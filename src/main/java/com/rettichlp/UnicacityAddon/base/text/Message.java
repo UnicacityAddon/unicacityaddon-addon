@@ -1,7 +1,11 @@
 package com.rettichlp.UnicacityAddon.base.text;
 
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.event.ClickEvent;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,9 +39,10 @@ public class Message {
 
         public Builder prefix() {
             return add(Message.getBuilder()
-                    .of("[").color(ColorCode.DARK_GRAY).advance()
-                    .of("Gemüsekiste").color(ColorCode.DARK_GREEN).advance()
-                    .of("]").color(ColorCode.DARK_GRAY).advance()
+                    .of("UCA").color(ColorCode.DARK_GREEN).advance()
+                    .space()
+                    .of("-").color(ColorCode.DARK_GRAY).advance()
+                    .space()
                     .create());
         }
 
@@ -90,6 +95,26 @@ public class Message {
             });
 
             return stringBuilder.toString();
+        }
+
+        public ITextComponent createComponent() {
+            Message message = build();
+            ITextComponent overall = new TextComponentString("");
+
+            message.getMessageParts().forEach(part -> {
+                ITextComponent componentPart = new TextComponentString(part.getMessage());
+                Style style = componentPart.getStyle();
+                style.setBold(part.getFormattingCodes().contains(FormattingCode.BOLD));
+                style.setItalic(part.getFormattingCodes().contains(FormattingCode.ITALIC));
+                style.setObfuscated(part.getFormattingCodes().contains(FormattingCode.OBFUSCATED));
+                style.setStrikethrough(part.getFormattingCodes().contains(FormattingCode.STRIKETHROUGH));
+                style.setUnderlined(part.getFormattingCodes().contains(FormattingCode.UNDERLINE));
+                style.setClickEvent(part.getClickEvent());
+                if (part.getColorCode() != null) style.setColor(TextFormatting.valueOf(String.valueOf(part.getColorCode())));
+                overall.getSiblings().add(componentPart);
+            });
+
+            return overall;
         }
 
         public void sendTo(EntityPlayerSP player) {

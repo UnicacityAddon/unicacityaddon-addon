@@ -1,5 +1,7 @@
 package com.rettichlp.UnicacityAddon.base.text;
 
+import net.minecraft.util.text.event.ClickEvent;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,11 +14,13 @@ public class MessagePart {
     private final String message;
     private final ColorCode colorCode;
     private final List<FormattingCode> formattingCodes;
+    private final ClickEvent clickEvent;
 
     private MessagePart(Builder builder) {
         this.message = builder.message;
         this.colorCode = builder.colorCode;
         this.formattingCodes = builder.formattingCodes;
+        this.clickEvent = builder.clickEvent;
     }
 
     public String getMessage() {
@@ -28,6 +32,8 @@ public class MessagePart {
     public List<FormattingCode> getFormattingCodes() {
         return formattingCodes;
     }
+    public ClickEvent getClickEvent() {return clickEvent;}
+
     public static Builder getBuilder() {
         return new Builder();
     }
@@ -36,6 +42,7 @@ public class MessagePart {
         private String message;
         private ColorCode colorCode;
         private final List<FormattingCode> formattingCodes = new ArrayList<>();
+        private ClickEvent clickEvent;
         private Message.Builder messageBuilder;
 
         public Builder messageBuilder(Message.Builder messageBuilder) {
@@ -75,6 +82,11 @@ public class MessagePart {
 
         public Builder italic() {
             this.formattingCodes.add(FormattingCode.ITALIC);
+            return this;
+        }
+
+        public Builder clickEvent(ClickEvent.Action action, String message) {
+            this.clickEvent = new ClickEvent(action, message);
             return this;
         }
 
