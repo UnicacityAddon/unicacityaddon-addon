@@ -5,13 +5,15 @@ buildscript {
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:3.+'
+        classpath "de.undercouch:gradle-download-task:4.1.2"
     }
 }
-        
+
 apply plugin: 'net.minecraftforge.gradle'
 // Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 apply plugin: 'idea'
 apply plugin: 'maven-publish'
+apply plugin: "de.undercouch.download"
 
 version = '1.0'
 group = 'com.rettichlp' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
@@ -107,16 +109,23 @@ jar.finalizedBy('reobfJar')
 // However if you are in a multi-project build, dev time needs unobfed jar files, so you can delay the obfuscation until publishing by doing
 //publish.dependsOn('reobfJar')
 
-/*
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            artifact jar
-        }
+import de.undercouch.gradle.tasks.download.Download
+
+task downloadLabyModAPI(type: Download) {
+    group("build")
+
+    File libraryDirectory = new File("libs/")
+
+    if (!libraryDirectory.exists()) {
+        libraryDirectory.mkdirs()
     }
-    repositories {
-        maven {
-            url "file:///${project.projectDir}/mcmodsrepo"
-        }
-    }
-}*/
+
+    src 'https://dl.labymod.net/latest/api/files/lm_api_mc1.12.2.jar'
+    dest 'libs/'
+}
+
+task copyTask(type: Copy) {
+    group("build")
+    from 'build/libs/.'
+    into 'run/LabyMod/addons-1.12'
+}
