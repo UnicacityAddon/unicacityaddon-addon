@@ -8,13 +8,14 @@ import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
 import com.rettichlp.UnicacityAddon.modules.BombTimerModule;
 import net.labymod.api.events.MessageReceiveEvent;
 import net.labymod.utils.ModUtils;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 @UCEventLabymod(event = "MessageReceiveEvent")
 @UCEventForge
 public class BombTimerEventHandler implements MessageReceiveEvent {
 
-    public void onTick(TickEvent.ClientTickEvent event) {
+    @SubscribeEvent public void onTick(TickEvent.ClientTickEvent event) {
         if (event.phase != TickEvent.Phase.END) return;
 
         if (!BombTimerModule.isBomb || ++BombTimerModule.currentTick != 20) return;
