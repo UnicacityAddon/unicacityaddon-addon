@@ -15,7 +15,7 @@ public class ATMInfoEventHandler implements MessageReceiveEvent {
     public boolean onReceive(String s, String s1) {
         if (!ConfigElements.getEventATMInfo()) return false;
 
-        Matcher kontoauszugMatcher = PatternHandler.KONTOAUSZUG_PATTERN.matcher(s);
+        Matcher kontoauszugMatcher = PatternHandler.KONTOAUSZUG_PATTERN.matcher(s1);
         if (kontoauszugMatcher.find()) AbstractionLayer.getPlayer().sendChatMessage("/atminfo");
         return false;
     }

@@ -11,18 +11,12 @@ public class CarOpenEventHandler implements MessageReceiveEvent {
 
     @Override
     public boolean onReceive(String s, String s1) {
-
-        System.out.println("=============================");
-        System.out.println(s);
-        System.out.println(s1);
-        System.out.println("=============================");
-
-        if (PatternHandler.CAR_OPEN_PATTERN.matcher(s).find()) {
+        if (PatternHandler.CAR_OPEN_PATTERN.matcher(s1).find()) {
             CarOpenModule.info = ColorCode.GREEN.getCode() + "offen";
             return false;
         }
 
-        if (PatternHandler.CAR_CLOSE_PATTERN.matcher(s).find()) {
+        if (PatternHandler.CAR_CLOSE_PATTERN.matcher(s1).find()) {
             CarOpenModule.info = ColorCode.RED.getCode() + "zu";
         }
         return false;

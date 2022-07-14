@@ -14,8 +14,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 @UCEventForge
 public class BombTimerEventHandler implements MessageReceiveEvent {
 
-    @Subscribe
-    public void onTick(TickEvent event) {
+    public void onTick(TickEvent.ClientTickEvent event) {
         if (event.phase != TickEvent.Phase.END) return;
 
         if (!BombTimerModule.isBomb || ++BombTimerModule.currentTick != 20) return;
@@ -28,15 +27,14 @@ public class BombTimerEventHandler implements MessageReceiveEvent {
     }
 
     @Override public boolean onReceive(String s, String s1) {
-        String msg = s;
 
-        if (PatternHandler.BOMB_PLACED_PATTERN.matcher(msg).find()) {
+        if (PatternHandler.BOMB_PLACED_PATTERN.matcher(s1).find()) {
             BombTimerModule.isBomb = true;
             BombTimerModule.timer = "00:00";
             return false;
         }
 
-        if (PatternHandler.BOMB_REMOVED_PATTERN.matcher(msg).find()) stopBombTimer();
+        if (PatternHandler.BOMB_REMOVED_PATTERN.matcher(s1).find()) stopBombTimer();
         return false;
     }
 
