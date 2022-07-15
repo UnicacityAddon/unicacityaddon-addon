@@ -5,6 +5,8 @@ import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
 import com.rettichlp.UnicacityAddon.base.event.UCEventLabymod;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
+import com.rettichlp.UnicacityAddon.commands.NearestATMCommand;
+import com.rettichlp.UnicacityAddon.commands.NearestJobCommand;
 import com.rettichlp.UnicacityAddon.commands.TriggerEventCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.ReinforcementCommand;
 import net.labymod.api.events.MessageSendEvent;
@@ -72,6 +74,10 @@ public class UCCommandHandler implements MessageSendEvent {
             commandMap.put("reinforcement", ReinforcementCommand.class.getDeclaredMethod("onCommand", UPlayer.class, List.class));
             commandMap.put("callreinforcement", ReinforcementCommand.class.getDeclaredMethod("onCommand", UPlayer.class, List.class));
             commandMap.put("reinf", ReinforcementCommand.class.getDeclaredMethod("onCommand", UPlayer.class, List.class));
+            commandMap.put("nearestatm", NearestATMCommand.class.getDeclaredMethod("onCommand", UPlayer.class, List.class));
+            commandMap.put("nearestjob", NearestJobCommand.class.getDeclaredMethod("onCommand", UPlayer.class, List.class));
+
+
         } catch (NoSuchMethodException e) {
             throw new RuntimeException(e);
         }
