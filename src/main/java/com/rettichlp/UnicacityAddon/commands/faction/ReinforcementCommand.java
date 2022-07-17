@@ -12,11 +12,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
 
-/*
-    @author Dimiikou
-
-    Partly copied from https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/commands/faction/CallReinforcementCommand.java
- */
+/**
+ * @author Dimiikou
+ * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/commands/faction/CallReinforcementCommand.java">UCUtils by paulzhng</a>
+ **/
 @SideOnly(Side.CLIENT)
 public class ReinforcementCommand implements UnicacityCommand {
 

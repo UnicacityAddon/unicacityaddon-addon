@@ -30,6 +30,22 @@ public class Message {
         return new Builder();
     }
 
+    public ITextComponent toTextComponent() {
+        ITextComponent textComponent = null;
+
+        for (MessagePart messagePart : messageParts) {
+            ITextComponent messageComponent = messagePart.toTextComponent();
+
+            if (textComponent == null) {
+                textComponent = messageComponent;
+            } else {
+                textComponent.appendSibling(messageComponent);
+            }
+        }
+
+        return textComponent;
+    }
+
     public static class Builder {
         private final List<MessagePart> messageParts = new ArrayList<>();
 
@@ -110,6 +126,7 @@ public class Message {
                 style.setStrikethrough(part.getFormattingCodes().contains(FormattingCode.STRIKETHROUGH));
                 style.setUnderlined(part.getFormattingCodes().contains(FormattingCode.UNDERLINE));
                 style.setClickEvent(part.getClickEvent());
+                style.setHoverEvent(part.getHoverEvent());
                 if (part.getColorCode() != null) style.setColor(TextFormatting.valueOf(String.valueOf(part.getColorCode())));
                 overall.getSiblings().add(componentPart);
             });

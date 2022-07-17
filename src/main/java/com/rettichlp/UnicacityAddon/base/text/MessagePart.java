@@ -1,6 +1,11 @@
 package com.rettichlp.UnicacityAddon.base.text;
 
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.event.ClickEvent;
+import net.minecraft.util.text.event.HoverEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,12 +20,14 @@ public class MessagePart {
     private final ColorCode colorCode;
     private final List<FormattingCode> formattingCodes;
     private final ClickEvent clickEvent;
+    private final HoverEvent hoverEvent;
 
     private MessagePart(Builder builder) {
         this.message = builder.message;
         this.colorCode = builder.colorCode;
         this.formattingCodes = builder.formattingCodes;
         this.clickEvent = builder.clickEvent;
+        this.hoverEvent = builder.hoverEvent;
     }
 
     public String getMessage() {
@@ -33,9 +40,41 @@ public class MessagePart {
         return formattingCodes;
     }
     public ClickEvent getClickEvent() {return clickEvent;}
+    public HoverEvent getHoverEvent() {return hoverEvent;}
 
     public static Builder getBuilder() {
         return new Builder();
+    }
+
+    public ITextComponent toTextComponent() {
+        ITextComponent messageComponent = new TextComponentString(message);
+        Style style = messageComponent.getStyle();
+
+        if (colorCode != null)
+            style.setColor(TextFormatting.valueOf(colorCode.getCode()));
+
+        if (clickEvent != null)
+            style.setClickEvent(clickEvent);
+
+        if (hoverEvent != null)
+            style.setHoverEvent(hoverEvent);
+
+        if (formattingCodes.contains(FormattingCode.BOLD))
+            style.setBold(true);
+
+        if (formattingCodes.contains(FormattingCode.ITALIC))
+            style.setItalic(true);
+
+        if (formattingCodes.contains(FormattingCode.STRIKETHROUGH))
+            style.setStrikethrough(true);
+
+        if (formattingCodes.contains(FormattingCode.UNDERLINE))
+            style.setUnderlined(true);
+
+        if (formattingCodes.contains(FormattingCode.OBFUSCATED))
+            style.setObfuscated(true);
+
+        return messageComponent;
     }
 
     public static class Builder {
@@ -43,6 +82,7 @@ public class MessagePart {
         private ColorCode colorCode;
         private final List<FormattingCode> formattingCodes = new ArrayList<>();
         private ClickEvent clickEvent;
+        private HoverEvent hoverEvent;
         private Message.Builder messageBuilder;
 
         public Builder messageBuilder(Message.Builder messageBuilder) {
@@ -87,6 +127,11 @@ public class MessagePart {
 
         public Builder clickEvent(ClickEvent.Action action, String message) {
             this.clickEvent = new ClickEvent(action, message);
+            return this;
+        }
+
+        public Builder hoverEvent(HoverEvent.Action action, ITextComponent message) {
+            this.hoverEvent = new HoverEvent(action, message);
             return this;
         }
 

@@ -7,6 +7,7 @@ import com.rettichlp.UnicacityAddon.base.module.UCModuleHandler;
 import com.rettichlp.UnicacityAddon.events.ATMInfoEventHandler;
 import com.rettichlp.UnicacityAddon.events.BombTimerEventHandler;
 import com.rettichlp.UnicacityAddon.events.CarOpenEventHandler;
+import com.rettichlp.UnicacityAddon.events.faction.ReinforcementEvent;
 import com.rettichlp.UnicacityAddon.modules.BombTimerModule;
 import com.rettichlp.UnicacityAddon.modules.CarOpenModule;
 import net.labymod.api.LabyModAddon;
@@ -43,6 +44,7 @@ public class UnicacityAddon extends LabyModAddon {
         ADDON.getApi().getEventManager().register(new BombTimerEventHandler());
         ADDON.getApi().getEventManager().register(new CarOpenEventHandler());
         ADDON.getApi().getEventManager().register(new UCCommandHandler());
+        ADDON.getApi().getEventManager().register(new ReinforcementEvent());
 
         // Modules -> https://docs.labymod.net/pages/create-addons/module_system/
         ModuleCategoryRegistry.loadCategory(UCModuleHandler.UNICACITY);
