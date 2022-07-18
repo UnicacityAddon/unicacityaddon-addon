@@ -1,9 +1,11 @@
 package com.rettichlp.UnicacityAddon;
 
-import com.rettichlp.UnicacityAddon.base.command.UCCommandHandler;
 import com.rettichlp.UnicacityAddon.base.config.ConfigSettings;
 import com.rettichlp.UnicacityAddon.base.faction.FactionHandler;
 import com.rettichlp.UnicacityAddon.base.module.UCModuleHandler;
+import com.rettichlp.UnicacityAddon.commands.NearestATMCommand;
+import com.rettichlp.UnicacityAddon.commands.NearestJobCommand;
+import com.rettichlp.UnicacityAddon.commands.TriggerEventCommand;
 import com.rettichlp.UnicacityAddon.events.ATMInfoEventHandler;
 import com.rettichlp.UnicacityAddon.events.BombTimerEventHandler;
 import com.rettichlp.UnicacityAddon.events.CarOpenEventHandler;
@@ -14,6 +16,7 @@ import net.labymod.ingamegui.ModuleCategoryRegistry;
 import net.labymod.main.LabyMod;
 import net.labymod.settings.elements.SettingsElement;
 import net.minecraft.client.Minecraft;
+import net.minecraftforge.client.ClientCommandHandler;
 
 import java.util.List;
 
@@ -31,25 +34,20 @@ public class UnicacityAddon extends LabyModAddon {
     public void onEnable() {
         ADDON = this;
 
-        // ModuleCategoryRegistry.loadCategory(UCModuleHandler.UNICACITY);
-        // UCModuleHandler.registerModules();
-        // UCEventHandler.registerEvents();
+        // ForgeCommands
+        ClientCommandHandler.instance.registerCommand(new NearestATMCommand());
+        ClientCommandHandler.instance.registerCommand(new NearestJobCommand());
+        ClientCommandHandler.instance.registerCommand(new TriggerEventCommand());
 
         // ForgeEvents -> https://docs.labymod.net/pages/create-addons/forge_events/
+        ADDON.getApi().registerForgeListener(new ATMInfoEventHandler());
         ADDON.getApi().registerForgeListener(new BombTimerEventHandler());
-
-        // LabymodEvents -> https://docs.labymod.net/pages/create-addons/labymod_events/
-        ADDON.getApi().getEventManager().register(new ATMInfoEventHandler());
-        ADDON.getApi().getEventManager().register(new BombTimerEventHandler());
-        ADDON.getApi().getEventManager().register(new CarOpenEventHandler());
-        ADDON.getApi().getEventManager().register(new UCCommandHandler());
+        ADDON.getApi().registerForgeListener(new CarOpenEventHandler());
 
         // Modules -> https://docs.labymod.net/pages/create-addons/module_system/
         ModuleCategoryRegistry.loadCategory(UCModuleHandler.UNICACITY);
         ADDON.getApi().registerModule(new BombTimerModule());
         ADDON.getApi().registerModule(new CarOpenModule());
-
-        // Commands müssen in UCCommandHandler ab Zeile 70 registriert werden!
     }
 
     @Override
