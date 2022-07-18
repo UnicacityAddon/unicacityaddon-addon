@@ -1,3 +1,4 @@
+/*
 package com.rettichlp.UnicacityAddon.base.command;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
@@ -18,9 +19,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * @author RettichLP
- */
 @UCEventLabymod(event = "MessageSendEvent")
 public class UCCommandHandler implements MessageSendEvent {
 
@@ -79,13 +77,14 @@ public class UCCommandHandler implements MessageSendEvent {
         }
 
 
-        /*ReflectionUtils.getMethodsAnnotatedWith(UCCommand.class, "com.rettichlp.UnicacityAddon.commands").forEach(method -> {
+        ReflectionUtils.getMethodsAnnotatedWith(UCCommand.class, "com.rettichlp.UnicacityAddon.commands").forEach(method -> {
             UCCommand ucCommand = method.getAnnotation(UCCommand.class);
             for (int i = 0; i < ucCommand.value().length; i++) {
                 commandMap.put(ucCommand.value()[i], method);
             }
-        });*/
+        });
 
         return commandMap;
     }
 }
+*/
