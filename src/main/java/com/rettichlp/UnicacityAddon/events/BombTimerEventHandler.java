@@ -1,19 +1,14 @@
 package com.rettichlp.UnicacityAddon.events;
 
-import com.google.common.eventbus.Subscribe;
-import com.rettichlp.UnicacityAddon.base.event.UCEventForge;
-import com.rettichlp.UnicacityAddon.base.event.UCEventLabymod;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
 import com.rettichlp.UnicacityAddon.modules.BombTimerModule;
-import net.labymod.api.events.MessageReceiveEvent;
 import net.labymod.utils.ModUtils;
+import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
-@UCEventLabymod(event = "MessageReceiveEvent")
-@UCEventForge
-public class BombTimerEventHandler implements MessageReceiveEvent {
+public class BombTimerEventHandler {
 
     @SubscribeEvent public void onTick(TickEvent.ClientTickEvent event) {
         if (event.phase != TickEvent.Phase.END) return;
@@ -27,15 +22,16 @@ public class BombTimerEventHandler implements MessageReceiveEvent {
         if (BombTimerModule.currentCount > 1200) stopBombTimer();
     }
 
-    @Override public boolean onReceive(String s, String s1) {
+    @SubscribeEvent public boolean onClientChatReceived(ClientChatReceivedEvent e) {
+        String msg = e.getMessage().getUnformattedText();
 
-        if (PatternHandler.BOMB_PLACED_PATTERN.matcher(s1).find()) {
+        if (PatternHandler.BOMB_PLACED_PATTERN.matcher(msg).find()) {
             BombTimerModule.isBomb = true;
             BombTimerModule.timer = "00:00";
             return false;
         }
 
-        if (PatternHandler.BOMB_REMOVED_PATTERN.matcher(s1).find()) stopBombTimer();
+        if (PatternHandler.BOMB_REMOVED_PATTERN.matcher(msg).find()) stopBombTimer();
         return false;
     }
 
