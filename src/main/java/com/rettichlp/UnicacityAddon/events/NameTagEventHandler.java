@@ -12,24 +12,27 @@ import com.rettichlp.UnicacityAddon.base.text.FormattingCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
 import net.labymod.api.event.events.client.renderer.RenderNameTagEvent;
 import net.labymod.api.events.RenderEntityEvent;
+import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.Items;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraftforge.client.event.ClientChatReceivedEvent;
+import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
 @UCEventLabymod(event = "RenderEntityEvent")
-public class NameTagEventHandler implements RenderEntityEvent {
+public class NameTagEventHandler {
 
     private static int tick;
 
     @Subscribe
-    public void onRenderNameTag(RenderNameTagEvent e) {
+    public void onRenderNameTag(PlayerEvent e) {
         String playerName = e.getDisplayName().getString();
         String houseban = getHouseban(playerName);
         String prefix = getPrefix(playerName);
