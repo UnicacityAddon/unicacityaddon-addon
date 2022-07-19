@@ -1,4 +1,3 @@
-/*
 package com.rettichlp.UnicacityAddon.base.command;
 
 import java.lang.annotation.ElementType;
@@ -8,11 +7,4 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-public @interface UCCommand {
-
-    String[] value();
-
-    String usage() default "/%label%";
-
-}
-*/
+public @interface UCCommand {}
