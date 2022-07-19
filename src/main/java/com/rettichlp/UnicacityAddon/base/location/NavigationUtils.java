@@ -5,6 +5,10 @@ import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 
 import java.util.Map;
 
+/**
+ * @author RettichLP
+ * @see <a href="https://github.com/paulzhng/UCUtils/blob/e1e4cc90a852a24fbb552413eb478097f865c6f3/src/main/java/de/fuzzlemann/ucutils/utils/location/navigation/NavigationUtil.java">UCUtils by paulzhng</a>
+ */
 public class NavigationUtils {
 
     public static Map.Entry<Double, ATM> getNearestATM() {

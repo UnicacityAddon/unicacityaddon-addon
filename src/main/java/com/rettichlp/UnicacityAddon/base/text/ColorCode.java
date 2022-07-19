@@ -2,6 +2,9 @@ package com.rettichlp.UnicacityAddon.base.text;
 
 import net.minecraft.util.text.TextFormatting;
 
+/**
+ * @author RettichLP
+ */
 public enum ColorCode {
 
     BLACK("§0", TextFormatting.BLACK),

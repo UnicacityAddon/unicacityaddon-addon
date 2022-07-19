@@ -6,6 +6,9 @@ import com.rettichlp.UnicacityAddon.modules.CarOpenModule;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+/**
+ * @author RettichLP
+ */
 public class CarOpenEventHandler {
 
     @SubscribeEvent public boolean onClientChatReceived(ClientChatReceivedEvent e) {

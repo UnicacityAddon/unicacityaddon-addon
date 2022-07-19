@@ -2,6 +2,9 @@ package com.rettichlp.UnicacityAddon.base.text;
 
 import java.util.regex.Pattern;
 
+/**
+ * @author RettichLP
+ */
 public class PatternHandler {
 
     /**

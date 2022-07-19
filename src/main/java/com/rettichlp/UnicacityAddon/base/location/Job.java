@@ -1,5 +1,8 @@
 package com.rettichlp.UnicacityAddon.base.location;
 
+/**
+ * @author Fuzzlemann
+ */
 public enum Job {
     POWDER_MINE(510, 63, 178, "Pulvermine", "/startmine"),
     REFUSE_COLLECTOR(510, 63, 178, "Müllmann", "/müllmann"),

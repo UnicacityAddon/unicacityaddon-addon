@@ -14,6 +14,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * @author RettichLP
+ */
 public class ReflectionUtils {
 
     public static List<Method> getMethodsAnnotatedWith(Class<?> annotationClass, String subPackage) {
@@ -28,10 +31,12 @@ public class ReflectionUtils {
         return getClassesInPackage(subPackage).stream().filter(clazz -> clazz.isAnnotationPresent((Class<? extends Annotation>) annotation)).collect(Collectors.toList());
     }
 
+    /*
     public static Class getClassInPackage(String className, String packageName) {
         return getClassesInPackage(packageName).stream()
                 .filter(clazz -> className.equals(clazz.getSimpleName())).findFirst().get();
     }
+    */
 
     private static Set<Class<?>> getClassesInPackage(String packageName) {
         InputStream stream = ClassLoader.getSystemClassLoader().getResourceAsStream(packageName.replaceAll("[.]", "/"));

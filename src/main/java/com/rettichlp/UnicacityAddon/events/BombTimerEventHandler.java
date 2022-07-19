@@ -8,6 +8,9 @@ import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
+/**
+ * @author RettichLP
+ */
 public class BombTimerEventHandler {
 
     @SubscribeEvent public void onTick(TickEvent.ClientTickEvent event) {

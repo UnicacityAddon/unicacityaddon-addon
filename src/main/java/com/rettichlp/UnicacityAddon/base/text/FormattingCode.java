@@ -1,5 +1,8 @@
 package com.rettichlp.UnicacityAddon.base.text;
 
+/**
+ * @author RettichLP
+ */
 public enum FormattingCode {
 
     OBFUSCATED("§k"),

@@ -10,26 +10,30 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * @author RettichLP
+ */
 public class TriggerEventCommand extends CommandBase {
 
-    @Override public String getName() {
+    @Override @Nonnull public String getName() {
         return "triggerevent";
     }
 
-    @Override public String getUsage(ICommandSender sender) {
+    @Override @Nonnull public String getUsage(@Nonnull ICommandSender sender) {
         return "/triggerevent [TriggerableEvent]";
     }
 
-    @Override public List<String> getAliases() {
-        return Arrays.asList("tevent");
+    @Override @Nonnull public List<String> getAliases() {
+        return Collections.singletonList("tevent");
     }
 
-    @Override public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+    @Override public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args) {
         UPlayer p = AbstractionLayer.getPlayer();
 
         if (args.length == 1) {
@@ -42,7 +46,7 @@ public class TriggerEventCommand extends CommandBase {
                 .sendTo(p.getPlayer());
     }
 
-    @Override public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
+    @Override @Nonnull public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
         if (args.length == 1) {
             return getListOfStringsMatchingLastWord(args, Arrays.asList(TriggerableEvent.values()));
         } else {
