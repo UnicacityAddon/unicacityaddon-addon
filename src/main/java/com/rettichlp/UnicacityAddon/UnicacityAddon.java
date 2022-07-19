@@ -1,11 +1,13 @@
 package com.rettichlp.UnicacityAddon;
 
+import com.rettichlp.UnicacityAddon.base.command.UCCommandHandler;
 import com.rettichlp.UnicacityAddon.base.config.ConfigSettings;
 import com.rettichlp.UnicacityAddon.base.faction.FactionHandler;
 import com.rettichlp.UnicacityAddon.base.module.UCModuleHandler;
 import com.rettichlp.UnicacityAddon.commands.NearestATMCommand;
 import com.rettichlp.UnicacityAddon.commands.NearestJobCommand;
 import com.rettichlp.UnicacityAddon.commands.TriggerEventCommand;
+import com.rettichlp.UnicacityAddon.commands.faction.police.ASUCommand;
 import com.rettichlp.UnicacityAddon.events.ATMInfoEventHandler;
 import com.rettichlp.UnicacityAddon.events.BombTimerEventHandler;
 import com.rettichlp.UnicacityAddon.events.CarOpenEventHandler;
@@ -34,7 +36,9 @@ public class UnicacityAddon extends LabyModAddon {
     public void onEnable() {
         ADDON = this;
 
+        //UCCommandHandler.registerCommands();
         // ForgeCommands
+        ClientCommandHandler.instance.registerCommand(new ASUCommand());
         ClientCommandHandler.instance.registerCommand(new NearestATMCommand());
         ClientCommandHandler.instance.registerCommand(new NearestJobCommand());
         ClientCommandHandler.instance.registerCommand(new TriggerEventCommand());
