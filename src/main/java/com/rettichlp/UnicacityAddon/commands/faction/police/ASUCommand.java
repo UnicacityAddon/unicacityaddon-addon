@@ -7,7 +7,6 @@ import com.rettichlp.UnicacityAddon.base.text.Message;
 import com.rettichlp.UnicacityAddon.base.utils.ForgeUtils;
 import com.rettichlp.UnicacityAddon.base.utils.MathUtils;
 import net.minecraft.command.CommandBase;
-import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
@@ -123,9 +122,11 @@ public class ASUCommand extends CommandBase {
 
     @Override @Nonnull public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
         if (args.length == 1) {
-            return ForgeUtils.getOnlinePlayers();
+            List<String> tabCompletions = ForgeUtils.getOnlinePlayers();
+            String input = args[args.length - 1].toLowerCase().replace('-', ' ');
+            tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
+            return tabCompletions;
         } else {
-
             List<String> tabCompletions = Arrays.stream(WantedReason.values()).map(WantedReason::getReason).sorted().collect(Collectors.toList());
             tabCompletions.addAll(ForgeUtils.getOnlinePlayers());
 
