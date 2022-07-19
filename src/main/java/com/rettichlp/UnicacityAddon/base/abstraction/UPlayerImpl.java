@@ -1,6 +1,8 @@
 package com.rettichlp.UnicacityAddon.base.abstraction;
 
 import com.rettichlp.UnicacityAddon.UnicacityAddon;
+import com.rettichlp.UnicacityAddon.base.faction.Faction;
+import com.rettichlp.UnicacityAddon.base.faction.FactionHandler;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.inventory.Container;
@@ -98,5 +100,10 @@ public class UPlayerImpl implements UPlayer {
     @Override
     public NetHandlerPlayClient getConnection() {
         return getPlayer().connection;
+    }
+
+    @Override
+    public Faction getFaction() {
+        return FactionHandler.getPlayerFactionMap().get(getName());
     }
 }
