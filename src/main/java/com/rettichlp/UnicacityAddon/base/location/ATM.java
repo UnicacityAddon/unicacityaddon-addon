@@ -1,5 +1,8 @@
 package com.rettichlp.UnicacityAddon.base.location;
 
+/**
+ * @author Fuzzlemann
+ */
 public enum ATM {
     ATM_1(1, 114, 70, 166),
     ATM_2(2, -7, 70, 196),

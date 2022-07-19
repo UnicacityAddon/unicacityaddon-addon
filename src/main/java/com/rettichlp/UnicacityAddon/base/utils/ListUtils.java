@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * @author RettichLP
+ */
 public class ListUtils {
 
     public static List<String> getAllMatchesFromString(Pattern pattern, String content) {

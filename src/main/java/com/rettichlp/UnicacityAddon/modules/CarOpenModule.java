@@ -7,6 +7,9 @@ import net.labymod.ingamegui.moduletypes.SimpleModule;
 import net.labymod.settings.elements.ControlElement;
 import net.labymod.utils.Material;
 
+/**
+ * @author RettichLP
+ */
 @UCModule
 public class CarOpenModule extends SimpleModule {
 

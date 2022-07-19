@@ -13,28 +13,32 @@ import net.minecraft.util.text.event.ClickEvent;
 
 import javax.annotation.Nonnull;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author RettichLP
+ */
 public class NearestATMCommand extends CommandBase {
 
-    @Override public String getName() {
+    @Override @Nonnull public String getName() {
         return "nearestatm";
     }
 
-    @Override public String getUsage(ICommandSender sender) {
+    @Override @Nonnull public String getUsage(@Nonnull ICommandSender sender) {
         return "/nearestatm";
     }
 
-    @Override public List<String> getAliases() {
-        return Arrays.asList("natm");
+    @Override @Nonnull public List<String> getAliases() {
+        return Collections.singletonList("natm");
     }
 
     @Override public boolean checkPermission(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender) {
         return true;
     }
 
-    @Override public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+    @Override public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
         Map.Entry<Double, ATM> nearestATM = NavigationUtils.getNearestATM();
 
         AbstractionLayer.getPlayer().sendMessage(Message.getBuilder()

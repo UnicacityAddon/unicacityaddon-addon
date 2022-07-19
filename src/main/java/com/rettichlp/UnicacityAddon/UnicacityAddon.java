@@ -1,6 +1,5 @@
 package com.rettichlp.UnicacityAddon;
 
-import com.rettichlp.UnicacityAddon.base.command.UCCommandHandler;
 import com.rettichlp.UnicacityAddon.base.config.ConfigSettings;
 import com.rettichlp.UnicacityAddon.base.faction.FactionHandler;
 import com.rettichlp.UnicacityAddon.base.module.UCModuleHandler;
@@ -29,8 +28,8 @@ public class UnicacityAddon extends LabyModAddon {
 
     public static final String VERSION = "1.0.0";
     public static final Minecraft MINECRAFT = Minecraft.getMinecraft();
+    public static final LabyMod LABYMOD = LabyMod.getInstance();
     public static UnicacityAddon ADDON;
-    public static LabyMod LABYMOD = LabyMod.getInstance();
 
     @Override
     public void onEnable() {

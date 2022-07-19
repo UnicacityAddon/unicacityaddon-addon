@@ -1,7 +1,5 @@
 package com.rettichlp.UnicacityAddon.base.abstraction;
 
-import com.rettichlp.UnicacityAddon.base.exceptions.UPlayerClassCannotBeInstantiated;
-
 import java.lang.reflect.InvocationTargetException;
 
 /**

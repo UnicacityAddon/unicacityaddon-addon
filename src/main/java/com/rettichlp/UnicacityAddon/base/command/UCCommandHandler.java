@@ -4,6 +4,9 @@ import com.rettichlp.UnicacityAddon.base.reflection.ReflectionUtils;
 import net.minecraft.command.ICommand;
 import net.minecraftforge.client.ClientCommandHandler;
 
+/**
+ * @author RettichLP
+ */
 public class UCCommandHandler {
 
     public static void registerCommands() {

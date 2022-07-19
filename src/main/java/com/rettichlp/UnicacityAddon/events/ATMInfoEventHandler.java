@@ -8,10 +8,12 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.regex.Matcher;
 
+/**
+ * @author RettichLP
+ */
 public class ATMInfoEventHandler {
 
-    @SubscribeEvent
-    public boolean onClientChatReceive(ClientChatReceivedEvent e) {
+    @SubscribeEvent public boolean onClientChatReceive(ClientChatReceivedEvent e) {
         if (!ConfigElements.getEventATMInfo()) return false;
 
         Matcher kontoauszugMatcher = PatternHandler.KONTOAUSZUG_PATTERN.matcher(e.getMessage().getUnformattedText());

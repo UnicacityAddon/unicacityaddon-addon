@@ -24,19 +24,23 @@ import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
+/**
+ * @author RettichLP
+ * @see <a href="https://github.com/paulzhng/UCUtils/blob/e1e4cc90a852a24fbb552413eb478097f865c6f3/src/main/java/de/fuzzlemann/ucutils/commands/faction/police/ASUCommand.java">UCUtils by paulzhng</a>
+ */
 public class ASUCommand extends CommandBase {
 
     private final Timer timer = new Timer();
 
-    @Override public String getName() {
+    @Override @Nonnull public String getName() {
         return "asu";
     }
 
-    @Override public String getUsage(ICommandSender sender) {
+    @Override @Nonnull public String getUsage(@Nonnull ICommandSender sender) {
         return "/asu [Spieler...] [Grund] (-v/-b/-fsa/-wsa)";
     }
 
-    @Override public List<String> getAliases() {
+    @Override @Nonnull public List<String> getAliases() {
         return Collections.emptyList();
     }
 
@@ -44,7 +48,7 @@ public class ASUCommand extends CommandBase {
         return true;
     }
 
-    @Override public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+    @Override public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args) {
         UPlayer p = AbstractionLayer.getPlayer();
 
         if (args.length < 2) {
@@ -117,7 +121,7 @@ public class ASUCommand extends CommandBase {
         }
     }
 
-    @Override public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
+    @Override @Nonnull public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
         if (args.length == 1) {
             return ForgeUtils.getOnlinePlayers();
         } else {
@@ -257,8 +261,8 @@ public class ASUCommand extends CommandBase {
         WP_94("Nachzahlen-eines-Bußgeldbescheides-(200$)", 1),
         WP_95("Nachzahlen-eines-Bußgeldbescheides-(350$)", 1);
 
-        private String description;
-        private int wanteds;
+        private final String description;
+        private final int wanteds;
 
         WantedReason(String description, int wanteds) {
             this.description = description;

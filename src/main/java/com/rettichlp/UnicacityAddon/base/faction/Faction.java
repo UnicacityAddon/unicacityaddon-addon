@@ -8,6 +8,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * @author RettichLP
+ */
 public enum Faction {
 
     NULL("", "Keine Auswahl", ""),

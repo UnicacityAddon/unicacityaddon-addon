@@ -6,6 +6,9 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.Scanner;
 
+/**
+ * @author RettichLP
+ */
 public class WebsiteAPI {
 
     public static String websiteToString(String urlString) {
