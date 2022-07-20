@@ -53,7 +53,6 @@ public class ReinforcementEventHandler {
                 builder.of("Reinforcement!").color(ColorCode.RED).bold().advance().space();
             }
 
-            // TODO: Nähesten Navispot rausfinden
             ITextComponent hoverMessage = Message.getBuilder().of("" + posX).color(ColorCode.BLUE).advance()
                     .of(" | ").color(ColorCode.GRAY).advance()
                     .of("" + posY).color(ColorCode.BLUE).advance()
