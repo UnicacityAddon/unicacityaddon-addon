@@ -6,6 +6,7 @@ import com.rettichlp.UnicacityAddon.base.module.UCModuleHandler;
 import com.rettichlp.UnicacityAddon.commands.NearestATMCommand;
 import com.rettichlp.UnicacityAddon.commands.NearestJobCommand;
 import com.rettichlp.UnicacityAddon.commands.TriggerEventCommand;
+import com.rettichlp.UnicacityAddon.commands.faction.ReinforcementCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.police.ASUCommand;
 import com.rettichlp.UnicacityAddon.events.ATMInfoEventHandler;
 import com.rettichlp.UnicacityAddon.events.BombTimerEventHandler;
@@ -42,6 +43,7 @@ public class UnicacityAddon extends LabyModAddon {
         ClientCommandHandler.instance.registerCommand(new ASUCommand());
         ClientCommandHandler.instance.registerCommand(new NearestATMCommand());
         ClientCommandHandler.instance.registerCommand(new NearestJobCommand());
+        ClientCommandHandler.instance.registerCommand(new ReinforcementCommand());
         ClientCommandHandler.instance.registerCommand(new TriggerEventCommand());
 
         // ForgeEvents -> https://docs.labymod.net/pages/create-addons/forge_events/
@@ -49,9 +51,7 @@ public class UnicacityAddon extends LabyModAddon {
         ADDON.getApi().registerForgeListener(new BombTimerEventHandler());
         ADDON.getApi().registerForgeListener(new CarOpenEventHandler());
         ADDON.getApi().registerForgeListener(new NameTagEventHandler());
-
-        // LabymodEvents -> https://docs.labymod.net/pages/create-addons/labymod_events/
-        ADDON.getApi().getEventManager().register(new ReinforcementEvent());
+        ADDON.getApi().registerForgeListener(new ReinforcementEvent());
 
         // Modules -> https://docs.labymod.net/pages/create-addons/module_system/
         ModuleCategoryRegistry.loadCategory(UCModuleHandler.UNICACITY);

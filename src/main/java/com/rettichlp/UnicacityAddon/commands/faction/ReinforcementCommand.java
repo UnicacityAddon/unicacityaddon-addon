@@ -1,52 +1,64 @@
 package com.rettichlp.UnicacityAddon.commands.faction;
 
+import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
-import com.rettichlp.UnicacityAddon.base.command.UCCommand;
-import com.rettichlp.UnicacityAddon.base.command.UnicacityCommand;
+import com.rettichlp.UnicacityAddon.base.utils.MathUtils;
+import net.minecraft.command.CommandBase;
+import net.minecraft.command.ICommandSender;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  * @author Dimiikou
  * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/commands/faction/CallReinforcementCommand.java">UCUtils by paulzhng</a>
  **/
-@SideOnly(Side.CLIENT)
-public class ReinforcementCommand implements UnicacityCommand {
+public class ReinforcementCommand extends CommandBase {
 
-    private Type firstType = Type.DEFAULT;
+    @Override @Nonnull public String getName() {
+        return "reinforcement";
+    }
 
-    @Override
-    @UCCommand(value = "reinforcement", usage = "/%label%")
-    public boolean onCommand(UPlayer p, List<String> args) {
+    @Override @Nonnull public String getUsage(@Nonnull ICommandSender sender) {
+        return "/reinforcement (-d/-r/-rd/-e/-ed/-m/-lb/-da/-ct/-p)";
+    }
 
-        Arrays.stream(Type.values()).forEach(type -> {
-            if (args.size() == 1) {
-                if (type.getArgument().equalsIgnoreCase(args.get(0))) firstType = type;
-            } else if (args.size() == 6) {
-                if (type.getArgument().equalsIgnoreCase(args.get(0))) firstType = type;
-            }
-        });
+    @Override @Nonnull public List<String> getAliases() {
+        return Arrays.asList("reinf", "verstärkung");
+    }
+
+    @Override public boolean checkPermission(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender) {
+        return true;
+    }
+
+    @Override public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args) {
+        UPlayer p = AbstractionLayer.getPlayer();
+
+        Type firstType = Type.DEFAULT;
+        if (args.length == 1 || args.length == 6) firstType = Type.getByArgument(args[args.length - 1]);
 
         String chatType = firstType.getChatType();
+
         // /reinforcement -d
         // /reinforcement ontheway name x y z (-d)
 
-        if ((args.size() == 6) && args.get(0).equalsIgnoreCase("ontheway")) {
-            String name = args.get(1);
-            Integer x = Integer.parseInt(args.get(2));
-            Integer y = Integer.parseInt(args.get(3));
-            Integer z = Integer.parseInt(args.get(4));
+        if ((args.length == 6) && args[0].equalsIgnoreCase("ontheway")) {
+            String name = args[1];
 
-            if (name == null || x == null || y == null || z == null) return false;
+            if (!MathUtils.isInteger(args[2], 10) || !MathUtils.isInteger(args[3], 10) || !MathUtils.isInteger(args[4], 10)) return;
+            int x = Integer.parseInt(args[2]);
+            int y = Integer.parseInt(args[3]);
+            int z = Integer.parseInt(args[4]);
 
             p.sendChatMessage("/" + chatType + " " + name + ", ich bin zu deinem Verstärkungsruf unterwegs! (" + (int) p.getPosition().getDistance(x, y, z) + " Meter entfernt)");
-            return true;
+            return;
         }
 
         BlockPos position = p.getPosition();
@@ -58,8 +70,19 @@ public class ReinforcementCommand implements UnicacityCommand {
             p.sendChatMessage("/" + chatType + " " + firstType.getMessage());
 
         p.sendChatMessage("/" + chatType + " Benötige Verstärkung! -> X: " + posX + " | Y: " + posY + " | Z: " + posZ);
+    }
 
-        return true;
+    @Override @Nonnull public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
+        List<String> tabCompletions = Collections.emptyList();
+        if (args.length == 1) {
+            tabCompletions = Arrays.stream(Type.values()).map(Type::getArgument).sorted().collect(Collectors.toList());
+            tabCompletions.add("ontheway");
+            String input = args[args.length - 1].toLowerCase().replace('-', ' ');
+            tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
+            return tabCompletions;
+        } else {
+            return tabCompletions;
+        }
     }
 
     public enum Type {
@@ -96,6 +119,13 @@ public class ReinforcementCommand implements UnicacityCommand {
             /* TODO: Check if alliance exists, otherwise send CORPSE_GUARDING to f chat
             if (!(alliance) && (this == Type.CORPSE_GUARDING)) return "f"; */
             return chatType;
+        }
+
+        public static Type getByArgument(String s) {
+            for (Type t : Type.values()) {
+                if (t.getArgument().equalsIgnoreCase(s)) return t;
+            }
+            return Type.DEFAULT;
         }
 
         public String getMessage() {

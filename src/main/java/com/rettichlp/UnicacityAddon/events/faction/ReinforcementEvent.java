@@ -2,19 +2,14 @@ package com.rettichlp.UnicacityAddon.events.faction;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
-import com.rettichlp.UnicacityAddon.base.event.UCEventLabymod;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
 import com.rettichlp.UnicacityAddon.commands.faction.ReinforcementCommand;
-import net.labymod.api.events.MessageReceiveEvent;
-import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.event.ClickEvent;
 import net.minecraft.util.text.event.HoverEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.client.event.ClientChatReceivedEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.regex.Matcher;
 
@@ -22,22 +17,19 @@ import java.util.regex.Matcher;
  * @author Dimiikou
  * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/commands/faction/CallReinforcementCommand.java">UCUtils by paulzhng</a>
  **/
-@SideOnly(Side.CLIENT)
-@UCEventLabymod(event = "MessageReceiveEvent")
-public class ReinforcementEvent implements MessageReceiveEvent {
+public class ReinforcementEvent {
 
     private static ReinforcementCommand.ReinforcementType lastReinforcement;
 
-    @Override
-    public boolean onReceive(String msg, String formattedMsg) {
+    @SubscribeEvent public boolean onClientChatReceive(ClientChatReceivedEvent e) {
         UPlayer p = AbstractionLayer.getPlayer();
-        Matcher reinforcementMatcher = PatternHandler.REINFORCEMENT_PATTERN.matcher(msg);
+        Matcher reinforcementMatcher = PatternHandler.REINFORCEMENT_PATTERN.matcher(e.getMessage().getUnformattedText());
 
         p.sendMessageAsString("1");
         if (reinforcementMatcher.find()) {
             String fullName = reinforcementMatcher.group(1);
             String name = reinforcementMatcher.group(2);
-            String[] splitFormattedMsg = formattedMsg.split(":");
+            String[] splitFormattedMsg = e.getMessage().getFormattedText().split(":");
 
             int posX = Integer.parseInt(reinforcementMatcher.group(3));
             int posY = Integer.parseInt(reinforcementMatcher.group(4));
