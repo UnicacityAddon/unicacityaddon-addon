@@ -10,6 +10,7 @@ import com.rettichlp.UnicacityAddon.commands.faction.police.ASUCommand;
 import com.rettichlp.UnicacityAddon.events.ATMInfoEventHandler;
 import com.rettichlp.UnicacityAddon.events.BombTimerEventHandler;
 import com.rettichlp.UnicacityAddon.events.CarOpenEventHandler;
+import com.rettichlp.UnicacityAddon.events.NameTagEventHandler;
 import com.rettichlp.UnicacityAddon.modules.BombTimerModule;
 import com.rettichlp.UnicacityAddon.modules.CarOpenModule;
 import net.labymod.api.LabyModAddon;
@@ -46,6 +47,7 @@ public class UnicacityAddon extends LabyModAddon {
         ADDON.getApi().registerForgeListener(new ATMInfoEventHandler());
         ADDON.getApi().registerForgeListener(new BombTimerEventHandler());
         ADDON.getApi().registerForgeListener(new CarOpenEventHandler());
+        ADDON.getApi().registerForgeListener(new NameTagEventHandler());
 
         // Modules -> https://docs.labymod.net/pages/create-addons/module_system/
         ModuleCategoryRegistry.loadCategory(UCModuleHandler.UNICACITY);
