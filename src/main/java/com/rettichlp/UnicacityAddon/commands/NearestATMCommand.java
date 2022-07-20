@@ -9,6 +9,7 @@ import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.event.ClickEvent;
+import net.minecraft.util.text.event.HoverEvent;
 
 import javax.annotation.Nonnull;
 import java.util.Collections;
@@ -51,7 +52,13 @@ public class NearestATMCommand extends CommandBase {
                 .space()
                 .of("entfernt.").color(ColorCode.GRAY).advance()
                 .space()
-                .of("➡ Navi").color(ColorCode.RED).clickEvent(ClickEvent.Action.RUN_COMMAND, nearestATM.getValue().getNaviCommand()).advance()
+                .of("➡ Navi")
+                    .color(ColorCode.RED)
+                    .clickEvent(ClickEvent.Action.RUN_COMMAND, nearestATM.getValue().getNaviCommand())
+                    .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder()
+                            .of("Route anzeigen").color(ColorCode.RED).advance()
+                            .createComponent())
+                    .advance()
                 .createComponent());
     }
 }
