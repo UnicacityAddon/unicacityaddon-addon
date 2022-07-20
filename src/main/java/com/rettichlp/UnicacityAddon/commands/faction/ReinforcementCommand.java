@@ -31,7 +31,7 @@ public class ReinforcementCommand extends CommandBase {
     }
 
     @Override @Nonnull public List<String> getAliases() {
-        return Arrays.asList("reinf", "verstärkung");
+        return Arrays.asList("callreinforcement", "reinf", "verstärkung");
     }
 
     @Override public boolean checkPermission(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender) {
@@ -46,10 +46,7 @@ public class ReinforcementCommand extends CommandBase {
 
         String chatType = firstType.getChatType();
 
-        // /reinforcement -d
-        // /reinforcement ontheway name x y z (-d)
-
-        if ((args.length == 6) && args[0].equalsIgnoreCase("ontheway")) {
+        if ((args.length >= 5) && args[0].equalsIgnoreCase("ontheway")) {
             String name = args[1];
 
             if (!MathUtils.isInteger(args[2], 10) || !MathUtils.isInteger(args[3], 10) || !MathUtils.isInteger(args[4], 10)) return;
@@ -58,6 +55,9 @@ public class ReinforcementCommand extends CommandBase {
             int z = Integer.parseInt(args[4]);
 
             p.sendChatMessage("/" + chatType + " " + name + ", ich bin zu deinem Verstärkungsruf unterwegs! (" + (int) p.getPosition().getDistance(x, y, z) + " Meter entfernt)");
+            p.sendChatMessage("/stoproute");
+            p.sendChatMessage("/navi " + x + "/" + y + "/" + z);
+
             return;
         }
 

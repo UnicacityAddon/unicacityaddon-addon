@@ -2,21 +2,28 @@ package com.rettichlp.UnicacityAddon.events.faction;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
+import com.rettichlp.UnicacityAddon.base.location.NaviPoint;
+import com.rettichlp.UnicacityAddon.base.location.NavigationUtils;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
 import com.rettichlp.UnicacityAddon.commands.faction.ReinforcementCommand;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.event.ClickEvent;
 import net.minecraft.util.text.event.HoverEvent;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+import java.util.Map;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Dimiikou
  * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/commands/faction/CallReinforcementCommand.java">UCUtils by paulzhng</a>
  **/
+@Mod.EventBusSubscriber
 public class ReinforcementEvent {
 
     private static ReinforcementCommand.ReinforcementType lastReinforcement;
@@ -25,7 +32,6 @@ public class ReinforcementEvent {
         UPlayer p = AbstractionLayer.getPlayer();
         Matcher reinforcementMatcher = PatternHandler.REINFORCEMENT_PATTERN.matcher(e.getMessage().getUnformattedText());
 
-        p.sendMessageAsString("1");
         if (reinforcementMatcher.find()) {
             String fullName = reinforcementMatcher.group(1);
             String name = reinforcementMatcher.group(2);
@@ -41,39 +47,83 @@ public class ReinforcementEvent {
                     && splitFormattedMsg[1].contains(ColorCode.RED.getCode());
 
             Message.Builder builder = Message.getBuilder();
-            p.sendMessageAsString("2");
             if (lastReinforcement != null && name.equals(lastReinforcement.getIssuer()) && System.currentTimeMillis() - lastReinforcement.getTime() < 1000) {
                 builder.of(lastReinforcement.getType().getMessage()).color(ColorCode.RED).bold().advance().space();
+            } else {
+                builder.of("Reinforcement!").color(ColorCode.RED).bold().advance().space();
             }
 
             // TODO: Nähesten Navispot rausfinden
-            p.sendMessageAsString("3");
-            Message hoverMessage = Message.getBuilder().of("" + posX).color(ColorCode.BLUE).advance()
+            ITextComponent hoverMessage = Message.getBuilder().of("" + posX).color(ColorCode.BLUE).advance()
                     .of(" | ").color(ColorCode.GRAY).advance()
                     .of("" + posY).color(ColorCode.BLUE).advance()
                     .of(" | ").color(ColorCode.GRAY).advance()
                     .of("" + posZ).color(ColorCode.BLUE).advance()
-                    .build();
+                    .createComponent();
+
+            Map.Entry<Double, NaviPoint > nearestNaviPoint = NavigationUtils.getNearestNaviPoint();
 
             // &c&lDringend! &9Dimiikou &7- &9Stadthalle &7- &c300m
-            builder.of(name).color(ColorCode.BLUE).advance()
+            p.sendMessage(
+                    builder.of(fullName).color(ColorCode.BLUE).advance()
                     .of(" - ").color(ColorCode.GRAY).advance()
-                    //.of(nearestLocation.getName()).color(ColorCode.BLUE).hoverEvent(HoverEvent.Action.SHOW_TEXT, hoverMessage.toTextComponent).advance()
-                    //.of(" - ").color(ColorCode.GRAY).advance()
+                    .of(nearestNaviPoint.getValue().getName())
+                    .hoverEvent(HoverEvent.Action.SHOW_TEXT, hoverMessage)
+                    .color(ColorCode.BLUE).advance()
+                    .of(" - ").color(ColorCode.GRAY).advance()
                     .of(distance + "m").color(ColorCode.RED).advance()
-                    .newline()
-                    .of("» ").color(ColorCode.GRAY).advance().space()
-                    .of("Route Anzeigen").color(ColorCode.RED)
+                    .createComponent());
+
+            builder = Message.getBuilder();
+            p.sendMessage(
+                    builder.of("»").color(ColorCode.GRAY).advance().space()
+                    .of("Route Anzeigen")
                     .clickEvent(ClickEvent.Action.RUN_COMMAND, "/navi " + posX + "/" + posY + "/" + posZ)
-                    .hoverEvent(HoverEvent.Action.SHOW_TEXT, hoverMessage.toTextComponent()).advance()
+                    .hoverEvent(HoverEvent.Action.SHOW_TEXT, hoverMessage)
+                    .color(ColorCode.RED).advance()
                     .of(" | ").color(ColorCode.GRAY).advance()
-                    .of("Unterwegs").color(ColorCode.RED)
+                    .of("Unterwegs").hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Unterwegs nachricht absenden").color(ColorCode.RED).advance().createComponent())
                     .clickEvent(ClickEvent.Action.RUN_COMMAND, "/reinforcement ontheway " + name + " " + posX + " " + posY + " " + posZ + (dChat ? " -d" : ""))
                     .color(ColorCode.RED).advance()
-                    .sendTo(p.getPlayer());
-            p.sendMessageAsString("4");
-            return true;
+                    .createComponent());
+
+            e.setCanceled(true);
+            return false;
         }
+
+        Matcher onTheWayMatcher = PatternHandler.ON_THE_WAY_PATTERN.matcher(e.getMessage().getUnformattedText());
+        if (onTheWayMatcher.find()) {
+            String senderFullName = onTheWayMatcher.group(1);
+            String reinforcementSenderName = onTheWayMatcher.group(3);
+            String distance = onTheWayMatcher.group(4);
+
+            Message.getBuilder().of("➥").color(ColorCode.GRAY).advance().space()
+                    .of(senderFullName).color(ColorCode.BLUE).advance().space()
+                    .of("➡").color(ColorCode.GRAY).advance().space()
+                    .of(reinforcementSenderName).color(ColorCode.RED).advance().space()
+                    .of("- (").color(ColorCode.GRAY).advance()
+                    .of(distance + "m").color(ColorCode.RED).advance()
+                    .of(")").color(ColorCode.GRAY).advance()
+                    .sendTo(p.getPlayer());
+
+            e.setCanceled(true);
+            return false;
+        }
+
+        for (ReinforcementCommand.Type type : ReinforcementCommand.Type.values()) {
+            Pattern pattern = type.getPattern();
+            if (pattern == null) continue;
+
+            Matcher matcher = pattern.matcher(e.getMessage().getUnformattedText());
+            if (!matcher.find()) continue;
+
+            String name = matcher.group(1);
+
+            lastReinforcement = new ReinforcementCommand.ReinforcementType(name, type);
+            e.setCanceled(true);
+            return false;
+        }
+
 
         return false;
     }

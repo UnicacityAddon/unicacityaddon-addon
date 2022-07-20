@@ -46,37 +46,6 @@ public class MessagePart {
         return new Builder();
     }
 
-    public ITextComponent toTextComponent() {
-        ITextComponent messageComponent = new TextComponentString(message);
-        Style style = messageComponent.getStyle();
-
-        if (colorCode != null)
-            style.setColor(TextFormatting.valueOf(colorCode.getCode()));
-
-        if (clickEvent != null)
-            style.setClickEvent(clickEvent);
-
-        if (hoverEvent != null)
-            style.setHoverEvent(hoverEvent);
-
-        if (formattingCodes.contains(FormattingCode.BOLD))
-            style.setBold(true);
-
-        if (formattingCodes.contains(FormattingCode.ITALIC))
-            style.setItalic(true);
-
-        if (formattingCodes.contains(FormattingCode.STRIKETHROUGH))
-            style.setStrikethrough(true);
-
-        if (formattingCodes.contains(FormattingCode.UNDERLINE))
-            style.setUnderlined(true);
-
-        if (formattingCodes.contains(FormattingCode.OBFUSCATED))
-            style.setObfuscated(true);
-
-        return messageComponent;
-    }
-
     public static class Builder {
         private String message;
         private ColorCode colorCode;
