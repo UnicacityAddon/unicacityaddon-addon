@@ -1,50 +1,45 @@
-/*
 package com.rettichlp.UnicacityAddon.events;
 
-import com.google.common.eventbus.Subscribe;
+import com.rettichlp.UnicacityAddon.UnicacityAddon;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.config.ConfigElements;
-import com.rettichlp.UnicacityAddon.base.event.UCEventLabymod;
 import com.rettichlp.UnicacityAddon.base.faction.Faction;
 import com.rettichlp.UnicacityAddon.base.faction.FactionHandler;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.FormattingCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
-import net.labymod.api.event.events.client.renderer.RenderNameTagEvent;
-import net.labymod.api.events.RenderEntityEvent;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.item.Items;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.item.ItemSkull;
+import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-@UCEventLabymod(event = "RenderEntityEvent")
-public class NameTagEventHandler implements RenderEntityEvent {
+public class NameTagEventHandler {
 
     private static int tick;
 
-    @Subscribe
-    public void onRenderNameTag(RenderNameTagEvent e) {
-        String playerName = e.getDisplayName().getString();
+    @SubscribeEvent
+    public void onRenderNameTag(PlayerEvent.NameFormat e) {
+        String playerName = e.getUsername();
         String houseban = getHouseban(playerName);
         String prefix = getPrefix(playerName);
         String suffix = getSuffix(playerName);
-        e.setDisplayName(ITextComponent.getTextComponentOrEmpty(houseban + prefix + playerName + suffix));
+        e.setDisplayname(houseban + prefix + playerName + suffix);
+        System.out.println("NameFormat EVENT: " + playerName + " -> " + e.getEntityPlayer().getCustomNameTag());
     }
 
-    @Subscribe
+    @SubscribeEvent
     public void onTick(TickEvent e) {
-        if (e.getPhase() != TickEvent.Phase.PRE) return;
-        if (AbstractionLayer.getPlayer().getWorld() == null) return;
+        if (e.phase != TickEvent.Phase.START) return;
+        if (UnicacityAddon.MINECRAFT.world == null) return;
         if (tick++ != 20) return;
 
-        getCorpsesInRange(30).forEach(itemEntity -> {
-            String name = itemEntity.getCustomName().getString();
+        List<EntityItem> items = UnicacityAddon.MINECRAFT.world.getEntities(EntityItem.class, (ent) -> ent != null && ent.hasCustomName() && ent.getItem().getItem() instanceof ItemSkull);
+
+        items.forEach(entityItem -> {
+            String name = entityItem.getCustomNameTag();
             String playerName = name.substring(3);
 
             if (!FactionHandler.getPlayerFactionMap().containsKey(name.substring(3))) return;
@@ -54,17 +49,17 @@ public class NameTagEventHandler implements RenderEntityEvent {
             String suffix = getSuffix(playerName);
 
             if (name.startsWith(ColorCode.DARK_GRAY.getCode())) { // non-revivable
-                itemEntity.setCustomName(ITextComponent.getTextComponentOrEmpty(ColorCode.DARK_GRAY.getCode() + "✟" + playerName + suffix));
+                entityItem.setCustomNameTag(ColorCode.DARK_GRAY.getCode() + "✟" + playerName + suffix);
                 return;
             }
 
-            itemEntity.setCustomName(ITextComponent.getTextComponentOrEmpty(ColorCode.GRAY.getCode() + prefix + "✟" + playerName + suffix));
+            entityItem.setCustomNameTag(ColorCode.GRAY.getCode() + prefix + "✟" + playerName + suffix);
         });
 
         tick = 0;
     }
 
-    private @NotNull String getHouseban(String playerName) {
+    private String getHouseban(String playerName) {
         StringBuilder houseban = new StringBuilder();
         houseban.append(FormattingCode.RESET.getCode());
 
@@ -80,7 +75,7 @@ public class NameTagEventHandler implements RenderEntityEvent {
         return houseban.toString();
     }
 
-    private @NotNull String getPrefix(String playerName) {
+    private String getPrefix(String playerName) {
         StringBuilder prefix = new StringBuilder();
         prefix.append(FormattingCode.RESET.getCode());
 
@@ -106,7 +101,7 @@ public class NameTagEventHandler implements RenderEntityEvent {
         return prefix.toString();
     }
 
-    private @NotNull String getSuffix(String playerName) {
+    private String getSuffix(String playerName) {
         StringBuilder suffix = new StringBuilder();
         suffix.append(FormattingCode.RESET.getCode());
 
@@ -117,16 +112,4 @@ public class NameTagEventHandler implements RenderEntityEvent {
 
         return suffix.toString();
     }
-
-    private List<ItemEntity> getCorpsesInRange(int range) {
-        BlockPos pos = AbstractionLayer.getPlayer().getPosition();
-        return AbstractionLayer.getPlayer().getWorld().getEntitiesWithinAABB(ItemEntity.class, new AxisAlignedBB(
-                pos.getX() - range,
-                pos.getY() - range,
-                pos.getZ() - range,
-                pos.getX() + range,
-                pos.getY() + range,
-                pos.getZ() + range),
-                itemEntity -> itemEntity != null && itemEntity.hasCustomName() && itemEntity.getItem().getItem().equals(Items.SKELETON_SKULL));
-    }
-}*/
+}

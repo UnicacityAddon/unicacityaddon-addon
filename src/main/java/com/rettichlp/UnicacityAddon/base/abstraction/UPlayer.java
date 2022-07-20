@@ -1,5 +1,6 @@
 package com.rettichlp.UnicacityAddon.base.abstraction;
 
+import com.rettichlp.UnicacityAddon.base.faction.Faction;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.inventory.Container;
@@ -49,4 +50,6 @@ public interface UPlayer {
     AxisAlignedBB getEntityBoundingBox();
 
     NetHandlerPlayClient getConnection();
+
+    Faction getFaction();
 }

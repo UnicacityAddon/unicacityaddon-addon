@@ -4,6 +4,9 @@ import com.rettichlp.UnicacityAddon.UnicacityAddon;
 import com.rettichlp.UnicacityAddon.base.faction.Faction;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 
+/**
+ * @author RettichLP
+ */
 public class ConfigElements {
 
     // FACTION

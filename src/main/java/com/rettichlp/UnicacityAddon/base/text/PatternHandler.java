@@ -4,6 +4,9 @@ import com.rettichlp.UnicacityAddon.commands.faction.ReinforcementCommand;
 
 import java.util.regex.Pattern;
 
+/**
+ * @author RettichLP
+ */
 public class PatternHandler {
 
     /**

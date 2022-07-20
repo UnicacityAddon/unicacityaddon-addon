@@ -16,6 +16,9 @@ import net.labymod.utils.Material;
 
 import java.util.List;
 
+/**
+ * @author RettichLP
+ */
 public class ConfigSettings {
 
     public static void createConfig(UnicacityAddon unicacityAddon, List<SettingsElement> list) {

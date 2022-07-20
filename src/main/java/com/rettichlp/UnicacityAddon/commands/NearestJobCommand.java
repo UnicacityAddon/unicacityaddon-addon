@@ -1,25 +1,45 @@
 package com.rettichlp.UnicacityAddon.commands;
 
-import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
-import com.rettichlp.UnicacityAddon.base.command.UCCommand;
-import com.rettichlp.UnicacityAddon.base.command.UnicacityCommand;
+import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.location.Job;
 import com.rettichlp.UnicacityAddon.base.location.NavigationUtils;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
+import net.minecraft.command.CommandBase;
+import net.minecraft.command.ICommandSender;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.event.ClickEvent;
 
+import javax.annotation.Nonnull;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-public class NearestJobCommand implements UnicacityCommand {
+/**
+ * @author RettichLP
+ */
+public class NearestJobCommand extends CommandBase {
 
-    @Override
-    @UCCommand(value = "nearestjob", usage = "/%label%")
-    public boolean onCommand(UPlayer p, List<String> args) {
+    @Override @Nonnull public String getName() {
+        return "nearestjob";
+    }
+
+    @Override @Nonnull public String getUsage(@Nonnull ICommandSender sender) {
+        return "/nearestjob";
+    }
+
+    @Override @Nonnull public List<String> getAliases() {
+        return Collections.singletonList("njob");
+    }
+
+    @Override public boolean checkPermission(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender) {
+        return true;
+    }
+
+    @Override public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
         Map.Entry<Double, Job> nearestJob = NavigationUtils.getNearestJob();
 
-        p.sendMessage(Message.getBuilder()
+        AbstractionLayer.getPlayer().sendMessage(Message.getBuilder()
                 .prefix()
                 .of("Job").color(ColorCode.GRAY).advance()
                 .space()
@@ -33,7 +53,5 @@ public class NearestJobCommand implements UnicacityCommand {
                 .space()
                 .of("➡ Navi").color(ColorCode.RED).clickEvent(ClickEvent.Action.RUN_COMMAND, nearestJob.getValue().getNaviCommand()).advance()
                 .createComponent());
-
-        return true;
     }
 }

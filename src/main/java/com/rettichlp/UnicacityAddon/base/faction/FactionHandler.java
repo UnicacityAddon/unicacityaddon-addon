@@ -8,6 +8,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author RettichLP
+ */
 public class FactionHandler {
 
     private static Map<String,Faction> playerFactionMap = new HashMap<>();
