@@ -24,7 +24,7 @@ import java.util.regex.Pattern;
  * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/commands/faction/CallReinforcementCommand.java">UCUtils by paulzhng</a>
  **/
 @Mod.EventBusSubscriber
-public class ReinforcementEvent {
+public class ReinforcementEventHandler {
 
     private static ReinforcementCommand.ReinforcementType lastReinforcement;
 
@@ -63,7 +63,6 @@ public class ReinforcementEvent {
 
             Map.Entry<Double, NaviPoint > nearestNaviPoint = NavigationUtils.getNearestNaviPoint();
 
-            // &c&lDringend! &9Dimiikou &7- &9Stadthalle &7- &c300m
             p.sendMessage(
                     builder.of(fullName).color(ColorCode.BLUE).advance()
                     .of(" - ").color(ColorCode.GRAY).advance()
