@@ -40,4 +40,19 @@ public class NavigationUtils {
 
         return Maps.immutableEntry(nearestDistance, nearestJob);
     }
+
+    public static Map.Entry<Double, NaviPoint> getNearestNaviPoint() {
+        NaviPoint nearestNaviPoint = null;
+        double nearestDistance = Double.MAX_VALUE;
+
+        for (NaviPoint naviPoint : NaviPoint.values()) {
+            double distance = AbstractionLayer.getPlayer().getPosition().getDistance(naviPoint.getX(), naviPoint.getY(), naviPoint.getZ());
+            if (distance < nearestDistance) {
+                nearestDistance = distance;
+                nearestNaviPoint = naviPoint;
+            }
+        }
+
+        return Maps.immutableEntry(nearestDistance, nearestNaviPoint);
+    }
 }
