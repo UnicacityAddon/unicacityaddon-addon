@@ -1,6 +1,5 @@
 package com.rettichlp.UnicacityAddon.events.faction.police;
 
-import com.rettichlp.UnicacityAddon.base.faction.Wanted;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
@@ -84,5 +83,32 @@ public class WantedEventHandler {
         String reason = matcher.group(3);
 
         WANTED_MAP.put(name, new Wanted(reason, wantedPoints));
+    }
+
+    public static class Wanted {
+
+        private String reason;
+        private int amount;
+
+        public Wanted(String reason, int amount) {
+            this.reason = reason;
+            this.amount = amount;
+        }
+
+        public String getReason() {
+            return reason;
+        }
+
+        public void setReason(String reason) {
+            this.reason = reason;
+        }
+
+        public int getAmount() {
+            return amount;
+        }
+
+        public void setAmount(int amount) {
+            this.amount = amount;
+        }
     }
 }

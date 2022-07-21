@@ -2,7 +2,6 @@ package com.rettichlp.UnicacityAddon.commands.faction.police;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
-import com.rettichlp.UnicacityAddon.base.faction.Wanted;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
 import com.rettichlp.UnicacityAddon.base.utils.ForgeUtils;
@@ -49,7 +48,7 @@ public class ModifyWantedsCommand extends CommandBase {
 
         String target = args[0];
 
-        Wanted wanted = WantedEventHandler.WANTED_MAP.get(target);
+        WantedEventHandler.Wanted wanted = WantedEventHandler.WANTED_MAP.get(target);
         if (wanted == null) {
             Message.getBuilder()
                     .error()
