@@ -12,9 +12,11 @@ import com.rettichlp.UnicacityAddon.commands.TriggerEventCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.ReinforcementCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.police.ASUCommand;
 import com.rettichlp.UnicacityAddon.events.*;
+import com.rettichlp.UnicacityAddon.events.faction.EmergencyServiceEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.ReinforcementEventHandler;
 import com.rettichlp.UnicacityAddon.modules.BombTimerModule;
 import com.rettichlp.UnicacityAddon.modules.CarOpenModule;
+import com.rettichlp.UnicacityAddon.modules.EmergencyServiceModule;
 import net.labymod.api.LabyModAddon;
 import net.labymod.core_implementation.mc112.gui.ModPlayerTabOverlay;
 import net.labymod.ingamegui.ModuleCategoryRegistry;
@@ -51,6 +53,7 @@ public class UnicacityAddon extends LabyModAddon {
         ADDON.getApi().registerForgeListener(new ATMInfoEventHandler());
         ADDON.getApi().registerForgeListener(new BombTimerEventHandler());
         ADDON.getApi().registerForgeListener(new CarOpenEventHandler());
+        ADDON.getApi().registerForgeListener(new EmergencyServiceEventHandler());
         ADDON.getApi().registerForgeListener(new NameTagEventHandler());
         ADDON.getApi().registerForgeListener(new ReinforcementEventHandler());
 
@@ -61,6 +64,7 @@ public class UnicacityAddon extends LabyModAddon {
         ModuleCategoryRegistry.loadCategory(UCModuleHandler.UNICACITY);
         ADDON.getApi().registerModule(new BombTimerModule());
         ADDON.getApi().registerModule(new CarOpenModule());
+        ADDON.getApi().registerModule(new EmergencyServiceModule());
     }
 
     @Override
