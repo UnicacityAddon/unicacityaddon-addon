@@ -53,23 +53,23 @@ public class ReinforcementEventHandler {
                 builder.of("Reinforcement!").color(ColorCode.RED).bold().advance().space();
             }
 
-            ITextComponent hoverMessage = Message.getBuilder().of("" + posX).color(ColorCode.BLUE).advance()
+            ITextComponent hoverMessage = Message.getBuilder().of("" + posX).color(ColorCode.AQUA).advance()
                     .of(" | ").color(ColorCode.GRAY).advance()
-                    .of("" + posY).color(ColorCode.BLUE).advance()
+                    .of("" + posY).color(ColorCode.AQUA).advance()
                     .of(" | ").color(ColorCode.GRAY).advance()
-                    .of("" + posZ).color(ColorCode.BLUE).advance()
+                    .of("" + posZ).color(ColorCode.AQUA).advance()
                     .createComponent();
 
             Map.Entry<Double, NaviPoint > nearestNaviPoint = NavigationUtils.getNearestNaviPoint();
 
             p.sendMessage(
-                    builder.of(fullName).color(ColorCode.BLUE).advance()
+                    builder.of(fullName).color(ColorCode.AQUA).advance()
                     .of(" - ").color(ColorCode.GRAY).advance()
                     .of(nearestNaviPoint.getValue().getName())
                     .hoverEvent(HoverEvent.Action.SHOW_TEXT, hoverMessage)
-                    .color(ColorCode.BLUE).advance()
+                    .color(ColorCode.AQUA).advance()
                     .of(" - ").color(ColorCode.GRAY).advance()
-                    .of(distance + "m").color(ColorCode.RED).advance()
+                    .of(distance + "m").color(ColorCode.DARK_AQUA).advance()
                     .createComponent());
 
             builder = Message.getBuilder();
@@ -80,7 +80,7 @@ public class ReinforcementEventHandler {
                     .hoverEvent(HoverEvent.Action.SHOW_TEXT, hoverMessage)
                     .color(ColorCode.RED).advance()
                     .of(" | ").color(ColorCode.GRAY).advance()
-                    .of("Unterwegs").hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Unterwegs nachricht absenden").color(ColorCode.RED).advance().createComponent())
+                    .of("Unterwegs").hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Unterwegs Nachricht absenden").color(ColorCode.RED).advance().createComponent())
                     .clickEvent(ClickEvent.Action.RUN_COMMAND, "/reinforcement ontheway " + name + " " + posX + " " + posY + " " + posZ + (dChat ? " -d" : ""))
                     .color(ColorCode.RED).advance()
                     .createComponent());
@@ -96,11 +96,11 @@ public class ReinforcementEventHandler {
             String distance = onTheWayMatcher.group(4);
 
             Message.getBuilder().of("➥").color(ColorCode.GRAY).advance().space()
-                    .of(senderFullName).color(ColorCode.BLUE).advance().space()
+                    .of(senderFullName).color(ColorCode.AQUA).advance().space()
                     .of("➡").color(ColorCode.GRAY).advance().space()
-                    .of(reinforcementSenderName).color(ColorCode.RED).advance().space()
+                    .of(reinforcementSenderName).color(ColorCode.DARK_AQUA).advance().space()
                     .of("- (").color(ColorCode.GRAY).advance()
-                    .of(distance + "m").color(ColorCode.RED).advance()
+                    .of(distance + "m").color(ColorCode.DARK_AQUA).advance()
                     .of(")").color(ColorCode.GRAY).advance()
                     .sendTo(p.getPlayer());
 

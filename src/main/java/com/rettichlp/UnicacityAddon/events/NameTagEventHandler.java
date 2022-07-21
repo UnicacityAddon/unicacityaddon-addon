@@ -9,12 +9,14 @@ import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.FormattingCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemSkull;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import java.util.List;
+import java.util.Objects;
 
 public class NameTagEventHandler {
 
@@ -110,5 +112,10 @@ public class NameTagEventHandler {
         }
 
         return suffix.toString();
+    }
+
+    public static void refreshAllDisplayNames() {
+        List<EntityPlayer> items = UnicacityAddon.MINECRAFT.world.getPlayers(EntityPlayer.class, Objects::nonNull);
+        items.forEach(EntityPlayer::refreshDisplayName);
     }
 }
