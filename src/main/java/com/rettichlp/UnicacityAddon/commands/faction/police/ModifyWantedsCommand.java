@@ -61,19 +61,19 @@ public class ModifyWantedsCommand extends CommandBase {
         String wantedReason = wanted.getReason();
         int wantedAmount = wanted.getAmount();
 
-        for (String flag : Arrays.copyOfRange(args, 1, args.length - 1)) {
-            Type type = Type.getType(flag);
+        for (String arg : args) {
+            Type type = Type.getType(arg);
 
-            if (wantedReason.contains(type.reason)) continue;
+            if (type == null || wantedReason.contains(type.reason)) continue;
 
-            if (flag.equals(Type.VERY_BAD_CONDUCT.flagArgument)) {
+            if (arg.equals(Type.VERY_BAD_CONDUCT.flagArgument)) {
                 if (wantedReason.contains(Type.BAD_CONDUCT.reason)) {
                     wantedReason = wantedReason.replace(Type.BAD_CONDUCT.reason, "");
                     wantedAmount -= 10;
                 }
             }
 
-            if (flag.equals(Type.BAD_CONDUCT.flagArgument)) {
+            if (arg.equals(Type.BAD_CONDUCT.flagArgument)) {
                 if (wantedReason.contains(Type.VERY_BAD_CONDUCT.reason)) {
                     wantedReason = wantedReason.replace(Type.VERY_BAD_CONDUCT.reason, "");
                     wantedAmount -= 15;

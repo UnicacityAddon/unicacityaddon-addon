@@ -27,7 +27,6 @@ public class NameTagEventHandler {
         String prefix = getPrefix(playerName);
         String suffix = getSuffix(playerName);
         e.setDisplayname(houseban + prefix + playerName + suffix);
-        System.out.println("NameFormat EVENT: " + playerName + " -> " + e.getEntityPlayer().getCustomNameTag());
     }
 
     @SubscribeEvent

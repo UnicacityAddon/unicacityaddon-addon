@@ -16,7 +16,7 @@ public class WantedEventHandler {
     private static long wantedsShown;
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public static void onWantedsGiven(ClientChatReceivedEvent e) {
+    public void onWantedsGiven(ClientChatReceivedEvent e) {
         ITextComponent message = e.getMessage();
         String unformattedMessage = message.getUnformattedText();
 
@@ -42,7 +42,7 @@ public class WantedEventHandler {
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public static void onWantedsDeleted(ClientChatReceivedEvent e) {
+    public void onWantedsDeleted(ClientChatReceivedEvent e) {
         ITextComponent message = e.getMessage();
         String unformattedMessage = message.getUnformattedText();
 
@@ -62,7 +62,7 @@ public class WantedEventHandler {
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public static void onWantedsShown(ClientChatReceivedEvent e) {
+    public void onWantedsShown(ClientChatReceivedEvent e) {
         ITextComponent message = e.getMessage();
         String unformattedMessage = message.getUnformattedText();
 

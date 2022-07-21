@@ -12,8 +12,8 @@ import com.rettichlp.UnicacityAddon.commands.faction.police.ModifyWantedsCommand
 import com.rettichlp.UnicacityAddon.events.ATMInfoEventHandler;
 import com.rettichlp.UnicacityAddon.events.BombTimerEventHandler;
 import com.rettichlp.UnicacityAddon.events.CarOpenEventHandler;
-import com.rettichlp.UnicacityAddon.events.faction.ReinforcementEventHandler;
 import com.rettichlp.UnicacityAddon.events.NameTagEventHandler;
+import com.rettichlp.UnicacityAddon.events.faction.ReinforcementEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.police.WantedEventHandler;
 import com.rettichlp.UnicacityAddon.modules.BombTimerModule;
 import com.rettichlp.UnicacityAddon.modules.CarOpenModule;
