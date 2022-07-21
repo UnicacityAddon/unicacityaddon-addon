@@ -11,9 +11,11 @@ import com.rettichlp.UnicacityAddon.commands.NearestJobCommand;
 import com.rettichlp.UnicacityAddon.commands.TriggerEventCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.ReinforcementCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.police.ASUCommand;
+import com.rettichlp.UnicacityAddon.commands.faction.police.ModifyWantedsCommand;
 import com.rettichlp.UnicacityAddon.events.*;
 import com.rettichlp.UnicacityAddon.events.faction.EmergencyServiceEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.ReinforcementEventHandler;
+import com.rettichlp.UnicacityAddon.events.faction.police.WantedEventHandler;
 import com.rettichlp.UnicacityAddon.modules.BombTimerModule;
 import com.rettichlp.UnicacityAddon.modules.CarOpenModule;
 import com.rettichlp.UnicacityAddon.modules.EmergencyServiceModule;
@@ -44,6 +46,7 @@ public class UnicacityAddon extends LabyModAddon {
         //UCCommandHandler.registerCommands();
         // ForgeCommands
         ClientCommandHandler.instance.registerCommand(new ASUCommand());
+        ClientCommandHandler.instance.registerCommand(new ModifyWantedsCommand());
         ClientCommandHandler.instance.registerCommand(new NearestATMCommand());
         ClientCommandHandler.instance.registerCommand(new NearestJobCommand());
         ClientCommandHandler.instance.registerCommand(new ReinforcementCommand());
@@ -56,6 +59,7 @@ public class UnicacityAddon extends LabyModAddon {
         ADDON.getApi().registerForgeListener(new EmergencyServiceEventHandler());
         ADDON.getApi().registerForgeListener(new NameTagEventHandler());
         ADDON.getApi().registerForgeListener(new ReinforcementEventHandler());
+        ADDON.getApi().registerForgeListener(new WantedEventHandler());
 
         // LabyModEvents -> https://docs.labymod.net/pages/create-addons/labymod_events/
         ADDON.getApi().getEventManager().register(new TabListEventHandler());
@@ -75,7 +79,8 @@ public class UnicacityAddon extends LabyModAddon {
         // Update nametags
         if (MINECRAFT.world != null) NameTagEventHandler.refreshAllDisplayNames();
         // Update tablist
-        if (ConfigElements.getEventTabList()) ReflectionUtils.setValue(ModPlayerTabOverlay.class, Ordering.class, Ordering.from(new TabListEventHandler()));
+        if (ConfigElements.getEventTabList())
+            ReflectionUtils.setValue(ModPlayerTabOverlay.class, Ordering.class, Ordering.from(new TabListEventHandler()));
     }
 
     @Override
