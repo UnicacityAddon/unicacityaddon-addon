@@ -1,4 +1,4 @@
-package com.rettichlp.UnicacityAddon.events.faction.police;
+package com.rettichlp.UnicacityAddon.events.faction.polizei;
 
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
 import net.minecraft.util.text.ITextComponent;

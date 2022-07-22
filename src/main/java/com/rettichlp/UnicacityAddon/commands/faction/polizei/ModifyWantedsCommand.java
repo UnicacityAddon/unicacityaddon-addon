@@ -1,4 +1,4 @@
-package com.rettichlp.UnicacityAddon.commands.faction.police;
+package com.rettichlp.UnicacityAddon.commands.faction.polizei;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
@@ -6,7 +6,7 @@ import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
 import com.rettichlp.UnicacityAddon.base.utils.ForgeUtils;
 import com.rettichlp.UnicacityAddon.base.utils.MathUtils;
-import com.rettichlp.UnicacityAddon.events.faction.police.WantedEventHandler;
+import com.rettichlp.UnicacityAddon.events.faction.polizei.WantedEventHandler;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;

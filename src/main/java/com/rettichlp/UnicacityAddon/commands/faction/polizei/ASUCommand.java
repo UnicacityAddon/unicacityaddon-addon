@@ -1,4 +1,4 @@
-package com.rettichlp.UnicacityAddon.commands.faction.police;
+package com.rettichlp.UnicacityAddon.commands.faction.polizei;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
