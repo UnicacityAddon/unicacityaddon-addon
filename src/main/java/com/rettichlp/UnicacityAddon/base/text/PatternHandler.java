@@ -47,7 +47,7 @@ public class PatternHandler {
     public static final Pattern SERVICE_NO_SERVICE_PATTERN = Pattern.compile("^Fehler: Es ist kein Service offen\\.$");
 
     /**
-     * {@link com.rettichlp.UnicacityAddon.events.faction.police.WantedEventHandler}
+     * {@link com.rettichlp.UnicacityAddon.events.faction.polizei.WantedEventHandler}
      */
     public static final Pattern WANTED_LIST_ENTRY_PATTERN = Pattern.compile("^ {2}- (?:\\[UC])*([a-zA-Z0-9_]+) \\| (\\d+) WPS \\((.+)\\)$");
     public static final Pattern WANTED_GIVEN_REASON_PATTERN = Pattern.compile("^HQ: Gesuchter: (?:\\[UC])*([a-zA-Z0-9_]+)\\. Grund: (.+)$");
@@ -55,4 +55,10 @@ public class PatternHandler {
     public static final Pattern WANTED_DELETED_PATTERN = Pattern.compile("^HQ: (?:\\[UC])*([a-zA-Z0-9_]+) wurde von (?:\\[UC])*[a-zA-Z0-9_]+ eingesperrt\\.$" +
             "|^HQ: (?:\\[UC])*([a-zA-Z0-9_]+) wurde von (?:\\[UC])*[a-zA-Z0-9_]+ getötet\\.$" +
             "|^HQ: .+ (?:\\[UC])*[a-zA-Z0-9_]+ hat (?:\\[UC])*([a-zA-Z0-9_]+)(?:'s)*(?: seine| ihre)* Akten gelöscht, over\\.$");
+
+    /**
+     * {@link com.rettichlp.UnicacityAddon.events.faction.rettungsdienst.MedicationEventHandler}
+     */
+    public static final Pattern RECIPE_ACCEPT_PATTERN = Pattern.compile("^((?:\\[UC])*[a-zA-Z0-9_]+) möchte dir ein Rezept für 300\\$ verkaufen\\.$");;
+    public static final Pattern RECIPE_GIVE_PATTERN = Pattern.compile("^Du hast ((?:\\[UC])*[a-zA-Z0-9_]+) ein Rezept für (Antibiotika|Hustensaft|Schmerzmittel) ausgestellt\\.$");;
 }
