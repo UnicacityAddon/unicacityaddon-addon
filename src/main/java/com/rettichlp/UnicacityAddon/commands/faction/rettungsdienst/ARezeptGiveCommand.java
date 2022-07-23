@@ -75,7 +75,7 @@ public class ARezeptGiveCommand extends CommandBase {
             tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
             return tabCompletions;
         } else if (args.length == 2) {
-            List<String> tabCompletions = Arrays.stream(Medication.values()).map(Medication::name).sorted().collect(Collectors.toList());
+            List<String> tabCompletions = Arrays.stream(Medication.values()).map(Medication::getDisplayName).sorted().collect(Collectors.toList());
             String input = args[args.length - 1].toLowerCase().replace('-', ' ');
             tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
             return tabCompletions;

@@ -9,6 +9,8 @@ import com.rettichlp.UnicacityAddon.commands.TriggerEventCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.ReinforcementCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.polizei.ASUCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.polizei.ModifyWantedsCommand;
+import com.rettichlp.UnicacityAddon.commands.faction.rettungsdienst.ARezeptAcceptCommand;
+import com.rettichlp.UnicacityAddon.commands.faction.rettungsdienst.ARezeptGiveCommand;
 import com.rettichlp.UnicacityAddon.events.ATMInfoEventHandler;
 import com.rettichlp.UnicacityAddon.events.BombTimerEventHandler;
 import com.rettichlp.UnicacityAddon.events.CarOpenEventHandler;
@@ -45,6 +47,8 @@ public class UnicacityAddon extends LabyModAddon {
 
         //UCCommandHandler.registerCommands();
         // ForgeCommands
+        ClientCommandHandler.instance.registerCommand(new ARezeptAcceptCommand());
+        ClientCommandHandler.instance.registerCommand(new ARezeptGiveCommand());
         ClientCommandHandler.instance.registerCommand(new ASUCommand());
         ClientCommandHandler.instance.registerCommand(new ModifyWantedsCommand());
         ClientCommandHandler.instance.registerCommand(new NearestATMCommand());
