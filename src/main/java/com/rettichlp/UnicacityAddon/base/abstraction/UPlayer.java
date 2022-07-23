@@ -57,4 +57,10 @@ public interface UPlayer {
     void sellMedication(String target, Medication medication);
 
     void acceptOffer();
+
+    void stopRoute();
+
+    void setNaviRoute(int x, int y, int z);
+
+    void setNaviRoute(BlockPos blockPos);
 }

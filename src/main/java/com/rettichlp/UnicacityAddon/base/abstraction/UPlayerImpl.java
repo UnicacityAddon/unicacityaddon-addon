@@ -98,4 +98,16 @@ public class UPlayerImpl implements UPlayer {
     @Override public void acceptOffer() {
         sendChatMessage("/annehmen");
     }
+
+    @Override public void stopRoute() {
+        sendChatMessage("/stoproute");
+    }
+
+    @Override public void setNaviRoute(int x, int y, int z) {
+        sendChatMessage("/navi " + x + "/" + y + "/" + z);
+    }
+
+    @Override public void setNaviRoute(BlockPos blockPos) {
+        sendChatMessage("/navi " + blockPos.getX() + "/" + blockPos.getY() + "/" + blockPos.getZ());
+    }
 }
