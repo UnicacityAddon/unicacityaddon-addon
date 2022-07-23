@@ -1,11 +1,8 @@
 package com.rettichlp.UnicacityAddon;
 
-import com.google.common.collect.Ordering;
-import com.rettichlp.UnicacityAddon.base.config.ConfigElements;
 import com.rettichlp.UnicacityAddon.base.config.ConfigSettings;
 import com.rettichlp.UnicacityAddon.base.faction.FactionHandler;
 import com.rettichlp.UnicacityAddon.base.module.UCModuleHandler;
-import com.rettichlp.UnicacityAddon.base.reflection.ReflectionUtils;
 import com.rettichlp.UnicacityAddon.commands.NearestATMCommand;
 import com.rettichlp.UnicacityAddon.commands.NearestJobCommand;
 import com.rettichlp.UnicacityAddon.commands.TriggerEventCommand;
@@ -24,7 +21,6 @@ import com.rettichlp.UnicacityAddon.modules.BombTimerModule;
 import com.rettichlp.UnicacityAddon.modules.CarOpenModule;
 import com.rettichlp.UnicacityAddon.modules.EmergencyServiceModule;
 import net.labymod.api.LabyModAddon;
-import net.labymod.core_implementation.mc112.gui.ModPlayerTabOverlay;
 import net.labymod.ingamegui.ModuleCategoryRegistry;
 import net.labymod.main.LabyMod;
 import net.labymod.settings.elements.SettingsElement;
@@ -81,10 +77,9 @@ public class UnicacityAddon extends LabyModAddon {
         FactionHandler.getPlayerRankMap();
 
         // Update nametags
-        if (MINECRAFT.world != null) NameTagEventHandler.refreshAllDisplayNames();
+        NameTagEventHandler.refreshAllDisplayNames();
         // Update tablist
-        if (ConfigElements.getEventTabList())
-            ReflectionUtils.setValue(ModPlayerTabOverlay.class, Ordering.class, Ordering.from(new TabListEventHandler()));
+        TabListEventHandler.refreshTablist();
     }
 
     @Override
