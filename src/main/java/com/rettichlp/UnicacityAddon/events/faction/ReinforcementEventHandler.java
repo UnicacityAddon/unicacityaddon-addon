@@ -60,7 +60,7 @@ public class ReinforcementEventHandler {
                     .of("" + posZ).color(ColorCode.AQUA).advance()
                     .createComponent();
 
-            Map.Entry<Double, NaviPoint > nearestNaviPoint = NavigationUtils.getNearestNaviPoint();
+            Map.Entry<Double, NaviPoint > nearestNaviPoint = NavigationUtils.getNearestNaviPoint(posX, posY, posZ);
 
             p.sendMessage(
                     builder.of(fullName).color(ColorCode.AQUA).advance()

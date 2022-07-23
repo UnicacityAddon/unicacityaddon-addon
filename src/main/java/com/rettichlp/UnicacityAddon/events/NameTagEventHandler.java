@@ -115,6 +115,7 @@ public class NameTagEventHandler {
     }
 
     public static void refreshAllDisplayNames() {
+        if (UnicacityAddon.MINECRAFT.world == null) return;
         List<EntityPlayer> items = UnicacityAddon.MINECRAFT.world.getPlayers(EntityPlayer.class, Objects::nonNull);
         items.forEach(EntityPlayer::refreshDisplayName);
     }
