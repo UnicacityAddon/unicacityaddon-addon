@@ -7,12 +7,14 @@ import com.rettichlp.UnicacityAddon.commands.NearestATMCommand;
 import com.rettichlp.UnicacityAddon.commands.NearestJobCommand;
 import com.rettichlp.UnicacityAddon.commands.TriggerEventCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.ReinforcementCommand;
+import com.rettichlp.UnicacityAddon.commands.faction.ShareLocationCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.police.ASUCommand;
 import com.rettichlp.UnicacityAddon.events.ATMInfoEventHandler;
 import com.rettichlp.UnicacityAddon.events.BombTimerEventHandler;
 import com.rettichlp.UnicacityAddon.events.CarOpenEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.ReinforcementEventHandler;
 import com.rettichlp.UnicacityAddon.events.NameTagEventHandler;
+import com.rettichlp.UnicacityAddon.events.faction.ShareLocationEventHandler;
 import com.rettichlp.UnicacityAddon.modules.BombTimerModule;
 import com.rettichlp.UnicacityAddon.modules.CarOpenModule;
 import net.labymod.api.LabyModAddon;
@@ -44,6 +46,7 @@ public class UnicacityAddon extends LabyModAddon {
         ClientCommandHandler.instance.registerCommand(new NearestATMCommand());
         ClientCommandHandler.instance.registerCommand(new NearestJobCommand());
         ClientCommandHandler.instance.registerCommand(new ReinforcementCommand());
+        ClientCommandHandler.instance.registerCommand(new ShareLocationCommand());
         ClientCommandHandler.instance.registerCommand(new TriggerEventCommand());
 
         // ForgeEvents -> https://docs.labymod.net/pages/create-addons/forge_events/
@@ -52,6 +55,7 @@ public class UnicacityAddon extends LabyModAddon {
         ADDON.getApi().registerForgeListener(new CarOpenEventHandler());
         ADDON.getApi().registerForgeListener(new NameTagEventHandler());
         ADDON.getApi().registerForgeListener(new ReinforcementEventHandler());
+        ADDON.getApi().registerForgeListener(new ShareLocationEventHandler());
 
         // Modules -> https://docs.labymod.net/pages/create-addons/module_system/
         ModuleCategoryRegistry.loadCategory(UCModuleHandler.UNICACITY);
