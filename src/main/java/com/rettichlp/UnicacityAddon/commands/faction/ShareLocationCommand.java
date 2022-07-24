@@ -12,8 +12,10 @@ import net.minecraft.util.math.BlockPos;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Arrays;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * @author Dimiikou
@@ -41,7 +43,6 @@ public class ShareLocationCommand extends CommandBase {
 
     @Override
     public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args) {
-        List<String> onlinePlayers = ForgeUtils.getOnlinePlayers();
         Set<String> playerNames = new LinkedHashSet<>();
         UPlayer p = AbstractionLayer.getPlayer();
         boolean allianceChat = false;
@@ -78,11 +79,9 @@ public class ShareLocationCommand extends CommandBase {
     }
 
     @Override @Nonnull public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
-        List<String> tabCompletions = Arrays.stream(ReinforcementCommand.Type.values()).map(ReinforcementCommand.Type::getArgument).sorted().collect(Collectors.toList());
+        List<String> tabCompletions = ForgeUtils.getOnlinePlayers();
         String input = args[args.length - 1].toLowerCase().replace('-', ' ');
         tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
-
         return tabCompletions;
     }
-
 }
