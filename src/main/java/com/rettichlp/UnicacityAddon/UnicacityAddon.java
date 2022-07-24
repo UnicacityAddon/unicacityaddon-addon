@@ -7,6 +7,7 @@ import com.rettichlp.UnicacityAddon.commands.NearestATMCommand;
 import com.rettichlp.UnicacityAddon.commands.NearestJobCommand;
 import com.rettichlp.UnicacityAddon.commands.TriggerEventCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.ReinforcementCommand;
+import com.rettichlp.UnicacityAddon.commands.faction.ShareLocationCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.polizei.ASUCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.polizei.ModifyWantedsCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.rettungsdienst.ARezeptAcceptCommand;
@@ -18,6 +19,7 @@ import com.rettichlp.UnicacityAddon.events.NameTagEventHandler;
 import com.rettichlp.UnicacityAddon.events.TabListEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.EmergencyServiceEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.ReinforcementEventHandler;
+import com.rettichlp.UnicacityAddon.events.faction.ShareLocationEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.polizei.WantedEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.rettungsdienst.MedicationEventHandler;
 import com.rettichlp.UnicacityAddon.modules.BombTimerModule;
@@ -55,6 +57,7 @@ public class UnicacityAddon extends LabyModAddon {
         ClientCommandHandler.instance.registerCommand(new NearestATMCommand());
         ClientCommandHandler.instance.registerCommand(new NearestJobCommand());
         ClientCommandHandler.instance.registerCommand(new ReinforcementCommand());
+        ClientCommandHandler.instance.registerCommand(new ShareLocationCommand());
         ClientCommandHandler.instance.registerCommand(new TriggerEventCommand());
 
         // ForgeEvents -> https://docs.labymod.net/pages/create-addons/forge_events/
@@ -65,6 +68,7 @@ public class UnicacityAddon extends LabyModAddon {
         ADDON.getApi().registerForgeListener(new MedicationEventHandler());
         ADDON.getApi().registerForgeListener(new NameTagEventHandler());
         ADDON.getApi().registerForgeListener(new ReinforcementEventHandler());
+        ADDON.getApi().registerForgeListener(new ShareLocationEventHandler());
         ADDON.getApi().registerForgeListener(new WantedEventHandler());
 
         // LabyModEvents -> https://docs.labymod.net/pages/create-addons/labymod_events/
