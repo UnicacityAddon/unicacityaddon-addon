@@ -19,6 +19,7 @@ import com.rettichlp.UnicacityAddon.events.TabListEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.EmergencyServiceEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.ReinforcementEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.polizei.WantedEventHandler;
+import com.rettichlp.UnicacityAddon.events.faction.rettungsdienst.MedicationEventHandler;
 import com.rettichlp.UnicacityAddon.modules.BombTimerModule;
 import com.rettichlp.UnicacityAddon.modules.CarOpenModule;
 import com.rettichlp.UnicacityAddon.modules.EmergencyServiceModule;
@@ -61,6 +62,7 @@ public class UnicacityAddon extends LabyModAddon {
         ADDON.getApi().registerForgeListener(new BombTimerEventHandler());
         ADDON.getApi().registerForgeListener(new CarOpenEventHandler());
         ADDON.getApi().registerForgeListener(new EmergencyServiceEventHandler());
+        ADDON.getApi().registerForgeListener(new MedicationEventHandler());
         ADDON.getApi().registerForgeListener(new NameTagEventHandler());
         ADDON.getApi().registerForgeListener(new ReinforcementEventHandler());
         ADDON.getApi().registerForgeListener(new WantedEventHandler());

@@ -16,7 +16,7 @@ public class MedicationEventHandler {
     private static long lastExecution;
 
     @SubscribeEvent
-    public static void onRecipeAcceptFeedback(ClientChatReceivedEvent e) {
+    public void onRecipeAcceptFeedback(ClientChatReceivedEvent e) {
         if (ARezeptAcceptCommand.amount < 1) return; //checks if there is an active recipe-accept-process
 
         String msg = e.getMessage().getUnformattedText();
@@ -35,13 +35,13 @@ public class MedicationEventHandler {
         }, delay);
     }
 
-    private static void acceptRecipe() {
+    private void acceptRecipe() {
         --ARezeptAcceptCommand.amount;
         lastExecution = System.currentTimeMillis();
         AbstractionLayer.getPlayer().acceptOffer();
     }
 
-    @SubscribeEvent public static void onRecipeGiveFeedback(ClientChatReceivedEvent e) {
+    @SubscribeEvent public void onRecipeGiveFeedback(ClientChatReceivedEvent e) {
         if (ARezeptGiveCommand.amount < 1)
             return; //checks if there is an active recipe-give-process
 
@@ -61,7 +61,7 @@ public class MedicationEventHandler {
         }, delay);
     }
 
-    private static void giveRecipe() {
+    private void giveRecipe() {
         --ARezeptGiveCommand.amount;
         lastExecution = System.currentTimeMillis();
         AbstractionLayer.getPlayer().sellMedication(ARezeptGiveCommand.target, ARezeptGiveCommand.medication);
