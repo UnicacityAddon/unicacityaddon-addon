@@ -55,8 +55,8 @@ public class ReinforcementCommand extends CommandBase {
             int z = Integer.parseInt(args[4]);
 
             p.sendChatMessage("/" + chatType + " " + name + ", ich bin zu deinem Verstärkungsruf unterwegs! (" + (int) p.getPosition().getDistance(x, y, z) + " Meter entfernt)");
-            p.sendChatMessage("/stoproute");
-            p.sendChatMessage("/navi " + x + "/" + y + "/" + z);
+            p.stopRoute();
+            p.setNaviRoute(x, y, z);
 
             return;
         }
@@ -96,7 +96,9 @@ public class ReinforcementCommand extends CommandBase {
         CORPSE_GUARDING("-lb", "d", "Leichenbewachung!"),
         DRUG_REMOVAL("-da", "d", "Drogenabnahme!"),
         CONTRACT("-ct", "f", "Contract!"),
-        PLANT("-p", "d", "Plant!");
+        PLANT("-p", "d", "Plant!"),
+        BOMB("-b", "f", "Bombe!"),
+        HOSTAGE_TAKING("-gn", "f", "Geiselnahme!");
 
         private final String argument;
         private final String chatType;
@@ -116,8 +118,18 @@ public class ReinforcementCommand extends CommandBase {
         }
 
         public String getChatType() {
-            /* TODO: Check if alliance exists, otherwise send CORPSE_GUARDING to f chat
-            if (!(alliance) && (this == Type.CORPSE_GUARDING)) return "f"; */
+            /*
+            TODO: Check if alliance exists, otherwise send CORPSE_GUARDING, BOMB and HOSTAGE_TAKING to f chat
+            if (!(alliance)) {
+                switch (this) {
+                    case CORPSE_GUARDING:
+                    case BOMB:
+                    case HOSTAGE_TAKING:
+                        return "f";
+                        break;
+                }
+            }
+            */
             return chatType;
         }
 
@@ -161,4 +173,3 @@ public class ReinforcementCommand extends CommandBase {
         }
     }
 }
-

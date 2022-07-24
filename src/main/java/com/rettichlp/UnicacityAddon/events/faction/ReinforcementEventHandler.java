@@ -60,7 +60,7 @@ public class ReinforcementEventHandler {
                     .of("" + posZ).color(ColorCode.AQUA).advance()
                     .createComponent();
 
-            Map.Entry<Double, NaviPoint > nearestNaviPoint = NavigationUtils.getNearestNaviPoint();
+            Map.Entry<Double, NaviPoint > nearestNaviPoint = NavigationUtils.getNearestNaviPoint(posX, posY, posZ);
 
             p.sendMessage(
                     builder.of(fullName).color(ColorCode.AQUA).advance()
@@ -80,7 +80,7 @@ public class ReinforcementEventHandler {
                     .hoverEvent(HoverEvent.Action.SHOW_TEXT, hoverMessage)
                     .color(ColorCode.RED).advance()
                     .of(" | ").color(ColorCode.GRAY).advance()
-                    .of("Unterwegs").hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Unterwegs nachricht absenden").color(ColorCode.RED).advance().createComponent())
+                    .of("Unterwegs").hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Unterwegs Nachricht absenden").color(ColorCode.RED).advance().createComponent())
                     .clickEvent(ClickEvent.Action.RUN_COMMAND, "/reinforcement ontheway " + name + " " + posX + " " + posY + " " + posZ + (dChat ? " -d" : ""))
                     .color(ColorCode.RED).advance()
                     .createComponent());

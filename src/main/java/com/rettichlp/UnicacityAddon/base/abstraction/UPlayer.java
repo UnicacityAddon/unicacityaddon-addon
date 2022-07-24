@@ -1,6 +1,7 @@
 package com.rettichlp.UnicacityAddon.base.abstraction;
 
 import com.rettichlp.UnicacityAddon.base.faction.Faction;
+import com.rettichlp.UnicacityAddon.base.faction.rettungsdienst.Medication;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.inventory.Container;
@@ -52,4 +53,14 @@ public interface UPlayer {
     NetHandlerPlayClient getConnection();
 
     Faction getFaction();
+
+    void sellMedication(String target, Medication medication);
+
+    void acceptOffer();
+
+    void stopRoute();
+
+    void setNaviRoute(int x, int y, int z);
+
+    void setNaviRoute(BlockPos blockPos);
 }

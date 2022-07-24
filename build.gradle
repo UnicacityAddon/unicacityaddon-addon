@@ -13,9 +13,8 @@ apply plugin: 'net.minecraftforge.gradle'
 // Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 apply plugin: 'idea'
 apply plugin: 'maven-publish'
-apply plugin: "de.undercouch.download"
 
-version = '1.0'
+version = '1.0.0'
 group = 'com.rettichlp' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'UnicacityAddon'
 
@@ -122,10 +121,4 @@ task downloadLabyModAPI(type: Download) {
 
     src 'https://dl.labymod.net/latest/api/files/lm_api_mc1.12.2.jar'
     dest 'libs/'
-}
-
-task copyTask(type: Copy) {
-    group("build")
-    from 'build/libs/.'
-    into 'run/LabyMod/addons-1.12'
 }
