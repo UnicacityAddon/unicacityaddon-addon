@@ -35,11 +35,11 @@ public class ForgeUtils {
                 .collect(Collectors.toList());
     }
 
-    private static String stripColor(String string) {
+    public static String stripColor(String string) {
         return STRIP_COLOR_PATTERN.matcher(string).replaceAll("");
     }
 
-    private static String stripPrefix(String string) {
+    public static String stripPrefix(String string) {
         return STRIP_PREFIX_PATTERN.matcher(string).replaceAll("");
     }
 }

@@ -8,6 +8,7 @@ import com.rettichlp.UnicacityAddon.base.faction.FactionHandler;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.FormattingCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
+import com.rettichlp.UnicacityAddon.events.faction.polizei.WantedEventHandler;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemSkull;
@@ -27,8 +28,9 @@ public class NameTagEventHandler {
         String playerName = e.getUsername();
         String houseban = getHouseban(playerName);
         String prefix = getPrefix(playerName);
-        String suffix = getSuffix(playerName);
-        e.setDisplayname(houseban + prefix + playerName + suffix);
+        String factionInfo = getFactionInfo(playerName);
+        String duty = getDuty(playerName);
+        e.setDisplayname(houseban + prefix + playerName + factionInfo + duty);
     }
 
     @SubscribeEvent
@@ -47,14 +49,14 @@ public class NameTagEventHandler {
             if (name.contains("◤")) return; // already edited
 
             String prefix = getPrefix(playerName);
-            String suffix = getSuffix(playerName);
+            String factionInfo = getFactionInfo(playerName);
 
             if (name.startsWith(ColorCode.DARK_GRAY.getCode())) { // non-revivable
-                entityItem.setCustomNameTag(ColorCode.DARK_GRAY.getCode() + "✟" + playerName + suffix);
+                entityItem.setCustomNameTag(ColorCode.DARK_GRAY.getCode() + "✟" + playerName + factionInfo);
                 return;
             }
 
-            entityItem.setCustomNameTag(ColorCode.GRAY.getCode() + prefix + "✟" + playerName + suffix);
+            entityItem.setCustomNameTag(ColorCode.GRAY.getCode() + prefix + "✟" + playerName + factionInfo);
         });
 
         tick = 0;
@@ -62,10 +64,10 @@ public class NameTagEventHandler {
 
     private String getHouseban(String playerName) {
         StringBuilder houseban = new StringBuilder();
-        houseban.append(FormattingCode.RESET.getCode());
 
         if (ConfigElements.getNameTagHouseban()) {
             if (FactionHandler.checkPlayerHouseBan(playerName)) houseban.append(Message.getBuilder()
+                    .add(FormattingCode.RESET.getCode())
                     .of("[").color(ColorCode.DARK_GRAY).advance()
                     .of("HV").color(ColorCode.RED).advance()
                     .of("]").color(ColorCode.DARK_GRAY).advance()
@@ -102,7 +104,7 @@ public class NameTagEventHandler {
         return prefix.toString();
     }
 
-    private String getSuffix(String playerName) {
+    private String getFactionInfo(String playerName) {
         StringBuilder suffix = new StringBuilder();
         suffix.append(FormattingCode.RESET.getCode());
 
@@ -112,6 +114,20 @@ public class NameTagEventHandler {
         }
 
         return suffix.toString();
+    }
+
+    private String getDuty(String playerName) {
+        StringBuilder duty = new StringBuilder();
+
+        if (ConfigElements.getNameTagDuty()) {
+            if (FactionHandler.checkPlayerDuty(playerName)) duty.append(Message.getBuilder()
+                    .add(FormattingCode.RESET.getCode())
+                    .of(" ● ").color(ColorCode.GOLD).advance()
+                    .add(FormattingCode.RESET.getCode())
+                    .create());
+        }
+
+        return duty.toString();
     }
 
     public static void refreshAllDisplayNames() {
