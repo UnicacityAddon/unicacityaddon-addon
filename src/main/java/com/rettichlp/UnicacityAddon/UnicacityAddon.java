@@ -56,13 +56,13 @@ public class UnicacityAddon extends LabyModAddon {
         ClientCommandHandler.instance.registerCommand(new ARezeptAcceptCommand());
         ClientCommandHandler.instance.registerCommand(new ARezeptGiveCommand());
         ClientCommandHandler.instance.registerCommand(new ASUCommand());
+        ClientCommandHandler.instance.registerCommand(new ExplosiveBeltCommand());
         ClientCommandHandler.instance.registerCommand(new ModifyWantedsCommand());
         ClientCommandHandler.instance.registerCommand(new NearestATMCommand());
         ClientCommandHandler.instance.registerCommand(new NearestJobCommand());
         ClientCommandHandler.instance.registerCommand(new ReinforcementCommand());
         ClientCommandHandler.instance.registerCommand(new ShareLocationCommand());
         ClientCommandHandler.instance.registerCommand(new TriggerEventCommand());
-        ClientCommandHandler.instance.registerCommand(new ExplosiveBeltCommand());
 
         // ForgeEvents -> https://docs.labymod.net/pages/create-addons/forge_events/
         ADDON.getApi().registerForgeListener(new ATMInfoEventHandler());
