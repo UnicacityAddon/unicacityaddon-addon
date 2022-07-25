@@ -34,7 +34,7 @@ public class ConfigSettings {
                 .space()
                 .of("-").color(ColorCode.GRAY).bold().advance()
                 .space()
-                .of("by RettichLP").color(ColorCode.GOLD).advance()
+                .of("by RettichLP and Dimiikou").color(ColorCode.GOLD).advance()
                 .create()));
 
         list.add(new HeaderElement(Message.getBuilder()
