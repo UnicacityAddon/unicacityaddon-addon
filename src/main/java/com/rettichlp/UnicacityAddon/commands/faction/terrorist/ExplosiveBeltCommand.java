@@ -28,8 +28,6 @@ public class ExplosiveBeltCommand extends CommandBase {
 
     @Override public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args) {
 
-
-
         try {
             ExplosiveBeltTimerModule.currentCount = parseInt(args[0]);
         } catch (NumberInvalidException e) {
