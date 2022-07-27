@@ -28,7 +28,7 @@ public class ExplosiveBeltCommand extends CommandBase {
 
     @Override public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args) {
 
-        ExplosiveBeltTimerModule.explosiveBeltStarted = true;
+
 
         try {
             ExplosiveBeltTimerModule.currentCount = parseInt(args[0]);
@@ -37,6 +37,7 @@ public class ExplosiveBeltCommand extends CommandBase {
             return;
         }
 
+        ExplosiveBeltTimerModule.explosiveBeltStarted = true;
         ExplosiveBeltTimerModule.timer = args[0];
         AbstractionLayer.getPlayer().sendChatMessage("/sprenggürtel " + args[0]);
     }
