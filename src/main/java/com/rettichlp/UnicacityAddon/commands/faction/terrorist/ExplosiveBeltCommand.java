@@ -27,7 +27,7 @@ public class ExplosiveBeltCommand extends CommandBase {
     @Override public boolean checkPermission(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender) { return true; }
 
     @Override public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args) {
-        // /sprenggürtel 10
+
         ExplosiveBeltTimerModule.explosiveBeltStarted = true;
 
         try {
