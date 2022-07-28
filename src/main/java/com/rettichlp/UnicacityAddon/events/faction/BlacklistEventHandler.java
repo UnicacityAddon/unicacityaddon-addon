@@ -17,7 +17,7 @@ public class BlacklistEventHandler {
     private static long blacklistShown;
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public static void onBlacklistShown(ClientChatReceivedEvent e) {
+    public void onBlacklistShown(ClientChatReceivedEvent e) {
         ITextComponent message = e.getMessage();
         String unformattedMessage = message.getUnformattedText();
 
@@ -44,7 +44,7 @@ public class BlacklistEventHandler {
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public static void onBlacklistAdd(ClientChatReceivedEvent e) {
+    public void onBlacklistAdd(ClientChatReceivedEvent e) {
         ITextComponent message = e.getMessage();
         String unformattedMessage = message.getUnformattedText();
 
@@ -58,7 +58,7 @@ public class BlacklistEventHandler {
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public static void onBlacklistRemove(ClientChatReceivedEvent e) {
+    public void onBlacklistRemove(ClientChatReceivedEvent e) {
         ITextComponent message = e.getMessage();
         String unformattedMessage = message.getUnformattedText();
 

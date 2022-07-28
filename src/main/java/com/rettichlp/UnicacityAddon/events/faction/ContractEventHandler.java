@@ -18,7 +18,7 @@ public class ContractEventHandler {
     private static long hitlistShown;
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public static void onHitlistShown(ClientChatReceivedEvent e) {
+    public void onHitlistShown(ClientChatReceivedEvent e) {
         ITextComponent message = e.getMessage();
         String unformattedMessage = message.getUnformattedText();
 
@@ -43,7 +43,7 @@ public class ContractEventHandler {
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public static void onContractSet(ClientChatReceivedEvent e) {
+    public void onContractSet(ClientChatReceivedEvent e) {
         ITextComponent message = e.getMessage();
         String unformattedMessage = message.getUnformattedText();
 
@@ -51,13 +51,15 @@ public class ContractEventHandler {
         if (matcher.find()) {
             String name = matcher.group(1);
 
+            System.out.println("Name: " + name);
+
             CONTRACT_LIST.add(name);
             NameTagEventHandler.refreshAllDisplayNames(); // TODO: not all display names needs to update
         }
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public static void onContractRemoved(ClientChatReceivedEvent e) {
+    public void onContractRemoved(ClientChatReceivedEvent e) {
         ITextComponent message = e.getMessage();
         String unformattedMessage = message.getUnformattedText();
 
