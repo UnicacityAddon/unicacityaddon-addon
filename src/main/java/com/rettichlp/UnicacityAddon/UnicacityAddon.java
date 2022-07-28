@@ -15,7 +15,7 @@ import com.rettichlp.UnicacityAddon.commands.faction.rettungsdienst.ARezeptGiveC
 import com.rettichlp.UnicacityAddon.commands.faction.terrorist.ExplosiveBeltCommand;
 import com.rettichlp.UnicacityAddon.events.ATMInfoEventHandler;
 import com.rettichlp.UnicacityAddon.events.BombTimerEventHandler;
-import com.rettichlp.UnicacityAddon.events.CarOpenEventHandler;
+import com.rettichlp.UnicacityAddon.events.CarEventHandler;
 import com.rettichlp.UnicacityAddon.events.NameTagEventHandler;
 import com.rettichlp.UnicacityAddon.events.TabListEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.BlacklistEventHandler;
@@ -70,7 +70,7 @@ public class UnicacityAddon extends LabyModAddon {
         ADDON.getApi().registerForgeListener(new ATMInfoEventHandler());
         ADDON.getApi().registerForgeListener(new BlacklistEventHandler());
         ADDON.getApi().registerForgeListener(new BombTimerEventHandler());
-        ADDON.getApi().registerForgeListener(new CarOpenEventHandler());
+        ADDON.getApi().registerForgeListener(new CarEventHandler());
         ADDON.getApi().registerForgeListener(new ContractEventHandler());
         ADDON.getApi().registerForgeListener(new EmergencyServiceEventHandler());
         ADDON.getApi().registerForgeListener(new ExplosiveBeltTimerEvent());
