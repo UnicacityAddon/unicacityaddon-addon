@@ -76,6 +76,10 @@ public class ConfigSettings {
                 ConfigElements.getNameTagBlacklist());
         list.add(nameTagBlacklist);
 
+        BooleanElement nameTagContract = new BooleanElement("Contract", unicacityAddon, new ControlElement.IconData(Material.IRON_SWORD), "NAMETAG_CONTRACT",
+            ConfigElements.getNameTagContract());
+        list.add(nameTagContract);
+
         list.add(new HeaderElement(Message.getBuilder()
                 .of("").color(ColorCode.WHITE).advance()
                 .create()));

@@ -127,6 +127,12 @@ public class ConfigElements {
                 .getAsBoolean(); // default = false
     }
 
+    // Contract
+    public static boolean getNameTagContract() {
+        return UnicacityAddon.ADDON.getConfig().has("NAMETAG_CONTRACT") && UnicacityAddon.ADDON.getConfig().get("NAMETAG_CONTRACT")
+            .getAsBoolean(); // default = false
+    }
+
     // ATMINFO
     public static boolean getEventATMInfo() {
         return !UnicacityAddon.ADDON.getConfig().has("EVENT_ATMINFO") || UnicacityAddon.ADDON.getConfig().get("EVENT_ATMINFO")
