@@ -122,7 +122,7 @@ public class NameTagEventHandler {
         if (ConfigElements.getNameTagDuty()) {
             if (FactionHandler.checkPlayerDuty(playerName)) duty.append(Message.getBuilder()
                     .add(FormattingCode.RESET.getCode())
-                    .of(" ● ").color(ColorCode.GOLD).advance()
+                    .of(" ● ").color(ColorCode.GREEN).advance()
                     .add(FormattingCode.RESET.getCode())
                     .create());
         }
