@@ -172,6 +172,12 @@ public class ConfigElements {
                 .getAsBoolean(); // default = true
     }
 
+    // CARFIND
+    public static boolean getEventCarFind() {
+        return !UnicacityAddon.ADDON.getConfig().has("EVENT_CARFIND") || UnicacityAddon.ADDON.getConfig().get("EVENT_CARFIND")
+                .getAsBoolean(); // default = true
+    }
+
     // REINFORCEMENT
     public static String getPatternReinforcement() {
         return UnicacityAddon.ADDON.getConfig().has("PATTERN_REINFORCEMENT") && !UnicacityAddon.ADDON.getConfig().get("PATTERN_REINFORCEMENT").getAsString().isEmpty()

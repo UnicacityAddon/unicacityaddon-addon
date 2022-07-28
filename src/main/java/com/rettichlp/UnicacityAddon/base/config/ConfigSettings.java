@@ -94,6 +94,10 @@ public class ConfigSettings {
                 ConfigElements.getEventTabList());
         list.add(eventTabList);
 
+        BooleanElement eventCarFind = new BooleanElement("Route bei /car find", unicacityAddon, new ControlElement.IconData(Material.MINECART), "EVENT_CARFIND",
+                ConfigElements.getEventCarFind());
+        list.add(eventCarFind);
+
         list.add(new HeaderElement(Message.getBuilder()
                 .of("").color(ColorCode.WHITE).advance()
                 .create()));
