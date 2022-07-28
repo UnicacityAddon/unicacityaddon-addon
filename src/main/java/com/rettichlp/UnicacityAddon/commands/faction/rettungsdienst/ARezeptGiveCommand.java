@@ -57,7 +57,7 @@ public class ARezeptGiveCommand extends CommandBase {
         if (medication == null) return;
 
         if (!MathUtils.isInteger(args[2])) return;
-        amount = Integer.parseInt(args[2]);
+        amount = Integer.parseInt(args[2]) - 1;
 
         p.sellMedication(target, medication);
     }
