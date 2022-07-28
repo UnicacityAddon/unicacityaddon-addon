@@ -17,9 +17,8 @@ import com.rettichlp.UnicacityAddon.commands.faction.rettungsdienst.ARezeptGiveC
 import com.rettichlp.UnicacityAddon.commands.faction.terrorist.ExplosiveBeltCommand;
 import com.rettichlp.UnicacityAddon.events.ATMInfoEventHandler;
 import com.rettichlp.UnicacityAddon.events.BombTimerEventHandler;
-import com.rettichlp.UnicacityAddon.events.CarOpenEventHandler;
-import com.rettichlp.UnicacityAddon.events.MobileEventHandler;
 import com.rettichlp.UnicacityAddon.events.CarEventHandler;
+import com.rettichlp.UnicacityAddon.events.MobileEventHandler;
 import com.rettichlp.UnicacityAddon.events.NameTagEventHandler;
 import com.rettichlp.UnicacityAddon.events.TabListEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.BlacklistEventHandler;
@@ -34,14 +33,13 @@ import com.rettichlp.UnicacityAddon.modules.BombTimerModule;
 import com.rettichlp.UnicacityAddon.modules.CarOpenModule;
 import com.rettichlp.UnicacityAddon.modules.EmergencyServiceModule;
 import com.rettichlp.UnicacityAddon.modules.ExplosiveBeltTimerModule;
+import java.util.List;
 import net.labymod.api.LabyModAddon;
 import net.labymod.ingamegui.ModuleCategoryRegistry;
 import net.labymod.main.LabyMod;
 import net.labymod.settings.elements.SettingsElement;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.ClientCommandHandler;
-
-import java.util.List;
 
 /**
  * @author RettichLP
