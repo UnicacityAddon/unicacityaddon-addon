@@ -4,7 +4,6 @@ import com.rettichlp.UnicacityAddon.UnicacityAddon;
 import com.rettichlp.UnicacityAddon.base.faction.Faction;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
-import net.minecraft.util.text.event.HoverEvent;
 
 /**
  * @author RettichLP
@@ -12,6 +11,7 @@ import net.minecraft.util.text.event.HoverEvent;
 public class ConfigElements {
 
     private static final String REINFORCEMENT_FALLBACK = Message.getBuilder()
+            .of("%type%").color(ColorCode.RED).bold().advance().space()
             .of("%sender%").color(ColorCode.AQUA).advance().space()
             .of("-").color(ColorCode.GRAY).advance().space()
             .of("%navipoint%").color(ColorCode.AQUA).advance().space()
