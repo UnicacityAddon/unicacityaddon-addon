@@ -51,12 +51,12 @@ public class ARezeptAcceptCommand extends CommandBase {
         }
 
         if (!MathUtils.isInteger(args[0])) return;
-        amount = Integer.parseInt(args[0]);
+        amount = Integer.parseInt(args[0]) - 1;
 
         p.acceptOffer();
     }
 
-    @Override @Nonnull public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
+    @Override @Nonnull public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
         return Collections.emptyList();
     }
 }
