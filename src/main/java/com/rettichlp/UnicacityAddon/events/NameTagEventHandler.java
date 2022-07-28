@@ -8,18 +8,17 @@ import com.rettichlp.UnicacityAddon.base.faction.FactionHandler;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.FormattingCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
-import com.rettichlp.UnicacityAddon.events.faction.polizei.WantedEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.BlacklistEventHandler;
+import com.rettichlp.UnicacityAddon.events.faction.ContractEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.polizei.WantedEventHandler;
+import java.util.List;
+import java.util.Objects;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemSkull;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-
-import java.util.List;
-import java.util.Objects;
 
 public class NameTagEventHandler {
 
@@ -123,6 +122,9 @@ public class NameTagEventHandler {
         if (ConfigElements.getNameTagBlacklist())
             if (BlacklistEventHandler.BLACKLIST_MAP.get(playerName) != null) prefix.append(ColorCode.RED.getCode());
 
+        if (ConfigElements.getNameTagContract())
+            if (ContractEventHandler.CONTRACT_LIST.contains(playerName)) prefix.append(ColorCode.RED.getCode());
+
         if (FactionHandler.getPlayerFactionMap().containsKey(playerName)) {
             Faction targetPlayerFaction = FactionHandler.getPlayerFactionMap().get(playerName);
 
@@ -163,7 +165,7 @@ public class NameTagEventHandler {
 
         if (ConfigElements.getNameTagDuty()) {
             if (FactionHandler.checkPlayerDuty(playerName)) duty.append(Message.getBuilder()
-                    .of(" ● ").color(ColorCode.GOLD).advance()
+                    .of(" ● ").color(ColorCode.GREEN).advance()
                     .add(FormattingCode.RESET.getCode())
                     .create());
         }
