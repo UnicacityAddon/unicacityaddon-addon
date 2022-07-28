@@ -27,7 +27,7 @@ public class JobSalaryModule extends SimpleModule {
         return "Job-Gehalt";
     }
 
-    @Override public String getDisplayValue() { return ""+currentSalary; }
+    @Override public String getDisplayValue() { return currentSalary + "$"; }
 
     @Override public String getDefaultValue() {
         return "0";
