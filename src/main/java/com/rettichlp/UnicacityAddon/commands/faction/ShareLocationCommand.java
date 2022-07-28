@@ -5,6 +5,7 @@ import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
 import com.rettichlp.UnicacityAddon.base.utils.ForgeUtils;
+import com.rettichlp.UnicacityAddon.events.MobileEventHandler;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
@@ -42,9 +43,19 @@ public class ShareLocationCommand extends CommandBase {
     }
 
     @Override
-    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args) {
-        Set<String> playerNames = new LinkedHashSet<>();
+    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
         UPlayer p = AbstractionLayer.getPlayer();
+
+        if (!MobileEventHandler.hasCommunications) {
+            Message.getBuilder()
+                    .error()
+                    .space()
+                    .of("Du hast keine Kommunikationsmittel!").color(ColorCode.GRAY).advance()
+                    .sendTo(p.getPlayer());
+            return;
+        }
+
+        Set<String> playerNames = new LinkedHashSet<>();
         boolean allianceChat = false;
 
         //TODO: CommunicationsChecker
