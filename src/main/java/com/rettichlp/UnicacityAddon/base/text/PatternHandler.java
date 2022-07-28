@@ -95,4 +95,9 @@ public class PatternHandler {
      * {@link com.rettichlp.UnicacityAddon.events.CarEventHandler}
      */
     public static final Pattern CAR_POSITION_PATTERN = Pattern.compile("^\\[Car] Das Fahrzeug befindet sich bei . X: (-?\\d+) \\| Y: (-?\\d+) \\| Z: (-?\\d+)$");
+
+    /**
+     * {@link com.rettichlp.UnicacityAddon.events.SalaryCountEventHandler}
+     */
+    public static final Pattern JOB_SALARY_PATTERN = Pattern.compile("^\\[PayDay] Du bekommst dein Gehalt von (\\d+)\\$ am PayDay ausgezahlt\\.$");
 }
