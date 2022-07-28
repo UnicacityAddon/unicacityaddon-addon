@@ -49,7 +49,7 @@ public class ExplosiveBeltTimerModule  extends SimpleModule {
     }
 
     @Override public boolean isShown() {
-        return !timer.isEmpty();
+        return !explosiveBeltStarted;
     }
 
     @Override public int getSortingId() {

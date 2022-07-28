@@ -87,6 +87,9 @@ public class PatternHandler {
      */
     public static final Pattern NUMBER_PATTERN = Pattern.compile("^Nummer von (?:\\[UC])*[a-zA-Z0-9_]+: (\\d+)$");
     public static final Pattern SMS_PATTERN = Pattern.compile("^Dein Handy klingelt! Eine Nachricht von (?:\\[UC])*([a-zA-Z0-9_]+) \\((\\d+)\\)\\.$");
+    public static final Pattern COMMUNICATIONS_REMOVE_PATTERN = Pattern.compile("^((?:\\[UC])*[a-zA-Z0-9_]+) hat dir deine Kommunikationsgeräte abgenommen\\.$");
+    public static final Pattern COMMUNICATIONS_GET_PATTERN = Pattern.compile("^Du hast dein Handy genommen\\.$");
+    public static final Pattern ACCOUNT_UNLOCKED_PATTERN = Pattern.compile("^Du hast deinen Account freigeschaltet\\.$");
 
     /**
      * {@link com.rettichlp.UnicacityAddon.events.SalaryCountEventHandler}
