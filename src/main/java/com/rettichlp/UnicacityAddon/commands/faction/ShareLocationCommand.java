@@ -58,7 +58,6 @@ public class ShareLocationCommand extends CommandBase {
         Set<String> playerNames = new LinkedHashSet<>();
         boolean allianceChat = false;
 
-        //TODO: CommunicationsChecker
         for (String arg : args) {
             if (arg.equalsIgnoreCase("-d")) {
                 allianceChat = true;
