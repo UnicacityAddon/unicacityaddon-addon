@@ -3,6 +3,8 @@ package com.rettichlp.UnicacityAddon;
 import com.rettichlp.UnicacityAddon.base.config.ConfigSettings;
 import com.rettichlp.UnicacityAddon.base.faction.FactionHandler;
 import com.rettichlp.UnicacityAddon.base.module.UCModuleHandler;
+import com.rettichlp.UnicacityAddon.commands.ACallCommand;
+import com.rettichlp.UnicacityAddon.commands.ASMSCommand;
 import com.rettichlp.UnicacityAddon.commands.NearestATMCommand;
 import com.rettichlp.UnicacityAddon.commands.NearestJobCommand;
 import com.rettichlp.UnicacityAddon.commands.TriggerEventCommand;
@@ -16,6 +18,7 @@ import com.rettichlp.UnicacityAddon.commands.faction.terrorist.ExplosiveBeltComm
 import com.rettichlp.UnicacityAddon.events.ATMInfoEventHandler;
 import com.rettichlp.UnicacityAddon.events.BombTimerEventHandler;
 import com.rettichlp.UnicacityAddon.events.CarOpenEventHandler;
+import com.rettichlp.UnicacityAddon.events.MobileEventHandler;
 import com.rettichlp.UnicacityAddon.events.NameTagEventHandler;
 import com.rettichlp.UnicacityAddon.events.TabListEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.BlacklistEventHandler;
@@ -55,8 +58,10 @@ public class UnicacityAddon extends LabyModAddon {
 
         //UCCommandHandler.registerCommands();
         // ForgeCommands
+        ClientCommandHandler.instance.registerCommand(new ACallCommand());
         ClientCommandHandler.instance.registerCommand(new ARezeptAcceptCommand());
         ClientCommandHandler.instance.registerCommand(new ARezeptGiveCommand());
+        ClientCommandHandler.instance.registerCommand(new ASMSCommand());
         ClientCommandHandler.instance.registerCommand(new ASUCommand());
         ClientCommandHandler.instance.registerCommand(new ExplosiveBeltCommand());
         ClientCommandHandler.instance.registerCommand(new ModifyWantedsCommand());
@@ -75,6 +80,7 @@ public class UnicacityAddon extends LabyModAddon {
         ADDON.getApi().registerForgeListener(new EmergencyServiceEventHandler());
         ADDON.getApi().registerForgeListener(new ExplosiveBeltTimerEvent());
         ADDON.getApi().registerForgeListener(new MedicationEventHandler());
+        ADDON.getApi().registerForgeListener(new MobileEventHandler());
         ADDON.getApi().registerForgeListener(new NameTagEventHandler());
         ADDON.getApi().registerForgeListener(new ReinforcementEventHandler());
         ADDON.getApi().registerForgeListener(new ShareLocationEventHandler());
