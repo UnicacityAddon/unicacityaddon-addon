@@ -89,7 +89,8 @@ public class PatternHandler {
     public static final Pattern SMS_PATTERN = Pattern.compile("^Dein Handy klingelt! Eine Nachricht von (?:\\[UC])*([a-zA-Z0-9_]+) \\((\\d+)\\)\\.$");
 
     /**
-     * {@link com.rettichlp.UnicacityAddon.events.CarEventHandler}
+     * {@link com.rettichlp.UnicacityAddon.events.SalaryCountEventHandler}
      */
     public static final Pattern CAR_POSITION_PATTERN = Pattern.compile("^\\[Car] Das Fahrzeug befindet sich bei . X: (-?\\d+) \\| Y: (-?\\d+) \\| Z: (-?\\d+)$");
+    public static final Pattern JOB_SALARY_PATTERN = Pattern.compile("^\\[PayDay] Du bekommst dein Gehalt von (\\d+)\\$ am PayDay ausgezahlt\\.$");
 }
