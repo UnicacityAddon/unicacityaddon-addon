@@ -3,11 +3,38 @@ package com.rettichlp.UnicacityAddon.base.config;
 import com.rettichlp.UnicacityAddon.UnicacityAddon;
 import com.rettichlp.UnicacityAddon.base.faction.Faction;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
+import com.rettichlp.UnicacityAddon.base.text.Message;
+import net.minecraft.util.text.event.HoverEvent;
 
 /**
  * @author RettichLP
  */
 public class ConfigElements {
+
+    private static final String REINFORCEMENT_FALLBACK = Message.getBuilder()
+            .of("%sender%").color(ColorCode.AQUA).advance().space()
+            .of("-").color(ColorCode.GRAY).advance().space()
+            .of("%navipoint%").color(ColorCode.AQUA).advance().space()
+            .of("-").color(ColorCode.GRAY).advance().space()
+            .of("%distance%" + "m").color(ColorCode.DARK_AQUA).advance().create();
+    private static final String REINFORCEMENT_REPLY_FALLBACK = Message.getBuilder()
+            .of("➥").color(ColorCode.GRAY).advance().space()
+            .of("%sender%").color(ColorCode.AQUA).advance().space()
+            .of("➡").color(ColorCode.GRAY).advance().space()
+            .of("%target%").color(ColorCode.DARK_AQUA).advance().space()
+            .of("- (").color(ColorCode.GRAY).advance()
+            .of("%distance%" + "m").color(ColorCode.DARK_AQUA).advance()
+            .of(")").color(ColorCode.GRAY).advance().create();
+    private static final String SLOC_FALLBACK = Message.getBuilder()
+            .of("Position!").color(ColorCode.RED).bold().advance().space()
+            .of("-").color(ColorCode.GRAY).advance().space()
+            .of("%sender%").color(ColorCode.AQUA).advance().space()
+            .of("-").color(ColorCode.GRAY).advance().space()
+            .of("%x%").color(ColorCode.AQUA).advance().space()
+            .of("|").color(ColorCode.GRAY).advance().space()
+            .of("%y%").color(ColorCode.AQUA).advance().space()
+            .of("|").color(ColorCode.GRAY).advance().space()
+            .of("%z%").color(ColorCode.AQUA).advance().create();
 
     // FACTIONSUFFIX
     public static boolean getNameTagFactionSuffix() {
@@ -130,7 +157,7 @@ public class ConfigElements {
     // Contract
     public static boolean getNameTagContract() {
         return UnicacityAddon.ADDON.getConfig().has("NAMETAG_CONTRACT") && UnicacityAddon.ADDON.getConfig().get("NAMETAG_CONTRACT")
-            .getAsBoolean(); // default = false
+                .getAsBoolean(); // default = false
     }
 
     // ATMINFO
@@ -143,5 +170,26 @@ public class ConfigElements {
     public static boolean getEventTabList() {
         return !UnicacityAddon.ADDON.getConfig().has("EVENT_TABLIST") || UnicacityAddon.ADDON.getConfig().get("EVENT_TABLIST")
                 .getAsBoolean(); // default = true
+    }
+
+    // REINFORCEMENT
+    public static String getPatternReinforcement() {
+        return UnicacityAddon.ADDON.getConfig().has("PATTERN_REINFORCEMENT") && !UnicacityAddon.ADDON.getConfig().get("PATTERN_REINFORCEMENT").getAsString().isEmpty()
+                ? UnicacityAddon.ADDON.getConfig().get("PATTERN_REINFORCEMENT").getAsString()
+                : REINFORCEMENT_FALLBACK;
+    }
+
+    // REINFORCEMENT REPLY
+    public static String getPatternReinforcementReply() {
+        return UnicacityAddon.ADDON.getConfig().has("PATTERN_REINFORCEMENT_REPLY") && !UnicacityAddon.ADDON.getConfig().get("PATTERN_REINFORCEMENT_REPLY").getAsString().isEmpty()
+                ? UnicacityAddon.ADDON.getConfig().get("PATTERN_REINFORCEMENT_REPLY").getAsString()
+                : REINFORCEMENT_REPLY_FALLBACK;
+    }
+
+    // SLOC
+    public static String getPatternSloc() {
+        return UnicacityAddon.ADDON.getConfig().has("PATTERN_SLOC") && !UnicacityAddon.ADDON.getConfig().get("PATTERN_SLOC").getAsString().isEmpty()
+                ? UnicacityAddon.ADDON.getConfig().get("PATTERN_SLOC").getAsString()
+                : SLOC_FALLBACK;
     }
 }
