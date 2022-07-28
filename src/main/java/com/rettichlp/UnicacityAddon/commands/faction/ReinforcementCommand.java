@@ -49,7 +49,7 @@ public class ReinforcementCommand extends CommandBase {
         if ((args.length >= 5) && args[0].equalsIgnoreCase("ontheway")) {
             String name = args[1];
 
-            if (!MathUtils.isInteger(args[2], 10) || !MathUtils.isInteger(args[3], 10) || !MathUtils.isInteger(args[4], 10)) return;
+            if (!MathUtils.isInteger(args[2]) || !MathUtils.isInteger(args[3]) || !MathUtils.isInteger(args[4])) return;
             int x = Integer.parseInt(args[2]);
             int y = Integer.parseInt(args[3]);
             int z = Integer.parseInt(args[4]);
