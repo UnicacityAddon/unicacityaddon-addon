@@ -120,10 +120,10 @@ public class NameTagEventHandler {
         }
 
         if (ConfigElements.getNameTagBlacklist())
-            if (BlacklistEventHandler.BLACKLIST_MAP.get(playerName) != null) prefix.append(ColorCode.RED.getCode());
+            if (BlacklistEventHandler.BLACKLIST_MAP.get(playerName) != null) prefix.append(ColorCode.DARK_RED.getCode());
 
         if (ConfigElements.getNameTagContract())
-            if (ContractEventHandler.CONTRACT_LIST.contains(playerName)) prefix.append(ColorCode.RED.getCode());
+            if (ContractEventHandler.CONTRACT_LIST.contains(playerName)) prefix.append(ColorCode.DARK_RED.getCode());
 
         if (FactionHandler.getPlayerFactionMap().containsKey(playerName)) {
             Faction targetPlayerFaction = FactionHandler.getPlayerFactionMap().get(playerName);
