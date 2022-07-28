@@ -2,23 +2,17 @@ package com.rettichlp.UnicacityAddon.commands.faction.rettungsdienst;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
-import com.rettichlp.UnicacityAddon.base.faction.rettungsdienst.Medication;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
-import com.rettichlp.UnicacityAddon.base.utils.ForgeUtils;
 import com.rettichlp.UnicacityAddon.base.utils.MathUtils;
+import java.util.Collections;
+import java.util.List;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Timer;
-import java.util.stream.Collectors;
 
 /**
  * @author RettichLP
@@ -56,7 +50,7 @@ public class ARezeptAcceptCommand extends CommandBase {
             return;
         }
 
-        if (!MathUtils.isInteger(args[0], 10)) return;
+        if (!MathUtils.isInteger(args[0])) return;
         amount = Integer.parseInt(args[0]);
 
         p.acceptOffer();

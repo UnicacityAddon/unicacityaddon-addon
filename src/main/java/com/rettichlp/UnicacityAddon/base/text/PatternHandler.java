@@ -83,6 +83,12 @@ public class PatternHandler {
             "|(?:^\\[Contract] (?:\\[UC])*[a-zA-Z0-9_]+ hat (?:\\[UC])*([a-zA-Z0-9_]+) getötet\\. Kopfgeld: \\d+\\$)");
 
     /**
+     * {@link com.rettichlp.UnicacityAddon.events.MobileEventHandler}
+     */
+    public static final Pattern NUMBER_PATTERN = Pattern.compile("^Nummer von (?:\\[UC])*[a-zA-Z0-9_]+: (\\d+)$");
+    public static final Pattern SMS_PATTERN = Pattern.compile("^Dein Handy klingelt! Eine Nachricht von (?:\\[UC])*([a-zA-Z0-9_]+) \\((\\d+)\\)\\.$");
+
+    /**
      * {@link com.rettichlp.UnicacityAddon.events.CarEventHandler}
      */
     public static final Pattern CAR_POSITION_PATTERN = Pattern.compile("^\\[Car] Das Fahrzeug befindet sich bei . X: (-?\\d+) \\| Y: (-?\\d+) \\| Z: (-?\\d+)$");
