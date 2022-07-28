@@ -12,6 +12,7 @@ import com.rettichlp.UnicacityAddon.commands.faction.polizei.ASUCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.polizei.ModifyWantedsCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.rettungsdienst.ARezeptAcceptCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.rettungsdienst.ARezeptGiveCommand;
+import com.rettichlp.UnicacityAddon.commands.faction.terrorist.ExplosiveBeltCommand;
 import com.rettichlp.UnicacityAddon.events.ATMInfoEventHandler;
 import com.rettichlp.UnicacityAddon.events.BombTimerEventHandler;
 import com.rettichlp.UnicacityAddon.events.CarOpenEventHandler;
@@ -22,9 +23,11 @@ import com.rettichlp.UnicacityAddon.events.faction.ReinforcementEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.ShareLocationEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.polizei.WantedEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.rettungsdienst.MedicationEventHandler;
+import com.rettichlp.UnicacityAddon.events.faction.terrorist.ExplosiveBeltTimerEvent;
 import com.rettichlp.UnicacityAddon.modules.BombTimerModule;
 import com.rettichlp.UnicacityAddon.modules.CarOpenModule;
 import com.rettichlp.UnicacityAddon.modules.EmergencyServiceModule;
+import com.rettichlp.UnicacityAddon.modules.ExplosiveBeltTimerModule;
 import net.labymod.api.LabyModAddon;
 import net.labymod.ingamegui.ModuleCategoryRegistry;
 import net.labymod.main.LabyMod;
@@ -39,7 +42,7 @@ import java.util.List;
  */
 public class UnicacityAddon extends LabyModAddon {
 
-    public static final String VERSION = "1.0.0";
+    public static final String VERSION = "1.1.0-dev";
     public static final Minecraft MINECRAFT = Minecraft.getMinecraft();
     public static final LabyMod LABYMOD = LabyMod.getInstance();
     public static UnicacityAddon ADDON;
@@ -53,6 +56,7 @@ public class UnicacityAddon extends LabyModAddon {
         ClientCommandHandler.instance.registerCommand(new ARezeptAcceptCommand());
         ClientCommandHandler.instance.registerCommand(new ARezeptGiveCommand());
         ClientCommandHandler.instance.registerCommand(new ASUCommand());
+        ClientCommandHandler.instance.registerCommand(new ExplosiveBeltCommand());
         ClientCommandHandler.instance.registerCommand(new ModifyWantedsCommand());
         ClientCommandHandler.instance.registerCommand(new NearestATMCommand());
         ClientCommandHandler.instance.registerCommand(new NearestJobCommand());
@@ -65,6 +69,7 @@ public class UnicacityAddon extends LabyModAddon {
         ADDON.getApi().registerForgeListener(new BombTimerEventHandler());
         ADDON.getApi().registerForgeListener(new CarOpenEventHandler());
         ADDON.getApi().registerForgeListener(new EmergencyServiceEventHandler());
+        ADDON.getApi().registerForgeListener(new ExplosiveBeltTimerEvent());
         ADDON.getApi().registerForgeListener(new MedicationEventHandler());
         ADDON.getApi().registerForgeListener(new NameTagEventHandler());
         ADDON.getApi().registerForgeListener(new ReinforcementEventHandler());
@@ -79,6 +84,7 @@ public class UnicacityAddon extends LabyModAddon {
         ADDON.getApi().registerModule(new BombTimerModule());
         ADDON.getApi().registerModule(new CarOpenModule());
         ADDON.getApi().registerModule(new EmergencyServiceModule());
+        ADDON.getApi().registerModule(new ExplosiveBeltTimerModule());
     }
 
     @Override

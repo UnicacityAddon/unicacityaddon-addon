@@ -60,9 +60,21 @@ public class ConfigSettings {
         nameTagStreetwar.setSubSettings(nameTagStreetwarSettings());
         list.add(nameTagStreetwar);
 
-        BooleanElement nameTagForHouseBan = new BooleanElement("Hausverbot", unicacityAddon, new ControlElement.IconData(Material.MOB_SPAWNER), "NAMETAG_HOUSEBAN",
+        BooleanElement nameTagHouseBan = new BooleanElement("Hausverbot", unicacityAddon, new ControlElement.IconData(Material.MOB_SPAWNER), "NAMETAG_HOUSEBAN",
                 ConfigElements.getNameTagHouseban());
-        list.add(nameTagForHouseBan);
+        list.add(nameTagHouseBan);
+
+        BooleanElement nameTagDuty = new BooleanElement("Duty", unicacityAddon, new ControlElement.IconData(Material.REDSTONE_TORCH_ON), "NAMETAG_DUTY",
+                ConfigElements.getNameTagDuty());
+        list.add(nameTagDuty);
+
+        BooleanElement nameTagWPS = new BooleanElement("WPS", unicacityAddon, new ControlElement.IconData(Material.IRON_FENCE), "NAMETAG_WPS",
+                ConfigElements.getNameTagWPS());
+        list.add(nameTagWPS);
+
+        BooleanElement nameTagBlacklist = new BooleanElement("Blacklist", unicacityAddon, new ControlElement.IconData(Material.IRON_SWORD), "NAMETAG_BLACKLIST",
+                ConfigElements.getNameTagBlacklist());
+        list.add(nameTagBlacklist);
 
         list.add(new HeaderElement(Message.getBuilder()
                 .of("").color(ColorCode.WHITE).advance()

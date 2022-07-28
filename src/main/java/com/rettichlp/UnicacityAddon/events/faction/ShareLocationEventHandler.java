@@ -9,18 +9,13 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.event.ClickEvent;
 import net.minecraft.util.text.event.HoverEvent;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.regex.Matcher;
 
 /**
  * @author Dimiikou
  */
-@SideOnly(Side.CLIENT)
-@Mod.EventBusSubscriber
 public class ShareLocationEventHandler {
 
     @SubscribeEvent

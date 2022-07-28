@@ -4,6 +4,7 @@ import com.rettichlp.UnicacityAddon.base.faction.Faction;
 import com.rettichlp.UnicacityAddon.base.faction.rettungsdienst.Medication;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.network.NetHandlerPlayClient;
+import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.inventory.Container;
 import net.minecraft.scoreboard.Scoreboard;
 import net.minecraft.scoreboard.Team;
@@ -33,6 +34,8 @@ public interface UPlayer {
     void playSound(SoundEvent soundIn, float volume, float pitch);
 
     String getName();
+
+    NetworkPlayerInfo getNetworkPlayerInfo();
 
     UUID getUniqueID();
 
