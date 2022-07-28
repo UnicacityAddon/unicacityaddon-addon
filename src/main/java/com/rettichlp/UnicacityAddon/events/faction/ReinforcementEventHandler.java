@@ -2,6 +2,7 @@ package com.rettichlp.UnicacityAddon.events.faction;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
+import com.rettichlp.UnicacityAddon.base.config.ConfigElements;
 import com.rettichlp.UnicacityAddon.base.location.NaviPoint;
 import com.rettichlp.UnicacityAddon.base.location.NavigationUtils;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
@@ -44,11 +45,9 @@ public class ReinforcementEventHandler {
             boolean dChat = splitFormattedMsg[0].contains(ColorCode.RED.getCode())
                     && splitFormattedMsg[1].contains(ColorCode.RED.getCode());
 
-            Message.Builder builder = Message.getBuilder();
+            String type = "Reinforcement!";
             if (lastReinforcement != null && name.equals(lastReinforcement.getIssuer()) && System.currentTimeMillis() - lastReinforcement.getTime() < 1000) {
-                builder.of(lastReinforcement.getType().getMessage()).color(ColorCode.RED).bold().advance().space();
-            } else {
-                builder.of("Reinforcement!").color(ColorCode.RED).bold().advance().space();
+                type = lastReinforcement.getType().getMessage();
             }
 
             ITextComponent hoverMessage = Message.getBuilder().of("" + posX).color(ColorCode.AQUA).advance()
@@ -60,19 +59,18 @@ public class ReinforcementEventHandler {
 
             Map.Entry<Double, NaviPoint > nearestNaviPoint = NavigationUtils.getNearestNaviPoint(posX, posY, posZ);
 
-            p.sendMessage(
-                    builder.of(fullName).color(ColorCode.AQUA).advance()
-                    .of(" - ").color(ColorCode.GRAY).advance()
-                    .of(nearestNaviPoint.getValue().getName())
-                    .hoverEvent(HoverEvent.Action.SHOW_TEXT, hoverMessage)
-                    .color(ColorCode.AQUA).advance()
-                    .of(" - ").color(ColorCode.GRAY).advance()
-                    .of(distance + "m").color(ColorCode.DARK_AQUA).advance()
-                    .createComponent());
+            p.sendMessageAsString(ConfigElements.getPatternReinforcement()
+                    .replace("&", "§")
+                    .replace("%type%", type)
+                    .replace("%sender%", fullName)
+                    .replace("%x%", String.valueOf(posX))
+                    .replace("%y%", String.valueOf(posY))
+                    .replace("%z%", String.valueOf(posZ))
+                    .replace("%navipoint%", nearestNaviPoint.getValue().getName())
+                    .replace("%distance%", String.valueOf(distance)));
 
-            builder = Message.getBuilder();
-            p.sendMessage(
-                    builder.of("»").color(ColorCode.GRAY).advance().space()
+            p.sendMessage(Message.getBuilder()
+                    .of("»").color(ColorCode.GRAY).advance().space()
                     .of("Route Anzeigen")
                     .clickEvent(ClickEvent.Action.RUN_COMMAND, "/navi " + posX + "/" + posY + "/" + posZ)
                     .hoverEvent(HoverEvent.Action.SHOW_TEXT, hoverMessage)
@@ -93,14 +91,11 @@ public class ReinforcementEventHandler {
             String reinforcementSenderName = onTheWayMatcher.group(3);
             String distance = onTheWayMatcher.group(4);
 
-            Message.getBuilder().of("➥").color(ColorCode.GRAY).advance().space()
-                    .of(senderFullName).color(ColorCode.AQUA).advance().space()
-                    .of("➡").color(ColorCode.GRAY).advance().space()
-                    .of(reinforcementSenderName).color(ColorCode.DARK_AQUA).advance().space()
-                    .of("- (").color(ColorCode.GRAY).advance()
-                    .of(distance + "m").color(ColorCode.DARK_AQUA).advance()
-                    .of(")").color(ColorCode.GRAY).advance()
-                    .sendTo(p.getPlayer());
+            p.sendMessageAsString(ConfigElements.getPatternReinforcementReply()
+                    .replace("&", "§")
+                    .replace("%sender%", senderFullName)
+                    .replace("%target%", reinforcementSenderName)
+                    .replace("%distance%", String.valueOf(distance)));
 
             e.setCanceled(true);
             return false;
@@ -119,7 +114,6 @@ public class ReinforcementEventHandler {
             e.setCanceled(true);
             return false;
         }
-
 
         return false;
     }

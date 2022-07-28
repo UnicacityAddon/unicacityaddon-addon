@@ -9,9 +9,11 @@ import net.labymod.main.LabyMod;
 import net.labymod.settings.Settings;
 import net.labymod.settings.elements.BooleanElement;
 import net.labymod.settings.elements.ControlElement;
+import net.labymod.settings.elements.ControlElement.IconData;
 import net.labymod.settings.elements.DropDownElement;
 import net.labymod.settings.elements.HeaderElement;
 import net.labymod.settings.elements.SettingsElement;
+import net.labymod.settings.elements.StringElement;
 import net.labymod.utils.Material;
 
 import java.util.List;
@@ -91,6 +93,22 @@ public class ConfigSettings {
         BooleanElement eventTabList = new BooleanElement("Sortierte Tablist", unicacityAddon, new ControlElement.IconData(Material.COMMAND), "EVENT_TABLIST",
                 ConfigElements.getEventTabList());
         list.add(eventTabList);
+
+        list.add(new HeaderElement(Message.getBuilder()
+                .of("").color(ColorCode.WHITE).advance()
+                .create()));
+
+        StringElement patternReinforcement = new StringElement("Reinforcement", unicacityAddon, new ControlElement.IconData(Material.PAPER), "PATTERN_REINFORCEMENT",
+                ConfigElements.getPatternReinforcement());
+        list.add(patternReinforcement);
+
+        StringElement patternReinforcementReply = new StringElement("Reinforcement Antwort", unicacityAddon, new ControlElement.IconData(Material.PAPER), "PATTERN_REINFORCEMENT_REPLY",
+                ConfigElements.getPatternReinforcementReply());
+        list.add(patternReinforcementReply);
+
+        StringElement patternSLoc = new StringElement("Position", unicacityAddon, new ControlElement.IconData(Material.PAPER), "PATTERN_SLOC",
+                ConfigElements.getPatternSloc());
+        list.add(patternSLoc);
     }
 
     private static Settings nameTagAllianceSettings() {
