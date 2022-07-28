@@ -6,6 +6,7 @@ import com.rettichlp.UnicacityAddon.base.faction.FactionHandler;
 import com.rettichlp.UnicacityAddon.base.faction.rettungsdienst.Medication;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.network.NetHandlerPlayClient;
+import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.inventory.Container;
 import net.minecraft.scoreboard.Scoreboard;
 import net.minecraft.scoreboard.Team;
@@ -49,6 +50,11 @@ public class UPlayerImpl implements UPlayer {
 
     @Override public String getName() {
         return UnicacityAddon.MINECRAFT.getSession().getUsername();
+    }
+
+    @Override public NetworkPlayerInfo getNetworkPlayerInfo() {
+        if (UnicacityAddon.MINECRAFT.getConnection() == null) return null;
+        return UnicacityAddon.MINECRAFT.getConnection().getPlayerInfo(getUniqueID());
     }
 
     @Override public UUID getUniqueID() {

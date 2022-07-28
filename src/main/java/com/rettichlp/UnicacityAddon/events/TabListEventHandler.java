@@ -54,7 +54,7 @@ public class TabListEventHandler implements Comparator<NetworkPlayerInfo>, TabLi
         ReflectionUtils.setValue(ModPlayerTabOverlay.class, Ordering.class, Ordering.from(new TabListEventHandler()));
     }
 
-    private String getFormattedDisplayName(ITextComponent displayName) {
+    public static String getFormattedDisplayName(ITextComponent displayName) {
         StringBuilder formattedDisplayName = new StringBuilder();
 
         List<ITextComponent> siblings = displayName.getSiblings();
@@ -72,7 +72,7 @@ public class TabListEventHandler implements Comparator<NetworkPlayerInfo>, TabLi
         return formattedDisplayName.toString().replace("[R]", FormattingCode.RESET.getCode());
     }
 
-    private String getTablistName(NetworkPlayerInfo networkPlayerInfo) {
+    public static String getTablistName(NetworkPlayerInfo networkPlayerInfo) {
         return getFormattedDisplayName(networkPlayerInfo.getDisplayName() != null ? networkPlayerInfo.getDisplayName() : new TextComponentString(ScorePlayerTeam.formatPlayerName(networkPlayerInfo.getPlayerTeam(), networkPlayerInfo.getGameProfile().getName())));
     }
 }

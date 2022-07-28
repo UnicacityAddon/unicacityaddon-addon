@@ -42,7 +42,7 @@ import java.util.List;
  */
 public class UnicacityAddon extends LabyModAddon {
 
-    public static final String VERSION = "1.0.0";
+    public static final String VERSION = "1.1.0-dev";
     public static final Minecraft MINECRAFT = Minecraft.getMinecraft();
     public static final LabyMod LABYMOD = LabyMod.getInstance();
     public static UnicacityAddon ADDON;

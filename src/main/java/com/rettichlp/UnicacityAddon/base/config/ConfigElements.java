@@ -9,6 +9,12 @@ import com.rettichlp.UnicacityAddon.base.text.ColorCode;
  */
 public class ConfigElements {
 
+    // FACTIONSUFFIX
+    public static boolean getNameTagFactionSuffix() {
+        return !UnicacityAddon.ADDON.getConfig().has("NAMETAG_FACTIONSUFFIX") || UnicacityAddon.ADDON.getConfig().get("NAMETAG_FACTIONSUFFIX")
+                .getAsBoolean(); // default = true
+    }
+
     // FACTION
     public static boolean getNameTagFaction() {
         return UnicacityAddon.ADDON.getConfig().has("NAMETAG_FACTION") && UnicacityAddon.ADDON.getConfig().get("NAMETAG_FACTION")
@@ -23,18 +29,6 @@ public class ConfigElements {
 
     public static void setNameTagFactionColor(ColorCode factionColor) {
         UnicacityAddon.ADDON.getConfig().addProperty("NAMETAG_FACTION_COLOR", factionColor.toString());
-    }
-
-    // FACTIONSUFFIX
-    public static boolean getNameTagFactionSuffix() {
-        return !UnicacityAddon.ADDON.getConfig().has("NAMETAG_FACTIONSUFFIX") || UnicacityAddon.ADDON.getConfig().get("NAMETAG_FACTIONSUFFIX")
-                .getAsBoolean(); // default = true
-    }
-
-    // HOUSEBAN
-    public static boolean getNameTagHouseban() {
-        return UnicacityAddon.ADDON.getConfig().has("NAMETAG_HOUSEBAN") && UnicacityAddon.ADDON.getConfig().get("NAMETAG_HOUSEBAN")
-                .getAsBoolean(); // default = false
     }
 
     // ALLIANCE
@@ -107,6 +101,30 @@ public class ConfigElements {
 
     public static void setNameTagStreetwar2(Faction streetwarFaction2) {
         UnicacityAddon.ADDON.getConfig().addProperty("NAMETAG_STREETWAR2", streetwarFaction2.toString());
+    }
+
+    // HOUSEBAN
+    public static boolean getNameTagHouseban() {
+        return UnicacityAddon.ADDON.getConfig().has("NAMETAG_HOUSEBAN") && UnicacityAddon.ADDON.getConfig().get("NAMETAG_HOUSEBAN")
+                .getAsBoolean(); // default = false
+    }
+
+    // DUTY
+    public static boolean getNameTagDuty() {
+        return UnicacityAddon.ADDON.getConfig().has("NAMETAG_DUTY") && UnicacityAddon.ADDON.getConfig().get("NAMETAG_DUTY")
+                .getAsBoolean(); // default = false
+    }
+
+    // WPS
+    public static boolean getNameTagWPS() {
+        return UnicacityAddon.ADDON.getConfig().has("NAMETAG_WPS") && UnicacityAddon.ADDON.getConfig().get("NAMETAG_WPS")
+                .getAsBoolean(); // default = false
+    }
+
+    // Blacklist
+    public static boolean getNameTagBlacklist() {
+        return UnicacityAddon.ADDON.getConfig().has("NAMETAG_BLACKLIST") && UnicacityAddon.ADDON.getConfig().get("NAMETAG_BLACKLIST")
+                .getAsBoolean(); // default = false
     }
 
     // ATMINFO
