@@ -4,6 +4,7 @@ import com.rettichlp.UnicacityAddon.UnicacityAddon;
 import com.rettichlp.UnicacityAddon.base.faction.Faction;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
+import joptsimple.internal.Strings;
 
 /**
  * @author RettichLP
@@ -197,5 +198,12 @@ public class ConfigElements {
         return UnicacityAddon.ADDON.getConfig().has("PATTERN_SLOC") && !UnicacityAddon.ADDON.getConfig().get("PATTERN_SLOC").getAsString().isEmpty()
                 ? UnicacityAddon.ADDON.getConfig().get("PATTERN_SLOC").getAsString()
                 : SLOC_FALLBACK;
+    }
+
+    // REPORT GREETING
+    public static String getReportGreeting() {
+        return UnicacityAddon.ADDON.getConfig().has("REPORT_GREETING") && !UnicacityAddon.ADDON.getConfig().get("REPORT_GREETING").getAsString().isEmpty()
+                ? UnicacityAddon.ADDON.getConfig().get("REPORT_GREETING").getAsString()
+                : Strings.EMPTY;
     }
 }
