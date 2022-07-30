@@ -1,5 +1,7 @@
 package com.rettichlp.UnicacityAddon.base.text;
 
+import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
+
 import java.util.regex.Pattern;
 
 /**
@@ -100,4 +102,10 @@ public class PatternHandler {
      * {@link com.rettichlp.UnicacityAddon.events.SalaryCountEventHandler}
      */
     public static final Pattern JOB_SALARY_PATTERN = Pattern.compile("^\\[PayDay] Du bekommst dein Gehalt von (\\d+)\\$ am PayDay ausgezahlt\\.$");
+
+    /**
+     * {@link com.rettichlp.UnicacityAddon.events.faction.badfaction.PlantTimerEventHandler}
+     */
+    public static final Pattern PLANT_HARVEST_PATTERN = Pattern.compile("^\\[Plantage] Eine .+-Plantage wurde von (?:\\[UC])*([a-zA-Z0-9_]+) geerntet\\. \\[\\d+g]$");
+    public static final Pattern PLANT_USE_PATTERN = Pattern.compile("^\\[Plantage] Eine .+-Plantage wurde von (?:\\[UC])*(" + AbstractionLayer.getPlayer().getName() + ") (gewässert|gedüngt)\\.$");
 }

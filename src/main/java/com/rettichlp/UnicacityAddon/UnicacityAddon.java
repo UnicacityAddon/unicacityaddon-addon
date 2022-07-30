@@ -21,6 +21,7 @@ import com.rettichlp.UnicacityAddon.events.faction.ContractEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.EmergencyServiceEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.ReinforcementEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.ShareLocationEventHandler;
+import com.rettichlp.UnicacityAddon.events.faction.badfaction.PlantTimerEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.polizei.WantedEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.rettungsdienst.MedicationEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.terrorist.ExplosiveBeltTimerEvent;
@@ -75,6 +76,7 @@ public class UnicacityAddon extends LabyModAddon {
         ADDON.getApi().registerForgeListener(new MedicationEventHandler());
         ADDON.getApi().registerForgeListener(new MobileEventHandler());
         ADDON.getApi().registerForgeListener(new NameTagEventHandler());
+        ADDON.getApi().registerForgeListener(new PlantTimerEventHandler());
         ADDON.getApi().registerForgeListener(new ReinforcementEventHandler());
         ADDON.getApi().registerForgeListener(new ShareLocationEventHandler());
         ADDON.getApi().registerForgeListener(new WantedEventHandler());
@@ -89,6 +91,8 @@ public class UnicacityAddon extends LabyModAddon {
         ADDON.getApi().registerModule(new EmergencyServiceModule());
         ADDON.getApi().registerModule(new ExplosiveBeltTimerModule());
         ADDON.getApi().registerModule(new JobSalaryModule());
+        ADDON.getApi().registerModule(new PlantFertilizeTimerModule());
+        ADDON.getApi().registerModule(new PlantWaterTimerModule());
 
     }
 
