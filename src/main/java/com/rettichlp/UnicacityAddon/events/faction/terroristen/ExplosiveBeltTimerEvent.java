@@ -1,9 +1,6 @@
-package com.rettichlp.UnicacityAddon.events.faction.terrorist;
+package com.rettichlp.UnicacityAddon.events.faction.terroristen;
 
-import com.rettichlp.UnicacityAddon.base.text.ColorCode;
-import com.rettichlp.UnicacityAddon.modules.BombTimerModule;
 import com.rettichlp.UnicacityAddon.modules.ExplosiveBeltTimerModule;
-import net.labymod.utils.ModUtils;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
