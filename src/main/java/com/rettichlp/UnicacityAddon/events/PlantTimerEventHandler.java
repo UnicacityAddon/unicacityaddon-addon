@@ -1,5 +1,6 @@
 package com.rettichlp.UnicacityAddon.events;
 
+import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
 import com.rettichlp.UnicacityAddon.base.utils.MathUtils;
 import com.rettichlp.UnicacityAddon.modules.PlantFertilizeTimerModule;
@@ -62,7 +63,7 @@ public class PlantTimerEventHandler {
         if (!PlantWaterTimerModule.timer.isEmpty() && MathUtils.isInteger(PlantWaterTimerModule.timer.replace(":", "")))
             PlantWaterTimerModule.timer = ModUtils.parseTimer(--PlantWaterTimerModule.currentCount);
 
-        if (PlantFertilizeTimerModule.currentCount <= 0) PlantFertilizeTimerModule.timer = "§cJetzt";
-        if (PlantWaterTimerModule.currentCount <= 0) PlantFertilizeTimerModule.timer = "§cJetzt";
+        if (PlantFertilizeTimerModule.currentCount <= 0) PlantFertilizeTimerModule.timer = ColorCode.RED.getCode() + "Jetzt";
+        if (PlantWaterTimerModule.currentCount <= 0) PlantFertilizeTimerModule.timer = ColorCode.RED.getCode() + "Jetzt";
     }
 }
