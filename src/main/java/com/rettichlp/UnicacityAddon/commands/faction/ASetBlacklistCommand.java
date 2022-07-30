@@ -67,7 +67,9 @@ public class ASetBlacklistCommand extends CommandBase {
             return;
         }
 
-        p.sendChatMessage("/bl set " + args[0] + " " + ble.getKills() + " " + ble.getPrice() + " " + ble.getReason().replace("-", ""));
+        for (int i = 0; i < args.length - 1; i++) {
+            p.sendChatMessage("/bl set " + args[i] + " " + ble.getKills() + " " + ble.getPrice() + " " + ble.getReason().replace("-", ""));
+        }
     }
 
     @Override
