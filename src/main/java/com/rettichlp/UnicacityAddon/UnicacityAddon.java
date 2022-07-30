@@ -38,6 +38,9 @@ import com.rettichlp.UnicacityAddon.modules.EmergencyServiceModule;
 import com.rettichlp.UnicacityAddon.modules.ExplosiveBeltTimerModule;
 import com.rettichlp.UnicacityAddon.modules.JobSalaryModule;
 import java.util.List;
+
+import com.rettichlp.UnicacityAddon.modules.PlantFertilizeTimerModule;
+import com.rettichlp.UnicacityAddon.modules.PlantWaterTimerModule;
 import net.labymod.api.LabyModAddon;
 import net.labymod.ingamegui.ModuleCategoryRegistry;
 import net.labymod.main.LabyMod;
