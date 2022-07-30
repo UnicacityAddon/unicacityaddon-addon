@@ -21,6 +21,7 @@ import com.rettichlp.UnicacityAddon.events.faction.ContractEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.EmergencyServiceEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.ReinforcementEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.ShareLocationEventHandler;
+import com.rettichlp.UnicacityAddon.events.faction.badfaction.PlantTimerEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.polizei.WantedEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.rettungsdienst.MedicationEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.terrorist.ExplosiveBeltTimerEvent;

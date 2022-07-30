@@ -1,4 +1,4 @@
-package com.rettichlp.UnicacityAddon.events;
+package com.rettichlp.UnicacityAddon.events.faction.badfaction;
 
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
@@ -22,12 +22,14 @@ public class PlantTimerEventHandler {
         String msg = e.getMessage().getUnformattedText();
 
         Matcher plantHarvestMatcher = PatternHandler.PLANT_HARVEST_PATTERN.matcher(msg);
-        Matcher plantUseMatcher = PatternHandler.PLANT_USE_PATTERN.matcher(msg);
 
         if (plantHarvestMatcher.find()) {
             PlantFertilizeTimerModule.stopPlant();
             PlantWaterTimerModule.stopPlant();
+            return false;
         }
+
+        Matcher plantUseMatcher = PatternHandler.PLANT_USE_PATTERN.matcher(msg);
 
         if (plantUseMatcher.find()) {
             if (!PlantFertilizeTimerModule.plantRunning) PlantFertilizeTimerModule.plantRunning = true;
