@@ -1,4 +1,4 @@
-package com.rettichlp.UnicacityAddon.commands.faction.terrorist;
+package com.rettichlp.UnicacityAddon.commands.faction.terroristen;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.text.Message;
