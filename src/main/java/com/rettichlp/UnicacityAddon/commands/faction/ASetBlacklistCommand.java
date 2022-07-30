@@ -48,7 +48,15 @@ public class ASetBlacklistCommand extends CommandBase {
         UPlayer p = AbstractionLayer.getPlayer();
         if (args.length < 2) return;
 
-        String reason = TextUtils.makeStringByArgs(args, " ").replace(args[0] + " ", "");
+        if (BlacklistEventHandler.BLACKLIST == null) {
+            p.sendMessage(Message.getBuilder()
+                    .error().space()
+                    .of("Datei 'blacklistData.json' wurde nicht gefunden oder ist falsch formatiert!").color(ColorCode.GRAY).advance()
+                    .createComponent());
+            return;
+        }
+
+        String reason = args[args.length - 1];
         BlacklistEntry ble = BlacklistEventHandler.BLACKLIST.getBlackListEntryByReason(reason);
 
         if (ble == null) {
