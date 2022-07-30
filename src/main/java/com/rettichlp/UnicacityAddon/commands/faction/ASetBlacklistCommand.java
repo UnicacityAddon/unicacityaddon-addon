@@ -66,7 +66,7 @@ public class ASetBlacklistCommand extends CommandBase {
     @Nonnull
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
         List<String> tabCompletions = ForgeUtils.getOnlinePlayers();
-        if (args.length > 1) {
+        if (args.length > 1 && !BlacklistEventHandler.BLACKLIST.getBlacklistReasons().isEmpty()) {
             tabCompletions.addAll(BlacklistEventHandler.BLACKLIST.getBlacklistReasons());
         }
         String input = args[args.length - 1].toLowerCase().replace('-', ' ');
