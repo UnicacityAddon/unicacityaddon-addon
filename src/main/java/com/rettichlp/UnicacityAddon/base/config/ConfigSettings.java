@@ -113,6 +113,10 @@ public class ConfigSettings {
         StringElement patternSLoc = new StringElement("Position", unicacityAddon, new ControlElement.IconData(Material.PAPER), "PATTERN_SLOC",
                 ConfigElements.getPatternSloc());
         list.add(patternSLoc);
+
+        StringElement reportGreeting = new StringElement("Report Begrüßung", unicacityAddon, new ControlElement.IconData(Material.PAPER), "REPORT_GREETING",
+                ConfigElements.getReportGreeting());
+        list.add(reportGreeting);
     }
 
     private static Settings nameTagAllianceSettings() {

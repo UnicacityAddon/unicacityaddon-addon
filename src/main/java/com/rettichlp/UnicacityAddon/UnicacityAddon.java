@@ -15,7 +15,13 @@ import com.rettichlp.UnicacityAddon.commands.faction.polizei.ModifyWantedsComman
 import com.rettichlp.UnicacityAddon.commands.faction.rettungsdienst.ARezeptAcceptCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.rettungsdienst.ARezeptGiveCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.terrorist.ExplosiveBeltCommand;
-import com.rettichlp.UnicacityAddon.events.*;
+import com.rettichlp.UnicacityAddon.events.ATMInfoEventHandler;
+import com.rettichlp.UnicacityAddon.events.BombTimerEventHandler;
+import com.rettichlp.UnicacityAddon.events.CarEventHandler;
+import com.rettichlp.UnicacityAddon.events.MobileEventHandler;
+import com.rettichlp.UnicacityAddon.events.NameTagEventHandler;
+import com.rettichlp.UnicacityAddon.events.SalaryCountEventHandler;
+import com.rettichlp.UnicacityAddon.events.TabListEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.BlacklistEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.ContractEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.EmergencyServiceEventHandler;
@@ -25,9 +31,16 @@ import com.rettichlp.UnicacityAddon.events.faction.badfaction.PlantTimerEventHan
 import com.rettichlp.UnicacityAddon.events.faction.polizei.WantedEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.rettungsdienst.MedicationEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.terrorist.ExplosiveBeltTimerEvent;
-import com.rettichlp.UnicacityAddon.modules.*;
-
+import com.rettichlp.UnicacityAddon.events.team.ReportAcceptEventHandler;
+import com.rettichlp.UnicacityAddon.modules.BombTimerModule;
+import com.rettichlp.UnicacityAddon.modules.CarOpenModule;
+import com.rettichlp.UnicacityAddon.modules.EmergencyServiceModule;
+import com.rettichlp.UnicacityAddon.modules.ExplosiveBeltTimerModule;
+import com.rettichlp.UnicacityAddon.modules.JobSalaryModule;
 import java.util.List;
+
+import com.rettichlp.UnicacityAddon.modules.PlantFertilizeTimerModule;
+import com.rettichlp.UnicacityAddon.modules.PlantWaterTimerModule;
 import net.labymod.api.LabyModAddon;
 import net.labymod.ingamegui.ModuleCategoryRegistry;
 import net.labymod.main.LabyMod;
@@ -78,6 +91,7 @@ public class UnicacityAddon extends LabyModAddon {
         ADDON.getApi().registerForgeListener(new NameTagEventHandler());
         ADDON.getApi().registerForgeListener(new PlantTimerEventHandler());
         ADDON.getApi().registerForgeListener(new ReinforcementEventHandler());
+        ADDON.getApi().registerForgeListener(new ReportAcceptEventHandler());
         ADDON.getApi().registerForgeListener(new ShareLocationEventHandler());
         ADDON.getApi().registerForgeListener(new WantedEventHandler());
 
