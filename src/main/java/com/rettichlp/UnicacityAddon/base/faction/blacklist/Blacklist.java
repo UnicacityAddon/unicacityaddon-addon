@@ -1,12 +1,13 @@
 package com.rettichlp.UnicacityAddon.base.faction.blacklist;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class Blacklist {
 
-    private List<BlacklistEntry> blacklistEntryList;
+    private List<BlacklistEntry> blacklistEntryList = new ArrayList<>();
 
     public Blacklist() {
     }
