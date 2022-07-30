@@ -51,13 +51,15 @@ public class ASetBlacklistCommand extends CommandBase {
         String reason = TextUtils.makeStringByArgs(args, " ").replace(args[0] + " ", "");
         BlacklistEntry ble = BlacklistEventHandler.BLACKLIST.getBlackListEntryByReason(reason);
 
-        if (ble == null) p.sendMessage(Message.getBuilder()
-                .error()
-                .of("Blacklistgrund wurde nicht gefunden!").color(ColorCode.GRAY).advance()
-                .createComponent());
+        if (ble == null) {
+            p.sendMessage(Message.getBuilder()
+                    .error().space()
+                    .of("Blacklistgrund wurde nicht gefunden!").color(ColorCode.GRAY).advance()
+                    .createComponent());
+            return;
+        }
 
-        System.out.println("/bl set " + args[0] + " " + ble.getKills() + " " + ble.getPrice() + " " + ble.getReason());
-        p.sendChatMessage("/bl set " + args[0] + " " + ble.getKills() + " " + ble.getPrice() + " " + ble.getReason());
+        p.sendChatMessage("/bl set " + args[0] + " " + ble.getKills() + " " + ble.getPrice() + " " + ble.getReason().replace("-", ""));
     }
 
     @Override

@@ -6,6 +6,7 @@ import com.rettichlp.UnicacityAddon.base.faction.blacklist.Blacklist;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
 import com.rettichlp.UnicacityAddon.events.NameTagEventHandler;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -82,8 +83,13 @@ public class BlacklistEventHandler {
 
     public static void refreshBlacklistReasons() {
         try {
+            File blacklistData = new File(UnicacityAddon.MINECRAFT.mcDataDir.getAbsolutePath() + "/unicacityAddon/blacklistData.json");
+            if (!blacklistData.exists()) {
+                blacklistData.createNewFile();
+            }
+
             Gson g = new Gson();
-            Path path = Paths.get(UnicacityAddon.MINECRAFT.mcDataDir.getAbsolutePath() + "/unicacityAddon/blacklistData.json");
+            Path path = Paths.get(blacklistData.getAbsolutePath());
             BufferedReader reader = Files.newBufferedReader(path);
             BLACKLIST = g.fromJson(reader, Blacklist.class);
         } catch (IOException e) {
