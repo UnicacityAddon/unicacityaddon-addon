@@ -1,11 +1,9 @@
 package com.rettichlp.UnicacityAddon.base.faction;
 
-import com.google.gson.Gson;
-import com.rettichlp.UnicacityAddon.base.faction.blacklist.Blacklist;
-import com.rettichlp.UnicacityAddon.base.faction.blacklist.BlacklistEntry;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
 import com.rettichlp.UnicacityAddon.base.utils.WebsiteAPI;
+
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -105,11 +103,5 @@ public enum Faction {
                 .filter(entry -> entry.getValue().equals(this))
                 .map(Map.Entry::getKey)
                 .collect(Collectors.toList());
-    }
-
-    public List<String> getBlacklistReasons() {
-        Gson g = new Gson();
-        Blacklist blacklist = g.fromJson(Blacklist.getBlacklistData(), Blacklist.class);
-        return blacklist.getBlacklist(this).stream().map(BlacklistEntry::getReason).collect(Collectors.toList());
     }
 }
