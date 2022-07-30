@@ -14,7 +14,7 @@ import com.rettichlp.UnicacityAddon.commands.faction.polizei.ASUCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.polizei.ModifyWantedsCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.rettungsdienst.ARezeptAcceptCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.rettungsdienst.ARezeptGiveCommand;
-import com.rettichlp.UnicacityAddon.commands.faction.terrorist.ExplosiveBeltCommand;
+import com.rettichlp.UnicacityAddon.commands.faction.terroristen.ExplosiveBeltCommand;
 import com.rettichlp.UnicacityAddon.events.*;
 import com.rettichlp.UnicacityAddon.events.faction.BlacklistEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.ContractEventHandler;
@@ -23,7 +23,7 @@ import com.rettichlp.UnicacityAddon.events.faction.ReinforcementEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.ShareLocationEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.polizei.WantedEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.rettungsdienst.MedicationEventHandler;
-import com.rettichlp.UnicacityAddon.events.faction.terrorist.ExplosiveBeltTimerEvent;
+import com.rettichlp.UnicacityAddon.events.faction.terroristen.ExplosiveBeltTimerEvent;
 import com.rettichlp.UnicacityAddon.modules.*;
 
 import java.util.List;
