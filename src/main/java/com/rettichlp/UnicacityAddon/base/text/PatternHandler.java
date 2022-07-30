@@ -113,4 +113,9 @@ public class PatternHandler {
      */
     public static final Pattern PLANT_HARVEST_PATTERN = Pattern.compile("^\\[Plantage] Eine .+-Plantage wurde von (?:\\[UC])*([a-zA-Z0-9_]+) geerntet\\. \\[\\d+g]$");
     public static final Pattern PLANT_USE_PATTERN = Pattern.compile("^\\[Plantage] Eine .+-Plantage wurde von (?:\\[UC])*(" + AbstractionLayer.getPlayer().getName() + ") (gewässert|gedüngt)\\.$");
+
+    /**
+     * {@link com.rettichlp.UnicacityAddon.events.faction.badfaction.FBIHackEventHandler}
+     */
+    public static final Pattern FBI_HACK_STARTED_PATTERN = Pattern.compile("^\\[Polizeicomputer] Du hast einen Hackversuch gestartet\\. Geschätzte Dauer: (\\d+) Sekunden\\.$");
 }
