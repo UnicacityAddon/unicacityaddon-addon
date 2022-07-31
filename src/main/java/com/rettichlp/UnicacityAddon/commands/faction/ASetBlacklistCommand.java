@@ -6,7 +6,6 @@ import com.rettichlp.UnicacityAddon.base.faction.blacklist.BlacklistEntry;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
 import com.rettichlp.UnicacityAddon.base.utils.ForgeUtils;
-import com.rettichlp.UnicacityAddon.base.utils.TextUtils;
 import com.rettichlp.UnicacityAddon.events.faction.BlacklistEventHandler;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
@@ -51,7 +50,7 @@ public class ASetBlacklistCommand extends CommandBase {
         if (BlacklistEventHandler.BLACKLIST == null) {
             p.sendMessage(Message.getBuilder()
                     .error().space()
-                    .of("Datei 'blacklistData.json' wurde nicht gefunden oder ist falsch formatiert!").color(ColorCode.GRAY).advance()
+                    .of("Datei 'blacklistData.json' ist falsch formatiert!").color(ColorCode.GRAY).advance()
                     .createComponent());
             return;
         }
