@@ -45,7 +45,7 @@ public class PatternHandler {
     public static final Pattern SERVICE_ACCEPTED_PATTERN = Pattern.compile("^((?:\\[UC])*[a-zA-Z0-9_]+) hat den Notruf von ((?:\\[UC])*[a-zA-Z0-9_]+) angenommen\\. \\((\\d+)m entfernt\\)$");
     public static final Pattern SERVICE_REQUEUED_PATTERN = Pattern.compile("^((?:\\[UC])*[a-zA-Z0-9_]+) hat den Notruf von ((?:\\[UC])*[a-zA-Z0-9_]+) \\((\\d+)\\) wieder geöffnet\\.$");
     public static final Pattern SERVICE_DELETED_PATTERN = Pattern.compile("^Der Notruf von ((?:\\[UC])*[a-zA-Z0-9_]+) wurde von ((?:\\[UC])*[a-zA-Z0-9_]+) gelöscht\\.$");
-    public static final Pattern SERVICE_OVERVIEW_PATTERN = Pattern.compile("^\\nOffene Notrufe \\((\\d+)\\):(.*)$");
+    public static final Pattern SERVICE_OVERVIEW_PATTERN = Pattern.compile("^\\nOffene Notrufe \\((\\d+)\\):((.|\\n)*)$");
     public static final Pattern SERVICE_NO_SERVICE_PATTERN = Pattern.compile("^Fehler: Es ist kein Service offen\\.$");
 
     /**
