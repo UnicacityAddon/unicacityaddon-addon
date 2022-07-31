@@ -2,20 +2,18 @@ package com.rettichlp.UnicacityAddon.events;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
-import java.util.regex.Matcher;
 import net.minecraft.client.Minecraft;
 import net.minecraft.inventory.ContainerChest;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.client.event.GuiContainerEvent;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.network.FMLNetworkEvent;
+
+import java.util.regex.Matcher;
 
 public class MobileEventHandler {
 
     public static int lastCheckedNumber = 0;
     public static boolean hasCommunications = false;
-    private boolean connected;
     private boolean activeCommunicationsCheck;
 
     /**
@@ -27,10 +25,18 @@ public class MobileEventHandler {
     public void onClientChatReceived(ClientChatReceivedEvent e) {
         String msg = e.getMessage().getUnformattedText();
 
+        Matcher accountWelcomeBackMatcher = PatternHandler.ACCOUNT_WELCOME_BACK_PATTERN.matcher(msg);
+        if (accountWelcomeBackMatcher.find()) {
+            activeCommunicationsCheck = true;
+            AbstractionLayer.getPlayer().sendChatMessage("/mobile");
+            return;
+        }
+
         Matcher accountUnlockedMatcher = PatternHandler.ACCOUNT_UNLOCKED_PATTERN.matcher(msg);
         if (accountUnlockedMatcher.find()) {
             activeCommunicationsCheck = true;
             AbstractionLayer.getPlayer().sendChatMessage("/mobile");
+            return;
         }
 
         Matcher communicationsRemoveMatcher = PatternHandler.COMMUNICATIONS_REMOVE_PATTERN.matcher(msg);
@@ -50,19 +56,6 @@ public class MobileEventHandler {
             lastCheckedNumber = Integer.parseInt(numberMatcher.group(1));
             e.setCanceled(true);
         }
-    }
-
-    @SubscribeEvent
-    public void onJoin(FMLNetworkEvent.ClientConnectedToServerEvent e) {
-        connected = true;
-    }
-
-    @SubscribeEvent
-    public void onJoinWorld(EntityJoinWorldEvent e) {
-        if (!connected) return;
-        connected = false;
-        activeCommunicationsCheck = true;
-        AbstractionLayer.getPlayer().sendChatMessage("/mobile");
     }
 
     /**
