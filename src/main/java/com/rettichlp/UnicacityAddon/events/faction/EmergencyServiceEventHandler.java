@@ -15,11 +15,16 @@ public class EmergencyServiceEventHandler {
     @SubscribeEvent public boolean onClientChatReceived(ClientChatReceivedEvent e) {
         String msg = e.getMessage().getUnformattedText();
 
-        if (PatternHandler.SERVICE_ARRIVED_PATTERN.matcher(msg).find()) EmergencyServiceModule.currentCount++;
-        if (PatternHandler.SERVICE_REQUEUED_PATTERN.matcher(msg).find()) EmergencyServiceModule.currentCount++;
-        if (PatternHandler.SERVICE_ACCEPTED_PATTERN.matcher(msg).find()) EmergencyServiceModule.currentCount--;
-        if (PatternHandler.SERVICE_DELETED_PATTERN.matcher(msg).find()) EmergencyServiceModule.currentCount--;
-        if (PatternHandler.SERVICE_NO_SERVICE_PATTERN.matcher(msg).find()) EmergencyServiceModule.currentCount = 0;
+        if (PatternHandler.SERVICE_ARRIVED_PATTERN.matcher(msg).find())
+            EmergencyServiceModule.currentCount++;
+        if (PatternHandler.SERVICE_REQUEUED_PATTERN.matcher(msg).find())
+            EmergencyServiceModule.currentCount++;
+        if (PatternHandler.SERVICE_ACCEPTED_PATTERN.matcher(msg).find() && EmergencyServiceModule.currentCount > 0)
+            EmergencyServiceModule.currentCount--;
+        if (PatternHandler.SERVICE_DELETED_PATTERN.matcher(msg).find() && EmergencyServiceModule.currentCount > 0)
+            EmergencyServiceModule.currentCount--;
+        if (PatternHandler.SERVICE_NO_SERVICE_PATTERN.matcher(msg).find())
+            EmergencyServiceModule.currentCount = 0;
 
         Matcher serviceOverviewMatcher = PatternHandler.SERVICE_OVERVIEW_PATTERN.matcher(msg);
         if (serviceOverviewMatcher.find()) {
