@@ -11,11 +11,9 @@ import net.labymod.settings.elements.BooleanElement;
 import net.labymod.settings.elements.ControlElement;
 import net.labymod.settings.elements.DropDownElement;
 import net.labymod.settings.elements.HeaderElement;
-import net.labymod.settings.elements.KeyElement;
 import net.labymod.settings.elements.SettingsElement;
 import net.labymod.settings.elements.StringElement;
 import net.labymod.utils.Material;
-import org.lwjgl.input.Keyboard;
 
 import java.util.List;
 
@@ -118,11 +116,6 @@ public class ConfigSettings {
         BooleanElement eventCarFind = new BooleanElement("Route bei /car find", unicacityAddon, new ControlElement.IconData(Material.MINECART), "EVENT_CARFIND",
                 ConfigElements.getEventCarFind());
         list.add(eventCarFind);
-
-        BooleanElement eventHotkey = new BooleanElement("Hotkeys", unicacityAddon, new ControlElement.IconData(Material.REDSTONE_COMPARATOR_ON), "EVENT_HOTKEY",
-                ConfigElements.getEventHotkey());
-        eventHotkey.setSubSettings(eventHotkeySettings());
-        list.add(eventHotkey);
     }
 
     private static Settings nameTagAllianceSettings() {
@@ -196,15 +189,6 @@ public class ConfigSettings {
         settings.add(dropDownElement0);
         settings.add(dropDownElement1);
         settings.add(dropDownElement2);
-        return settings;
-    }
-
-    private static Settings eventHotkeySettings() {
-        Settings settings = new Settings();
-
-        KeyElement keyElement = new KeyElement("Screenshot mit Upload", UnicacityAddon.ADDON, new ControlElement.IconData(Material.PAINTING), "HOTKEY_SCREENSHOT", Keyboard.KEY_F10, true);
-
-        settings.add(keyElement);
         return settings;
     }
 }

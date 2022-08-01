@@ -206,10 +206,4 @@ public class ConfigElements {
                 ? UnicacityAddon.ADDON.getConfig().get("REPORT_GREETING").getAsString()
                 : Strings.EMPTY;
     }
-
-    // HOTKEY
-    public static boolean getEventHotkey() {
-        return UnicacityAddon.ADDON.getConfig().has("EVENT_HOTKEY") && UnicacityAddon.ADDON.getConfig().get("EVENT_HOTKEY")
-                .getAsBoolean(); // default = false
-    }
 }
