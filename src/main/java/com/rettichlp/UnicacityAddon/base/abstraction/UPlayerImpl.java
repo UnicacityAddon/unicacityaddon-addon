@@ -144,6 +144,5 @@ public class UPlayerImpl implements UPlayer {
         StringSelection stringSelection = new StringSelection(string);
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
         clipboard.setContents(stringSelection, null);
-        sendInfoMessage("\"" + string + "\" wurde in die Zwischenablage kopiert.");
     }
 }
