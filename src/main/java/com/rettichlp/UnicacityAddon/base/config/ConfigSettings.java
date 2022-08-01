@@ -9,12 +9,13 @@ import net.labymod.main.LabyMod;
 import net.labymod.settings.Settings;
 import net.labymod.settings.elements.BooleanElement;
 import net.labymod.settings.elements.ControlElement;
-import net.labymod.settings.elements.ControlElement.IconData;
 import net.labymod.settings.elements.DropDownElement;
 import net.labymod.settings.elements.HeaderElement;
+import net.labymod.settings.elements.KeyElement;
 import net.labymod.settings.elements.SettingsElement;
 import net.labymod.settings.elements.StringElement;
 import net.labymod.utils.Material;
+import org.lwjgl.input.Keyboard;
 
 import java.util.List;
 
@@ -40,7 +41,7 @@ public class ConfigSettings {
                 .create()));
 
         list.add(new HeaderElement(Message.getBuilder()
-                .of("Einstellungen").color(ColorCode.WHITE).advance()
+                .of("Nametag").color(ColorCode.WHITE).advance()
                 .create()));
 
         BooleanElement nameTagFactionSuffix = new BooleanElement("Fraktionsinfo", unicacityAddon, new ControlElement.IconData(Material.NAME_TAG), "NAMETAG_FACTIONSUFFIX",
@@ -83,23 +84,7 @@ public class ConfigSettings {
         list.add(nameTagContract);
 
         list.add(new HeaderElement(Message.getBuilder()
-                .of("").color(ColorCode.WHITE).advance()
-                .create()));
-
-        BooleanElement eventATMInfo = new BooleanElement("ATM Info", unicacityAddon, new ControlElement.IconData(Material.PAPER), "EVENT_ATMINFO",
-                ConfigElements.getEventATMInfo());
-        list.add(eventATMInfo);
-
-        BooleanElement eventTabList = new BooleanElement("Sortierte Tablist", unicacityAddon, new ControlElement.IconData(Material.COMMAND), "EVENT_TABLIST",
-                ConfigElements.getEventTabList());
-        list.add(eventTabList);
-
-        BooleanElement eventCarFind = new BooleanElement("Route bei /car find", unicacityAddon, new ControlElement.IconData(Material.MINECART), "EVENT_CARFIND",
-                ConfigElements.getEventCarFind());
-        list.add(eventCarFind);
-
-        list.add(new HeaderElement(Message.getBuilder()
-                .of("").color(ColorCode.WHITE).advance()
+                .of("Text").color(ColorCode.WHITE).advance()
                 .create()));
 
         StringElement patternReinforcement = new StringElement("Reinforcement", unicacityAddon, new ControlElement.IconData(Material.PAPER), "PATTERN_REINFORCEMENT",
@@ -117,6 +102,27 @@ public class ConfigSettings {
         StringElement reportGreeting = new StringElement("Report Begrüßung", unicacityAddon, new ControlElement.IconData(Material.PAPER), "REPORT_GREETING",
                 ConfigElements.getReportGreeting());
         list.add(reportGreeting);
+
+        list.add(new HeaderElement(Message.getBuilder()
+                .of("Sonstiges").color(ColorCode.WHITE).advance()
+                .create()));
+
+        BooleanElement eventATMInfo = new BooleanElement("ATM Info", unicacityAddon, new ControlElement.IconData(Material.PAPER), "EVENT_ATMINFO",
+                ConfigElements.getEventATMInfo());
+        list.add(eventATMInfo);
+
+        BooleanElement eventTabList = new BooleanElement("Sortierte Tablist", unicacityAddon, new ControlElement.IconData(Material.COMMAND), "EVENT_TABLIST",
+                ConfigElements.getEventTabList());
+        list.add(eventTabList);
+
+        BooleanElement eventCarFind = new BooleanElement("Route bei /car find", unicacityAddon, new ControlElement.IconData(Material.MINECART), "EVENT_CARFIND",
+                ConfigElements.getEventCarFind());
+        list.add(eventCarFind);
+
+        BooleanElement eventHotkey = new BooleanElement("Hotkeys", unicacityAddon, new ControlElement.IconData(Material.REDSTONE_COMPARATOR_ON), "EVENT_HOTKEY",
+                ConfigElements.getEventHotkey());
+        eventHotkey.setSubSettings(eventHotkeySettings());
+        list.add(eventHotkey);
     }
 
     private static Settings nameTagAllianceSettings() {
@@ -190,6 +196,15 @@ public class ConfigSettings {
         settings.add(dropDownElement0);
         settings.add(dropDownElement1);
         settings.add(dropDownElement2);
+        return settings;
+    }
+
+    private static Settings eventHotkeySettings() {
+        Settings settings = new Settings();
+
+        KeyElement keyElement = new KeyElement("Screenshot mit Upload", UnicacityAddon.ADDON, new ControlElement.IconData(Material.PAINTING), "HOTKEY_SCREENSHOT", Keyboard.KEY_F10, true);
+
+        settings.add(keyElement);
         return settings;
     }
 }
