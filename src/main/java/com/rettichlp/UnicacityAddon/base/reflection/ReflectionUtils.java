@@ -49,8 +49,21 @@ public class ReflectionUtils {
         try {
             return Class.forName(packageName + "." + className.substring(0, className.lastIndexOf('.')));
         } catch (ClassNotFoundException e) {
-            // handle the exception
+            // TODO: handle the exception
         }
+        return null;
+    }
+
+    public static <T, V> T getValue(V object, Class<T> type) {
+        try {
+            Field field = getField(object.getClass(), type);
+            if (field == null) return null;
+
+            return (T) field.get(object);
+        } catch (IllegalAccessException e) {
+            // TODO: handle the exception
+        }
+
         return null;
     }
 
