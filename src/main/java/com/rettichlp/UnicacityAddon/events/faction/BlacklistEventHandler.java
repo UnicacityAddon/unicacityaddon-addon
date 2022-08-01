@@ -1,11 +1,8 @@
 package com.rettichlp.UnicacityAddon.events.faction;
 
 import com.google.gson.Gson;
-import com.rettichlp.UnicacityAddon.UnicacityAddon;
-import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.faction.blacklist.Blacklist;
-import com.rettichlp.UnicacityAddon.base.text.ColorCode;
-import com.rettichlp.UnicacityAddon.base.text.Message;
+import com.rettichlp.UnicacityAddon.base.io.FileManager;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
 import com.rettichlp.UnicacityAddon.events.NameTagEventHandler;
 import net.minecraft.util.text.ITextComponent;
@@ -17,7 +14,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
@@ -87,22 +83,11 @@ public class BlacklistEventHandler {
 
     public static void refreshBlacklistReasons() {
         try {
-            File unicacityAddonDir = new File(UnicacityAddon.MINECRAFT.mcDataDir.getAbsolutePath() + "/unicacityAddon/");
-            if (unicacityAddonDir.exists() || unicacityAddonDir.mkdir()) {
-                File blacklistData = new File(unicacityAddonDir.getAbsolutePath() + "/blacklistData.json");
-                if (blacklistData.exists() || blacklistData.createNewFile()) {
-                    Gson g = new Gson();
-                    Path path = Paths.get(blacklistData.getAbsolutePath());
-                    BufferedReader reader = Files.newBufferedReader(path);
-                    BLACKLIST = g.fromJson(reader, Blacklist.class);
-                } else AbstractionLayer.getPlayer().sendMessage(Message.getBuilder()
-                        .error().space()
-                        .of("Datei 'blacklistData.json' wurde nicht gefunden!").color(ColorCode.GRAY).advance()
-                        .createComponent());
-            } else  AbstractionLayer.getPlayer().sendMessage(Message.getBuilder()
-                    .error().space()
-                    .of("Ordner 'unicacityAddon' wurde nicht gefunden!").color(ColorCode.GRAY).advance()
-                    .createComponent());
+            File blacklistDataFile = FileManager.getBlacklistDataFile();
+            if (blacklistDataFile == null) return;
+            BufferedReader reader = Files.newBufferedReader(Paths.get(blacklistDataFile.getAbsolutePath()));
+            Gson g = new Gson();
+            BLACKLIST = g.fromJson(reader, Blacklist.class);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
