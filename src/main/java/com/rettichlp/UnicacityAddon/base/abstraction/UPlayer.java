@@ -27,6 +27,12 @@ public interface UPlayer {
 
     void sendMessage(ITextComponent textComponent);
 
+    void sendErrorMessage(String message);
+
+    void sendInfoMessage(String message);
+
+    void sendSyntaxMessage(String message);
+
     void sendMessageAsString(String message);
 
     void sendChatMessage(String message);
@@ -66,4 +72,6 @@ public interface UPlayer {
     void setNaviRoute(int x, int y, int z);
 
     void setNaviRoute(BlockPos blockPos);
+
+    void copyToClipboard(String string);
 }

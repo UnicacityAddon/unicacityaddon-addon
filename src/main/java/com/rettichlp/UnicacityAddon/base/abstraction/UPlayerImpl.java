@@ -4,6 +4,8 @@ import com.rettichlp.UnicacityAddon.UnicacityAddon;
 import com.rettichlp.UnicacityAddon.base.faction.Faction;
 import com.rettichlp.UnicacityAddon.base.faction.FactionHandler;
 import com.rettichlp.UnicacityAddon.base.faction.rettungsdienst.Medication;
+import com.rettichlp.UnicacityAddon.base.text.ColorCode;
+import com.rettichlp.UnicacityAddon.base.text.Message;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.client.network.NetworkPlayerInfo;
@@ -17,6 +19,9 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 
+import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.util.UUID;
 
 /**
@@ -34,6 +39,24 @@ public class UPlayerImpl implements UPlayer {
 
     @Override public void sendMessage(ITextComponent textComponent) {
         getPlayer().sendMessage(textComponent);
+    }
+
+    @Override public void sendErrorMessage(String message) {
+        sendMessage(Message.getBuilder()
+                .error().space()
+                .of(message).color(ColorCode.GRAY).advance()
+                .createComponent());
+    }
+
+    @Override public void sendInfoMessage(String message) {
+        sendMessage(Message.getBuilder()
+                .info().space()
+                .of(message).color(ColorCode.WHITE).advance()
+                .createComponent());
+    }
+
+    @Override public void sendSyntaxMessage(String message) {
+        sendErrorMessage("Syntax: " + message);
     }
 
     @Override public void sendMessageAsString(String message) {
@@ -115,5 +138,12 @@ public class UPlayerImpl implements UPlayer {
 
     @Override public void setNaviRoute(BlockPos blockPos) {
         sendChatMessage("/navi " + blockPos.getX() + "/" + blockPos.getY() + "/" + blockPos.getZ());
+    }
+
+    @Override public void copyToClipboard(String string) {
+        StringSelection stringSelection = new StringSelection(string);
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        clipboard.setContents(stringSelection, null);
+        sendInfoMessage("\"" + string + "\" wurde in die Zwischenablage kopiert.");
     }
 }
