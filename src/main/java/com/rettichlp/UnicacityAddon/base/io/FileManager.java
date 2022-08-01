@@ -51,12 +51,12 @@ public class FileManager {
         String date = DATE_FORMAT.format(new Date());
         StringBuilder sb = new StringBuilder(date);
         int i = 1;
-        while (new File(UnicacityAddon.MINECRAFT.mcDataDir.getAbsolutePath() + "/unicacityAddon/screenshots/" + date + ".jpg").exists()) {
+        while (new File(getAddonScreenshotDir().getAbsolutePath() + "/" + sb + ".jpg").exists()) {
             if (i == 1) sb.append("_").append(i++);
             else sb.replace(sb.length() - 1, sb.length(), String.valueOf(i));
         }
 
-        File newImageFile = new File(sb.append(".jpg").toString());
+        File newImageFile = new File(getAddonScreenshotDir().getAbsolutePath() + "/" + sb + ".jpg");
         return newImageFile.createNewFile() ? newImageFile : null;
     }
 }

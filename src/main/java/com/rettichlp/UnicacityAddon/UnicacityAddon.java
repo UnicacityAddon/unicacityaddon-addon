@@ -3,6 +3,7 @@ package com.rettichlp.UnicacityAddon;
 import com.rettichlp.UnicacityAddon.base.config.ConfigSettings;
 import com.rettichlp.UnicacityAddon.base.faction.FactionHandler;
 import com.rettichlp.UnicacityAddon.base.module.UCModuleHandler;
+import com.rettichlp.UnicacityAddon.base.registry.KeyBindRegistry;
 import com.rettichlp.UnicacityAddon.commands.ACallCommand;
 import com.rettichlp.UnicacityAddon.commands.ASMSCommand;
 import com.rettichlp.UnicacityAddon.commands.NearestATMCommand;
@@ -19,10 +20,10 @@ import com.rettichlp.UnicacityAddon.commands.faction.terroristen.ExplosiveBeltCo
 import com.rettichlp.UnicacityAddon.events.ATMInfoEventHandler;
 import com.rettichlp.UnicacityAddon.events.BombTimerEventHandler;
 import com.rettichlp.UnicacityAddon.events.CarEventHandler;
-import com.rettichlp.UnicacityAddon.events.HotkeyEventHandler;
 import com.rettichlp.UnicacityAddon.events.MobileEventHandler;
 import com.rettichlp.UnicacityAddon.events.NameTagEventHandler;
 import com.rettichlp.UnicacityAddon.events.SalaryCountEventHandler;
+import com.rettichlp.UnicacityAddon.events.ScreenshotEventHandler;
 import com.rettichlp.UnicacityAddon.events.TabListEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.BlacklistEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.ContractEventHandler;
@@ -66,8 +67,11 @@ public class UnicacityAddon extends LabyModAddon {
     public void onEnable() {
         ADDON = this;
 
-        //UCCommandHandler.registerCommands();
-        // ForgeCommands
+        //CommandRegistry.registerCommands(); TODO
+        //ModuleRegistry.registerModules(); TODO
+        //EventRegistry.registerEvents(); TODO
+
+        // ForgeCommands - TODO remove later
         ClientCommandHandler.instance.registerCommand(new ACallCommand());
         ClientCommandHandler.instance.registerCommand(new ARezeptAcceptCommand());
         ClientCommandHandler.instance.registerCommand(new ARezeptGiveCommand());
@@ -82,7 +86,7 @@ public class UnicacityAddon extends LabyModAddon {
         ClientCommandHandler.instance.registerCommand(new ShareLocationCommand());
         ClientCommandHandler.instance.registerCommand(new TriggerEventCommand());
 
-        // ForgeEvents -> https://docs.labymod.net/pages/create-addons/forge_events/
+        // ForgeEvents -> https://docs.labymod.net/pages/create-addons/forge_events/ - TODO remove later
         ADDON.getApi().registerForgeListener(new ATMInfoEventHandler());
         ADDON.getApi().registerForgeListener(new BlacklistEventHandler());
         ADDON.getApi().registerForgeListener(new BombTimerEventHandler());
@@ -91,7 +95,7 @@ public class UnicacityAddon extends LabyModAddon {
         ADDON.getApi().registerForgeListener(new EmergencyServiceEventHandler());
         ADDON.getApi().registerForgeListener(new ExplosiveBeltTimerEvent());
         ADDON.getApi().registerForgeListener(new FBIHackEventHandler());
-        ADDON.getApi().registerForgeListener(new HotkeyEventHandler());
+        ADDON.getApi().registerForgeListener(new ScreenshotEventHandler());
         ADDON.getApi().registerForgeListener(new SalaryCountEventHandler());
         ADDON.getApi().registerForgeListener(new MedicationEventHandler());
         ADDON.getApi().registerForgeListener(new MobileEventHandler());
@@ -102,10 +106,10 @@ public class UnicacityAddon extends LabyModAddon {
         ADDON.getApi().registerForgeListener(new ShareLocationEventHandler());
         ADDON.getApi().registerForgeListener(new WantedEventHandler());
 
-        // LabyModEvents -> https://docs.labymod.net/pages/create-addons/labymod_events/
+        // LabyModEvents -> https://docs.labymod.net/pages/create-addons/labymod_events/ - TODO remove later
         ADDON.getApi().getEventManager().register(new TabListEventHandler());
 
-        // Modules -> https://docs.labymod.net/pages/create-addons/module_system/
+        // Modules -> https://docs.labymod.net/pages/create-addons/module_system/ - TODO remove later
         ModuleCategoryRegistry.loadCategory(UCModuleHandler.UNICACITY);
         ADDON.getApi().registerModule(new BombTimerModule());
         ADDON.getApi().registerModule(new CarOpenModule());
@@ -128,6 +132,8 @@ public class UnicacityAddon extends LabyModAddon {
         TabListEventHandler.refreshTablist();
         // Update blacklist
         BlacklistEventHandler.refreshBlacklistReasons();
+        // Register keybindings
+        KeyBindRegistry.registerKeyBinds();
     }
 
     @Override
