@@ -106,7 +106,7 @@ public class ConfigSettings {
                 .create()));
 
         BooleanElement eventATM = new BooleanElement("ATM Info", unicacityAddon, new ControlElement.IconData(Material.PAPER), "EVENT_ATM",
-                ConfigElements.getEventATMInfo());
+                ConfigElements.getEventATM());
         eventATM.setSubSettings(eventATMSettings(unicacityAddon));
         list.add(eventATM);
 
@@ -197,10 +197,10 @@ public class ConfigSettings {
         Settings settings = new Settings();
 
         BooleanElement eventATMFBank = new BooleanElement("Kontoauszug FBank", unicacityAddon, new ControlElement.IconData(Material.GOLD_INGOT), "EVENT_ATM_FBANK",
-                ConfigElements.getEventATMInfo());
+                ConfigElements.getEventATMFBank());
 
         BooleanElement eventATMGRKasse = new BooleanElement("Kontoauszug GRKasse", unicacityAddon, new ControlElement.IconData(Material.GOLD_INGOT), "EVENT_ATM_GRKASSE",
-                ConfigElements.getEventATMInfo());
+                ConfigElements.getEventATMGRKasse());
 
         BooleanElement eventATMInfo = new BooleanElement("Geld im ATM", unicacityAddon, new ControlElement.IconData(Material.GOLD_INGOT), "EVENT_ATM_INFO",
                 ConfigElements.getEventATMInfo());
