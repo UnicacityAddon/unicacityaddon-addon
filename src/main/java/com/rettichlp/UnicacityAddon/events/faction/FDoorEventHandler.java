@@ -12,6 +12,9 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * @author Fuzzlemann
+ */
 public class FDoorEventHandler {
 
     private final Set<FDoor> F_DOORS = ImmutableSet.of(
