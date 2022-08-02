@@ -6,6 +6,10 @@ import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import org.lwjgl.input.Keyboard;
 
+/**
+ * @author RettichLP
+ * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/keybind/KeyBindRegistry.java">UCUtils by paulzhng</a>
+ */
 public class KeyBindRegistry {
 
     private static final String KEY_CATEGORY = "UnicacityAddon";

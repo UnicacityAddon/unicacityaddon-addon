@@ -10,6 +10,9 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.regex.Matcher;
 
+/**
+ * @author RettichLP
+ */
 public class MobileEventHandler {
 
     public static int lastCheckedNumber = 0;
@@ -60,7 +63,7 @@ public class MobileEventHandler {
 
     /**
      * The GuiOpenEvent is called before a Gui is opened. If we don't want the gui to open, we can cancel the event.<br>
-     * Problem: Since the content of the gui is only set after opening and we haven't opened the gui, the gui items are
+     * Problem: Since the content of the gui is only set after opening, and we haven't opened the gui, the gui items are
      * placed in the inventory on the client side.<br>
      * Solution: We close the inventory after opening it (and setting the items).
      */

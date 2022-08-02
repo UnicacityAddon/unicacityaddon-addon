@@ -12,7 +12,7 @@ import javax.annotation.Nonnull;
 
 /**
  * @author Dimiikou
- **/
+ */
 public class ExplosiveBeltCommand extends CommandBase {
 
     @Override @Nonnull

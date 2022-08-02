@@ -20,6 +20,9 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
+/**
+ * @author RettichLP
+ */
 public class NameTagEventHandler {
 
     private static int tick;

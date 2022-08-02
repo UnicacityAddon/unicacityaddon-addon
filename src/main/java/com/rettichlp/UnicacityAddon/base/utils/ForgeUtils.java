@@ -1,6 +1,7 @@
 package com.rettichlp.UnicacityAddon.base.utils;
 
 import com.rettichlp.UnicacityAddon.UnicacityAddon;
+import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.client.network.NetworkPlayerInfo;
@@ -8,16 +9,13 @@ import net.minecraft.client.network.NetworkPlayerInfo;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /**
- * @author Fuzzlemann
+ * @author RettichLP
+ * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/utils/ForgeUtils.java">UCUtils by paulzhng</a>
  */
 public class ForgeUtils {
-
-    private static final Pattern STRIP_COLOR_PATTERN = Pattern.compile("(?i)§[0-9A-FK-OR]");
-    private static final Pattern STRIP_PREFIX_PATTERN = Pattern.compile("\\[[0-9A-Za-z]+]");
 
     public static List<String> getOnlinePlayers() {
         Minecraft minecraft = UnicacityAddon.MINECRAFT;
@@ -36,10 +34,10 @@ public class ForgeUtils {
     }
 
     public static String stripColor(String string) {
-        return STRIP_COLOR_PATTERN.matcher(string).replaceAll("");
+        return PatternHandler.STRIP_COLOR_PATTERN.matcher(string).replaceAll("");
     }
 
     public static String stripPrefix(String string) {
-        return STRIP_PREFIX_PATTERN.matcher(string).replaceAll("");
+        return PatternHandler.STRIP_PREFIX_PATTERN.matcher(string).replaceAll("");
     }
 }

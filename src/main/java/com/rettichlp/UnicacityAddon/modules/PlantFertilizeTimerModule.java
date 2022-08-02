@@ -1,6 +1,5 @@
 package com.rettichlp.UnicacityAddon.modules;
 
-import com.rettichlp.UnicacityAddon.base.module.UCModule;
 import com.rettichlp.UnicacityAddon.base.module.UCModuleHandler;
 import net.labymod.ingamegui.ModuleCategory;
 import net.labymod.ingamegui.moduletypes.SimpleModule;
@@ -12,14 +11,13 @@ import java.text.DecimalFormat;
 /**
  * @author Dimiikou
  */
-@UCModule
 public class PlantFertilizeTimerModule extends SimpleModule {
 
     public static boolean plantRunning = false;
 
     public static int currentCount = 0;
     public static int currentTick = 0;
-    public static int timeNeeded = 4200;
+    public static final int timeNeeded = 4200;
     public static String timer = "";
 
     @Override public String getControlName() {

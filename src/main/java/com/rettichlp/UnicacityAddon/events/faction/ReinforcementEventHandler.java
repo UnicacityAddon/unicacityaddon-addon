@@ -22,7 +22,7 @@ import java.util.regex.Pattern;
 /**
  * @author Dimiikou
  * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/commands/faction/CallReinforcementCommand.java">UCUtils by paulzhng</a>
- **/
+ */
 public class ReinforcementEventHandler {
 
     private static ReinforcementCommand.ReinforcementType lastReinforcement;

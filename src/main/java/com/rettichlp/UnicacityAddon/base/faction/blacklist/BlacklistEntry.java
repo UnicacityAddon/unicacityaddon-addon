@@ -1,5 +1,8 @@
 package com.rettichlp.UnicacityAddon.base.faction.blacklist;
 
+/**
+ * @author RettichLP
+ */
 public class BlacklistEntry {
 
     private final String reason;

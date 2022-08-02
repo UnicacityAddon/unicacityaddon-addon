@@ -19,6 +19,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 
+/**
+ * @author RettichLP
+ * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/events/NameFormatEventHandler.java">UCUtils by paulzhng</a>
+ */
 public class BlacklistEventHandler {
 
     public static Blacklist BLACKLIST;

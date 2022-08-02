@@ -4,6 +4,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * @author RettichLP
+ */
 public class Blacklist {
 
     private List<BlacklistEntry> blacklistEntryList;

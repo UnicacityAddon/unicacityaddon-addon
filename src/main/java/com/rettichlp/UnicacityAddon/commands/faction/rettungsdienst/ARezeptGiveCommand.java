@@ -20,7 +20,6 @@ import net.minecraft.util.math.BlockPos;
 
 /**
  * @author RettichLP
- * @see <a href="https://github.com/paulzhng/UCUtils/blob/e1e4cc90a852a24fbb552413eb478097f865c6f3/src/main/java/de/fuzzlemann/ucutils/commands/faction/police/ASUCommand.java">UCUtils by paulzhng</a>
  */
 public class ARezeptGiveCommand extends CommandBase {
 

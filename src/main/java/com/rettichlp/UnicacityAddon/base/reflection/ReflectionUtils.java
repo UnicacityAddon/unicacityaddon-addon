@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 
 /**
  * @author RettichLP
+ * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/utils/ReflectionUtil.java">UCUtils by paulzhng</a>
  */
 public class ReflectionUtils {
 
@@ -30,13 +31,6 @@ public class ReflectionUtils {
     public static List<Class<?>> getClassesAnnotatedWith(Class<?> annotation, String subPackage) {
         return getClassesInPackage(subPackage).stream().filter(clazz -> clazz.isAnnotationPresent((Class<? extends Annotation>) annotation)).collect(Collectors.toList());
     }
-
-    /*
-    public static Class getClassInPackage(String className, String packageName) {
-        return getClassesInPackage(packageName).stream()
-                .filter(clazz -> className.equals(clazz.getSimpleName())).findFirst().get();
-    }
-    */
 
     private static Set<Class<?>> getClassesInPackage(String packageName) {
         InputStream stream = ClassLoader.getSystemClassLoader().getResourceAsStream(packageName.replaceAll("[.]", "/"));

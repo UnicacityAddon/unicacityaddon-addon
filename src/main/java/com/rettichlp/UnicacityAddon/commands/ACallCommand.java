@@ -22,7 +22,7 @@ import net.minecraft.util.math.BlockPos;
  */
 public class ACallCommand extends CommandBase {
 
-    Timer timer = new Timer();
+    final Timer timer = new Timer();
 
     @Override @Nonnull public String getName() {
         return "acall";

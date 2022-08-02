@@ -1,5 +1,8 @@
 package com.rettichlp.UnicacityAddon.base.utils;
 
+/**
+ * @author RettichLP
+ */
 public class TextUtils {
 
     public static String makeStringByArgs(Object[] args, String space) {

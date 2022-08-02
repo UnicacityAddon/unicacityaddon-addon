@@ -1,6 +1,5 @@
 package com.rettichlp.UnicacityAddon.modules;
 
-import com.rettichlp.UnicacityAddon.base.module.UCModule;
 import com.rettichlp.UnicacityAddon.base.module.UCModuleHandler;
 import net.labymod.ingamegui.ModuleCategory;
 import net.labymod.ingamegui.moduletypes.SimpleModule;
@@ -10,11 +9,10 @@ import net.labymod.utils.Material;
 /**
  * @author Dimiikou
  */
-@UCModule
 public class PlantWaterTimerModule extends SimpleModule {
 
     public static int currentCount = 0;
-    public static int timeNeeded = 3000;
+    public static final int timeNeeded = 3000;
     public static String timer = "";
 
     @Override public String getControlName() {

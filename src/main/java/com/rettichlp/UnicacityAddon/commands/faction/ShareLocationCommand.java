@@ -21,7 +21,7 @@ import java.util.Set;
 /**
  * @author Dimiikou
  * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/commands/faction/ShareLocationCommand.java">UCUtils by paulzhng</a>
- **/
+ */
 public class ShareLocationCommand extends CommandBase {
 
     @Override @Nonnull public String getName() {

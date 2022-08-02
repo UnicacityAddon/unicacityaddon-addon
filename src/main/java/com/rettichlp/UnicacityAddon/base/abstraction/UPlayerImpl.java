@@ -25,7 +25,8 @@ import java.awt.datatransfer.StringSelection;
 import java.util.UUID;
 
 /**
- * @author Fuzzlemann
+ * @author RettichLP
+ * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/base/abstraction/UPlayerImpl.java">UCUtils by paulzhng</a>
  */
 public class UPlayerImpl implements UPlayer {
 

@@ -21,7 +21,7 @@ import net.minecraft.util.math.BlockPos;
 /**
  * @author Dimiikou
  * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/commands/faction/CallReinforcementCommand.java">UCUtils by paulzhng</a>
- **/
+ */
 public class ReinforcementCommand extends CommandBase {
 
     @Override @Nonnull public String getName() {
@@ -90,10 +90,8 @@ public class ReinforcementCommand extends CommandBase {
             tabCompletions.add("ontheway");
             String input = args[args.length - 1].toLowerCase().replace('-', ' ');
             tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
-            return tabCompletions;
-        } else {
-            return tabCompletions;
         }
+        return tabCompletions;
     }
 
     public enum Type {
@@ -121,7 +119,7 @@ public class ReinforcementCommand extends CommandBase {
             this.chatType = chatType;
             this.message = message;
 
-            this.pattern = message != null ? Pattern.compile("^.+ ((?:\\[UC])*[a-zA-Z0-9_]+): " + message + "$") : null;
+            this.pattern = message != null ? Pattern.compile("^.+ ((?:\\[UC])*\\w+): " + message + "$") : null;
         }
 
         public String getArgument() {

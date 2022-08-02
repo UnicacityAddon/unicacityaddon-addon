@@ -5,7 +5,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 /**
- * @author RettichLP
+ * @author Dimiikou
  */
 public class ExplosiveBeltTimerEvent {
 
