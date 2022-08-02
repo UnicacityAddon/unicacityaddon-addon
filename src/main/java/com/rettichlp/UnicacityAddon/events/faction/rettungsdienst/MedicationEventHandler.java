@@ -10,6 +10,9 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * @author RettichLP
+ */
 public class MedicationEventHandler {
 
     private static final Timer TIMER = new Timer();

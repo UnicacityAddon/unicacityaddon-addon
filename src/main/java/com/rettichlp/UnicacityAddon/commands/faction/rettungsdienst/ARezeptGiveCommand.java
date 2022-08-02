@@ -7,26 +7,19 @@ import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
 import com.rettichlp.UnicacityAddon.base.utils.ForgeUtils;
 import com.rettichlp.UnicacityAddon.base.utils.MathUtils;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
-
 /**
  * @author RettichLP
- * @see <a href="https://github.com/paulzhng/UCUtils/blob/e1e4cc90a852a24fbb552413eb478097f865c6f3/src/main/java/de/fuzzlemann/ucutils/commands/faction/police/ASUCommand.java">UCUtils by paulzhng</a>
  */
 public class ARezeptGiveCommand extends CommandBase {
 
@@ -62,8 +55,8 @@ public class ARezeptGiveCommand extends CommandBase {
         medication = Medication.getMedication(args[1]);
         if (medication == null) return;
 
-        if (!MathUtils.isInteger(args[2], 10)) return;
-        amount = Integer.parseInt(args[2]);
+        if (!MathUtils.isInteger(args[2])) return;
+        amount = Integer.parseInt(args[2]) - 1;
 
         p.sellMedication(target, medication);
     }

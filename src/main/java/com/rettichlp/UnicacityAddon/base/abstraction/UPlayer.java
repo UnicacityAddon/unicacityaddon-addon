@@ -4,6 +4,7 @@ import com.rettichlp.UnicacityAddon.base.faction.Faction;
 import com.rettichlp.UnicacityAddon.base.faction.rettungsdienst.Medication;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.network.NetHandlerPlayClient;
+import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.inventory.Container;
 import net.minecraft.scoreboard.Scoreboard;
 import net.minecraft.scoreboard.Team;
@@ -26,6 +27,12 @@ public interface UPlayer {
 
     void sendMessage(ITextComponent textComponent);
 
+    void sendErrorMessage(String message);
+
+    void sendInfoMessage(String message);
+
+    void sendSyntaxMessage(String message);
+
     void sendMessageAsString(String message);
 
     void sendChatMessage(String message);
@@ -33,6 +40,8 @@ public interface UPlayer {
     void playSound(SoundEvent soundIn, float volume, float pitch);
 
     String getName();
+
+    NetworkPlayerInfo getNetworkPlayerInfo();
 
     UUID getUniqueID();
 
@@ -63,4 +72,6 @@ public interface UPlayer {
     void setNaviRoute(int x, int y, int z);
 
     void setNaviRoute(BlockPos blockPos);
+
+    void copyToClipboard(String string);
 }

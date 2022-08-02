@@ -2,24 +2,26 @@ package com.rettichlp.UnicacityAddon.commands.faction;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
+import com.rettichlp.UnicacityAddon.base.text.ColorCode;
+import com.rettichlp.UnicacityAddon.base.text.Message;
 import com.rettichlp.UnicacityAddon.base.utils.MathUtils;
-import net.minecraft.command.CommandBase;
-import net.minecraft.command.ICommandSender;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.math.BlockPos;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import com.rettichlp.UnicacityAddon.events.MobileEventHandler;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import net.minecraft.command.CommandBase;
+import net.minecraft.command.ICommandSender;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.math.BlockPos;
 
 /**
  * @author Dimiikou
  * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/commands/faction/CallReinforcementCommand.java">UCUtils by paulzhng</a>
- **/
+ */
 public class ReinforcementCommand extends CommandBase {
 
     @Override @Nonnull public String getName() {
@@ -38,8 +40,17 @@ public class ReinforcementCommand extends CommandBase {
         return true;
     }
 
-    @Override public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args) {
+    @Override public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
         UPlayer p = AbstractionLayer.getPlayer();
+
+        if (!MobileEventHandler.hasCommunications) {
+            Message.getBuilder()
+                    .error()
+                    .space()
+                    .of("Du hast keine Kommunikationsmittel!").color(ColorCode.GRAY).advance()
+                    .sendTo(p.getPlayer());
+            return;
+        }
 
         Type firstType = Type.DEFAULT;
         if (args.length == 1 || args.length == 6) firstType = Type.getByArgument(args[args.length - 1]);
@@ -49,7 +60,7 @@ public class ReinforcementCommand extends CommandBase {
         if ((args.length >= 5) && args[0].equalsIgnoreCase("ontheway")) {
             String name = args[1];
 
-            if (!MathUtils.isInteger(args[2], 10) || !MathUtils.isInteger(args[3], 10) || !MathUtils.isInteger(args[4], 10)) return;
+            if (!MathUtils.isInteger(args[2]) || !MathUtils.isInteger(args[3]) || !MathUtils.isInteger(args[4])) return;
             int x = Integer.parseInt(args[2]);
             int y = Integer.parseInt(args[3]);
             int z = Integer.parseInt(args[4]);
@@ -79,10 +90,8 @@ public class ReinforcementCommand extends CommandBase {
             tabCompletions.add("ontheway");
             String input = args[args.length - 1].toLowerCase().replace('-', ' ');
             tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
-            return tabCompletions;
-        } else {
-            return tabCompletions;
         }
+        return tabCompletions;
     }
 
     public enum Type {
@@ -110,7 +119,7 @@ public class ReinforcementCommand extends CommandBase {
             this.chatType = chatType;
             this.message = message;
 
-            this.pattern = message != null ? Pattern.compile("^.+ ((?:\\[UC])*[a-zA-Z0-9_]+): " + message + "$") : null;
+            this.pattern = message != null ? Pattern.compile("^.+ ((?:\\[UC])*\\w+): " + message + "$") : null;
         }
 
         public String getArgument() {

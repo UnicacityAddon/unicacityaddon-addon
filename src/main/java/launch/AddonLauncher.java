@@ -12,7 +12,7 @@ import net.minecraft.launchwrapper.Launch;
 public class AddonLauncher {
 
   public static void main(String[] args) {
-    Map<String, String> arguments = new HashMap();
+    Map<String, String> arguments = new HashMap<>();
     hackNatives();
     arguments.put("version", "LabyMod-Addon-Environment");
     arguments.put("assetIndex", System.getenv("assetIndex"));
@@ -20,7 +20,7 @@ public class AddonLauncher {
     arguments.put("accessToken", "LabyMod");
     arguments.put("userProperties", "{}");
     arguments.put("tweak", System.getenv("tweakClass"));
-    List<String> argumentList = new ArrayList();
+    List<String> argumentList = new ArrayList<>();
     arguments.forEach((k, v) -> {
       argumentList.add("--" + k);
       argumentList.add(v);

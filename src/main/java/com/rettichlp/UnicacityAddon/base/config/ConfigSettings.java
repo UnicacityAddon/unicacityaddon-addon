@@ -12,6 +12,7 @@ import net.labymod.settings.elements.ControlElement;
 import net.labymod.settings.elements.DropDownElement;
 import net.labymod.settings.elements.HeaderElement;
 import net.labymod.settings.elements.SettingsElement;
+import net.labymod.settings.elements.StringElement;
 import net.labymod.utils.Material;
 
 import java.util.List;
@@ -34,11 +35,11 @@ public class ConfigSettings {
                 .space()
                 .of("-").color(ColorCode.GRAY).bold().advance()
                 .space()
-                .of("by RettichLP").color(ColorCode.GOLD).advance()
+                .of("by RettichLP and Dimiikou").color(ColorCode.GOLD).advance()
                 .create()));
 
         list.add(new HeaderElement(Message.getBuilder()
-                .of("Einstellungen").color(ColorCode.WHITE).advance()
+                .of("Nametag").color(ColorCode.WHITE).advance()
                 .create()));
 
         BooleanElement nameTagFactionSuffix = new BooleanElement("Fraktionsinfo", unicacityAddon, new ControlElement.IconData(Material.NAME_TAG), "NAMETAG_FACTIONSUFFIX",
@@ -60,21 +61,62 @@ public class ConfigSettings {
         nameTagStreetwar.setSubSettings(nameTagStreetwarSettings());
         list.add(nameTagStreetwar);
 
-        BooleanElement nameTagForHouseBan = new BooleanElement("Hausverbot", unicacityAddon, new ControlElement.IconData(Material.MOB_SPAWNER), "NAMETAG_HOUSEBAN",
+        BooleanElement nameTagHouseBan = new BooleanElement("Hausverbot", unicacityAddon, new ControlElement.IconData(Material.MOB_SPAWNER), "NAMETAG_HOUSEBAN",
                 ConfigElements.getNameTagHouseban());
-        list.add(nameTagForHouseBan);
+        list.add(nameTagHouseBan);
+
+        BooleanElement nameTagDuty = new BooleanElement("Duty", unicacityAddon, new ControlElement.IconData(Material.REDSTONE_TORCH_ON), "NAMETAG_DUTY",
+                ConfigElements.getNameTagDuty());
+        list.add(nameTagDuty);
+
+        BooleanElement nameTagWPS = new BooleanElement("WPS", unicacityAddon, new ControlElement.IconData(Material.IRON_FENCE), "NAMETAG_WPS",
+                ConfigElements.getNameTagWPS());
+        list.add(nameTagWPS);
+
+        BooleanElement nameTagBlacklist = new BooleanElement("Blacklist", unicacityAddon, new ControlElement.IconData(Material.IRON_SWORD), "NAMETAG_BLACKLIST",
+                ConfigElements.getNameTagBlacklist());
+        list.add(nameTagBlacklist);
+
+        BooleanElement nameTagContract = new BooleanElement("Contract", unicacityAddon, new ControlElement.IconData(Material.IRON_SWORD), "NAMETAG_CONTRACT",
+            ConfigElements.getNameTagContract());
+        list.add(nameTagContract);
 
         list.add(new HeaderElement(Message.getBuilder()
-                .of("").color(ColorCode.WHITE).advance()
+                .of("Text").color(ColorCode.WHITE).advance()
                 .create()));
 
-        BooleanElement eventATMInfo = new BooleanElement("ATM Info", unicacityAddon, new ControlElement.IconData(Material.PAPER), "EVENT_ATMINFO",
-                ConfigElements.getEventATMInfo());
-        list.add(eventATMInfo);
+        StringElement patternReinforcement = new StringElement("Reinforcement", unicacityAddon, new ControlElement.IconData(Material.PAPER), "PATTERN_REINFORCEMENT",
+                ConfigElements.getPatternReinforcement());
+        list.add(patternReinforcement);
+
+        StringElement patternReinforcementReply = new StringElement("Reinforcement Antwort", unicacityAddon, new ControlElement.IconData(Material.PAPER), "PATTERN_REINFORCEMENT_REPLY",
+                ConfigElements.getPatternReinforcementReply());
+        list.add(patternReinforcementReply);
+
+        StringElement patternSLoc = new StringElement("Position", unicacityAddon, new ControlElement.IconData(Material.PAPER), "PATTERN_SLOC",
+                ConfigElements.getPatternSloc());
+        list.add(patternSLoc);
+
+        StringElement reportGreeting = new StringElement("Report Begrüßung", unicacityAddon, new ControlElement.IconData(Material.PAPER), "REPORT_GREETING",
+                ConfigElements.getReportGreeting());
+        list.add(reportGreeting);
+
+        list.add(new HeaderElement(Message.getBuilder()
+                .of("Sonstiges").color(ColorCode.WHITE).advance()
+                .create()));
+
+        BooleanElement eventATM = new BooleanElement("ATM Info", unicacityAddon, new ControlElement.IconData(Material.PAPER), "EVENT_ATM",
+                ConfigElements.getEventATM());
+        eventATM.setSubSettings(eventATMSettings(unicacityAddon));
+        list.add(eventATM);
 
         BooleanElement eventTabList = new BooleanElement("Sortierte Tablist", unicacityAddon, new ControlElement.IconData(Material.COMMAND), "EVENT_TABLIST",
                 ConfigElements.getEventTabList());
         list.add(eventTabList);
+
+        BooleanElement eventCarFind = new BooleanElement("Route bei /car find", unicacityAddon, new ControlElement.IconData(Material.MINECART), "EVENT_CARFIND",
+                ConfigElements.getEventCarFind());
+        list.add(eventCarFind);
     }
 
     private static Settings nameTagAllianceSettings() {
@@ -148,6 +190,24 @@ public class ConfigSettings {
         settings.add(dropDownElement0);
         settings.add(dropDownElement1);
         settings.add(dropDownElement2);
+        return settings;
+    }
+
+    private static Settings eventATMSettings(UnicacityAddon unicacityAddon) {
+        Settings settings = new Settings();
+
+        BooleanElement eventATMFBank = new BooleanElement("Kontoauszug FBank", unicacityAddon, new ControlElement.IconData(Material.GOLD_INGOT), "EVENT_ATM_FBANK",
+                ConfigElements.getEventATMFBank());
+
+        BooleanElement eventATMGRKasse = new BooleanElement("Kontoauszug GRKasse", unicacityAddon, new ControlElement.IconData(Material.GOLD_INGOT), "EVENT_ATM_GRKASSE",
+                ConfigElements.getEventATMGRKasse());
+
+        BooleanElement eventATMInfo = new BooleanElement("Geld im ATM", unicacityAddon, new ControlElement.IconData(Material.GOLD_INGOT), "EVENT_ATM_INFO",
+                ConfigElements.getEventATMInfo());
+
+        settings.add(eventATMFBank);
+        settings.add(eventATMGRKasse);
+        settings.add(eventATMInfo);
         return settings;
     }
 }

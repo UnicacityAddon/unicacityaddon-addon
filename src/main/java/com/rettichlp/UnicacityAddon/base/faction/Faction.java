@@ -28,7 +28,7 @@ public enum Faction {
             .of("◢").color(ColorCode.DARK_GRAY).advance().create()),
     KERZAKOV("kerzakov", "Kerzakov Familie", Message.getBuilder()
             .of("◤").color(ColorCode.DARK_GRAY).advance()
-            .of("☭").color(ColorCode.RED).advance()
+            .of("✮").color(ColorCode.RED).advance()
             .of("◢").color(ColorCode.DARK_GRAY).advance().create()),
     KIRCHE("kirche", "Kirche", Message.getBuilder()
             .of("◤").color(ColorCode.DARK_GRAY).advance()

@@ -8,6 +8,11 @@ import com.rettichlp.UnicacityAddon.base.faction.FactionHandler;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.FormattingCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
+import com.rettichlp.UnicacityAddon.events.faction.BlacklistEventHandler;
+import com.rettichlp.UnicacityAddon.events.faction.ContractEventHandler;
+import com.rettichlp.UnicacityAddon.events.faction.polizei.WantedEventHandler;
+import java.util.List;
+import java.util.Objects;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemSkull;
@@ -15,9 +20,9 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
-import java.util.List;
-import java.util.Objects;
-
+/**
+ * @author RettichLP
+ */
 public class NameTagEventHandler {
 
     private static int tick;
@@ -26,9 +31,11 @@ public class NameTagEventHandler {
     public void onRenderNameTag(PlayerEvent.NameFormat e) {
         String playerName = e.getUsername();
         String houseban = getHouseban(playerName);
+        String outlaw = getOutlaw(playerName);
         String prefix = getPrefix(playerName);
-        String suffix = getSuffix(playerName);
-        e.setDisplayname(houseban + prefix + playerName + suffix);
+        String factionInfo = getFactionInfo(playerName);
+        String duty = getDuty(playerName);
+        e.setDisplayname(houseban + outlaw + prefix + playerName + factionInfo + duty);
     }
 
     @SubscribeEvent
@@ -47,14 +54,14 @@ public class NameTagEventHandler {
             if (name.contains("◤")) return; // already edited
 
             String prefix = getPrefix(playerName);
-            String suffix = getSuffix(playerName);
+            String factionInfo = getFactionInfo(playerName);
 
             if (name.startsWith(ColorCode.DARK_GRAY.getCode())) { // non-revivable
-                entityItem.setCustomNameTag(ColorCode.DARK_GRAY.getCode() + "✟" + playerName + suffix);
+                entityItem.setCustomNameTag(ColorCode.DARK_GRAY.getCode() + "✟" + playerName + factionInfo);
                 return;
             }
 
-            entityItem.setCustomNameTag(ColorCode.GRAY.getCode() + prefix + "✟" + playerName + suffix);
+            entityItem.setCustomNameTag(ColorCode.GRAY.getCode() + prefix + "✟" + playerName + factionInfo);
         });
 
         tick = 0;
@@ -76,9 +83,50 @@ public class NameTagEventHandler {
         return houseban.toString();
     }
 
+    private String getOutlaw(String playerName) {
+        StringBuilder outlaw = new StringBuilder();
+        outlaw.append(FormattingCode.RESET.getCode());
+
+        if (ConfigElements.getNameTagBlacklist()) {
+            if (BlacklistEventHandler.BLACKLIST_MAP.containsKey(playerName)) {
+                if (BlacklistEventHandler.BLACKLIST_MAP.get(playerName)) outlaw.append(Message.getBuilder()
+                        .of("[").color(ColorCode.DARK_GRAY).advance()
+                        .of("V").color(ColorCode.RED).advance()
+                        .of("]").color(ColorCode.DARK_GRAY).advance()
+                        .add(FormattingCode.RESET.getCode())
+                        .create());
+            }
+        }
+
+        return outlaw.toString();
+    }
+
     private String getPrefix(String playerName) {
         StringBuilder prefix = new StringBuilder();
         prefix.append(FormattingCode.RESET.getCode());
+
+        if (ConfigElements.getNameTagWPS()) {
+            WantedEventHandler.Wanted wanted = WantedEventHandler.WANTED_MAP.get(playerName);
+            if (wanted != null) {
+                int amount = wanted.getAmount();
+                ColorCode color;
+
+                if (amount == 1) color = ColorCode.DARK_GREEN;
+                else if (amount < 15) color = ColorCode.GREEN;
+                else if (amount < 25) color = ColorCode.YELLOW;
+                else if (amount < 50) color = ColorCode.GOLD;
+                else if (amount < 60) color = ColorCode.RED;
+                else color = ColorCode.DARK_RED;
+
+                prefix.append(color.getCode());
+            }
+        }
+
+        if (ConfigElements.getNameTagBlacklist())
+            if (BlacklistEventHandler.BLACKLIST_MAP.get(playerName) != null) prefix.append(ColorCode.DARK_RED.getCode());
+
+        if (ConfigElements.getNameTagContract())
+            if (ContractEventHandler.CONTRACT_LIST.contains(playerName)) prefix.append(ColorCode.DARK_RED.getCode());
 
         if (FactionHandler.getPlayerFactionMap().containsKey(playerName)) {
             Faction targetPlayerFaction = FactionHandler.getPlayerFactionMap().get(playerName);
@@ -102,7 +150,7 @@ public class NameTagEventHandler {
         return prefix.toString();
     }
 
-    private String getSuffix(String playerName) {
+    private String getFactionInfo(String playerName) {
         StringBuilder suffix = new StringBuilder();
         suffix.append(FormattingCode.RESET.getCode());
 
@@ -112,6 +160,20 @@ public class NameTagEventHandler {
         }
 
         return suffix.toString();
+    }
+
+    private String getDuty(String playerName) {
+        StringBuilder duty = new StringBuilder();
+        duty.append(FormattingCode.RESET.getCode());
+
+        if (ConfigElements.getNameTagDuty()) {
+            if (FactionHandler.checkPlayerDuty(playerName)) duty.append(Message.getBuilder()
+                    .of(" ● ").color(ColorCode.GREEN).advance()
+                    .add(FormattingCode.RESET.getCode())
+                    .create());
+        }
+
+        return duty.toString();
     }
 
     public static void refreshAllDisplayNames() {

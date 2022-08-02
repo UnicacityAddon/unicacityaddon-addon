@@ -3,11 +3,45 @@ package com.rettichlp.UnicacityAddon.base.config;
 import com.rettichlp.UnicacityAddon.UnicacityAddon;
 import com.rettichlp.UnicacityAddon.base.faction.Faction;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
+import com.rettichlp.UnicacityAddon.base.text.Message;
+import joptsimple.internal.Strings;
 
 /**
  * @author RettichLP
  */
 public class ConfigElements {
+
+    private static final String REINFORCEMENT_FALLBACK = Message.getBuilder()
+            .of("%type%").color(ColorCode.RED).bold().advance().space()
+            .of("%sender%").color(ColorCode.AQUA).advance().space()
+            .of("-").color(ColorCode.GRAY).advance().space()
+            .of("%navipoint%").color(ColorCode.AQUA).advance().space()
+            .of("-").color(ColorCode.GRAY).advance().space()
+            .of("%distance%" + "m").color(ColorCode.DARK_AQUA).advance().create();
+    private static final String REINFORCEMENT_REPLY_FALLBACK = Message.getBuilder()
+            .of("➥").color(ColorCode.GRAY).advance().space()
+            .of("%sender%").color(ColorCode.AQUA).advance().space()
+            .of("➡").color(ColorCode.GRAY).advance().space()
+            .of("%target%").color(ColorCode.DARK_AQUA).advance().space()
+            .of("- (").color(ColorCode.GRAY).advance()
+            .of("%distance%" + "m").color(ColorCode.DARK_AQUA).advance()
+            .of(")").color(ColorCode.GRAY).advance().create();
+    private static final String SLOC_FALLBACK = Message.getBuilder()
+            .of("Position!").color(ColorCode.RED).bold().advance().space()
+            .of("-").color(ColorCode.GRAY).advance().space()
+            .of("%sender%").color(ColorCode.AQUA).advance().space()
+            .of("-").color(ColorCode.GRAY).advance().space()
+            .of("%x%").color(ColorCode.AQUA).advance().space()
+            .of("|").color(ColorCode.GRAY).advance().space()
+            .of("%y%").color(ColorCode.AQUA).advance().space()
+            .of("|").color(ColorCode.GRAY).advance().space()
+            .of("%z%").color(ColorCode.AQUA).advance().create();
+
+    // FACTIONSUFFIX
+    public static boolean getNameTagFactionSuffix() {
+        return !UnicacityAddon.ADDON.getConfig().has("NAMETAG_FACTIONSUFFIX") || UnicacityAddon.ADDON.getConfig().get("NAMETAG_FACTIONSUFFIX")
+                .getAsBoolean(); // default = true
+    }
 
     // FACTION
     public static boolean getNameTagFaction() {
@@ -23,18 +57,6 @@ public class ConfigElements {
 
     public static void setNameTagFactionColor(ColorCode factionColor) {
         UnicacityAddon.ADDON.getConfig().addProperty("NAMETAG_FACTION_COLOR", factionColor.toString());
-    }
-
-    // FACTIONSUFFIX
-    public static boolean getNameTagFactionSuffix() {
-        return !UnicacityAddon.ADDON.getConfig().has("NAMETAG_FACTIONSUFFIX") || UnicacityAddon.ADDON.getConfig().get("NAMETAG_FACTIONSUFFIX")
-                .getAsBoolean(); // default = true
-    }
-
-    // HOUSEBAN
-    public static boolean getNameTagHouseban() {
-        return UnicacityAddon.ADDON.getConfig().has("NAMETAG_HOUSEBAN") && UnicacityAddon.ADDON.getConfig().get("NAMETAG_HOUSEBAN")
-                .getAsBoolean(); // default = false
     }
 
     // ALLIANCE
@@ -109,9 +131,54 @@ public class ConfigElements {
         UnicacityAddon.ADDON.getConfig().addProperty("NAMETAG_STREETWAR2", streetwarFaction2.toString());
     }
 
+    // HOUSEBAN
+    public static boolean getNameTagHouseban() {
+        return UnicacityAddon.ADDON.getConfig().has("NAMETAG_HOUSEBAN") && UnicacityAddon.ADDON.getConfig().get("NAMETAG_HOUSEBAN")
+                .getAsBoolean(); // default = false
+    }
+
+    // DUTY
+    public static boolean getNameTagDuty() {
+        return UnicacityAddon.ADDON.getConfig().has("NAMETAG_DUTY") && UnicacityAddon.ADDON.getConfig().get("NAMETAG_DUTY")
+                .getAsBoolean(); // default = false
+    }
+
+    // WPS
+    public static boolean getNameTagWPS() {
+        return UnicacityAddon.ADDON.getConfig().has("NAMETAG_WPS") && UnicacityAddon.ADDON.getConfig().get("NAMETAG_WPS")
+                .getAsBoolean(); // default = false
+    }
+
+    // Blacklist
+    public static boolean getNameTagBlacklist() {
+        return UnicacityAddon.ADDON.getConfig().has("NAMETAG_BLACKLIST") && UnicacityAddon.ADDON.getConfig().get("NAMETAG_BLACKLIST")
+                .getAsBoolean(); // default = false
+    }
+
+    // Contract
+    public static boolean getNameTagContract() {
+        return UnicacityAddon.ADDON.getConfig().has("NAMETAG_CONTRACT") && UnicacityAddon.ADDON.getConfig().get("NAMETAG_CONTRACT")
+                .getAsBoolean(); // default = false
+    }
+
     // ATMINFO
+    public static boolean getEventATM() {
+        return !UnicacityAddon.ADDON.getConfig().has("EVENT_ATM") || UnicacityAddon.ADDON.getConfig().get("EVENT_ATM")
+                .getAsBoolean(); // default = true
+    }
+
+    public static boolean getEventATMFBank() {
+        return UnicacityAddon.ADDON.getConfig().has("EVENT_ATM_FBANK") && UnicacityAddon.ADDON.getConfig().get("EVENT_ATM_FBANK")
+                .getAsBoolean(); // default = true
+    }
+
+    public static boolean getEventATMGRKasse() {
+        return UnicacityAddon.ADDON.getConfig().has("EVENT_ATM_GRKASSE") && UnicacityAddon.ADDON.getConfig().get("EVENT_ATM_GRKASSE")
+                .getAsBoolean(); // default = true
+    }
+
     public static boolean getEventATMInfo() {
-        return !UnicacityAddon.ADDON.getConfig().has("EVENT_ATMINFO") || UnicacityAddon.ADDON.getConfig().get("EVENT_ATMINFO")
+        return !UnicacityAddon.ADDON.getConfig().has("EVENT_ATM_INFO") || UnicacityAddon.ADDON.getConfig().get("EVENT_ATM_INFO")
                 .getAsBoolean(); // default = true
     }
 
@@ -119,5 +186,39 @@ public class ConfigElements {
     public static boolean getEventTabList() {
         return !UnicacityAddon.ADDON.getConfig().has("EVENT_TABLIST") || UnicacityAddon.ADDON.getConfig().get("EVENT_TABLIST")
                 .getAsBoolean(); // default = true
+    }
+
+    // CARFIND
+    public static boolean getEventCarFind() {
+        return !UnicacityAddon.ADDON.getConfig().has("EVENT_CARFIND") || UnicacityAddon.ADDON.getConfig().get("EVENT_CARFIND")
+                .getAsBoolean(); // default = true
+    }
+
+    // REINFORCEMENT
+    public static String getPatternReinforcement() {
+        return UnicacityAddon.ADDON.getConfig().has("PATTERN_REINFORCEMENT") && !UnicacityAddon.ADDON.getConfig().get("PATTERN_REINFORCEMENT").getAsString().isEmpty()
+                ? UnicacityAddon.ADDON.getConfig().get("PATTERN_REINFORCEMENT").getAsString()
+                : REINFORCEMENT_FALLBACK;
+    }
+
+    // REINFORCEMENT REPLY
+    public static String getPatternReinforcementReply() {
+        return UnicacityAddon.ADDON.getConfig().has("PATTERN_REINFORCEMENT_REPLY") && !UnicacityAddon.ADDON.getConfig().get("PATTERN_REINFORCEMENT_REPLY").getAsString().isEmpty()
+                ? UnicacityAddon.ADDON.getConfig().get("PATTERN_REINFORCEMENT_REPLY").getAsString()
+                : REINFORCEMENT_REPLY_FALLBACK;
+    }
+
+    // SLOC
+    public static String getPatternSloc() {
+        return UnicacityAddon.ADDON.getConfig().has("PATTERN_SLOC") && !UnicacityAddon.ADDON.getConfig().get("PATTERN_SLOC").getAsString().isEmpty()
+                ? UnicacityAddon.ADDON.getConfig().get("PATTERN_SLOC").getAsString()
+                : SLOC_FALLBACK;
+    }
+
+    // REPORT GREETING
+    public static String getReportGreeting() {
+        return UnicacityAddon.ADDON.getConfig().has("REPORT_GREETING") && !UnicacityAddon.ADDON.getConfig().get("REPORT_GREETING").getAsString().isEmpty()
+                ? UnicacityAddon.ADDON.getConfig().get("REPORT_GREETING").getAsString()
+                : Strings.EMPTY;
     }
 }

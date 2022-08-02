@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 
 /**
  * @author RettichLP
+ * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/utils/ReflectionUtil.java">UCUtils by paulzhng</a>
  */
 public class ReflectionUtils {
 
@@ -31,13 +32,6 @@ public class ReflectionUtils {
         return getClassesInPackage(subPackage).stream().filter(clazz -> clazz.isAnnotationPresent((Class<? extends Annotation>) annotation)).collect(Collectors.toList());
     }
 
-    /*
-    public static Class getClassInPackage(String className, String packageName) {
-        return getClassesInPackage(packageName).stream()
-                .filter(clazz -> className.equals(clazz.getSimpleName())).findFirst().get();
-    }
-    */
-
     private static Set<Class<?>> getClassesInPackage(String packageName) {
         InputStream stream = ClassLoader.getSystemClassLoader().getResourceAsStream(packageName.replaceAll("[.]", "/"));
         if (stream == null) return new HashSet<>();
@@ -49,8 +43,21 @@ public class ReflectionUtils {
         try {
             return Class.forName(packageName + "." + className.substring(0, className.lastIndexOf('.')));
         } catch (ClassNotFoundException e) {
-            // handle the exception
+            // TODO: handle the exception
         }
+        return null;
+    }
+
+    public static <T, V> T getValue(V object, Class<T> type) {
+        try {
+            Field field = getField(object.getClass(), type);
+            if (field == null) return null;
+
+            return (T) field.get(object);
+        } catch (IllegalAccessException e) {
+            // TODO: handle the exception
+        }
+
         return null;
     }
 
