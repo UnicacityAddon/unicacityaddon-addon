@@ -36,6 +36,7 @@ import com.rettichlp.UnicacityAddon.events.faction.badfaction.PlantTimerEventHan
 import com.rettichlp.UnicacityAddon.events.faction.polizei.WantedEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.rettungsdienst.MedicationEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.terroristen.ExplosiveBeltTimerEvent;
+import com.rettichlp.UnicacityAddon.events.job.ADropEventHandler;
 import com.rettichlp.UnicacityAddon.events.team.ReportAcceptEventHandler;
 import com.rettichlp.UnicacityAddon.modules.BombTimerModule;
 import com.rettichlp.UnicacityAddon.modules.CarOpenModule;
@@ -89,6 +90,7 @@ public class UnicacityAddon extends LabyModAddon {
 
         // ForgeEvents -> https://docs.labymod.net/pages/create-addons/forge_events/ - TODO remove later
         ADDON.getApi().registerForgeListener(new ATMInfoEventHandler());
+        ADDON.getApi().registerForgeListener(new ADropEventHandler());
         ADDON.getApi().registerForgeListener(new BlacklistEventHandler());
         ADDON.getApi().registerForgeListener(new BombTimerEventHandler());
         ADDON.getApi().registerForgeListener(new CarEventHandler());
