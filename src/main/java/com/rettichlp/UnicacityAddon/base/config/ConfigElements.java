@@ -162,8 +162,23 @@ public class ConfigElements {
     }
 
     // ATMINFO
+    public static boolean getEventATM() {
+        return !UnicacityAddon.ADDON.getConfig().has("EVENT_ATM") || UnicacityAddon.ADDON.getConfig().get("EVENT_ATM")
+                .getAsBoolean(); // default = true
+    }
+
+    public static boolean getEventATMFBank() {
+        return UnicacityAddon.ADDON.getConfig().has("EVENT_ATM_FBANK") && UnicacityAddon.ADDON.getConfig().get("EVENT_ATM_FBANK")
+                .getAsBoolean(); // default = true
+    }
+
+    public static boolean getEventATMGRKasse() {
+        return UnicacityAddon.ADDON.getConfig().has("EVENT_ATM_GRKASSE") && UnicacityAddon.ADDON.getConfig().get("EVENT_ATM_GRKASSE")
+                .getAsBoolean(); // default = true
+    }
+
     public static boolean getEventATMInfo() {
-        return !UnicacityAddon.ADDON.getConfig().has("EVENT_ATMINFO") || UnicacityAddon.ADDON.getConfig().get("EVENT_ATMINFO")
+        return !UnicacityAddon.ADDON.getConfig().has("EVENT_ATM_INFO") || UnicacityAddon.ADDON.getConfig().get("EVENT_ATM_INFO")
                 .getAsBoolean(); // default = true
     }
 
