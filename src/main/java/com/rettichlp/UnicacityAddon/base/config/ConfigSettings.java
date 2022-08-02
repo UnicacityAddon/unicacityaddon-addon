@@ -105,9 +105,10 @@ public class ConfigSettings {
                 .of("Sonstiges").color(ColorCode.WHITE).advance()
                 .create()));
 
-        BooleanElement eventATMInfo = new BooleanElement("ATM Info", unicacityAddon, new ControlElement.IconData(Material.PAPER), "EVENT_ATMINFO",
+        BooleanElement eventATM = new BooleanElement("ATM Info", unicacityAddon, new ControlElement.IconData(Material.PAPER), "EVENT_ATM",
                 ConfigElements.getEventATMInfo());
-        list.add(eventATMInfo);
+        eventATM.setSubSettings(eventATMSettings(unicacityAddon));
+        list.add(eventATM);
 
         BooleanElement eventTabList = new BooleanElement("Sortierte Tablist", unicacityAddon, new ControlElement.IconData(Material.COMMAND), "EVENT_TABLIST",
                 ConfigElements.getEventTabList());
@@ -189,6 +190,24 @@ public class ConfigSettings {
         settings.add(dropDownElement0);
         settings.add(dropDownElement1);
         settings.add(dropDownElement2);
+        return settings;
+    }
+
+    private static Settings eventATMSettings(UnicacityAddon unicacityAddon) {
+        Settings settings = new Settings();
+
+        BooleanElement eventATMFBank = new BooleanElement("Kontoauszug FBank", unicacityAddon, new ControlElement.IconData(Material.GOLD_INGOT), "EVENT_ATM_FBANK",
+                ConfigElements.getEventATMInfo());
+
+        BooleanElement eventATMGRKasse = new BooleanElement("Kontoauszug GRKasse", unicacityAddon, new ControlElement.IconData(Material.GOLD_INGOT), "EVENT_ATM_GRKASSE",
+                ConfigElements.getEventATMInfo());
+
+        BooleanElement eventATMInfo = new BooleanElement("Geld im ATM", unicacityAddon, new ControlElement.IconData(Material.GOLD_INGOT), "EVENT_ATM_INFO",
+                ConfigElements.getEventATMInfo());
+
+        settings.add(eventATMFBank);
+        settings.add(eventATMGRKasse);
+        settings.add(eventATMInfo);
         return settings;
     }
 }
