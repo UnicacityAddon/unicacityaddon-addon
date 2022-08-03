@@ -131,4 +131,9 @@ public class PatternHandler {
      */
     public static final Pattern DROP_TRANSPORT_PATTERN = Pattern.compile("^\\[Transport] Du hast eine (Kiste|Waffenkiste) abgeliefert\\.$");
     public static final Pattern DROP_DRINK_PATTERN = Pattern.compile("^\\[Bar] Du hast eine Flasche abgegeben!$");
+
+    /**
+     * {@link com.rettichlp.UnicacityAddon.events.HotkeyEventHandler}
+     */
+    public static final Pattern AD_CONTROL_PATTERN = Pattern.compile("^\\[Werbung] (\\w+) hat eine Werbung geschalten: .+$");
 }
