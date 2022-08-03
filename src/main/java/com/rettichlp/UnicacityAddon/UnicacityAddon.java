@@ -32,6 +32,7 @@ import com.rettichlp.UnicacityAddon.events.faction.EmergencyServiceEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.FDoorEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.ReinforcementEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.ShareLocationEventHandler;
+import com.rettichlp.UnicacityAddon.events.faction.badfaction.AutomatedCalculationOf25;
 import com.rettichlp.UnicacityAddon.events.faction.badfaction.FBIHackEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.badfaction.PlantTimerEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.polizei.WantedEventHandler;
@@ -92,6 +93,7 @@ public class UnicacityAddon extends LabyModAddon {
 
         // ForgeEvents -> https://docs.labymod.net/pages/create-addons/forge_events/ - TODO remove later
         ADDON.getApi().registerForgeListener(new ATMInfoEventHandler());
+        ADDON.getApi().registerForgeListener(new AutomatedCalculationOf25());
         ADDON.getApi().registerForgeListener(new ADropEventHandler());
         ADDON.getApi().registerForgeListener(new BlacklistEventHandler());
         ADDON.getApi().registerForgeListener(new BombTimerEventHandler());
