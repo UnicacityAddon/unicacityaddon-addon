@@ -25,7 +25,6 @@ import com.rettichlp.UnicacityAddon.events.HotkeyEventHandler;
 import com.rettichlp.UnicacityAddon.events.MobileEventHandler;
 import com.rettichlp.UnicacityAddon.events.NameTagEventHandler;
 import com.rettichlp.UnicacityAddon.events.SalaryCountEventHandler;
-import com.rettichlp.UnicacityAddon.events.ScreenshotEventHandler;
 import com.rettichlp.UnicacityAddon.events.TabListEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.BlacklistEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.ContractEventHandler;
