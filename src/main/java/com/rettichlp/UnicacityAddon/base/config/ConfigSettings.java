@@ -106,6 +106,14 @@ public class ConfigSettings {
         list.add(reportFarewell);
 
         list.add(new HeaderElement(Message.getBuilder()
+                .of("Teamspeak").color(ColorCode.WHITE).advance()
+                .create()));
+
+        StringElement teamspeakAPIKey = new StringElement("Teamspeak API Key", unicacityAddon, new ControlElement.IconData(Material.NOTE_BLOCK), "TS_APIKEY",
+                ConfigElements.getTeamspeakAPIKey());
+        list.add(teamspeakAPIKey);
+
+        list.add(new HeaderElement(Message.getBuilder()
                 .of("Sonstiges").color(ColorCode.WHITE).advance()
                 .create()));
 

@@ -227,4 +227,14 @@ public class ConfigElements {
                 ? UnicacityAddon.ADDON.getConfig().get("REPORT_FAREWELL").getAsString()
                 : Strings.EMPTY;
     }
+
+    public static String getTeamspeakAPIKey() {
+        return UnicacityAddon.ADDON.getConfig().has("TS_APIKEY") && !UnicacityAddon.ADDON.getConfig().get("TS_APIKEY").getAsString().isEmpty()
+                ? UnicacityAddon.ADDON.getConfig().get("TS_APIKEY").getAsString()
+                : Strings.EMPTY;
+    }
+
+    public static void setTeamspeakAPIKey(String apiKey) {
+        UnicacityAddon.ADDON.getConfig().addProperty("TS_APIKEY", apiKey);
+    }
 }
