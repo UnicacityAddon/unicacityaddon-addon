@@ -21,10 +21,10 @@ import com.rettichlp.UnicacityAddon.commands.faction.terroristen.ExplosiveBeltCo
 import com.rettichlp.UnicacityAddon.events.ATMInfoEventHandler;
 import com.rettichlp.UnicacityAddon.events.BombTimerEventHandler;
 import com.rettichlp.UnicacityAddon.events.CarEventHandler;
+import com.rettichlp.UnicacityAddon.events.HotkeyEventHandler;
 import com.rettichlp.UnicacityAddon.events.MobileEventHandler;
 import com.rettichlp.UnicacityAddon.events.NameTagEventHandler;
 import com.rettichlp.UnicacityAddon.events.SalaryCountEventHandler;
-import com.rettichlp.UnicacityAddon.events.ScreenshotEventHandler;
 import com.rettichlp.UnicacityAddon.events.TabListEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.BlacklistEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.ContractEventHandler;
@@ -101,7 +101,7 @@ public class UnicacityAddon extends LabyModAddon {
         ADDON.getApi().registerForgeListener(new ExplosiveBeltTimerEvent());
         ADDON.getApi().registerForgeListener(new FBIHackEventHandler());
         ADDON.getApi().registerForgeListener(new FDoorEventHandler());
-        ADDON.getApi().registerForgeListener(new ScreenshotEventHandler());
+        ADDON.getApi().registerForgeListener(new HotkeyEventHandler());
         ADDON.getApi().registerForgeListener(new SalaryCountEventHandler());
         ADDON.getApi().registerForgeListener(new MedicationEventHandler());
         ADDON.getApi().registerForgeListener(new MobileEventHandler());

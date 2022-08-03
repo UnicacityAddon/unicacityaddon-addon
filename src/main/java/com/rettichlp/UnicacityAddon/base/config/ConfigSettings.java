@@ -101,6 +101,10 @@ public class ConfigSettings {
                 ConfigElements.getReportGreeting());
         list.add(reportGreeting);
 
+        StringElement reportFarewell = new StringElement("Report Verabschiedung", unicacityAddon, new ControlElement.IconData(Material.PAPER), "REPORT_FAREWELL",
+                ConfigElements.getReportFarewell());
+        list.add(reportFarewell);
+
         list.add(new HeaderElement(Message.getBuilder()
                 .of("Sonstiges").color(ColorCode.WHITE).advance()
                 .create()));
@@ -117,6 +121,12 @@ public class ConfigSettings {
         BooleanElement eventCarFind = new BooleanElement("Route bei /car find", unicacityAddon, new ControlElement.IconData(Material.MINECART), "EVENT_CARFIND",
                 ConfigElements.getEventCarFind());
         list.add(eventCarFind);
+
+        // Certain LabyMod themes cover the lower settings. To counteract this, empty lines are appended.
+        HeaderElement emptyLine = new HeaderElement("");
+        list.add(emptyLine);
+        list.add(emptyLine);
+        list.add(emptyLine);
     }
 
     private static Settings nameTagAllianceSettings() {

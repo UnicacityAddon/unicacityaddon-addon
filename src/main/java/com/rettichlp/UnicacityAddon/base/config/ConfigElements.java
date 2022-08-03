@@ -221,4 +221,10 @@ public class ConfigElements {
                 ? UnicacityAddon.ADDON.getConfig().get("REPORT_GREETING").getAsString()
                 : Strings.EMPTY;
     }
+
+    public static String getReportFarewell() {
+        return UnicacityAddon.ADDON.getConfig().has("REPORT_FAREWELL") && !UnicacityAddon.ADDON.getConfig().get("REPORT_FAREWELL").getAsString().isEmpty()
+                ? UnicacityAddon.ADDON.getConfig().get("REPORT_FAREWELL").getAsString()
+                : Strings.EMPTY;
+    }
 }
