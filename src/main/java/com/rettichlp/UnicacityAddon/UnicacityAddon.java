@@ -6,6 +6,7 @@ import com.rettichlp.UnicacityAddon.base.module.UCModuleHandler;
 import com.rettichlp.UnicacityAddon.base.registry.KeyBindRegistry;
 import com.rettichlp.UnicacityAddon.commands.ACallCommand;
 import com.rettichlp.UnicacityAddon.commands.ASMSCommand;
+import com.rettichlp.UnicacityAddon.commands.NaviCommand;
 import com.rettichlp.UnicacityAddon.commands.NearestATMCommand;
 import com.rettichlp.UnicacityAddon.commands.NearestJobCommand;
 import com.rettichlp.UnicacityAddon.commands.TriggerEventCommand;
@@ -82,6 +83,7 @@ public class UnicacityAddon extends LabyModAddon {
         ClientCommandHandler.instance.registerCommand(new ASUCommand());
         ClientCommandHandler.instance.registerCommand(new ExplosiveBeltCommand());
         ClientCommandHandler.instance.registerCommand(new ModifyWantedsCommand());
+        ClientCommandHandler.instance.registerCommand(new NaviCommand());
         ClientCommandHandler.instance.registerCommand(new NearestATMCommand());
         ClientCommandHandler.instance.registerCommand(new NearestJobCommand());
         ClientCommandHandler.instance.registerCommand(new ReinforcementCommand());
