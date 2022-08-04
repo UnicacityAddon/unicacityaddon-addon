@@ -10,20 +10,27 @@ public class FishermanEventHandler {
 
     private boolean onTargetLocation = false;
     private boolean canCatchFish = false;
+    private int count = 0;
 
     @SubscribeEvent
     public boolean onClientChatReceive(ClientChatReceivedEvent e) {
         String msg = e.getMessage().getUnformattedText();
+        UPlayer p = AbstractionLayer.getPlayer();
 
-        if (PatternHandler.FISHER_START.matcher(msg).find()
-                || PatternHandler.FISHER_CATCH_SUCCESS.matcher(msg).find()
+        if (PatternHandler.FISHER_START.matcher(msg).find()) {
+            p.sendChatMessage("/findschwarm");
+            canCatchFish = true;
+            return catchFish();
+        }
+
+        if (PatternHandler.FISHER_CATCH_SUCCESS.matcher(msg).find()
                 || PatternHandler.FISHER_CATCH_FAILURE.matcher(msg).find()) {
             canCatchFish = true;
             return catchFish();
         }
 
         if (PatternHandler.FISHER_CATCH_START.matcher(msg).find()) {
-            AbstractionLayer.getPlayer().sendChatMessage("/findschwarm");
+            p.sendChatMessage("/findschwarm");
             canCatchFish = false;
             return catchFish();
         }
@@ -43,8 +50,9 @@ public class FishermanEventHandler {
     }
 
     private boolean catchFish() {
-        if (canCatchFish && onTargetLocation) {
+        if (canCatchFish && onTargetLocation && count < 5) {
             AbstractionLayer.getPlayer().sendChatMessage("/catchfish");
+            count++;
             return true;
         }
         return false;
