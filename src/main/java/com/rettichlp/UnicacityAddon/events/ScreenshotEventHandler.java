@@ -13,17 +13,21 @@ import net.minecraft.util.ScreenShotHelper;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
+import org.lwjgl.input.Keyboard;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author RettichLP
  * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/events/AlternateScreenshotEventHandler.java">UCUtils by paulzhng</a>
  */
 public class ScreenshotEventHandler {
+
+    private static long lastScreenshot;
 
     @SubscribeEvent
     public void onKeyInput(InputEvent.KeyInputEvent e) {
@@ -36,7 +40,8 @@ public class ScreenshotEventHandler {
     }
 
     private void handleScreenshot() {
-        if (!KeyBindRegistry.addonScreenshot.isPressed()) return;
+        if (!Keyboard.isKeyDown(KeyBindRegistry.addonScreenshot.getKeyCode())) return;
+        if (System.currentTimeMillis() - lastScreenshot < TimeUnit.SECONDS.toMillis(1)) return;
 
         try {
             File newImageFile = FileManager.getNewImageFile();
@@ -57,6 +62,8 @@ public class ScreenshotEventHandler {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+        lastScreenshot = System.currentTimeMillis();
     }
 
     private void uploadScreenshot(File screenshotFile) {
