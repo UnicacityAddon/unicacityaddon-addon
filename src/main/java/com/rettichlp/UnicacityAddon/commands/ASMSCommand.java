@@ -24,6 +24,7 @@ import net.minecraft.util.math.BlockPos;
 public class ASMSCommand extends CommandBase {
 
     final Timer timer = new Timer();
+    public static boolean isActive;
 
     @Override @Nonnull public String getName() {
         return "asms";
@@ -48,6 +49,7 @@ public class ASMSCommand extends CommandBase {
                 .of("Syntax: " + getUsage(sender)).color(ColorCode.GRAY).advance()
                 .createComponent());
 
+        isActive = true;
         p.sendChatMessage("/nummer " + args[0]);
 
         timer.schedule(new TimerTask() {
