@@ -1,6 +1,7 @@
 package com.rettichlp.UnicacityAddon.base.text;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
+import com.rettichlp.UnicacityAddon.events.faction.badfaction.AutomatedCalculationOf25;
 
 import java.util.regex.Pattern;
 
@@ -136,4 +137,9 @@ public class PatternHandler {
      * {@link com.rettichlp.UnicacityAddon.events.HotkeyEventHandler}
      */
     public static final Pattern AD_CONTROL_PATTERN = Pattern.compile("^\\[Werbung] (\\w+) hat eine Werbung geschalten: .+$");
+
+    /**
+     * {@link com.rettichlp.UnicacityAddon.events.faction.badfaction.AutomatedCalculationOf25}
+     */
+    public static final Pattern STATEMENT_OF_ACCOUNT = Pattern.compile("^Finanzen von (?:\\[UC])*(\\w+): Geld: (\\d+)\\$ \\| Bank: (\\d+)\\$$");
 }
