@@ -58,20 +58,20 @@ public class HotkeyEventHandler {
         if (System.currentTimeMillis() - lastScreenshot < TimeUnit.SECONDS.toMillis(1)) return;
         UPlayer p = AbstractionLayer.getPlayer();
 
-        if (!Keyboard.isKeyDown(KeyBindRegistry.addonScreenshot.getKeyCode())) {
+        if (Keyboard.isKeyDown(KeyBindRegistry.addonScreenshot.getKeyCode())) {
             handleScreenshot();
-        } else if (!Keyboard.isKeyDown(KeyBindRegistry.adFreigeben.getKeyCode())) {
+        } else if (Keyboard.isKeyDown(KeyBindRegistry.adFreigeben.getKeyCode())) {
             handleAd("freigeben");
-        } else if (!Keyboard.isKeyDown(KeyBindRegistry.adBlockieren.getKeyCode())) {
+        } else if (Keyboard.isKeyDown(KeyBindRegistry.adBlockieren.getKeyCode())) {
             handleAd("blockieren");
-        } else if (!Keyboard.isKeyDown(KeyBindRegistry.acceptReport.getKeyCode())) {
+        } else if (Keyboard.isKeyDown(KeyBindRegistry.acceptReport.getKeyCode())) {
             p.sendChatMessage("/ar");
-        } else if (!Keyboard.isKeyDown(KeyBindRegistry.cancelReport.getKeyCode())) {
+        } else if (Keyboard.isKeyDown(KeyBindRegistry.cancelReport.getKeyCode())) {
             if (!ConfigElements.getReportFarewell().isEmpty()) p.sendChatMessage(ConfigElements.getReportFarewell());
             p.sendChatMessage("/cr");
-        } else if (!Keyboard.isKeyDown(KeyBindRegistry.aDuty.getKeyCode())) {
+        } else if (Keyboard.isKeyDown(KeyBindRegistry.aDuty.getKeyCode())) {
             p.sendChatMessage("/aduty");
-        } else if (!Keyboard.isKeyDown(KeyBindRegistry.aDutySilent.getKeyCode())) {
+        } else if (Keyboard.isKeyDown(KeyBindRegistry.aDutySilent.getKeyCode())) {
             p.sendChatMessage("/aduty -s");
         }
 
