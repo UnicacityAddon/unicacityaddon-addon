@@ -2,6 +2,8 @@ package com.rettichlp.UnicacityAddon.events;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
+import com.rettichlp.UnicacityAddon.commands.ACallCommand;
+import com.rettichlp.UnicacityAddon.commands.ASMSCommand;
 import net.minecraft.client.Minecraft;
 import net.minecraft.inventory.ContainerChest;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
@@ -57,7 +59,10 @@ public class MobileEventHandler {
         Matcher numberMatcher = PatternHandler.NUMBER_PATTERN.matcher(msg);
         if (numberMatcher.find()) {
             lastCheckedNumber = Integer.parseInt(numberMatcher.group(1));
-            e.setCanceled(true);
+            if (ACallCommand.isActive || ASMSCommand.isActive) {
+                e.setCanceled(true);
+                ACallCommand.isActive = ASMSCommand.isActive = false;
+            }
         }
     }
 

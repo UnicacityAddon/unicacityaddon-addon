@@ -17,6 +17,7 @@ import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
+import org.lwjgl.input.Keyboard;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -33,6 +34,7 @@ public class HotkeyEventHandler {
 
     private String adIssuer;
     private long adTime;
+    private static long lastScreenshot;
 
     @SubscribeEvent
     public void onKeyInput(InputEvent.KeyInputEvent e) {
@@ -53,23 +55,27 @@ public class HotkeyEventHandler {
     }
 
     private void handleHotkey() {
+        if (System.currentTimeMillis() - lastScreenshot < TimeUnit.SECONDS.toMillis(1)) return;
         UPlayer p = AbstractionLayer.getPlayer();
-        if (KeyBindRegistry.addonScreenshot.isPressed()) {
+
+        if (!Keyboard.isKeyDown(KeyBindRegistry.addonScreenshot.getKeyCode())) {
             handleScreenshot();
-        } else if (KeyBindRegistry.adFreigeben.isPressed()) {
+        } else if (!Keyboard.isKeyDown(KeyBindRegistry.adFreigeben.getKeyCode())) {
             handleAd("freigeben");
-        } else if (KeyBindRegistry.adBlockieren.isPressed()) {
+        } else if (!Keyboard.isKeyDown(KeyBindRegistry.adBlockieren.getKeyCode())) {
             handleAd("blockieren");
-        } else if (KeyBindRegistry.acceptReport.isPressed()) {
+        } else if (!Keyboard.isKeyDown(KeyBindRegistry.acceptReport.getKeyCode())) {
             p.sendChatMessage("/ar");
-        } else if (KeyBindRegistry.cancelReport.isPressed()) {
+        } else if (!Keyboard.isKeyDown(KeyBindRegistry.cancelReport.getKeyCode())) {
             if (!ConfigElements.getReportFarewell().isEmpty()) p.sendChatMessage(ConfigElements.getReportFarewell());
             p.sendChatMessage("/cr");
-        } else if (KeyBindRegistry.aDuty.isPressed()) {
+        } else if (!Keyboard.isKeyDown(KeyBindRegistry.aDuty.getKeyCode())) {
             p.sendChatMessage("/aduty");
-        } else if (KeyBindRegistry.aDutySilent.isPressed()) {
+        } else if (!Keyboard.isKeyDown(KeyBindRegistry.aDutySilent.getKeyCode())) {
             p.sendChatMessage("/aduty -s");
         }
+
+        lastScreenshot = System.currentTimeMillis();
     }
 
     private void handleScreenshot() {
