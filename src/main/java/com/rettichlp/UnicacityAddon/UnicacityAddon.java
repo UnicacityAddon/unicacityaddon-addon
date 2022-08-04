@@ -18,14 +18,7 @@ import com.rettichlp.UnicacityAddon.commands.faction.polizei.ModifyWantedsComman
 import com.rettichlp.UnicacityAddon.commands.faction.rettungsdienst.ARezeptAcceptCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.rettungsdienst.ARezeptGiveCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.terroristen.ExplosiveBeltCommand;
-import com.rettichlp.UnicacityAddon.events.ATMInfoEventHandler;
-import com.rettichlp.UnicacityAddon.events.BombTimerEventHandler;
-import com.rettichlp.UnicacityAddon.events.CarEventHandler;
-import com.rettichlp.UnicacityAddon.events.HotkeyEventHandler;
-import com.rettichlp.UnicacityAddon.events.MobileEventHandler;
-import com.rettichlp.UnicacityAddon.events.NameTagEventHandler;
-import com.rettichlp.UnicacityAddon.events.SalaryCountEventHandler;
-import com.rettichlp.UnicacityAddon.events.TabListEventHandler;
+import com.rettichlp.UnicacityAddon.events.*;
 import com.rettichlp.UnicacityAddon.events.faction.BlacklistEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.ContractEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.EmergencyServiceEventHandler;
@@ -102,6 +95,7 @@ public class UnicacityAddon extends LabyModAddon {
         ADDON.getApi().registerForgeListener(new FBIHackEventHandler());
         ADDON.getApi().registerForgeListener(new FDoorEventHandler());
         ADDON.getApi().registerForgeListener(new HotkeyEventHandler());
+        ADDON.getApi().registerForgeListener(new InstantDropstoneEventHandler());
         ADDON.getApi().registerForgeListener(new SalaryCountEventHandler());
         ADDON.getApi().registerForgeListener(new MedicationEventHandler());
         ADDON.getApi().registerForgeListener(new MobileEventHandler());
