@@ -130,7 +130,8 @@ public class PatternHandler {
     /**
      * {@link com.rettichlp.UnicacityAddon.events.job.ADropEventHandler}
      */
-    public static final Pattern DROP_TRANSPORT_PATTERN = Pattern.compile("^\\[Transport] Du hast eine (Kiste|Waffenkiste) abgeliefert\\.$");
+    public static final Pattern DROP_TRANSPORT_PATTERN = Pattern.compile("^\\[Transport] Du hast eine (Kiste|Waffenkiste) abgeliefert\\.$" +
+            "|^\\[Transport] Du hast ein Weizen Paket abgeliefert\\.$");
     public static final Pattern DROP_DRINK_PATTERN = Pattern.compile("^\\[Bar] Du hast eine Flasche abgegeben!$");
 
     /**
