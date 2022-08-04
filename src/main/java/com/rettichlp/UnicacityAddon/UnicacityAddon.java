@@ -33,6 +33,7 @@ import com.rettichlp.UnicacityAddon.events.faction.polizei.WantedEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.rettungsdienst.MedicationEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.terroristen.ExplosiveBeltTimerEvent;
 import com.rettichlp.UnicacityAddon.events.job.ADropEventHandler;
+import com.rettichlp.UnicacityAddon.events.job.FishermanEventHandler;
 import com.rettichlp.UnicacityAddon.events.team.ReportAcceptEventHandler;
 import com.rettichlp.UnicacityAddon.modules.BombTimerModule;
 import com.rettichlp.UnicacityAddon.modules.CarOpenModule;
@@ -98,6 +99,7 @@ public class UnicacityAddon extends LabyModAddon {
         ADDON.getApi().registerForgeListener(new ExplosiveBeltTimerEvent());
         ADDON.getApi().registerForgeListener(new FBIHackEventHandler());
         ADDON.getApi().registerForgeListener(new FDoorEventHandler());
+        ADDON.getApi().registerForgeListener(new FishermanEventHandler());
         ADDON.getApi().registerForgeListener(new HotkeyEventHandler());
         ADDON.getApi().registerForgeListener(new InstantDropstoneEventHandler());
         ADDON.getApi().registerForgeListener(new SalaryCountEventHandler());
