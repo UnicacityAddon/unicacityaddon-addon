@@ -48,7 +48,20 @@ public enum ATM {
     ATM_42(42, 1628, 70, 425),
     ATM_43(43, 97, 70, -202),
     ATM_44(44, 215, 70, 603),
-    ATM_45(45, 248, 70, 735);
+    ATM_45(45, 248, 70, 735),
+    ATM_46(46, 1437, 70, 238),
+    ATM_47(47, 1546, 70, 52), // Stadion
+    ATM_48(48, 1546, 70, 44), // Stadion
+    ATM_49(49, 1405, 70, -111), // Funpark
+    ATM_50(50, 1405, 70, -98), // Funpark
+    ATM_51(51, -365, 70, -252), // Mex Reichenviertel
+    ATM_52(52, 428, 70, -85), // Fahrschule
+    ATM_53(53, 11, 70, 602), // Labor
+    ATM_54(54, -401, 70, 171), // Hochseefischer (Transport)
+    ATM_55(55, 1443, 72, 126), // LU Bank
+    ATM_56(56, 1440, 72, 126), // LU Bank
+    ATM_57(57, 1439, 72, 124), // LU Bank
+    ATM_58(58, 1439, 72, 121); // LU Bank
 
     private final int id;
     private final int x;
