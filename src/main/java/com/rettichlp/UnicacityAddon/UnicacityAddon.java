@@ -9,6 +9,7 @@ import com.rettichlp.UnicacityAddon.commands.ASMSCommand;
 import com.rettichlp.UnicacityAddon.commands.NaviCommand;
 import com.rettichlp.UnicacityAddon.commands.NearestATMCommand;
 import com.rettichlp.UnicacityAddon.commands.NearestJobCommand;
+import com.rettichlp.UnicacityAddon.commands.TodoListCommand;
 import com.rettichlp.UnicacityAddon.commands.TriggerEventCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.ASetBlacklistCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.ReinforcementCommand;
@@ -83,6 +84,7 @@ public class UnicacityAddon extends LabyModAddon {
         ClientCommandHandler.instance.registerCommand(new ReinforcementCommand());
         ClientCommandHandler.instance.registerCommand(new SchmarzmarktLocationsCommand());
         ClientCommandHandler.instance.registerCommand(new ShareLocationCommand());
+        ClientCommandHandler.instance.registerCommand(new TodoListCommand());
         ClientCommandHandler.instance.registerCommand(new TriggerEventCommand());
 
         // ForgeEvents -> https://docs.labymod.net/pages/create-addons/forge_events/ - TODO remove later

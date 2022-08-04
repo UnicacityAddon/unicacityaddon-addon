@@ -48,6 +48,16 @@ public class FileManager {
         return null;
     }
 
+    public static File getTodoDataFile() throws IOException {
+        if (getUnicacityAddonDir() == null) return null;
+        File todoDataFile = new File(getUnicacityAddonDir().getAbsolutePath() + "/todoData.json");
+        if (todoDataFile.exists() || todoDataFile.createNewFile()) return todoDataFile;
+
+        AbstractionLayer.getPlayer().sendErrorMessage("Datei 'todoData.json' wurde nicht gefunden!");
+
+        return null;
+    }
+
     public static File getNewImageFile() throws IOException {
         if (getAddonScreenshotDir() == null) return null;
 
