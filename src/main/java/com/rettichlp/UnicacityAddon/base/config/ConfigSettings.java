@@ -5,7 +5,6 @@ import com.rettichlp.UnicacityAddon.base.faction.Faction;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
 import net.labymod.gui.elements.DropDownMenu;
-import net.labymod.main.LabyMod;
 import net.labymod.settings.Settings;
 import net.labymod.settings.elements.BooleanElement;
 import net.labymod.settings.elements.ControlElement;
@@ -148,21 +147,21 @@ public class ConfigSettings {
 
         DropDownMenu<ColorCode> dropDownMenu0 = new DropDownMenu<ColorCode>("Farbe", 0, 0, 0, 0).fill(ColorCode.values());
         dropDownMenu0.setSelected(ConfigElements.getNameTagAllianceColor());
-        dropDownMenu0.setEntryDrawer((object, x, y, string) -> LabyMod.getInstance().getDrawUtils()
+        dropDownMenu0.setEntryDrawer((object, x, y, string) ->  UnicacityAddon.LABYMOD.getDrawUtils()
                 .drawString(ColorCode.valueOf(object.toString().toUpperCase()).toString(), x, y));
         DropDownElement<ColorCode> dropDownElement0 = new DropDownElement<>("", dropDownMenu0);
         dropDownElement0.setChangeListener(ConfigElements::setNameTagAllianceColor);
 
         DropDownMenu<Faction> dropDownMenu1 = new DropDownMenu<Faction>("Bündnisfraktion 1", 0, 0, 0, 0).fill(Faction.values());
         dropDownMenu1.setSelected(ConfigElements.getNameTagAlliance1());
-        dropDownMenu1.setEntryDrawer((object, x, y, string) -> LabyMod.getInstance().getDrawUtils()
+        dropDownMenu1.setEntryDrawer((object, x, y, string) -> UnicacityAddon.LABYMOD.getDrawUtils()
                 .drawString(Faction.valueOf(object.toString().toUpperCase()).getDisplayName(), x, y));
         DropDownElement<Faction> dropDownElement1 = new DropDownElement<>("", dropDownMenu1);
         dropDownElement1.setChangeListener(ConfigElements::setNameTagAlliance1);
 
         DropDownMenu<Faction> dropDownMenu2 = new DropDownMenu<Faction>("Bündnisfraktion 2 (optional)", 0, 0, 0, 0).fill(Faction.values());
         dropDownMenu2.setSelected(ConfigElements.getNameTagAlliance2());
-        dropDownMenu2.setEntryDrawer((object, x, y, string) -> LabyMod.getInstance().getDrawUtils()
+        dropDownMenu2.setEntryDrawer((object, x, y, string) -> UnicacityAddon.LABYMOD.getDrawUtils()
                 .drawString(Faction.valueOf(object.toString().toUpperCase()).getDisplayName(), x, y));
         DropDownElement<Faction> dropDownElement2 = new DropDownElement<>("", dropDownMenu2);
         dropDownElement2.setChangeListener(ConfigElements::setNameTagAlliance2);
@@ -178,7 +177,7 @@ public class ConfigSettings {
 
         DropDownMenu<ColorCode> dropDownMenu0 = new DropDownMenu<ColorCode>("Farbe", 0, 0, 0, 0).fill(ColorCode.values());
         dropDownMenu0.setSelected(ConfigElements.getNameTagFactionColor());
-        dropDownMenu0.setEntryDrawer((object, x, y, string) -> LabyMod.getInstance().getDrawUtils()
+        dropDownMenu0.setEntryDrawer((object, x, y, string) -> UnicacityAddon.LABYMOD.getDrawUtils()
                 .drawString(ColorCode.valueOf(object.toString().toUpperCase()).toString(), x, y));
         DropDownElement<ColorCode> dropDownElement0 = new DropDownElement<>("", dropDownMenu0);
         dropDownElement0.setChangeListener(ConfigElements::setNameTagFactionColor);
@@ -192,21 +191,21 @@ public class ConfigSettings {
 
         DropDownMenu<ColorCode> dropDownMenu0 = new DropDownMenu<ColorCode>("Farbe", 0, 0, 0, 0).fill(ColorCode.values());
         dropDownMenu0.setSelected(ConfigElements.getNameTagStreetwarColor());
-        dropDownMenu0.setEntryDrawer((object, x, y, string) -> LabyMod.getInstance().getDrawUtils()
+        dropDownMenu0.setEntryDrawer((object, x, y, string) -> UnicacityAddon.LABYMOD.getDrawUtils()
                 .drawString(ColorCode.valueOf(object.toString().toUpperCase()).toString(), x, y));
         DropDownElement<ColorCode> dropDownElement0 = new DropDownElement<>("", dropDownMenu0);
         dropDownElement0.setChangeListener(ConfigElements::setNameTagStreetwarColor);
 
         DropDownMenu<Faction> dropDownMenu1 = new DropDownMenu<Faction>("Streetwarfraktion 1", 0, 0, 0, 0).fill(Faction.values());
         dropDownMenu1.setSelected(ConfigElements.getNameTagStreetwar1());
-        dropDownMenu1.setEntryDrawer((object, x, y, string) -> LabyMod.getInstance().getDrawUtils()
+        dropDownMenu1.setEntryDrawer((object, x, y, string) -> UnicacityAddon.LABYMOD.getDrawUtils()
                 .drawString(Faction.valueOf(object.toString().toUpperCase()).getDisplayName(), x, y));
         DropDownElement<Faction> dropDownElement1 = new DropDownElement<>("", dropDownMenu1);
         dropDownElement1.setChangeListener(ConfigElements::setNameTagStreetwar1);
 
         DropDownMenu<Faction> dropDownMenu2 = new DropDownMenu<Faction>("Streetwarfraktion 2 (optional)", 0, 0, 0, 0).fill(Faction.values());
         dropDownMenu2.setSelected(ConfigElements.getNameTagStreetwar2());
-        dropDownMenu2.setEntryDrawer((object, x, y, string) -> LabyMod.getInstance().getDrawUtils()
+        dropDownMenu2.setEntryDrawer((object, x, y, string) -> UnicacityAddon.LABYMOD.getDrawUtils()
                 .drawString(Faction.valueOf(object.toString().toUpperCase()).getDisplayName(), x, y));
         DropDownElement<Faction> dropDownElement2 = new DropDownElement<>("", dropDownMenu2);
         dropDownElement2.setChangeListener(ConfigElements::setNameTagStreetwar2);
