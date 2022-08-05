@@ -50,7 +50,6 @@ public class JoinEventHandler {
                 }
             }, 2000L);
 
-
         }
 
         if (PatternHandler.ACCOUNT_WELCOME_BACK_PATTERN.matcher(e.getMessage().getUnformattedText()).find()) {
@@ -81,9 +80,7 @@ public class JoinEventHandler {
                     }
                 }
             };
-
             t.schedule(tt, 200);
-
 
         }
 
