@@ -29,6 +29,8 @@ public class NameTagEventHandler {
 
     @SubscribeEvent
     public void onRenderNameTag(PlayerEvent.NameFormat e) {
+        if (e.getDisplayname().contains(FormattingCode.OBFUSCATED.getCode())) return;
+
         String playerName = e.getUsername();
         String houseban = getHouseban(playerName);
         String outlaw = getOutlaw(playerName);
