@@ -127,7 +127,7 @@ public class ConfigSettings {
         activatePassword.setSubSettings(passwordSettings(unicacityAddon));
         list.add(activatePassword);
 
-        BooleanElement commandsOnJoin = new BooleanElement("Automatisches Befehle", unicacityAddon, new ControlElement.IconData(Material.REDSTONE_COMPARATOR), "COMMAND_ON_JOIN",
+        BooleanElement commandsOnJoin = new BooleanElement("Automatische Befehle", unicacityAddon, new ControlElement.IconData(Material.REDSTONE_COMPARATOR), "COMMAND_ON_JOIN",
                 ConfigElements.getCommandAutomation());
         commandsOnJoin.setSubSettings(commandList(unicacityAddon));
         list.add(commandsOnJoin);
