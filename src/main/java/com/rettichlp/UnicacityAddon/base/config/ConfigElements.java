@@ -161,6 +161,13 @@ public class ConfigElements {
                 .getAsBoolean(); // default = false
     }
 
+    // Delay
+    public static String getRefreshDisplayNamesInterval() {
+        return UnicacityAddon.ADDON.getConfig().has("NAMETAG_DELAY") && !UnicacityAddon.ADDON.getConfig().get("NAMETAG_DELAY").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("NAMETAG_DELAY").getAsString().equals("0")
+                ? UnicacityAddon.ADDON.getConfig().get("NAMETAG_DELAY").getAsString()
+                : "5";
+    }
+
     // ATMINFO
     public static boolean getEventATM() {
         return !UnicacityAddon.ADDON.getConfig().has("EVENT_ATM") || UnicacityAddon.ADDON.getConfig().get("EVENT_ATM")
