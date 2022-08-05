@@ -63,7 +63,7 @@ public class NameTagEventHandler {
                 return;
             }
 
-            entityItem.setCustomNameTag(ColorCode.GRAY.getCode() + prefix + "✟" + playerName + factionInfo);
+            entityItem.setCustomNameTag(prefix + ColorCode.GRAY.getCode() + "✟" + playerName + factionInfo);
         });
 
         tick = 0;
