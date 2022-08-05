@@ -26,11 +26,11 @@ public class FishermanEventHandler {
         if (PatternHandler.FISHER_CATCH_SUCCESS.matcher(msg).find()
                 || PatternHandler.FISHER_CATCH_FAILURE.matcher(msg).find()) {
             canCatchFish = true;
+            count++;
             return catchFish();
         }
 
         if (PatternHandler.FISHER_CATCH_START.matcher(msg).find()) {
-            p.sendChatMessage("/findschwarm");
             canCatchFish = false;
             return catchFish();
         }
@@ -50,9 +50,10 @@ public class FishermanEventHandler {
     }
 
     private boolean catchFish() {
+        UPlayer p = AbstractionLayer.getPlayer();
         if (canCatchFish && onTargetLocation && count < 5) {
-            AbstractionLayer.getPlayer().sendChatMessage("/catchfish");
-            count++;
+            p.sendChatMessage("/catchfish");
+            p.sendChatMessage("/findschwarm");
             return true;
         }
         return false;

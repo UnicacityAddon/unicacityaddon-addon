@@ -146,7 +146,7 @@ public class PatternHandler {
     /**
      * {@link com.rettichlp.UnicacityAddon.events.job.FishermanEventHandler}
      */
-    public static final Pattern FISHER_START = Pattern.compile("^\\[Fischer] Fahre nun zu den Fischschwärmen und wirf dein Fischenetz mit /catchfish aus\\.$");
+    public static final Pattern FISHER_START = Pattern.compile("^\\[Fischer] Mit /findschwarm kannst du dir den nächsten Fischschwarm anzeigen lassen\\.$");
     public static final Pattern FISHER_SPOT_FOUND = Pattern.compile("^\\[Fischer] Du hast einen Fischschwarm gefunden!$");
     public static final Pattern FISHER_SPOT_LOSE = Pattern.compile("^\\[Fischer] Du hast dich dem Fischschwarm zu weit entfernt\\.$");
     public static final Pattern FISHER_CATCH_START = Pattern.compile("^\\[Fischer] Du hast ein Fischernetz ausgeworfen\\.$");
