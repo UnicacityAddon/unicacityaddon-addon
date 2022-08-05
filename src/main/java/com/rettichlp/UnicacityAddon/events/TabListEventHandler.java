@@ -46,10 +46,6 @@ public class TabListEventHandler implements Comparator<NetworkPlayerInfo>, TabLi
 
     @Override
     public void onUpdate(Type type, String s, String s1) {
-        refreshTablist();
-    }
-
-    public static void refreshTablist() {
         if (!ConfigElements.getEventTabList()) return;
         ReflectionUtils.setValue(ModPlayerTabOverlay.class, Ordering.class, Ordering.from(new TabListEventHandler()));
     }

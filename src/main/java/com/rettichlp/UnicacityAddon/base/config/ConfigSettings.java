@@ -81,6 +81,10 @@ public class ConfigSettings {
             ConfigElements.getNameTagContract());
         list.add(nameTagContract);
 
+        StringElement nameTagDelay = new StringElement("Update Intervall", unicacityAddon, new ControlElement.IconData(Material.WATCH), "NAMETAG_DELAY",
+                ConfigElements.getRefreshDisplayNamesInterval());
+        list.add(nameTagDelay);
+
         list.add(new HeaderElement(Message.getBuilder()
                 .of("Text").color(ColorCode.WHITE).advance()
                 .create()));

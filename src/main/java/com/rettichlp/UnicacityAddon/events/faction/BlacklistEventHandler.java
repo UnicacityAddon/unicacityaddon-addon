@@ -41,7 +41,6 @@ public class BlacklistEventHandler {
         if (blacklistStartMatcher.find()) {
             BLACKLIST_MAP.clear();
             blacklistShown = currentTime;
-            NameTagEventHandler.refreshAllDisplayNames();
             return;
         }
 
@@ -53,7 +52,6 @@ public class BlacklistEventHandler {
             String reason = matcher.group(2);
 
             BLACKLIST_MAP.put(name, reason.toLowerCase().contains("vogelfrei"));
-            NameTagEventHandler.refreshAllDisplayNames();
         }
     }
 
@@ -67,7 +65,6 @@ public class BlacklistEventHandler {
             String name = matcher.group(1);
 
             BLACKLIST_MAP.put(name, false);
-            NameTagEventHandler.refreshAllDisplayNames();
         }
     }
 
@@ -81,7 +78,6 @@ public class BlacklistEventHandler {
             String name = matcher.group(1);
 
             BLACKLIST_MAP.remove(name);
-            NameTagEventHandler.refreshAllDisplayNames();
         }
     }
 

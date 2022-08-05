@@ -133,10 +133,6 @@ public class UnicacityAddon extends LabyModAddon {
         FactionHandler.getPlayerFactionMap();
         FactionHandler.getPlayerRankMap();
 
-        // Update nametags
-        NameTagEventHandler.refreshAllDisplayNames();
-        // Update tablist
-        TabListEventHandler.refreshTablist();
         // Update blacklist
         BlacklistEventHandler.refreshBlacklistReasons();
         // Register keybindings

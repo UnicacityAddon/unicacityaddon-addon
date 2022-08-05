@@ -8,6 +8,7 @@ import com.rettichlp.UnicacityAddon.base.faction.FactionHandler;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.FormattingCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
+import com.rettichlp.UnicacityAddon.base.utils.MathUtils;
 import com.rettichlp.UnicacityAddon.events.faction.BlacklistEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.ContractEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.polizei.WantedEventHandler;
@@ -26,9 +27,12 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 public class NameTagEventHandler {
 
     private static int tick;
+    private static int syncTick;
 
     @SubscribeEvent
     public void onRenderNameTag(PlayerEvent.NameFormat e) {
+        if (e.getDisplayname().contains(FormattingCode.OBFUSCATED.getCode())) return;
+
         String playerName = e.getUsername();
         String houseban = getHouseban(playerName);
         String outlaw = getOutlaw(playerName);
@@ -39,13 +43,12 @@ public class NameTagEventHandler {
     }
 
     @SubscribeEvent
-    public void onTick(TickEvent e) {
-        if (e.phase != TickEvent.Phase.START) return;
+    public void onTick(TickEvent.ClientTickEvent e) {
+        if (e.phase != TickEvent.Phase.END) return;
         if (UnicacityAddon.MINECRAFT.world == null) return;
         if (tick++ != 20) return;
 
         List<EntityItem> items = UnicacityAddon.MINECRAFT.world.getEntities(EntityItem.class, (ent) -> ent != null && ent.hasCustomName() && ent.getItem().getItem() instanceof ItemSkull);
-
         items.forEach(entityItem -> {
             String name = entityItem.getCustomNameTag();
             String playerName = name.substring(3);
@@ -61,10 +64,26 @@ public class NameTagEventHandler {
                 return;
             }
 
-            entityItem.setCustomNameTag(ColorCode.GRAY.getCode() + prefix + "✟" + playerName + factionInfo);
+            entityItem.setCustomNameTag(prefix + ColorCode.GRAY.getCode() + "✟" + playerName + factionInfo);
         });
 
         tick = 0;
+    }
+
+    @SubscribeEvent
+    public void onSyncDisplayName(TickEvent.ClientTickEvent e) {
+        if (e.phase != TickEvent.Phase.END) return;
+        if (UnicacityAddon.MINECRAFT.world == null) return;
+
+        String intervalString = ConfigElements.getRefreshDisplayNamesInterval();
+        int interval = 5 * 20;
+        if (MathUtils.isInteger(intervalString)) {
+            interval = Integer.parseInt(intervalString) * 20;
+        }
+
+        if (syncTick++ < interval) return;
+        refreshAllDisplayNames();
+        syncTick = 0;
     }
 
     private String getHouseban(String playerName) {
