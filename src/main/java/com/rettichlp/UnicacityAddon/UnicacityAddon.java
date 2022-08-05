@@ -33,6 +33,7 @@ import com.rettichlp.UnicacityAddon.events.faction.polizei.WantedEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.rettungsdienst.MedicationEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.terroristen.ExplosiveBeltTimerEvent;
 import com.rettichlp.UnicacityAddon.events.job.ADropEventHandler;
+import com.rettichlp.UnicacityAddon.events.job.InstantDropstoneEventHandler;
 import com.rettichlp.UnicacityAddon.events.job.FishermanEventHandler;
 import com.rettichlp.UnicacityAddon.events.team.ReportAcceptEventHandler;
 import com.rettichlp.UnicacityAddon.modules.BombTimerModule;

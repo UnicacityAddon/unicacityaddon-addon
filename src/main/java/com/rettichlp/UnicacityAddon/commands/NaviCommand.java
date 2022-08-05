@@ -47,7 +47,10 @@ public class NaviCommand extends CommandBase {
     @Override
     public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
         UPlayer p = AbstractionLayer.getPlayer();
-        if (args.length < 1) return;
+        if (args.length < 1) {
+            p.sendChatMessage("/navi");
+            return;
+        }
 
         NaviPoint naviPoint = getNaviPointByName(args[0]);
         if (naviPoint == null) {
