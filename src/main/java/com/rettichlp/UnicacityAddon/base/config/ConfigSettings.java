@@ -78,7 +78,7 @@ public class ConfigSettings {
         list.add(nameTagBlacklist);
 
         BooleanElement nameTagContract = new BooleanElement("Contract", unicacityAddon, new ControlElement.IconData(Material.IRON_SWORD), "NAMETAG_CONTRACT",
-            ConfigElements.getNameTagContract());
+                ConfigElements.getNameTagContract());
         list.add(nameTagContract);
 
         StringElement nameTagDelay = new StringElement("Update Intervall", unicacityAddon, new ControlElement.IconData(Material.WATCH), "NAMETAG_DELAY",
@@ -125,6 +125,16 @@ public class ConfigSettings {
         BooleanElement eventCarFind = new BooleanElement("Route bei /car find", unicacityAddon, new ControlElement.IconData(Material.MINECART), "EVENT_CARFIND",
                 ConfigElements.getEventCarFind());
         list.add(eventCarFind);
+
+        BooleanElement activatePassword = new BooleanElement("Automatisches /passwort", unicacityAddon, new ControlElement.IconData(Material.TRIPWIRE_HOOK), "AUTOMATED_PASSWORD",
+                ConfigElements.getPasswordAutomation());
+        activatePassword.setSubSettings(passwordSettings(unicacityAddon));
+        list.add(activatePassword);
+
+        BooleanElement commandsOnJoin = new BooleanElement("Automatische Befehle", unicacityAddon, new ControlElement.IconData(Material.REDSTONE_COMPARATOR), "COMMAND_ON_JOIN",
+                ConfigElements.getCommandAutomation());
+        commandsOnJoin.setSubSettings(commandList(unicacityAddon));
+        list.add(commandsOnJoin);
 
         // Certain LabyMod themes cover the lower settings. To counteract this, empty lines are appended.
         HeaderElement emptyLine = new HeaderElement("");
@@ -222,6 +232,34 @@ public class ConfigSettings {
         settings.add(eventATMFBank);
         settings.add(eventATMGRKasse);
         settings.add(eventATMInfo);
+        return settings;
+    }
+
+    private static Settings passwordSettings(UnicacityAddon unicacityAddon) {
+        Settings settings = new Settings();
+
+        StringElement password = new StringElement("Passwort", unicacityAddon, new ControlElement.IconData(Material.TRIPWIRE_HOOK), "PASSWORD",
+                ConfigElements.getPassword());
+        settings.add(password);
+
+        return settings;
+    }
+
+    private static Settings commandList(UnicacityAddon unicacityAddon) {
+        Settings settings = new Settings();
+
+        StringElement commandOne = new StringElement("Erster Command", unicacityAddon, new ControlElement.IconData(Material.PAPER), "FIRST_COMMAND",
+                ConfigElements.getFirstCommand());
+        settings.add(commandOne);
+
+        StringElement commandTwo = new StringElement("Zweiter Command", unicacityAddon, new ControlElement.IconData(Material.PAPER), "SECOND_COMMAND",
+                ConfigElements.getSecondCommand());
+        settings.add(commandTwo);
+
+        StringElement commandThree = new StringElement("Dritter Command", unicacityAddon, new ControlElement.IconData(Material.PAPER), "THIRD_COMMAND",
+                ConfigElements.getThirdCommand());
+        settings.add(commandThree);
+
         return settings;
     }
 }
