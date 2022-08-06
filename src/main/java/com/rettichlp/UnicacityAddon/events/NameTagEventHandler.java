@@ -40,7 +40,7 @@ public class NameTagEventHandler {
 
         String houseban = getHouseban(playerName);
         String outlaw = getOutlaw(playerName);
-        String prefix = getPrefix(playerName);
+        String prefix = getPrefix(playerName, false);
         String factionInfo = getFactionInfo(playerName);
         String duty = getDuty(playerName);
         e.setDisplayname(houseban + outlaw + prefix + playerName + factionInfo + duty);
@@ -60,7 +60,7 @@ public class NameTagEventHandler {
             if (!FactionHandler.getPlayerFactionMap().containsKey(name.substring(3))) return;
             if (name.contains("◤")) return; // already edited
 
-            String prefix = getPrefix(playerName);
+            String prefix = getPrefix(playerName, true);
             String factionInfo = getFactionInfo(playerName);
 
             if (name.startsWith(ColorCode.DARK_GRAY.getCode())) { // non-revivable
@@ -68,7 +68,7 @@ public class NameTagEventHandler {
                 return;
             }
 
-            entityItem.setCustomNameTag(prefix + ColorCode.GRAY.getCode() + "✟" + playerName + factionInfo);
+            entityItem.setCustomNameTag(prefix + "✟" + playerName + factionInfo);
         });
 
         tick = 0;
@@ -124,9 +124,10 @@ public class NameTagEventHandler {
         return outlaw.toString();
     }
 
-    private String getPrefix(String playerName) {
+    private String getPrefix(String playerName, boolean isCorpse) {
         StringBuilder prefix = new StringBuilder();
         prefix.append(FormattingCode.RESET.getCode());
+        if (isCorpse) prefix.append(ColorCode.GRAY.getCode());
 
         if (ConfigElements.getNameTagWPS()) {
             WantedEventHandler.Wanted wanted = WantedEventHandler.WANTED_MAP.get(playerName);
