@@ -17,7 +17,7 @@ import net.minecraft.util.math.BlockPos;
 /**
  * @author RettichLP
  */
-public class ARezeptAcceptCommand extends CommandBase {
+public class ARezeptAnnehmenCommand extends CommandBase {
 
     public static int amount = 0;
 

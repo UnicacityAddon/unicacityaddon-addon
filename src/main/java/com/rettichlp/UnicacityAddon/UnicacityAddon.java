@@ -10,14 +10,14 @@ import com.rettichlp.UnicacityAddon.commands.NaviCommand;
 import com.rettichlp.UnicacityAddon.commands.NearestATMCommand;
 import com.rettichlp.UnicacityAddon.commands.NearestJobCommand;
 import com.rettichlp.UnicacityAddon.commands.TriggerEventCommand;
-import com.rettichlp.UnicacityAddon.commands.faction.ASetBlacklistCommand;
+import com.rettichlp.UnicacityAddon.commands.faction.badfaction.ASetBlacklistCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.ReinforcementCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.ShareLocationCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.badfaction.SchmarzmarktLocationsCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.polizei.ASUCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.polizei.ModifyWantedsCommand;
-import com.rettichlp.UnicacityAddon.commands.faction.rettungsdienst.ARezeptAcceptCommand;
-import com.rettichlp.UnicacityAddon.commands.faction.rettungsdienst.ARezeptGiveCommand;
+import com.rettichlp.UnicacityAddon.commands.faction.rettungsdienst.ARezeptAnnehmenCommand;
+import com.rettichlp.UnicacityAddon.commands.faction.rettungsdienst.ARezeptCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.terroristen.ExplosiveBeltCommand;
 import com.rettichlp.UnicacityAddon.events.*;
 import com.rettichlp.UnicacityAddon.events.faction.BlacklistEventHandler;
@@ -73,8 +73,8 @@ public class UnicacityAddon extends LabyModAddon {
 
         // ForgeCommands - TODO remove later
         ClientCommandHandler.instance.registerCommand(new ACallCommand());
-        ClientCommandHandler.instance.registerCommand(new ARezeptAcceptCommand());
-        ClientCommandHandler.instance.registerCommand(new ARezeptGiveCommand());
+        ClientCommandHandler.instance.registerCommand(new ARezeptAnnehmenCommand());
+        ClientCommandHandler.instance.registerCommand(new ARezeptCommand());
         ClientCommandHandler.instance.registerCommand(new ASetBlacklistCommand());
         ClientCommandHandler.instance.registerCommand(new ASMSCommand());
         ClientCommandHandler.instance.registerCommand(new ASUCommand());

@@ -1,4 +1,4 @@
-package com.rettichlp.UnicacityAddon.commands.faction;
+package com.rettichlp.UnicacityAddon.commands.faction.badfaction;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
