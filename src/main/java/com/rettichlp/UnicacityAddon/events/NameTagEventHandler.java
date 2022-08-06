@@ -12,14 +12,16 @@ import com.rettichlp.UnicacityAddon.base.utils.MathUtils;
 import com.rettichlp.UnicacityAddon.events.faction.BlacklistEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.ContractEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.polizei.WantedEventHandler;
-import java.util.List;
-import java.util.Objects;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemSkull;
+import net.minecraft.scoreboard.ScorePlayerTeam;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+
+import java.util.List;
+import java.util.Objects;
 
 /**
  * @author RettichLP
@@ -31,9 +33,11 @@ public class NameTagEventHandler {
 
     @SubscribeEvent
     public void onRenderNameTag(PlayerEvent.NameFormat e) {
-        if (e.getDisplayname().contains(FormattingCode.OBFUSCATED.getCode())) return;
-
         String playerName = e.getUsername();
+
+        String displayName = ScorePlayerTeam.formatPlayerName(e.getEntityPlayer().getTeam(), playerName);
+        if (displayName.contains(FormattingCode.OBFUSCATED.getCode())) return;
+
         String houseban = getHouseban(playerName);
         String outlaw = getOutlaw(playerName);
         String prefix = getPrefix(playerName);
