@@ -28,7 +28,7 @@ public class MedicationEventHandler {
         long timeSinceLastExecution = System.currentTimeMillis() - lastExecution;
         long delay = 0;
 
-        if (timeSinceLastExecution < 750) delay = 750 - timeSinceLastExecution;
+        if (timeSinceLastExecution < 1000) delay = 1000 - timeSinceLastExecution;
 
         TIMER.schedule(new TimerTask() {
             @Override
@@ -55,7 +55,7 @@ public class MedicationEventHandler {
         long timeSinceLastExecution = System.currentTimeMillis() - lastExecution;
         long delay = 0;
 
-        if (timeSinceLastExecution < 750) delay = 750 - timeSinceLastExecution;
+        if (timeSinceLastExecution < 1000) delay = 1000 - timeSinceLastExecution;
 
         TIMER.schedule(new TimerTask() {
             @Override public void run() {
