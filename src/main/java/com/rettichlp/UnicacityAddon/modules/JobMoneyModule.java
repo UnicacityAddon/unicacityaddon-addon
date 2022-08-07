@@ -8,13 +8,11 @@ import net.labymod.ingamegui.ModuleCategory;
 import net.labymod.ingamegui.moduletypes.SimpleModule;
 import net.labymod.settings.elements.ControlElement;
 import net.labymod.utils.Material;
+import org.apache.commons.io.FileUtils;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.nio.charset.StandardCharsets;
 
 /**
  * @author Dimiikou
@@ -96,12 +94,10 @@ public class JobMoneyModule extends SimpleModule {
         try {
             File balanceDataFile = FileManager.getBalanceDataFile();
             if (balanceDataFile == null) return;
-            BufferedWriter writer = Files.newBufferedWriter(Paths.get(balanceDataFile.getAbsolutePath()));
             Gson g = new Gson();
             Balance balance = new Balance();
             balance.setJobBalance(jobBalance);
-            System.out.println(g.toJson(balance));
-            g.toJson(balance, writer);
+            FileUtils.writeStringToFile(balanceDataFile, g.toJson(balance), StandardCharsets.UTF_8.toString());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -111,10 +107,15 @@ public class JobMoneyModule extends SimpleModule {
         try {
             File balanceDataFile = FileManager.getBalanceDataFile();
             if (balanceDataFile == null) return;
-            BufferedReader reader = Files.newBufferedReader(Paths.get(balanceDataFile.getAbsolutePath()));
             Gson g = new Gson();
-            Balance balance = g.fromJson(reader, Balance.class);
-            jobBalance = balance.getJobBalance();
+            String jsonData = FileUtils.readFileToString(balanceDataFile, StandardCharsets.UTF_8.toString());
+
+            if (jsonData.isEmpty()) {
+                jobBalance = 0;
+                return;
+            }
+
+            jobBalance = g.fromJson(jsonData, Balance.class).getJobBalance();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
