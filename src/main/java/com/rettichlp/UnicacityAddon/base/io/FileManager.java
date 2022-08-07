@@ -48,6 +48,16 @@ public class FileManager {
         return null;
     }
 
+    public static File getBalanceDataFile() throws IOException {
+        if (getUnicacityAddonDir() == null) return null;
+        File balanceDataFile = new File(getUnicacityAddonDir().getAbsolutePath() + "/balanceData.json");
+        if (balanceDataFile.exists() || balanceDataFile.createNewFile()) return balanceDataFile;
+
+        AbstractionLayer.getPlayer().sendErrorMessage("Datei 'balanceData.json' wurde nicht gefunden!");
+
+        return null;
+    }
+
     public static File getNewImageFile() throws IOException {
         if (getAddonScreenshotDir() == null) return null;
 
