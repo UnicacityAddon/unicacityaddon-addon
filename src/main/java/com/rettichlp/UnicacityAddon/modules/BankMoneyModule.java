@@ -56,7 +56,7 @@ public class BankMoneyModule extends SimpleModule {
 
     @Override
     public boolean isShown() {
-        return bankBalance > 0;
+        return true;
     }
 
     @Override

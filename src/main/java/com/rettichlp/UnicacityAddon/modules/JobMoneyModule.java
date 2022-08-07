@@ -56,7 +56,7 @@ public class JobMoneyModule extends SimpleModule {
 
     @Override
     public boolean isShown() {
-        return jobBalance > 0;
+        return true;
     }
 
     @Override
