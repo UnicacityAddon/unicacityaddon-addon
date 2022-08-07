@@ -19,7 +19,14 @@ import com.rettichlp.UnicacityAddon.commands.faction.polizei.ModifyWantedsComman
 import com.rettichlp.UnicacityAddon.commands.faction.rettungsdienst.ARezeptAnnehmenCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.rettungsdienst.ARezeptCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.terroristen.ExplosiveBeltCommand;
-import com.rettichlp.UnicacityAddon.events.*;
+import com.rettichlp.UnicacityAddon.events.BombTimerEventHandler;
+import com.rettichlp.UnicacityAddon.events.CarEventHandler;
+import com.rettichlp.UnicacityAddon.events.HotkeyEventHandler;
+import com.rettichlp.UnicacityAddon.events.JoinEventHandler;
+import com.rettichlp.UnicacityAddon.events.MobileEventHandler;
+import com.rettichlp.UnicacityAddon.events.MoneyEventHandler;
+import com.rettichlp.UnicacityAddon.events.NameTagEventHandler;
+import com.rettichlp.UnicacityAddon.events.TabListEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.BlacklistEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.ContractEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.EmergencyServiceEventHandler;
@@ -36,12 +43,13 @@ import com.rettichlp.UnicacityAddon.events.job.ADropEventHandler;
 import com.rettichlp.UnicacityAddon.events.job.InstantDropstoneEventHandler;
 import com.rettichlp.UnicacityAddon.events.job.FishermanEventHandler;
 import com.rettichlp.UnicacityAddon.events.team.ReportAcceptEventHandler;
+import com.rettichlp.UnicacityAddon.modules.BankMoneyModule;
 import com.rettichlp.UnicacityAddon.modules.BombTimerModule;
 import com.rettichlp.UnicacityAddon.modules.CarOpenModule;
 import com.rettichlp.UnicacityAddon.modules.EmergencyServiceModule;
 import com.rettichlp.UnicacityAddon.modules.ExplosiveBeltTimerModule;
 import com.rettichlp.UnicacityAddon.modules.FBIHackModule;
-import com.rettichlp.UnicacityAddon.modules.JobSalaryModule;
+import com.rettichlp.UnicacityAddon.modules.JobMoneyModule;
 import com.rettichlp.UnicacityAddon.modules.PlantFertilizeTimerModule;
 import com.rettichlp.UnicacityAddon.modules.PlantWaterTimerModule;
 import net.labymod.api.LabyModAddon;
@@ -89,9 +97,9 @@ public class UnicacityAddon extends LabyModAddon {
         ClientCommandHandler.instance.registerCommand(new TriggerEventCommand());
 
         // ForgeEvents -> https://docs.labymod.net/pages/create-addons/forge_events/ - TODO remove later
-        ADDON.getApi().registerForgeListener(new ATMInfoEventHandler());
         ADDON.getApi().registerForgeListener(new AutomatedCalculationOf25());
         ADDON.getApi().registerForgeListener(new ADropEventHandler());
+        ADDON.getApi().registerForgeListener(new MoneyEventHandler());
         ADDON.getApi().registerForgeListener(new BlacklistEventHandler());
         ADDON.getApi().registerForgeListener(new BombTimerEventHandler());
         ADDON.getApi().registerForgeListener(new CarEventHandler());
@@ -104,7 +112,6 @@ public class UnicacityAddon extends LabyModAddon {
         ADDON.getApi().registerForgeListener(new HotkeyEventHandler());
         ADDON.getApi().registerForgeListener(new InstantDropstoneEventHandler());
         ADDON.getApi().registerForgeListener(new JoinEventHandler());
-        ADDON.getApi().registerForgeListener(new SalaryCountEventHandler());
         ADDON.getApi().registerForgeListener(new MedicationEventHandler());
         ADDON.getApi().registerForgeListener(new MobileEventHandler());
         ADDON.getApi().registerForgeListener(new NameTagEventHandler());
@@ -119,12 +126,13 @@ public class UnicacityAddon extends LabyModAddon {
 
         // Modules -> https://docs.labymod.net/pages/create-addons/module_system/ - TODO remove later
         ModuleCategoryRegistry.loadCategory(UCModuleHandler.UNICACITY);
+        ADDON.getApi().registerModule(new BankMoneyModule());
         ADDON.getApi().registerModule(new BombTimerModule());
         ADDON.getApi().registerModule(new CarOpenModule());
         ADDON.getApi().registerModule(new EmergencyServiceModule());
         ADDON.getApi().registerModule(new ExplosiveBeltTimerModule());
         ADDON.getApi().registerModule(new FBIHackModule());
-        ADDON.getApi().registerModule(new JobSalaryModule());
+        ADDON.getApi().registerModule(new JobMoneyModule());
         ADDON.getApi().registerModule(new PlantFertilizeTimerModule());
         ADDON.getApi().registerModule(new PlantWaterTimerModule());
     }
@@ -138,6 +146,9 @@ public class UnicacityAddon extends LabyModAddon {
         BlacklistEventHandler.refreshBlacklistReasons();
         // Register keybindings
         KeyBindRegistry.registerKeyBinds();
+
+        BankMoneyModule.loadBalance();
+        JobMoneyModule.loadBalance();
     }
 
     @Override
