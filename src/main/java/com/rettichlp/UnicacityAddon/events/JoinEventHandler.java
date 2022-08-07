@@ -34,19 +34,19 @@ public class JoinEventHandler {
             if (!ConfigElements.getCommandAutomation()) return false;
             Timer t = new Timer();
 
-            if (ConfigElements.getFirstCommand() != null) p.sendChatMessage(ConfigElements.getFirstCommand());
+            if (!ConfigElements.getFirstCommand().isEmpty()) p.sendChatMessage(ConfigElements.getFirstCommand());
 
             t.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    if (ConfigElements.getSecondCommand() != null) p.sendChatMessage(ConfigElements.getSecondCommand());
+                    if (!ConfigElements.getSecondCommand().isEmpty()) p.sendChatMessage(ConfigElements.getSecondCommand());
                 }
             }, 1000L);
 
             t.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    if (ConfigElements.getThirdCommand() != null) p.sendChatMessage(ConfigElements.getThirdCommand());
+                    if (!ConfigElements.getThirdCommand().isEmpty()) p.sendChatMessage(ConfigElements.getThirdCommand());
                 }
             }, 2000L);
 
@@ -59,13 +59,13 @@ public class JoinEventHandler {
                 @Override
                 public void run() {
                     if (!accountLocked && ConfigElements.getCommandAutomation()) {
-                        if (ConfigElements.getFirstCommand() != null)
+                        if (!ConfigElements.getFirstCommand().isEmpty())
                             p.sendChatMessage(ConfigElements.getFirstCommand());
 
                         t.schedule(new TimerTask() {
                             @Override
                             public void run() {
-                                if (ConfigElements.getSecondCommand() != null)
+                                if (!ConfigElements.getSecondCommand().isEmpty())
                                     p.sendChatMessage(ConfigElements.getSecondCommand());
                             }
                         }, 1000L);
@@ -73,7 +73,7 @@ public class JoinEventHandler {
                         t.schedule(new TimerTask() {
                             @Override
                             public void run() {
-                                if (ConfigElements.getThirdCommand() != null)
+                                if (!ConfigElements.getThirdCommand().isEmpty())
                                     p.sendChatMessage(ConfigElements.getThirdCommand());
                             }
                         }, 2000L);
