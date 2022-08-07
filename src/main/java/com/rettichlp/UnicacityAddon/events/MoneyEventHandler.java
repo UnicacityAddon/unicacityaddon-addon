@@ -9,12 +9,15 @@ import com.rettichlp.UnicacityAddon.modules.JobMoneyModule;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 
 /**
  * @author Dimiikou, RettichLP
  */
 public class MoneyEventHandler {
+
+    private long reviveByMedicStartTime;
 
     @SubscribeEvent
     public boolean onClientChatReceived(ClientChatReceivedEvent e) {
@@ -49,6 +52,19 @@ public class MoneyEventHandler {
         Matcher bankTransferGetMatcher = PatternHandler.BANK_TRANSFER_GET_PATTERN.matcher(msg);
         if (bankTransferGetMatcher.find()) {
             BankMoneyModule.addBalance(Integer.parseInt(bankTransferGetMatcher.group(2)));
+            return false;
+        }
+
+        Matcher reviveByMedicStartMatcher = PatternHandler.REVIVE_BY_MEDIC_START.matcher(msg);
+        if (reviveByMedicStartMatcher.find()) {
+            reviveByMedicStartTime = System.currentTimeMillis();
+            return false;
+        }
+
+        Matcher reviveByMedicFinishMatcher = PatternHandler.REVIVE_BY_MEDIC_FINISH.matcher(msg);
+        if (reviveByMedicFinishMatcher.find()) {
+            if (System.currentTimeMillis() - reviveByMedicStartTime > TimeUnit.SECONDS.toMillis(10)) return false;
+            BankMoneyModule.removeBalance(27); // successfully revived by medic = 27$
             return false;
         }
 
