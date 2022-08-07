@@ -4,8 +4,11 @@ import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
 import com.rettichlp.UnicacityAddon.base.config.ConfigElements;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
+import com.rettichlp.UnicacityAddon.modules.BankMoneyModule;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+
+import java.util.regex.Matcher;
 
 /**
  * @author RettichLP
@@ -16,7 +19,9 @@ public class ATMInfoEventHandler {
         if (!ConfigElements.getEventATM()) return false;
         UPlayer p = AbstractionLayer.getPlayer();
 
-        if (PatternHandler.KONTOAUSZUG_PATTERN.matcher(e.getMessage().getUnformattedText()).find()) {
+        Matcher kontoauszugMatcher = PatternHandler.KONTOAUSZUG_PATTERN.matcher(e.getMessage().getUnformattedText());
+        if (kontoauszugMatcher.find()) {
+            BankMoneyModule.setBalance(Integer.parseInt(kontoauszugMatcher.group(1)));
 
             if (ConfigElements.getEventATMFBank()) {
                 p.sendChatMessage("/fbank");
