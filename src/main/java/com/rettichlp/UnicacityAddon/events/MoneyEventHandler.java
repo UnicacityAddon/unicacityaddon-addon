@@ -1,5 +1,8 @@
 package com.rettichlp.UnicacityAddon.events;
 
+import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
+import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
+import com.rettichlp.UnicacityAddon.base.config.ConfigElements;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
 import com.rettichlp.UnicacityAddon.modules.BankMoneyModule;
 import com.rettichlp.UnicacityAddon.modules.JobMoneyModule;
@@ -16,6 +19,13 @@ public class MoneyEventHandler {
     @SubscribeEvent
     public boolean onClientChatReceived(ClientChatReceivedEvent e) {
         String msg = e.getMessage().getUnformattedText();
+        UPlayer p = AbstractionLayer.getPlayer();
+
+        Matcher jobSalaryMatcher = PatternHandler.JOB_SALARY_PATTERN.matcher(msg);
+        if (jobSalaryMatcher.find()) {
+            JobMoneyModule.addBalance(Integer.parseInt(jobSalaryMatcher.group(1)));
+            return false;
+        }
 
         Matcher bankNewBalanceMatcher = PatternHandler.BANK_NEW_BALANCE_PATTERN.matcher(msg);
         if (bankNewBalanceMatcher.find()) {
@@ -42,9 +52,24 @@ public class MoneyEventHandler {
             return false;
         }
 
-        Matcher jobSalaryMatcher = PatternHandler.JOB_SALARY_PATTERN.matcher(msg);
-        if (jobSalaryMatcher.find()) {
-            JobMoneyModule.addBalance(Integer.parseInt(jobSalaryMatcher.group(1)));
+        Matcher kontoauszugMatcher = PatternHandler.BANK_STATEMENT_PATTERN.matcher(msg);
+        if (kontoauszugMatcher.find()) {
+            BankMoneyModule.setBalance(Integer.parseInt(kontoauszugMatcher.group(1)));
+
+            if (ConfigElements.getEventATM()) {
+                if (ConfigElements.getEventATMFBank()) {
+                    p.sendChatMessage("/fbank");
+                }
+
+                if (ConfigElements.getEventATMGRKasse()) {
+                    p.sendChatMessage("/grkasse info");
+                }
+
+                if (ConfigElements.getEventATMInfo()) {
+                    p.sendChatMessage("/atminfo");
+                }
+            }
+
             return false;
         }
 
