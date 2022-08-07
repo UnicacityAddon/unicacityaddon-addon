@@ -5,7 +5,7 @@ import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
 import com.rettichlp.UnicacityAddon.base.config.ConfigElements;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
 import com.rettichlp.UnicacityAddon.modules.BankMoneyModule;
-import com.rettichlp.UnicacityAddon.modules.CashModule;
+import com.rettichlp.UnicacityAddon.modules.CashMoneyModule;
 import com.rettichlp.UnicacityAddon.modules.JobMoneyModule;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -100,43 +100,55 @@ public class MoneyEventHandler {
 
         Matcher cashGiveMatcher = PatternHandler.CASH_GIVE_PATTERN.matcher(msg);
         if (cashGiveMatcher.find()) {
-            CashModule.removeBalance(Integer.parseInt(cashGiveMatcher.group(1)));
+            CashMoneyModule.removeBalance(Integer.parseInt(cashGiveMatcher.group(2)));
             return false;
         }
 
         Matcher cashTakeMatcher = PatternHandler.CASH_TAKE_PATTERN.matcher(msg);
         if (cashTakeMatcher.find()) {
-            CashModule.addBalance(Integer.parseInt(cashTakeMatcher.group(2)));
+            CashMoneyModule.addBalance(Integer.parseInt(cashTakeMatcher.group(2)));
             return false;
         }
 
         Matcher cashToFBankMatcher = PatternHandler.CASH_TO_FBANK_PATTERN.matcher(msg);
         if (cashToFBankMatcher.find()) {
-            CashModule.removeBalance(Integer.parseInt(cashToFBankMatcher.group(1)));
+            CashMoneyModule.removeBalance(Integer.parseInt(cashToFBankMatcher.group(1)));
             return false;
         }
 
         Matcher cashFromFBankMatcher = PatternHandler.CASH_FROM_FBANK_PATTERN.matcher(msg);
         if (cashFromFBankMatcher.find()) {
-            CashModule.addBalance(Integer.parseInt(cashFromFBankMatcher.group(1)));
+            CashMoneyModule.addBalance(Integer.parseInt(cashFromFBankMatcher.group(1)));
+            return false;
+        }
+
+        Matcher cashToBankMatcher = PatternHandler.CASH_TO_BANK_PATTERN.matcher(msg);
+        if (cashToBankMatcher.find()) {
+            CashMoneyModule.removeBalance(Integer.parseInt(cashToBankMatcher.group(1)));
+            return false;
+        }
+
+        Matcher cashFromBankMatcher = PatternHandler.CASH_FROM_BANK_PATTERN.matcher(msg);
+        if (cashFromBankMatcher.find()) {
+            CashMoneyModule.addBalance(Integer.parseInt(cashFromBankMatcher.group(1)));
             return false;
         }
 
         Matcher cashGetMatcher = PatternHandler.CASH_GET_PATTERN.matcher(msg);
         if (cashGetMatcher.find()) {
-            CashModule.addBalance(Integer.parseInt(cashGetMatcher.group(1)));
+            CashMoneyModule.addBalance(Integer.parseInt(cashGetMatcher.group(1)));
             return false;
         }
 
         Matcher cashRemoveMatcher = PatternHandler.CASH_REMOVE_PATTERN.matcher(msg);
         if (cashRemoveMatcher.find()) {
-            CashModule.removeBalance(Integer.parseInt(cashRemoveMatcher.group(1)));
+            CashMoneyModule.removeBalance(Integer.parseInt(cashRemoveMatcher.group(1)));
             return false;
         }
 
         Matcher cashStatsMatcher = PatternHandler.CASH_STATS_PATTERN.matcher(msg);
         if (cashStatsMatcher.find()) {
-            CashModule.setBalance(Integer.parseInt(cashStatsMatcher.group(1)));
+            CashMoneyModule.setBalance(Integer.parseInt(cashStatsMatcher.group(1)));
             return false;
         }
 
