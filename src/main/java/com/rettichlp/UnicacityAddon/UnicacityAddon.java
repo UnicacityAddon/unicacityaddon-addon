@@ -149,13 +149,49 @@ public class UnicacityAddon extends LabyModAddon {
         // Register keybindings
         KeyBindRegistry.registerKeyBinds();
 
-        BankMoneyModule.loadBalance();
-        CashModule.loadBalance();
-        JobMoneyModule.loadBalance();
+        loadBalance();
     }
 
     @Override
     protected void fillSettings(List<SettingsElement> list) {
         ConfigSettings.createConfig(this, list);
+    }
+
+    public static void loadBalance() {
+        try {
+            File balanceDataFile = FileManager.getBalanceDataFile();
+            if (balanceDataFile == null) return;
+            Gson g = new Gson();
+            String jsonData = FileUtils.readFileToString(balanceDataFile, StandardCharsets.UTF_8.toString());
+
+            if (jsonData.isEmpty()) {
+                BankMoneyModule.setBalance(0);
+                CashMoneyModule.setBalance(0);
+                JobMoneyModule.setBalance(0);
+                return;
+            }
+
+            Balance balance = g.fromJson(jsonData, Balance.class);
+            BankMoneyModule.bankBalance = balance.getBankBalance();
+            CashMoneyModule.cashBalance = balance.getCash();
+            JobMoneyModule.jobBalance = balance.getJobBalance();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void saveBalance() {
+        try {
+            File balanceDataFile = FileManager.getBalanceDataFile();
+            if (balanceDataFile == null) return;
+            Gson g = new Gson();
+            Balance balance = new Balance();
+            balance.setBankBalance(BankMoneyModule.bankBalance);
+            balance.setCash(CashMoneyModule.cashBalance);
+            balance.setJobBalance(JobMoneyModule.jobBalance);
+            FileUtils.writeStringToFile(balanceDataFile, g.toJson(balance), StandardCharsets.UTF_8.toString());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

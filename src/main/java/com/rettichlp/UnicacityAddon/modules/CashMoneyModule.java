@@ -8,15 +8,15 @@ import net.labymod.settings.elements.ControlElement;
 import net.labymod.utils.Material;
 
 /**
- * @author Dimiikou
+ * @author RettichLP
  */
-public class JobMoneyModule extends SimpleModule {
+public class CashMoneyModule extends SimpleModule {
 
-    public static int jobBalance;
+    public static int cashBalance;
 
     @Override
     public String getControlName() {
-        return "Job Gehalt";
+        return "Geld auf der Hand";
     }
 
     @Override
@@ -26,12 +26,12 @@ public class JobMoneyModule extends SimpleModule {
 
     @Override
     public String getDisplayName() {
-        return "Job-Gehalt";
+        return "Bargeld";
     }
 
     @Override
     public String getDisplayValue() {
-        return jobBalance + "$";
+        return cashBalance + "$";
     }
 
     @Override
@@ -41,7 +41,7 @@ public class JobMoneyModule extends SimpleModule {
 
     @Override
     public String getDescription() {
-        return "Zeigt dein Gehalt durch Jobs bis zum nächsten PayDay an.";
+        return "Zeigt an, wie viel Geld du auf der Hand hast.";
     }
 
     @Override
@@ -56,7 +56,7 @@ public class JobMoneyModule extends SimpleModule {
 
     @Override
     public boolean isShown() {
-        return jobBalance > 0;
+        return cashBalance > 0;
     }
 
     @Override
@@ -69,17 +69,17 @@ public class JobMoneyModule extends SimpleModule {
     }
 
     public static void addBalance(int balance) {
-        jobBalance = jobBalance + balance;
+        cashBalance = cashBalance + balance;
         UnicacityAddon.saveBalance();
     }
 
     public static void removeBalance(int balance) {
-        jobBalance = jobBalance - balance;
+        cashBalance = cashBalance - balance;
         UnicacityAddon.saveBalance();
     }
 
     public static void setBalance(int balance) {
-        jobBalance = balance;
+        cashBalance = balance;
         UnicacityAddon.saveBalance();
     }
 }
