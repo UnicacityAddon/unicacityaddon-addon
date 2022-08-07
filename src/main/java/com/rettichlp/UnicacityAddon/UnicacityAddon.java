@@ -41,7 +41,7 @@ import com.rettichlp.UnicacityAddon.modules.CarOpenModule;
 import com.rettichlp.UnicacityAddon.modules.EmergencyServiceModule;
 import com.rettichlp.UnicacityAddon.modules.ExplosiveBeltTimerModule;
 import com.rettichlp.UnicacityAddon.modules.FBIHackModule;
-import com.rettichlp.UnicacityAddon.modules.JobSalaryModule;
+import com.rettichlp.UnicacityAddon.modules.JobMoneyModule;
 import com.rettichlp.UnicacityAddon.modules.PlantFertilizeTimerModule;
 import com.rettichlp.UnicacityAddon.modules.PlantWaterTimerModule;
 import net.labymod.api.LabyModAddon;
@@ -124,7 +124,7 @@ public class UnicacityAddon extends LabyModAddon {
         ADDON.getApi().registerModule(new EmergencyServiceModule());
         ADDON.getApi().registerModule(new ExplosiveBeltTimerModule());
         ADDON.getApi().registerModule(new FBIHackModule());
-        ADDON.getApi().registerModule(new JobSalaryModule());
+        ADDON.getApi().registerModule(new JobMoneyModule());
         ADDON.getApi().registerModule(new PlantFertilizeTimerModule());
         ADDON.getApi().registerModule(new PlantWaterTimerModule());
     }
