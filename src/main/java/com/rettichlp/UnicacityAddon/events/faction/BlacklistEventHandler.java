@@ -1,10 +1,9 @@
 package com.rettichlp.UnicacityAddon.events.faction;
 
 import com.google.gson.Gson;
-import com.rettichlp.UnicacityAddon.base.faction.blacklist.Blacklist;
+import com.rettichlp.UnicacityAddon.base.json.blacklist.Blacklist;
 import com.rettichlp.UnicacityAddon.base.io.FileManager;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
-import com.rettichlp.UnicacityAddon.events.NameTagEventHandler;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
