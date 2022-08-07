@@ -46,6 +46,7 @@ import com.rettichlp.UnicacityAddon.events.team.ReportAcceptEventHandler;
 import com.rettichlp.UnicacityAddon.modules.BankMoneyModule;
 import com.rettichlp.UnicacityAddon.modules.BombTimerModule;
 import com.rettichlp.UnicacityAddon.modules.CarOpenModule;
+import com.rettichlp.UnicacityAddon.modules.CashModule;
 import com.rettichlp.UnicacityAddon.modules.EmergencyServiceModule;
 import com.rettichlp.UnicacityAddon.modules.ExplosiveBeltTimerModule;
 import com.rettichlp.UnicacityAddon.modules.FBIHackModule;
@@ -129,6 +130,7 @@ public class UnicacityAddon extends LabyModAddon {
         ADDON.getApi().registerModule(new BankMoneyModule());
         ADDON.getApi().registerModule(new BombTimerModule());
         ADDON.getApi().registerModule(new CarOpenModule());
+        ADDON.getApi().registerModule(new CashModule());
         ADDON.getApi().registerModule(new EmergencyServiceModule());
         ADDON.getApi().registerModule(new ExplosiveBeltTimerModule());
         ADDON.getApi().registerModule(new FBIHackModule());
@@ -148,6 +150,7 @@ public class UnicacityAddon extends LabyModAddon {
         KeyBindRegistry.registerKeyBinds();
 
         BankMoneyModule.loadBalance();
+        CashModule.loadBalance();
         JobMoneyModule.loadBalance();
     }
 
