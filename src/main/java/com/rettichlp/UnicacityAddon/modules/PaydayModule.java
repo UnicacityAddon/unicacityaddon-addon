@@ -10,13 +10,13 @@ import net.labymod.utils.Material;
 /**
  * @author RettichLP
  */
-public class BankMoneyModule extends SimpleModule {
+public class PaydayModule extends SimpleModule {
 
-    public static int bankBalance;
+    public static int currentTime;
 
     @Override
     public String getControlName() {
-        return "Geld auf der Bank";
+        return "Zeit bis zum Payday";
     }
 
     @Override
@@ -26,12 +26,12 @@ public class BankMoneyModule extends SimpleModule {
 
     @Override
     public String getDisplayName() {
-        return "Bank";
+        return "Payday";
     }
 
     @Override
     public String getDisplayValue() {
-        return bankBalance + "$";
+        return currentTime + "/60 Minuten";
     }
 
     @Override
@@ -41,12 +41,12 @@ public class BankMoneyModule extends SimpleModule {
 
     @Override
     public String getDescription() {
-        return "Zeigt an, wie viel Geld du auf der Bank hast.";
+        return "Zeigt die Minuten bis zum Payday an.";
     }
 
     @Override
     public ControlElement.IconData getIconData() {
-        return new ControlElement.IconData(Material.GOLD_INGOT);
+        return new ControlElement.IconData(Material.WATCH);
     }
 
     @Override
@@ -68,18 +68,18 @@ public class BankMoneyModule extends SimpleModule {
     public void loadSettings() {
     }
 
-    public static void addBalance(int balance) {
-        bankBalance = bankBalance + balance;
+    public static void addTime(int time) {
+        currentTime = currentTime + time;
         UnicacityAddon.saveData();
     }
 
-    public static void removeBalance(int balance) {
-        bankBalance = bankBalance - balance;
+    public static void removeTime(int time) {
+        currentTime = currentTime - time;
         UnicacityAddon.saveData();
     }
 
-    public static void setBalance(int balance) {
-        bankBalance = balance;
+    public static void setTime(int time) {
+        currentTime = time;
         UnicacityAddon.saveData();
     }
 }

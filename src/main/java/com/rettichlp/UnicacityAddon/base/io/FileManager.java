@@ -48,12 +48,12 @@ public class FileManager {
         return null;
     }
 
-    public static File getBalanceDataFile() throws IOException {
+    public static File getOfflineDataFile() throws IOException {
         if (getUnicacityAddonDir() == null) return null;
-        File balanceDataFile = new File(getUnicacityAddonDir().getAbsolutePath() + "/balanceData.json");
-        if (balanceDataFile.exists() || balanceDataFile.createNewFile()) return balanceDataFile;
+        File offlineDataFile = new File(getUnicacityAddonDir().getAbsolutePath() + "/offlineData.json");
+        if (offlineDataFile.exists() || offlineDataFile.createNewFile()) return offlineDataFile;
 
-        AbstractionLayer.getPlayer().sendErrorMessage("Datei 'balanceData.json' wurde nicht gefunden!");
+        AbstractionLayer.getPlayer().sendErrorMessage("Datei 'offlineData.json' wurde nicht gefunden!");
 
         return null;
     }
