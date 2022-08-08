@@ -36,7 +36,8 @@ public class FishermanEventHandler {
 
         if (PatternHandler.FISHER_CATCH_START.matcher(msg).find()) {
             canCatchFish = false;
-            return catchFish();
+            p.sendChatMessage("/findschwarm");
+            return false;
         }
 
         if (PatternHandler.FISHER_SPOT_FOUND.matcher(msg).find()) {
@@ -46,13 +47,14 @@ public class FishermanEventHandler {
 
         if (PatternHandler.FISHER_SPOT_LOSE.matcher(msg).find()) {
             onTargetLocation = false;
-            return catchFish();
+            return false;
         }
 
         if (PatternHandler.FISHER_END.matcher(msg).find()) {
             fisherManJob = false;
             onTargetLocation = false;
-            return catchFish();
+            canCatchFish = false;
+            return false;
         }
 
         return false;
@@ -62,7 +64,8 @@ public class FishermanEventHandler {
         UPlayer p = AbstractionLayer.getPlayer();
         if (canCatchFish && onTargetLocation && count < 5) {
             p.sendChatMessage("/catchfish");
-            p.sendChatMessage("/findschwarm");
+            onTargetLocation = false;
+            canCatchFish = false;
             return true;
         }
         return false;
