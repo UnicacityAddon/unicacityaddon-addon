@@ -39,11 +39,12 @@ public class PaydayEventHandler {
         return false;
     }
 
-    @SubscribeEvent public void onTick(TickEvent.ClientTickEvent event) {
-        if (event.phase != TickEvent.Phase.END) return;
-        if (isAfk) return;
+    @SubscribeEvent
+    public void onTick(TickEvent.ClientTickEvent event) {
+        if (isAfk || event.phase != TickEvent.Phase.END) return;
 
         if (currentTick++ != 1200) return;
         PaydayModule.addTime(1);
+        currentTick = 0;
     }
 }
