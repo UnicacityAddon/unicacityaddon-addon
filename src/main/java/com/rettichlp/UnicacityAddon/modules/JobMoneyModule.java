@@ -70,16 +70,16 @@ public class JobMoneyModule extends SimpleModule {
 
     public static void addBalance(int balance) {
         jobBalance = jobBalance + balance;
-        UnicacityAddon.saveBalance();
+        UnicacityAddon.saveData();
     }
 
     public static void removeBalance(int balance) {
         jobBalance = jobBalance - balance;
-        UnicacityAddon.saveBalance();
+        UnicacityAddon.saveData();
     }
 
     public static void setBalance(int balance) {
         jobBalance = balance;
-        UnicacityAddon.saveBalance();
+        UnicacityAddon.saveData();
     }
 }

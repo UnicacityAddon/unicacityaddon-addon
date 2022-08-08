@@ -1,12 +1,13 @@
 package com.rettichlp.UnicacityAddon.base.json.balance;
 
-public class Balance {
+public class Offlinedata {
 
     private int bankBalance;
     private int cash;
     private int jobBalance;
+    private int paydayTime;
 
-    public Balance() {
+    public Offlinedata() {
     }
 
     public int getBankBalance() {
@@ -25,11 +26,19 @@ public class Balance {
         this.jobBalance = jobBalance;
     }
 
-    public int getCash() {
+    public int getCashBalance() {
         return cash;
     }
 
-    public void setCash(int cash) {
+    public void setCashBalance(int cash) {
         this.cash = cash;
+    }
+
+    public int getPaydayTime() {
+        return paydayTime;
+    }
+
+    public void setPaydayTime(int paydayTime) {
+        this.paydayTime = paydayTime;
     }
 }

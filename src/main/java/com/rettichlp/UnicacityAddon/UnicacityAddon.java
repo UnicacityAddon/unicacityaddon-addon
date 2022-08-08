@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.rettichlp.UnicacityAddon.base.config.ConfigSettings;
 import com.rettichlp.UnicacityAddon.base.faction.FactionHandler;
 import com.rettichlp.UnicacityAddon.base.io.FileManager;
-import com.rettichlp.UnicacityAddon.base.json.balance.Balance;
+import com.rettichlp.UnicacityAddon.base.json.balance.Offlinedata;
 import com.rettichlp.UnicacityAddon.base.module.UCModuleHandler;
 import com.rettichlp.UnicacityAddon.base.registry.KeyBindRegistry;
 import com.rettichlp.UnicacityAddon.commands.ACallCommand;
@@ -29,6 +29,7 @@ import com.rettichlp.UnicacityAddon.events.JoinEventHandler;
 import com.rettichlp.UnicacityAddon.events.MobileEventHandler;
 import com.rettichlp.UnicacityAddon.events.MoneyEventHandler;
 import com.rettichlp.UnicacityAddon.events.NameTagEventHandler;
+import com.rettichlp.UnicacityAddon.events.PaydayEventHandler;
 import com.rettichlp.UnicacityAddon.events.TabListEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.BlacklistEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.ContractEventHandler;
@@ -54,6 +55,7 @@ import com.rettichlp.UnicacityAddon.modules.EmergencyServiceModule;
 import com.rettichlp.UnicacityAddon.modules.ExplosiveBeltTimerModule;
 import com.rettichlp.UnicacityAddon.modules.FBIHackModule;
 import com.rettichlp.UnicacityAddon.modules.JobMoneyModule;
+import com.rettichlp.UnicacityAddon.modules.PaydayModule;
 import com.rettichlp.UnicacityAddon.modules.PlantFertilizeTimerModule;
 import com.rettichlp.UnicacityAddon.modules.PlantWaterTimerModule;
 import net.labymod.api.LabyModAddon;
@@ -123,6 +125,7 @@ public class UnicacityAddon extends LabyModAddon {
         ADDON.getApi().registerForgeListener(new MedicationEventHandler());
         ADDON.getApi().registerForgeListener(new MobileEventHandler());
         ADDON.getApi().registerForgeListener(new NameTagEventHandler());
+        ADDON.getApi().registerForgeListener(new PaydayEventHandler());
         ADDON.getApi().registerForgeListener(new PlantTimerEventHandler());
         ADDON.getApi().registerForgeListener(new ReinforcementEventHandler());
         ADDON.getApi().registerForgeListener(new ReportAcceptEventHandler());
@@ -142,6 +145,7 @@ public class UnicacityAddon extends LabyModAddon {
         ADDON.getApi().registerModule(new ExplosiveBeltTimerModule());
         ADDON.getApi().registerModule(new FBIHackModule());
         ADDON.getApi().registerModule(new JobMoneyModule());
+        ADDON.getApi().registerModule(new PaydayModule());
         ADDON.getApi().registerModule(new PlantFertilizeTimerModule());
         ADDON.getApi().registerModule(new PlantWaterTimerModule());
     }
@@ -166,37 +170,40 @@ public class UnicacityAddon extends LabyModAddon {
 
     public static void loadBalance() {
         try {
-            File balanceDataFile = FileManager.getBalanceDataFile();
-            if (balanceDataFile == null) return;
+            File offlineDataFile = FileManager.getOfflineDataFile();
+            if (offlineDataFile == null) return;
             Gson g = new Gson();
-            String jsonData = FileUtils.readFileToString(balanceDataFile, StandardCharsets.UTF_8.toString());
+            String jsonData = FileUtils.readFileToString(offlineDataFile, StandardCharsets.UTF_8.toString());
 
             if (jsonData.isEmpty()) {
                 BankMoneyModule.setBalance(0);
                 CashMoneyModule.setBalance(0);
                 JobMoneyModule.setBalance(0);
+                PaydayModule.setTime(0);
                 return;
             }
 
-            Balance balance = g.fromJson(jsonData, Balance.class);
-            BankMoneyModule.bankBalance = balance.getBankBalance();
-            CashMoneyModule.cashBalance = balance.getCash();
-            JobMoneyModule.jobBalance = balance.getJobBalance();
+            Offlinedata offlineData = g.fromJson(jsonData, Offlinedata.class);
+            BankMoneyModule.bankBalance = offlineData.getBankBalance();
+            CashMoneyModule.cashBalance = offlineData.getCashBalance();
+            JobMoneyModule.jobBalance = offlineData.getJobBalance();
+            PaydayModule.currentTime = offlineData.getPaydayTime();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static void saveBalance() {
+    public static void saveData() {
         try {
-            File balanceDataFile = FileManager.getBalanceDataFile();
-            if (balanceDataFile == null) return;
+            File offlineDataFile = FileManager.getOfflineDataFile();
+            if (offlineDataFile == null) return;
             Gson g = new Gson();
-            Balance balance = new Balance();
-            balance.setBankBalance(BankMoneyModule.bankBalance);
-            balance.setCash(CashMoneyModule.cashBalance);
-            balance.setJobBalance(JobMoneyModule.jobBalance);
-            FileUtils.writeStringToFile(balanceDataFile, g.toJson(balance), StandardCharsets.UTF_8.toString());
+            Offlinedata offlinedata = new Offlinedata();
+            offlinedata.setBankBalance(BankMoneyModule.bankBalance);
+            offlinedata.setCashBalance(CashMoneyModule.cashBalance);
+            offlinedata.setJobBalance(JobMoneyModule.jobBalance);
+            offlinedata.setPaydayTime(PaydayModule.currentTime);
+            FileUtils.writeStringToFile(offlineDataFile, g.toJson(offlinedata), StandardCharsets.UTF_8.toString());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
