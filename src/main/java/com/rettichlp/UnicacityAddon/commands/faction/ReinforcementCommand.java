@@ -66,7 +66,6 @@ public class ReinforcementCommand extends CommandBase {
             int z = Integer.parseInt(args[4]);
 
             p.sendChatMessage("/" + chatType + " " + name + ", ich bin zu deinem Verstärkungsruf unterwegs! (" + (int) p.getPosition().getDistance(x, y, z) + " Meter entfernt)");
-            p.stopRoute();
             p.setNaviRoute(x, y, z);
 
             return;
