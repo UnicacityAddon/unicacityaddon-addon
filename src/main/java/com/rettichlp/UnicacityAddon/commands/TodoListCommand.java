@@ -1,37 +1,32 @@
 package com.rettichlp.UnicacityAddon.commands;
 
-import com.google.gson.Gson;
+import com.rettichlp.UnicacityAddon.UnicacityAddon;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
-import com.rettichlp.UnicacityAddon.base.io.FileManager;
+import com.rettichlp.UnicacityAddon.base.json.todo.Todolist;
+import com.rettichlp.UnicacityAddon.base.json.todo.TodolistEntry;
+import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
-import com.rettichlp.UnicacityAddon.base.todo.Todolist;
-import com.rettichlp.UnicacityAddon.base.todo.TodolistEntry;
+import com.rettichlp.UnicacityAddon.base.utils.MathUtils;
 import com.rettichlp.UnicacityAddon.base.utils.TextUtils;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.event.ClickEvent;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author RettichLP
  */
 public class TodoListCommand extends CommandBase {
 
-    Todolist TODOLIST = null;
+    public static Todolist todolist;
 
     @Override
     @Nonnull
@@ -58,47 +53,26 @@ public class TodoListCommand extends CommandBase {
 
     @Override
     public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
-        UPlayer p = AbstractionLayer.getPlayer();
-
-        try {
-            File todoDataFile = FileManager.getTodoDataFile();
-            if (todoDataFile == null) return;
-            BufferedReader reader = Files.newBufferedReader(Paths.get(todoDataFile.getAbsolutePath()));
-            Gson g = new Gson();
-            TODOLIST = g.fromJson(reader, Todolist.class);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        if (todolist == null) return;
 
         if (args.length == 0) {
-            p.sendMessage(Message.getBuilder().of("TODO:").advance().createComponent());
-
-            TODOLIST.getTodoEntryList().forEach(todolistEntry -> p.sendMessage(Message.getBuilder().of(todolistEntry.getTodo())
-                    .advance().createComponent()));
-        } else {
-            if (args[1].equalsIgnoreCase("add")) {
-                String todo = TextUtils.makeStringByArgs(args, " ").replace("add ", "");
-                TodolistEntry todolistEntry = new TodolistEntry(todo);
-                TODOLIST.getTodoEntryList().add(todolistEntry);
-                saveTodolist();
-            } else if (args[1].equalsIgnoreCase("done")) {
-                String todo = TextUtils.makeStringByArgs(args, " ").replace("done ", "");
-                TodolistEntry tle = TODOLIST.getTodoEntryList().stream().filter(todolistEntry -> todolistEntry.getTodo().equals(todo)).collect(Collectors.toList()).get(0);
-                tle.setDone(true);
-                saveTodolist();
-            }
-        }
-    }
-
-    private void saveTodolist() {
-        try {
-            File todoDataFile = FileManager.getTodoDataFile();
-            if (todoDataFile == null) return;
-            BufferedWriter writer = Files.newBufferedWriter(Paths.get(todoDataFile.getAbsolutePath()));
-            Gson g = new Gson();
-            g.toJson(TODOLIST, writer);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            todoList();
+        } else if (args.length > 1 && args[0].equalsIgnoreCase("add")) {
+            String todo = TextUtils.makeStringByArgs(args, " ").replace("add ", "");
+            TodolistEntry todolistEntry = new TodolistEntry(todolist.getTodolistEntryList().size(), todo);
+            todolist.getTodolistEntryList().add(todolistEntry);
+            UnicacityAddon.saveOfflineData();
+        } else if (args[0].equalsIgnoreCase("done")) {
+            if (!MathUtils.isInteger(args[1])) return;
+            int index = Integer.parseInt(args[1]) - 1;
+            TodolistEntry todolistEntry = todolist.getTodolistEntryList().get(index);
+            todolistEntry.setDone(true);
+            todolist.getTodolistEntryList().set(index, todolistEntry);
+            UnicacityAddon.saveOfflineData();
+        } else if (args[0].equalsIgnoreCase("delete")) {
+            if (!MathUtils.isInteger(args[1])) return;
+            todolist.getTodolistEntryList().remove(Integer.parseInt(args[1]) - 1);
+            UnicacityAddon.saveOfflineData();
         }
     }
 
@@ -108,11 +82,24 @@ public class TodoListCommand extends CommandBase {
             tabCompletions = Arrays.asList("add", "done", "delete");
             String input = args[args.length - 1].toLowerCase().replace('-', ' ');
             tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
-        } else if (args.length == 2) {
-            tabCompletions = TODOLIST.getTodoEntryList().stream().map(TodolistEntry::getTodo).sorted().collect(Collectors.toList());
-            String input = args[args.length - 1].toLowerCase().replace('-', ' ');
-            tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
         }
         return tabCompletions;
+    }
+
+    private void todoList() {
+        UPlayer p = AbstractionLayer.getPlayer();
+        p.sendMessage(Message.getBuilder()
+                .of("Todoliste:").color(ColorCode.AQUA).bold().advance()
+                .createComponent());
+        todolist.getTodolistEntryList().forEach(todolistEntry -> p.sendMessage(Message.getBuilder()
+                .of("  - ").color(ColorCode.GRAY).advance()
+                .of(todolistEntry.getTodo()).color(ColorCode.GOLD).advance()
+                .of("[Erledigt]").color(ColorCode.GREEN)
+                        .clickEvent(ClickEvent.Action.RUN_COMMAND, "/todo done " + todolistEntry.getId())
+                        .advance()
+                .of("[Löschen]").color(ColorCode.RED)
+                        .clickEvent(ClickEvent.Action.RUN_COMMAND, "/todo delete " + todolistEntry.getId())
+                        .advance()
+                .createComponent()));
     }
 }
