@@ -1,6 +1,6 @@
 package com.rettichlp.UnicacityAddon.modules;
 
-import com.rettichlp.UnicacityAddon.UnicacityAddon;
+import com.rettichlp.UnicacityAddon.base.io.FileManager;
 import com.rettichlp.UnicacityAddon.base.module.UCModuleHandler;
 import net.labymod.ingamegui.ModuleCategory;
 import net.labymod.ingamegui.moduletypes.SimpleModule;
@@ -70,16 +70,11 @@ public class PaydayModule extends SimpleModule {
 
     public static void addTime(int time) {
         currentTime = currentTime + time;
-        UnicacityAddon.saveOfflineData();
-    }
-
-    public static void removeTime(int time) {
-        currentTime = currentTime - time;
-        UnicacityAddon.saveOfflineData();
+        FileManager.saveData();
     }
 
     public static void setTime(int time) {
         currentTime = time;
-        UnicacityAddon.saveOfflineData();
+        FileManager.saveData();
     }
 }

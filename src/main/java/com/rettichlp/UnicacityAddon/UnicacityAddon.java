@@ -1,10 +1,8 @@
 package com.rettichlp.UnicacityAddon;
 
-import com.google.gson.Gson;
 import com.rettichlp.UnicacityAddon.base.config.ConfigSettings;
 import com.rettichlp.UnicacityAddon.base.faction.FactionHandler;
 import com.rettichlp.UnicacityAddon.base.io.FileManager;
-import com.rettichlp.UnicacityAddon.base.json.balance.Offlinedata;
 import com.rettichlp.UnicacityAddon.base.module.UCModuleHandler;
 import com.rettichlp.UnicacityAddon.base.registry.KeyBindRegistry;
 import com.rettichlp.UnicacityAddon.commands.ACallCommand;
@@ -65,11 +63,7 @@ import net.labymod.main.LabyMod;
 import net.labymod.settings.elements.SettingsElement;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.ClientCommandHandler;
-import org.apache.commons.io.FileUtils;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 /**
@@ -162,54 +156,11 @@ public class UnicacityAddon extends LabyModAddon {
         // Register keybindings
         KeyBindRegistry.registerKeyBinds();
 
-        loadOfflineData();
+        FileManager.loadData();
     }
 
     @Override
     protected void fillSettings(List<SettingsElement> list) {
         ConfigSettings.createConfig(this, list);
-    }
-
-    public static void loadOfflineData() {
-        try {
-            File offlineDataFile = FileManager.getOfflineDataFile();
-            if (offlineDataFile == null) return;
-            Gson g = new Gson();
-            String jsonData = FileUtils.readFileToString(offlineDataFile, StandardCharsets.UTF_8.toString());
-
-            if (jsonData.isEmpty()) {
-                BankMoneyModule.setBalance(0);
-                CashMoneyModule.setBalance(0);
-                JobMoneyModule.setBalance(0);
-                PaydayModule.setTime(0);
-                return;
-            }
-
-            Offlinedata offlineData = g.fromJson(jsonData, Offlinedata.class);
-            BankMoneyModule.bankBalance = offlineData.getBankBalance();
-            CashMoneyModule.cashBalance = offlineData.getCashBalance();
-            JobMoneyModule.jobBalance = offlineData.getJobBalance();
-            PaydayModule.currentTime = offlineData.getPaydayTime();
-            TodoListCommand.todolist = offlineData.getTodolist();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public static void saveOfflineData() {
-        try {
-            File offlineDataFile = FileManager.getOfflineDataFile();
-            if (offlineDataFile == null) return;
-            Gson g = new Gson();
-            Offlinedata offlinedata = new Offlinedata();
-            offlinedata.setBankBalance(BankMoneyModule.bankBalance);
-            offlinedata.setCashBalance(CashMoneyModule.cashBalance);
-            offlinedata.setJobBalance(JobMoneyModule.jobBalance);
-            offlinedata.setPaydayTime(PaydayModule.currentTime);
-            offlinedata.setTodolist(TodoListCommand.todolist);
-            FileUtils.writeStringToFile(offlineDataFile, g.toJson(offlinedata), StandardCharsets.UTF_8.toString());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 }

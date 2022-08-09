@@ -1,6 +1,6 @@
 package com.rettichlp.UnicacityAddon.modules;
 
-import com.rettichlp.UnicacityAddon.UnicacityAddon;
+import com.rettichlp.UnicacityAddon.base.io.FileManager;
 import com.rettichlp.UnicacityAddon.base.module.UCModuleHandler;
 import net.labymod.ingamegui.ModuleCategory;
 import net.labymod.ingamegui.moduletypes.SimpleModule;
@@ -70,16 +70,16 @@ public class CashMoneyModule extends SimpleModule {
 
     public static void addBalance(int balance) {
         cashBalance = cashBalance + balance;
-        UnicacityAddon.saveOfflineData();
+        FileManager.saveData();
     }
 
     public static void removeBalance(int balance) {
         cashBalance = cashBalance - balance;
-        UnicacityAddon.saveOfflineData();
+        FileManager.saveData();
     }
 
     public static void setBalance(int balance) {
         cashBalance = balance;
-        UnicacityAddon.saveOfflineData();
+        FileManager.saveData();
     }
 }
