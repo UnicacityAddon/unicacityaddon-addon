@@ -2,8 +2,8 @@ package com.rettichlp.UnicacityAddon.events.faction.rettungsdienst;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
-import com.rettichlp.UnicacityAddon.commands.faction.rettungsdienst.ARezeptAcceptCommand;
-import com.rettichlp.UnicacityAddon.commands.faction.rettungsdienst.ARezeptGiveCommand;
+import com.rettichlp.UnicacityAddon.commands.faction.rettungsdienst.ARezeptAnnehmenCommand;
+import com.rettichlp.UnicacityAddon.commands.faction.rettungsdienst.ARezeptCommand;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -20,7 +20,7 @@ public class MedicationEventHandler {
 
     @SubscribeEvent
     public void onRecipeAcceptFeedback(ClientChatReceivedEvent e) {
-        if (ARezeptAcceptCommand.amount < 1) return; //checks if there is an active recipe-accept-process
+        if (ARezeptAnnehmenCommand.amount < 1) return; //checks if there is an active recipe-accept-process
 
         String msg = e.getMessage().getUnformattedText();
         if (!PatternHandler.RECIPE_ACCEPT_PATTERN.matcher(msg).find()) return;
@@ -28,7 +28,7 @@ public class MedicationEventHandler {
         long timeSinceLastExecution = System.currentTimeMillis() - lastExecution;
         long delay = 0;
 
-        if (timeSinceLastExecution < 750) delay = 750 - timeSinceLastExecution;
+        if (timeSinceLastExecution < 1000) delay = 1000 - timeSinceLastExecution;
 
         TIMER.schedule(new TimerTask() {
             @Override
@@ -39,13 +39,13 @@ public class MedicationEventHandler {
     }
 
     private void acceptRecipe() {
-        --ARezeptAcceptCommand.amount;
+        --ARezeptAnnehmenCommand.amount;
         lastExecution = System.currentTimeMillis();
         AbstractionLayer.getPlayer().acceptOffer();
     }
 
     @SubscribeEvent public void onRecipeGiveFeedback(ClientChatReceivedEvent e) {
-        if (ARezeptGiveCommand.amount < 1)
+        if (ARezeptCommand.amount < 1)
             return; //checks if there is an active recipe-give-process
 
         String msg = e.getMessage().getUnformattedText();
@@ -55,7 +55,7 @@ public class MedicationEventHandler {
         long timeSinceLastExecution = System.currentTimeMillis() - lastExecution;
         long delay = 0;
 
-        if (timeSinceLastExecution < 750) delay = 750 - timeSinceLastExecution;
+        if (timeSinceLastExecution < 1000) delay = 1000 - timeSinceLastExecution;
 
         TIMER.schedule(new TimerTask() {
             @Override public void run() {
@@ -65,8 +65,8 @@ public class MedicationEventHandler {
     }
 
     private void giveRecipe() {
-        --ARezeptGiveCommand.amount;
+        --ARezeptCommand.amount;
         lastExecution = System.currentTimeMillis();
-        AbstractionLayer.getPlayer().sellMedication(ARezeptGiveCommand.target, ARezeptGiveCommand.medication);
+        AbstractionLayer.getPlayer().sellMedication(ARezeptCommand.target, ARezeptCommand.medication);
     }
 }

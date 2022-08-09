@@ -1,4 +1,4 @@
-package com.rettichlp.UnicacityAddon.base.faction.blacklist;
+package com.rettichlp.UnicacityAddon.base.json.blacklist;
 
 /**
  * @author RettichLP

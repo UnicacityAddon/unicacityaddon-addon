@@ -9,16 +9,13 @@ import java.util.regex.Pattern;
  */
 public class PatternHandler {
 
+    private static final String playerName = AbstractionLayer.getPlayer().getName();
+
     /**
      * {@link com.rettichlp.UnicacityAddon.base.faction.FactionHandler}
      */
     public static final Pattern NAME_PATTERN = Pattern.compile("<h4 class=\"h5 g-mb-5\"><strong>(\\w+)");
     public static final Pattern RANK_PATTERN = Pattern.compile("<strong>Rang (\\d)( \\(Leader\\))*</strong>");
-
-    /**
-     * {@link com.rettichlp.UnicacityAddon.events.ATMInfoEventHandler}
-     */
-    public static final Pattern KONTOAUSZUG_PATTERN = Pattern.compile("^Ihr Bankguthaben beträgt: [+-](\\d)+\\$$");
 
     /**
      * {@link com.rettichlp.UnicacityAddon.modules.BombTimerModule}
@@ -100,11 +97,6 @@ public class PatternHandler {
     public static final Pattern CAR_POSITION_PATTERN = Pattern.compile("^\\[Car] Das Fahrzeug befindet sich bei . X: (-?\\d+) \\| Y: (-?\\d+) \\| Z: (-?\\d+)$");
 
     /**
-     * {@link com.rettichlp.UnicacityAddon.events.SalaryCountEventHandler}
-     */
-    public static final Pattern JOB_SALARY_PATTERN = Pattern.compile("^\\[PayDay] Du bekommst dein Gehalt von (\\d+)\\$ am PayDay ausgezahlt\\.$");
-
-    /**
      * {@link com.rettichlp.UnicacityAddon.events.team.ReportAcceptEventHandler}
      */
     public static final Pattern REPORT_ACCEPTED_PATTERN = Pattern.compile("^\\[Report] Du hast den Report von \\w+ \\[Level \\d+] angenommen! Thema: [a-zA-Z]+$");
@@ -113,7 +105,7 @@ public class PatternHandler {
      * {@link com.rettichlp.UnicacityAddon.events.faction.badfaction.PlantTimerEventHandler}
      */
     public static final Pattern PLANT_HARVEST_PATTERN = Pattern.compile("^\\[Plantage] Eine .+-Plantage wurde von (?:\\[UC])*(\\w+) geerntet\\. \\[\\d+g]$");
-    public static final Pattern PLANT_USE_PATTERN = Pattern.compile("^\\[Plantage] Eine .+-Plantage wurde von (?:\\[UC])*(" + AbstractionLayer.getPlayer().getName() + ") (gewässert|gedüngt)\\.$");
+    public static final Pattern PLANT_USE_PATTERN = Pattern.compile("^\\[Plantage] Eine .+-Plantage wurde von (?:\\[UC])*(" + playerName + ") (gewässert|gedüngt)\\.$");
 
     /**
      * {@link com.rettichlp.UnicacityAddon.events.faction.badfaction.FBIHackEventHandler}
@@ -129,11 +121,57 @@ public class PatternHandler {
     /**
      * {@link com.rettichlp.UnicacityAddon.events.job.ADropEventHandler}
      */
-    public static final Pattern DROP_TRANSPORT_PATTERN = Pattern.compile("^\\[Transport] Du hast eine (Kiste|Waffenkiste) abgeliefert\\.$");
+    public static final Pattern DROP_TRANSPORT_PATTERN = Pattern.compile("^\\[Transport] Du hast eine (Kiste|Waffenkiste) abgeliefert\\.$" +
+            "|^\\[Transport] Du hast ein Weizen Paket abgeliefert\\.$");
     public static final Pattern DROP_DRINK_PATTERN = Pattern.compile("^\\[Bar] Du hast eine Flasche abgegeben!$");
 
     /**
      * {@link com.rettichlp.UnicacityAddon.events.HotkeyEventHandler}
      */
     public static final Pattern AD_CONTROL_PATTERN = Pattern.compile("^\\[Werbung] (\\w+) hat eine Werbung geschalten: .+$");
+
+    /**
+     * {@link com.rettichlp.UnicacityAddon.events.faction.badfaction.AutomatedCalculationOf25}
+     */
+    public static final Pattern STATEMENT_OF_ACCOUNT = Pattern.compile("^Finanzen von (?:\\[UC])*(\\w+): Geld: (\\d+)\\$ \\| Bank: (\\d+)\\$$");
+
+    /**
+     * {@link com.rettichlp.UnicacityAddon.events.job.FishermanEventHandler}
+     */
+    public static final Pattern FISHER_START = Pattern.compile("^\\[Fischer] Mit /findschwarm kannst du dir den nächsten Fischschwarm anzeigen lassen\\.$");
+    public static final Pattern FISHER_SPOT_FOUND = Pattern.compile("^\\[Fischer] Du hast einen Fischschwarm gefunden!$");
+    public static final Pattern FISHER_SPOT_LOSE = Pattern.compile("^\\[Fischer] Du hast dich dem Fischschwarm zu weit entfernt\\.$");
+    public static final Pattern FISHER_CATCH_START = Pattern.compile("^\\[Fischer] Du hast ein Fischernetz ausgeworfen\\.$");
+    public static final Pattern FISHER_CATCH_SUCCESS = Pattern.compile("^\\[Fischer] Du hast \\d+kg frischen Fisch gefangen! \\(\\d+kg\\)$");
+    public static final Pattern FISHER_CATCH_FAILURE = Pattern.compile("^\\[Fischer] Du hast ein Fischernetz verloren\\.\\.\\.$");
+    public static final Pattern FISHER_END = Pattern.compile("^\\[Fischer] Du hast keine Netze mehr\\. Bring den gefangenen Fisch zurück zum Steg\\.$");
+
+    /**
+     * {@link com.rettichlp.UnicacityAddon.events.MoneyEventHandler}
+     */
+    public static final Pattern JOB_SALARY_PATTERN = Pattern.compile("^\\[PayDay] Du bekommst dein Gehalt von (\\d+)\\$ am PayDay ausgezahlt\\.$");
+    public static final Pattern BANK_STATEMENT_PATTERN = Pattern.compile("^Ihr Bankguthaben beträgt: [+-](\\d+)\\$$");
+    public static final Pattern STATS_BANK_PATTERN = Pattern.compile("^Neuer Betrag: (\\d+)\\$ \\([+-]\\d+\\$\\)$");
+    public static final Pattern BANK_NEW_BALANCE_PATTERN = Pattern.compile("^ {2}Neuer Kontostand: (\\d+)\\$$");
+    public static final Pattern BANK_TRANSFER_TO_PATTERN = Pattern.compile("^Du hast (?:\\[UC])*(\\w+) (\\d+)\\$ überwiesen!$");
+    public static final Pattern BANK_TRANSFER_GET_PATTERN = Pattern.compile("^(?:\\[UC])*(\\w+) hat dir (\\d+)\\$ überwiesen!$");
+    public static final Pattern REVIVE_BY_MEDIC_START_PATTERN = Pattern.compile("^Du wirst von (?:\\[UC])*(\\w+) wiederbelebt\\.$");
+    public static final Pattern REVIVE_BY_MEDIC_FINISH_PATTERN = Pattern.compile("^Du lebst nun wieder\\.$");
+    public static final Pattern LOTTO_WIN = Pattern.compile("^\\[Lotto] Du hast im Lotto gewonnen! \\((\\d+)\\$\\)$");
+    public static final Pattern CASH_GIVE_PATTERN = Pattern.compile("^Du hast (?:\\[UC])*(\\w+) (\\d+)\\$ gegeben!$");
+    public static final Pattern CASH_TAKE_PATTERN = Pattern.compile("^(?:\\[UC])*(\\w+) hat dir (\\d+)\\$ gegeben!$");
+    public static final Pattern CASH_TO_FBANK_PATTERN = Pattern.compile("^\\[F-Bank] " + playerName + " hat (\\d+)\\$ in die Fraktionsbank eingezahlt\\.$");
+    public static final Pattern CASH_FROM_FBANK_PATTERN = Pattern.compile("^\\[F-Bank] " + playerName + " hat (\\d+)\\$ aus der Fraktionsbank genommen\\.$");
+    public static final Pattern CASH_TO_BANK_PATTERN = Pattern.compile("^ {2}Eingezahlt: \\+(\\d+)\\$$");
+    public static final Pattern CASH_FROM_BANK_PATTERN = Pattern.compile("^ {2}Auszahlung: -(\\d+)\\$$");
+    public static final Pattern CASH_GET_PATTERN = Pattern.compile("^ {2}\\+(\\d+)\\$$");
+    public static final Pattern CASH_REMOVE_PATTERN = Pattern.compile("^ {2}-(\\d+)\\$$");
+    public static final Pattern CASH_STATS_PATTERN = Pattern.compile("^ {2}- Geld: (\\d+)\\$$");
+
+    /**
+     * {@link com.rettichlp.UnicacityAddon.events.PaydayEventHandler}
+     */
+    public static final Pattern ACCOUNT_AFK_TRUE_PATTERN = Pattern.compile("^Du bist nun im AFK-Modus\\.$");
+    public static final Pattern ACCOUNT_AFK_FALSE_PATTERN = Pattern.compile("^Du bist nun nicht mehr im AFK-Modus\\.$");
+    public static final Pattern STATS_PAYDAY_PATTERN = Pattern.compile("^ {2}- Zeit seit PayDay: (\\d+)/60 Minuten$");
 }

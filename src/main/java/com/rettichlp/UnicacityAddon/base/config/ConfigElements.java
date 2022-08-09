@@ -161,6 +161,13 @@ public class ConfigElements {
                 .getAsBoolean(); // default = false
     }
 
+    // Delay
+    public static String getRefreshDisplayNamesInterval() {
+        return UnicacityAddon.ADDON.getConfig().has("NAMETAG_DELAY") && !UnicacityAddon.ADDON.getConfig().get("NAMETAG_DELAY").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("NAMETAG_DELAY").getAsString().equals("0")
+                ? UnicacityAddon.ADDON.getConfig().get("NAMETAG_DELAY").getAsString()
+                : "5";
+    }
+
     // ATMINFO
     public static boolean getEventATM() {
         return !UnicacityAddon.ADDON.getConfig().has("EVENT_ATM") || UnicacityAddon.ADDON.getConfig().get("EVENT_ATM")
@@ -225,6 +232,42 @@ public class ConfigElements {
     public static String getReportFarewell() {
         return UnicacityAddon.ADDON.getConfig().has("REPORT_FAREWELL") && !UnicacityAddon.ADDON.getConfig().get("REPORT_FAREWELL").getAsString().isEmpty()
                 ? UnicacityAddon.ADDON.getConfig().get("REPORT_FAREWELL").getAsString()
+                : Strings.EMPTY;
+    }
+
+    // PASSWORD SETTINGS
+    public static boolean getPasswordAutomation() {
+        return UnicacityAddon.ADDON.getConfig().has("AUTOMATED_PASSWORD") && UnicacityAddon.ADDON.getConfig().get("AUTOMATED_PASSWORD")
+                .getAsBoolean();
+    }
+
+    public static String getPassword() {
+        return UnicacityAddon.ADDON.getConfig().has("PASSWORD") && !UnicacityAddon.ADDON.getConfig().get("PASSWORD").getAsString().isEmpty()
+                ? UnicacityAddon.ADDON.getConfig().get("PASSWORD").getAsString()
+                : Strings.EMPTY;
+    }
+
+    // COMMANDS ON JOIN
+    public static boolean getCommandAutomation() {
+        return UnicacityAddon.ADDON.getConfig().has("COMMAND_ON_JOIN") && UnicacityAddon.ADDON.getConfig().get("COMMAND_ON_JOIN")
+                .getAsBoolean();
+    }
+
+    public static String getFirstCommand() {
+        return UnicacityAddon.ADDON.getConfig().has("FIRST_COMMAND") && !UnicacityAddon.ADDON.getConfig().get("FIRST_COMMAND").getAsString().isEmpty()
+                ? UnicacityAddon.ADDON.getConfig().get("FIRST_COMMAND").getAsString()
+                : Strings.EMPTY;
+    }
+
+    public static String getSecondCommand() {
+        return UnicacityAddon.ADDON.getConfig().has("SECOND_COMMAND") && !UnicacityAddon.ADDON.getConfig().get("SECOND_COMMAND").getAsString().isEmpty()
+                ? UnicacityAddon.ADDON.getConfig().get("SECOND_COMMAND").getAsString()
+                : Strings.EMPTY;
+    }
+
+    public static String getThirdCommand() {
+        return UnicacityAddon.ADDON.getConfig().has("THIRD_COMMAND") && !UnicacityAddon.ADDON.getConfig().get("THIRD_COMMAND").getAsString().isEmpty()
+                ? UnicacityAddon.ADDON.getConfig().get("THIRD_COMMAND").getAsString()
                 : Strings.EMPTY;
     }
 }

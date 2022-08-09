@@ -48,6 +48,16 @@ public class FileManager {
         return null;
     }
 
+    public static File getOfflineDataFile() throws IOException {
+        if (getUnicacityAddonDir() == null) return null;
+        File offlineDataFile = new File(getUnicacityAddonDir().getAbsolutePath() + "/offlineData.json");
+        if (offlineDataFile.exists() || offlineDataFile.createNewFile()) return offlineDataFile;
+
+        AbstractionLayer.getPlayer().sendErrorMessage("Datei 'offlineData.json' wurde nicht gefunden!");
+
+        return null;
+    }
+
     public static File getTodoDataFile() throws IOException {
         if (getUnicacityAddonDir() == null) return null;
         File todoDataFile = new File(getUnicacityAddonDir().getAbsolutePath() + "/todoData.json");

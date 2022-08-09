@@ -5,7 +5,6 @@ import com.rettichlp.UnicacityAddon.base.faction.Faction;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
 import net.labymod.gui.elements.DropDownMenu;
-import net.labymod.main.LabyMod;
 import net.labymod.settings.Settings;
 import net.labymod.settings.elements.BooleanElement;
 import net.labymod.settings.elements.ControlElement;
@@ -78,8 +77,12 @@ public class ConfigSettings {
         list.add(nameTagBlacklist);
 
         BooleanElement nameTagContract = new BooleanElement("Contract", unicacityAddon, new ControlElement.IconData(Material.IRON_SWORD), "NAMETAG_CONTRACT",
-            ConfigElements.getNameTagContract());
+                ConfigElements.getNameTagContract());
         list.add(nameTagContract);
+
+        StringElement nameTagDelay = new StringElement("Update Intervall", unicacityAddon, new ControlElement.IconData(Material.WATCH), "NAMETAG_DELAY",
+                ConfigElements.getRefreshDisplayNamesInterval());
+        list.add(nameTagDelay);
 
         list.add(new HeaderElement(Message.getBuilder()
                 .of("Text").color(ColorCode.WHITE).advance()
@@ -122,6 +125,16 @@ public class ConfigSettings {
                 ConfigElements.getEventCarFind());
         list.add(eventCarFind);
 
+        BooleanElement activatePassword = new BooleanElement("Automatisches /passwort", unicacityAddon, new ControlElement.IconData(Material.TRIPWIRE_HOOK), "AUTOMATED_PASSWORD",
+                ConfigElements.getPasswordAutomation());
+        activatePassword.setSubSettings(passwordSettings(unicacityAddon));
+        list.add(activatePassword);
+
+        BooleanElement commandsOnJoin = new BooleanElement("Automatische Befehle", unicacityAddon, new ControlElement.IconData(Material.REDSTONE_COMPARATOR), "COMMAND_ON_JOIN",
+                ConfigElements.getCommandAutomation());
+        commandsOnJoin.setSubSettings(commandList(unicacityAddon));
+        list.add(commandsOnJoin);
+
         // Certain LabyMod themes cover the lower settings. To counteract this, empty lines are appended.
         HeaderElement emptyLine = new HeaderElement("");
         list.add(emptyLine);
@@ -134,21 +147,21 @@ public class ConfigSettings {
 
         DropDownMenu<ColorCode> dropDownMenu0 = new DropDownMenu<ColorCode>("Farbe", 0, 0, 0, 0).fill(ColorCode.values());
         dropDownMenu0.setSelected(ConfigElements.getNameTagAllianceColor());
-        dropDownMenu0.setEntryDrawer((object, x, y, string) -> LabyMod.getInstance().getDrawUtils()
+        dropDownMenu0.setEntryDrawer((object, x, y, string) ->  UnicacityAddon.LABYMOD.getDrawUtils()
                 .drawString(ColorCode.valueOf(object.toString().toUpperCase()).toString(), x, y));
         DropDownElement<ColorCode> dropDownElement0 = new DropDownElement<>("", dropDownMenu0);
         dropDownElement0.setChangeListener(ConfigElements::setNameTagAllianceColor);
 
         DropDownMenu<Faction> dropDownMenu1 = new DropDownMenu<Faction>("Bündnisfraktion 1", 0, 0, 0, 0).fill(Faction.values());
         dropDownMenu1.setSelected(ConfigElements.getNameTagAlliance1());
-        dropDownMenu1.setEntryDrawer((object, x, y, string) -> LabyMod.getInstance().getDrawUtils()
+        dropDownMenu1.setEntryDrawer((object, x, y, string) -> UnicacityAddon.LABYMOD.getDrawUtils()
                 .drawString(Faction.valueOf(object.toString().toUpperCase()).getDisplayName(), x, y));
         DropDownElement<Faction> dropDownElement1 = new DropDownElement<>("", dropDownMenu1);
         dropDownElement1.setChangeListener(ConfigElements::setNameTagAlliance1);
 
         DropDownMenu<Faction> dropDownMenu2 = new DropDownMenu<Faction>("Bündnisfraktion 2 (optional)", 0, 0, 0, 0).fill(Faction.values());
         dropDownMenu2.setSelected(ConfigElements.getNameTagAlliance2());
-        dropDownMenu2.setEntryDrawer((object, x, y, string) -> LabyMod.getInstance().getDrawUtils()
+        dropDownMenu2.setEntryDrawer((object, x, y, string) -> UnicacityAddon.LABYMOD.getDrawUtils()
                 .drawString(Faction.valueOf(object.toString().toUpperCase()).getDisplayName(), x, y));
         DropDownElement<Faction> dropDownElement2 = new DropDownElement<>("", dropDownMenu2);
         dropDownElement2.setChangeListener(ConfigElements::setNameTagAlliance2);
@@ -164,7 +177,7 @@ public class ConfigSettings {
 
         DropDownMenu<ColorCode> dropDownMenu0 = new DropDownMenu<ColorCode>("Farbe", 0, 0, 0, 0).fill(ColorCode.values());
         dropDownMenu0.setSelected(ConfigElements.getNameTagFactionColor());
-        dropDownMenu0.setEntryDrawer((object, x, y, string) -> LabyMod.getInstance().getDrawUtils()
+        dropDownMenu0.setEntryDrawer((object, x, y, string) -> UnicacityAddon.LABYMOD.getDrawUtils()
                 .drawString(ColorCode.valueOf(object.toString().toUpperCase()).toString(), x, y));
         DropDownElement<ColorCode> dropDownElement0 = new DropDownElement<>("", dropDownMenu0);
         dropDownElement0.setChangeListener(ConfigElements::setNameTagFactionColor);
@@ -178,21 +191,21 @@ public class ConfigSettings {
 
         DropDownMenu<ColorCode> dropDownMenu0 = new DropDownMenu<ColorCode>("Farbe", 0, 0, 0, 0).fill(ColorCode.values());
         dropDownMenu0.setSelected(ConfigElements.getNameTagStreetwarColor());
-        dropDownMenu0.setEntryDrawer((object, x, y, string) -> LabyMod.getInstance().getDrawUtils()
+        dropDownMenu0.setEntryDrawer((object, x, y, string) -> UnicacityAddon.LABYMOD.getDrawUtils()
                 .drawString(ColorCode.valueOf(object.toString().toUpperCase()).toString(), x, y));
         DropDownElement<ColorCode> dropDownElement0 = new DropDownElement<>("", dropDownMenu0);
         dropDownElement0.setChangeListener(ConfigElements::setNameTagStreetwarColor);
 
         DropDownMenu<Faction> dropDownMenu1 = new DropDownMenu<Faction>("Streetwarfraktion 1", 0, 0, 0, 0).fill(Faction.values());
         dropDownMenu1.setSelected(ConfigElements.getNameTagStreetwar1());
-        dropDownMenu1.setEntryDrawer((object, x, y, string) -> LabyMod.getInstance().getDrawUtils()
+        dropDownMenu1.setEntryDrawer((object, x, y, string) -> UnicacityAddon.LABYMOD.getDrawUtils()
                 .drawString(Faction.valueOf(object.toString().toUpperCase()).getDisplayName(), x, y));
         DropDownElement<Faction> dropDownElement1 = new DropDownElement<>("", dropDownMenu1);
         dropDownElement1.setChangeListener(ConfigElements::setNameTagStreetwar1);
 
         DropDownMenu<Faction> dropDownMenu2 = new DropDownMenu<Faction>("Streetwarfraktion 2 (optional)", 0, 0, 0, 0).fill(Faction.values());
         dropDownMenu2.setSelected(ConfigElements.getNameTagStreetwar2());
-        dropDownMenu2.setEntryDrawer((object, x, y, string) -> LabyMod.getInstance().getDrawUtils()
+        dropDownMenu2.setEntryDrawer((object, x, y, string) -> UnicacityAddon.LABYMOD.getDrawUtils()
                 .drawString(Faction.valueOf(object.toString().toUpperCase()).getDisplayName(), x, y));
         DropDownElement<Faction> dropDownElement2 = new DropDownElement<>("", dropDownMenu2);
         dropDownElement2.setChangeListener(ConfigElements::setNameTagStreetwar2);
@@ -218,6 +231,34 @@ public class ConfigSettings {
         settings.add(eventATMFBank);
         settings.add(eventATMGRKasse);
         settings.add(eventATMInfo);
+        return settings;
+    }
+
+    private static Settings passwordSettings(UnicacityAddon unicacityAddon) {
+        Settings settings = new Settings();
+
+        StringElement password = new StringElement("Passwort", unicacityAddon, new ControlElement.IconData(Material.TRIPWIRE_HOOK), "PASSWORD",
+                ConfigElements.getPassword());
+        settings.add(password);
+
+        return settings;
+    }
+
+    private static Settings commandList(UnicacityAddon unicacityAddon) {
+        Settings settings = new Settings();
+
+        StringElement commandOne = new StringElement("Erster Command", unicacityAddon, new ControlElement.IconData(Material.PAPER), "FIRST_COMMAND",
+                ConfigElements.getFirstCommand());
+        settings.add(commandOne);
+
+        StringElement commandTwo = new StringElement("Zweiter Command", unicacityAddon, new ControlElement.IconData(Material.PAPER), "SECOND_COMMAND",
+                ConfigElements.getSecondCommand());
+        settings.add(commandTwo);
+
+        StringElement commandThree = new StringElement("Dritter Command", unicacityAddon, new ControlElement.IconData(Material.PAPER), "THIRD_COMMAND",
+                ConfigElements.getThirdCommand());
+        settings.add(commandThree);
+
         return settings;
     }
 }

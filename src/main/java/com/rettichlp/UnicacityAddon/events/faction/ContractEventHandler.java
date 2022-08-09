@@ -31,7 +31,6 @@ public class ContractEventHandler {
         if (unformattedMessage.equals("=~=~=~Contracts~=~=~=")) {
             CONTRACT_LIST.clear();
             hitlistShown = currentTime;
-            NameTagEventHandler.refreshAllDisplayNames();
             return;
         }
 
@@ -43,7 +42,6 @@ public class ContractEventHandler {
         String name = ForgeUtils.stripPrefix(splittedMessage[1]);
 
         CONTRACT_LIST.add(name);
-        NameTagEventHandler.refreshAllDisplayNames(); // TODO: not all display names needs to update
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
@@ -58,7 +56,6 @@ public class ContractEventHandler {
             System.out.println("Name: " + name);
 
             CONTRACT_LIST.add(name);
-            NameTagEventHandler.refreshAllDisplayNames(); // TODO: not all display names needs to update
         }
     }
 
@@ -80,6 +77,5 @@ public class ContractEventHandler {
         }
 
         CONTRACT_LIST.remove(name);
-        NameTagEventHandler.refreshAllDisplayNames(); // TODO: not all display names needs to update
     }
 }
