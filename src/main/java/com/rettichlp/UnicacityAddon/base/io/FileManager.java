@@ -1,11 +1,21 @@
 package com.rettichlp.UnicacityAddon.base.io;
 
+import com.google.gson.Gson;
 import com.rettichlp.UnicacityAddon.UnicacityAddon;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
+import com.rettichlp.UnicacityAddon.base.json.Data;
+import com.rettichlp.UnicacityAddon.commands.TodoListCommand;
+import com.rettichlp.UnicacityAddon.modules.BankMoneyModule;
+import com.rettichlp.UnicacityAddon.modules.CashMoneyModule;
+import com.rettichlp.UnicacityAddon.modules.JobMoneyModule;
+import com.rettichlp.UnicacityAddon.modules.PaydayModule;
+import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.Date;
 
 /**
@@ -54,16 +64,6 @@ public class FileManager {
         if (dataFile.exists() || dataFile.createNewFile()) return dataFile;
 
         AbstractionLayer.getPlayer().sendErrorMessage("Datei 'data.json' wurde nicht gefunden!");
-
-        return null;
-    }
-
-    public static File getTodoDataFile() throws IOException {
-        if (getUnicacityAddonDir() == null) return null;
-        File todoDataFile = new File(getUnicacityAddonDir().getAbsolutePath() + "/todoData.json");
-        if (todoDataFile.exists() || todoDataFile.createNewFile()) return todoDataFile;
-
-        AbstractionLayer.getPlayer().sendErrorMessage("Datei 'todoData.json' wurde nicht gefunden!");
 
         return null;
     }
