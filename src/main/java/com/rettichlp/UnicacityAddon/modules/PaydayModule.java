@@ -70,16 +70,16 @@ public class PaydayModule extends SimpleModule {
 
     public static void addTime(int time) {
         currentTime = currentTime + time;
-        UnicacityAddon.saveData();
+        UnicacityAddon.saveOfflineData();
     }
 
     public static void removeTime(int time) {
         currentTime = currentTime - time;
-        UnicacityAddon.saveData();
+        UnicacityAddon.saveOfflineData();
     }
 
     public static void setTime(int time) {
         currentTime = time;
-        UnicacityAddon.saveData();
+        UnicacityAddon.saveOfflineData();
     }
 }
