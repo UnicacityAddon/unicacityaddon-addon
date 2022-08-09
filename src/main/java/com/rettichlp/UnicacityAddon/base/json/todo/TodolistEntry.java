@@ -1,15 +1,25 @@
-package com.rettichlp.UnicacityAddon.base.todo;
+package com.rettichlp.UnicacityAddon.base.json.todo;
 
 public class TodolistEntry {
 
+    private int id;
     private String todo;
     private long time;
     private boolean done;
 
-    public TodolistEntry(String todo) {
+    public TodolistEntry(int id, String todo) {
+        this.id = id;
         this.todo = todo;
         this.time = System.currentTimeMillis();
         this.done = false;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTodo() {
