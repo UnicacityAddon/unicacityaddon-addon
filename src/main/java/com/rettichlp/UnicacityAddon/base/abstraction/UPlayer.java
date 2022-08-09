@@ -27,13 +27,15 @@ public interface UPlayer {
 
     void sendMessage(ITextComponent textComponent);
 
+    void sendMessageAsString(String message);
+
     void sendErrorMessage(String message);
 
     void sendInfoMessage(String message);
 
     void sendSyntaxMessage(String message);
 
-    void sendMessageAsString(String message);
+    void sendEmptyMessage();
 
     void sendChatMessage(String message);
 
