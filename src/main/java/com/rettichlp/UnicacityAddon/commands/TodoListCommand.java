@@ -76,7 +76,9 @@ public class TodoListCommand extends CommandBase {
         }
     }
 
-    @Override @Nonnull public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
+    @Override
+    @Nonnull
+    public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
         List<String> tabCompletions = Collections.emptyList();
         if (args.length == 1) {
             tabCompletions = Arrays.asList("add", "done", "delete");
