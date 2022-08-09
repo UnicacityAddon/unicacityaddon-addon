@@ -1,4 +1,4 @@
-package com.rettichlp.UnicacityAddon.base.json.blacklist;
+package com.rettichlp.UnicacityAddon.base.json;
 
 import java.util.Collections;
 import java.util.List;
