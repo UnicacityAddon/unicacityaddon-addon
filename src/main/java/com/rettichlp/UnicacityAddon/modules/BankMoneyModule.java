@@ -70,16 +70,16 @@ public class BankMoneyModule extends SimpleModule {
 
     public static void addBalance(int balance) {
         bankBalance = bankBalance + balance;
-        UnicacityAddon.saveData();
+        UnicacityAddon.saveOfflineData();
     }
 
     public static void removeBalance(int balance) {
         bankBalance = bankBalance - balance;
-        UnicacityAddon.saveData();
+        UnicacityAddon.saveOfflineData();
     }
 
     public static void setBalance(int balance) {
         bankBalance = balance;
-        UnicacityAddon.saveData();
+        UnicacityAddon.saveOfflineData();
     }
 }

@@ -162,7 +162,7 @@ public class UnicacityAddon extends LabyModAddon {
         // Register keybindings
         KeyBindRegistry.registerKeyBinds();
 
-        loadBalance();
+        loadOfflineData();
     }
 
     @Override
@@ -170,7 +170,7 @@ public class UnicacityAddon extends LabyModAddon {
         ConfigSettings.createConfig(this, list);
     }
 
-    public static void loadBalance() {
+    public static void loadOfflineData() {
         try {
             File offlineDataFile = FileManager.getOfflineDataFile();
             if (offlineDataFile == null) return;
@@ -190,12 +190,13 @@ public class UnicacityAddon extends LabyModAddon {
             CashMoneyModule.cashBalance = offlineData.getCashBalance();
             JobMoneyModule.jobBalance = offlineData.getJobBalance();
             PaydayModule.currentTime = offlineData.getPaydayTime();
+            TodoListCommand.todolist = offlineData.getTodolist();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static void saveData() {
+    public static void saveOfflineData() {
         try {
             File offlineDataFile = FileManager.getOfflineDataFile();
             if (offlineDataFile == null) return;
@@ -205,6 +206,7 @@ public class UnicacityAddon extends LabyModAddon {
             offlinedata.setCashBalance(CashMoneyModule.cashBalance);
             offlinedata.setJobBalance(JobMoneyModule.jobBalance);
             offlinedata.setPaydayTime(PaydayModule.currentTime);
+            offlinedata.setTodolist(TodoListCommand.todolist);
             FileUtils.writeStringToFile(offlineDataFile, g.toJson(offlinedata), StandardCharsets.UTF_8.toString());
         } catch (IOException e) {
             throw new RuntimeException(e);
