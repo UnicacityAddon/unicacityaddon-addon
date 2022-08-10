@@ -272,6 +272,12 @@ public class ConfigElements {
                 : Strings.EMPTY;
     }
 
+    // HQ Nachrichten
+    public static boolean getHQMessagesActivated() {
+        return !UnicacityAddon.ADDON.getConfig().has("HQ_MESSAGES") || UnicacityAddon.ADDON.getConfig().get("HQ_MESSAGES")
+                .getAsBoolean(); // default = true
+    }
+
     // EIGENBEDARF SETTINGS
     public static boolean getCocainActivated() {
         return !UnicacityAddon.ADDON.getConfig().has("COCAIN_ACTIVATED") || UnicacityAddon.ADDON.getConfig().get("COCAIN_ACTIVATED")

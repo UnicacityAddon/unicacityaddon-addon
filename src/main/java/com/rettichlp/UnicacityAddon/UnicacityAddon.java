@@ -44,6 +44,7 @@ import com.rettichlp.UnicacityAddon.events.faction.badfaction.AutomatedCalculati
 import com.rettichlp.UnicacityAddon.events.faction.badfaction.FBIHackEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.badfaction.GiftEigenbedarfListener;
 import com.rettichlp.UnicacityAddon.events.faction.badfaction.PlantTimerEventHandler;
+import com.rettichlp.UnicacityAddon.events.faction.polizei.HQMessageEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.polizei.WantedEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.rettungsdienst.MedicationEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.terroristen.ExplosiveBeltTimerEvent;
@@ -130,6 +131,7 @@ public class UnicacityAddon extends LabyModAddon {
         ADDON.getApi().registerForgeListener(new FishermanEventHandler());
         ADDON.getApi().registerForgeListener(new GiftEigenbedarfListener());
         ADDON.getApi().registerForgeListener(new HotkeyEventHandler());
+        ADDON.getApi().registerForgeListener(new HQMessageEventHandler());
         ADDON.getApi().registerForgeListener(new InstantDropstoneEventHandler());
         ADDON.getApi().registerForgeListener(new JoinEventHandler());
         ADDON.getApi().registerForgeListener(new MedicationEventHandler());

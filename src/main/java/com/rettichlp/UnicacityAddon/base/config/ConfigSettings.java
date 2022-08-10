@@ -131,6 +131,10 @@ public class ConfigSettings {
         commandsOnJoin.setSubSettings(commandList(unicacityAddon));
         list.add(commandsOnJoin);
 
+        BooleanElement hqMessages = new BooleanElement("HQ Nachrichten", unicacityAddon, new ControlElement.IconData(Material.LEASH), "HQ_MESSAGES",
+                ConfigElements.getHQMessagesActivated());
+        list.add(hqMessages);
+
         ListContainerElement eigenbedarfSettings = new ListContainerElement("Eigenbedarf", new ControlElement.IconData(Material.SUGAR));
             eigenbedarfSettings.setSubSettings(eigenbedarfSubSettings(unicacityAddon));
         list.add(eigenbedarfSettings);
