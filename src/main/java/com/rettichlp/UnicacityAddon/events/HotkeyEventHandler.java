@@ -10,10 +10,7 @@ import com.rettichlp.UnicacityAddon.base.registry.KeyBindRegistry;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
 import com.rettichlp.UnicacityAddon.base.utils.ImageUploadUtils;
-import com.rettichlp.UnicacityAddon.base.utils.MathUtils;
 import net.minecraft.client.shader.Framebuffer;
-import net.minecraft.inventory.ClickType;
-import net.minecraft.inventory.Container;
 import net.minecraft.util.ScreenShotHelper;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.client.event.GuiScreenEvent;
@@ -25,8 +22,6 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 
@@ -39,8 +34,6 @@ public class HotkeyEventHandler {
     private String adIssuer;
     private long adTime;
     private static long lastScreenshot;
-    private final Timer timer = new Timer();
-    private int aBuyAmountLeft;
 
     @SubscribeEvent
     public void onKeyInput(InputEvent.KeyInputEvent e) {
@@ -79,8 +72,6 @@ public class HotkeyEventHandler {
             p.sendChatMessage("/aduty");
         } else if (Keyboard.isKeyDown(KeyBindRegistry.aDutySilent.getKeyCode())) {
             p.sendChatMessage("/aduty -s");
-        } else if (Keyboard.isKeyDown(KeyBindRegistry.aBuy.getKeyCode())) {
-            handleAutomaticBuy();
         }
 
         lastScreenshot = System.currentTimeMillis();
@@ -118,24 +109,5 @@ public class HotkeyEventHandler {
         if (adIssuer == null || System.currentTimeMillis() - adTime > TimeUnit.SECONDS.toMillis(20)) return;
         AbstractionLayer.getPlayer().sendChatMessage("/adcontrol " + adIssuer + " " + type);
         adIssuer = null;
-    }
-
-    private void handleAutomaticBuy() {
-        if (!MathUtils.isInteger(ConfigElements.getEventABuyAmount()) || !MathUtils.isInteger(ConfigElements.getEventABuyDelay())) return;
-        aBuyAmountLeft = Integer.parseInt(ConfigElements.getEventABuyAmount());
-        timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                UPlayer p = AbstractionLayer.getPlayer();
-                if (aBuyAmountLeft < 1) timer.cancel();
-
-                Container container = p.getOpenContainer();
-                UnicacityAddon.MINECRAFT.playerController.windowClick(container.windowId, ABuyEventHandler.lastHoveredSlotIndex, 0, ClickType.QUICK_MOVE, UnicacityAddon.MINECRAFT.player);
-
-                container.detectAndSendChanges();
-                p.getInventoryContainer().detectAndSendChanges();
-                aBuyAmountLeft--;
-            }
-        }, 0, Integer.parseInt(ConfigElements.getEventABuyDelay()));
     }
 }
