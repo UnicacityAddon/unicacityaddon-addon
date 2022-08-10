@@ -70,6 +70,7 @@ public class TodoListCommand extends CommandBase {
             todolist.set(index, todolistEntry);
             FileManager.saveData();
             p.sendInfoMessage("Aufgabe als erledigt markiert.");
+            p.sendChatMessage("/todo");
         } else if (args[0].equalsIgnoreCase("delete") && MathUtils.isInteger(args[1])) {
             int index = Integer.parseInt(args[1]) - 1;
             if (index > todolist.size() - 1) {
@@ -79,6 +80,7 @@ public class TodoListCommand extends CommandBase {
             todolist.remove(index);
             FileManager.saveData();
             p.sendInfoMessage("Aufgabe aus Todoliste gelöscht.");
+            p.sendChatMessage("/todo");
         }
     }
 
