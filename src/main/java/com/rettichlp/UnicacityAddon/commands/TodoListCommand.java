@@ -91,25 +91,25 @@ public class TodoListCommand extends CommandBase {
         todolist.forEach(todolistEntry -> {
             int id = todolist.indexOf(todolistEntry) + 1;
             if (todolistEntry.isDone()) p.sendMessage(Message.getBuilder()
-                        .of("» " + id + ". ").color(ColorCode.GRAY).advance()
-                        .of(todolistEntry.getTodo()).color(ColorCode.AQUA).strikethrough().advance()
-                        .space()
-                        .of("[Löschen]").color(ColorCode.RED)
-                        .clickEvent(ClickEvent.Action.RUN_COMMAND, "/todo delete " + id)
-                        .advance()
-                        .createComponent());
+                    .of("» " + id + ". ").color(ColorCode.GRAY).advance()
+                    .of(todolistEntry.getTodo()).color(ColorCode.AQUA).strikethrough().advance()
+                    .space()
+                    .of("[Löschen]").color(ColorCode.RED)
+                            .clickEvent(ClickEvent.Action.RUN_COMMAND, "/todo delete " + id)
+                            .advance()
+                    .createComponent());
             else p.sendMessage(Message.getBuilder()
-                .of("  " + id + ". ").color(ColorCode.GRAY).advance()
-                .of(todolistEntry.getTodo()).color(ColorCode.GOLD).advance()
-                .space()
-                .of("[Erledigt]").color(ColorCode.GREEN)
-                        .clickEvent(ClickEvent.Action.RUN_COMMAND, "/todo done " + id)
-                        .advance()
-                .space()
-                .of("[Löschen]").color(ColorCode.RED)
-                        .clickEvent(ClickEvent.Action.RUN_COMMAND, "/todo delete " + id)
-                        .advance()
-                .createComponent());
+                    .of("» " + id + ". ").color(ColorCode.GRAY).advance()
+                    .of(todolistEntry.getTodo()).color(ColorCode.AQUA).advance()
+                    .space()
+                    .of("[Erledigt]").color(ColorCode.GREEN)
+                            .clickEvent(ClickEvent.Action.RUN_COMMAND, "/todo done " + id)
+                            .advance()
+                    .space()
+                    .of("[Löschen]").color(ColorCode.RED)
+                            .clickEvent(ClickEvent.Action.RUN_COMMAND, "/todo delete " + id)
+                            .advance()
+                    .createComponent());
         });
         p.sendEmptyMessage();
     }
