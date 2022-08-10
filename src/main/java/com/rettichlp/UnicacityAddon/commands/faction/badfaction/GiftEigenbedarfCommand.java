@@ -52,7 +52,7 @@ public class GiftEigenbedarfCommand extends CommandBase {
         UPlayer p = AbstractionLayer.getPlayer();
 
         if (args.length < 1) {
-            Message.getBuilder().error().space().of("Falscher Syntax, verwende").advance().space()
+            Message.getBuilder().error().space().of("Falscher Syntax, verwende").color(ColorCode.GRAY).advance().space()
                     .of("/gifteigenbedarf [Spieler]").color(ColorCode.RED).advance().sendTo(p.getPlayer());
             return;
         }
