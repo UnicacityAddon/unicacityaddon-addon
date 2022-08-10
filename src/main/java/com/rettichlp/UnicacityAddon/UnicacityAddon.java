@@ -16,6 +16,7 @@ import com.rettichlp.UnicacityAddon.commands.TriggerEventCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.ReinforcementCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.ShareLocationCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.badfaction.ASetBlacklistCommand;
+import com.rettichlp.UnicacityAddon.commands.faction.badfaction.EigenbedarfCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.badfaction.SchmarzmarktLocationsCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.polizei.ASUCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.polizei.ModifyWantedsCommand;
@@ -96,6 +97,7 @@ public class UnicacityAddon extends LabyModAddon {
         ClientCommandHandler.instance.registerCommand(new ASetBlacklistCommand());
         ClientCommandHandler.instance.registerCommand(new ASMSCommand());
         ClientCommandHandler.instance.registerCommand(new ASUCommand());
+        ClientCommandHandler.instance.registerCommand(new EigenbedarfCommand());
         ClientCommandHandler.instance.registerCommand(new ExplosiveBeltCommand());
         ClientCommandHandler.instance.registerCommand(new ModifyWantedsCommand());
         ClientCommandHandler.instance.registerCommand(new NaviCommand());
