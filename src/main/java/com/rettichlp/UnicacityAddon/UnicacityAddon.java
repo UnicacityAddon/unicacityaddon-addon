@@ -19,6 +19,7 @@ import com.rettichlp.UnicacityAddon.commands.faction.badfaction.ASetBlacklistCom
 import com.rettichlp.UnicacityAddon.commands.faction.badfaction.EigenbedarfCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.badfaction.GiftEigenbedarfCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.badfaction.SchmarzmarktLocationsCommand;
+import com.rettichlp.UnicacityAddon.commands.faction.job.AdropMoney;
 import com.rettichlp.UnicacityAddon.commands.faction.polizei.ASUCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.polizei.ModifyWantedsCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.rettungsdienst.ARezeptAnnehmenCommand;
@@ -47,6 +48,7 @@ import com.rettichlp.UnicacityAddon.events.faction.polizei.WantedEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.rettungsdienst.MedicationEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.terroristen.ExplosiveBeltTimerEvent;
 import com.rettichlp.UnicacityAddon.events.job.ADropEventHandler;
+import com.rettichlp.UnicacityAddon.events.job.ADropMoneyEventHandler;
 import com.rettichlp.UnicacityAddon.events.job.FishermanEventHandler;
 import com.rettichlp.UnicacityAddon.events.job.InstantDropstoneEventHandler;
 import com.rettichlp.UnicacityAddon.events.team.ReportAcceptEventHandler;
@@ -94,6 +96,7 @@ public class UnicacityAddon extends LabyModAddon {
 
         // ForgeCommands - TODO remove later
         ClientCommandHandler.instance.registerCommand(new ACallCommand());
+        ClientCommandHandler.instance.registerCommand(new AdropMoney());
         ClientCommandHandler.instance.registerCommand(new ARezeptAnnehmenCommand());
         ClientCommandHandler.instance.registerCommand(new ARezeptCommand());
         ClientCommandHandler.instance.registerCommand(new ASetBlacklistCommand());
@@ -114,6 +117,7 @@ public class UnicacityAddon extends LabyModAddon {
         // ForgeEvents -> https://docs.labymod.net/pages/create-addons/forge_events/ - TODO remove later
         ADDON.getApi().registerForgeListener(new AutomatedCalculationOf25());
         ADDON.getApi().registerForgeListener(new ADropEventHandler());
+        ADDON.getApi().registerForgeListener(new ADropMoneyEventHandler());
         ADDON.getApi().registerForgeListener(new MoneyEventHandler());
         ADDON.getApi().registerForgeListener(new BlacklistEventHandler());
         ADDON.getApi().registerForgeListener(new BombTimerEventHandler());

@@ -180,4 +180,9 @@ public class PatternHandler {
      */
     public static final Pattern DRUGDEAL_ENDED = Pattern.compile("^\\[Deal] (?:\\[UC])*(\\w+) hat den Deal angenommen\\.$" +
             "|^\\[Deal] (?:\\[UC])*(\\w+) hat das Angebot abgelehnt\\.$");
+
+    /**
+     * {@link com.rettichlp.UnicacityAddon.events.job.ADropMoneyEventHandler}
+     */
+    public static final Pattern PREVIOUS_BANK_VALUE_PATTERN = Pattern.compile("^ {2}Vorheriger Kontostand: (\\d+)\\$$");
 }

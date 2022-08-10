@@ -13,6 +13,9 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * @author Dimiikou
+ */
 public class EigenbedarfCommand extends CommandBase {
 
     @Override
