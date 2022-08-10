@@ -1,5 +1,6 @@
 package com.rettichlp.UnicacityAddon.base.json;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Data {
@@ -46,7 +47,7 @@ public class Data {
     }
 
     public List<TodolistEntry> getTodolist() {
-        return todolist;
+        return todolist == null ? new ArrayList<>() : todolist;
     }
 
     public void setTodolist(List<TodolistEntry> todolist) {
