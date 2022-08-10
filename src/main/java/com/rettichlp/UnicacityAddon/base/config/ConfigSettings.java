@@ -135,6 +135,14 @@ public class ConfigSettings {
         commandsOnJoin.setSubSettings(commandList(unicacityAddon));
         list.add(commandsOnJoin);
 
+        StringElement aBuyAmount = new StringElement("ABuy Anzahl", unicacityAddon, new ControlElement.IconData(Material.BOOK), "EVENT_ABUY_AMOUNT",
+                ConfigElements.getEventABuyAmount());
+        list.add(aBuyAmount);
+
+        StringElement aBuyDelay = new StringElement("ABuy Delay", unicacityAddon, new ControlElement.IconData(Material.WATCH), "EVENT_ABUY_DELAY",
+                ConfigElements.getEventABuyDelay());
+        list.add(aBuyDelay);
+
         // Certain LabyMod themes cover the lower settings. To counteract this, empty lines are appended.
         HeaderElement emptyLine = new HeaderElement("");
         list.add(emptyLine);
