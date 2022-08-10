@@ -1,7 +1,7 @@
 package com.rettichlp.UnicacityAddon.events.job;
 
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
-import com.rettichlp.UnicacityAddon.commands.faction.job.AdropMoney;
+import com.rettichlp.UnicacityAddon.commands.job.AdropMoney;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 

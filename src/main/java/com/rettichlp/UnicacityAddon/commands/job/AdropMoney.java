@@ -1,4 +1,4 @@
-package com.rettichlp.UnicacityAddon.commands.faction.job;
+package com.rettichlp.UnicacityAddon.commands.job;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;

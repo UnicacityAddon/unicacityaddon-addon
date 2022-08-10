@@ -19,7 +19,7 @@ import com.rettichlp.UnicacityAddon.commands.faction.badfaction.ASetBlacklistCom
 import com.rettichlp.UnicacityAddon.commands.faction.badfaction.EigenbedarfCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.badfaction.GiftEigenbedarfCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.badfaction.SchmarzmarktLocationsCommand;
-import com.rettichlp.UnicacityAddon.commands.faction.job.AdropMoney;
+import com.rettichlp.UnicacityAddon.commands.job.AdropMoney;
 import com.rettichlp.UnicacityAddon.commands.faction.polizei.ASUCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.polizei.ModifyWantedsCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.rettungsdienst.ARezeptAnnehmenCommand;
