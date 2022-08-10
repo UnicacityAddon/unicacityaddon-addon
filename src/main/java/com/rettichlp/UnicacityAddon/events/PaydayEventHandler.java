@@ -13,7 +13,7 @@ import java.util.regex.Matcher;
  */
 public class PaydayEventHandler {
 
-    private boolean isAfk = false;
+    public static boolean isAfk = false;
     private int currentTick;
 
     @SubscribeEvent
