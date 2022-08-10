@@ -13,24 +13,33 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class EigenbedarfCommand  extends CommandBase {
+public class EigenbedarfCommand extends CommandBase {
 
-    @Override @Nonnull
-    public String getName() { return "eigenberdarf"; }
-
-    @Override @Nonnull public String getUsage(@Nonnull ICommandSender sender) {
-        return "/eigenberdarf";
+    @Override
+    @Nonnull
+    public String getName() {
+        return "eigenbedarf";
     }
 
-    @Override @Nonnull public List<String> getAliases() {
+    @Override
+    @Nonnull
+    public String getUsage(@Nonnull ICommandSender sender) {
+        return "/eigenbedarf";
+    }
+
+    @Override
+    @Nonnull
+    public List<String> getAliases() {
         return Collections.emptyList();
     }
 
-    @Override public boolean checkPermission(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender) {
+    @Override
+    public boolean checkPermission(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender) {
         return true;
     }
 
-    @Override public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
+    @Override
+    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
         UPlayer p = AbstractionLayer.getPlayer();
         Timer t = new Timer();
 
@@ -50,9 +59,9 @@ public class EigenbedarfCommand  extends CommandBase {
                                     p.sendChatMessage("/dbank get Meth " + ConfigElements.getMethAmount() + " " + ConfigElements.getMethDrugPurity().getPurity());
 
                                 }
-                            },1000L);
+                            }, 1000L);
                     }
-                },1000L);
+                }, 1000L);
             }
             return;
         }
@@ -66,7 +75,7 @@ public class EigenbedarfCommand  extends CommandBase {
                     public void run() {
                         p.sendChatMessage("/dbank get Meth " + ConfigElements.getMethAmount() + " " + ConfigElements.getMethDrugPurity().getPurity());
                     }
-                },1000L);
+                }, 1000L);
 
             return;
         }
