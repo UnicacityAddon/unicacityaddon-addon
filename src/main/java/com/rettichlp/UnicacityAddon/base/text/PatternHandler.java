@@ -1,6 +1,7 @@
 package com.rettichlp.UnicacityAddon.base.text;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
+import com.rettichlp.UnicacityAddon.events.KarmaMessageEventHandler;
 
 import java.util.regex.Pattern;
 
@@ -190,4 +191,10 @@ public class PatternHandler {
      * {@link com.rettichlp.UnicacityAddon.events.job.ADropMoneyEventHandler}
      */
     public static final Pattern PREVIOUS_BANK_VALUE_PATTERN = Pattern.compile("^ {2}Vorheriger Kontostand: (\\d+)\\$$");
+
+    /**
+     * {@link com.rettichlp.UnicacityAddon.events.KarmaMessageEventHandler}
+     */
+    public static final Pattern KARMA_CHANGED_PATTERN = Pattern.compile("^\\[Karma] (-?\\d+) Karma\\.$");
+    public static final Pattern KARMA_PATTERN = Pattern.compile("^\\[Karma] Du hast ein Karma von (-?\\d+)\\.$");
 }
