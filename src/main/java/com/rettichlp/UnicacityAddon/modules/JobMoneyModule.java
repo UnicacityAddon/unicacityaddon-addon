@@ -1,6 +1,6 @@
 package com.rettichlp.UnicacityAddon.modules;
 
-import com.rettichlp.UnicacityAddon.UnicacityAddon;
+import com.rettichlp.UnicacityAddon.base.io.FileManager;
 import com.rettichlp.UnicacityAddon.base.module.UCModuleHandler;
 import net.labymod.ingamegui.ModuleCategory;
 import net.labymod.ingamegui.moduletypes.SimpleModule;
@@ -70,16 +70,11 @@ public class JobMoneyModule extends SimpleModule {
 
     public static void addBalance(int balance) {
         jobBalance = jobBalance + balance;
-        UnicacityAddon.saveData();
-    }
-
-    public static void removeBalance(int balance) {
-        jobBalance = jobBalance - balance;
-        UnicacityAddon.saveData();
+        FileManager.saveData();
     }
 
     public static void setBalance(int balance) {
         jobBalance = balance;
-        UnicacityAddon.saveData();
+        FileManager.saveData();
     }
 }

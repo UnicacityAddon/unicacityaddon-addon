@@ -1,13 +1,17 @@
-package com.rettichlp.UnicacityAddon.base.json.balance;
+package com.rettichlp.UnicacityAddon.base.json;
 
-public class Offlinedata {
+import java.util.ArrayList;
+import java.util.List;
+
+public class Data {
 
     private int bankBalance;
-    private int cash;
+    private int cashBalance;
     private int jobBalance;
     private int paydayTime;
+    private List<TodolistEntry> todolist;
 
-    public Offlinedata() {
+    public Data() {
     }
 
     public int getBankBalance() {
@@ -27,11 +31,11 @@ public class Offlinedata {
     }
 
     public int getCashBalance() {
-        return cash;
+        return cashBalance;
     }
 
-    public void setCashBalance(int cash) {
-        this.cash = cash;
+    public void setCashBalance(int cashBalance) {
+        this.cashBalance = cashBalance;
     }
 
     public int getPaydayTime() {
@@ -40,5 +44,13 @@ public class Offlinedata {
 
     public void setPaydayTime(int paydayTime) {
         this.paydayTime = paydayTime;
+    }
+
+    public List<TodolistEntry> getTodolist() {
+        return todolist == null ? new ArrayList<>() : todolist;
+    }
+
+    public void setTodolist(List<TodolistEntry> todolist) {
+        this.todolist = todolist;
     }
 }

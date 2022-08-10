@@ -1,10 +1,8 @@
 package com.rettichlp.UnicacityAddon;
 
-import com.google.gson.Gson;
 import com.rettichlp.UnicacityAddon.base.config.ConfigSettings;
 import com.rettichlp.UnicacityAddon.base.faction.FactionHandler;
 import com.rettichlp.UnicacityAddon.base.io.FileManager;
-import com.rettichlp.UnicacityAddon.base.json.balance.Offlinedata;
 import com.rettichlp.UnicacityAddon.base.module.UCModuleHandler;
 import com.rettichlp.UnicacityAddon.base.registry.KeyBindRegistry;
 import com.rettichlp.UnicacityAddon.commands.ACallCommand;
@@ -12,6 +10,7 @@ import com.rettichlp.UnicacityAddon.commands.ASMSCommand;
 import com.rettichlp.UnicacityAddon.commands.NaviCommand;
 import com.rettichlp.UnicacityAddon.commands.NearestATMCommand;
 import com.rettichlp.UnicacityAddon.commands.NearestJobCommand;
+import com.rettichlp.UnicacityAddon.commands.TodoListCommand;
 import com.rettichlp.UnicacityAddon.commands.TriggerEventCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.ReinforcementCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.ShareLocationCommand;
@@ -64,11 +63,7 @@ import net.labymod.main.LabyMod;
 import net.labymod.settings.elements.SettingsElement;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.ClientCommandHandler;
-import org.apache.commons.io.FileUtils;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 /**
@@ -104,6 +99,7 @@ public class UnicacityAddon extends LabyModAddon {
         ClientCommandHandler.instance.registerCommand(new ReinforcementCommand());
         ClientCommandHandler.instance.registerCommand(new SchmarzmarktLocationsCommand());
         ClientCommandHandler.instance.registerCommand(new ShareLocationCommand());
+        ClientCommandHandler.instance.registerCommand(new TodoListCommand());
         ClientCommandHandler.instance.registerCommand(new TriggerEventCommand());
 
         // ForgeEvents -> https://docs.labymod.net/pages/create-addons/forge_events/ - TODO remove later
@@ -160,52 +156,11 @@ public class UnicacityAddon extends LabyModAddon {
         // Register keybindings
         KeyBindRegistry.registerKeyBinds();
 
-        loadBalance();
+        FileManager.loadData();
     }
 
     @Override
     protected void fillSettings(List<SettingsElement> list) {
         ConfigSettings.createConfig(this, list);
-    }
-
-    public static void loadBalance() {
-        try {
-            File offlineDataFile = FileManager.getOfflineDataFile();
-            if (offlineDataFile == null) return;
-            Gson g = new Gson();
-            String jsonData = FileUtils.readFileToString(offlineDataFile, StandardCharsets.UTF_8.toString());
-
-            if (jsonData.isEmpty()) {
-                BankMoneyModule.setBalance(0);
-                CashMoneyModule.setBalance(0);
-                JobMoneyModule.setBalance(0);
-                PaydayModule.setTime(0);
-                return;
-            }
-
-            Offlinedata offlineData = g.fromJson(jsonData, Offlinedata.class);
-            BankMoneyModule.bankBalance = offlineData.getBankBalance();
-            CashMoneyModule.cashBalance = offlineData.getCashBalance();
-            JobMoneyModule.jobBalance = offlineData.getJobBalance();
-            PaydayModule.currentTime = offlineData.getPaydayTime();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public static void saveData() {
-        try {
-            File offlineDataFile = FileManager.getOfflineDataFile();
-            if (offlineDataFile == null) return;
-            Gson g = new Gson();
-            Offlinedata offlinedata = new Offlinedata();
-            offlinedata.setBankBalance(BankMoneyModule.bankBalance);
-            offlinedata.setCashBalance(CashMoneyModule.cashBalance);
-            offlinedata.setJobBalance(JobMoneyModule.jobBalance);
-            offlinedata.setPaydayTime(PaydayModule.currentTime);
-            FileUtils.writeStringToFile(offlineDataFile, g.toJson(offlinedata), StandardCharsets.UTF_8.toString());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 }
