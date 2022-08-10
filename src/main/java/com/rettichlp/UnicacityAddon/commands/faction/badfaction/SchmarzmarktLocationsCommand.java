@@ -70,7 +70,7 @@ public class SchmarzmarktLocationsCommand extends CommandBase {
 
     private static final List<Map.Entry<String, String>> BLACK_MARKET_LIST = Lists.newArrayList(
             Maps.immutableEntry("Psychiatrie", "1689/66/-390"),
-            Maps.immutableEntry("Hafen (Chinatown)", "1172/69/-436"),
+            Maps.immutableEntry("Hafen (Chinatown)", "1205/69/-118"),
             Maps.immutableEntry("Haus 472 (Chinatown)", "1205/69/-118"),
             Maps.immutableEntry("Mex U-Bahn", "-92/52/-33"),
             Maps.immutableEntry("Kino (Ruine)", "743/69/315"),

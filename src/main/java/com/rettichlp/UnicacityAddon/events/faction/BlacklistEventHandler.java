@@ -1,7 +1,7 @@
 package com.rettichlp.UnicacityAddon.events.faction;
 
 import com.google.gson.Gson;
-import com.rettichlp.UnicacityAddon.base.json.blacklist.Blacklist;
+import com.rettichlp.UnicacityAddon.base.json.Blacklist;
 import com.rettichlp.UnicacityAddon.base.io.FileManager;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
 import net.minecraft.util.text.ITextComponent;

@@ -1,11 +1,21 @@
 package com.rettichlp.UnicacityAddon.base.io;
 
+import com.google.gson.Gson;
 import com.rettichlp.UnicacityAddon.UnicacityAddon;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
+import com.rettichlp.UnicacityAddon.base.json.Data;
+import com.rettichlp.UnicacityAddon.commands.TodoListCommand;
+import com.rettichlp.UnicacityAddon.modules.BankMoneyModule;
+import com.rettichlp.UnicacityAddon.modules.CashMoneyModule;
+import com.rettichlp.UnicacityAddon.modules.JobMoneyModule;
+import com.rettichlp.UnicacityAddon.modules.PaydayModule;
+import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.Date;
 
 /**
@@ -48,12 +58,12 @@ public class FileManager {
         return null;
     }
 
-    public static File getOfflineDataFile() throws IOException {
+    public static File getDataFile() throws IOException {
         if (getUnicacityAddonDir() == null) return null;
-        File offlineDataFile = new File(getUnicacityAddonDir().getAbsolutePath() + "/offlineData.json");
-        if (offlineDataFile.exists() || offlineDataFile.createNewFile()) return offlineDataFile;
+        File dataFile = new File(getUnicacityAddonDir().getAbsolutePath() + "/data.json");
+        if (dataFile.exists() || dataFile.createNewFile()) return dataFile;
 
-        AbstractionLayer.getPlayer().sendErrorMessage("Datei 'offlineData.json' wurde nicht gefunden!");
+        AbstractionLayer.getPlayer().sendErrorMessage("Datei 'data.json' wurde nicht gefunden!");
 
         return null;
     }
@@ -71,5 +81,49 @@ public class FileManager {
 
         File newImageFile = new File(getAddonScreenshotDir().getAbsolutePath() + "/" + sb + ".jpg");
         return newImageFile.createNewFile() ? newImageFile : null;
+    }
+
+    public static void loadData() {
+        try {
+            File dataFile = FileManager.getDataFile();
+            if (dataFile == null) return;
+            Gson g = new Gson();
+            String jsonData = FileUtils.readFileToString(dataFile, StandardCharsets.UTF_8.toString());
+
+            if (jsonData.isEmpty()) {
+                BankMoneyModule.setBalance(0);
+                CashMoneyModule.setBalance(0);
+                JobMoneyModule.setBalance(0);
+                PaydayModule.setTime(0);
+                TodoListCommand.todolist = Collections.emptyList();
+                return;
+            }
+
+            Data data = g.fromJson(jsonData, Data.class);
+            BankMoneyModule.bankBalance = data.getBankBalance();
+            CashMoneyModule.cashBalance = data.getCashBalance();
+            JobMoneyModule.jobBalance = data.getJobBalance();
+            PaydayModule.currentTime = data.getPaydayTime();
+            TodoListCommand.todolist = data.getTodolist();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void saveData() {
+        try {
+            File dataFile = FileManager.getDataFile();
+            if (dataFile == null) return;
+            Gson g = new Gson();
+            Data data = new Data();
+            data.setBankBalance(BankMoneyModule.bankBalance);
+            data.setCashBalance(CashMoneyModule.cashBalance);
+            data.setJobBalance(JobMoneyModule.jobBalance);
+            data.setPaydayTime(PaydayModule.currentTime);
+            data.setTodolist(TodoListCommand.todolist);
+            FileUtils.writeStringToFile(dataFile, g.toJson(data), StandardCharsets.UTF_8.toString());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

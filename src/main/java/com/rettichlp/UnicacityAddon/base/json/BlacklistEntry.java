@@ -1,4 +1,4 @@
-package com.rettichlp.UnicacityAddon.base.json.blacklist;
+package com.rettichlp.UnicacityAddon.base.json;
 
 /**
  * @author RettichLP
