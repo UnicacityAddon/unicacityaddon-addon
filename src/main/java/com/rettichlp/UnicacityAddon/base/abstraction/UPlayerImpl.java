@@ -42,6 +42,10 @@ public class UPlayerImpl implements UPlayer {
         getPlayer().sendMessage(textComponent);
     }
 
+    @Override public void sendMessageAsString(String message) {
+        getPlayer().sendMessage(new TextComponentString(message));
+    }
+
     @Override public void sendErrorMessage(String message) {
         sendMessage(Message.getBuilder()
                 .error().space()
@@ -60,12 +64,13 @@ public class UPlayerImpl implements UPlayer {
         sendErrorMessage("Syntax: " + message);
     }
 
-    @Override public void sendMessageAsString(String message) {
-        getPlayer().sendMessage(new TextComponentString(message));
+    @Override public void sendEmptyMessage() {
+        getPlayer().sendMessage(Message.getBuilder().createComponent());
     }
 
     @Override public void sendChatMessage(String message) {
         getPlayer().sendChatMessage(message);
+        System.out.println("UPlayer send chat message: " + message);
     }
 
     @Override public void playSound(SoundEvent soundIn, float volume, float pitch) {

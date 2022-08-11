@@ -21,7 +21,7 @@ import net.minecraft.util.math.BlockPos;
 /**
  * @author RettichLP
  */
-public class ARezeptGiveCommand extends CommandBase {
+public class ARezeptCommand extends CommandBase {
 
     public static String target;
     public static Medication medication;

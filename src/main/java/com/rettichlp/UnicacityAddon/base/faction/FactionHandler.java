@@ -4,7 +4,7 @@ import com.rettichlp.UnicacityAddon.UnicacityAddon;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
 import com.rettichlp.UnicacityAddon.base.utils.ForgeUtils;
 import com.rettichlp.UnicacityAddon.base.utils.ListUtils;
-import com.rettichlp.UnicacityAddon.base.utils.WebsiteAPI;
+import com.rettichlp.UnicacityAddon.base.utils.WebsiteUtils;
 import com.rettichlp.UnicacityAddon.events.TabListEventHandler;
 
 import java.util.HashMap;
@@ -34,7 +34,7 @@ public class FactionHandler {
 
     public static boolean checkPlayerHouseBan(String playerName) {
         if (websiteSource.isEmpty()) {
-            Thread thread = new Thread(() -> websiteSource = WebsiteAPI.websiteToString("https://fuzzlemann.de/commons/houseBans"));
+            Thread thread = new Thread(() -> websiteSource = WebsiteUtils.websiteToString("https://fuzzlemann.de/commons/houseBans"));
             thread.start();
         }
         return websiteSource.contains(playerName);

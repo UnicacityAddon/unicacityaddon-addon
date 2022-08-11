@@ -1,10 +1,9 @@
 package com.rettichlp.UnicacityAddon.events.faction;
 
 import com.google.gson.Gson;
-import com.rettichlp.UnicacityAddon.base.faction.blacklist.Blacklist;
+import com.rettichlp.UnicacityAddon.base.json.Blacklist;
 import com.rettichlp.UnicacityAddon.base.io.FileManager;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
-import com.rettichlp.UnicacityAddon.events.NameTagEventHandler;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
@@ -41,7 +40,6 @@ public class BlacklistEventHandler {
         if (blacklistStartMatcher.find()) {
             BLACKLIST_MAP.clear();
             blacklistShown = currentTime;
-            NameTagEventHandler.refreshAllDisplayNames();
             return;
         }
 
@@ -53,7 +51,6 @@ public class BlacklistEventHandler {
             String reason = matcher.group(2);
 
             BLACKLIST_MAP.put(name, reason.toLowerCase().contains("vogelfrei"));
-            NameTagEventHandler.refreshAllDisplayNames();
         }
     }
 
@@ -67,7 +64,6 @@ public class BlacklistEventHandler {
             String name = matcher.group(1);
 
             BLACKLIST_MAP.put(name, false);
-            NameTagEventHandler.refreshAllDisplayNames();
         }
     }
 
@@ -81,7 +77,6 @@ public class BlacklistEventHandler {
             String name = matcher.group(1);
 
             BLACKLIST_MAP.remove(name);
-            NameTagEventHandler.refreshAllDisplayNames();
         }
     }
 

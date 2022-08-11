@@ -2,7 +2,7 @@ package com.rettichlp.UnicacityAddon.base.faction;
 
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
-import com.rettichlp.UnicacityAddon.base.utils.WebsiteAPI;
+import com.rettichlp.UnicacityAddon.base.utils.WebsiteUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -95,7 +95,7 @@ public enum Faction {
     }
 
     public String getWebsiteSource() {
-        return WebsiteAPI.websiteToString(this.getWebsiteUrl());
+        return WebsiteUtils.websiteToString(this.getWebsiteUrl());
     }
 
     public List<String> getMember() {

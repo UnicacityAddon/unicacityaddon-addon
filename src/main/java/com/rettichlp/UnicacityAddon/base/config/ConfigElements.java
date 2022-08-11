@@ -2,6 +2,7 @@ package com.rettichlp.UnicacityAddon.base.config;
 
 import com.rettichlp.UnicacityAddon.UnicacityAddon;
 import com.rettichlp.UnicacityAddon.base.faction.Faction;
+import com.rettichlp.UnicacityAddon.base.faction.badfaction.DrugPurity;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
 import joptsimple.internal.Strings;
@@ -132,7 +133,7 @@ public class ConfigElements {
     }
 
     // HOUSEBAN
-    public static boolean getNameTagHouseban() {
+    public static boolean getNameTagHouseBan() {
         return UnicacityAddon.ADDON.getConfig().has("NAMETAG_HOUSEBAN") && UnicacityAddon.ADDON.getConfig().get("NAMETAG_HOUSEBAN")
                 .getAsBoolean(); // default = false
     }
@@ -159,6 +160,13 @@ public class ConfigElements {
     public static boolean getNameTagContract() {
         return UnicacityAddon.ADDON.getConfig().has("NAMETAG_CONTRACT") && UnicacityAddon.ADDON.getConfig().get("NAMETAG_CONTRACT")
                 .getAsBoolean(); // default = false
+    }
+
+    // Delay
+    public static String getRefreshDisplayNamesInterval() {
+        return UnicacityAddon.ADDON.getConfig().has("NAMETAG_DELAY") && !UnicacityAddon.ADDON.getConfig().get("NAMETAG_DELAY").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("NAMETAG_DELAY").getAsString().equals("0") && !UnicacityAddon.ADDON.getConfig().get("NAMETAG_DELAY").getAsString().startsWith("-")
+                ? UnicacityAddon.ADDON.getConfig().get("NAMETAG_DELAY").getAsString()
+                : "5";
     }
 
     // ATMINFO
@@ -220,5 +228,117 @@ public class ConfigElements {
         return UnicacityAddon.ADDON.getConfig().has("REPORT_GREETING") && !UnicacityAddon.ADDON.getConfig().get("REPORT_GREETING").getAsString().isEmpty()
                 ? UnicacityAddon.ADDON.getConfig().get("REPORT_GREETING").getAsString()
                 : Strings.EMPTY;
+    }
+
+    public static String getReportFarewell() {
+        return UnicacityAddon.ADDON.getConfig().has("REPORT_FAREWELL") && !UnicacityAddon.ADDON.getConfig().get("REPORT_FAREWELL").getAsString().isEmpty()
+                ? UnicacityAddon.ADDON.getConfig().get("REPORT_FAREWELL").getAsString()
+                : Strings.EMPTY;
+    }
+
+    // PASSWORD SETTINGS
+    public static boolean getPasswordAutomation() {
+        return UnicacityAddon.ADDON.getConfig().has("AUTOMATED_PASSWORD") && UnicacityAddon.ADDON.getConfig().get("AUTOMATED_PASSWORD")
+                .getAsBoolean();
+    }
+
+    public static String getPassword() {
+        return UnicacityAddon.ADDON.getConfig().has("PASSWORD") && !UnicacityAddon.ADDON.getConfig().get("PASSWORD").getAsString().isEmpty()
+                ? UnicacityAddon.ADDON.getConfig().get("PASSWORD").getAsString()
+                : Strings.EMPTY;
+    }
+
+    // COMMANDS ON JOIN
+    public static boolean getCommandAutomation() {
+        return UnicacityAddon.ADDON.getConfig().has("COMMAND_ON_JOIN") && UnicacityAddon.ADDON.getConfig().get("COMMAND_ON_JOIN")
+                .getAsBoolean();
+    }
+
+    public static String getFirstCommand() {
+        return UnicacityAddon.ADDON.getConfig().has("FIRST_COMMAND") && !UnicacityAddon.ADDON.getConfig().get("FIRST_COMMAND").getAsString().isEmpty()
+                ? UnicacityAddon.ADDON.getConfig().get("FIRST_COMMAND").getAsString()
+                : Strings.EMPTY;
+    }
+
+    public static String getSecondCommand() {
+        return UnicacityAddon.ADDON.getConfig().has("SECOND_COMMAND") && !UnicacityAddon.ADDON.getConfig().get("SECOND_COMMAND").getAsString().isEmpty()
+                ? UnicacityAddon.ADDON.getConfig().get("SECOND_COMMAND").getAsString()
+                : Strings.EMPTY;
+    }
+
+    public static String getThirdCommand() {
+        return UnicacityAddon.ADDON.getConfig().has("THIRD_COMMAND") && !UnicacityAddon.ADDON.getConfig().get("THIRD_COMMAND").getAsString().isEmpty()
+                ? UnicacityAddon.ADDON.getConfig().get("THIRD_COMMAND").getAsString()
+                : Strings.EMPTY;
+    }
+
+    // HQ Nachrichten
+    public static boolean getHQMessagesActivated() {
+        return !UnicacityAddon.ADDON.getConfig().has("HQ_MESSAGES") || UnicacityAddon.ADDON.getConfig().get("HQ_MESSAGES")
+                .getAsBoolean(); // default = true
+    }
+
+    // EIGENBEDARF SETTINGS
+    public static boolean getCocainActivated() {
+        return !UnicacityAddon.ADDON.getConfig().has("COCAIN_ACTIVATED") || UnicacityAddon.ADDON.getConfig().get("COCAIN_ACTIVATED")
+                .getAsBoolean(); // default = true
+    }
+
+    public static DrugPurity getCocainDrugPurity() {
+        return UnicacityAddon.ADDON.getConfig().has("COCAIN_PURITY") ?
+                DrugPurity.valueOf(UnicacityAddon.ADDON.getConfig().get("COCAIN_PURITY").getAsString()) :
+                DrugPurity.BEST; // default = NULL
+    }
+
+    public static void setCocainDrugPurity(DrugPurity cocainPurity) {
+        UnicacityAddon.ADDON.getConfig().addProperty("COCAIN_PURITY", cocainPurity.toString());
+    }
+
+    public static String getCocaineAmount() {
+        return UnicacityAddon.ADDON.getConfig().has("COCAINE_AMOUNT") && !UnicacityAddon.ADDON.getConfig().get("COCAINE_AMOUNT").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("COCAINE_AMOUNT").getAsString().equals("0")
+                ? UnicacityAddon.ADDON.getConfig().get("COCAINE_AMOUNT").getAsString()
+                : "15";
+    }
+
+    public static boolean getMarihuanaActivated() {
+        return !UnicacityAddon.ADDON.getConfig().has("MARIHUANA_ACTIVATED") || UnicacityAddon.ADDON.getConfig().get("MARIHUANA_ACTIVATED")
+                .getAsBoolean(); // default = true
+    }
+
+    public static DrugPurity getMarihuanaDrugPurity() {
+        return UnicacityAddon.ADDON.getConfig().has("MARIHUANA_PURITY") ?
+                DrugPurity.valueOf(UnicacityAddon.ADDON.getConfig().get("MARIHUANA_PURITY").getAsString()) :
+                DrugPurity.BEST; // default = NULL
+    }
+
+    public static void setMarihuanaDrugPurity(DrugPurity cocainPurity) {
+        UnicacityAddon.ADDON.getConfig().addProperty("MARIHUANA_PURITY", cocainPurity.toString());
+    }
+
+    public static String getMarihuanaAmount() {
+        return UnicacityAddon.ADDON.getConfig().has("MARIHUANA_AMOUNT") && !UnicacityAddon.ADDON.getConfig().get("MARIHUANA_AMOUNT").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("MARIHUANA_AMOUNT").getAsString().equals("0")
+                ? UnicacityAddon.ADDON.getConfig().get("MARIHUANA_AMOUNT").getAsString()
+                : "15";
+    }
+
+    public static boolean getMethActivated() {
+        return !UnicacityAddon.ADDON.getConfig().has("METH_ACTIVATED") || UnicacityAddon.ADDON.getConfig().get("METH_ACTIVATED")
+                .getAsBoolean(); // default = true
+    }
+
+    public static DrugPurity getMethDrugPurity() {
+        return UnicacityAddon.ADDON.getConfig().has("METH_PURITY") ?
+                DrugPurity.valueOf(UnicacityAddon.ADDON.getConfig().get("METH_PURITY").getAsString()) :
+                DrugPurity.BEST; // default = NULL
+    }
+
+    public static void setMethDrugPurity(DrugPurity cocainPurity) {
+        UnicacityAddon.ADDON.getConfig().addProperty("MMETH_PURITY", cocainPurity.toString());
+    }
+
+    public static String getMethAmount() {
+        return UnicacityAddon.ADDON.getConfig().has("METH_AMOUNT") && !UnicacityAddon.ADDON.getConfig().get("METH_AMOUNT").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("METH_AMOUNT").getAsString().equals("0")
+                ? UnicacityAddon.ADDON.getConfig().get("METH_AMOUNT").getAsString()
+                : "15";
     }
 }

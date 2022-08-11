@@ -11,7 +11,7 @@ import java.util.Scanner;
 /**
  * @author RettichLP
  */
-public class WebsiteAPI {
+public class WebsiteUtils {
 
     public static String websiteToString(String urlString) {
         Scanner scanner;
