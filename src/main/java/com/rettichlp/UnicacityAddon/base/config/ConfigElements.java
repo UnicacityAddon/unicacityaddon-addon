@@ -164,7 +164,7 @@ public class ConfigElements {
 
     // Delay
     public static String getRefreshDisplayNamesInterval() {
-        return UnicacityAddon.ADDON.getConfig().has("NAMETAG_DELAY") && !UnicacityAddon.ADDON.getConfig().get("NAMETAG_DELAY").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("NAMETAG_DELAY").getAsString().equals("0")
+        return UnicacityAddon.ADDON.getConfig().has("NAMETAG_DELAY") && !UnicacityAddon.ADDON.getConfig().get("NAMETAG_DELAY").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("NAMETAG_DELAY").getAsString().equals("0") && !UnicacityAddon.ADDON.getConfig().get("NAMETAG_DELAY").getAsString().startsWith("-")
                 ? UnicacityAddon.ADDON.getConfig().get("NAMETAG_DELAY").getAsString()
                 : "5";
     }
@@ -342,6 +342,16 @@ public class ConfigElements {
                 : "15";
     }
 
+    // ABUY
+    public static String getEventABuyAmount() {
+        return UnicacityAddon.ADDON.getConfig().has("EVENT_ABUY_AMOUNT") && !UnicacityAddon.ADDON.getConfig().get("EVENT_ABUY_AMOUNT").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("EVENT_ABUY_AMOUNT").getAsString().startsWith("-")
+                ? UnicacityAddon.ADDON.getConfig().get("EVENT_ABUY_AMOUNT").getAsString()
+                : "5";
+    }
 
-
+    public static String getEventABuyDelay() {
+        return UnicacityAddon.ADDON.getConfig().has("EVENT_ABUY_DELAY") && !UnicacityAddon.ADDON.getConfig().get("EVENT_ABUY_DELAY").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("EVENT_ABUY_DELAY").getAsString().startsWith("-")
+                ? UnicacityAddon.ADDON.getConfig().get("EVENT_ABUY_DELAY").getAsString()
+                : "0";
+    }
 }

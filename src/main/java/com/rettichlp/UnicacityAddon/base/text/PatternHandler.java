@@ -197,4 +197,10 @@ public class PatternHandler {
      */
     public static final Pattern KARMA_CHANGED_PATTERN = Pattern.compile("^\\[Karma] (-?\\d+) Karma\\.$");
     public static final Pattern KARMA_PATTERN = Pattern.compile("^\\[Karma] Du hast ein Karma von (-?\\d+)\\.$");
+
+    /**
+     * {@link com.rettichlp.UnicacityAddon.events.ABuyEventHandler}
+     */
+    public static final Pattern BUY_INTERRUPTED_PATTERN = Pattern.compile("^Verkäufer: (Tut (uns|mir) Leid|Verzeihung), unser Lager ist derzeit leer\\.$" +
+            "|^Verkäufer: Dieses Produkt kostet \\d+\\$\\.$");
 }

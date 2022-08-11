@@ -5,12 +5,13 @@ import com.rettichlp.UnicacityAddon.base.faction.FactionHandler;
 import com.rettichlp.UnicacityAddon.base.io.FileManager;
 import com.rettichlp.UnicacityAddon.base.module.UCModuleHandler;
 import com.rettichlp.UnicacityAddon.base.registry.KeyBindRegistry;
-import com.rettichlp.UnicacityAddon.commands.*;
 import com.rettichlp.UnicacityAddon.commands.ACallCommand;
 import com.rettichlp.UnicacityAddon.commands.ASMSCommand;
+import com.rettichlp.UnicacityAddon.commands.EinzahlenCommand;
 import com.rettichlp.UnicacityAddon.commands.NaviCommand;
 import com.rettichlp.UnicacityAddon.commands.NearestATMCommand;
 import com.rettichlp.UnicacityAddon.commands.NearestJobCommand;
+import com.rettichlp.UnicacityAddon.commands.ReichensteuerCommand;
 import com.rettichlp.UnicacityAddon.commands.TodoListCommand;
 import com.rettichlp.UnicacityAddon.commands.TriggerEventCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.ReinforcementCommand;
@@ -25,7 +26,17 @@ import com.rettichlp.UnicacityAddon.commands.faction.polizei.ModifyWantedsComman
 import com.rettichlp.UnicacityAddon.commands.faction.rettungsdienst.ARezeptAnnehmenCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.rettungsdienst.ARezeptCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.terroristen.ExplosiveBeltCommand;
-import com.rettichlp.UnicacityAddon.events.*;
+import com.rettichlp.UnicacityAddon.events.ABuyEventHandler;
+import com.rettichlp.UnicacityAddon.events.BombTimerEventHandler;
+import com.rettichlp.UnicacityAddon.events.CarEventHandler;
+import com.rettichlp.UnicacityAddon.events.HotkeyEventHandler;
+import com.rettichlp.UnicacityAddon.events.JoinEventHandler;
+import com.rettichlp.UnicacityAddon.events.KarmaMessageEventHandler;
+import com.rettichlp.UnicacityAddon.events.MobileEventHandler;
+import com.rettichlp.UnicacityAddon.events.MoneyEventHandler;
+import com.rettichlp.UnicacityAddon.events.NameTagEventHandler;
+import com.rettichlp.UnicacityAddon.events.PaydayEventHandler;
+import com.rettichlp.UnicacityAddon.events.TabListEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.BlacklistEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.ContractEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.EmergencyServiceEventHandler;
@@ -107,6 +118,7 @@ public class UnicacityAddon extends LabyModAddon {
         ClientCommandHandler.instance.registerCommand(new TriggerEventCommand());
 
         // ForgeEvents -> https://docs.labymod.net/pages/create-addons/forge_events/ - TODO remove later
+        ADDON.getApi().registerForgeListener(new ABuyEventHandler());
         ADDON.getApi().registerForgeListener(new AutomatedCalculationOf25());
         ADDON.getApi().registerForgeListener(new ADropEventHandler());
         ADDON.getApi().registerForgeListener(new ADropMoneyEventHandler());

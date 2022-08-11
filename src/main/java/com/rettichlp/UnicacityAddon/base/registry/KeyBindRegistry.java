@@ -22,6 +22,7 @@ public class KeyBindRegistry {
     public static KeyBinding cancelReport;
     public static KeyBinding aDuty;
     public static KeyBinding aDutySilent;
+    public static KeyBinding aBuy;
 
     public static void registerKeyBinds() {
         if (executed) return;
@@ -34,6 +35,7 @@ public class KeyBindRegistry {
         int hotkeyCancelReport = config.has("HOTKEY_REPORT_CANCEL") ? config.get("HOTKEY_REPORT_CANCEL").getAsInt() : Keyboard.KEY_NONE;
         int hotkeyADuty = config.has("HOTKEY_ADUTY") ? config.get("HOTKEY_ADUTY").getAsInt() : Keyboard.KEY_NONE;
         int hotkeyADutySilent = config.has("HOTKEY_ADUTY_SILENT") ? config.get("HOTKEY_ADUTY_SILENT").getAsInt() : Keyboard.KEY_NONE;
+        int hotkeyABuy = config.has("HOTKEY_ABUY") ? config.get("HOTKEY_ABUY").getAsInt() : Keyboard.KEY_NONE;
 
         addonScreenshot = new KeyBinding("Screenshot mit Upload", hotkeyAddonScreenshot, KEY_CATEGORY);
         adFreigeben = new KeyBinding("Werbung freigeben", hotkeyAdFreigeben, KEY_CATEGORY);
@@ -42,6 +44,7 @@ public class KeyBindRegistry {
         cancelReport = new KeyBinding("Report beenden (+Verabschiedung)", hotkeyCancelReport, KEY_CATEGORY);
         aDuty = new KeyBinding("ADuty", hotkeyADuty, KEY_CATEGORY);
         aDutySilent = new KeyBinding("ADuty (silent)", hotkeyADutySilent, KEY_CATEGORY);
+        aBuy = new KeyBinding("ABuy", hotkeyABuy, KEY_CATEGORY);
 
         ClientRegistry.registerKeyBinding(addonScreenshot);
         ClientRegistry.registerKeyBinding(adFreigeben);
@@ -50,6 +53,7 @@ public class KeyBindRegistry {
         ClientRegistry.registerKeyBinding(cancelReport);
         ClientRegistry.registerKeyBinding(aDuty);
         ClientRegistry.registerKeyBinding(aDutySilent);
+        ClientRegistry.registerKeyBinding(aBuy);
 
         executed = true;
     }
