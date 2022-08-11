@@ -12,13 +12,13 @@ import net.labymod.utils.Material;
 /**
  * @author RettichLP
  */
-public class PaydayModule extends SimpleModule {
+public class PayDayModule extends SimpleModule {
 
     public static int currentTime;
 
     @Override
     public String getControlName() {
-        return "Zeit bis zum Payday";
+        return "Zeit bis zum PayDay";
     }
 
     @Override
@@ -28,7 +28,7 @@ public class PaydayModule extends SimpleModule {
 
     @Override
     public String getDisplayName() {
-        return "Payday";
+        return "PayDay";
     }
 
     @Override
@@ -43,7 +43,7 @@ public class PaydayModule extends SimpleModule {
 
     @Override
     public String getDescription() {
-        return "Zeigt die Minuten bis zum Payday an.";
+        return "Zeigt die Minuten bis zum PayDay an.";
     }
 
     @Override

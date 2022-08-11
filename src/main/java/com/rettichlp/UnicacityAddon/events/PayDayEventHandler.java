@@ -1,7 +1,7 @@
 package com.rettichlp.UnicacityAddon.events;
 
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
-import com.rettichlp.UnicacityAddon.modules.PaydayModule;
+import com.rettichlp.UnicacityAddon.modules.PayDayModule;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -11,7 +11,7 @@ import java.util.regex.Matcher;
 /**
  * @author RettichLP
  */
-public class PaydayEventHandler {
+public class PayDayEventHandler {
 
     public static boolean isAfk = false;
     private int currentTick;
@@ -30,9 +30,9 @@ public class PaydayEventHandler {
             return false;
         }
 
-        Matcher statsPaydayMatcher = PatternHandler.STATS_PAYDAY_PATTERN.matcher(msg);
-        if (statsPaydayMatcher.find()) {
-            PaydayModule.setTime(Integer.parseInt(statsPaydayMatcher.group(1)));
+        Matcher statsPayDayMatcher = PatternHandler.STATS_PAYDAY_PATTERN.matcher(msg);
+        if (statsPayDayMatcher.find()) {
+            PayDayModule.setTime(Integer.parseInt(statsPayDayMatcher.group(1)));
             return false;
         }
 
@@ -44,7 +44,7 @@ public class PaydayEventHandler {
         if (isAfk || event.phase != TickEvent.Phase.END) return;
 
         if (currentTick++ != 1200) return;
-        PaydayModule.addTime(1);
+        PayDayModule.addTime(1);
         currentTick = 0;
     }
 }

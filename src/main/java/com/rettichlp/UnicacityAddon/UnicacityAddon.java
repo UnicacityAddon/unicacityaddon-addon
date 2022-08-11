@@ -40,7 +40,7 @@ import com.rettichlp.UnicacityAddon.events.KarmaMessageEventHandler;
 import com.rettichlp.UnicacityAddon.events.MobileEventHandler;
 import com.rettichlp.UnicacityAddon.events.MoneyEventHandler;
 import com.rettichlp.UnicacityAddon.events.NameTagEventHandler;
-import com.rettichlp.UnicacityAddon.events.PaydayEventHandler;
+import com.rettichlp.UnicacityAddon.events.PayDayEventHandler;
 import com.rettichlp.UnicacityAddon.events.TabListEventHandler;
 import com.rettichlp.UnicacityAddon.events.WeaponClickEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.AFbankEinzahlenEventHandler;
@@ -72,7 +72,7 @@ import com.rettichlp.UnicacityAddon.modules.EmergencyServiceModule;
 import com.rettichlp.UnicacityAddon.modules.ExplosiveBeltTimerModule;
 import com.rettichlp.UnicacityAddon.modules.FBIHackModule;
 import com.rettichlp.UnicacityAddon.modules.JobMoneyModule;
-import com.rettichlp.UnicacityAddon.modules.PaydayModule;
+import com.rettichlp.UnicacityAddon.modules.PayDayModule;
 import com.rettichlp.UnicacityAddon.modules.PlantFertilizeTimerModule;
 import com.rettichlp.UnicacityAddon.modules.PlantWaterTimerModule;
 import net.labymod.api.LabyModAddon;
@@ -156,7 +156,7 @@ public class UnicacityAddon extends LabyModAddon {
         ADDON.getApi().registerForgeListener(new MobileEventHandler());
         ADDON.getApi().registerForgeListener(new ModifyBlacklistEventHandler());
         ADDON.getApi().registerForgeListener(new NameTagEventHandler());
-        ADDON.getApi().registerForgeListener(new PaydayEventHandler());
+        ADDON.getApi().registerForgeListener(new PayDayEventHandler());
         ADDON.getApi().registerForgeListener(new PlantTimerEventHandler());
         ADDON.getApi().registerForgeListener(new ReinforcementEventHandler());
         ADDON.getApi().registerForgeListener(new ReportAcceptEventHandler());
@@ -177,7 +177,7 @@ public class UnicacityAddon extends LabyModAddon {
         ADDON.getApi().registerModule(new ExplosiveBeltTimerModule());
         ADDON.getApi().registerModule(new FBIHackModule());
         ADDON.getApi().registerModule(new JobMoneyModule());
-        ADDON.getApi().registerModule(new PaydayModule());
+        ADDON.getApi().registerModule(new PayDayModule());
         ADDON.getApi().registerModule(new PlantFertilizeTimerModule());
         ADDON.getApi().registerModule(new PlantWaterTimerModule());
     }

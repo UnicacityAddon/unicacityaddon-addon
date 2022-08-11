@@ -57,7 +57,7 @@ public class ConfigSettings {
         list.add(nameTagStreetwar);
 
         BooleanElement nameTagHouseBan = new BooleanElement("Hausverbot", unicacityAddon, new ControlElement.IconData(Material.MOB_SPAWNER), "NAMETAG_HOUSEBAN",
-                ConfigElements.getNameTagHouseban());
+                ConfigElements.getNameTagHouseBan());
         list.add(nameTagHouseBan);
 
         BooleanElement nameTagDuty = new BooleanElement("Duty", unicacityAddon, new ControlElement.IconData(Material.REDSTONE_TORCH_ON), "NAMETAG_DUTY",

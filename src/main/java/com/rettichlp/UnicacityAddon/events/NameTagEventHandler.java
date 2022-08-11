@@ -38,12 +38,12 @@ public class NameTagEventHandler {
         String displayName = ScorePlayerTeam.formatPlayerName(e.getEntityPlayer().getTeam(), playerName);
         if (displayName.contains(FormattingCode.OBFUSCATED.getCode())) return;
 
-        String houseban = getHouseban(playerName);
+        String houseBan = getHouseBan(playerName);
         String outlaw = getOutlaw(playerName);
         String prefix = getPrefix(playerName, false);
         String factionInfo = getFactionInfo(playerName);
         String duty = getDuty(playerName);
-        e.setDisplayname(houseban + outlaw + prefix + playerName + factionInfo + duty);
+        e.setDisplayname(houseBan + outlaw + prefix + playerName + factionInfo + duty);
     }
 
     @SubscribeEvent
@@ -90,12 +90,12 @@ public class NameTagEventHandler {
         syncTick = 0;
     }
 
-    private String getHouseban(String playerName) {
-        StringBuilder houseban = new StringBuilder();
-        houseban.append(FormattingCode.RESET.getCode());
+    private String getHouseBan(String playerName) {
+        StringBuilder houseBan = new StringBuilder();
+        houseBan.append(FormattingCode.RESET.getCode());
 
-        if (ConfigElements.getNameTagHouseban()) {
-            if (FactionHandler.checkPlayerHouseBan(playerName)) houseban.append(Message.getBuilder()
+        if (ConfigElements.getNameTagHouseBan()) {
+            if (FactionHandler.checkPlayerHouseBan(playerName)) houseBan.append(Message.getBuilder()
                     .of("[").color(ColorCode.DARK_GRAY).advance()
                     .of("HV").color(ColorCode.RED).advance()
                     .of("]").color(ColorCode.DARK_GRAY).advance()
@@ -103,7 +103,7 @@ public class NameTagEventHandler {
                     .create());
         }
 
-        return houseban.toString();
+        return houseBan.toString();
     }
 
     private String getOutlaw(String playerName) {

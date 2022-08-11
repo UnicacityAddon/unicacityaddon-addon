@@ -133,7 +133,7 @@ public class ConfigElements {
     }
 
     // HOUSEBAN
-    public static boolean getNameTagHouseban() {
+    public static boolean getNameTagHouseBan() {
         return UnicacityAddon.ADDON.getConfig().has("NAMETAG_HOUSEBAN") && UnicacityAddon.ADDON.getConfig().get("NAMETAG_HOUSEBAN")
                 .getAsBoolean(); // default = false
     }

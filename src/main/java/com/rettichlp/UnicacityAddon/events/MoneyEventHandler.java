@@ -7,7 +7,7 @@ import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
 import com.rettichlp.UnicacityAddon.modules.BankMoneyModule;
 import com.rettichlp.UnicacityAddon.modules.CashMoneyModule;
 import com.rettichlp.UnicacityAddon.modules.JobMoneyModule;
-import com.rettichlp.UnicacityAddon.modules.PaydayModule;
+import com.rettichlp.UnicacityAddon.modules.PayDayModule;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -53,11 +53,11 @@ public class MoneyEventHandler {
             return false;
         }
 
-        Matcher bankPaydayMatcher = PatternHandler.STATS_BANK_PATTERN.matcher(msg);
-        if (bankPaydayMatcher.find()) {
-            BankMoneyModule.setBalance(Integer.parseInt(bankPaydayMatcher.group(1)));
+        Matcher bankPayDayMatcher = PatternHandler.STATS_BANK_PATTERN.matcher(msg);
+        if (bankPayDayMatcher.find()) {
+            BankMoneyModule.setBalance(Integer.parseInt(bankPayDayMatcher.group(1)));
             JobMoneyModule.setBalance(0);
-            PaydayModule.setTime(0);
+            PayDayModule.setTime(0);
             return false;
         }
 

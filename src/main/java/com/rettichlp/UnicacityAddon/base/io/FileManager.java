@@ -8,7 +8,7 @@ import com.rettichlp.UnicacityAddon.commands.TodoListCommand;
 import com.rettichlp.UnicacityAddon.modules.BankMoneyModule;
 import com.rettichlp.UnicacityAddon.modules.CashMoneyModule;
 import com.rettichlp.UnicacityAddon.modules.JobMoneyModule;
-import com.rettichlp.UnicacityAddon.modules.PaydayModule;
+import com.rettichlp.UnicacityAddon.modules.PayDayModule;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
@@ -94,7 +94,7 @@ public class FileManager {
                 BankMoneyModule.setBalance(0);
                 CashMoneyModule.setBalance(0);
                 JobMoneyModule.setBalance(0);
-                PaydayModule.setTime(0);
+                PayDayModule.setTime(0);
                 TodoListCommand.todolist = Collections.emptyList();
                 return;
             }
@@ -103,7 +103,7 @@ public class FileManager {
             BankMoneyModule.bankBalance = data.getBankBalance();
             CashMoneyModule.cashBalance = data.getCashBalance();
             JobMoneyModule.jobBalance = data.getJobBalance();
-            PaydayModule.currentTime = data.getPaydayTime();
+            PayDayModule.currentTime = data.getPayDayTime();
             TodoListCommand.todolist = data.getTodolist();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -119,7 +119,7 @@ public class FileManager {
             data.setBankBalance(BankMoneyModule.bankBalance);
             data.setCashBalance(CashMoneyModule.cashBalance);
             data.setJobBalance(JobMoneyModule.jobBalance);
-            data.setPaydayTime(PaydayModule.currentTime);
+            data.setPayDayTime(PayDayModule.currentTime);
             data.setTodolist(TodoListCommand.todolist);
             FileUtils.writeStringToFile(dataFile, g.toJson(data), StandardCharsets.UTF_8.toString());
         } catch (IOException e) {

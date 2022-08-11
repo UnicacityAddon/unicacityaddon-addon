@@ -17,14 +17,13 @@ public class KarmaMessageEventHandler {
 
     private boolean karmaCheck = false;
     private int karma;
-    private int finalKarma;
 
     @SubscribeEvent
     public boolean onClientChatReceived(ClientChatReceivedEvent e) {
         String msg = e.getMessage().getUnformattedText();
         UPlayer p = AbstractionLayer.getPlayer();
 
-        if (PaydayEventHandler.isAfk) return false;
+        if (PayDayEventHandler.isAfk) return false;
         Matcher karmaChangedPattern = PatternHandler.KARMA_CHANGED_PATTERN.matcher(msg);
         if (karmaChangedPattern.find()) {
             p.sendChatMessage("/karma");

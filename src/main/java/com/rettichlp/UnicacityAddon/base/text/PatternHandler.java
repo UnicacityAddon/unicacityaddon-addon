@@ -174,7 +174,7 @@ public class PatternHandler {
     public static final Pattern CASH_STATS_PATTERN = Pattern.compile("^ {2}- Geld: (\\d+)\\$$");
 
     /**
-     * {@link com.rettichlp.UnicacityAddon.events.PaydayEventHandler}
+     * {@link com.rettichlp.UnicacityAddon.events.PayDayEventHandler}
      */
     public static final Pattern ACCOUNT_AFK_TRUE_PATTERN = Pattern.compile("^Du bist nun im AFK-Modus\\.$");
     public static final Pattern ACCOUNT_AFK_FALSE_PATTERN = Pattern.compile("^Du bist nun nicht mehr im AFK-Modus\\.$");

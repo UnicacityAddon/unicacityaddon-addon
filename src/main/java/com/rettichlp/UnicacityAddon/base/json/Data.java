@@ -8,7 +8,7 @@ public class Data {
     private int bankBalance;
     private int cashBalance;
     private int jobBalance;
-    private int paydayTime;
+    private int payDayTime;
     private List<TodolistEntry> todolist;
 
     public Data() {
@@ -38,12 +38,12 @@ public class Data {
         this.cashBalance = cashBalance;
     }
 
-    public int getPaydayTime() {
-        return paydayTime;
+    public int getPayDayTime() {
+        return payDayTime;
     }
 
-    public void setPaydayTime(int paydayTime) {
-        this.paydayTime = paydayTime;
+    public void setPayDayTime(int payDayTime) {
+        this.payDayTime = payDayTime;
     }
 
     public List<TodolistEntry> getTodolist() {
