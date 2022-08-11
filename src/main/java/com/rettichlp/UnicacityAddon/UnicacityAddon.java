@@ -38,6 +38,7 @@ import com.rettichlp.UnicacityAddon.events.MoneyEventHandler;
 import com.rettichlp.UnicacityAddon.events.NameTagEventHandler;
 import com.rettichlp.UnicacityAddon.events.PaydayEventHandler;
 import com.rettichlp.UnicacityAddon.events.TabListEventHandler;
+import com.rettichlp.UnicacityAddon.events.WeaponClickEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.BlacklistEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.ContractEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.EmergencyServiceEventHandler;
@@ -57,6 +58,7 @@ import com.rettichlp.UnicacityAddon.events.job.ADropMoneyEventHandler;
 import com.rettichlp.UnicacityAddon.events.job.FishermanEventHandler;
 import com.rettichlp.UnicacityAddon.events.job.InstantDropstoneEventHandler;
 import com.rettichlp.UnicacityAddon.events.team.ReportAcceptEventHandler;
+import com.rettichlp.UnicacityAddon.modules.AmmunitionModule;
 import com.rettichlp.UnicacityAddon.modules.BankMoneyModule;
 import com.rettichlp.UnicacityAddon.modules.BombTimerModule;
 import com.rettichlp.UnicacityAddon.modules.CarOpenModule;
@@ -149,12 +151,14 @@ public class UnicacityAddon extends LabyModAddon {
         ADDON.getApi().registerForgeListener(new ReportAcceptEventHandler());
         ADDON.getApi().registerForgeListener(new ShareLocationEventHandler());
         ADDON.getApi().registerForgeListener(new WantedEventHandler());
+        ADDON.getApi().registerForgeListener(new WeaponClickEventHandler());
 
         // LabyModEvents -> https://docs.labymod.net/pages/create-addons/labymod_events/ - TODO remove later
         ADDON.getApi().getEventManager().register(new TabListEventHandler());
 
         // Modules -> https://docs.labymod.net/pages/create-addons/module_system/ - TODO remove later
         ModuleCategoryRegistry.loadCategory(UCModuleHandler.UNICACITY);
+        ADDON.getApi().registerModule(new AmmunitionModule());
         ADDON.getApi().registerModule(new BankMoneyModule());
         ADDON.getApi().registerModule(new BombTimerModule());
         ADDON.getApi().registerModule(new CarOpenModule());
