@@ -29,7 +29,7 @@ public class ShareLocationCommand extends CommandBase {
     }
 
     @Override @Nonnull public String getUsage(@Nonnull ICommandSender sender) {
-        return "/sharelocation [Player...] (-d) ";
+        return "/sharelocation [Player...] (-d)";
     }
 
     @Override @Nonnull
