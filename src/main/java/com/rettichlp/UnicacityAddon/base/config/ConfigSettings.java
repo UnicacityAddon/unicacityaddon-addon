@@ -2,16 +2,12 @@ package com.rettichlp.UnicacityAddon.base.config;
 
 import com.rettichlp.UnicacityAddon.UnicacityAddon;
 import com.rettichlp.UnicacityAddon.base.faction.Faction;
+import com.rettichlp.UnicacityAddon.base.faction.badfaction.DrugPurity;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
 import net.labymod.gui.elements.DropDownMenu;
 import net.labymod.settings.Settings;
-import net.labymod.settings.elements.BooleanElement;
-import net.labymod.settings.elements.ControlElement;
-import net.labymod.settings.elements.DropDownElement;
-import net.labymod.settings.elements.HeaderElement;
-import net.labymod.settings.elements.SettingsElement;
-import net.labymod.settings.elements.StringElement;
+import net.labymod.settings.elements.*;
 import net.labymod.utils.Material;
 
 import java.util.List;
@@ -134,6 +130,14 @@ public class ConfigSettings {
                 ConfigElements.getCommandAutomation());
         commandsOnJoin.setSubSettings(commandList(unicacityAddon));
         list.add(commandsOnJoin);
+
+        BooleanElement hqMessages = new BooleanElement("HQ Nachrichten", unicacityAddon, new ControlElement.IconData(Material.LEASH), "HQ_MESSAGES",
+                ConfigElements.getHQMessagesActivated());
+        list.add(hqMessages);
+
+        ListContainerElement eigenbedarfSettings = new ListContainerElement("Eigenbedarf", new ControlElement.IconData(Material.SUGAR));
+            eigenbedarfSettings.setSubSettings(eigenbedarfSubSettings(unicacityAddon));
+        list.add(eigenbedarfSettings);
 
         StringElement aBuyAmount = new StringElement("ABuy Anzahl", unicacityAddon, new ControlElement.IconData(Material.BOOK), "EVENT_ABUY_AMOUNT",
                 ConfigElements.getEventABuyAmount());
@@ -269,4 +273,85 @@ public class ConfigSettings {
 
         return settings;
     }
+
+    private static Settings eigenbedarfSubSettings(UnicacityAddon unicacityAddon) {
+        // DropDownElement
+        // NumberElement
+        Settings settings = new Settings();
+
+        BooleanElement cocaineSettings = new BooleanElement("Kokain", unicacityAddon, new ControlElement.IconData(Material.SUGAR), "COCAIN_ACTIVATED",
+                ConfigElements.getCocainActivated());
+        cocaineSettings.setSubSettings(cocainSubSettings(unicacityAddon));
+        settings.add(cocaineSettings);
+
+        BooleanElement weedSettings = new BooleanElement("Marihuana", unicacityAddon, new ControlElement.IconData(Material.WHEAT), "MARIHUANA_ACTIVATED",
+                ConfigElements.getMarihuanaActivated());
+        weedSettings.setSubSettings(weedSubSettings(unicacityAddon));
+        settings.add(weedSettings);
+
+        BooleanElement methSettings = new BooleanElement("Methamphetamin", unicacityAddon, new ControlElement.IconData(Material.QUARTZ), "METH_ACTIVATED",
+                ConfigElements.getMethActivated());
+        methSettings.setSubSettings(methSubSettings(unicacityAddon));
+        settings.add(methSettings);
+
+        return settings;
+    }
+
+    private static Settings cocainSubSettings(UnicacityAddon unicacityAddon) {
+        Settings settings = new Settings();
+
+        StringElement cocainAmount = new StringElement("Kokain Menge", unicacityAddon, new ControlElement.IconData(Material.SUGAR), "COCAINE_AMOUNT",
+                ConfigElements.getCocaineAmount());
+        settings.add(cocainAmount);
+
+        DropDownMenu<DrugPurity> cocainPurity = new DropDownMenu<DrugPurity>("Kokain Reinheit", 0, 0, 0, 0).fill(DrugPurity.values());
+        cocainPurity.setSelected(ConfigElements.getCocainDrugPurity());
+        cocainPurity.setEntryDrawer((object, x, y, string) -> UnicacityAddon.LABYMOD.getDrawUtils()
+                .drawString(DrugPurity.valueOf(object.toString().toUpperCase()).getPurityString(), x, y));
+        DropDownElement<DrugPurity> cocainPurityElement = new DropDownElement<>("", cocainPurity);
+        cocainPurityElement.setChangeListener(ConfigElements::setCocainDrugPurity);
+
+        settings.add(cocainPurityElement);
+
+        return settings;
+    }
+
+    private static Settings weedSubSettings(UnicacityAddon unicacityAddon) {
+        Settings settings = new Settings();
+
+        StringElement weedAmount = new StringElement("Marihuana Menge", unicacityAddon, new ControlElement.IconData(Material.SUGAR), "MARIHUANA_AMOUNT",
+                ConfigElements.getMarihuanaAmount());
+        settings.add(weedAmount);
+
+        DropDownMenu<DrugPurity> weedPurity = new DropDownMenu<DrugPurity>("Marihuana Reinheit", 0, 0, 0, 0).fill(DrugPurity.values());
+        weedPurity.setSelected(ConfigElements.getMarihuanaDrugPurity());
+        weedPurity.setEntryDrawer((object, x, y, string) -> UnicacityAddon.LABYMOD.getDrawUtils()
+                .drawString(DrugPurity.valueOf(object.toString().toUpperCase()).getPurityString(), x, y));
+        DropDownElement<DrugPurity> weedPurityElement = new DropDownElement<>("", weedPurity);
+        weedPurityElement.setChangeListener(ConfigElements::setMarihuanaDrugPurity);
+
+        settings.add(weedPurityElement);
+
+        return settings;
+    }
+
+    private static Settings methSubSettings(UnicacityAddon unicacityAddon) {
+        Settings settings = new Settings();
+
+        StringElement methAmount = new StringElement("Methamphetamin Menge", unicacityAddon, new ControlElement.IconData(Material.SUGAR), "METH_AMOUNT",
+                ConfigElements.getMethAmount());
+        settings.add(methAmount);
+
+        DropDownMenu<DrugPurity> methPurity = new DropDownMenu<DrugPurity>("Methamphetamin Reinheit", 0, 0, 0, 0).fill(DrugPurity.values());
+        methPurity.setSelected(ConfigElements.getMethDrugPurity());
+        methPurity.setEntryDrawer((object, x, y, string) -> UnicacityAddon.LABYMOD.getDrawUtils()
+                .drawString(DrugPurity.valueOf(object.toString().toUpperCase()).getPurityString(), x, y));
+        DropDownElement<DrugPurity> methPurityEmelemt = new DropDownElement<>("", methPurity);
+        methPurityEmelemt.setChangeListener(ConfigElements::setMethDrugPurity);
+
+        settings.add(methPurityEmelemt);
+
+        return settings;
+    }
+
 }

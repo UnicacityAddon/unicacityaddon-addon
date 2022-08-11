@@ -1,6 +1,7 @@
 package com.rettichlp.UnicacityAddon.base.text;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
+import com.rettichlp.UnicacityAddon.events.KarmaMessageEventHandler;
 
 import java.util.regex.Pattern;
 
@@ -50,7 +51,12 @@ public class PatternHandler {
      */
     public static final Pattern WANTED_LIST_ENTRY_PATTERN = Pattern.compile("^ {2}- (?:\\[UC])*(\\w+) \\| (\\d+) WPS \\((.+)\\)$");
     public static final Pattern WANTED_GIVEN_REASON_PATTERN = Pattern.compile("^HQ: Gesuchter: (?:\\[UC])*(\\w+)\\. Grund: (.+)$");
+    public static final Pattern WANTED_REASON = Pattern.compile("^HQ: Fahndungsgrund: (.+) \\| Fahndungszeit: (.+)\\.$");
     public static final Pattern WANTED_GIVEN_POINTS_PATTERN = Pattern.compile("^HQ: (?:\\[UC])*(\\w+)'s momentanes WantedLevel: (\\d+)$");
+    public static final Pattern WANTED_KILL = Pattern.compile("^HQ: (?:\\[UC])*([a-zA-Z0-9_]+) wurde von (?:\\[UC])*([a-zA-Z0-9_]+) get\u00f6tet\\.$");
+    public static final Pattern WANTED_DELETE = Pattern.compile("^HQ: .+ (?:\\[UC])*([a-zA-Z0-9_]+) hat (?:\\[UC])*([a-zA-Z0-9_]+)'s Akten gel\u00f6scht, over\\.$");
+    public static final Pattern WANTED_JAIL = Pattern.compile("^HQ: (?:\\[UC])*([a-zA-Z0-9_]+) wurde von (?:\\[UC])*([a-zA-Z0-9_]+) eingesperrt\\.$");
+    public static final Pattern WANTEDS_TICKET_PATTERN = Pattern.compile("^HQ: .+ (?:\\[UC])*([a-zA-Z0-9_]+) hat (?:\\[UC])*([a-zA-Z0-9_]+)(?:'s)*(?: seine| ihre)* Akten gel\u00f6scht, over\\.$");
     public static final Pattern WANTED_DELETED_PATTERN = Pattern.compile("^HQ: (?:\\[UC])*(\\w+) wurde von (?:\\[UC])*\\w+ eingesperrt\\.$" +
             "|^HQ: (?:\\[UC])*(\\w+) wurde von (?:\\[UC])*\\w+ getötet\\.$" +
             "|^HQ: .+ (?:\\[UC])*\\w+ hat (?:\\[UC])*(\\w+)(?:'s)*(?: seine| ihre)* Akten gelöscht, over\\.$");
@@ -174,6 +180,23 @@ public class PatternHandler {
     public static final Pattern ACCOUNT_AFK_TRUE_PATTERN = Pattern.compile("^Du bist nun im AFK-Modus\\.$");
     public static final Pattern ACCOUNT_AFK_FALSE_PATTERN = Pattern.compile("^Du bist nun nicht mehr im AFK-Modus\\.$");
     public static final Pattern STATS_PAYDAY_PATTERN = Pattern.compile("^ {2}- Zeit seit PayDay: (\\d+)/60 Minuten$");
+
+    /**
+     * {@link com.rettichlp.UnicacityAddon.events.faction.badfaction.GiftEigenbedarfListener}
+     */
+    public static final Pattern DRUGDEAL_ENDED = Pattern.compile("^\\[Deal] (?:\\[UC])*(\\w+) hat den Deal angenommen\\.$" +
+            "|^\\[Deal] (?:\\[UC])*(\\w+) hat das Angebot abgelehnt\\.$");
+
+    /**
+     * {@link com.rettichlp.UnicacityAddon.events.job.ADropMoneyEventHandler}
+     */
+    public static final Pattern PREVIOUS_BANK_VALUE_PATTERN = Pattern.compile("^ {2}Vorheriger Kontostand: (\\d+)\\$$");
+
+    /**
+     * {@link com.rettichlp.UnicacityAddon.events.KarmaMessageEventHandler}
+     */
+    public static final Pattern KARMA_CHANGED_PATTERN = Pattern.compile("^\\[Karma] (-?\\d+) Karma\\.$");
+    public static final Pattern KARMA_PATTERN = Pattern.compile("^\\[Karma] Du hast ein Karma von (-?\\d+)\\.$");
 
     /**
      * {@link com.rettichlp.UnicacityAddon.events.ABuyEventHandler}
