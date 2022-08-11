@@ -58,7 +58,6 @@ import com.rettichlp.UnicacityAddon.events.job.ADropMoneyEventHandler;
 import com.rettichlp.UnicacityAddon.events.job.FishermanEventHandler;
 import com.rettichlp.UnicacityAddon.events.job.InstantDropstoneEventHandler;
 import com.rettichlp.UnicacityAddon.events.team.ReportAcceptEventHandler;
-import com.rettichlp.UnicacityAddon.modules.AmmunitionModule;
 import com.rettichlp.UnicacityAddon.modules.BankMoneyModule;
 import com.rettichlp.UnicacityAddon.modules.BombTimerModule;
 import com.rettichlp.UnicacityAddon.modules.CarOpenModule;
@@ -158,7 +157,6 @@ public class UnicacityAddon extends LabyModAddon {
 
         // Modules -> https://docs.labymod.net/pages/create-addons/module_system/ - TODO remove later
         ModuleCategoryRegistry.loadCategory(UCModuleHandler.UNICACITY);
-        ADDON.getApi().registerModule(new AmmunitionModule());
         ADDON.getApi().registerModule(new BankMoneyModule());
         ADDON.getApi().registerModule(new BombTimerModule());
         ADDON.getApi().registerModule(new CarOpenModule());
