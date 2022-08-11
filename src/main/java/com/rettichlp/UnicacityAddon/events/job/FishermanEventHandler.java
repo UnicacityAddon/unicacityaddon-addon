@@ -51,6 +51,7 @@ public class FishermanEventHandler {
         }
 
         if (PatternHandler.FISHER_END.matcher(msg).find()) {
+            count = 0;
             fisherManJob = false;
             onTargetLocation = false;
             canCatchFish = false;
