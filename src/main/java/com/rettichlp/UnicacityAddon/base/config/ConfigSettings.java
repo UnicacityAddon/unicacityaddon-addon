@@ -311,7 +311,7 @@ public class ConfigSettings {
     private static Settings weedSubSettings(UnicacityAddon unicacityAddon) {
         Settings settings = new Settings();
 
-        StringElement weedAmount = new StringElement("Marihuana Menge", unicacityAddon, new ControlElement.IconData(Material.SUGAR), "MARIHUANA_AMOUNT",
+        StringElement weedAmount = new StringElement("Marihuana Menge", unicacityAddon, new ControlElement.IconData(Material.WHEAT), "MARIHUANA_AMOUNT",
                 ConfigElements.getMarihuanaAmount());
         settings.add(weedAmount);
 
@@ -330,7 +330,7 @@ public class ConfigSettings {
     private static Settings methSubSettings(UnicacityAddon unicacityAddon) {
         Settings settings = new Settings();
 
-        StringElement methAmount = new StringElement("Methamphetamin Menge", unicacityAddon, new ControlElement.IconData(Material.SUGAR), "METH_AMOUNT",
+        StringElement methAmount = new StringElement("Methamphetamin Menge", unicacityAddon, new ControlElement.IconData(Material.QUARTZ), "METH_AMOUNT",
                 ConfigElements.getMethAmount());
         settings.add(methAmount);
 
