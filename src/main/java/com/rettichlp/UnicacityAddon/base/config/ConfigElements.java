@@ -349,6 +349,12 @@ public class ConfigElements {
                 : "5";
     }
 
+    public static String getEventAEquipAmount() {
+        return UnicacityAddon.ADDON.getConfig().has("EVENT_AEQUIP_AMOUNT") && !UnicacityAddon.ADDON.getConfig().get("EVENT_AEQUIP_AMOUNT").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("EVENT_AEQUIP_AMOUNT").getAsString().startsWith("-")
+                ? UnicacityAddon.ADDON.getConfig().get("EVENT_AEQUIP_AMOUNT").getAsString()
+                : "5";
+    }
+
     public static String getEventABuyDelay() {
         return UnicacityAddon.ADDON.getConfig().has("EVENT_ABUY_DELAY") && !UnicacityAddon.ADDON.getConfig().get("EVENT_ABUY_DELAY").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("EVENT_ABUY_DELAY").getAsString().startsWith("-")
                 ? UnicacityAddon.ADDON.getConfig().get("EVENT_ABUY_DELAY").getAsString()

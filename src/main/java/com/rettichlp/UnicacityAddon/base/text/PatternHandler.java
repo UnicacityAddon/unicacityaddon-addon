@@ -1,7 +1,6 @@
 package com.rettichlp.UnicacityAddon.base.text;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
-import com.rettichlp.UnicacityAddon.events.KarmaMessageEventHandler;
 
 import java.util.regex.Pattern;
 
@@ -203,4 +202,9 @@ public class PatternHandler {
      */
     public static final Pattern BUY_INTERRUPTED_PATTERN = Pattern.compile("^Verkäufer: (Tut (uns|mir) Leid|Verzeihung), unser Lager ist derzeit leer\\.$" +
             "|^Verkäufer: Dieses Produkt kostet \\d+\\$\\.$");
+
+    /**
+     * {@link com.rettichlp.UnicacityAddon.events.AEquipEventHandler}
+     */
+    public static final Pattern EQUIP_INTERRUPTED_PATTERN = Pattern.compile("^\\[Equip] Du bist nicht im Dienst\\.$");
 }

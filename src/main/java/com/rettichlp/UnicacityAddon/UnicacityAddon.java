@@ -27,6 +27,7 @@ import com.rettichlp.UnicacityAddon.commands.faction.rettungsdienst.ARezeptAnneh
 import com.rettichlp.UnicacityAddon.commands.faction.rettungsdienst.ARezeptCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.terroristen.ExplosiveBeltCommand;
 import com.rettichlp.UnicacityAddon.events.ABuyEventHandler;
+import com.rettichlp.UnicacityAddon.events.AEquipEventHandler;
 import com.rettichlp.UnicacityAddon.events.BombTimerEventHandler;
 import com.rettichlp.UnicacityAddon.events.CarEventHandler;
 import com.rettichlp.UnicacityAddon.events.HotkeyEventHandler;
@@ -119,6 +120,7 @@ public class UnicacityAddon extends LabyModAddon {
 
         // ForgeEvents -> https://docs.labymod.net/pages/create-addons/forge_events/ - TODO remove later
         ADDON.getApi().registerForgeListener(new ABuyEventHandler());
+        ADDON.getApi().registerForgeListener(new AEquipEventHandler());
         ADDON.getApi().registerForgeListener(new AutomatedCalculationOf25());
         ADDON.getApi().registerForgeListener(new ADropEventHandler());
         ADDON.getApi().registerForgeListener(new ADropMoneyEventHandler());
