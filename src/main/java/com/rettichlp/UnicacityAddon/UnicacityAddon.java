@@ -36,6 +36,7 @@ import com.rettichlp.UnicacityAddon.events.MoneyEventHandler;
 import com.rettichlp.UnicacityAddon.events.NameTagEventHandler;
 import com.rettichlp.UnicacityAddon.events.PaydayEventHandler;
 import com.rettichlp.UnicacityAddon.events.TabListEventHandler;
+import com.rettichlp.UnicacityAddon.events.WeaponClickEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.BlacklistEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.ContractEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.EmergencyServiceEventHandler;
@@ -153,6 +154,7 @@ public class UnicacityAddon extends LabyModAddon {
         ADDON.getApi().registerForgeListener(new ReportAcceptEventHandler());
         ADDON.getApi().registerForgeListener(new ShareLocationEventHandler());
         ADDON.getApi().registerForgeListener(new WantedEventHandler());
+        ADDON.getApi().registerForgeListener(new WeaponClickEventHandler());
 
         // LabyModEvents -> https://docs.labymod.net/pages/create-addons/labymod_events/ - TODO remove later
         ADDON.getApi().getEventManager().register(new TabListEventHandler());
