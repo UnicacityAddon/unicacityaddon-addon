@@ -1,9 +1,9 @@
 package com.rettichlp.UnicacityAddon.events;
 
 import com.google.common.collect.ImmutableSet;
+import com.rettichlp.UnicacityAddon.UnicacityAddon;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
-import com.rettichlp.UnicacityAddon.modules.AmmunitionModule;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
@@ -23,32 +23,40 @@ public class WeaponClickEventHandler {
     public static boolean tazerLoaded = false;
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public void onInteract(PlayerInteractEvent e) {
+    public void onPlayerInteract(PlayerInteractEvent e) {
         if (!(e instanceof PlayerInteractEvent.RightClickItem || e instanceof PlayerInteractEvent.RightClickBlock || e instanceof PlayerInteractEvent.EntityInteractSpecific))
             return;
 
         ItemStack is = e.getItemStack();
-        if (!isWeapon(is)) {
-            AmmunitionModule.isShown = false;
-            return;
-        }
-        AmmunitionModule.isShown = true;
+        if (!isWeapon(is)) return;
 
         tazerLoaded = false;
+        handleMunitionDisplay(is);
+    }
 
+    private static void handleMunitionDisplay(ItemStack is) {
+        String text = getText(is);
+        if (text == null) return;
+
+        UnicacityAddon.MINECRAFT.ingameGUI.setOverlayMessage(text, true);
+    }
+
+    private static String getText(ItemStack is) {
         NBTTagCompound nbt = is.getTagCompound();
-        if (nbt == null) return;
+        if (nbt == null) return null;
 
         NBTTagCompound display = nbt.getCompoundTag("display");
 
         String lore = display.getTagList("Lore", Constants.NBT.TAG_STRING).getStringTagAt(0);
-        if (!lore.startsWith(ColorCode.GOLD.getCode()) || !lore.contains("/")) return;
+        String[] splittedLore = lore.split("/");
+        if (splittedLore.length != 2) return null;
 
-        String[] splittetLore = lore.split("/");
-        if (splittetLore[0].length() < 2) return;
+        String munitionString = splittedLore[0];
+        if (munitionString.length() < 2) return null;
 
-        AmmunitionModule.currentLoadedAmmunition = Integer.parseInt(splittetLore[0].substring(2));
-        AmmunitionModule.currentTakenAmmunition = Integer.parseInt(splittetLore[1]);
+        int munition = Integer.parseInt(munitionString.substring(2));
+
+        return (--munition < 1 ? ColorCode.RED.getCode() + "0" : ColorCode.GOLD.getCode() + munition) + ColorCode.GRAY.getCode() + "/" + ColorCode.GOLD.getCode() + splittedLore[1];
     }
 
     private boolean isWeapon(ItemStack is) {
