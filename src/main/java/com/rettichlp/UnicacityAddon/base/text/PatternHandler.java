@@ -201,7 +201,7 @@ public class PatternHandler {
      * {@link com.rettichlp.UnicacityAddon.events.ABuyEventHandler}
      */
     public static final Pattern BUY_INTERRUPTED_PATTERN = Pattern.compile("^Verkäufer: (Tut (uns|mir) Leid|Verzeihung), unser Lager ist derzeit leer\\.$" +
-            "|^Verkäufer: Dieses Produkt kostet \\d+\\$\\.$");
+            "|^Verkäufer: Dieses Produkt kostet \\d+\\$\\.$" + "|^Verkäufer: Du hast leider nicht genug Geld dabei\\.$");
 
     /**
      * {@link com.rettichlp.UnicacityAddon.events.AEquipEventHandler}
