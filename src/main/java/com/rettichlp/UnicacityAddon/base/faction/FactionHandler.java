@@ -33,7 +33,10 @@ public class FactionHandler {
     }
 
     public static boolean checkPlayerHouseBan(String playerName) {
-        if (websiteSource.isEmpty()) websiteSource = WebsiteUtils.websiteToString("https://fuzzlemann.de/commons/houseBans");
+        if (websiteSource.isEmpty()) {
+            Thread thread = new Thread(() -> websiteSource = WebsiteUtils.websiteToString("https://fuzzlemann.de/commons/houseBans"));
+            thread.start();
+        }
         return websiteSource.contains(playerName);
     }
 
@@ -51,10 +54,13 @@ public class FactionHandler {
     private static Map<String,Faction> getPlayerFactions() {
         Map<String,Faction> playerFactions = new HashMap<>();
 
-        for (Faction faction : Faction.values()) {
-            List<String> nameList = ListUtils.getAllMatchesFromString(PatternHandler.NAME_PATTERN, faction.getWebsiteSource());
-            nameList.forEach(name -> playerFactions.put(name.replace("<h4 class=\"h5 g-mb-5\"><strong>", ""), faction));
-        }
+        Thread thread = new Thread(() -> {
+            for (Faction faction : Faction.values()) {
+                List<String> nameList = ListUtils.getAllMatchesFromString(PatternHandler.NAME_PATTERN, faction.getWebsiteSource());
+                nameList.forEach(name -> playerFactions.put(name.replace("<h4 class=\"h5 g-mb-5\"><strong>", ""), faction));
+            }
+        });
+        thread.start();
 
         return playerFactions;
     }
@@ -62,15 +68,18 @@ public class FactionHandler {
     private static Map<String,Integer> getPlayerRanks() {
         Map<String,Integer> playerRankMap = new HashMap<>();
 
-        for (Faction faction : Faction.values()) {
-            List<String> nameList = ListUtils.getAllMatchesFromString(PatternHandler.NAME_PATTERN, faction.getWebsiteSource());
-            List<String> rankList = ListUtils.getAllMatchesFromString(PatternHandler.RANK_PATTERN, faction.getWebsiteSource());
-            nameList.forEach(name -> playerRankMap.put(
-                    name.replace("<h4 class=\"h5 g-mb-5\"><strong>", ""),
-                    Integer.parseInt(String.valueOf(rankList.get(nameList.indexOf(name))
-                            .replace("<strong>Rang ", "")
-                            .charAt(0)))));
-        }
+        Thread thread = new Thread(() -> {
+            for (Faction faction : Faction.values()) {
+                List<String> nameList = ListUtils.getAllMatchesFromString(PatternHandler.NAME_PATTERN, faction.getWebsiteSource());
+                List<String> rankList = ListUtils.getAllMatchesFromString(PatternHandler.RANK_PATTERN, faction.getWebsiteSource());
+                nameList.forEach(name -> playerRankMap.put(
+                        name.replace("<h4 class=\"h5 g-mb-5\"><strong>", ""),
+                        Integer.parseInt(String.valueOf(rankList.get(nameList.indexOf(name))
+                                .replace("<strong>Rang ", "")
+                                .charAt(0)))));
+            }
+        });
+        thread.start();
 
         return playerRankMap;
     }
