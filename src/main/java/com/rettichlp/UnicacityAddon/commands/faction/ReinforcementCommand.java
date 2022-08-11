@@ -29,7 +29,7 @@ public class ReinforcementCommand extends CommandBase {
     }
 
     @Override @Nonnull public String getUsage(@Nonnull ICommandSender sender) {
-        return "/reinforcement (-d/-r/-rd/-e/-ed/-m/-lb/-da/-ct/-p)";
+        return "/reinforcement (-d/-r/-rd/-e/-ed/-m/-lb/-da/-ct/-p/-b/-gn)";
     }
 
     @Override @Nonnull public List<String> getAliases() {
