@@ -66,7 +66,7 @@ public class AFbankEinzahlenCommand extends CommandBase {
 
         // check if there are taxes
         p.sendChatMessage("/fbank " + interaction + " 4");
-        this.amount = amount - 4; // we already paid 4$
+        this.amount = Integer.parseInt(args[1]) - 4; // we already paid 4$
 
         STARTED.set(true);
 
