@@ -1,7 +1,7 @@
 package com.rettichlp.UnicacityAddon.events.job;
 
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
-import com.rettichlp.UnicacityAddon.commands.job.AdropMoney;
+import com.rettichlp.UnicacityAddon.commands.job.ADropMoneyCommand;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -14,10 +14,10 @@ public class ADropMoneyEventHandler {
     public boolean onClientChatReceive(ClientChatReceivedEvent e) {
         String msg = e.getMessage().getUnformattedText();
 
-        if (!AdropMoney.execute) return false;
+        if (!ADropMoneyCommand.execute) return false;
 
         if (msg.equals("Du hast zu wenig Geld!")) {
-            AdropMoney.execute = false;
+            ADropMoneyCommand.execute = false;
             return false;
         }
 

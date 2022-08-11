@@ -15,7 +15,7 @@ import java.util.TimerTask;
 /**
  * @author Dimiikou
  */
-public class AdropMoney extends CommandBase {
+public class ADropMoneyCommand extends CommandBase {
 
     public static long lastExecute = -1;
     public static boolean execute = false;
@@ -68,8 +68,5 @@ public class AdropMoney extends CommandBase {
                 }
             }
         }, 1000L);
-
-
     }
-
 }
