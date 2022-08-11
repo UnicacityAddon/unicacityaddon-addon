@@ -55,18 +55,14 @@ public class ModifyBlacklistCommand extends CommandBase {
         UPlayer p = AbstractionLayer.getPlayer();
 
         if (args.length != 2) {
-            Message.getBuilder().error().space().of("Falscher Syntax, verwende").color(ColorCode.GRAY).advance().space()
-                    .of("/modifyblacklist [Spieler] [Grund/-v]").color(ColorCode.RED).advance().sendTo(p.getPlayer());
+            p.sendSyntaxMessage("/modifyblacklist [Spieler] [Grund/-v]");
             return;
         }
 
         String reason = args[1];
         BlacklistEntry ble = BlacklistEventHandler.BLACKLIST.getBlackListEntryByReason(reason);
         if (!reason.equalsIgnoreCase("-v") && ble == null) {
-            p.sendMessage(Message.getBuilder()
-                    .error().space()
-                    .of("Blacklistgrund wurde nicht gefunden!").color(ColorCode.GRAY).advance()
-                    .createComponent());
+            p.sendErrorMessage("Blacklistgrund wurde nicht gefunden!");
             return;
         }
 
