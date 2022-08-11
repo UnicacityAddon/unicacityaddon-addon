@@ -2,8 +2,10 @@ package com.rettichlp.UnicacityAddon.events;
 
 import com.rettichlp.UnicacityAddon.UnicacityAddon;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
+import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
 import com.rettichlp.UnicacityAddon.base.config.ConfigElements;
 import com.rettichlp.UnicacityAddon.base.registry.KeyBindRegistry;
+import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
 import com.rettichlp.UnicacityAddon.base.utils.MathUtils;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.ClickType;
@@ -38,7 +40,7 @@ public class ABuyEventHandler {
     private static int slotIndex;
 
     @SubscribeEvent
-    public static void onKeyboardClickEvent(GuiScreenEvent.KeyboardInputEvent.Post e) {
+    public void onKeyboardClickEvent(GuiScreenEvent.KeyboardInputEvent.Post e) {
         String amountString = ConfigElements.getEventABuyAmount();
         String delayAmount = ConfigElements.getEventABuyDelay();
         if (!MathUtils.isInteger(amountString) || !MathUtils.isInteger(delayAmount)) return;
@@ -70,7 +72,7 @@ public class ABuyEventHandler {
     }
 
     @SubscribeEvent
-    public static void onGuiOpen(GuiOpenEvent e) {
+    public void onGuiOpen(GuiOpenEvent e) {
         if (amountLeft == 0) return;
         if (!(e.getGui() instanceof GuiContainer)) return;
 
@@ -92,7 +94,7 @@ public class ABuyEventHandler {
     }
 
     @SubscribeEvent
-    public static void onChatReceived(ClientChatReceivedEvent e) {
+    public void onChatReceived(ClientChatReceivedEvent e) {
         if (amountLeft == 0) return;
 
         String message = e.getMessage().getUnformattedText();
@@ -102,14 +104,16 @@ public class ABuyEventHandler {
         slotIndex = 0;
     }
 
-    private static void buy() {
+    private void buy() {
+        UPlayer p = AbstractionLayer.getPlayer();
+
         --amountLeft;
         lastBuy = System.currentTimeMillis();
 
-        Container container = AbstractionLayer.getPlayer().getOpenContainer();
-        UnicacityAddon.MINECRAFT.playerController.windowClick(container.windowId, slotIndex, 0, ClickType.QUICK_MOVE, UnicacityAddon.MINECRAFT.player);
+        Container container = p.getOpenContainer();
+        UnicacityAddon.MINECRAFT.playerController.windowClick(container.windowId, slotIndex, 0, ClickType.PICKUP, UnicacityAddon.MINECRAFT.player);
 
         container.detectAndSendChanges();
-        AbstractionLayer.getPlayer().getInventoryContainer().detectAndSendChanges();
+        p.getInventoryContainer().detectAndSendChanges();
     }
 }
