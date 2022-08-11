@@ -14,6 +14,7 @@ import com.rettichlp.UnicacityAddon.commands.NearestJobCommand;
 import com.rettichlp.UnicacityAddon.commands.ReichensteuerCommand;
 import com.rettichlp.UnicacityAddon.commands.TodoListCommand;
 import com.rettichlp.UnicacityAddon.commands.TriggerEventCommand;
+import com.rettichlp.UnicacityAddon.commands.faction.AFbankEinzahlenCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.ReinforcementCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.ShareLocationCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.badfaction.*;
@@ -42,6 +43,11 @@ import com.rettichlp.UnicacityAddon.events.faction.FDoorEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.ReinforcementEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.ShareLocationEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.badfaction.*;
+import com.rettichlp.UnicacityAddon.events.faction.*;
+import com.rettichlp.UnicacityAddon.events.faction.badfaction.AutomatedCalculationOf25;
+import com.rettichlp.UnicacityAddon.events.faction.badfaction.FBIHackEventHandler;
+import com.rettichlp.UnicacityAddon.events.faction.badfaction.GiftEigenbedarfListener;
+import com.rettichlp.UnicacityAddon.events.faction.badfaction.PlantTimerEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.polizei.HQMessageEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.polizei.WantedEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.rettungsdienst.MedicationEventHandler;
@@ -92,6 +98,7 @@ public class UnicacityAddon extends LabyModAddon {
         // ForgeCommands - TODO remove later
         ClientCommandHandler.instance.registerCommand(new ACallCommand());
         ClientCommandHandler.instance.registerCommand(new AdropMoney());
+        ClientCommandHandler.instance.registerCommand(new AFbankEinzahlenCommand());
         ClientCommandHandler.instance.registerCommand(new ARezeptAnnehmenCommand());
         ClientCommandHandler.instance.registerCommand(new ARezeptCommand());
         ClientCommandHandler.instance.registerCommand(new ASetBlacklistCommand());
@@ -116,6 +123,7 @@ public class UnicacityAddon extends LabyModAddon {
         // ForgeEvents -> https://docs.labymod.net/pages/create-addons/forge_events/ - TODO remove later
         ADDON.getApi().registerForgeListener(new ABuyEventHandler());
         ADDON.getApi().registerForgeListener(new AEquipEventHandler());
+        ADDON.getApi().registerForgeListener(new AFbankEinzahlenEventHandler());
         ADDON.getApi().registerForgeListener(new AutomatedCalculationOf25());
         ADDON.getApi().registerForgeListener(new ADropEventHandler());
         ADDON.getApi().registerForgeListener(new ADropMoneyEventHandler());
