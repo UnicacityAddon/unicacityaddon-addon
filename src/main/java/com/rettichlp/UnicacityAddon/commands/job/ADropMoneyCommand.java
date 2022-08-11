@@ -65,6 +65,6 @@ public class ADropMoneyCommand extends CommandBase {
 
                 }
             }
-        }, 1000L);
+        }, 1500L);
     }
 }
