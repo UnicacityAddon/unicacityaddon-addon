@@ -207,4 +207,10 @@ public class PatternHandler {
      * {@link com.rettichlp.UnicacityAddon.events.AEquipEventHandler}
      */
     public static final Pattern EQUIP_INTERRUPTED_PATTERN = Pattern.compile("^\\[Equip] Du bist nicht im Dienst\\.$");
+
+    /**
+     * {@link com.rettichlp.UnicacityAddon.commands.faction.AFbankEinzahlenCommand}
+     */
+    public static final Pattern FBANK_TAXES = Pattern.compile("^\\[F-Bank] (?:\\[UC])*([a-zA-Z0-9_]+) hat (\\d+)\\$ \\(-(\\d+)\\$\\) in die F-Bank eingezahlt\\.$" +
+            "|^\\[F-Bank] (?:\\[UC])*([a-zA-Z0-9_]+) hat (\\d+)\\$ \\(\\+(\\d+)\\$\\) aus der F-Bank genommen\\.$");
 }
