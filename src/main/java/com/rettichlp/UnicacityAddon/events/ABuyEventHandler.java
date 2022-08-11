@@ -23,7 +23,6 @@ import org.lwjgl.input.Keyboard;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
-import java.util.regex.Pattern;
 
 /**
  * @author RettichLP
@@ -31,8 +30,6 @@ import java.util.regex.Pattern;
  */
 public class ABuyEventHandler {
 
-    private static final Pattern BUY_INTERRUPTED_PATTERN = Pattern.compile("^Verkäufer: (Tut (uns|mir) Leid|Verzeihung), unser Lager ist derzeit leer\\.$" +
-            "|^Verkäufer: Dieses Produkt kostet \\d+\\$\\.$");
     private static final Timer TIMER = new Timer();
     private static int delay = 10;
     private static long lastBuy;
@@ -98,7 +95,7 @@ public class ABuyEventHandler {
         if (amountLeft == 0) return;
 
         String message = e.getMessage().getUnformattedText();
-        if (!BUY_INTERRUPTED_PATTERN.matcher(message).find()) return;
+        if (!PatternHandler.BUY_INTERRUPTED_PATTERN.matcher(message).find()) return;
 
         amountLeft = 0;
         slotIndex = 0;
