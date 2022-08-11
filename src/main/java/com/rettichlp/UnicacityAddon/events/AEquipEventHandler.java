@@ -3,10 +3,9 @@ package com.rettichlp.UnicacityAddon.events;
 import com.rettichlp.UnicacityAddon.UnicacityAddon;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
-import com.rettichlp.UnicacityAddon.base.config.ConfigElements;
 import com.rettichlp.UnicacityAddon.base.registry.KeyBindRegistry;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
-import com.rettichlp.UnicacityAddon.base.utils.MathUtils;
+import com.rettichlp.UnicacityAddon.commands.AEquipCommand;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Container;
@@ -37,9 +36,7 @@ public class AEquipEventHandler {
 
     @SubscribeEvent
     public void onKeyboardClickEvent(GuiScreenEvent.KeyboardInputEvent.Post e) {
-        String amountString = ConfigElements.getEventAEquipAmount();
-        if (!MathUtils.isInteger(amountString)) return;
-        int amount = Integer.parseInt(amountString);
+        int amount = AEquipCommand.amount;
         if (amount == 0) return;
 
         if (!Keyboard.isKeyDown(KeyBindRegistry.aBuy.getKeyCode())) return;

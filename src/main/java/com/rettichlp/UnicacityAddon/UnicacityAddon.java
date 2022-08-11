@@ -5,7 +5,9 @@ import com.rettichlp.UnicacityAddon.base.faction.FactionHandler;
 import com.rettichlp.UnicacityAddon.base.io.FileManager;
 import com.rettichlp.UnicacityAddon.base.module.UCModuleHandler;
 import com.rettichlp.UnicacityAddon.base.registry.KeyBindRegistry;
+import com.rettichlp.UnicacityAddon.commands.ABuyCommand;
 import com.rettichlp.UnicacityAddon.commands.ACallCommand;
+import com.rettichlp.UnicacityAddon.commands.AEquipCommand;
 import com.rettichlp.UnicacityAddon.commands.ASMSCommand;
 import com.rettichlp.UnicacityAddon.commands.EinzahlenCommand;
 import com.rettichlp.UnicacityAddon.commands.NaviCommand;
@@ -102,7 +104,9 @@ public class UnicacityAddon extends LabyModAddon {
 
         // ForgeCommands - TODO remove later
         ClientCommandHandler.instance.registerCommand(new ACallCommand());
+        ClientCommandHandler.instance.registerCommand(new ABuyCommand());
         ClientCommandHandler.instance.registerCommand(new ADropMoneyCommand());
+        ClientCommandHandler.instance.registerCommand(new AEquipCommand());
         ClientCommandHandler.instance.registerCommand(new AFbankEinzahlenCommand());
         ClientCommandHandler.instance.registerCommand(new ARezeptAnnehmenCommand());
         ClientCommandHandler.instance.registerCommand(new ARezeptCommand());

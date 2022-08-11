@@ -3,10 +3,9 @@ package com.rettichlp.UnicacityAddon.events;
 import com.rettichlp.UnicacityAddon.UnicacityAddon;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
-import com.rettichlp.UnicacityAddon.base.config.ConfigElements;
 import com.rettichlp.UnicacityAddon.base.registry.KeyBindRegistry;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
-import com.rettichlp.UnicacityAddon.base.utils.MathUtils;
+import com.rettichlp.UnicacityAddon.commands.ABuyCommand;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Container;
@@ -31,20 +30,14 @@ import java.util.concurrent.TimeUnit;
 public class ABuyEventHandler {
 
     private static final Timer TIMER = new Timer();
-    private static int delay = 10;
     private static long lastBuy;
     private static int amountLeft;
     private static int slotIndex;
 
     @SubscribeEvent
     public void onKeyboardClickEvent(GuiScreenEvent.KeyboardInputEvent.Post e) {
-        String amountString = ConfigElements.getEventABuyAmount();
-        String delayAmount = ConfigElements.getEventABuyDelay();
-        if (!MathUtils.isInteger(amountString) || !MathUtils.isInteger(delayAmount)) return;
-        int amount = Integer.parseInt(amountString);
+        int amount = ABuyCommand.amount;
         if (amount == 0) return;
-
-        delay = Integer.parseInt(delayAmount);
 
         if (!Keyboard.isKeyDown(KeyBindRegistry.aBuy.getKeyCode())) return;
 
@@ -87,7 +80,7 @@ public class ABuyEventHandler {
                     slotIndex = 0;
                 }
             }
-        }, delay);
+        }, ABuyCommand.delay);
     }
 
     @SubscribeEvent
