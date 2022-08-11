@@ -1,5 +1,7 @@
 package com.rettichlp.UnicacityAddon.modules;
 
+import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
+import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
 import com.rettichlp.UnicacityAddon.base.io.FileManager;
 import com.rettichlp.UnicacityAddon.base.module.UCModuleHandler;
 import net.labymod.ingamegui.ModuleCategory;
@@ -69,7 +71,11 @@ public class PaydayModule extends SimpleModule {
     }
 
     public static void addTime(int time) {
+        UPlayer p = AbstractionLayer.getPlayer();
         currentTime = currentTime + time;
+        if (currentTime == 55) p.sendInfoMessage("Du hast in 5 Minuten deinen PayDay.");
+        if (currentTime == 57) p.sendInfoMessage("Du hast in 3 Minuten deinen PayDay.");
+        if (currentTime == 59) p.sendInfoMessage("Du hast in 1 Minute deinen PayDay.");
         FileManager.saveData();
     }
 
