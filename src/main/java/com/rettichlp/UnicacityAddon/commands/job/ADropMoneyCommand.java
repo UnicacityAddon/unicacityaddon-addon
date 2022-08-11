@@ -17,7 +17,6 @@ import java.util.TimerTask;
  */
 public class ADropMoneyCommand extends CommandBase {
 
-    public static long lastExecute = -1;
     public static boolean execute = false;
 
     @Override
@@ -49,7 +48,6 @@ public class ADropMoneyCommand extends CommandBase {
         Timer t = new Timer();
 
         execute = true;
-        lastExecute = System.currentTimeMillis();
         p.sendChatMessage("/bank abbuchen 15000");
 
         t.schedule(new TimerTask() {
