@@ -8,6 +8,7 @@ import com.rettichlp.UnicacityAddon.modules.BankMoneyModule;
 import com.rettichlp.UnicacityAddon.modules.CashMoneyModule;
 import com.rettichlp.UnicacityAddon.modules.JobMoneyModule;
 import com.rettichlp.UnicacityAddon.modules.PayDayModule;
+import net.minecraftforge.client.event.ClientChatEvent;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -20,6 +21,7 @@ import java.util.regex.Matcher;
 public class MoneyEventHandler {
 
     private long reviveByMedicStartTime;
+    private boolean isGRBankCommand;
 
     @SubscribeEvent
     public boolean onClientChatReceived(ClientChatReceivedEvent e) {
@@ -63,6 +65,10 @@ public class MoneyEventHandler {
 
         Matcher bankNewBalanceMatcher = PatternHandler.BANK_NEW_BALANCE_PATTERN.matcher(msg);
         if (bankNewBalanceMatcher.find()) {
+            if (isGRBankCommand) {
+                isGRBankCommand = false;
+                return false;
+            }
             BankMoneyModule.setBalance(Integer.parseInt(bankNewBalanceMatcher.group(1)));
             return false;
         }
@@ -154,6 +160,13 @@ public class MoneyEventHandler {
             return false;
         }
 
+        return false;
+    }
+
+    @SubscribeEvent
+    public boolean onClientChatReceived(ClientChatEvent e) {
+        String msg = e.getMessage();
+        isGRBankCommand = msg.startsWith("/grkasse get") || msg.startsWith("/grkasse drop");
         return false;
     }
 }
