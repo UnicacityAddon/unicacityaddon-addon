@@ -23,6 +23,7 @@ public class ADropMoneyEventHandler {
 
         if (msg.equalsIgnoreCase("=== Kontoauszug ===")
                 || msg.equalsIgnoreCase("=================")
+                || msg.equals("")
                 || PatternHandler.PREVIOUS_BANK_VALUE_PATTERN.matcher(msg).find()
                 || PatternHandler.CASH_FROM_BANK_PATTERN.matcher(msg).find()
                 || PatternHandler.CASH_TO_BANK_PATTERN.matcher(msg).find()
