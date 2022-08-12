@@ -2,6 +2,8 @@ package com.rettichlp.UnicacityAddon.commands.faction;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
+import com.rettichlp.UnicacityAddon.base.config.ConfigElements;
+import com.rettichlp.UnicacityAddon.base.faction.Faction;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
 import com.rettichlp.UnicacityAddon.base.utils.MathUtils;
@@ -29,7 +31,7 @@ public class ReinforcementCommand extends CommandBase {
     }
 
     @Override @Nonnull public String getUsage(@Nonnull ICommandSender sender) {
-        return "/reinforcement (-d/-r/-rd/-e/-ed/-m/-lb/-da/-ct/-p/-b/-gn)";
+        return "/reinforcement (-d/-r/-rd/-e/-ed/-m/-lb/-da/-ct/-p/-b/-gn/-t)";
     }
 
     @Override @Nonnull public List<String> getAliases() {
@@ -105,8 +107,10 @@ public class ReinforcementCommand extends CommandBase {
         DRUG_REMOVAL("-da", "d", "Drogenabnahme!"),
         CONTRACT("-ct", "f", "Contract!"),
         PLANT("-p", "d", "Plant!"),
-        BOMB("-b", "f", "Bombe!"),
-        HOSTAGE_TAKING("-gn", "f", "Geiselnahme!");
+        BOMB("-b", "d", "Bombe!"),
+        HOSTAGE_TAKING("-gn", "d", "Geiselnahme!"),
+        TRAINING("-t", "f", "Training!"),
+        TRAINING_D("-td", "d", "Training!");
 
         private final String argument;
         private final String chatType;
@@ -126,19 +130,12 @@ public class ReinforcementCommand extends CommandBase {
         }
 
         public String getChatType() {
-            /*
-            TODO: Check if alliance exists, otherwise send CORPSE_GUARDING, BOMB and HOSTAGE_TAKING to f chat
-            if (!(alliance)) {
-                switch (this) {
-                    case CORPSE_GUARDING:
-                    case BOMB:
-                    case HOSTAGE_TAKING:
-                        return "f";
-                        break;
-                }
-            }
-            */
-            return chatType;
+            Faction alliance1 = ConfigElements.getNameTagAlliance1();
+            Faction alliance2 = ConfigElements.getNameTagAlliance2();
+
+            boolean hasAllianceFaction = !alliance1.equals(Faction.NULL) || !alliance2.equals(Faction.NULL);
+
+            return hasAllianceFaction ? chatType : "f";
         }
 
         public static Type getByArgument(String s) {
