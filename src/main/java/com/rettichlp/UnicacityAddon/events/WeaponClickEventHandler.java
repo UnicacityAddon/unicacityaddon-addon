@@ -78,7 +78,7 @@ public class WeaponClickEventHandler {
 
     @SubscribeEvent
     public void onWeaponInteract(PlayerInteractEvent e) {
-        if (!tazerLoaded) return;
+        if (!tazerLoaded || !isWeapon(e.getItemStack())) return;
         if (!(e instanceof PlayerInteractEvent.LeftClickBlock || e instanceof PlayerInteractEvent.EntityInteractSpecific || e instanceof PlayerInteractEvent.LeftClickEmpty))
             return;
 
