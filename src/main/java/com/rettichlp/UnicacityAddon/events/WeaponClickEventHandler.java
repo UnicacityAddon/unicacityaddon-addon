@@ -13,6 +13,7 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author RettichLP
@@ -22,6 +23,7 @@ public class WeaponClickEventHandler {
 
     private static final Set<String> WEAPONS = ImmutableSet.of("§8M4", "§8MP5", "§8Pistole", "§8Jagdflinte");
     public static boolean tazerLoaded = false;
+    private long tazerLastWarningSend = 0;
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onPlayerInteract(PlayerInteractEvent e) {
@@ -78,10 +80,13 @@ public class WeaponClickEventHandler {
 
     @SubscribeEvent
     public void onWeaponInteract(PlayerInteractEvent e) {
-        if (!tazerLoaded || !isWeapon(e.getItemStack())) return;
+        if (!tazerLoaded) return;
         if (!(e instanceof PlayerInteractEvent.LeftClickBlock || e instanceof PlayerInteractEvent.EntityInteractSpecific || e instanceof PlayerInteractEvent.LeftClickEmpty))
             return;
 
+        if (System.currentTimeMillis() - tazerLastWarningSend < TimeUnit.SECONDS.toMillis(5)) return;
+
         AbstractionLayer.getPlayer().sendInfoMessage("Achtung! Dein Tazer ist geladen!");
+        tazerLastWarningSend = System.currentTimeMillis();
     }
 }
