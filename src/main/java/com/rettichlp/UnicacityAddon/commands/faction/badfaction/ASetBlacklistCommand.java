@@ -3,8 +3,6 @@ package com.rettichlp.UnicacityAddon.commands.faction.badfaction;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
 import com.rettichlp.UnicacityAddon.base.json.BlacklistEntry;
-import com.rettichlp.UnicacityAddon.base.text.ColorCode;
-import com.rettichlp.UnicacityAddon.base.text.Message;
 import com.rettichlp.UnicacityAddon.base.utils.ForgeUtils;
 import com.rettichlp.UnicacityAddon.events.faction.BlacklistEventHandler;
 import net.minecraft.command.CommandBase;
@@ -51,10 +49,7 @@ public class ASetBlacklistCommand extends CommandBase {
         if (args.length < 2) return;
 
         if (BlacklistEventHandler.BLACKLIST == null) {
-            p.sendMessage(Message.getBuilder()
-                    .error().space()
-                    .of("Datei 'blacklistData.json' ist falsch formatiert!").color(ColorCode.GRAY).advance()
-                    .createComponent());
+            p.sendErrorMessage("Datei 'blacklistData.json' ist falsch formatiert!");
             return;
         }
 
@@ -62,10 +57,7 @@ public class ASetBlacklistCommand extends CommandBase {
         BlacklistEntry ble = BlacklistEventHandler.BLACKLIST.getBlackListEntryByReason(reason);
 
         if (ble == null) {
-            p.sendMessage(Message.getBuilder()
-                    .error().space()
-                    .of("Blacklistgrund wurde nicht gefunden!").color(ColorCode.GRAY).advance()
-                    .createComponent());
+            p.sendErrorMessage("Blacklistgrund wurde nicht gefunden!");
             return;
         }
 

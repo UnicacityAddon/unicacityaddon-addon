@@ -3,8 +3,6 @@ package com.rettichlp.UnicacityAddon.commands.faction.polizei;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
 import com.rettichlp.UnicacityAddon.base.faction.polizei.WantedReason;
-import com.rettichlp.UnicacityAddon.base.text.ColorCode;
-import com.rettichlp.UnicacityAddon.base.text.Message;
 import com.rettichlp.UnicacityAddon.base.utils.ForgeUtils;
 import com.rettichlp.UnicacityAddon.base.utils.MathUtils;
 import net.minecraft.command.CommandBase;
@@ -52,11 +50,7 @@ public class ASUCommand extends CommandBase {
         UPlayer p = AbstractionLayer.getPlayer();
 
         if (args.length < 2) {
-            Message.getBuilder()
-                    .error()
-                    .space()
-                    .of("Syntax: " + getUsage(sender)).color(ColorCode.GRAY).advance()
-                    .sendTo(p.getPlayer());
+            p.sendSyntaxMessage(getUsage(sender));
             return;
         }
 
@@ -74,11 +68,7 @@ public class ASUCommand extends CommandBase {
         }
 
         if (wantedReason == null) {
-            Message.getBuilder()
-                    .error()
-                    .space()
-                    .of("Der Wantedgrund wurde nicht gefunden." + getUsage(sender)).color(ColorCode.GRAY).advance()
-                    .sendTo(p.getPlayer());
+            p.sendErrorMessage("Der Wantedgrund wurde nicht gefunden!");
             return;
         }
 

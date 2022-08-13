@@ -5,21 +5,20 @@ import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
 import com.rettichlp.UnicacityAddon.base.config.ConfigElements;
 import com.rettichlp.UnicacityAddon.base.faction.Faction;
 import com.rettichlp.UnicacityAddon.base.text.ChatType;
-import com.rettichlp.UnicacityAddon.base.text.ColorCode;
-import com.rettichlp.UnicacityAddon.base.text.Message;
 import com.rettichlp.UnicacityAddon.base.utils.MathUtils;
 import com.rettichlp.UnicacityAddon.events.MobileEventHandler;
+import net.minecraft.command.CommandBase;
+import net.minecraft.command.ICommandSender;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.math.BlockPos;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import net.minecraft.command.CommandBase;
-import net.minecraft.command.ICommandSender;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.math.BlockPos;
 
 /**
  * @author Dimiikou
@@ -47,11 +46,7 @@ public class ReinforcementCommand extends CommandBase {
         UPlayer p = AbstractionLayer.getPlayer();
 
         if (!MobileEventHandler.hasCommunications) {
-            Message.getBuilder()
-                    .error()
-                    .space()
-                    .of("Du hast keine Kommunikationsmittel!").color(ColorCode.GRAY).advance()
-                    .sendTo(p.getPlayer());
+            p.sendErrorMessage("Du hast keine Kommunikationsmittel!");
             return;
         }
 

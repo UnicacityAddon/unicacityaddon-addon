@@ -47,11 +47,7 @@ public class ShareLocationCommand extends CommandBase {
         UPlayer p = AbstractionLayer.getPlayer();
 
         if (!MobileEventHandler.hasCommunications) {
-            Message.getBuilder()
-                    .error()
-                    .space()
-                    .of("Du hast keine Kommunikationsmittel!").color(ColorCode.GRAY).advance()
-                    .sendTo(p.getPlayer());
+            p.sendErrorMessage("Du hast keine Kommunikationsmittel!");
             return;
         }
 
@@ -67,7 +63,7 @@ public class ShareLocationCommand extends CommandBase {
         }
 
         if (playerNames.isEmpty()) {
-            Message.getBuilder().error().space().of("Dieser Spieler wurder nicht gefunden.").color(ColorCode.RED).advance().sendTo(p.getPlayer());
+            p.sendErrorMessage("Dieser Spieler wurde nicht gefunden!");
             return;
         }
 

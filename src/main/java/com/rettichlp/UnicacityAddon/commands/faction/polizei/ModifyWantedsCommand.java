@@ -2,8 +2,6 @@ package com.rettichlp.UnicacityAddon.commands.faction.polizei;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
-import com.rettichlp.UnicacityAddon.base.text.ColorCode;
-import com.rettichlp.UnicacityAddon.base.text.Message;
 import com.rettichlp.UnicacityAddon.base.utils.ForgeUtils;
 import com.rettichlp.UnicacityAddon.base.utils.MathUtils;
 import com.rettichlp.UnicacityAddon.events.faction.polizei.WantedEventHandler;
@@ -50,11 +48,7 @@ public class ModifyWantedsCommand extends CommandBase {
 
         WantedEventHandler.Wanted wanted = WantedEventHandler.WANTED_MAP.get(target);
         if (wanted == null) {
-            Message.getBuilder()
-                    .error()
-                    .space()
-                    .of("Du hast /wanteds noch nicht ausgeführt.").color(ColorCode.GRAY).advance()
-                    .sendTo(p.getPlayer());
+            p.sendErrorMessage("Du hast /wanteds noch nicht ausgeführt!");
             return;
         }
 
@@ -92,11 +86,7 @@ public class ModifyWantedsCommand extends CommandBase {
             wantedAmount = 69;
 
         if (wantedAmount == wanted.getAmount() && wantedReason.equals(wanted.getReason())) {
-            Message.getBuilder()
-                    .error()
-                    .space()
-                    .of("Der Spieler besitzt bereits diese Modifikatoren.").color(ColorCode.GRAY).advance()
-                    .sendTo(p.getPlayer());
+            p.sendErrorMessage("Der Spieler besitzt bereits diese Modifikatoren.");
             return;
         }
 

@@ -2,17 +2,16 @@ package com.rettichlp.UnicacityAddon.commands.faction.rettungsdienst;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
-import com.rettichlp.UnicacityAddon.base.text.ColorCode;
-import com.rettichlp.UnicacityAddon.base.text.Message;
 import com.rettichlp.UnicacityAddon.base.utils.MathUtils;
-import java.util.Collections;
-import java.util.List;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author RettichLP
@@ -41,11 +40,7 @@ public class ARezeptAnnehmenCommand extends CommandBase {
         UPlayer p = AbstractionLayer.getPlayer();
 
         if (args.length < 1) {
-            Message.getBuilder()
-                    .error()
-                    .space()
-                    .of("Syntax: " + getUsage(sender)).color(ColorCode.GRAY).advance()
-                    .sendTo(p.getPlayer());
+            p.sendSyntaxMessage(getUsage(sender));
             return;
         }
 

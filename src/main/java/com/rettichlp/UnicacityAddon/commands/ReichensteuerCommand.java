@@ -2,8 +2,6 @@ package com.rettichlp.UnicacityAddon.commands;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
-import com.rettichlp.UnicacityAddon.base.text.ColorCode;
-import com.rettichlp.UnicacityAddon.base.text.Message;
 import com.rettichlp.UnicacityAddon.modules.BankMoneyModule;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
@@ -48,7 +46,6 @@ public class ReichensteuerCommand extends CommandBase {
         if (BankMoneyModule.bankBalance > 100000)
             p.sendChatMessage("/bank abbuchen " + (BankMoneyModule.bankBalance - 100000));
         else
-            p.sendMessage(Message.getBuilder().error().space()
-                    .of("Dein Kontostand beträgt bereits 100.000$").color(ColorCode.GRAY).advance().createComponent());
+            p.sendErrorMessage("Dein Kontostand beträgt bereits 100.000$!");
     }
 }
