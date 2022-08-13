@@ -11,6 +11,7 @@ import com.rettichlp.UnicacityAddon.commands.AEquipCommand;
 import com.rettichlp.UnicacityAddon.commands.ASMSCommand;
 import com.rettichlp.UnicacityAddon.commands.EinzahlenCommand;
 import com.rettichlp.UnicacityAddon.commands.FactionInfoCommand;
+import com.rettichlp.UnicacityAddon.commands.MemberInfoCommand;
 import com.rettichlp.UnicacityAddon.commands.NaviCommand;
 import com.rettichlp.UnicacityAddon.commands.NearestATMCommand;
 import com.rettichlp.UnicacityAddon.commands.NearestJobCommand;
@@ -120,6 +121,7 @@ public class UnicacityAddon extends LabyModAddon {
         ClientCommandHandler.instance.registerCommand(new ExplosiveBeltCommand());
         ClientCommandHandler.instance.registerCommand(new FactionInfoCommand());
         ClientCommandHandler.instance.registerCommand(new GiftEigenbedarfCommand());
+        ClientCommandHandler.instance.registerCommand(new MemberInfoCommand());
         ClientCommandHandler.instance.registerCommand(new ModifyBlacklistCommand());
         ClientCommandHandler.instance.registerCommand(new ModifyWantedsCommand());
         ClientCommandHandler.instance.registerCommand(new NaviCommand());
