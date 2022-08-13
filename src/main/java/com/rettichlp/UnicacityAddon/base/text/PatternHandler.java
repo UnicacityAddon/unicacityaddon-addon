@@ -213,4 +213,10 @@ public class PatternHandler {
      */
     public static final Pattern FBANK_TAXES = Pattern.compile("^\\[F-Bank] (?:\\[UC])*([a-zA-Z0-9_]+) hat (\\d+)\\$ \\(-(\\d+)\\$\\) in die F-Bank eingezahlt\\.$" +
             "|^\\[F-Bank] (?:\\[UC])*([a-zA-Z0-9_]+) hat (\\d+)\\$ \\(\\+(\\d+)\\$\\) aus der F-Bank genommen\\.$");
+
+    /**
+     * {@link com.rettichlp.UnicacityAddon.events.HouseRenterEventHandler}
+     */
+    public static final Pattern HOUSE_RENTER_PATTERN = Pattern.compile("^=== Mieter in Haus (\\d+) ===$");
+    public static final Pattern RENTER_PATTERN = Pattern.compile("^ {2}» (?:\\[UC])*(\\w+) \\((Online|Offline seit (\\d+)\\.(\\d+)\\.(\\d+) (\\d+):(\\d+):(\\d+))\\)$");
 }
