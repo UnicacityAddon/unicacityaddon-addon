@@ -9,6 +9,7 @@ import com.rettichlp.UnicacityAddon.commands.ABuyCommand;
 import com.rettichlp.UnicacityAddon.commands.ACallCommand;
 import com.rettichlp.UnicacityAddon.commands.AEquipCommand;
 import com.rettichlp.UnicacityAddon.commands.ASMSCommand;
+import com.rettichlp.UnicacityAddon.commands.CountdownCommand;
 import com.rettichlp.UnicacityAddon.commands.EinzahlenCommand;
 import com.rettichlp.UnicacityAddon.commands.FactionInfoCommand;
 import com.rettichlp.UnicacityAddon.commands.MemberInfoCommand;
@@ -96,6 +97,7 @@ public class UnicacityAddon extends LabyModAddon {
         ClientCommandHandler.instance.registerCommand(new ASMSCommand());
         ClientCommandHandler.instance.registerCommand(new ASUCommand());
         ClientCommandHandler.instance.registerCommand(new BlacklistInfoCommand());
+        ClientCommandHandler.instance.registerCommand(new CountdownCommand());
         ClientCommandHandler.instance.registerCommand(new EigenbedarfCommand());
         ClientCommandHandler.instance.registerCommand(new EinzahlenCommand());
         ClientCommandHandler.instance.registerCommand(new ExplosiveBeltCommand());
