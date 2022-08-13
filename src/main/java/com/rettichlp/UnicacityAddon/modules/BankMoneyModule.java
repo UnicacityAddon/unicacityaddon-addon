@@ -7,6 +7,9 @@ import net.labymod.ingamegui.moduletypes.SimpleModule;
 import net.labymod.settings.elements.ControlElement;
 import net.labymod.utils.Material;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 /**
  * @author RettichLP
  */
@@ -31,7 +34,8 @@ public class BankMoneyModule extends SimpleModule {
 
     @Override
     public String getDisplayValue() {
-        return bankBalance + "$";
+        NumberFormat numberFormat = NumberFormat.getNumberInstance(new Locale("da", "DK"));
+        return numberFormat.format(bankBalance) + "$";
     }
 
     @Override

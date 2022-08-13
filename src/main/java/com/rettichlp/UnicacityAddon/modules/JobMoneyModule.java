@@ -7,6 +7,9 @@ import net.labymod.ingamegui.moduletypes.SimpleModule;
 import net.labymod.settings.elements.ControlElement;
 import net.labymod.utils.Material;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 /**
  * @author Dimiikou
  */
@@ -31,7 +34,8 @@ public class JobMoneyModule extends SimpleModule {
 
     @Override
     public String getDisplayValue() {
-        return jobBalance + "$";
+        NumberFormat numberFormat = NumberFormat.getNumberInstance(new Locale("da", "DK"));
+        return numberFormat.format(jobBalance) + "$";
     }
 
     @Override
