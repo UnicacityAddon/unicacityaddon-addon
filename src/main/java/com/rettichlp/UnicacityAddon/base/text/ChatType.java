@@ -1,10 +1,13 @@
 package com.rettichlp.UnicacityAddon.base.text;
 
 public enum ChatType {
+
+    ADMIN("Serverweit", "o"),
     CHAT("Chat", ""),
     DCHAT("Bündnis", "d"),
     FCHAT("Fraktion", "f"),
     SFCHAT("Subfraktion", "sf"),
+    LEADER("Leader", "l"),
     GRCHAT("Gruppierung", "gr"),
     SCREAM("Schreien", "s"),
     WHISPER("Flüstern", "w");
