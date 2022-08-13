@@ -4,6 +4,7 @@ import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
 import com.rettichlp.UnicacityAddon.base.config.ConfigElements;
 import com.rettichlp.UnicacityAddon.base.faction.Faction;
+import com.rettichlp.UnicacityAddon.base.text.ChatType;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
 import com.rettichlp.UnicacityAddon.base.utils.MathUtils;
@@ -57,7 +58,7 @@ public class ReinforcementCommand extends CommandBase {
         Type firstType = Type.DEFAULT;
         if (args.length == 1 || args.length == 6) firstType = Type.getByArgument(args[args.length - 1]);
 
-        String chatType = firstType.getChatType();
+        ChatType chatType = firstType.getChatType();
 
         if ((args.length >= 5) && args[0].equalsIgnoreCase("ontheway")) {
             String name = args[1];
@@ -67,7 +68,7 @@ public class ReinforcementCommand extends CommandBase {
             int y = Integer.parseInt(args[3]);
             int z = Integer.parseInt(args[4]);
 
-            p.sendChatMessage("/" + chatType + " " + name + ", ich bin zu deinem Verstärkungsruf unterwegs! (" + (int) p.getPosition().getDistance(x, y, z) + " Meter entfernt)");
+            p.sendChatMessage(chatType.getChatCommand() + " " + name + ", ich bin zu deinem Verstärkungsruf unterwegs! (" + (int) p.getPosition().getDistance(x, y, z) + " Meter entfernt)");
             p.setNaviRoute(x, y, z);
 
             return;
@@ -79,9 +80,9 @@ public class ReinforcementCommand extends CommandBase {
         int posZ = position.getZ();
 
         if (firstType.message != null)
-            p.sendChatMessage("/" + chatType + " " + firstType.getMessage());
+            p.sendChatMessage(chatType.getChatCommand() + " " + firstType.getMessage());
 
-        p.sendChatMessage("/" + chatType + " Benötige Verstärkung! -> X: " + posX + " | Y: " + posY + " | Z: " + posZ);
+        p.sendChatMessage(chatType.getChatCommand() + " Benötige Verstärkung! -> X: " + posX + " | Y: " + posY + " | Z: " + posZ);
     }
 
     @Override @Nonnull public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
@@ -96,28 +97,28 @@ public class ReinforcementCommand extends CommandBase {
     }
 
     public enum Type {
-        DEFAULT("-f", "f", null),
-        D_CHAT("-d", "d", null),
-        RAM("-r", "f", "Rammen!"),
-        RAM_D("-rd", "d", "Rammen!"),
-        EMERGENCY("-e", "f", "Dringend!"),
-        EMERGENCY_D("-ed", "d", "Dringend!"),
-        MEDIC("-m", "d", "Medic benötigt!"),
-        CORPSE_GUARDING("-lb", "d", "Leichenbewachung!"),
-        DRUG_REMOVAL("-da", "d", "Drogenabnahme!"),
-        CONTRACT("-ct", "f", "Contract!"),
-        PLANT("-p", "d", "Plant!"),
-        BOMB("-b", "d", "Bombe!"),
-        HOSTAGE_TAKING("-gn", "d", "Geiselnahme!"),
-        TRAINING("-t", "f", "Training!"),
-        TRAINING_D("-td", "d", "Training!");
+        DEFAULT("-f", ChatType.FCHAT, null),
+        D_CHAT("-d", ChatType.DCHAT, null),
+        RAM("-r", ChatType.FCHAT, "Rammen!"),
+        RAM_D("-rd", ChatType.DCHAT, "Rammen!"),
+        EMERGENCY("-e", ChatType.FCHAT, "Dringend!"),
+        EMERGENCY_D("-ed", ChatType.DCHAT, "Dringend!"),
+        MEDIC("-m", ChatType.DCHAT, "Medic benötigt!"),
+        CORPSE_GUARDING("-lb", ChatType.DCHAT, "Leichenbewachung!"),
+        DRUG_REMOVAL("-da", ChatType.DCHAT, "Drogenabnahme!"),
+        CONTRACT("-ct", ChatType.FCHAT, "Contract!"),
+        PLANT("-p", ChatType.DCHAT, "Plant!"),
+        BOMB("-b", ChatType.DCHAT, "Bombe!"),
+        HOSTAGE_TAKING("-gn", ChatType.DCHAT, "Geiselnahme!"),
+        TRAINING("-t", ChatType.FCHAT, "Training!"),
+        TRAINING_D("-td", ChatType.DCHAT, "Training!");
 
         private final String argument;
-        private final String chatType;
+        private final ChatType chatType;
         private final String message;
         private final Pattern pattern;
 
-        Type(String argument, String chatType, String message) {
+        Type(String argument, ChatType chatType, String message) {
             this.argument = argument;
             this.chatType = chatType;
             this.message = message;
@@ -129,13 +130,13 @@ public class ReinforcementCommand extends CommandBase {
             return argument;
         }
 
-        public String getChatType() {
+        public ChatType getChatType() {
             Faction alliance1 = ConfigElements.getNameTagAlliance1();
             Faction alliance2 = ConfigElements.getNameTagAlliance2();
 
             boolean hasAllianceFaction = !alliance1.equals(Faction.NULL) || !alliance2.equals(Faction.NULL);
 
-            return hasAllianceFaction ? chatType : "f";
+            return hasAllianceFaction ? chatType : ChatType.FCHAT;
         }
 
         public static Type getByArgument(String s) {
