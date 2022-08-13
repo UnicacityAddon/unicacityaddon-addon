@@ -74,7 +74,6 @@ public class FactionInfoCommand extends CommandBase {
             Map<Boolean, Integer> members = getMembers(faction);
             int activeMembers = members.get(true);
             int inactiveMembers = members.get(false);
-            System.out.println(faction + ": " + activeMembers + "/" + (activeMembers + inactiveMembers));
             p.sendMessage(Message.getBuilder()
                     .of("  » ").color(ColorCode.GRAY).advance()
                     .of(faction.getDisplayName())

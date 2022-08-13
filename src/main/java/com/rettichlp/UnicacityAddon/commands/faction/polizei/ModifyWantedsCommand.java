@@ -86,7 +86,6 @@ public class ModifyWantedsCommand extends CommandBase {
 
         if (wanted.getAmount() > wantedAmount) {
             p.sendChatMessage("/clear " + target);
-            System.out.println("/clear " + target);
         }
 
         if (wantedAmount > 69)
@@ -102,7 +101,6 @@ public class ModifyWantedsCommand extends CommandBase {
         }
 
         p.sendChatMessage("/su " + wantedAmount + " " + target + " " + wantedReason);
-        System.out.println("/su " + wantedAmount + " " + target + " " + wantedReason);
     }
 
     @Override @Nonnull public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {

@@ -110,13 +110,11 @@ public class ASUCommand extends CommandBase {
                     String player = players.get(i++);
 
                     issuer.sendChatMessage("/su " + maxAmount + " " + player + " " + reason);
-                    System.out.println("/su " + maxAmount + " " + player + " " + reason);
                 }
             }, 0, TimeUnit.SECONDS.toMillis(1));
         } else{
             for (String player : players) {
                 issuer.sendChatMessage("/su " + amount + " " + player + " " + reason);
-                System.out.println("/su " + amount + " " + player + " " + reason);
             }
         }
     }
