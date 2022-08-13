@@ -3,8 +3,6 @@ package com.rettichlp.UnicacityAddon.commands.faction.badfaction;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
 import com.rettichlp.UnicacityAddon.base.json.BlacklistEntry;
-import com.rettichlp.UnicacityAddon.base.text.ColorCode;
-import com.rettichlp.UnicacityAddon.base.text.Message;
 import com.rettichlp.UnicacityAddon.base.utils.ForgeUtils;
 import com.rettichlp.UnicacityAddon.events.faction.BlacklistEventHandler;
 import net.minecraft.command.CommandBase;
