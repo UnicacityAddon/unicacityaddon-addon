@@ -6,7 +6,7 @@
 Installation is done from the in-game addons page, just like any other addon.<br>
 There are no development versions available for installation. If such want to be used, the installation must be done manually.
 
-### Manuel installation (addon folder)
+### Manual installation (addon folder)
 
 1. Download the latest or desired version [here](https://github.com/rettichlp/UnicacityAddon-1.12.2/releases).
 2. Open the `.minecraft` folder
