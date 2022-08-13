@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 public class CountdownCommand extends CommandBase {
 
     private static boolean active = false;
-    private static int countdown;
+    public static int countdown;
 
     @Override
     @Nonnull
@@ -82,6 +82,12 @@ public class CountdownCommand extends CommandBase {
         }
 
         active = true;
+        int delay = 0;
+
+        if (chatType.equals(ChatType.ADMIN)) {
+            p.sendInfoMessage("In 10 Sekunden wird ein Countdown mittels /o gestartet! Du kannst diesen mit /cancelcountdown abbrechen.");
+            delay = 10000;
+        }
 
         Timer timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
@@ -89,14 +95,16 @@ public class CountdownCommand extends CommandBase {
             public void run() {
                 if (countdown == 0) {
                     p.sendChatMessage(chatType.getChatCommand() + " Start!");
+                } else if (countdown == -1) {
                     timer.cancel();
                     active = false;
                     return;
+                } else {
+                    p.sendChatMessage(chatType.getChatCommand() + " " + countdown);
                 }
-                p.sendChatMessage(chatType.getChatCommand() + " " + countdown);
                 countdown--;
             }
-        }, 0, 1000);
+        }, delay, 1000);
     }
 
     @Override
