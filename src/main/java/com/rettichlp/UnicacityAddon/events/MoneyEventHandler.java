@@ -138,6 +138,10 @@ public class MoneyEventHandler {
 
         Matcher cashFromBankMatcher = PatternHandler.CASH_FROM_BANK_PATTERN.matcher(msg);
         if (cashFromBankMatcher.find()) {
+            if (isGRBankCommand) {
+                isGRBankCommand = false;
+                return false;
+            }
             CashMoneyModule.addBalance(Integer.parseInt(cashFromBankMatcher.group(1)));
             return false;
         }
