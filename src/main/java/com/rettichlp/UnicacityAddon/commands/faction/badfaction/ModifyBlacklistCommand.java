@@ -12,7 +12,7 @@ import net.minecraft.util.math.BlockPos;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -40,7 +40,7 @@ public class ModifyBlacklistCommand extends CommandBase {
     @Override
     @Nonnull
     public List<String> getAliases() {
-        return Arrays.asList("mbl");
+        return Collections.singletonList("mbl");
     }
 
     @Override
@@ -53,7 +53,7 @@ public class ModifyBlacklistCommand extends CommandBase {
         UPlayer p = AbstractionLayer.getPlayer();
 
         if (args.length != 2) {
-            p.sendSyntaxMessage("/modifyblacklist [Spieler] [Grund/-v]");
+            p.sendSyntaxMessage(getUsage(sender));
             return;
         }
 

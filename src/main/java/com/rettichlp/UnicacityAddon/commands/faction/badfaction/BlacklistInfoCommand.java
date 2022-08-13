@@ -10,7 +10,7 @@ import net.minecraft.util.math.BlockPos;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -29,13 +29,13 @@ public class BlacklistInfoCommand extends CommandBase {
     @Override
     @Nonnull
     public String getUsage(@Nonnull ICommandSender sender) {
-        return "/blinfo [Spieler]";
+        return "/blacklistinfo [Spieler]";
     }
 
     @Override
     @Nonnull
     public List<String> getAliases() {
-        return Arrays.asList("blinfo");
+        return Collections.singletonList("blinfo");
     }
 
     @Override
@@ -48,7 +48,7 @@ public class BlacklistInfoCommand extends CommandBase {
         UPlayer p = AbstractionLayer.getPlayer();
 
         if (args.length != 1) {
-            p.sendSyntaxMessage("/blinfo [Spieler]");
+            p.sendSyntaxMessage(getUsage(sender));
             return;
         }
 

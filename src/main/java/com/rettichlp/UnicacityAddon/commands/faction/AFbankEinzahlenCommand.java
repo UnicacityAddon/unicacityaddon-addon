@@ -54,7 +54,7 @@ public class AFbankEinzahlenCommand extends CommandBase {
     public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
         UPlayer p = AbstractionLayer.getPlayer();
         if (args.length != 2 || !MathUtils.isInteger(args[1])) {
-            p.sendSyntaxMessage("/afbank [einzahlen/auszahlen] [Betrag]");
+            p.sendSyntaxMessage(getUsage(sender));
             return;
         }
 
@@ -66,11 +66,10 @@ public class AFbankEinzahlenCommand extends CommandBase {
 
         // check if there are taxes
         p.sendChatMessage("/fbank " + interaction + " 4");
-        this.amount = Integer.parseInt(args[1]) - 4; // we already paid 4$
+        amount = Integer.parseInt(args[1]) - 4; // we already paid 4$
 
         STARTED.set(true);
 
-        AFbankEinzahlenCommand instance = this;
         timer.scheduleAtFixedRate(new TimerTask() {
             public void run() {
                 if (!STARTED.get()) {
@@ -78,13 +77,13 @@ public class AFbankEinzahlenCommand extends CommandBase {
                     return;
                 }
 
-                if (instance.amount > 1000) {
+                if (amount > 1000) {
                     // if amount is bigger than 1000, add or remove 1k from faction bank and wait
                     p.sendChatMessage("/fbank " + interaction + " 1000");
-                    instance.amount -= 1000;
+                    amount -= 1000;
                 } else {
                     // otherwise add or remove the remainder and stop the task
-                    p.sendChatMessage("/fbank " + interaction + " " + instance.amount);
+                    p.sendChatMessage("/fbank " + interaction + " " + amount);
                     STARTED.set(false);
                     cancel();
 
@@ -101,7 +100,7 @@ public class AFbankEinzahlenCommand extends CommandBase {
 
     @Override
     @Nonnull
-    public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
+    public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
         return Arrays.asList("einzahlen", "auszahlen");
     }
 
