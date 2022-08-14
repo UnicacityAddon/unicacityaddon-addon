@@ -2,6 +2,7 @@ package com.rettichlp.UnicacityAddon.commands;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
+import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import com.rettichlp.UnicacityAddon.base.text.ChatType;
 import com.rettichlp.UnicacityAddon.base.utils.MathUtils;
 import net.minecraft.command.CommandBase;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
 /**
  * @author RettichLP
  */
+@UCCommand
 public class CountdownCommand extends CommandBase {
 
     private static boolean active = false;

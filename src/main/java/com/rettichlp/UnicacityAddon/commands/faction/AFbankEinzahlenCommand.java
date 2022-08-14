@@ -2,6 +2,7 @@ package com.rettichlp.UnicacityAddon.commands.faction;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
+import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
 import com.rettichlp.UnicacityAddon.base.utils.MathUtils;
@@ -20,6 +21,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 /**
  * @author Dimiikou
  */
+@UCCommand
 public class AFbankEinzahlenCommand extends CommandBase {
 
     public static final AtomicBoolean STARTED = new AtomicBoolean();
