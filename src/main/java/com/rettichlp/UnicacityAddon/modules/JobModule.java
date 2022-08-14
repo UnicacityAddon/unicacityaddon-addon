@@ -13,13 +13,14 @@ import java.util.Locale;
 /**
  * @author Dimiikou
  */
-public class JobMoneyModule extends SimpleModule {
+public class JobModule extends SimpleModule {
 
     public static int jobBalance;
+    public static int jobExperience;
 
     @Override
     public String getControlName() {
-        return "Job Gehalt";
+        return "Job Belohnungen";
     }
 
     @Override
@@ -29,23 +30,23 @@ public class JobMoneyModule extends SimpleModule {
 
     @Override
     public String getDisplayName() {
-        return "Job-Gehalt";
+        return "Job";
     }
 
     @Override
     public String getDisplayValue() {
         NumberFormat numberFormat = NumberFormat.getNumberInstance(new Locale("da", "DK"));
-        return numberFormat.format(jobBalance) + "$";
+        return numberFormat.format(jobBalance) + "$ | " + numberFormat.format(jobExperience) + "EXP";
     }
 
     @Override
     public String getDefaultValue() {
-        return "0";
+        return "0$ | 0EXP";
     }
 
     @Override
     public String getDescription() {
-        return "Zeigt dein Gehalt durch Jobs bis zum nächsten PayDay an.";
+        return "Zeigt dein Gehalt und durch Jobs erhaltene EXP bis zum nächsten PayDay an.";
     }
 
     @Override
@@ -77,8 +78,18 @@ public class JobMoneyModule extends SimpleModule {
         FileManager.saveData();
     }
 
+    public static void addExperience(int experience) {
+        jobExperience = jobExperience + experience;
+        FileManager.saveData();
+    }
+
     public static void setBalance(int balance) {
         jobBalance = balance;
+        FileManager.saveData();
+    }
+
+    public static void setExperience(int experience) {
+        jobExperience = experience;
         FileManager.saveData();
     }
 }
