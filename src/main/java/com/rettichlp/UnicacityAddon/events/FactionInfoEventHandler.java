@@ -1,5 +1,6 @@
 package com.rettichlp.UnicacityAddon.events;
 
+import com.rettichlp.UnicacityAddon.base.registry.annotation.UCEvent;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -14,6 +15,7 @@ import java.util.regex.Pattern;
  * @author RettichLP
  * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/commands/faction/CheckActiveMembersCommand.java">UCUtils by paulzhng</a>
  */
+@UCEvent
 public class FactionInfoEventHandler {
 
     private static final Timer TIMER = new Timer();

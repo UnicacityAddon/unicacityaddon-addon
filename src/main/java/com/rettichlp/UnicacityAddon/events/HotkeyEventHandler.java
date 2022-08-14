@@ -7,6 +7,7 @@ import com.rettichlp.UnicacityAddon.base.config.ConfigElements;
 import com.rettichlp.UnicacityAddon.base.io.FileManager;
 import com.rettichlp.UnicacityAddon.base.reflection.ReflectionUtils;
 import com.rettichlp.UnicacityAddon.base.registry.KeyBindRegistry;
+import com.rettichlp.UnicacityAddon.base.registry.annotation.UCEvent;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
 import com.rettichlp.UnicacityAddon.base.utils.ImageUploadUtils;
@@ -29,6 +30,7 @@ import java.util.regex.Matcher;
  * @author RettichLP
  * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/events/AlternateScreenshotEventHandler.java">UCUtils by paulzhng</a>
  */
+@UCEvent
 public class HotkeyEventHandler {
 
     private String adIssuer;

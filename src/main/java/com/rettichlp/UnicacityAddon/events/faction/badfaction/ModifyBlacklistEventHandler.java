@@ -2,6 +2,7 @@ package com.rettichlp.UnicacityAddon.events.faction.badfaction;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
+import com.rettichlp.UnicacityAddon.base.registry.annotation.UCEvent;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
 import com.rettichlp.UnicacityAddon.commands.faction.badfaction.ModifyBlacklistCommand;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
@@ -12,6 +13,7 @@ import java.util.regex.Matcher;
 /**
  * @author Dimiikou
  */
+@UCEvent
 public class ModifyBlacklistEventHandler {
 
     @SubscribeEvent

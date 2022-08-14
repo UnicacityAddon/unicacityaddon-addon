@@ -3,6 +3,7 @@ package com.rettichlp.UnicacityAddon.events;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
 import com.rettichlp.UnicacityAddon.base.config.ConfigElements;
+import com.rettichlp.UnicacityAddon.base.registry.annotation.UCEvent;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -13,6 +14,7 @@ import java.util.TimerTask;
 /**
  * @author Dimiikou
  */
+@UCEvent
 public class JoinEventHandler {
 
     private static boolean accountLocked = false;
