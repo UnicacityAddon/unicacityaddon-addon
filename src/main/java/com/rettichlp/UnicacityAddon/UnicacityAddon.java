@@ -34,15 +34,17 @@ public class UnicacityAddon extends LabyModAddon {
     public void preInit(FMLPreInitializationEvent e) {
         ASMDataTable asmDataTable = e.getAsmData();
 
-        ModuleCategoryRegistry.loadCategory(ModuleRegistry.UNICACITY);
-        ModuleRegistry.register(asmDataTable);
         CommandRegistry.register(asmDataTable);
-        EventRegistry.register(asmDataTable);
     }
 
     @Override
     public void onEnable() {
         ADDON = this;
+
+        ModuleCategoryRegistry.loadCategory(ModuleRegistry.UNICACITY);
+
+        EventRegistry.register(this);
+        ModuleRegistry.register(this);
     }
 
     @Override
