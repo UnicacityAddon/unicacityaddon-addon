@@ -36,12 +36,12 @@ public class JobModule extends SimpleModule {
     @Override
     public String getDisplayValue() {
         NumberFormat numberFormat = NumberFormat.getNumberInstance(new Locale("da", "DK"));
-        return numberFormat.format(jobBalance) + "$ | " + numberFormat.format(jobExperience) + "EXP";
+        return numberFormat.format(jobBalance) + "$ | " + numberFormat.format(jobExperience) + " EXP";
     }
 
     @Override
     public String getDefaultValue() {
-        return "0$ | 0EXP";
+        return "0$ | 0 EXP";
     }
 
     @Override
