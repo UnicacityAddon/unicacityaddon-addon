@@ -8,6 +8,7 @@ public class Data {
     private int bankBalance;
     private int cashBalance;
     private int jobBalance;
+    private int jobExperience;
     private int payDayTime;
     private List<TodolistEntry> todolist;
 
@@ -28,6 +29,12 @@ public class Data {
 
     public void setJobBalance(int jobBalance) {
         this.jobBalance = jobBalance;
+    }
+
+    public int getJobExperience() { return jobExperience; }
+
+    public void setJobExperience(int jobExperience) {
+        this.jobExperience = jobExperience;
     }
 
     public int getCashBalance() {
