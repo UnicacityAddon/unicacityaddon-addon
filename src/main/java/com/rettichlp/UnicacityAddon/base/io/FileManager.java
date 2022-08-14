@@ -7,7 +7,7 @@ import com.rettichlp.UnicacityAddon.base.json.Data;
 import com.rettichlp.UnicacityAddon.commands.TodoListCommand;
 import com.rettichlp.UnicacityAddon.modules.BankMoneyModule;
 import com.rettichlp.UnicacityAddon.modules.CashMoneyModule;
-import com.rettichlp.UnicacityAddon.modules.JobMoneyModule;
+import com.rettichlp.UnicacityAddon.modules.JobModule;
 import com.rettichlp.UnicacityAddon.modules.PayDayModule;
 import org.apache.commons.io.FileUtils;
 
@@ -93,7 +93,8 @@ public class FileManager {
             if (jsonData.isEmpty()) {
                 BankMoneyModule.setBalance(0);
                 CashMoneyModule.setBalance(0);
-                JobMoneyModule.setBalance(0);
+                JobModule.setBalance(0);
+                JobModule.setExperience(0);
                 PayDayModule.setTime(0);
                 TodoListCommand.todolist = Collections.emptyList();
                 return;
@@ -102,7 +103,8 @@ public class FileManager {
             Data data = g.fromJson(jsonData, Data.class);
             BankMoneyModule.bankBalance = data.getBankBalance();
             CashMoneyModule.cashBalance = data.getCashBalance();
-            JobMoneyModule.jobBalance = data.getJobBalance();
+            JobModule.jobBalance = data.getJobBalance();
+            JobModule.jobExperience = data.getJobExperience();
             PayDayModule.currentTime = data.getPayDayTime();
             TodoListCommand.todolist = data.getTodolist();
         } catch (IOException e) {
@@ -118,7 +120,8 @@ public class FileManager {
             Data data = new Data();
             data.setBankBalance(BankMoneyModule.bankBalance);
             data.setCashBalance(CashMoneyModule.cashBalance);
-            data.setJobBalance(JobMoneyModule.jobBalance);
+            data.setJobBalance(JobModule.jobBalance);
+            data.setJobExperience(JobModule.jobExperience);
             data.setPayDayTime(PayDayModule.currentTime);
             data.setTodolist(TodoListCommand.todolist);
             FileUtils.writeStringToFile(dataFile, g.toJson(data), StandardCharsets.UTF_8.toString());
