@@ -3,6 +3,7 @@ package com.rettichlp.UnicacityAddon.commands.faction.rettungsdienst;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
 import com.rettichlp.UnicacityAddon.base.utils.MathUtils;
+import com.rettichlp.UnicacityAddon.events.faction.rettungsdienst.MedicationEventHandler;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
@@ -45,9 +46,8 @@ public class ARezeptAnnehmenCommand extends CommandBase {
         }
 
         if (!MathUtils.isInteger(args[0])) return;
-        amount = Integer.parseInt(args[0]) - 1;
 
-        p.acceptOffer();
+        MedicationEventHandler.acceptRecipe();
     }
 
     @Override @Nonnull public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {

@@ -5,6 +5,7 @@ import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
 import com.rettichlp.UnicacityAddon.base.faction.rettungsdienst.Medication;
 import com.rettichlp.UnicacityAddon.base.utils.ForgeUtils;
 import com.rettichlp.UnicacityAddon.base.utils.MathUtils;
+import com.rettichlp.UnicacityAddon.events.faction.rettungsdienst.MedicationEventHandler;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
@@ -55,9 +56,8 @@ public class ARezeptCommand extends CommandBase {
         if (medication == null) return;
 
         if (!MathUtils.isInteger(args[2])) return;
-        amount = Integer.parseInt(args[2]) - 1;
 
-        p.sellMedication(target, medication);
+        MedicationEventHandler.giveRecipe();
     }
 
     @Override @Nonnull public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
