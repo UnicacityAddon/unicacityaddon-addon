@@ -40,35 +40,35 @@ public class ConfigElements {
 
     // FACTIONSUFFIX
     public static boolean getNameTagFactionSuffix() {
-        return !UnicacityAddon.ADDON.getConfig().has("NAMETAG_FACTIONSUFFIX") || UnicacityAddon.ADDON.getConfig().get("NAMETAG_FACTIONSUFFIX")
+        return !UnicacityAddon.ADDON.getConfig().has("NAMETAG_FACTIONSUFFIX_SETTINGS") || UnicacityAddon.ADDON.getConfig().get("NAMETAG_FACTIONSUFFIX_SETTINGS")
                 .getAsBoolean(); // default = true
     }
 
     // FACTION
     public static boolean getNameTagFaction() {
-        return UnicacityAddon.ADDON.getConfig().has("NAMETAG_FACTION") && UnicacityAddon.ADDON.getConfig().get("NAMETAG_FACTION")
+        return UnicacityAddon.ADDON.getConfig().has("NAMETAG_FACTION_SETTINGS") && UnicacityAddon.ADDON.getConfig().get("NAMETAG_FACTION_SETTINGS")
                 .getAsBoolean(); // default = false
     }
 
     public static ColorCode getNameTagFactionColor() {
-        return UnicacityAddon.ADDON.getConfig().has("NAMETAG_FACTION_COLOR") ?
-                ColorCode.valueOf(UnicacityAddon.ADDON.getConfig().get("NAMETAG_FACTION_COLOR").getAsString()) :
+        return UnicacityAddon.ADDON.getConfig().has("NAMETAG_FACTION_COLOR_SETTINGS") ?
+                ColorCode.valueOf(UnicacityAddon.ADDON.getConfig().get("NAMETAG_FACTION_COLOR_SETTINGS").getAsString()) :
                 ColorCode.BLUE; // default = BLUE
     }
 
     public static void setNameTagFactionColor(ColorCode factionColor) {
-        UnicacityAddon.ADDON.getConfig().addProperty("NAMETAG_FACTION_COLOR", factionColor.toString());
+        UnicacityAddon.ADDON.getConfig().addProperty("NAMETAG_FACTION_COLOR_SETTINGS", factionColor.toString());
     }
 
     // ALLIANCE
     public static boolean getNameTagAlliance() {
-        return UnicacityAddon.ADDON.getConfig().has("NAMETAG_ALLIANCE") && UnicacityAddon.ADDON.getConfig().get("NAMETAG_ALLIANCE")
+        return UnicacityAddon.ADDON.getConfig().has("NAMETAG_ALLIANCE_SETTINGS") && UnicacityAddon.ADDON.getConfig().get("NAMETAG_ALLIANCE_SETTINGS")
                 .getAsBoolean(); // default = false
     }
 
     public static ColorCode getNameTagAllianceColor() {
-        return UnicacityAddon.ADDON.getConfig().has("NAMETAG_ALLIANCE_COLOR") ?
-                ColorCode.valueOf(UnicacityAddon.ADDON.getConfig().get("NAMETAG_ALLIANCE_COLOR").getAsString()) :
+        return UnicacityAddon.ADDON.getConfig().has("NAMETAG_ALLIANCE_COLOR_SETTINGS") ?
+                ColorCode.valueOf(UnicacityAddon.ADDON.getConfig().get("NAMETAG_ALLIANCE_COLOR_SETTINGS").getAsString()) :
                 ColorCode.DARK_PURPLE; // default = DARK_PURPLE
     }
 
@@ -85,7 +85,7 @@ public class ConfigElements {
     }
 
     public static void setNameTagAllianceColor(ColorCode allianceColor) {
-        UnicacityAddon.ADDON.getConfig().addProperty("NAMETAG_ALLIANCE_COLOR", allianceColor.toString());
+        UnicacityAddon.ADDON.getConfig().addProperty("NAMETAG_ALLIANCE_COLOR_SETTINGS", allianceColor.toString());
     }
 
     public static void setNameTagAlliance1(Faction allianceFaction1) {
@@ -98,13 +98,13 @@ public class ConfigElements {
 
     // STREETWAR
     public static boolean getNameTagStreetwar() {
-        return UnicacityAddon.ADDON.getConfig().has("NAMETAG_STREETWAR") && UnicacityAddon.ADDON.getConfig().get("NAMETAG_STREETWAR")
+        return UnicacityAddon.ADDON.getConfig().has("NAMETAG_STREETWAR_SETTINGS") && UnicacityAddon.ADDON.getConfig().get("NAMETAG_STREETWAR_SETTINGS")
                 .getAsBoolean(); // default = false
     }
 
     public static ColorCode getNameTagStreetwarColor() {
-        return UnicacityAddon.ADDON.getConfig().has("NAMETAG_STREETWAR_COLOR") ?
-                ColorCode.valueOf(UnicacityAddon.ADDON.getConfig().get("NAMETAG_STREETWAR_COLOR").getAsString()) :
+        return UnicacityAddon.ADDON.getConfig().has("NAMETAG_STREETWAR_COLOR_SETTINGS") ?
+                ColorCode.valueOf(UnicacityAddon.ADDON.getConfig().get("NAMETAG_STREETWAR_COLOR_SETTINGS").getAsString()) :
                 ColorCode.DARK_RED; // default = DARK_RED
     }
 
@@ -121,7 +121,7 @@ public class ConfigElements {
     }
 
     public static void setNameTagStreetwarColor(ColorCode streetwarColor) {
-        UnicacityAddon.ADDON.getConfig().addProperty("NAMETAG_STREETWAR_COLOR", streetwarColor.toString());
+        UnicacityAddon.ADDON.getConfig().addProperty("NAMETAG_STREETWAR_COLOR_SETTINGS", streetwarColor.toString());
     }
 
     public static void setNameTagStreetwar1(Faction streetwarFaction1) {
@@ -134,211 +134,199 @@ public class ConfigElements {
 
     // HOUSEBAN
     public static boolean getNameTagHouseBan() {
-        return UnicacityAddon.ADDON.getConfig().has("NAMETAG_HOUSEBAN") && UnicacityAddon.ADDON.getConfig().get("NAMETAG_HOUSEBAN")
+        return UnicacityAddon.ADDON.getConfig().has("NAMETAG_HOUSEBAN_SETTINGS") && UnicacityAddon.ADDON.getConfig().get("NAMETAG_HOUSEBAN_SETTINGS")
                 .getAsBoolean(); // default = false
     }
 
     // DUTY
     public static boolean getNameTagDuty() {
-        return UnicacityAddon.ADDON.getConfig().has("NAMETAG_DUTY") && UnicacityAddon.ADDON.getConfig().get("NAMETAG_DUTY")
+        return UnicacityAddon.ADDON.getConfig().has("NAMETAG_DUTY_SETTINGS") && UnicacityAddon.ADDON.getConfig().get("NAMETAG_DUTY_SETTINGS")
                 .getAsBoolean(); // default = false
     }
 
-    // WPS
-    public static boolean getNameTagWPS() {
-        return UnicacityAddon.ADDON.getConfig().has("NAMETAG_WPS") && UnicacityAddon.ADDON.getConfig().get("NAMETAG_WPS")
-                .getAsBoolean(); // default = false
-    }
-
-    // Blacklist
-    public static boolean getNameTagBlacklist() {
-        return UnicacityAddon.ADDON.getConfig().has("NAMETAG_BLACKLIST") && UnicacityAddon.ADDON.getConfig().get("NAMETAG_BLACKLIST")
-                .getAsBoolean(); // default = false
-    }
-
-    // Contract
-    public static boolean getNameTagContract() {
-        return UnicacityAddon.ADDON.getConfig().has("NAMETAG_CONTRACT") && UnicacityAddon.ADDON.getConfig().get("NAMETAG_CONTRACT")
+    // WPS/BLACKLIST/CONTRACT
+    public static boolean getNameTagFactionSpecific() {
+        return UnicacityAddon.ADDON.getConfig().has("NAMETAG_FACTIONSPECIFIC_SETTINGS") && UnicacityAddon.ADDON.getConfig().get("NAMETAG_FACTIONSPECIFIC_SETTINGS")
                 .getAsBoolean(); // default = false
     }
 
     // Delay
     public static String getRefreshDisplayNamesInterval() {
-        return UnicacityAddon.ADDON.getConfig().has("NAMETAG_DELAY") && !UnicacityAddon.ADDON.getConfig().get("NAMETAG_DELAY").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("NAMETAG_DELAY").getAsString().equals("0") && !UnicacityAddon.ADDON.getConfig().get("NAMETAG_DELAY").getAsString().startsWith("-")
-                ? UnicacityAddon.ADDON.getConfig().get("NAMETAG_DELAY").getAsString()
+        return UnicacityAddon.ADDON.getConfig().has("NAMETAG_DELAY_SETTINGS") && !UnicacityAddon.ADDON.getConfig().get("NAMETAG_DELAY_SETTINGS").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("NAMETAG_DELAY").getAsString().equals("0") && !UnicacityAddon.ADDON.getConfig().get("NAMETAG_DELAY").getAsString().startsWith("-")
+                ? UnicacityAddon.ADDON.getConfig().get("NAMETAG_DELAY_SETTINGS").getAsString()
                 : "5";
     }
 
     // ATMINFO
     public static boolean getEventATM() {
-        return !UnicacityAddon.ADDON.getConfig().has("EVENT_ATM") || UnicacityAddon.ADDON.getConfig().get("EVENT_ATM")
+        return !UnicacityAddon.ADDON.getConfig().has("ATM_SETTINGS") || UnicacityAddon.ADDON.getConfig().get("ATM_SETTINGS")
                 .getAsBoolean(); // default = true
     }
 
     public static boolean getEventATMFBank() {
-        return UnicacityAddon.ADDON.getConfig().has("EVENT_ATM_FBANK") && UnicacityAddon.ADDON.getConfig().get("EVENT_ATM_FBANK")
+        return UnicacityAddon.ADDON.getConfig().has("ATM_FBANK_SETTINGS") && UnicacityAddon.ADDON.getConfig().get("ATM_FBANK_SETTINGS")
                 .getAsBoolean(); // default = true
     }
 
     public static boolean getEventATMGRKasse() {
-        return UnicacityAddon.ADDON.getConfig().has("EVENT_ATM_GRKASSE") && UnicacityAddon.ADDON.getConfig().get("EVENT_ATM_GRKASSE")
+        return UnicacityAddon.ADDON.getConfig().has("ATM_GRBANK_SETTINGS") && UnicacityAddon.ADDON.getConfig().get("ATM_GRBANK_SETTINGS")
                 .getAsBoolean(); // default = true
     }
 
     public static boolean getEventATMInfo() {
-        return !UnicacityAddon.ADDON.getConfig().has("EVENT_ATM_INFO") || UnicacityAddon.ADDON.getConfig().get("EVENT_ATM_INFO")
+        return !UnicacityAddon.ADDON.getConfig().has("ATM_INFO_SETTINGS") || UnicacityAddon.ADDON.getConfig().get("ATM_INFO_SETTINGS")
                 .getAsBoolean(); // default = true
     }
 
     // TABLIST
     public static boolean getEventTabList() {
-        return !UnicacityAddon.ADDON.getConfig().has("EVENT_TABLIST") || UnicacityAddon.ADDON.getConfig().get("EVENT_TABLIST")
+        return !UnicacityAddon.ADDON.getConfig().has("ORDERED_TABLIST_SETTINGS") || UnicacityAddon.ADDON.getConfig().get("ORDERED_TABLIST_SETTINGS")
                 .getAsBoolean(); // default = true
     }
 
     // CARFIND
     public static boolean getEventCarFind() {
-        return !UnicacityAddon.ADDON.getConfig().has("EVENT_CARFIND") || UnicacityAddon.ADDON.getConfig().get("EVENT_CARFIND")
+        return !UnicacityAddon.ADDON.getConfig().has("CAR_FIND_SETTINGS") || UnicacityAddon.ADDON.getConfig().get("CAR_FIND_SETTINGS")
                 .getAsBoolean(); // default = true
     }
 
     // REINFORCEMENT
     public static String getPatternReinforcement() {
-        return UnicacityAddon.ADDON.getConfig().has("PATTERN_REINFORCEMENT") && !UnicacityAddon.ADDON.getConfig().get("PATTERN_REINFORCEMENT").getAsString().isEmpty()
-                ? UnicacityAddon.ADDON.getConfig().get("PATTERN_REINFORCEMENT").getAsString()
+        return UnicacityAddon.ADDON.getConfig().has("REINFORCEMENT_SETTINGS") && !UnicacityAddon.ADDON.getConfig().get("REINFORCEMENT_SETTINGS").getAsString().isEmpty()
+                ? UnicacityAddon.ADDON.getConfig().get("REINFORCEMENT_SETTINGS").getAsString()
                 : REINFORCEMENT_FALLBACK;
     }
 
     // REINFORCEMENT REPLY
     public static String getPatternReinforcementReply() {
-        return UnicacityAddon.ADDON.getConfig().has("PATTERN_REINFORCEMENT_REPLY") && !UnicacityAddon.ADDON.getConfig().get("PATTERN_REINFORCEMENT_REPLY").getAsString().isEmpty()
-                ? UnicacityAddon.ADDON.getConfig().get("PATTERN_REINFORCEMENT_REPLY").getAsString()
+        return UnicacityAddon.ADDON.getConfig().has("REINFORCEMENT_REPLY_SETTINGS") && !UnicacityAddon.ADDON.getConfig().get("REINFORCEMENT_REPLY_SETTINGS").getAsString().isEmpty()
+                ? UnicacityAddon.ADDON.getConfig().get("REINFORCEMENT_REPLY_SETTINGS").getAsString()
                 : REINFORCEMENT_REPLY_FALLBACK;
     }
 
     // SLOC
     public static String getPatternSloc() {
-        return UnicacityAddon.ADDON.getConfig().has("PATTERN_SLOC") && !UnicacityAddon.ADDON.getConfig().get("PATTERN_SLOC").getAsString().isEmpty()
-                ? UnicacityAddon.ADDON.getConfig().get("PATTERN_SLOC").getAsString()
+        return UnicacityAddon.ADDON.getConfig().has("SLOC_SETTINGS") && !UnicacityAddon.ADDON.getConfig().get("SLOC_SETTINGS").getAsString().isEmpty()
+                ? UnicacityAddon.ADDON.getConfig().get("SLOC_SETTINGS").getAsString()
                 : SLOC_FALLBACK;
     }
 
     // REPORT GREETING
     public static String getReportGreeting() {
-        return UnicacityAddon.ADDON.getConfig().has("REPORT_GREETING") && !UnicacityAddon.ADDON.getConfig().get("REPORT_GREETING").getAsString().isEmpty()
-                ? UnicacityAddon.ADDON.getConfig().get("REPORT_GREETING").getAsString()
+        return UnicacityAddon.ADDON.getConfig().has("REPORT_GREETING_SETTINGS") && !UnicacityAddon.ADDON.getConfig().get("REPORT_GREETING_SETTINGS").getAsString().isEmpty()
+                ? UnicacityAddon.ADDON.getConfig().get("REPORT_GREETING_SETTINGS").getAsString()
                 : Strings.EMPTY;
     }
 
     public static String getReportFarewell() {
-        return UnicacityAddon.ADDON.getConfig().has("REPORT_FAREWELL") && !UnicacityAddon.ADDON.getConfig().get("REPORT_FAREWELL").getAsString().isEmpty()
-                ? UnicacityAddon.ADDON.getConfig().get("REPORT_FAREWELL").getAsString()
+        return UnicacityAddon.ADDON.getConfig().has("REPORT_FAREWELL_SETTINGS") && !UnicacityAddon.ADDON.getConfig().get("REPORT_FAREWELL_SETTINGS").getAsString().isEmpty()
+                ? UnicacityAddon.ADDON.getConfig().get("REPORT_FAREWELL_SETTINGS").getAsString()
                 : Strings.EMPTY;
     }
 
     // PASSWORD SETTINGS
     public static boolean getPasswordAutomation() {
-        return UnicacityAddon.ADDON.getConfig().has("AUTOMATED_PASSWORD") && UnicacityAddon.ADDON.getConfig().get("AUTOMATED_PASSWORD")
+        return UnicacityAddon.ADDON.getConfig().has("PASSWORD_SETTINGS") && UnicacityAddon.ADDON.getConfig().get("PASSWORD_SETTINGS")
                 .getAsBoolean();
     }
 
     public static String getPassword() {
-        return UnicacityAddon.ADDON.getConfig().has("PASSWORD") && !UnicacityAddon.ADDON.getConfig().get("PASSWORD").getAsString().isEmpty()
-                ? UnicacityAddon.ADDON.getConfig().get("PASSWORD").getAsString()
+        return UnicacityAddon.ADDON.getConfig().has("PASSWORD_STRING_SETTINGS") && !UnicacityAddon.ADDON.getConfig().get("PASSWORD_STRING_SETTINGS").getAsString().isEmpty()
+                ? UnicacityAddon.ADDON.getConfig().get("PASSWORD_STRING_SETTINGS").getAsString()
                 : Strings.EMPTY;
     }
 
     // COMMANDS ON JOIN
     public static boolean getCommandAutomation() {
-        return UnicacityAddon.ADDON.getConfig().has("COMMAND_ON_JOIN") && UnicacityAddon.ADDON.getConfig().get("COMMAND_ON_JOIN")
+        return UnicacityAddon.ADDON.getConfig().has("AUTOMATE_COMMANDS_SETTINGS") && UnicacityAddon.ADDON.getConfig().get("AUTOMATE_COMMANDS_SETTINGS")
                 .getAsBoolean();
     }
 
     public static String getFirstCommand() {
-        return UnicacityAddon.ADDON.getConfig().has("FIRST_COMMAND") && !UnicacityAddon.ADDON.getConfig().get("FIRST_COMMAND").getAsString().isEmpty()
-                ? UnicacityAddon.ADDON.getConfig().get("FIRST_COMMAND").getAsString()
+        return UnicacityAddon.ADDON.getConfig().has("AUTOMATE_COMMAND_ONE_SETTINGS") && !UnicacityAddon.ADDON.getConfig().get("AUTOMATE_COMMAND_ONE_SETTINGS").getAsString().isEmpty()
+                ? UnicacityAddon.ADDON.getConfig().get("AUTOMATE_COMMAND_ONE_SETTINGS").getAsString()
                 : Strings.EMPTY;
     }
 
     public static String getSecondCommand() {
-        return UnicacityAddon.ADDON.getConfig().has("SECOND_COMMAND") && !UnicacityAddon.ADDON.getConfig().get("SECOND_COMMAND").getAsString().isEmpty()
-                ? UnicacityAddon.ADDON.getConfig().get("SECOND_COMMAND").getAsString()
+        return UnicacityAddon.ADDON.getConfig().has("AUTOMATE_COMMAND_SECOND_SETTINGS") && !UnicacityAddon.ADDON.getConfig().get("AUTOMATE_COMMAND_SECOND_SETTINGS").getAsString().isEmpty()
+                ? UnicacityAddon.ADDON.getConfig().get("AUTOMATE_COMMAND_SECOND_SETTINGS").getAsString()
                 : Strings.EMPTY;
     }
 
     public static String getThirdCommand() {
-        return UnicacityAddon.ADDON.getConfig().has("THIRD_COMMAND") && !UnicacityAddon.ADDON.getConfig().get("THIRD_COMMAND").getAsString().isEmpty()
-                ? UnicacityAddon.ADDON.getConfig().get("THIRD_COMMAND").getAsString()
+        return UnicacityAddon.ADDON.getConfig().has("AUTOMATE_COMMAND_THIRD_SETTINGS") && !UnicacityAddon.ADDON.getConfig().get("AUTOMATE_COMMAND_THIRD_SETTINGS").getAsString().isEmpty()
+                ? UnicacityAddon.ADDON.getConfig().get("AUTOMATE_COMMAND_THIRD_SETTINGS").getAsString()
                 : Strings.EMPTY;
     }
 
     // HQ Nachrichten
     public static boolean getHQMessagesActivated() {
-        return !UnicacityAddon.ADDON.getConfig().has("HQ_MESSAGES") || UnicacityAddon.ADDON.getConfig().get("HQ_MESSAGES")
+        return !UnicacityAddon.ADDON.getConfig().has("HQ_MESSAGE_SETTINGS") || UnicacityAddon.ADDON.getConfig().get("HQ_MESSAGE_SETTINGS")
                 .getAsBoolean(); // default = true
     }
 
     // EIGENBEDARF SETTINGS
     public static boolean getCocainActivated() {
-        return !UnicacityAddon.ADDON.getConfig().has("COCAIN_ACTIVATED") || UnicacityAddon.ADDON.getConfig().get("COCAIN_ACTIVATED")
+        return !UnicacityAddon.ADDON.getConfig().has("EIGENBEDARF_COCAINE_SETTINGS") || UnicacityAddon.ADDON.getConfig().get("EIGENBEDARF_COCAINE_SETTINGS")
                 .getAsBoolean(); // default = true
     }
 
     public static DrugPurity getCocainDrugPurity() {
-        return UnicacityAddon.ADDON.getConfig().has("COCAIN_PURITY") ?
-                DrugPurity.valueOf(UnicacityAddon.ADDON.getConfig().get("COCAIN_PURITY").getAsString()) :
+        return UnicacityAddon.ADDON.getConfig().has("EIGENBEDARF_COCAINE_PURITY_SETTINGS") ?
+                DrugPurity.valueOf(UnicacityAddon.ADDON.getConfig().get("EIGENBEDARF_COCAINE_PURITY_SETTINGS").getAsString()) :
                 DrugPurity.BEST; // default = NULL
     }
 
     public static void setCocainDrugPurity(DrugPurity cocainPurity) {
-        UnicacityAddon.ADDON.getConfig().addProperty("COCAIN_PURITY", cocainPurity.toString());
+        UnicacityAddon.ADDON.getConfig().addProperty("EIGENBEDARF_COCAINE_PURITY_SETTINGS", cocainPurity.toString());
     }
 
     public static String getCocaineAmount() {
-        return UnicacityAddon.ADDON.getConfig().has("COCAINE_AMOUNT") && !UnicacityAddon.ADDON.getConfig().get("COCAINE_AMOUNT").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("COCAINE_AMOUNT").getAsString().equals("0")
-                ? UnicacityAddon.ADDON.getConfig().get("COCAINE_AMOUNT").getAsString()
+        return UnicacityAddon.ADDON.getConfig().has("EIGENBEDARF_COCAINE_AMOUNT_SETTINGS") && !UnicacityAddon.ADDON.getConfig().get("EIGENBEDARF_COCAINE_AMOUNT_SETTINGS").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("COCAINE_AMOUNT").getAsString().equals("0")
+                ? UnicacityAddon.ADDON.getConfig().get("EIGENBEDARF_COCAINE_AMOUNT_SETTINGS").getAsString()
                 : "15";
     }
 
     public static boolean getMarihuanaActivated() {
-        return !UnicacityAddon.ADDON.getConfig().has("MARIHUANA_ACTIVATED") || UnicacityAddon.ADDON.getConfig().get("MARIHUANA_ACTIVATED")
+        return !UnicacityAddon.ADDON.getConfig().has("EIGENBEDARF_MARIHUANA_SETTINGS") || UnicacityAddon.ADDON.getConfig().get("EIGENBEDARF_MARIHUANA_SETTINGS")
                 .getAsBoolean(); // default = true
     }
 
     public static DrugPurity getMarihuanaDrugPurity() {
-        return UnicacityAddon.ADDON.getConfig().has("MARIHUANA_PURITY") ?
-                DrugPurity.valueOf(UnicacityAddon.ADDON.getConfig().get("MARIHUANA_PURITY").getAsString()) :
+        return UnicacityAddon.ADDON.getConfig().has("EIGENBEDARF_MARIHUANA_PURITY_SETTINGS") ?
+                DrugPurity.valueOf(UnicacityAddon.ADDON.getConfig().get("EIGENBEDARF_MARIHUANA_PURITY_SETTINGS").getAsString()) :
                 DrugPurity.BEST; // default = NULL
     }
 
     public static void setMarihuanaDrugPurity(DrugPurity cocainPurity) {
-        UnicacityAddon.ADDON.getConfig().addProperty("MARIHUANA_PURITY", cocainPurity.toString());
+        UnicacityAddon.ADDON.getConfig().addProperty("EIGENBEDARF_MARIHUANA_PURITY_SETTINGS", cocainPurity.toString());
     }
 
     public static String getMarihuanaAmount() {
-        return UnicacityAddon.ADDON.getConfig().has("MARIHUANA_AMOUNT") && !UnicacityAddon.ADDON.getConfig().get("MARIHUANA_AMOUNT").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("MARIHUANA_AMOUNT").getAsString().equals("0")
-                ? UnicacityAddon.ADDON.getConfig().get("MARIHUANA_AMOUNT").getAsString()
+        return UnicacityAddon.ADDON.getConfig().has("EIGENBEDARF_MARIHUANA_AMOUNT_SETTINGS") && !UnicacityAddon.ADDON.getConfig().get("EIGENBEDARF_MARIHUANA_AMOUNT_SETTINGS").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("MARIHUANA_AMOUNT").getAsString().equals("0")
+                ? UnicacityAddon.ADDON.getConfig().get("EIGENBEDARF_MARIHUANA_AMOUNT_SETTINGS").getAsString()
                 : "15";
     }
 
     public static boolean getMethActivated() {
-        return !UnicacityAddon.ADDON.getConfig().has("METH_ACTIVATED") || UnicacityAddon.ADDON.getConfig().get("METH_ACTIVATED")
+        return !UnicacityAddon.ADDON.getConfig().has("EIGENBEDARF_METH_SETTINGS") || UnicacityAddon.ADDON.getConfig().get("EIGENBEDARF_METH_SETTINGS")
                 .getAsBoolean(); // default = true
     }
 
     public static DrugPurity getMethDrugPurity() {
-        return UnicacityAddon.ADDON.getConfig().has("METH_PURITY") ?
-                DrugPurity.valueOf(UnicacityAddon.ADDON.getConfig().get("METH_PURITY").getAsString()) :
+        return UnicacityAddon.ADDON.getConfig().has("EIGENBEDARF_METH_PURITY_SETTINGS") ?
+                DrugPurity.valueOf(UnicacityAddon.ADDON.getConfig().get("EIGENBEDARF_METH_PURITY_SETTINGS").getAsString()) :
                 DrugPurity.BEST; // default = NULL
     }
 
     public static void setMethDrugPurity(DrugPurity cocainPurity) {
-        UnicacityAddon.ADDON.getConfig().addProperty("MMETH_PURITY", cocainPurity.toString());
+        UnicacityAddon.ADDON.getConfig().addProperty("EIGENBEDARF_METH_PURITY_SETTINGS", cocainPurity.toString());
     }
 
     public static String getMethAmount() {
-        return UnicacityAddon.ADDON.getConfig().has("METH_AMOUNT") && !UnicacityAddon.ADDON.getConfig().get("METH_AMOUNT").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("METH_AMOUNT").getAsString().equals("0")
-                ? UnicacityAddon.ADDON.getConfig().get("METH_AMOUNT").getAsString()
+        return UnicacityAddon.ADDON.getConfig().has("EIGENBEDARF_METH_AMOUNT_SETTINGS") && !UnicacityAddon.ADDON.getConfig().get("EIGENBEDARF_METH_AMOUNT_SETTINGS").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("METH_AMOUNT").getAsString().equals("0")
+                ? UnicacityAddon.ADDON.getConfig().get("EIGENBEDARF_METH_AMOUNT_SETTINGS").getAsString()
                 : "15";
     }
 }

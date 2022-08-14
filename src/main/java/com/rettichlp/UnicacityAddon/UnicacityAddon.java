@@ -1,22 +1,55 @@
 package com.rettichlp.UnicacityAddon;
 
-import com.rettichlp.UnicacityAddon.base.config.ConfigSettings;
+import com.rettichlp.UnicacityAddon.base.config.Config;
 import com.rettichlp.UnicacityAddon.base.faction.FactionHandler;
 import com.rettichlp.UnicacityAddon.base.io.FileManager;
 import com.rettichlp.UnicacityAddon.base.module.UCModuleHandler;
 import com.rettichlp.UnicacityAddon.base.registry.KeyBindRegistry;
-import com.rettichlp.UnicacityAddon.commands.*;
+import com.rettichlp.UnicacityAddon.commands.ABuyCommand;
+import com.rettichlp.UnicacityAddon.commands.ACallCommand;
+import com.rettichlp.UnicacityAddon.commands.AEquipCommand;
+import com.rettichlp.UnicacityAddon.commands.ASMSCommand;
+import com.rettichlp.UnicacityAddon.commands.CancelCountdownCommand;
+import com.rettichlp.UnicacityAddon.commands.CountdownCommand;
+import com.rettichlp.UnicacityAddon.commands.EinzahlenCommand;
+import com.rettichlp.UnicacityAddon.commands.FactionInfoCommand;
+import com.rettichlp.UnicacityAddon.commands.MemberInfoCommand;
+import com.rettichlp.UnicacityAddon.commands.NaviCommand;
+import com.rettichlp.UnicacityAddon.commands.NearestATMCommand;
+import com.rettichlp.UnicacityAddon.commands.NearestJobCommand;
+import com.rettichlp.UnicacityAddon.commands.ReichensteuerCommand;
+import com.rettichlp.UnicacityAddon.commands.TodoListCommand;
+import com.rettichlp.UnicacityAddon.commands.TriggerEventCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.AFbankEinzahlenCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.ReinforcementCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.ShareLocationCommand;
-import com.rettichlp.UnicacityAddon.commands.faction.badfaction.*;
+import com.rettichlp.UnicacityAddon.commands.faction.badfaction.ASetBlacklistCommand;
+import com.rettichlp.UnicacityAddon.commands.faction.badfaction.BlacklistInfoCommand;
+import com.rettichlp.UnicacityAddon.commands.faction.badfaction.EigenbedarfCommand;
+import com.rettichlp.UnicacityAddon.commands.faction.badfaction.GiftEigenbedarfCommand;
+import com.rettichlp.UnicacityAddon.commands.faction.badfaction.ModifyBlacklistCommand;
+import com.rettichlp.UnicacityAddon.commands.faction.badfaction.SchmarzmarktLocationsCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.polizei.ASUCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.polizei.ModifyWantedsCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.rettungsdienst.ARezeptAnnehmenCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.rettungsdienst.ARezeptCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.terroristen.ExplosiveBeltCommand;
 import com.rettichlp.UnicacityAddon.commands.job.ADropMoneyCommand;
-import com.rettichlp.UnicacityAddon.events.*;
+import com.rettichlp.UnicacityAddon.events.ABuyEventHandler;
+import com.rettichlp.UnicacityAddon.events.AEquipEventHandler;
+import com.rettichlp.UnicacityAddon.events.BombTimerEventHandler;
+import com.rettichlp.UnicacityAddon.events.CarEventHandler;
+import com.rettichlp.UnicacityAddon.events.FactionInfoEventHandler;
+import com.rettichlp.UnicacityAddon.events.HotkeyEventHandler;
+import com.rettichlp.UnicacityAddon.events.HouseRenterEventHandler;
+import com.rettichlp.UnicacityAddon.events.JoinEventHandler;
+import com.rettichlp.UnicacityAddon.events.KarmaMessageEventHandler;
+import com.rettichlp.UnicacityAddon.events.MobileEventHandler;
+import com.rettichlp.UnicacityAddon.events.MoneyEventHandler;
+import com.rettichlp.UnicacityAddon.events.NameTagEventHandler;
+import com.rettichlp.UnicacityAddon.events.PayDayEventHandler;
+import com.rettichlp.UnicacityAddon.events.TabListEventHandler;
+import com.rettichlp.UnicacityAddon.events.WeaponClickEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.AFbankEinzahlenEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.BlacklistEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.ContractEventHandler;
@@ -24,7 +57,12 @@ import com.rettichlp.UnicacityAddon.events.faction.EmergencyServiceEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.FDoorEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.ReinforcementEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.ShareLocationEventHandler;
-import com.rettichlp.UnicacityAddon.events.faction.badfaction.*;
+import com.rettichlp.UnicacityAddon.events.faction.badfaction.AutomatedCalculationOf25;
+import com.rettichlp.UnicacityAddon.events.faction.badfaction.BlacklistInfoEventHandler;
+import com.rettichlp.UnicacityAddon.events.faction.badfaction.FBIHackEventHandler;
+import com.rettichlp.UnicacityAddon.events.faction.badfaction.GiftEigenbedarfListener;
+import com.rettichlp.UnicacityAddon.events.faction.badfaction.ModifyBlacklistEventHandler;
+import com.rettichlp.UnicacityAddon.events.faction.badfaction.PlantTimerEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.polizei.HQMessageEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.polizei.WantedEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.rettungsdienst.MedicationEventHandler;
@@ -175,6 +213,6 @@ public class UnicacityAddon extends LabyModAddon {
 
     @Override
     protected void fillSettings(List<SettingsElement> list) {
-        ConfigSettings.createConfig(this, list);
+        Config.createConfig(this, list);
     }
 }
