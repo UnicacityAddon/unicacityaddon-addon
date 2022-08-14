@@ -154,6 +154,7 @@ public class UnicacityAddon extends LabyModAddon {
         ADDON.getApi().registerForgeListener(new BlacklistInfoEventHandler());
         ADDON.getApi().registerForgeListener(new BombTimerEventHandler());
         ADDON.getApi().registerForgeListener(new CarEventHandler());
+        ADDON.getApi().registerForgeListener(new CheckKFZEventHandler());
         ADDON.getApi().registerForgeListener(new ContractEventHandler());
         ADDON.getApi().registerForgeListener(new EmergencyServiceEventHandler());
         ADDON.getApi().registerForgeListener(new ExplosiveBeltTimerEvent());
