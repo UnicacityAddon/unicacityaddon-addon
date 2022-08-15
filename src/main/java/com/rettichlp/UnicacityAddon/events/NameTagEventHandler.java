@@ -33,6 +33,7 @@ public class NameTagEventHandler {
 
     @SubscribeEvent
     public void onRenderNameTag(PlayerEvent.NameFormat e) {
+        if (!UnicacityAddon.isUnicacity()) return;
         String playerName = e.getUsername();
 
         String displayName = ScorePlayerTeam.formatPlayerName(e.getEntityPlayer().getTeam(), playerName);
