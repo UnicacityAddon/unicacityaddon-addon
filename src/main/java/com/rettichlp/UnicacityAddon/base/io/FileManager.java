@@ -10,6 +10,7 @@ import com.rettichlp.UnicacityAddon.modules.CarOpenModule;
 import com.rettichlp.UnicacityAddon.modules.CashMoneyModule;
 import com.rettichlp.UnicacityAddon.modules.JobModule;
 import com.rettichlp.UnicacityAddon.modules.PayDayModule;
+import joptsimple.internal.Strings;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
@@ -109,7 +110,7 @@ public class FileManager {
             JobModule.jobExperience = data.getJobExperience();
             PayDayModule.currentTime = data.getPayDayTime();
             TodoListCommand.todolist = data.getTodolist();
-            CarOpenModule.info = data.getCarInfo();
+            CarOpenModule.info = data.getCarInfo() == null ? Strings.EMPTY : data.getCarInfo();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
