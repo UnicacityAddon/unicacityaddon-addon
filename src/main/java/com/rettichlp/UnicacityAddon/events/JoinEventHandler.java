@@ -67,7 +67,7 @@ public class JoinEventHandler {
                 new Timer().schedule(new TimerTask() {
                     @Override
                     public void run() {
-                        if (!ConfigElements.getSecondCommand().isEmpty()) p.sendChatMessage(ConfigElements.getFirstCommand());
+                        if (!ConfigElements.getFirstCommand().isEmpty()) p.sendChatMessage(ConfigElements.getFirstCommand());
                     }
                 }, 500);
 
