@@ -86,7 +86,7 @@ public class ConfigSubSettings {
     static Settings getEigenbedarfCocaineSettings(UnicacityAddon unicacityAddon) {
         Settings settings = new Settings();
 
-        StringElement cocainAmount = new StringElement("Kokain Menge", unicacityAddon, new ControlElement.IconData(Material.SUGAR), "COCAINE_AMOUNT", ConfigElements.getCocaineAmount());
+        StringElement cocainAmount = new StringElement("Kokain Menge", unicacityAddon, new ControlElement.IconData(Material.SUGAR), "EIGENBEDARF_COCAINE_AMOUNT_SETTINGS", ConfigElements.getCocaineAmount());
         settings.add(cocainAmount);
 
         DropDownMenu<DrugPurity> cocainPurity = new DropDownMenu<DrugPurity>("Kokain Reinheit", 0, 0, 0, 0).fill(DrugPurity.values());
@@ -103,7 +103,7 @@ public class ConfigSubSettings {
     static Settings getEigenbedarfWeedSettings(UnicacityAddon unicacityAddon) {
         Settings settings = new Settings();
 
-        StringElement weedAmount = new StringElement("Marihuana Menge", unicacityAddon, new ControlElement.IconData(Material.WHEAT), "MARIHUANA_AMOUNT", ConfigElements.getMarihuanaAmount());
+        StringElement weedAmount = new StringElement("Marihuana Menge", unicacityAddon, new ControlElement.IconData(Material.WHEAT), "EIGENBEDARF_MARIHUANA_AMOUNT_SETTINGS", ConfigElements.getMarihuanaAmount());
         settings.add(weedAmount);
 
         DropDownMenu<DrugPurity> weedPurity = new DropDownMenu<DrugPurity>("Marihuana Reinheit", 0, 0, 0, 0).fill(DrugPurity.values());
@@ -120,7 +120,7 @@ public class ConfigSubSettings {
     static Settings getEigenbedarfMethSettings(UnicacityAddon unicacityAddon) {
         Settings settings = new Settings();
 
-        StringElement methAmount = new StringElement("Methamphetamin Menge", unicacityAddon, new ControlElement.IconData(Material.QUARTZ), "METH_AMOUNT", ConfigElements.getMethAmount());
+        StringElement methAmount = new StringElement("Methamphetamin Menge", unicacityAddon, new ControlElement.IconData(Material.QUARTZ), "EIGENBEDARF_METH_AMOUNT_SETTINGS", ConfigElements.getMethAmount());
         settings.add(methAmount);
 
         DropDownMenu<DrugPurity> methPurity = new DropDownMenu<DrugPurity>("Methamphetamin Reinheit", 0, 0, 0, 0).fill(DrugPurity.values());
