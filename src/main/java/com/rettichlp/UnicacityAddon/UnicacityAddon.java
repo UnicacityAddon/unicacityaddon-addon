@@ -102,6 +102,7 @@ public class UnicacityAddon extends LabyModAddon {
     public static final String VERSION = "1.3.0-dev";
     public static final Minecraft MINECRAFT = Minecraft.getMinecraft();
     public static final LabyMod LABYMOD = LabyMod.getInstance();
+    public static boolean isUnicacity = MINECRAFT.world != null && MINECRAFT.getCurrentServerData() != null && (MINECRAFT.getCurrentServerData().serverIP.contains("unicacity") || MINECRAFT.getCurrentServerData().serverIP.contains("51.195.87.119"));
     public static UnicacityAddon ADDON;
 
     @Override
