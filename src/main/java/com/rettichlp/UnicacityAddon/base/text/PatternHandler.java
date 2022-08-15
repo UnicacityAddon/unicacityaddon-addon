@@ -137,7 +137,7 @@ public class PatternHandler {
     public static final Pattern AD_CONTROL_PATTERN = Pattern.compile("^\\[Werbung] (\\w+) hat eine Werbung geschalten: .+$");
 
     /**
-     * {@link com.rettichlp.UnicacityAddon.events.faction.badfaction.AutomatedCalculationOf25}
+     * {@link com.rettichlp.UnicacityAddon.events.faction.badfaction.AutomatedCalculationOf25EventHandler}
      */
     public static final Pattern STATEMENT_OF_ACCOUNT = Pattern.compile("^Finanzen von (?:\\[UC])*(\\w+): Geld: (\\d+)\\$ \\| Bank: (\\d+)\\$$");
 
@@ -183,7 +183,7 @@ public class PatternHandler {
     public static final Pattern STATS_PAYDAY_PATTERN = Pattern.compile("^ {2}- Zeit seit PayDay: (\\d+)/60 Minuten$");
 
     /**
-     * {@link com.rettichlp.UnicacityAddon.events.faction.badfaction.GiftEigenbedarfListener}
+     * {@link com.rettichlp.UnicacityAddon.events.faction.badfaction.GiftEigenbedarfEventHandler}
      */
     public static final Pattern DRUGDEAL_ENDED = Pattern.compile("^\\[Deal] (?:\\[UC])*(\\w+) hat den Deal angenommen\\.$" +
             "|^\\[Deal] (?:\\[UC])*(\\w+) hat das Angebot abgelehnt\\.$");

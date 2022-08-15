@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 @UCEvent
 public class ADropEventHandler {
 
-    Timer timer = new Timer();
+    final Timer timer = new Timer();
 
     @SubscribeEvent
     public boolean onClientChatReceive(ClientChatReceivedEvent e) {
