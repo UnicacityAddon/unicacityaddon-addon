@@ -90,6 +90,7 @@ import net.labymod.ingamegui.ModuleCategoryRegistry;
 import net.labymod.main.LabyMod;
 import net.labymod.settings.elements.SettingsElement;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.ServerData;
 import net.minecraftforge.client.ClientCommandHandler;
 
 import java.util.List;
@@ -218,5 +219,17 @@ public class UnicacityAddon extends LabyModAddon {
     @Override
     protected void fillSettings(List<SettingsElement> list) {
         Config.createConfig(this, list);
+    }
+
+    public static boolean isUnicacity() {
+        if (MINECRAFT.world == null) return false;
+
+        ServerData serverData = MINECRAFT.getCurrentServerData();
+        if (serverData == null) return false;
+
+        String ip = serverData.serverIP;
+        if (ip.contains(":")) ip = ip.split(":")[0]; // strip unused port
+
+        return ip.equalsIgnoreCase("server.unicacity.de") || ip.equalsIgnoreCase("unicacity.de");
     }
 }

@@ -1,5 +1,6 @@
 package com.rettichlp.UnicacityAddon.events;
 
+import com.rettichlp.UnicacityAddon.UnicacityAddon;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
 import com.rettichlp.UnicacityAddon.modules.PayDayModule;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
@@ -41,9 +42,9 @@ public class PayDayEventHandler {
 
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
-        if (isAfk || event.phase != TickEvent.Phase.END) return;
+        if (isAfk || event.phase != TickEvent.Phase.END || !UnicacityAddon.isUnicacity()) return;
 
-        if (currentTick++ != 1200) return;
+        if (currentTick++ != 5) return;
         PayDayModule.addTime(1);
         currentTick = 0;
     }
