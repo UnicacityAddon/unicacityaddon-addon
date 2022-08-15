@@ -11,6 +11,7 @@ import com.rettichlp.UnicacityAddon.base.registry.annotation.UCEvent;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
 import com.rettichlp.UnicacityAddon.base.utils.ImageUploadUtils;
+import net.labymod.main.LabyMod;
 import net.minecraft.client.shader.Framebuffer;
 import net.minecraft.util.ScreenShotHelper;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
@@ -75,15 +76,13 @@ public class HotkeyEventHandler {
         } else if (Keyboard.isKeyDown(KeyBindRegistry.aDutySilent.getKeyCode())) {
             p.sendChatMessage("/aduty -s");
         }
-
-        lastScreenshot = System.currentTimeMillis();
     }
 
     private void handleScreenshot() {
         try {
             File newImageFile = FileManager.getNewImageFile();
             if (newImageFile == null) {
-                UnicacityAddon.LABYMOD.notifyMessageRaw(ColorCode.RED.getCode() + "Fehler!", "Screenshot konnte nicht erstellt werden.");
+                LabyMod.getInstance().notifyMessageRaw(ColorCode.RED.getCode() + "Fehler!", "Screenshot konnte nicht erstellt werden.");
                 return;
             }
 
@@ -91,7 +90,9 @@ public class HotkeyEventHandler {
             assert framebuffer != null;
             BufferedImage image = ScreenShotHelper.createScreenshot(UnicacityAddon.MINECRAFT.displayWidth, UnicacityAddon.MINECRAFT.displayHeight, framebuffer);
             ImageIO.write(image, "jpg", newImageFile);
-            UnicacityAddon.LABYMOD.notifyMessageRaw(ColorCode.GREEN.getCode() + "Screenshot erstellt!", "Wird hochgeladen...");
+            LabyMod.getInstance().notifyMessageRaw(ColorCode.GREEN.getCode() + "Screenshot erstellt!", "Wird hochgeladen...");
+
+            lastScreenshot = System.currentTimeMillis();
 
             Thread thread = new Thread(() -> uploadScreenshot(newImageFile));
             thread.start();
@@ -104,7 +105,7 @@ public class HotkeyEventHandler {
     private void uploadScreenshot(File screenshotFile) {
         String link = ImageUploadUtils.uploadToLink(screenshotFile);
         AbstractionLayer.getPlayer().copyToClipboard(link);
-        UnicacityAddon.LABYMOD.notifyMessageRaw(ColorCode.GREEN.getCode() + "Screenshot hochgeladen!", "Link in Zwischenablage kopiert.");
+        LabyMod.getInstance().notifyMessageRaw(ColorCode.GREEN.getCode() + "Screenshot hochgeladen!", "Link in Zwischenablage kopiert.");
     }
 
     private void handleAd(String type) {

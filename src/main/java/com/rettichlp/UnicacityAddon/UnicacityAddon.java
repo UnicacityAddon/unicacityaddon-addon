@@ -58,7 +58,6 @@ import com.rettichlp.UnicacityAddon.modules.PlantFertilizeTimerModule;
 import com.rettichlp.UnicacityAddon.modules.PlantWaterTimerModule;
 import net.labymod.api.LabyModAddon;
 import net.labymod.ingamegui.ModuleCategoryRegistry;
-import net.labymod.main.LabyMod;
 import net.labymod.settings.elements.SettingsElement;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ServerData;
@@ -76,7 +75,6 @@ public class UnicacityAddon extends LabyModAddon {
 
     public static final String VERSION = "1.3.0-dev";
     public static final Minecraft MINECRAFT = Minecraft.getMinecraft();
-    public static final LabyMod LABYMOD = LabyMod.getInstance();
     public static UnicacityAddon ADDON;
 
     @Mod.EventHandler
