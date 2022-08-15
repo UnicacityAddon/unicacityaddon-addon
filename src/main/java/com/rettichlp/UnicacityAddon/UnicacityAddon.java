@@ -203,18 +203,14 @@ public class UnicacityAddon extends LabyModAddon {
         ADDON.getApi().registerModule(new PayDayModule());
         ADDON.getApi().registerModule(new PlantFertilizeTimerModule());
         ADDON.getApi().registerModule(new PlantWaterTimerModule());
+
+        FactionHandler.syncPlayerFactions();
+        FactionHandler.syncPlayerRanks();
     }
 
     @Override
     public void loadConfig() {
-        FactionHandler.syncPlayerFactions();
-        FactionHandler.syncPlayerRanks();
-
-        // Update blacklist
-        BlacklistEventHandler.refreshBlacklistReasons();
-        // Register keybindings
         KeyBindRegistry.registerKeyBinds();
-
         FileManager.loadData();
     }
 
