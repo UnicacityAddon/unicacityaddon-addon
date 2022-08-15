@@ -2,6 +2,7 @@ package com.rettichlp.UnicacityAddon.commands.faction.badfaction;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
+import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import com.rettichlp.UnicacityAddon.base.utils.ForgeUtils;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
@@ -16,6 +17,7 @@ import java.util.List;
 /**
  * @author Dimiikou
  */
+@UCCommand
 public class BlacklistInfoCommand extends CommandBase {
 
     public static String target;

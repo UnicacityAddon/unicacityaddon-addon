@@ -1,5 +1,6 @@
 package com.rettichlp.UnicacityAddon.events.job;
 
+import com.rettichlp.UnicacityAddon.base.registry.annotation.UCEvent;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
 import com.rettichlp.UnicacityAddon.commands.job.ADropMoneyCommand;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
@@ -8,6 +9,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 /**
  * @author Dimiikou
  */
+@UCEvent
 public class ADropMoneyEventHandler {
 
     @SubscribeEvent

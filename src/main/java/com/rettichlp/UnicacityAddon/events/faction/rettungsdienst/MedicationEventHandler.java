@@ -1,6 +1,7 @@
 package com.rettichlp.UnicacityAddon.events.faction.rettungsdienst;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
+import com.rettichlp.UnicacityAddon.base.registry.annotation.UCEvent;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
 import com.rettichlp.UnicacityAddon.commands.faction.rettungsdienst.ARezeptAnnehmenCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.rettungsdienst.ARezeptCommand;
@@ -13,6 +14,7 @@ import java.util.TimerTask;
 /**
  * @author RettichLP
  */
+@UCEvent
 public class MedicationEventHandler {
 
     private static final Timer TIMER = new Timer();

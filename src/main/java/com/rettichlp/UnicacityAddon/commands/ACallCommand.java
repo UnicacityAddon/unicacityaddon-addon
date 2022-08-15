@@ -2,6 +2,7 @@ package com.rettichlp.UnicacityAddon.commands;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
+import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import com.rettichlp.UnicacityAddon.base.utils.ForgeUtils;
 import com.rettichlp.UnicacityAddon.events.MobileEventHandler;
 import net.minecraft.command.CommandBase;
@@ -19,6 +20,7 @@ import java.util.TimerTask;
 /**
  * @author RettichLP
  */
+@UCCommand
 public class ACallCommand extends CommandBase {
 
     final Timer timer = new Timer();

@@ -1,4 +1,4 @@
-package com.rettichlp.UnicacityAddon.base.event;
+package com.rettichlp.UnicacityAddon.base.registry.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -10,4 +10,4 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-public @interface UCEventForge {}
+public @interface UCCommand {}

@@ -2,6 +2,7 @@ package com.rettichlp.UnicacityAddon.commands.faction.terroristen;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
+import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import com.rettichlp.UnicacityAddon.modules.ExplosiveBeltTimerModule;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
@@ -13,6 +14,7 @@ import javax.annotation.Nonnull;
 /**
  * @author Dimiikou
  */
+@UCCommand
 public class ExplosiveBeltCommand extends CommandBase {
 
     @Override @Nonnull

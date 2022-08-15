@@ -1,5 +1,6 @@
 package com.rettichlp.UnicacityAddon.commands;
 
+import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import com.rettichlp.UnicacityAddon.base.updater.Updater;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
@@ -12,6 +13,7 @@ import java.util.List;
 /**
  * @author RettichLP
  */
+@UCCommand
 public class UpdateAddonCommand extends CommandBase {
 
     @Override

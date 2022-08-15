@@ -3,6 +3,7 @@ package com.rettichlp.UnicacityAddon.commands.faction.rettungsdienst;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
 import com.rettichlp.UnicacityAddon.base.faction.rettungsdienst.Medication;
+import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import com.rettichlp.UnicacityAddon.base.utils.ForgeUtils;
 import com.rettichlp.UnicacityAddon.base.utils.MathUtils;
 import com.rettichlp.UnicacityAddon.events.faction.rettungsdienst.MedicationEventHandler;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
 /**
  * @author RettichLP
  */
+@UCCommand
 public class ARezeptCommand extends CommandBase {
 
     public static String target;

@@ -1,5 +1,6 @@
 package com.rettichlp.UnicacityAddon.events.faction.badfaction;
 
+import com.rettichlp.UnicacityAddon.base.registry.annotation.UCEvent;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
 import com.rettichlp.UnicacityAddon.base.utils.MathUtils;
@@ -15,6 +16,7 @@ import java.util.regex.Matcher;
 /**
  * @author Dimiikou
  */
+@UCEvent
 public class PlantTimerEventHandler {
 
     @SubscribeEvent

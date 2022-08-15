@@ -3,6 +3,7 @@ package com.rettichlp.UnicacityAddon.commands;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
 import com.rettichlp.UnicacityAddon.base.location.NaviPoint;
+import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import com.rettichlp.UnicacityAddon.base.utils.MathUtils;
 import com.rettichlp.UnicacityAddon.base.utils.TextUtils;
 import net.minecraft.command.CommandBase;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 /**
  * @author RettichLP
  */
+@UCCommand
 public class NaviCommand extends CommandBase {
 
     @Override

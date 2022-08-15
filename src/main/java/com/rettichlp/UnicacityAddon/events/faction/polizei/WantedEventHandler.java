@@ -1,7 +1,7 @@
 package com.rettichlp.UnicacityAddon.events.faction.polizei;
 
+import com.rettichlp.UnicacityAddon.base.registry.annotation.UCEvent;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
-import com.rettichlp.UnicacityAddon.events.NameTagEventHandler;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
@@ -15,6 +15,7 @@ import java.util.regex.Matcher;
  * @author RettichLP
  * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/events/NameFormatEventHandler.java">UCUtils by paulzhng</a>
  */
+@UCEvent
 public class WantedEventHandler {
 
     public static final Map<String, Wanted> WANTED_MAP = new HashMap<>();

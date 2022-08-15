@@ -2,12 +2,14 @@ package com.rettichlp.UnicacityAddon.events.job;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
+import com.rettichlp.UnicacityAddon.base.registry.annotation.UCEvent;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 /**
  * @author Dimiikou
  */
+@UCEvent
 public class InstantDropstoneEventHandler {
 
     @SubscribeEvent

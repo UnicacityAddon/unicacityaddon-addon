@@ -3,6 +3,7 @@ package com.rettichlp.UnicacityAddon.commands;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.location.ATM;
 import com.rettichlp.UnicacityAddon.base.location.NavigationUtils;
+import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
 import net.minecraft.command.CommandBase;
@@ -19,6 +20,7 @@ import java.util.Map;
 /**
  * @author RettichLP
  */
+@UCCommand
 public class NearestATMCommand extends CommandBase {
 
     @Override @Nonnull public String getName() {
