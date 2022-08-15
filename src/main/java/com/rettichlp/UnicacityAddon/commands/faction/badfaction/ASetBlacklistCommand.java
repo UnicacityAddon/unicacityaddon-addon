@@ -62,13 +62,14 @@ public class ASetBlacklistCommand extends CommandBase {
         }
 
         for (int i = 0; i < args.length - 1; i++) {
-            p.sendChatMessage("/bl set " + args[i] + " " + ble.getKills() + " " + ble.getPrice() + " " + ble.getReason().replace("-", ""));
+            p.sendChatMessage("/bl set " + args[i] + " " + ble.getKills() + " " + ble.getPrice() + " " + ble.getReason().replace("-", " "));
         }
     }
 
     @Override
     @Nonnull
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
+        BlacklistEventHandler.refreshBlacklistReasons();
         List<String> tabCompletions = ForgeUtils.getOnlinePlayers();
         if (args.length > 1 && BlacklistEventHandler.BLACKLIST != null) {
             tabCompletions.addAll(BlacklistEventHandler.BLACKLIST.getBlacklistReasons());
