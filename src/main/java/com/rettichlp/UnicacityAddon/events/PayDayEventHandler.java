@@ -44,7 +44,7 @@ public class PayDayEventHandler {
     public void onTick(TickEvent.ClientTickEvent event) {
         if (isAfk || event.phase != TickEvent.Phase.END || !UnicacityAddon.isUnicacity()) return;
 
-        if (currentTick++ != 5) return;
+        if (currentTick++ != 1200) return;
         PayDayModule.addTime(1);
         currentTick = 0;
     }
