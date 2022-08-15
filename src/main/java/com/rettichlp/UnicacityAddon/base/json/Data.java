@@ -11,6 +11,7 @@ public class Data {
     private int jobExperience;
     private int payDayTime;
     private List<TodolistEntry> todolist;
+    private String carInfo;
 
     public Data() {
     }
@@ -59,5 +60,13 @@ public class Data {
 
     public void setTodolist(List<TodolistEntry> todolist) {
         this.todolist = todolist;
+    }
+
+    public String getCarInfo() {
+        return carInfo;
+    }
+
+    public void setCarInfo(String carInfo) {
+        this.carInfo = carInfo;
     }
 }
