@@ -59,6 +59,16 @@ public class FileManager {
         return null;
     }
 
+    public static File getAddonActivityScreenDir(String type) {
+        if (getUnicacityAddonDir() == null) return null;
+        File addonScreenshotDir = new File(getUnicacityAddonDir().getAbsolutePath() + "/screenshots/" + type);
+        if (addonScreenshotDir.exists() || addonScreenshotDir.mkdir()) return addonScreenshotDir;
+
+        AbstractionLayer.getPlayer().sendErrorMessage("Ordner 'screenshots/" + type + "' wurde nicht gefunden!");
+
+        return null;
+    }
+
     public static File getUnicacityAddonFile() {
         if (getLabyModAddonDir() == null) return null;
         return new File(getLabyModAddonDir().getAbsolutePath() + "/UnicacityAddon-" + UnicacityAddon.VERSION + ".jar");
@@ -96,6 +106,21 @@ public class FileManager {
         }
 
         File newImageFile = new File(getAddonScreenshotDir().getAbsolutePath() + "/" + sb + ".jpg");
+        return newImageFile.createNewFile() ? newImageFile : null;
+    }
+
+    public static File getNewActivityImageFile(String type) throws IOException {
+        if (getAddonActivityScreenDir(type) == null) return null;
+
+        String date = DATE_FORMAT.format(new Date());
+        StringBuilder sb = new StringBuilder(date);
+        int i = 1;
+        while (new File(getAddonActivityScreenDir(type).getAbsolutePath() + "/" + type + "-" + sb + ".jpg").exists()) {
+            if (i == 1) sb.append("_").append(i++);
+            else sb.replace(sb.length() - 1, sb.length(), String.valueOf(i));
+        }
+
+        File newImageFile = new File(getAddonActivityScreenDir(type).getAbsolutePath() + "/" + type + "-" + sb + ".jpg");
         return newImageFile.createNewFile() ? newImageFile : null;
     }
 
