@@ -40,6 +40,15 @@ public class FileManager {
         return null;
     }
 
+    public static File getLabyModAddonDir() {
+        File labyModAddonDir = new File(getMinecraftDir().getAbsolutePath() + "/LabyMod/addons-1.12/");
+        if (labyModAddonDir.exists() || labyModAddonDir.mkdirs()) return labyModAddonDir;
+
+        AbstractionLayer.getPlayer().sendErrorMessage("Ordner 'addons-1.12' wurde nicht gefunden!");
+
+        return null;
+    }
+
     public static File getAddonScreenshotDir() {
         if (getUnicacityAddonDir() == null) return null;
         File addonScreenshotDir = new File(getUnicacityAddonDir().getAbsolutePath() + "/screenshots/");
@@ -48,6 +57,11 @@ public class FileManager {
         AbstractionLayer.getPlayer().sendErrorMessage("Ordner 'screenshots' wurde nicht gefunden!");
 
         return null;
+    }
+
+    public static File getUnicacityAddonFile() {
+        if (getLabyModAddonDir() == null) return null;
+        return new File(getLabyModAddonDir().getAbsolutePath() + "/UnicacityAddon-" + UnicacityAddon.VERSION + ".jar");
     }
 
     public static File getBlacklistDataFile() throws IOException {
