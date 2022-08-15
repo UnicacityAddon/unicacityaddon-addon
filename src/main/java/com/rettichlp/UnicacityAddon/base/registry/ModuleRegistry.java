@@ -1,17 +1,14 @@
 package com.rettichlp.UnicacityAddon.base.registry;
 
-import com.rettichlp.UnicacityAddon.UnicacityAddon;
-import com.rettichlp.UnicacityAddon.base.registry.annotation.UCModule;
-import net.labymod.ingamegui.Module;
 import net.labymod.ingamegui.ModuleCategory;
 import net.labymod.settings.elements.ControlElement;
 import net.labymod.utils.Material;
-import net.minecraftforge.fml.common.discovery.ASMDataTable;
 
 public class ModuleRegistry {
 
     public static final ModuleCategory UNICACITY = new ModuleCategory("Unicacity", true, new ControlElement.IconData(Material.DIAMOND));
 
+    /*
     public static void register(ASMDataTable asmDataTable) {
         // Modules -> https://docs.labymod.net/pages/create-addons/module_system/
         asmDataTable.getAll(UCModule.class.getCanonicalName()).forEach(asmData -> {
@@ -25,4 +22,5 @@ public class ModuleRegistry {
             }
         });
     }
+    */
 }
