@@ -30,7 +30,7 @@ public class JoinEventHandler {
             return false;
         }
 
-        if (e.getMessage().getUnformattedText().equals("  Info: Gebe bitte dein Passwort ein. /passwort [Passwort]")) { // TODO: 15.08.2022 Pattern
+        if (PatternHandler.ACCOUNT_LOCKED_PATTERN.matcher(msg).find()) {
             accountLocked = true;
             handleUnlockAccount();
         }
@@ -87,8 +87,14 @@ public class JoinEventHandler {
                     }
                 }, 1500);
 
-        }
-
-        return false;
+                // UPDATECHECKER
+                new Timer().schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        Updater.updateChecker();
+                    }
+                }, 2000);
+            }
+        }, 1000);
     }
 }
