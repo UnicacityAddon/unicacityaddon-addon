@@ -205,8 +205,8 @@ public class UnicacityAddon extends LabyModAddon {
 
     @Override
     public void loadConfig() {
-        FactionHandler.getPlayerFactionMap();
-        FactionHandler.getPlayerRankMap();
+        FactionHandler.syncPlayerFactions();
+        FactionHandler.syncPlayerRanks();
 
         // Update blacklist
         BlacklistEventHandler.refreshBlacklistReasons();
