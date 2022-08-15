@@ -18,6 +18,7 @@ import com.rettichlp.UnicacityAddon.commands.NaviCommand;
 import com.rettichlp.UnicacityAddon.commands.NearestATMCommand;
 import com.rettichlp.UnicacityAddon.commands.NearestJobCommand;
 import com.rettichlp.UnicacityAddon.commands.ReichensteuerCommand;
+import com.rettichlp.UnicacityAddon.commands.SyncPlayerDataCommand;
 import com.rettichlp.UnicacityAddon.commands.TodoListCommand;
 import com.rettichlp.UnicacityAddon.commands.TriggerEventCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.AFbankEinzahlenCommand;
@@ -142,6 +143,7 @@ public class UnicacityAddon extends LabyModAddon {
         ClientCommandHandler.instance.registerCommand(new ReinforcementCommand());
         ClientCommandHandler.instance.registerCommand(new SchmarzmarktLocationsCommand());
         ClientCommandHandler.instance.registerCommand(new ShareLocationCommand());
+        ClientCommandHandler.instance.registerCommand(new SyncPlayerDataCommand());
         ClientCommandHandler.instance.registerCommand(new TodoListCommand());
         ClientCommandHandler.instance.registerCommand(new TriggerEventCommand());
 
@@ -205,8 +207,8 @@ public class UnicacityAddon extends LabyModAddon {
 
     @Override
     public void loadConfig() {
-        FactionHandler.getPlayerFactionMap();
-        FactionHandler.getPlayerRankMap();
+        FactionHandler.syncPlayerFactions();
+        FactionHandler.syncPlayerRanks();
 
         // Update blacklist
         BlacklistEventHandler.refreshBlacklistReasons();
