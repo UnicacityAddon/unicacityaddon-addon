@@ -6,6 +6,7 @@ import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.json.Data;
 import com.rettichlp.UnicacityAddon.commands.TodoListCommand;
 import com.rettichlp.UnicacityAddon.modules.BankMoneyModule;
+import com.rettichlp.UnicacityAddon.modules.CarOpenModule;
 import com.rettichlp.UnicacityAddon.modules.CashMoneyModule;
 import com.rettichlp.UnicacityAddon.modules.JobModule;
 import com.rettichlp.UnicacityAddon.modules.PayDayModule;
@@ -97,6 +98,7 @@ public class FileManager {
                 JobModule.setExperience(0);
                 PayDayModule.setTime(0);
                 TodoListCommand.todolist = Collections.emptyList();
+                CarOpenModule.info = "";
                 return;
             }
 
@@ -107,6 +109,7 @@ public class FileManager {
             JobModule.jobExperience = data.getJobExperience();
             PayDayModule.currentTime = data.getPayDayTime();
             TodoListCommand.todolist = data.getTodolist();
+            CarOpenModule.info = data.getCarInfo();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -124,6 +127,7 @@ public class FileManager {
             data.setJobExperience(JobModule.jobExperience);
             data.setPayDayTime(PayDayModule.currentTime);
             data.setTodolist(TodoListCommand.todolist);
+            data.setCarInfo(CarOpenModule.info);
             FileUtils.writeStringToFile(dataFile, g.toJson(data), StandardCharsets.UTF_8.toString());
         } catch (IOException e) {
             throw new RuntimeException(e);
