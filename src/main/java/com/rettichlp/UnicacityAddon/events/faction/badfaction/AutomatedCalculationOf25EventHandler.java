@@ -9,6 +9,8 @@ import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+import java.text.NumberFormat;
+import java.util.Locale;
 import java.util.regex.Matcher;
 
 /**
@@ -26,6 +28,7 @@ public class AutomatedCalculationOf25EventHandler {
             int cash = Integer.parseInt(statementOfAccountMatcher.group(2));
             int bankBalance = Integer.parseInt(statementOfAccountMatcher.group(3));
             int oneQuarterOfAll = (cash + bankBalance) / 4;
+            NumberFormat numberFormat = NumberFormat.getNumberInstance(new Locale("da", "DK"));
 
             Message.getBuilder()
                     .of("Finanzen von " + statementOfAccountMatcher.group(1)).color(ColorCode.GOLD).advance()
@@ -37,7 +40,7 @@ public class AutomatedCalculationOf25EventHandler {
                     .of(":").color(ColorCode.DARK_GRAY).advance().space()
                     .of(statementOfAccountMatcher.group(3) + "$").color(ColorCode.RED).advance().space()
                     .of("(").color(ColorCode.DARK_GRAY).advance()
-                    .of(oneQuarterOfAll + "$").color(ColorCode.RED).advance()
+                    .of(numberFormat.format(oneQuarterOfAll) + "$").color(ColorCode.RED).advance()
                     .of(")").color(ColorCode.DARK_GRAY).advance().sendTo(p.getPlayer());
 
             e.setCanceled(true);

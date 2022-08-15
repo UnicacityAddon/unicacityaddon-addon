@@ -4,6 +4,7 @@ import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
 import com.rettichlp.UnicacityAddon.base.config.ConfigElements;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCEvent;
+import com.rettichlp.UnicacityAddon.base.io.FileManager;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
 import com.rettichlp.UnicacityAddon.modules.CarOpenModule;
@@ -23,11 +24,13 @@ public class CarEventHandler {
 
         if (PatternHandler.CAR_OPEN_PATTERN.matcher(msg).find()) {
             CarOpenModule.info = ColorCode.GREEN.getCode() + "offen";
+            FileManager.saveData();
             return false;
         }
 
         if (PatternHandler.CAR_CLOSE_PATTERN.matcher(msg).find()) {
             CarOpenModule.info = ColorCode.RED.getCode() + "zu";
+            FileManager.saveData();
             return false;
         }
 

@@ -7,7 +7,7 @@ import com.rettichlp.UnicacityAddon.base.registry.annotation.UCEvent;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
 import com.rettichlp.UnicacityAddon.modules.BankMoneyModule;
 import com.rettichlp.UnicacityAddon.modules.CashMoneyModule;
-import com.rettichlp.UnicacityAddon.modules.JobMoneyModule;
+import com.rettichlp.UnicacityAddon.modules.JobModule;
 import com.rettichlp.UnicacityAddon.modules.PayDayModule;
 import net.minecraftforge.client.event.ClientChatEvent;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
@@ -32,8 +32,21 @@ public class MoneyEventHandler {
 
         Matcher jobSalaryMatcher = PatternHandler.JOB_SALARY_PATTERN.matcher(msg);
         if (jobSalaryMatcher.find()) {
-            JobMoneyModule.addBalance(Integer.parseInt(jobSalaryMatcher.group(1)));
+            JobModule.addBalance(Integer.parseInt(jobSalaryMatcher.group(1)));
             return false;
+        }
+
+        Matcher jobExperienceMatcher = PatternHandler.JOB_EXPERIENCE_PATTERN.matcher(msg);
+        if (jobExperienceMatcher.find()) {
+            int experience = Integer.parseInt(jobExperienceMatcher.group(1));
+
+            if (jobExperienceMatcher.group(3) != null) {
+                int multiplier = Integer.parseInt(jobExperienceMatcher.group(3));
+                JobModule.addExperience(experience * multiplier);
+                return false;
+            }
+
+            JobModule.addExperience(experience);
         }
 
         Matcher kontoauszugMatcher = PatternHandler.BANK_STATEMENT_PATTERN.matcher(msg);
@@ -60,7 +73,8 @@ public class MoneyEventHandler {
         Matcher bankPayDayMatcher = PatternHandler.STATS_BANK_PATTERN.matcher(msg);
         if (bankPayDayMatcher.find()) {
             BankMoneyModule.setBalance(Integer.parseInt(bankPayDayMatcher.group(1)));
-            JobMoneyModule.setBalance(0);
+            JobModule.setBalance(0);
+            JobModule.setExperience(0);
             PayDayModule.setTime(0);
             return false;
         }
@@ -140,10 +154,8 @@ public class MoneyEventHandler {
 
         Matcher cashFromBankMatcher = PatternHandler.CASH_FROM_BANK_PATTERN.matcher(msg);
         if (cashFromBankMatcher.find()) {
-            if (isGRBankCommand) {
-                isGRBankCommand = false;
-                return false;
-            }
+            if (isGRBankCommand) return false;
+
             CashMoneyModule.addBalance(Integer.parseInt(cashFromBankMatcher.group(1)));
             return false;
         }

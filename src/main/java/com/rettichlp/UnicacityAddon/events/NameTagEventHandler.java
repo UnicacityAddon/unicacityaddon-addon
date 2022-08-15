@@ -35,6 +35,7 @@ public class NameTagEventHandler {
 
     @SubscribeEvent
     public void onRenderNameTag(PlayerEvent.NameFormat e) {
+        if (!UnicacityAddon.isUnicacity()) return;
         String playerName = e.getUsername();
 
         String displayName = ScorePlayerTeam.formatPlayerName(e.getEntityPlayer().getTeam(), playerName);
@@ -112,7 +113,7 @@ public class NameTagEventHandler {
         StringBuilder outlaw = new StringBuilder();
         outlaw.append(FormattingCode.RESET.getCode());
 
-        if (ConfigElements.getNameTagBlacklist()) {
+        if (ConfigElements.getNameTagFactionSpecific()) {
             if (BlacklistEventHandler.BLACKLIST_MAP.containsKey(playerName)) {
                 if (BlacklistEventHandler.BLACKLIST_MAP.get(playerName)) outlaw.append(Message.getBuilder()
                         .of("[").color(ColorCode.DARK_GRAY).advance()
@@ -131,7 +132,7 @@ public class NameTagEventHandler {
         prefix.append(FormattingCode.RESET.getCode());
         if (isCorpse) prefix.append(ColorCode.GRAY.getCode());
 
-        if (ConfigElements.getNameTagWPS()) {
+        if (ConfigElements.getNameTagFactionSpecific()) {
             WantedEventHandler.Wanted wanted = WantedEventHandler.WANTED_MAP.get(playerName);
             if (wanted != null) {
                 int amount = wanted.getAmount();
@@ -146,13 +147,12 @@ public class NameTagEventHandler {
 
                 prefix.append(color.getCode());
             }
-        }
 
-        if (ConfigElements.getNameTagBlacklist())
-            if (BlacklistEventHandler.BLACKLIST_MAP.get(playerName) != null) prefix.append(ColorCode.DARK_RED.getCode());
+            if (BlacklistEventHandler.BLACKLIST_MAP.get(playerName) != null)
+                prefix.append(ColorCode.DARK_RED.getCode());
 
-        if (ConfigElements.getNameTagContract())
             if (ContractEventHandler.CONTRACT_LIST.contains(playerName)) prefix.append(ColorCode.DARK_RED.getCode());
+        }
 
         if (FactionHandler.getPlayerFactionMap().containsKey(playerName)) {
             Faction targetPlayerFaction = FactionHandler.getPlayerFactionMap().get(playerName);
@@ -182,7 +182,8 @@ public class NameTagEventHandler {
 
         if (FactionHandler.getPlayerFactionMap().containsKey(playerName)) {
             Faction targetPlayerFaction = FactionHandler.getPlayerFactionMap().get(playerName);
-            if (ConfigElements.getNameTagFactionSuffix()) suffix.append(" ").append(targetPlayerFaction.getNameTagSuffix());
+            if (ConfigElements.getNameTagFactionSuffix())
+                suffix.append(" ").append(targetPlayerFaction.getNameTagSuffix());
         }
 
         return suffix.toString();

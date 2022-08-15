@@ -74,7 +74,7 @@ public class HQMessageEventHandler {
             if (m.find()) {
                 e.setMessage(Message.getBuilder().of("➥").color(ColorCode.DARK_GRAY).advance().space()
                         .of(m.group(2)).color(ColorCode.BLUE).advance().space()
-                        .of("Wanteds").advance().createComponent());
+                        .of("Wanteds").color(ColorCode.BLUE).advance().createComponent());
                 return false;
             }
 

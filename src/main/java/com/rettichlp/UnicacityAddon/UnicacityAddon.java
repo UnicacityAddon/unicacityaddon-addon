@@ -1,6 +1,6 @@
 package com.rettichlp.UnicacityAddon;
 
-import com.rettichlp.UnicacityAddon.base.config.ConfigSettings;
+import com.rettichlp.UnicacityAddon.base.config.Config;
 import com.rettichlp.UnicacityAddon.base.faction.FactionHandler;
 import com.rettichlp.UnicacityAddon.base.io.FileManager;
 import com.rettichlp.UnicacityAddon.base.registry.CommandRegistry;
@@ -21,6 +21,54 @@ import com.rettichlp.UnicacityAddon.events.NameTagEventHandler;
 import com.rettichlp.UnicacityAddon.events.PayDayEventHandler;
 import com.rettichlp.UnicacityAddon.events.TabListEventHandler;
 import com.rettichlp.UnicacityAddon.events.WeaponClickEventHandler;
+import com.rettichlp.UnicacityAddon.commands.ABuyCommand;
+import com.rettichlp.UnicacityAddon.commands.ACallCommand;
+import com.rettichlp.UnicacityAddon.commands.AEquipCommand;
+import com.rettichlp.UnicacityAddon.commands.ASMSCommand;
+import com.rettichlp.UnicacityAddon.commands.CancelCountdownCommand;
+import com.rettichlp.UnicacityAddon.commands.CountdownCommand;
+import com.rettichlp.UnicacityAddon.commands.EinzahlenCommand;
+import com.rettichlp.UnicacityAddon.commands.FactionInfoCommand;
+import com.rettichlp.UnicacityAddon.commands.MemberInfoCommand;
+import com.rettichlp.UnicacityAddon.commands.NaviCommand;
+import com.rettichlp.UnicacityAddon.commands.NearestATMCommand;
+import com.rettichlp.UnicacityAddon.commands.NearestJobCommand;
+import com.rettichlp.UnicacityAddon.commands.ReichensteuerCommand;
+import com.rettichlp.UnicacityAddon.commands.SyncPlayerDataCommand;
+import com.rettichlp.UnicacityAddon.commands.TodoListCommand;
+import com.rettichlp.UnicacityAddon.commands.TriggerEventCommand;
+import com.rettichlp.UnicacityAddon.commands.faction.AFbankEinzahlenCommand;
+import com.rettichlp.UnicacityAddon.commands.faction.ReinforcementCommand;
+import com.rettichlp.UnicacityAddon.commands.faction.ShareLocationCommand;
+import com.rettichlp.UnicacityAddon.commands.faction.badfaction.ASetBlacklistCommand;
+import com.rettichlp.UnicacityAddon.commands.faction.badfaction.BlacklistInfoCommand;
+import com.rettichlp.UnicacityAddon.commands.faction.badfaction.EigenbedarfCommand;
+import com.rettichlp.UnicacityAddon.commands.faction.badfaction.GiftEigenbedarfCommand;
+import com.rettichlp.UnicacityAddon.commands.faction.badfaction.ModifyBlacklistCommand;
+import com.rettichlp.UnicacityAddon.commands.faction.badfaction.SchmarzmarktLocationsCommand;
+import com.rettichlp.UnicacityAddon.commands.faction.polizei.ASUCommand;
+import com.rettichlp.UnicacityAddon.commands.faction.polizei.ModifyWantedsCommand;
+import com.rettichlp.UnicacityAddon.commands.faction.rettungsdienst.ARezeptAnnehmenCommand;
+import com.rettichlp.UnicacityAddon.commands.faction.rettungsdienst.ARezeptCommand;
+import com.rettichlp.UnicacityAddon.commands.faction.terroristen.ExplosiveBeltCommand;
+import com.rettichlp.UnicacityAddon.commands.job.ADropMoneyCommand;
+import com.rettichlp.UnicacityAddon.events.ABuyEventHandler;
+import com.rettichlp.UnicacityAddon.events.AEquipEventHandler;
+import com.rettichlp.UnicacityAddon.events.BombTimerEventHandler;
+import com.rettichlp.UnicacityAddon.events.CarEventHandler;
+import com.rettichlp.UnicacityAddon.events.CheckKFZEventHandler;
+import com.rettichlp.UnicacityAddon.events.FactionInfoEventHandler;
+import com.rettichlp.UnicacityAddon.events.HotkeyEventHandler;
+import com.rettichlp.UnicacityAddon.events.HouseRenterEventHandler;
+import com.rettichlp.UnicacityAddon.events.JoinEventHandler;
+import com.rettichlp.UnicacityAddon.events.KarmaMessageEventHandler;
+import com.rettichlp.UnicacityAddon.events.MobileEventHandler;
+import com.rettichlp.UnicacityAddon.events.MoneyEventHandler;
+import com.rettichlp.UnicacityAddon.events.NameTagEventHandler;
+import com.rettichlp.UnicacityAddon.events.PayDayEventHandler;
+import com.rettichlp.UnicacityAddon.events.ReviveEventHandler;
+import com.rettichlp.UnicacityAddon.events.TabListEventHandler;
+import com.rettichlp.UnicacityAddon.events.WeaponClickEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.AFbankEinzahlenEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.BlacklistEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.ContractEventHandler;
@@ -32,6 +80,12 @@ import com.rettichlp.UnicacityAddon.events.faction.badfaction.AutomatedCalculati
 import com.rettichlp.UnicacityAddon.events.faction.badfaction.BlacklistInfoEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.badfaction.FBIHackEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.badfaction.GiftEigenbedarfEventHandler;
+import com.rettichlp.UnicacityAddon.events.faction.badfaction.ModifyBlacklistEventHandler;
+import com.rettichlp.UnicacityAddon.events.faction.badfaction.PlantTimerEventHandler;
+import com.rettichlp.UnicacityAddon.events.faction.badfaction.AutomatedCalculationOf25;
+import com.rettichlp.UnicacityAddon.events.faction.badfaction.BlacklistInfoEventHandler;
+import com.rettichlp.UnicacityAddon.events.faction.badfaction.FBIHackEventHandler;
+import com.rettichlp.UnicacityAddon.events.faction.badfaction.GiftEigenbedarfListener;
 import com.rettichlp.UnicacityAddon.events.faction.badfaction.ModifyBlacklistEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.badfaction.PlantTimerEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.polizei.HQMessageEventHandler;
@@ -50,7 +104,7 @@ import com.rettichlp.UnicacityAddon.modules.CashMoneyModule;
 import com.rettichlp.UnicacityAddon.modules.EmergencyServiceModule;
 import com.rettichlp.UnicacityAddon.modules.ExplosiveBeltTimerModule;
 import com.rettichlp.UnicacityAddon.modules.FBIHackModule;
-import com.rettichlp.UnicacityAddon.modules.JobMoneyModule;
+import com.rettichlp.UnicacityAddon.modules.JobModule;
 import com.rettichlp.UnicacityAddon.modules.PayDayModule;
 import com.rettichlp.UnicacityAddon.modules.PlantFertilizeTimerModule;
 import com.rettichlp.UnicacityAddon.modules.PlantWaterTimerModule;
@@ -62,6 +116,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.discovery.ASMDataTable;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraft.client.multiplayer.ServerData;
+import net.minecraftforge.client.ClientCommandHandler;
 
 import java.util.List;
 
@@ -97,6 +153,7 @@ public class UnicacityAddon extends LabyModAddon {
         ADDON.getApi().registerForgeListener(new BlacklistInfoEventHandler());
         ADDON.getApi().registerForgeListener(new BombTimerEventHandler());
         ADDON.getApi().registerForgeListener(new CarEventHandler());
+        ADDON.getApi().registerForgeListener(new CheckKFZEventHandler());
         ADDON.getApi().registerForgeListener(new ContractEventHandler());
         ADDON.getApi().registerForgeListener(new EmergencyServiceEventHandler());
         ADDON.getApi().registerForgeListener(new ExplosiveBeltTimerEventHandler());
@@ -119,12 +176,14 @@ public class UnicacityAddon extends LabyModAddon {
         ADDON.getApi().registerForgeListener(new PlantTimerEventHandler());
         ADDON.getApi().registerForgeListener(new ReinforcementEventHandler());
         ADDON.getApi().registerForgeListener(new ReportAcceptEventHandler());
+        ADDON.getApi().registerForgeListener(new ReviveEventHandler());
         ADDON.getApi().registerForgeListener(new ShareLocationEventHandler());
         ADDON.getApi().registerForgeListener(new WantedEventHandler());
         ADDON.getApi().registerForgeListener(new WeaponClickEventHandler());
 
         ADDON.getApi().getEventManager().register(new TabListEventHandler());
 
+        ModuleCategoryRegistry.loadCategory(ModuleRegistry.UNICACITY);
         ADDON.getApi().registerModule(new BankMoneyModule());
         ADDON.getApi().registerModule(new BombTimerModule());
         ADDON.getApi().registerModule(new CarOpenModule());
@@ -132,32 +191,35 @@ public class UnicacityAddon extends LabyModAddon {
         ADDON.getApi().registerModule(new EmergencyServiceModule());
         ADDON.getApi().registerModule(new ExplosiveBeltTimerModule());
         ADDON.getApi().registerModule(new FBIHackModule());
-        ADDON.getApi().registerModule(new JobMoneyModule());
+        ADDON.getApi().registerModule(new JobModule());
         ADDON.getApi().registerModule(new PayDayModule());
         ADDON.getApi().registerModule(new PlantFertilizeTimerModule());
         ADDON.getApi().registerModule(new PlantWaterTimerModule());
 
-        ModuleCategoryRegistry.loadCategory(ModuleRegistry.UNICACITY);
-
-        //EventRegistry.register(this);
-        //ModuleRegistry.register(this);
+        FactionHandler.syncPlayerFactions();
+        FactionHandler.syncPlayerRanks();
     }
 
     @Override
     public void loadConfig() {
-        FactionHandler.getPlayerFactionMap();
-        FactionHandler.getPlayerRankMap();
-
-        // Update blacklist
-        BlacklistEventHandler.refreshBlacklistReasons();
-        // Register keybindings
         KeyBindRegistry.registerKeyBinds();
-
         FileManager.loadData();
     }
 
     @Override
     protected void fillSettings(List<SettingsElement> list) {
-        ConfigSettings.createConfig(this, list);
+        Config.createConfig(this, list);
+    }
+
+    public static boolean isUnicacity() {
+        if (MINECRAFT.world == null) return false;
+
+        ServerData serverData = MINECRAFT.getCurrentServerData();
+        if (serverData == null) return false;
+
+        String ip = serverData.serverIP;
+        if (ip.contains(":")) ip = ip.split(":")[0]; // strip unused port
+
+        return ip.equalsIgnoreCase("server.unicacity.de") || ip.equalsIgnoreCase("unicacity.de");
     }
 }

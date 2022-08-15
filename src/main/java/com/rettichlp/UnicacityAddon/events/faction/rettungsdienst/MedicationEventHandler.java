@@ -40,7 +40,7 @@ public class MedicationEventHandler {
         }, delay);
     }
 
-    private void acceptRecipe() {
+    public static void acceptRecipe() {
         --ARezeptAnnehmenCommand.amount;
         lastExecution = System.currentTimeMillis();
         AbstractionLayer.getPlayer().acceptOffer();
@@ -66,7 +66,7 @@ public class MedicationEventHandler {
         }, delay);
     }
 
-    private void giveRecipe() {
+    public static void giveRecipe() {
         --ARezeptCommand.amount;
         lastExecution = System.currentTimeMillis();
         AbstractionLayer.getPlayer().sellMedication(ARezeptCommand.target, ARezeptCommand.medication);

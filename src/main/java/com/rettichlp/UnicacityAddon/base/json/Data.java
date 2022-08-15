@@ -8,8 +8,10 @@ public class Data {
     private int bankBalance;
     private int cashBalance;
     private int jobBalance;
+    private int jobExperience;
     private int payDayTime;
     private List<TodolistEntry> todolist;
+    private String carInfo;
 
     public Data() {
     }
@@ -28,6 +30,12 @@ public class Data {
 
     public void setJobBalance(int jobBalance) {
         this.jobBalance = jobBalance;
+    }
+
+    public int getJobExperience() { return jobExperience; }
+
+    public void setJobExperience(int jobExperience) {
+        this.jobExperience = jobExperience;
     }
 
     public int getCashBalance() {
@@ -52,5 +60,13 @@ public class Data {
 
     public void setTodolist(List<TodolistEntry> todolist) {
         this.todolist = todolist;
+    }
+
+    public String getCarInfo() {
+        return carInfo;
+    }
+
+    public void setCarInfo(String carInfo) {
+        this.carInfo = carInfo;
     }
 }

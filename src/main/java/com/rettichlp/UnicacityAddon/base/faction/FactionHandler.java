@@ -1,6 +1,7 @@
 package com.rettichlp.UnicacityAddon.base.faction;
 
 import com.rettichlp.UnicacityAddon.UnicacityAddon;
+import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
 import com.rettichlp.UnicacityAddon.base.utils.ForgeUtils;
 import com.rettichlp.UnicacityAddon.base.utils.ListUtils;
@@ -18,18 +19,18 @@ import java.util.stream.Collectors;
  */
 public class FactionHandler {
 
-    private static Map<String,Faction> playerFactionMap = new HashMap<>();
-    private static Map<String,Integer> playerRankMap = new HashMap<>();
+    private static final Map<String,Faction> playerFactionMap = new HashMap<>();
+    private static final Map<String,Integer> playerRankMap = new HashMap<>();
     private static String websiteSource = "";
 
     public static Map<String, Faction> getPlayerFactionMap() {
-        if (!playerFactionMap.isEmpty()) return playerFactionMap;
-        return playerFactionMap = getPlayerFactions();
+        if (playerFactionMap.isEmpty()) syncPlayerFactions();
+        return playerFactionMap;
     }
 
     public static Map<String, Integer> getPlayerRankMap() {
-        if (!playerRankMap.isEmpty()) return playerRankMap;
-        return playerRankMap = getPlayerRanks();
+        if (playerRankMap.isEmpty()) syncPlayerRanks();
+        return playerRankMap;
     }
 
     public static boolean checkPlayerHouseBan(String playerName) {
@@ -51,23 +52,18 @@ public class FactionHandler {
                 .anyMatch(s -> Objects.equals(s, playerName));
     }
 
-    private static Map<String,Faction> getPlayerFactions() {
-        Map<String,Faction> playerFactions = new HashMap<>();
-
+    public static void syncPlayerFactions() {
         Thread thread = new Thread(() -> {
             for (Faction faction : Faction.values()) {
                 List<String> nameList = ListUtils.getAllMatchesFromString(PatternHandler.NAME_PATTERN, faction.getWebsiteSource());
-                nameList.forEach(name -> playerFactions.put(name.replace("<h4 class=\"h5 g-mb-5\"><strong>", ""), faction));
+                nameList.forEach(name -> playerFactionMap.put(name.replace("<h4 class=\"h5 g-mb-5\"><strong>", ""), faction));
             }
+            UnicacityAddon.LABYMOD.notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Fraktionen aktualisiert.");
         });
         thread.start();
-
-        return playerFactions;
     }
 
-    private static Map<String,Integer> getPlayerRanks() {
-        Map<String,Integer> playerRankMap = new HashMap<>();
-
+    public static void syncPlayerRanks() {
         Thread thread = new Thread(() -> {
             for (Faction faction : Faction.values()) {
                 List<String> nameList = ListUtils.getAllMatchesFromString(PatternHandler.NAME_PATTERN, faction.getWebsiteSource());
@@ -78,9 +74,8 @@ public class FactionHandler {
                                 .replace("<strong>Rang ", "")
                                 .charAt(0)))));
             }
+            UnicacityAddon.LABYMOD.notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Ränge aktualisiert.");
         });
         thread.start();
-
-        return playerRankMap;
     }
 }

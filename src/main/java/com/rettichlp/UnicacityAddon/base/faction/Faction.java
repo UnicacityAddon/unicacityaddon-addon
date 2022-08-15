@@ -62,7 +62,7 @@ public enum Faction {
             .of("◤").color(ColorCode.DARK_GRAY).advance()
             .of("是").color(ColorCode.RED).advance()
             .of("◢").color(ColorCode.DARK_GRAY).advance().create()),
-    WESTSIDEBALLAS("westsideballas", "Westsideballas", "Gang", Message.getBuilder()
+    WESTSIDEBALLAS("westsideballas", "Westside Ballas", "Gang", Message.getBuilder()
             .of("◤").color(ColorCode.DARK_GRAY).advance()
             .of("☠").color(ColorCode.DARK_PURPLE).advance()
             .of("◢").color(ColorCode.DARK_GRAY).advance().create());
