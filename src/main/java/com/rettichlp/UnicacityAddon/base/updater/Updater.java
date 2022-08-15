@@ -18,27 +18,19 @@ public class Updater {
         String latestVersion = getLatestVersion();
         if (latestVersion.equals(UnicacityAddon.VERSION)) return;
 
-        UnicacityAddon.LABYMOD.notifyMessageRaw(ColorCode.AQUA.getCode() + "Update verfügbar!", "Es ist Version " + ColorCode.DARK_AQUA.getCode() + latestVersion + ColorCode.WHITE.getCode() + " verfügbar.");
+        UnicacityAddon.LABYMOD.notifyMessageRaw(ColorCode.AQUA.getCode() + "Update verfügbar!", "Es ist Version " + ColorCode.DARK_AQUA.getCode() + "v" + latestVersion + ColorCode.WHITE.getCode() + " verfügbar.");
 
         AbstractionLayer.getPlayer().sendMessage(Message.getBuilder()
                 .info().space()
                 .of("Es ist ein neues Update für").advance().space()
                 .of("UnicacityAddon")
                         .color(ColorCode.DARK_AQUA)
-                        .underline()
                         .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder()
                                 .of("Changelog").color(ColorCode.RED).advance()
                                 .createComponent())
                         .clickEvent(ClickEvent.Action.OPEN_URL, "https://github.com/rettichlp/UnicacityAddon-1.12.2/releases/latest")
                         .advance().space()
                 .of("verfügbar!").advance().space()
-                .of("Aktualisieren")
-                        .color(ColorCode.GOLD)
-                        .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder()
-                                .of("Aktualisieren").color(ColorCode.RED).advance()
-                                .createComponent())
-                        .clickEvent(ClickEvent.Action.RUN_COMMAND, "/updateunicacityaddon")
-                        .advance()
                 .createComponent());
     }
 
