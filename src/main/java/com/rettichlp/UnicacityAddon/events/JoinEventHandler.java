@@ -63,31 +63,31 @@ public class JoinEventHandler {
                 p.sendChatMessage("/mobile");
 
                 // AUTOMATE_COMMAND_SETTINGS
-                if (!ConfigElements.getCommandAutomation()) return;
+                if (ConfigElements.getCommandAutomation()) {
+                    // AUTOMATE_COMMAND_FIRST_SETTINGS
+                    new Timer().schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            if (!ConfigElements.getFirstCommand().isEmpty()) p.sendChatMessage(ConfigElements.getFirstCommand());
+                        }
+                    }, 500);
 
-                // AUTOMATE_COMMAND_FIRST_SETTINGS
-                new Timer().schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        if (!ConfigElements.getFirstCommand().isEmpty()) p.sendChatMessage(ConfigElements.getFirstCommand());
-                    }
-                }, 500);
+                    // AUTOMATE_COMMAND_SECOND_SETTINGS
+                    new Timer().schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            if (!ConfigElements.getSecondCommand().isEmpty()) p.sendChatMessage(ConfigElements.getSecondCommand());
+                        }
+                    }, 1000);
 
-                // AUTOMATE_COMMAND_SECOND_SETTINGS
-                new Timer().schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        if (!ConfigElements.getSecondCommand().isEmpty()) p.sendChatMessage(ConfigElements.getSecondCommand());
-                    }
-                }, 1000);
-
-                // AUTOMATE_COMMAND_THIRD_SETTINGS
-                new Timer().schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        if (!ConfigElements.getThirdCommand().isEmpty()) p.sendChatMessage(ConfigElements.getThirdCommand());
-                    }
-                }, 1500);
+                    // AUTOMATE_COMMAND_THIRD_SETTINGS
+                    new Timer().schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            if (!ConfigElements.getThirdCommand().isEmpty()) p.sendChatMessage(ConfigElements.getThirdCommand());
+                        }
+                    }, 1500);
+                }
 
                 // UPDATECHECKER
                 new Timer().schedule(new TimerTask() {
