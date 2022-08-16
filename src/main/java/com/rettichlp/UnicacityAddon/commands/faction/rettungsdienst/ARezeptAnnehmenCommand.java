@@ -48,7 +48,7 @@ public class ARezeptAnnehmenCommand extends CommandBase {
         }
 
         if (!MathUtils.isInteger(args[0])) return;
-
+        amount = Integer.parseInt(args[2]);
         MedicationEventHandler.acceptRecipe();
     }
 

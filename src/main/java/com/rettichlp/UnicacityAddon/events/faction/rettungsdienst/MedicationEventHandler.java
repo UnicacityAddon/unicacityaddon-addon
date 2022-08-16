@@ -46,7 +46,8 @@ public class MedicationEventHandler {
         AbstractionLayer.getPlayer().acceptOffer();
     }
 
-    @SubscribeEvent public void onRecipeGiveFeedback(ClientChatReceivedEvent e) {
+    @SubscribeEvent
+    public void onRecipeGiveFeedback(ClientChatReceivedEvent e) {
         if (ARezeptCommand.amount < 1)
             return; //checks if there is an active recipe-give-process
 
@@ -60,7 +61,8 @@ public class MedicationEventHandler {
         if (timeSinceLastExecution < 1000) delay = 1000 - timeSinceLastExecution;
 
         TIMER.schedule(new TimerTask() {
-            @Override public void run() {
+            @Override
+            public void run() {
                 giveRecipe();
             }
         }, delay);
