@@ -2,6 +2,7 @@ package com.rettichlp.UnicacityAddon.commands;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
+import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import com.rettichlp.UnicacityAddon.modules.BankMoneyModule;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
@@ -14,6 +15,7 @@ import java.util.List;
 /**
  * @author Dimiikou
  */
+@UCCommand
 public class ReichensteuerCommand extends CommandBase {
 
     @Override

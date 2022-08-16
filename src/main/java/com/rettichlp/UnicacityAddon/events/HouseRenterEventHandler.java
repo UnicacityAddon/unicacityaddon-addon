@@ -3,6 +3,7 @@ package com.rettichlp.UnicacityAddon.events;
 import com.google.common.collect.Maps;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
+import com.rettichlp.UnicacityAddon.base.registry.annotation.UCEvent;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
@@ -24,6 +25,7 @@ import java.util.regex.Matcher;
 /**
  * @author RettichLP
  */
+@UCEvent
 public class HouseRenterEventHandler {
 
     public static Map<Integer, Map.Entry<Integer, Integer>> HOUSE_RENTER_MAP = new HashMap<>();

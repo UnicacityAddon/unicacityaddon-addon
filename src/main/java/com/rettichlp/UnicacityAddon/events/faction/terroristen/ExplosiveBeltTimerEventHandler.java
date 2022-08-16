@@ -1,5 +1,6 @@
 package com.rettichlp.UnicacityAddon.events.faction.terroristen;
 
+import com.rettichlp.UnicacityAddon.base.registry.annotation.UCEvent;
 import com.rettichlp.UnicacityAddon.modules.ExplosiveBeltTimerModule;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -7,7 +8,8 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 /**
  * @author Dimiikou
  */
-public class ExplosiveBeltTimerEvent {
+@UCEvent
+public class ExplosiveBeltTimerEventHandler {
 
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {

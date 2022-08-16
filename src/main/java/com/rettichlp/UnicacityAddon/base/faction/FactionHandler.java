@@ -7,6 +7,7 @@ import com.rettichlp.UnicacityAddon.base.utils.ForgeUtils;
 import com.rettichlp.UnicacityAddon.base.utils.ListUtils;
 import com.rettichlp.UnicacityAddon.base.utils.WebsiteUtils;
 import com.rettichlp.UnicacityAddon.events.TabListEventHandler;
+import net.labymod.main.LabyMod;
 
 import java.util.HashMap;
 import java.util.List;
@@ -58,7 +59,7 @@ public class FactionHandler {
                 List<String> nameList = ListUtils.getAllMatchesFromString(PatternHandler.NAME_PATTERN, faction.getWebsiteSource());
                 nameList.forEach(name -> playerFactionMap.put(name.replace("<h4 class=\"h5 g-mb-5\"><strong>", ""), faction));
             }
-            UnicacityAddon.LABYMOD.notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Fraktionen aktualisiert.");
+            LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Fraktionen aktualisiert.");
         });
         thread.start();
     }
@@ -74,7 +75,7 @@ public class FactionHandler {
                                 .replace("<strong>Rang ", "")
                                 .charAt(0)))));
             }
-            UnicacityAddon.LABYMOD.notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Ränge aktualisiert.");
+            LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Ränge aktualisiert.");
         });
         thread.start();
     }

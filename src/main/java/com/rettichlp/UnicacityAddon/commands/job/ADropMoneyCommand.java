@@ -2,6 +2,7 @@ package com.rettichlp.UnicacityAddon.commands.job;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
+import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
@@ -15,6 +16,7 @@ import java.util.TimerTask;
 /**
  * @author Dimiikou
  */
+@UCCommand
 public class ADropMoneyCommand extends CommandBase {
 
     public static boolean execute = false;

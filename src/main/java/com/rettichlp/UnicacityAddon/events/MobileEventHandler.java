@@ -1,5 +1,6 @@
 package com.rettichlp.UnicacityAddon.events;
 
+import com.rettichlp.UnicacityAddon.base.registry.annotation.UCEvent;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
 import com.rettichlp.UnicacityAddon.commands.ACallCommand;
 import com.rettichlp.UnicacityAddon.commands.ASMSCommand;
@@ -14,6 +15,7 @@ import java.util.regex.Matcher;
 /**
  * @author RettichLP
  */
+@UCEvent
 public class MobileEventHandler {
 
     public static int lastCheckedNumber = 0;

@@ -4,6 +4,7 @@ import com.rettichlp.UnicacityAddon.UnicacityAddon;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
 import com.rettichlp.UnicacityAddon.base.registry.KeyBindRegistry;
+import com.rettichlp.UnicacityAddon.base.registry.annotation.UCEvent;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
 import com.rettichlp.UnicacityAddon.commands.ABuyCommand;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -27,6 +28,7 @@ import java.util.concurrent.TimeUnit;
  * @author RettichLP
  * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/commands/ABuyCommand.java">UCUtils by paulzhng</a>
  */
+@UCEvent
 public class ABuyEventHandler {
 
     private static final Timer TIMER = new Timer();

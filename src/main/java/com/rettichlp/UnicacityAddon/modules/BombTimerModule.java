@@ -1,6 +1,7 @@
 package com.rettichlp.UnicacityAddon.modules;
 
-import com.rettichlp.UnicacityAddon.base.module.UCModuleHandler;
+import com.rettichlp.UnicacityAddon.base.registry.ModuleRegistry;
+import com.rettichlp.UnicacityAddon.base.registry.annotation.UCModule;
 import net.labymod.ingamegui.ModuleCategory;
 import net.labymod.ingamegui.moduletypes.SimpleModule;
 import net.labymod.settings.elements.ControlElement;
@@ -9,6 +10,7 @@ import net.labymod.utils.Material;
 /**
  * @author RettichLP
  */
+@UCModule
 public class BombTimerModule extends SimpleModule {
 
     public static int currentCount = 0;
@@ -45,7 +47,7 @@ public class BombTimerModule extends SimpleModule {
     }
 
     @Override public ModuleCategory getCategory() {
-        return UCModuleHandler.UNICACITY;
+        return ModuleRegistry.UNICACITY;
     }
 
     @Override public boolean isShown() {

@@ -1,5 +1,6 @@
 package com.rettichlp.UnicacityAddon.events;
 
+import com.rettichlp.UnicacityAddon.base.registry.annotation.UCEvent;
 import com.rettichlp.UnicacityAddon.UnicacityAddon;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
 import com.rettichlp.UnicacityAddon.modules.PayDayModule;
@@ -12,6 +13,7 @@ import java.util.regex.Matcher;
 /**
  * @author RettichLP
  */
+@UCEvent
 public class PayDayEventHandler {
 
     public static boolean isAfk = false;

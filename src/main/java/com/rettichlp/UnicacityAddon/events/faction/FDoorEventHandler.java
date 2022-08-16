@@ -3,6 +3,7 @@ package com.rettichlp.UnicacityAddon.events.faction;
 import com.google.common.collect.ImmutableSet;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
+import com.rettichlp.UnicacityAddon.base.registry.annotation.UCEvent;
 import net.minecraft.block.BlockAir;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
@@ -15,6 +16,7 @@ import java.util.Set;
 /**
  * @author Fuzzlemann
  */
+@UCEvent
 public class FDoorEventHandler {
 
     private final Set<FDoor> F_DOORS = ImmutableSet.of(
