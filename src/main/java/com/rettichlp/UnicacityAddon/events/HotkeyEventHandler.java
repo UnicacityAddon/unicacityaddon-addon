@@ -58,7 +58,12 @@ public class HotkeyEventHandler {
         UPlayer p = AbstractionLayer.getPlayer();
 
         if (Keyboard.isKeyDown(KeyBindRegistry.addonScreenshot.getKeyCode())) {
-            handleScreenshot();
+            try {
+                File file = FileManager.getNewImageFile();
+                handleScreenshot(file);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         } else if (Keyboard.isKeyDown(KeyBindRegistry.adFreigeben.getKeyCode())) {
             handleAd("freigeben");
         } else if (Keyboard.isKeyDown(KeyBindRegistry.adBlockieren.getKeyCode())) {
@@ -77,10 +82,9 @@ public class HotkeyEventHandler {
         lastScreenshot = System.currentTimeMillis();
     }
 
-    private void handleScreenshot() {
+    public static void handleScreenshot(File file) {
         try {
-            File newImageFile = FileManager.getNewImageFile();
-            if (newImageFile == null) {
+            if (file == null) {
                 UnicacityAddon.LABYMOD.notifyMessageRaw(ColorCode.RED.getCode() + "Fehler!", "Screenshot konnte nicht erstellt werden.");
                 return;
             }
@@ -88,10 +92,10 @@ public class HotkeyEventHandler {
             Framebuffer framebuffer = ReflectionUtils.getValue(UnicacityAddon.MINECRAFT, Framebuffer.class);
             assert framebuffer != null;
             BufferedImage image = ScreenShotHelper.createScreenshot(UnicacityAddon.MINECRAFT.displayWidth, UnicacityAddon.MINECRAFT.displayHeight, framebuffer);
-            ImageIO.write(image, "jpg", newImageFile);
+            ImageIO.write(image, "jpg", file);
             UnicacityAddon.LABYMOD.notifyMessageRaw(ColorCode.GREEN.getCode() + "Screenshot erstellt!", "Wird hochgeladen...");
 
-            Thread thread = new Thread(() -> uploadScreenshot(newImageFile));
+            Thread thread = new Thread(() -> uploadScreenshot(file));
             thread.start();
 
         } catch (IOException e) {
@@ -99,7 +103,7 @@ public class HotkeyEventHandler {
         }
     }
 
-    private void uploadScreenshot(File screenshotFile) {
+    private static void uploadScreenshot(File screenshotFile) {
         String link = ImageUploadUtils.uploadToLink(screenshotFile);
         AbstractionLayer.getPlayer().copyToClipboard(link);
         UnicacityAddon.LABYMOD.notifyMessageRaw(ColorCode.GREEN.getCode() + "Screenshot hochgeladen!", "Link in Zwischenablage kopiert.");
