@@ -23,14 +23,16 @@ public class Updater {
 
         AbstractionLayer.getPlayer().sendMessage(Message.getBuilder()
                 .info().space()
-                .of("Es ist ein neues Update für").advance().space()
-                .of("UnicacityAddon")
-                        .color(ColorCode.DARK_AQUA)
+                .of("Es ist").advance().space()
+                .of("v" + latestVersion)
+                        .color(ColorCode.AQUA)
                         .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder()
                                 .of("Changelog").color(ColorCode.RED).advance()
                                 .createComponent())
                         .clickEvent(ClickEvent.Action.OPEN_URL, "https://github.com/rettichlp/UnicacityAddon-1.12.2/releases/latest")
                         .advance().space()
+                .of("von").advance().space()
+                .of("UnicacityAddon").color(ColorCode.AQUA).advance().space()
                 .of("verfügbar!").advance().space()
                 .createComponent());
     }
