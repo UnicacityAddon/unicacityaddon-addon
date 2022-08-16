@@ -39,6 +39,10 @@ public class UPlayerImpl implements UPlayer {
     }
 
     @Override public void sendMessage(ITextComponent textComponent) {
+        if (!UnicacityAddon.ADDON.getApi().isIngame()) {
+            System.out.println("UPlayer nicht im Spiel! Nachricht abgebrochen.");
+            return;
+        }
         getPlayer().sendMessage(textComponent);
     }
 

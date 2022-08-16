@@ -3,8 +3,7 @@ package com.rettichlp.UnicacityAddon.commands.faction.badfaction;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
 import com.rettichlp.UnicacityAddon.base.json.BlacklistEntry;
-import com.rettichlp.UnicacityAddon.base.text.ColorCode;
-import com.rettichlp.UnicacityAddon.base.text.Message;
+import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import com.rettichlp.UnicacityAddon.base.utils.ForgeUtils;
 import com.rettichlp.UnicacityAddon.events.faction.BlacklistEventHandler;
 import net.minecraft.command.CommandBase;
@@ -14,12 +13,13 @@ import net.minecraft.util.math.BlockPos;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
  * @author Dimiikou
  */
+@UCCommand
 public class ModifyBlacklistCommand extends CommandBase {
 
     public static String target;
@@ -42,7 +42,7 @@ public class ModifyBlacklistCommand extends CommandBase {
     @Override
     @Nonnull
     public List<String> getAliases() {
-        return Arrays.asList("mbl");
+        return Collections.singletonList("mbl");
     }
 
     @Override
@@ -55,7 +55,7 @@ public class ModifyBlacklistCommand extends CommandBase {
         UPlayer p = AbstractionLayer.getPlayer();
 
         if (args.length != 2) {
-            p.sendSyntaxMessage("/modifyblacklist [Spieler] [Grund/-v]");
+            p.sendSyntaxMessage(getUsage(sender));
             return;
         }
 

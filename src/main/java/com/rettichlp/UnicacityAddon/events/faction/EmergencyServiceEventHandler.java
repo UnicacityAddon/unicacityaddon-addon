@@ -1,5 +1,6 @@
 package com.rettichlp.UnicacityAddon.events.faction;
 
+import com.rettichlp.UnicacityAddon.base.registry.annotation.UCEvent;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
 import com.rettichlp.UnicacityAddon.modules.EmergencyServiceModule;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
@@ -10,6 +11,7 @@ import java.util.regex.Matcher;
 /**
  * @author RettichLP
  */
+@UCEvent
 public class EmergencyServiceEventHandler {
 
     @SubscribeEvent public boolean onClientChatReceived(ClientChatReceivedEvent e) {

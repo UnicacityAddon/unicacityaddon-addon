@@ -3,6 +3,8 @@ package com.rettichlp.UnicacityAddon.commands;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
 import com.rettichlp.UnicacityAddon.base.location.NaviPoint;
+import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
+import com.rettichlp.UnicacityAddon.base.utils.MathUtils;
 import com.rettichlp.UnicacityAddon.base.utils.TextUtils;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
@@ -19,6 +21,7 @@ import java.util.stream.Collectors;
 /**
  * @author RettichLP
  */
+@UCCommand
 public class NaviCommand extends CommandBase {
 
     @Override
@@ -49,6 +52,11 @@ public class NaviCommand extends CommandBase {
         UPlayer p = AbstractionLayer.getPlayer();
         if (args.length < 1) {
             p.sendChatMessage("/navi");
+            return;
+        }
+
+        if (MathUtils.isInteger(args[0])) {
+            p.sendChatMessage("/navi Haus:" + args[0]);
             return;
         }
 

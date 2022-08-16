@@ -7,9 +7,11 @@ import com.rettichlp.UnicacityAddon.base.config.ConfigElements;
 import com.rettichlp.UnicacityAddon.base.io.FileManager;
 import com.rettichlp.UnicacityAddon.base.reflection.ReflectionUtils;
 import com.rettichlp.UnicacityAddon.base.registry.KeyBindRegistry;
+import com.rettichlp.UnicacityAddon.base.registry.annotation.UCEvent;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
 import com.rettichlp.UnicacityAddon.base.utils.ImageUploadUtils;
+import net.labymod.main.LabyMod;
 import net.minecraft.client.shader.Framebuffer;
 import net.minecraft.util.ScreenShotHelper;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
@@ -29,6 +31,7 @@ import java.util.regex.Matcher;
  * @author RettichLP
  * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/events/AlternateScreenshotEventHandler.java">UCUtils by paulzhng</a>
  */
+@UCEvent
 public class HotkeyEventHandler {
 
     private String adIssuer;
@@ -58,7 +61,12 @@ public class HotkeyEventHandler {
         UPlayer p = AbstractionLayer.getPlayer();
 
         if (Keyboard.isKeyDown(KeyBindRegistry.addonScreenshot.getKeyCode())) {
-            handleScreenshot();
+            try {
+                File file = FileManager.getNewImageFile();
+                handleScreenshot(file);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         } else if (Keyboard.isKeyDown(KeyBindRegistry.adFreigeben.getKeyCode())) {
             handleAd("freigeben");
         } else if (Keyboard.isKeyDown(KeyBindRegistry.adBlockieren.getKeyCode())) {
@@ -73,25 +81,24 @@ public class HotkeyEventHandler {
         } else if (Keyboard.isKeyDown(KeyBindRegistry.aDutySilent.getKeyCode())) {
             p.sendChatMessage("/aduty -s");
         }
-
-        lastScreenshot = System.currentTimeMillis();
     }
 
-    private void handleScreenshot() {
+    public static void handleScreenshot(File file) {
         try {
-            File newImageFile = FileManager.getNewImageFile();
-            if (newImageFile == null) {
-                UnicacityAddon.LABYMOD.notifyMessageRaw(ColorCode.RED.getCode() + "Fehler!", "Screenshot konnte nicht erstellt werden.");
+            if (file == null) {
+                LabyMod.getInstance().notifyMessageRaw(ColorCode.RED.getCode() + "Fehler!", "Screenshot konnte nicht erstellt werden.");
                 return;
             }
 
             Framebuffer framebuffer = ReflectionUtils.getValue(UnicacityAddon.MINECRAFT, Framebuffer.class);
             assert framebuffer != null;
             BufferedImage image = ScreenShotHelper.createScreenshot(UnicacityAddon.MINECRAFT.displayWidth, UnicacityAddon.MINECRAFT.displayHeight, framebuffer);
-            ImageIO.write(image, "jpg", newImageFile);
-            UnicacityAddon.LABYMOD.notifyMessageRaw(ColorCode.GREEN.getCode() + "Screenshot erstellt!", "Wird hochgeladen...");
+            ImageIO.write(image, "jpg", file);
+            LabyMod.getInstance().notifyMessageRaw(ColorCode.GREEN.getCode() + "Screenshot erstellt!", "Wird hochgeladen...");
 
-            Thread thread = new Thread(() -> uploadScreenshot(newImageFile));
+            lastScreenshot = System.currentTimeMillis();
+
+            Thread thread = new Thread(() -> uploadScreenshot(file));
             thread.start();
 
         } catch (IOException e) {
@@ -99,10 +106,10 @@ public class HotkeyEventHandler {
         }
     }
 
-    private void uploadScreenshot(File screenshotFile) {
+    private static void uploadScreenshot(File screenshotFile) {
         String link = ImageUploadUtils.uploadToLink(screenshotFile);
         AbstractionLayer.getPlayer().copyToClipboard(link);
-        UnicacityAddon.LABYMOD.notifyMessageRaw(ColorCode.GREEN.getCode() + "Screenshot hochgeladen!", "Link in Zwischenablage kopiert.");
+        LabyMod.getInstance().notifyMessageRaw(ColorCode.GREEN.getCode() + "Screenshot hochgeladen!", "Link in Zwischenablage kopiert.");
     }
 
     private void handleAd(String type) {

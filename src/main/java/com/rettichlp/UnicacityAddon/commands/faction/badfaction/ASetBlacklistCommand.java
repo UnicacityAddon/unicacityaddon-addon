@@ -3,8 +3,7 @@ package com.rettichlp.UnicacityAddon.commands.faction.badfaction;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
 import com.rettichlp.UnicacityAddon.base.json.BlacklistEntry;
-import com.rettichlp.UnicacityAddon.base.text.ColorCode;
-import com.rettichlp.UnicacityAddon.base.text.Message;
+import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import com.rettichlp.UnicacityAddon.base.utils.ForgeUtils;
 import com.rettichlp.UnicacityAddon.events.faction.BlacklistEventHandler;
 import net.minecraft.command.CommandBase;
@@ -20,6 +19,7 @@ import java.util.List;
 /**
  * @author RettichLP
  */
+@UCCommand
 public class ASetBlacklistCommand extends CommandBase {
 
     @Override
@@ -51,10 +51,7 @@ public class ASetBlacklistCommand extends CommandBase {
         if (args.length < 2) return;
 
         if (BlacklistEventHandler.BLACKLIST == null) {
-            p.sendMessage(Message.getBuilder()
-                    .error().space()
-                    .of("Datei 'blacklistData.json' ist falsch formatiert!").color(ColorCode.GRAY).advance()
-                    .createComponent());
+            p.sendErrorMessage("Datei 'blacklistData.json' ist falsch formatiert!");
             return;
         }
 
@@ -62,21 +59,19 @@ public class ASetBlacklistCommand extends CommandBase {
         BlacklistEntry ble = BlacklistEventHandler.BLACKLIST.getBlackListEntryByReason(reason);
 
         if (ble == null) {
-            p.sendMessage(Message.getBuilder()
-                    .error().space()
-                    .of("Blacklistgrund wurde nicht gefunden!").color(ColorCode.GRAY).advance()
-                    .createComponent());
+            p.sendErrorMessage("Blacklistgrund wurde nicht gefunden!");
             return;
         }
 
         for (int i = 0; i < args.length - 1; i++) {
-            p.sendChatMessage("/bl set " + args[i] + " " + ble.getKills() + " " + ble.getPrice() + " " + ble.getReason().replace("-", ""));
+            p.sendChatMessage("/bl set " + args[i] + " " + ble.getKills() + " " + ble.getPrice() + " " + ble.getReason().replace("-", " "));
         }
     }
 
     @Override
     @Nonnull
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
+        BlacklistEventHandler.refreshBlacklistReasons();
         List<String> tabCompletions = ForgeUtils.getOnlinePlayers();
         if (args.length > 1 && BlacklistEventHandler.BLACKLIST != null) {
             tabCompletions.addAll(BlacklistEventHandler.BLACKLIST.getBlacklistReasons());

@@ -2,6 +2,7 @@ package com.rettichlp.UnicacityAddon.commands.job;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
+import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
@@ -15,9 +16,11 @@ import java.util.TimerTask;
 /**
  * @author Dimiikou
  */
+@UCCommand
 public class ADropMoneyCommand extends CommandBase {
 
     public static boolean execute = false;
+    private int step = 0;
 
     @Override
     @Nonnull
@@ -48,23 +51,27 @@ public class ADropMoneyCommand extends CommandBase {
         Timer t = new Timer();
 
         execute = true;
-        p.sendChatMessage("/bank abbuchen 15000");
 
-        t.schedule(new TimerTask() {
+        t.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                if (execute) {
-                    p.sendChatMessage("/bank einzahlen 15000");
-                    p.sendChatMessage("/dropmoney");
-                    t.schedule(new TimerTask() {
-                        @Override
-                        public void run() {
-                            execute = false;
-                        }
-                    }, 200L);
-
+                switch (step++) {
+                    case 1:
+                        p.sendChatMessage("/bank abbuchen 15000");
+                        break;
+                    case 2:
+                        p.sendChatMessage("/dropmoney");
+                        break;
+                    case 3:
+                        p.sendChatMessage("/bank einzahlen 15000");
+                        break;
+                    case 4:
+                        execute = false;
+                        step = 0;
+                        t.cancel();
+                        break;
                 }
             }
-        }, 1500L);
+        }, 0, 500);
     }
 }

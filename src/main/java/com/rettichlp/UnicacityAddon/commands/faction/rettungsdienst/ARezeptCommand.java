@@ -3,24 +3,26 @@ package com.rettichlp.UnicacityAddon.commands.faction.rettungsdienst;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
 import com.rettichlp.UnicacityAddon.base.faction.rettungsdienst.Medication;
-import com.rettichlp.UnicacityAddon.base.text.ColorCode;
-import com.rettichlp.UnicacityAddon.base.text.Message;
+import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import com.rettichlp.UnicacityAddon.base.utils.ForgeUtils;
 import com.rettichlp.UnicacityAddon.base.utils.MathUtils;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import com.rettichlp.UnicacityAddon.events.faction.rettungsdienst.MedicationEventHandler;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * @author RettichLP
  */
+@UCCommand
 public class ARezeptCommand extends CommandBase {
 
     public static String target;
@@ -47,7 +49,7 @@ public class ARezeptCommand extends CommandBase {
         UPlayer p = AbstractionLayer.getPlayer();
 
         if (args.length < 3) {
-            Message.getBuilder().error().space().of("Syntax: " + getUsage(sender)).color(ColorCode.GRAY).advance().sendTo(p.getPlayer());
+            p.sendSyntaxMessage(getUsage(sender));
             return;
         }
 
@@ -56,9 +58,8 @@ public class ARezeptCommand extends CommandBase {
         if (medication == null) return;
 
         if (!MathUtils.isInteger(args[2])) return;
-        amount = Integer.parseInt(args[2]) - 1;
-
-        p.sellMedication(target, medication);
+        amount = Integer.parseInt(args[2]);
+        MedicationEventHandler.giveRecipe();
     }
 
     @Override @Nonnull public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {

@@ -1,15 +1,20 @@
 package com.rettichlp.UnicacityAddon.modules;
 
 import com.rettichlp.UnicacityAddon.base.io.FileManager;
-import com.rettichlp.UnicacityAddon.base.module.UCModuleHandler;
+import com.rettichlp.UnicacityAddon.base.registry.ModuleRegistry;
+import com.rettichlp.UnicacityAddon.base.registry.annotation.UCModule;
 import net.labymod.ingamegui.ModuleCategory;
 import net.labymod.ingamegui.moduletypes.SimpleModule;
 import net.labymod.settings.elements.ControlElement;
 import net.labymod.utils.Material;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 /**
  * @author RettichLP
  */
+@UCModule
 public class CashMoneyModule extends SimpleModule {
 
     public static int cashBalance;
@@ -31,7 +36,8 @@ public class CashMoneyModule extends SimpleModule {
 
     @Override
     public String getDisplayValue() {
-        return cashBalance + "$";
+        NumberFormat numberFormat = NumberFormat.getNumberInstance(new Locale("da", "DK"));
+        return numberFormat.format(cashBalance) + "$";
     }
 
     @Override
@@ -51,7 +57,7 @@ public class CashMoneyModule extends SimpleModule {
 
     @Override
     public ModuleCategory getCategory() {
-        return UCModuleHandler.UNICACITY;
+        return ModuleRegistry.UNICACITY;
     }
 
     @Override

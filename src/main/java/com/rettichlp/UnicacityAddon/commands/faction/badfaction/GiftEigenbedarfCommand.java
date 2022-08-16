@@ -3,8 +3,7 @@ package com.rettichlp.UnicacityAddon.commands.faction.badfaction;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
 import com.rettichlp.UnicacityAddon.base.config.ConfigElements;
-import com.rettichlp.UnicacityAddon.base.text.ColorCode;
-import com.rettichlp.UnicacityAddon.base.text.Message;
+import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import com.rettichlp.UnicacityAddon.base.utils.ForgeUtils;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
@@ -19,6 +18,7 @@ import java.util.List;
 /**
  * @author Dimiikou
  */
+@UCCommand
 public class GiftEigenbedarfCommand extends CommandBase {
 
     public static boolean checkWeed = false;
@@ -52,8 +52,7 @@ public class GiftEigenbedarfCommand extends CommandBase {
         UPlayer p = AbstractionLayer.getPlayer();
 
         if (args.length < 1) {
-            Message.getBuilder().error().space().of("Falscher Syntax, verwende").color(ColorCode.GRAY).advance().space()
-                    .of("/gifteigenbedarf [Spieler]").color(ColorCode.RED).advance().sendTo(p.getPlayer());
+            p.sendSyntaxMessage(getUsage(sender));
             return;
         }
 

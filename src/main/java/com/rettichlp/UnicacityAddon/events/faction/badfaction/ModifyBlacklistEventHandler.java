@@ -2,8 +2,7 @@ package com.rettichlp.UnicacityAddon.events.faction.badfaction;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
-import com.rettichlp.UnicacityAddon.base.text.ColorCode;
-import com.rettichlp.UnicacityAddon.base.text.Message;
+import com.rettichlp.UnicacityAddon.base.registry.annotation.UCEvent;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
 import com.rettichlp.UnicacityAddon.commands.faction.badfaction.ModifyBlacklistCommand;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
@@ -14,11 +13,13 @@ import java.util.regex.Matcher;
 /**
  * @author Dimiikou
  */
+@UCEvent
 public class ModifyBlacklistEventHandler {
 
     @SubscribeEvent
     public boolean onClientChatReceived(ClientChatReceivedEvent e) {
         if (System.currentTimeMillis() - ModifyBlacklistCommand.executedTime > 1000L) return false;
+        UPlayer p = AbstractionLayer.getPlayer();
 
         String msg = e.getMessage().getUnformattedText();
 
@@ -46,8 +47,7 @@ public class ModifyBlacklistEventHandler {
 
         if (ModifyBlacklistCommand.type == ModifyBlacklistCommand.ModifyBlacklistType.OUTLAW) {
             if (reason.contains("[Vogelfrei]")) {
-                Message.getBuilder().error().space().of("Der Spieler ist bereits vogelfrei.").color(ColorCode.GRAY)
-                .advance().sendTo(AbstractionLayer.getPlayer().getPlayer());
+                p.sendErrorMessage("Der Spieler ist bereits vogelfrei!");
                 return false;
             }
 
@@ -55,8 +55,7 @@ public class ModifyBlacklistEventHandler {
             reason += " [Vogelfrei]"; // append outlaw reason
         } else {
             if (reason.contains(ModifyBlacklistCommand.addReason.getReason())) {
-                Message.getBuilder().error().space().of("Der Spieler besitzt diesen Blacklistgrund bereits.").color(ColorCode.GRAY)
-                        .advance().sendTo(AbstractionLayer.getPlayer().getPlayer());
+                p.sendErrorMessage("Der Spieler besitzt diesen Blacklistgrund bereits!");
                 return false;
             }
 
@@ -72,7 +71,6 @@ public class ModifyBlacklistEventHandler {
         }
 
         // delete from and re-add blacklist
-        UPlayer p = AbstractionLayer.getPlayer();
         p.sendChatMessage("/bl del " + ModifyBlacklistCommand.target);
         p.sendChatMessage("/bl set " + ModifyBlacklistCommand.target + " " + kills + " " + price + " " + reason);
 
@@ -81,7 +79,7 @@ public class ModifyBlacklistEventHandler {
 
     //Removes all known Modifiers
     private static String removeModifiers(String reason) {
-        reason = reason.replaceAll(" (:?\\[|\\().+(:?\\]|\\))", "");
+        reason = reason.replaceAll(" (:?\\[|\\().+(:?]|\\))", "");
 
         return reason;
     }

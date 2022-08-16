@@ -6,9 +6,11 @@ import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.json.Data;
 import com.rettichlp.UnicacityAddon.commands.TodoListCommand;
 import com.rettichlp.UnicacityAddon.modules.BankMoneyModule;
+import com.rettichlp.UnicacityAddon.modules.CarOpenModule;
 import com.rettichlp.UnicacityAddon.modules.CashMoneyModule;
-import com.rettichlp.UnicacityAddon.modules.JobMoneyModule;
+import com.rettichlp.UnicacityAddon.modules.JobModule;
 import com.rettichlp.UnicacityAddon.modules.PayDayModule;
+import joptsimple.internal.Strings;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
@@ -38,6 +40,15 @@ public class FileManager {
         return null;
     }
 
+    public static File getLabyModAddonDir() {
+        File labyModAddonDir = new File(getMinecraftDir().getAbsolutePath() + "/LabyMod/addons-1.12/");
+        if (labyModAddonDir.exists() || labyModAddonDir.mkdirs()) return labyModAddonDir;
+
+        AbstractionLayer.getPlayer().sendErrorMessage("Ordner 'addons-1.12' wurde nicht gefunden!");
+
+        return null;
+    }
+
     public static File getAddonScreenshotDir() {
         if (getUnicacityAddonDir() == null) return null;
         File addonScreenshotDir = new File(getUnicacityAddonDir().getAbsolutePath() + "/screenshots/");
@@ -46,6 +57,21 @@ public class FileManager {
         AbstractionLayer.getPlayer().sendErrorMessage("Ordner 'screenshots' wurde nicht gefunden!");
 
         return null;
+    }
+
+    public static File getAddonActivityScreenDir(String type) {
+        if (getUnicacityAddonDir() == null) return null;
+        File addonScreenshotDir = new File(getUnicacityAddonDir().getAbsolutePath() + "/screenshots/" + type);
+        if (addonScreenshotDir.exists() || addonScreenshotDir.mkdir()) return addonScreenshotDir;
+
+        AbstractionLayer.getPlayer().sendErrorMessage("Ordner 'screenshots/" + type + "' wurde nicht gefunden!");
+
+        return null;
+    }
+
+    public static File getUnicacityAddonFile() {
+        if (getLabyModAddonDir() == null) return null;
+        return new File(getLabyModAddonDir().getAbsolutePath() + "/UnicacityAddon-" + UnicacityAddon.VERSION + ".jar");
     }
 
     public static File getBlacklistDataFile() throws IOException {
@@ -83,6 +109,21 @@ public class FileManager {
         return newImageFile.createNewFile() ? newImageFile : null;
     }
 
+    public static File getNewActivityImageFile(String type) throws IOException {
+        if (getAddonActivityScreenDir(type) == null) return null;
+
+        String date = DATE_FORMAT.format(new Date());
+        StringBuilder sb = new StringBuilder(date);
+        int i = 1;
+        while (new File(getAddonActivityScreenDir(type).getAbsolutePath() + "/" + sb + "-" + type + ".jpg").exists()) {
+            if (i == 1) sb.append("_").append(i++);
+            else sb.replace(sb.length() - 1, sb.length(), String.valueOf(i));
+        }
+
+        File newImageFile = new File(getAddonActivityScreenDir(type).getAbsolutePath() + "/" + sb + "-" + type + ".jpg");
+        return newImageFile.createNewFile() ? newImageFile : null;
+    }
+
     public static void loadData() {
         try {
             File dataFile = FileManager.getDataFile();
@@ -93,18 +134,22 @@ public class FileManager {
             if (jsonData.isEmpty()) {
                 BankMoneyModule.setBalance(0);
                 CashMoneyModule.setBalance(0);
-                JobMoneyModule.setBalance(0);
+                JobModule.setBalance(0);
+                JobModule.setExperience(0);
                 PayDayModule.setTime(0);
                 TodoListCommand.todolist = Collections.emptyList();
+                CarOpenModule.info = "";
                 return;
             }
 
             Data data = g.fromJson(jsonData, Data.class);
             BankMoneyModule.bankBalance = data.getBankBalance();
             CashMoneyModule.cashBalance = data.getCashBalance();
-            JobMoneyModule.jobBalance = data.getJobBalance();
+            JobModule.jobBalance = data.getJobBalance();
+            JobModule.jobExperience = data.getJobExperience();
             PayDayModule.currentTime = data.getPayDayTime();
             TodoListCommand.todolist = data.getTodolist();
+            CarOpenModule.info = data.getCarInfo() == null ? Strings.EMPTY : data.getCarInfo();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -118,9 +163,11 @@ public class FileManager {
             Data data = new Data();
             data.setBankBalance(BankMoneyModule.bankBalance);
             data.setCashBalance(CashMoneyModule.cashBalance);
-            data.setJobBalance(JobMoneyModule.jobBalance);
+            data.setJobBalance(JobModule.jobBalance);
+            data.setJobExperience(JobModule.jobExperience);
             data.setPayDayTime(PayDayModule.currentTime);
             data.setTodolist(TodoListCommand.todolist);
+            data.setCarInfo(CarOpenModule.info);
             FileUtils.writeStringToFile(dataFile, g.toJson(data), StandardCharsets.UTF_8.toString());
         } catch (IOException e) {
             throw new RuntimeException(e);

@@ -3,6 +3,7 @@ package com.rettichlp.UnicacityAddon.events;
 import com.google.common.collect.ImmutableSet;
 import com.rettichlp.UnicacityAddon.UnicacityAddon;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
+import com.rettichlp.UnicacityAddon.base.registry.annotation.UCEvent;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -13,15 +14,18 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author RettichLP
  * @see <a href="https://github.com/paulzhng/UCUtils/blob/e1e4cc90a852a24fbb552413eb478097f865c6f3/src/main/java/de/fuzzlemann/ucutils/events/WeaponClickEventHandler.java">UCUtils by paulzhng</a>
  */
+@UCEvent
 public class WeaponClickEventHandler {
 
     private static final Set<String> WEAPONS = ImmutableSet.of("§8M4", "§8MP5", "§8Pistole", "§8Jagdflinte");
     public static boolean tazerLoaded = false;
+    private long tazerLastWarningSend = 0;
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onPlayerInteract(PlayerInteractEvent e) {
@@ -82,6 +86,9 @@ public class WeaponClickEventHandler {
         if (!(e instanceof PlayerInteractEvent.LeftClickBlock || e instanceof PlayerInteractEvent.EntityInteractSpecific || e instanceof PlayerInteractEvent.LeftClickEmpty))
             return;
 
+        if (System.currentTimeMillis() - tazerLastWarningSend < TimeUnit.SECONDS.toMillis(5)) return;
+
         AbstractionLayer.getPlayer().sendInfoMessage("Achtung! Dein Tazer ist geladen!");
+        tazerLastWarningSend = System.currentTimeMillis();
     }
 }

@@ -2,9 +2,7 @@ package com.rettichlp.UnicacityAddon.commands;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
-import com.rettichlp.UnicacityAddon.base.text.ColorCode;
-import com.rettichlp.UnicacityAddon.base.text.Message;
-import com.rettichlp.UnicacityAddon.modules.BankMoneyModule;
+import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import com.rettichlp.UnicacityAddon.modules.CashMoneyModule;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
@@ -14,6 +12,10 @@ import javax.annotation.Nonnull;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * @author Dimiikou
+ */
+@UCCommand
 public class EinzahlenCommand extends CommandBase {
 
     @Override
@@ -46,7 +48,6 @@ public class EinzahlenCommand extends CommandBase {
         if (CashMoneyModule.cashBalance > 0)
             p.sendChatMessage("/bank einzahlen " + CashMoneyModule.cashBalance);
         else
-            p.sendMessage(Message.getBuilder().error().space()
-                    .of("Du hast kein Geld auf der Hand").color(ColorCode.GRAY).advance().createComponent());
+            p.sendErrorMessage("Du hast kein Geld auf der Hand!");
     }
 }

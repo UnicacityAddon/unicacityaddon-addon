@@ -1,5 +1,6 @@
 package com.rettichlp.UnicacityAddon.events;
 
+import com.rettichlp.UnicacityAddon.base.registry.annotation.UCEvent;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
 import com.rettichlp.UnicacityAddon.modules.BombTimerModule;
@@ -11,6 +12,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 /**
  * @author RettichLP
  */
+@UCEvent
 public class BombTimerEventHandler {
 
     @SubscribeEvent public void onTick(TickEvent.ClientTickEvent event) {

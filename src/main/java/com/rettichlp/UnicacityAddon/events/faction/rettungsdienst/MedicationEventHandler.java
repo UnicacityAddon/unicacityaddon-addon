@@ -1,6 +1,7 @@
 package com.rettichlp.UnicacityAddon.events.faction.rettungsdienst;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
+import com.rettichlp.UnicacityAddon.base.registry.annotation.UCEvent;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
 import com.rettichlp.UnicacityAddon.commands.faction.rettungsdienst.ARezeptAnnehmenCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.rettungsdienst.ARezeptCommand;
@@ -13,6 +14,7 @@ import java.util.TimerTask;
 /**
  * @author RettichLP
  */
+@UCEvent
 public class MedicationEventHandler {
 
     private static final Timer TIMER = new Timer();
@@ -38,13 +40,14 @@ public class MedicationEventHandler {
         }, delay);
     }
 
-    private void acceptRecipe() {
+    public static void acceptRecipe() {
         --ARezeptAnnehmenCommand.amount;
         lastExecution = System.currentTimeMillis();
         AbstractionLayer.getPlayer().acceptOffer();
     }
 
-    @SubscribeEvent public void onRecipeGiveFeedback(ClientChatReceivedEvent e) {
+    @SubscribeEvent
+    public void onRecipeGiveFeedback(ClientChatReceivedEvent e) {
         if (ARezeptCommand.amount < 1)
             return; //checks if there is an active recipe-give-process
 
@@ -58,13 +61,14 @@ public class MedicationEventHandler {
         if (timeSinceLastExecution < 1000) delay = 1000 - timeSinceLastExecution;
 
         TIMER.schedule(new TimerTask() {
-            @Override public void run() {
+            @Override
+            public void run() {
                 giveRecipe();
             }
         }, delay);
     }
 
-    private void giveRecipe() {
+    public static void giveRecipe() {
         --ARezeptCommand.amount;
         lastExecution = System.currentTimeMillis();
         AbstractionLayer.getPlayer().sellMedication(ARezeptCommand.target, ARezeptCommand.medication);
