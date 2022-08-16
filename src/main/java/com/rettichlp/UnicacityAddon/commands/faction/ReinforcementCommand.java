@@ -3,7 +3,6 @@ package com.rettichlp.UnicacityAddon.commands.faction;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
 import com.rettichlp.UnicacityAddon.base.config.ConfigElements;
-import com.rettichlp.UnicacityAddon.base.faction.Faction;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import com.rettichlp.UnicacityAddon.base.text.ChatType;
 import com.rettichlp.UnicacityAddon.base.utils.MathUtils;
@@ -128,11 +127,7 @@ public class ReinforcementCommand extends CommandBase {
         }
 
         public ChatType getChatType() {
-            Faction alliance1 = ConfigElements.getNameTagAlliance1();
-            Faction alliance2 = ConfigElements.getNameTagAlliance2();
-
-            boolean hasAllianceFaction = !alliance1.equals(Faction.NULL) || !alliance2.equals(Faction.NULL);
-
+            boolean hasAllianceFaction = ConfigElements.getNameTagAlliance();
             return hasAllianceFaction ? chatType : ChatType.FCHAT;
         }
 
