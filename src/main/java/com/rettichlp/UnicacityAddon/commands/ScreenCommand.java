@@ -3,6 +3,7 @@ package com.rettichlp.UnicacityAddon.commands;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
 import com.rettichlp.UnicacityAddon.base.io.FileManager;
+import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import com.rettichlp.UnicacityAddon.events.HotkeyEventHandler;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
@@ -18,6 +19,10 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * @author Dimiikou
+ */
+@UCCommand
 public class ScreenCommand extends CommandBase {
 
     private final List<String> SCREENSHOT_TYPE_LIST = new ArrayList<>(Arrays.asList(
