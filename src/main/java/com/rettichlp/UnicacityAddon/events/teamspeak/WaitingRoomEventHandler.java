@@ -3,40 +3,37 @@ package com.rettichlp.UnicacityAddon.events.teamspeak;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
+import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
+import com.rettichlp.UnicacityAddon.base.config.ConfigElements;
+import com.rettichlp.UnicacityAddon.base.faction.Faction;
+import com.rettichlp.UnicacityAddon.base.registry.annotation.UCEvent;
 import com.rettichlp.UnicacityAddon.base.teamspeak.commands.ClientVariableCommand;
 import com.rettichlp.UnicacityAddon.base.teamspeak.events.ClientMovedEvent;
-import de.fuzzlemann.ucutils.Main;
-import de.fuzzlemann.ucutils.base.abstraction.AbstractionLayer;
-import de.fuzzlemann.ucutils.base.text.Message;
-import de.fuzzlemann.ucutils.config.UCUtilsConfig;
-import de.fuzzlemann.ucutils.teamspeak.commands.ClientVariableCommand;
-import de.fuzzlemann.ucutils.teamspeak.events.ClientMovedEvent;
-import de.fuzzlemann.ucutils.utils.faction.Faction;
-import de.fuzzlemann.ucutils.utils.sound.SoundUtil;
-import net.minecraft.util.text.TextFormatting;
+import com.rettichlp.UnicacityAddon.base.text.ColorCode;
+import com.rettichlp.UnicacityAddon.base.text.Message;
 import net.minecraft.util.text.event.ClickEvent;
 import net.minecraft.util.text.event.HoverEvent;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 /**
  * @author Fuzzlemann
  */
-@Mod.EventBusSubscriber
+@UCEvent
 public class WaitingRoomEventHandler {
 
     private static final Table<Integer, Integer, Long> COOLDOWN_TABLE = HashBasedTable.create();
 
     @SubscribeEvent
     public static void onClientMoved(ClientMovedEvent e) {
-        if (!AbstractionLayer.getPlayer().isConnected()) return;
+        UPlayer p = AbstractionLayer.getPlayer();
 
-        boolean supportNotification = UCUtilsConfig.notifyWaitingSupport;
-        boolean publicNotification = UCUtilsConfig.notifyWaitingPublic;
+        if (!p.isConnected()) return;
+
+        boolean supportNotification = ConfigElements.getTeamspeakNotifyWaitingSupport();
+        boolean publicNotification = ConfigElements.getTeamspeakNotifyWaitingPublic();
         if (!supportNotification && !publicNotification) return;
 
         int targetChannelID = e.getTargetChannelID();
@@ -44,7 +41,7 @@ public class WaitingRoomEventHandler {
         if (targetChannelID == 41) {
             if (!supportNotification) return;
             support = true;
-        } else if (Faction.getFactionOfPlayer() != null && targetChannelID == Faction.getFactionOfPlayer().getPublicChannelID()) {
+        } else if (!p.getFaction().equals(Faction.NULL) && targetChannelID == p.getFaction().getPublicChannelId()) {
             if (!publicNotification) return;
             support = false;
         } else {
@@ -63,30 +60,31 @@ public class WaitingRoomEventHandler {
             ClientVariableCommand.Response response = new ClientVariableCommand(clientID).getResponse();
             String name = response.getDescription();
 
-            Message.Builder builder = Message.builder()
+            Message.Builder messageBuilder = Message.getBuilder()
                     .prefix()
-                    .of(name).color(TextFormatting.BLUE).advance()
+                    .of(name).color(ColorCode.BLUE).advance()
                     .space();
 
             if (support) {
-                builder.of("hat das Wartezimmer betreten.").color(TextFormatting.GRAY).advance();
+                messageBuilder.of("hat das Wartezimmer betreten.").color(ColorCode.GRAY).advance();
             } else {
-                builder.of("hat den Öffentlich-Channel betreten.").color(TextFormatting.GRAY).advance()
+                messageBuilder.of("hat den Öffentlich-Channel betreten.").color(ColorCode.GRAY).advance()
                         .space()
-                        .of("[↑]").color(TextFormatting.BLUE)
-                        .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.builder().of("Betritt den Öffentlich-Channel").color(TextFormatting.GRAY).advance().build())
+                        .of("[↑]").color(ColorCode.BLUE)
+                        .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Betritt den Öffentlich-Channel").color(ColorCode.GRAY).advance().createComponent())
                         .clickEvent(ClickEvent.Action.RUN_COMMAND, "/tsjoin Öffentlich")
                         .advance()
                         .space();
             }
 
-            builder.space()
-                    .of("[↓]").color(TextFormatting.BLUE)
-                    .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.builder().of("Move ").color(TextFormatting.GRAY).advance().of(name).color(TextFormatting.BLUE).advance().of(" zu dir").color(TextFormatting.GRAY).advance().build())
+            messageBuilder.space()
+                    .of("[↓]").color(ColorCode.BLUE)
+                    .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Move ").color(ColorCode.GRAY).advance().of(name).color(ColorCode.BLUE).advance().of(" zu dir").color(ColorCode.GRAY).advance().createComponent())
                     .clickEvent(ClickEvent.Action.RUN_COMMAND, "/movehere " + name).advance()
-                    .send();
+                    .sendTo(p.getPlayer());
 
-            Main.MINECRAFT.addScheduledTask(() -> AbstractionLayer.getPlayer().playSound(Objects.requireNonNull(SoundUtil.getSoundEvent("block.note.pling")), 1, 1));
+            //UnicacityAddon.MINECRAFT.addScheduledTask(() -> p.playSound(Objects.requireNonNull(SoundUtil.getSoundEvent("block.note.pling")), 1, 1));
+            // TODO: 17.08.2022
         }).start();
     }
 }
