@@ -13,7 +13,7 @@ There are no development versions available for installation. If such want to be
 ### Manual installation (addon folder)
 
 > Wichtig! Die Minecraft Version ist die 1.12.x und es wird LabyMod Forge benötigt. [Download](https://dl.labymod.net/latest/install/LabyMod3_Installer.jar)
-1. Neueste oder gwünschte Version [hier](https://github.com/rettichlp/UnicacityAddon-1.12.2/releases) herunterladen.<br>
+1. Neueste oder gewünschte Version [hier](https://github.com/rettichlp/UnicacityAddon-1.12.2/releases) herunterladen.<br>
    ![image](https://user-images.githubusercontent.com/97811064/184896004-2f6879ce-c709-405f-a64a-3c40254d4c28.png)
 2. [Minecraft Ordner](https://praxistipps.chip.de/wie-heisst-der-minecraft-ordner-so-finden-sie-ihn_40959) (`.minecraft`) öffnen.<br>
 3. LabyMod Ordner öffnen<br>
