@@ -2,6 +2,7 @@ package com.rettichlp.UnicacityAddon.commands.faction;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
+import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
 import com.rettichlp.UnicacityAddon.base.utils.ForgeUtils;
@@ -22,6 +23,7 @@ import java.util.Set;
  * @author Dimiikou
  * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/commands/faction/ShareLocationCommand.java">UCUtils by paulzhng</a>
  */
+@UCCommand
 public class ShareLocationCommand extends CommandBase {
 
     @Override @Nonnull public String getName() {
@@ -29,7 +31,7 @@ public class ShareLocationCommand extends CommandBase {
     }
 
     @Override @Nonnull public String getUsage(@Nonnull ICommandSender sender) {
-        return "/sharelocation [Player...] (-d) ";
+        return "/sharelocation [Player...] (-d)";
     }
 
     @Override @Nonnull
@@ -47,11 +49,7 @@ public class ShareLocationCommand extends CommandBase {
         UPlayer p = AbstractionLayer.getPlayer();
 
         if (!MobileEventHandler.hasCommunications) {
-            Message.getBuilder()
-                    .error()
-                    .space()
-                    .of("Du hast keine Kommunikationsmittel!").color(ColorCode.GRAY).advance()
-                    .sendTo(p.getPlayer());
+            p.sendErrorMessage("Du hast keine Kommunikationsmittel!");
             return;
         }
 
@@ -67,7 +65,7 @@ public class ShareLocationCommand extends CommandBase {
         }
 
         if (playerNames.isEmpty()) {
-            Message.getBuilder().error().space().of("Dieser Spieler wurder nicht gefunden.").color(ColorCode.RED).advance().sendTo(p.getPlayer());
+            p.sendErrorMessage("Dieser Spieler wurde nicht gefunden!");
             return;
         }
 

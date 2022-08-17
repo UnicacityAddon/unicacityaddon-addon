@@ -7,6 +7,7 @@ import com.rettichlp.UnicacityAddon.base.config.ConfigElements;
 import com.rettichlp.UnicacityAddon.base.io.FileManager;
 import com.rettichlp.UnicacityAddon.base.reflection.ReflectionUtils;
 import com.rettichlp.UnicacityAddon.base.registry.KeyBindRegistry;
+import com.rettichlp.UnicacityAddon.base.registry.annotation.UCEvent;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
 import com.rettichlp.UnicacityAddon.base.utils.ImageUploadUtils;
@@ -17,6 +18,7 @@ import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
+import org.lwjgl.input.Keyboard;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -29,10 +31,12 @@ import java.util.regex.Matcher;
  * @author RettichLP
  * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/events/AlternateScreenshotEventHandler.java">UCUtils by paulzhng</a>
  */
+@UCEvent
 public class HotkeyEventHandler {
 
     private String adIssuer;
     private long adTime;
+    private static long lastScreenshot;
 
     @SubscribeEvent
     public void onKeyInput(InputEvent.KeyInputEvent e) {
@@ -53,29 +57,35 @@ public class HotkeyEventHandler {
     }
 
     private void handleHotkey() {
+        if (System.currentTimeMillis() - lastScreenshot < TimeUnit.SECONDS.toMillis(1)) return;
         UPlayer p = AbstractionLayer.getPlayer();
-        if (KeyBindRegistry.addonScreenshot.isPressed()) {
-            handleScreenshot();
-        } else if (KeyBindRegistry.adFreigeben.isPressed()) {
+
+        if (Keyboard.isKeyDown(KeyBindRegistry.addonScreenshot.getKeyCode())) {
+            try {
+                File file = FileManager.getNewImageFile();
+                handleScreenshot(file);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } else if (Keyboard.isKeyDown(KeyBindRegistry.adFreigeben.getKeyCode())) {
             handleAd("freigeben");
-        } else if (KeyBindRegistry.adBlockieren.isPressed()) {
+        } else if (Keyboard.isKeyDown(KeyBindRegistry.adBlockieren.getKeyCode())) {
             handleAd("blockieren");
-        } else if (KeyBindRegistry.acceptReport.isPressed()) {
+        } else if (Keyboard.isKeyDown(KeyBindRegistry.acceptReport.getKeyCode())) {
             p.sendChatMessage("/ar");
-        } else if (KeyBindRegistry.cancelReport.isPressed()) {
+        } else if (Keyboard.isKeyDown(KeyBindRegistry.cancelReport.getKeyCode())) {
             if (!ConfigElements.getReportFarewell().isEmpty()) p.sendChatMessage(ConfigElements.getReportFarewell());
             p.sendChatMessage("/cr");
-        } else if (KeyBindRegistry.aDuty.isPressed()) {
+        } else if (Keyboard.isKeyDown(KeyBindRegistry.aDuty.getKeyCode())) {
             p.sendChatMessage("/aduty");
-        } else if (KeyBindRegistry.aDutySilent.isPressed()) {
+        } else if (Keyboard.isKeyDown(KeyBindRegistry.aDutySilent.getKeyCode())) {
             p.sendChatMessage("/aduty -s");
         }
     }
 
-    private void handleScreenshot() {
+    public static void handleScreenshot(File file) {
         try {
-            File newImageFile = FileManager.getNewImageFile();
-            if (newImageFile == null) {
+            if (file == null) {
                 LabyMod.getInstance().notifyMessageRaw(ColorCode.RED.getCode() + "Fehler!", "Screenshot konnte nicht erstellt werden.");
                 return;
             }
@@ -83,10 +93,12 @@ public class HotkeyEventHandler {
             Framebuffer framebuffer = ReflectionUtils.getValue(UnicacityAddon.MINECRAFT, Framebuffer.class);
             assert framebuffer != null;
             BufferedImage image = ScreenShotHelper.createScreenshot(UnicacityAddon.MINECRAFT.displayWidth, UnicacityAddon.MINECRAFT.displayHeight, framebuffer);
-            ImageIO.write(image, "jpg", newImageFile);
+            ImageIO.write(image, "jpg", file);
             LabyMod.getInstance().notifyMessageRaw(ColorCode.GREEN.getCode() + "Screenshot erstellt!", "Wird hochgeladen...");
 
-            Thread thread = new Thread(() -> uploadScreenshot(newImageFile));
+            lastScreenshot = System.currentTimeMillis();
+
+            Thread thread = new Thread(() -> uploadScreenshot(file));
             thread.start();
 
         } catch (IOException e) {
@@ -94,7 +106,7 @@ public class HotkeyEventHandler {
         }
     }
 
-    private void uploadScreenshot(File screenshotFile) {
+    private static void uploadScreenshot(File screenshotFile) {
         String link = ImageUploadUtils.uploadToLink(screenshotFile);
         AbstractionLayer.getPlayer().copyToClipboard(link);
         LabyMod.getInstance().notifyMessageRaw(ColorCode.GREEN.getCode() + "Screenshot hochgeladen!", "Link in Zwischenablage kopiert.");

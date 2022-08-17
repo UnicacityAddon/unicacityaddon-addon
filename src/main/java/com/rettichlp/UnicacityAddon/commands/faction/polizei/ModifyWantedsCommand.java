@@ -2,8 +2,7 @@ package com.rettichlp.UnicacityAddon.commands.faction.polizei;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
-import com.rettichlp.UnicacityAddon.base.text.ColorCode;
-import com.rettichlp.UnicacityAddon.base.text.Message;
+import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import com.rettichlp.UnicacityAddon.base.utils.ForgeUtils;
 import com.rettichlp.UnicacityAddon.base.utils.MathUtils;
 import com.rettichlp.UnicacityAddon.events.faction.polizei.WantedEventHandler;
@@ -23,6 +22,7 @@ import java.util.stream.Collectors;
  * @author RettichLP
  * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/commands/faction/police/ModifyWantedsCommand.java">UCUtils by paulzhng</a>
  */
+@UCCommand
 public class ModifyWantedsCommand extends CommandBase {
 
     @Override @Nonnull public String getName() {
@@ -50,11 +50,7 @@ public class ModifyWantedsCommand extends CommandBase {
 
         WantedEventHandler.Wanted wanted = WantedEventHandler.WANTED_MAP.get(target);
         if (wanted == null) {
-            Message.getBuilder()
-                    .error()
-                    .space()
-                    .of("Du hast /wanteds noch nicht ausgeführt.").color(ColorCode.GRAY).advance()
-                    .sendTo(p.getPlayer());
+            p.sendErrorMessage("Du hast /wanteds noch nicht ausgeführt!");
             return;
         }
 
@@ -86,23 +82,17 @@ public class ModifyWantedsCommand extends CommandBase {
 
         if (wanted.getAmount() > wantedAmount) {
             p.sendChatMessage("/clear " + target);
-            System.out.println("/clear " + target);
         }
 
         if (wantedAmount > 69)
             wantedAmount = 69;
 
         if (wantedAmount == wanted.getAmount() && wantedReason.equals(wanted.getReason())) {
-            Message.getBuilder()
-                    .error()
-                    .space()
-                    .of("Der Spieler besitzt bereits diese Modifikatoren.").color(ColorCode.GRAY).advance()
-                    .sendTo(p.getPlayer());
+            p.sendErrorMessage("Der Spieler besitzt bereits diese Modifikatoren.");
             return;
         }
 
         p.sendChatMessage("/su " + wantedAmount + " " + target + " " + wantedReason);
-        System.out.println("/su " + wantedAmount + " " + target + " " + wantedReason);
     }
 
     @Override @Nonnull public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {

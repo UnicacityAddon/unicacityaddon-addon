@@ -2,8 +2,7 @@ package com.rettichlp.UnicacityAddon.commands;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
-import com.rettichlp.UnicacityAddon.base.text.ColorCode;
-import com.rettichlp.UnicacityAddon.base.text.Message;
+import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
@@ -18,6 +17,7 @@ import java.util.List;
 /**
  * @author RettichLP
  */
+@UCCommand
 public class TriggerEventCommand extends CommandBase {
 
     @Override @Nonnull public String getName() {
@@ -38,11 +38,9 @@ public class TriggerEventCommand extends CommandBase {
         if (args.length == 1) {
             TriggerableEvent triggerableEvent = TriggerableEvent.valueOf(args[0]);
             p.sendMessageAsString(triggerableEvent.getTriggerMesage());
-        } else Message.getBuilder()
-                .error()
-                .space()
-                .of("Syntax: " + getUsage(sender)).color(ColorCode.GRAY).advance()
-                .sendTo(p.getPlayer());
+        } else {
+            p.sendSyntaxMessage(getUsage(sender));
+        }
     }
 
     @Override @Nonnull public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {

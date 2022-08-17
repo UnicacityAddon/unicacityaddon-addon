@@ -39,7 +39,15 @@ public class UPlayerImpl implements UPlayer {
     }
 
     @Override public void sendMessage(ITextComponent textComponent) {
+        if (!UnicacityAddon.ADDON.getApi().isIngame()) {
+            System.out.println("UPlayer nicht im Spiel! Nachricht abgebrochen.");
+            return;
+        }
         getPlayer().sendMessage(textComponent);
+    }
+
+    @Override public void sendMessageAsString(String message) {
+        getPlayer().sendMessage(new TextComponentString(message));
     }
 
     @Override public void sendErrorMessage(String message) {
@@ -60,8 +68,8 @@ public class UPlayerImpl implements UPlayer {
         sendErrorMessage("Syntax: " + message);
     }
 
-    @Override public void sendMessageAsString(String message) {
-        getPlayer().sendMessage(new TextComponentString(message));
+    @Override public void sendEmptyMessage() {
+        getPlayer().sendMessage(Message.getBuilder().createComponent());
     }
 
     @Override public void sendChatMessage(String message) {

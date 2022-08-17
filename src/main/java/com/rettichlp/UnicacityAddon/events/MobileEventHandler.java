@@ -1,7 +1,9 @@
 package com.rettichlp.UnicacityAddon.events;
 
-import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
+import com.rettichlp.UnicacityAddon.base.registry.annotation.UCEvent;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
+import com.rettichlp.UnicacityAddon.commands.ACallCommand;
+import com.rettichlp.UnicacityAddon.commands.ASMSCommand;
 import net.minecraft.client.Minecraft;
 import net.minecraft.inventory.ContainerChest;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
@@ -13,11 +15,12 @@ import java.util.regex.Matcher;
 /**
  * @author RettichLP
  */
+@UCEvent
 public class MobileEventHandler {
 
     public static int lastCheckedNumber = 0;
     public static boolean hasCommunications = false;
-    private boolean activeCommunicationsCheck;
+    public static boolean activeCommunicationsCheck;
 
     /**
      * If the user has set a password for their account, <code>/mobile</code> cannot be listed until the account is unlocked.
@@ -27,20 +30,6 @@ public class MobileEventHandler {
     @SubscribeEvent
     public void onClientChatReceived(ClientChatReceivedEvent e) {
         String msg = e.getMessage().getUnformattedText();
-
-        Matcher accountWelcomeBackMatcher = PatternHandler.ACCOUNT_WELCOME_BACK_PATTERN.matcher(msg);
-        if (accountWelcomeBackMatcher.find()) {
-            activeCommunicationsCheck = true;
-            AbstractionLayer.getPlayer().sendChatMessage("/mobile");
-            return;
-        }
-
-        Matcher accountUnlockedMatcher = PatternHandler.ACCOUNT_UNLOCKED_PATTERN.matcher(msg);
-        if (accountUnlockedMatcher.find()) {
-            activeCommunicationsCheck = true;
-            AbstractionLayer.getPlayer().sendChatMessage("/mobile");
-            return;
-        }
 
         Matcher communicationsRemoveMatcher = PatternHandler.COMMUNICATIONS_REMOVE_PATTERN.matcher(msg);
         if (communicationsRemoveMatcher.find()) {
@@ -57,7 +46,10 @@ public class MobileEventHandler {
         Matcher numberMatcher = PatternHandler.NUMBER_PATTERN.matcher(msg);
         if (numberMatcher.find()) {
             lastCheckedNumber = Integer.parseInt(numberMatcher.group(1));
-            e.setCanceled(true);
+            if (ACallCommand.isActive || ASMSCommand.isActive) {
+                e.setCanceled(true);
+                ACallCommand.isActive = ASMSCommand.isActive = false;
+            }
         }
     }
 

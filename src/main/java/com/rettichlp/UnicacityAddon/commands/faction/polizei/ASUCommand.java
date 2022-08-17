@@ -3,8 +3,7 @@ package com.rettichlp.UnicacityAddon.commands.faction.polizei;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
 import com.rettichlp.UnicacityAddon.base.faction.polizei.WantedReason;
-import com.rettichlp.UnicacityAddon.base.text.ColorCode;
-import com.rettichlp.UnicacityAddon.base.text.Message;
+import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import com.rettichlp.UnicacityAddon.base.utils.ForgeUtils;
 import com.rettichlp.UnicacityAddon.base.utils.MathUtils;
 import net.minecraft.command.CommandBase;
@@ -28,6 +27,7 @@ import java.util.stream.Collectors;
  * @author RettichLP
  * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/commands/faction/police/ASUCommand.java">UCUtils by paulzhng</a>
  */
+@UCCommand
 public class ASUCommand extends CommandBase {
 
     private final Timer timer = new Timer();
@@ -52,11 +52,7 @@ public class ASUCommand extends CommandBase {
         UPlayer p = AbstractionLayer.getPlayer();
 
         if (args.length < 2) {
-            Message.getBuilder()
-                    .error()
-                    .space()
-                    .of("Syntax: " + getUsage(sender)).color(ColorCode.GRAY).advance()
-                    .sendTo(p.getPlayer());
+            p.sendSyntaxMessage(getUsage(sender));
             return;
         }
 
@@ -74,11 +70,7 @@ public class ASUCommand extends CommandBase {
         }
 
         if (wantedReason == null) {
-            Message.getBuilder()
-                    .error()
-                    .space()
-                    .of("Der Wantedgrund wurde nicht gefunden." + getUsage(sender)).color(ColorCode.GRAY).advance()
-                    .sendTo(p.getPlayer());
+            p.sendErrorMessage("Der Wantedgrund wurde nicht gefunden!");
             return;
         }
 
@@ -110,13 +102,11 @@ public class ASUCommand extends CommandBase {
                     String player = players.get(i++);
 
                     issuer.sendChatMessage("/su " + maxAmount + " " + player + " " + reason);
-                    System.out.println("/su " + maxAmount + " " + player + " " + reason);
                 }
             }, 0, TimeUnit.SECONDS.toMillis(1));
         } else{
             for (String player : players) {
                 issuer.sendChatMessage("/su " + amount + " " + player + " " + reason);
-                System.out.println("/su " + amount + " " + player + " " + reason);
             }
         }
     }
