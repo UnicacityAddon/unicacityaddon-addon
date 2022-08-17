@@ -1,6 +1,7 @@
 package com.rettichlp.UnicacityAddon.events;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
+import com.rettichlp.UnicacityAddon.base.registry.annotation.UCEvent;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -11,6 +12,7 @@ import java.util.regex.Matcher;
  * @author Fuzzlemann
  * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/events/CheckKFZEventHandler.java">UCUtils by paulzhng</a>
  */
+@UCEvent
 public class CheckKFZEventHandler {
 
     @SubscribeEvent
