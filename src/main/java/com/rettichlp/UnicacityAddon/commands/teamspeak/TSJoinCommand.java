@@ -1,3 +1,4 @@
+/*
 package com.rettichlp.UnicacityAddon.commands.teamspeak;
 
 import com.rettichlp.UnicacityAddon.base.teamspeak.CommandResponse;
@@ -22,9 +23,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+*/
 /**
  * @author Fuzzlemann
- */
+ *//*
+
 public class TSJoinCommand implements TabCompletion {
 
     @Command(value = "tsjoin", usage = "/%label% [Channel] (Passwort)", async = true)
@@ -105,3 +108,4 @@ public class TSJoinCommand implements TabCompletion {
         return input;
     }
 }
+*/

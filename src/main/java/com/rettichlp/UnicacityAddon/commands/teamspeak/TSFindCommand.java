@@ -1,3 +1,4 @@
+/*
 package com.rettichlp.UnicacityAddon.commands.teamspeak;
 
 import com.rettichlp.UnicacityAddon.base.teamspeak.TSUtils;
@@ -16,9 +17,11 @@ import net.minecraft.util.text.TextFormatting;
 
 import java.util.List;
 
+*/
 /**
  * @author Fuzzlemann
- */
+ *//*
+
 public class TSFindCommand {
 
     @Command(value = "tsfind", usage = "/%label% [Spieler]", async = true)
@@ -48,3 +51,4 @@ public class TSFindCommand {
     }
 
 }
+*/

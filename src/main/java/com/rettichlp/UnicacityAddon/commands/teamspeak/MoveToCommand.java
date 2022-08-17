@@ -1,3 +1,4 @@
+/*
 package com.rettichlp.UnicacityAddon.commands.teamspeak;
 
 import com.rettichlp.UnicacityAddon.base.teamspeak.CommandResponse;
@@ -18,9 +19,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
+*/
 /**
  * @author Fuzzlemann
- */
+ *//*
+
 @SideOnly(Side.CLIENT)
 public class MoveToCommand {
 
@@ -49,3 +52,4 @@ public class MoveToCommand {
         return true;
     }
 }
+*/
