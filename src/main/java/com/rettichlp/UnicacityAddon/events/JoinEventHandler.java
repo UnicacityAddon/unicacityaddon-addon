@@ -28,6 +28,7 @@ public class JoinEventHandler {
 
         if (PatternHandler.ACCOUNT_WELCOME_BACK_PATTERN.matcher(msg).find()) {
             MobileEventHandler.activeCommunicationsCheck = true;
+            PayDayEventHandler.isAfk = false;
             handleJoin();
             return false;
         }
