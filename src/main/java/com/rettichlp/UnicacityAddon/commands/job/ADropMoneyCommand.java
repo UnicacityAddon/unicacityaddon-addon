@@ -19,7 +19,6 @@ import java.util.TimerTask;
 @UCCommand
 public class ADropMoneyCommand extends CommandBase {
 
-    public static boolean execute = false;
     private int step = 0;
 
     @Override
@@ -48,11 +47,8 @@ public class ADropMoneyCommand extends CommandBase {
     @Override
     public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
         UPlayer p = AbstractionLayer.getPlayer();
-        Timer t = new Timer();
 
-        execute = true;
-
-        t.scheduleAtFixedRate(new TimerTask() {
+        new Timer().scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
                 switch (step++) {
@@ -64,11 +60,8 @@ public class ADropMoneyCommand extends CommandBase {
                         break;
                     case 3:
                         p.sendChatMessage("/bank einzahlen 15000");
-                        break;
-                    case 4:
-                        execute = false;
                         step = 0;
-                        t.cancel();
+                        this.cancel();
                         break;
                 }
             }
