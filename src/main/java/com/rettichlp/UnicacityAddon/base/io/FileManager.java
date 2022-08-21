@@ -94,6 +94,16 @@ public class FileManager {
         return null;
     }
 
+    public static File getSharesDataFile() throws IOException {
+        if (getUnicacityAddonDir() == null) return null;
+        File sharesDataFile = new File(getUnicacityAddonDir().getAbsolutePath() + "/sharesData.json");
+        if (sharesDataFile.exists() || sharesDataFile.createNewFile()) return sharesDataFile;
+
+        AbstractionLayer.getPlayer().sendErrorMessage("Datei 'sharesData.json' wurde nicht gefunden!");
+
+        return null;
+    }
+
     public static File getNewImageFile() throws IOException {
         if (getAddonScreenshotDir() == null) return null;
 
