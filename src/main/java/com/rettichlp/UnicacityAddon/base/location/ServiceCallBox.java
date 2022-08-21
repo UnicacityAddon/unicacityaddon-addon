@@ -4,16 +4,16 @@ import net.minecraft.util.math.BlockPos;
 
 public enum ServiceCallBox {
 
-    ALTSTADT("???", 267, 69, 603),
+    ALTSTADT("Altstadt", 267, 69, 603),
     CFK_WESTSIDE("CFK [Westside]", -357, 69, 364),
-    FLUGHAFEN("???", -217, 64, 633),
+    FLUGHAFEN("Flughafen", -217, 64, 633), //?
     KRANKENHAUS("Krankenhaus", 246, 69, 257),
     STADTHALLE("Stadthalle", 99, 69, 134),
     MEXICAN("Mexican", 280, 69, -81),
-    OBRIEN("???", 728, 69, 538),
-    UNICA17("???", 611, 69, 87),
-    LEER1("???", 0, 69, 0),
-    LEER2("???", 0, 69, 0);
+    OBRIEN("O'Brien", 728, 69, 538),
+    UNICA17("Unica17", 611, 69, 87); //?
+    // LEER1("Stadthalle", 0, 69, 0),
+    // LEER2("Stadthalle", 0, 69, 0);
 
     private final String locationName;
     private final int x;
