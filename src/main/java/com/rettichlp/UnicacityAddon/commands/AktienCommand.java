@@ -79,21 +79,21 @@ public class AktienCommand extends CommandBase {
                 .space().space()
                 .of("»").color(ColorCode.DARK_GRAY).advance().space()
                 .of("Kaufwert:").color(ColorCode.AQUA).advance().space()
-                .of(String.valueOf(buyValue)).color(ColorCode.GREEN).advance()
+                .of(buyValue + "$").color(ColorCode.GREEN).advance()
                 .createComponent());
 
         p.sendMessage(Message.getBuilder()
                 .space().space()
                 .of("»").color(ColorCode.DARK_GRAY).advance().space()
                 .of("aktueller Wert:").color(ColorCode.AQUA).advance().space()
-                .of(String.valueOf(currentStockValue)).color(ColorCode.GREEN).advance()
+                .of(currentStockValue + "$").color(ColorCode.GREEN).advance()
                 .createComponent());
 
         p.sendMessage(Message.getBuilder()
                 .space().space()
                 .of("»").color(ColorCode.DARK_GRAY).advance().space()
-                .of("Gewinn:").color(ColorCode.AQUA).advance().space()
-                .of(String.valueOf(currentWin)).color(ColorCode.GREEN).advance()
+                .of(currentWin < 0 ? "Verlust:" : "Gewinn:").color(ColorCode.AQUA).advance().space()
+                .of(currentWin + "$").color(currentWin < 0 ? ColorCode.RED : ColorCode.GREEN).advance()
                 .createComponent());
 
     }
