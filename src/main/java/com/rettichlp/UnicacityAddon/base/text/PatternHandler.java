@@ -229,4 +229,9 @@ public class PatternHandler {
      */
     public static final Pattern CHECK_KFZ_PATTERN = Pattern.compile("^HQ: Das Fahrzeug mit dem Kennzeichen (?:null|.+) ist auf den Spieler (?:\\[UC])*([a-zA-Z0-9_]+) registriert, over.$" +
             "|^Kennzeichen: (?:null|.+) \\| Type: [a-zA-Z]+ \\| Besitzer: (?:\\[UC])*([a-zA-Z0-9_]+)$");
+
+    /**
+     * {@link com.rettichlp.UnicacityAddon.events.faction.EmergencyCallBoxEventHandler}
+     */
+    public static final Pattern SERVICE_CALL_BOX_PATTERN = Pattern.compile("^ {2}➡ (?:\\[UC])*([a-zA-Z0-9_]+) » (.+)$");
 }
