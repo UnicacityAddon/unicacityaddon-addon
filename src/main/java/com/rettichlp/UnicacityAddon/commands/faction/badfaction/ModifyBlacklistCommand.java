@@ -82,6 +82,7 @@ public class ModifyBlacklistCommand extends CommandBase {
     @Override
     @Nonnull
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
+        BlacklistEventHandler.refreshBlacklistReasons();
         List<String> tabCompletions = ForgeUtils.getOnlinePlayers();
         if (args.length > 1 && BlacklistEventHandler.BLACKLIST != null) {
             tabCompletions.addAll(BlacklistEventHandler.BLACKLIST.getBlacklistReasons());
