@@ -64,10 +64,15 @@ public class HotkeyEventHandler {
             try {
                 File file = FileManager.getNewImageFile();
                 handleScreenshot(file);
+                return;
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-        } else if (Keyboard.isKeyDown(KeyBindRegistry.adFreigeben.getKeyCode())) {
+        }
+
+        if (UnicacityAddon.MINECRAFT.currentScreen != null) return;
+
+        if (Keyboard.isKeyDown(KeyBindRegistry.adFreigeben.getKeyCode())) {
             handleAd("freigeben");
         } else if (Keyboard.isKeyDown(KeyBindRegistry.adBlockieren.getKeyCode())) {
             handleAd("blockieren");

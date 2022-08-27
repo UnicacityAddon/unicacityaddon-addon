@@ -150,9 +150,19 @@ public class ConfigElements {
                 .getAsBoolean(); // default = false
     }
 
+    public static ColorCode getNameTagFactionSpecificColor() {
+        return UnicacityAddon.ADDON.getConfig().has("NAMETAG_FACTIONSPECIFIC_COLOR_SETTINGS") ?
+                ColorCode.valueOf(UnicacityAddon.ADDON.getConfig().get("NAMETAG_FACTIONSPECIFIC_COLOR_SETTINGS").getAsString()) :
+                ColorCode.DARK_RED; // default = DARK_RED
+    }
+
+    public static void setNameTagFactionSpecificColor(ColorCode factionSpecificColor) {
+        UnicacityAddon.ADDON.getConfig().addProperty("NAMETAG_FACTIONSPECIFIC_COLOR_SETTINGS", factionSpecificColor.toString());
+    }
+
     // Delay
     public static String getRefreshDisplayNamesInterval() {
-        return UnicacityAddon.ADDON.getConfig().has("NAMETAG_DELAY_SETTINGS") && !UnicacityAddon.ADDON.getConfig().get("NAMETAG_DELAY_SETTINGS").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("NAMETAG_DELAY").getAsString().equals("0") && !UnicacityAddon.ADDON.getConfig().get("NAMETAG_DELAY").getAsString().startsWith("-")
+        return UnicacityAddon.ADDON.getConfig().has("NAMETAG_DELAY_SETTINGS") && !UnicacityAddon.ADDON.getConfig().get("NAMETAG_DELAY_SETTINGS").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("NAMETAG_DELAY_SETTINGS").getAsString().equals("0") && !UnicacityAddon.ADDON.getConfig().get("NAMETAG_DELAY_SETTINGS").getAsString().startsWith("-")
                 ? UnicacityAddon.ADDON.getConfig().get("NAMETAG_DELAY_SETTINGS").getAsString()
                 : "5";
     }

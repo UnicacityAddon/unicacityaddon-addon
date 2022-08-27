@@ -175,6 +175,7 @@ public class PatternHandler {
     public static final Pattern CASH_GET_PATTERN = Pattern.compile("^ {2}\\+(\\d+)\\$$");
     public static final Pattern CASH_REMOVE_PATTERN = Pattern.compile("^ {2}-(\\d+)\\$$");
     public static final Pattern CASH_STATS_PATTERN = Pattern.compile("^ {2}- Geld: (\\d+)\\$$");
+    public static final Pattern SHARES_BUY_PATTERN = Pattern.compile("^\\[Aktie] Du hast dir eine (\\.+) Aktie gekauft!$");
 
     /**
      * {@link com.rettichlp.UnicacityAddon.events.PayDayEventHandler}
@@ -190,7 +191,7 @@ public class PatternHandler {
             "|^\\[Deal] (?:\\[UC])*(\\w+) hat das Angebot abgelehnt\\.$");
 
     /**
-     * {@link com.rettichlp.UnicacityAddon.events.job.ADropMoneyEventHandler}
+     * {@link com.rettichlp.UnicacityAddon.events.job.ADropEventHandler}
      */
     public static final Pattern PREVIOUS_BANK_VALUE_PATTERN = Pattern.compile("^ {2}Vorheriger Kontostand: (\\d+)\\$$");
 
@@ -228,4 +229,9 @@ public class PatternHandler {
      */
     public static final Pattern CHECK_KFZ_PATTERN = Pattern.compile("^HQ: Das Fahrzeug mit dem Kennzeichen (?:null|.+) ist auf den Spieler (?:\\[UC])*([a-zA-Z0-9_]+) registriert, over.$" +
             "|^Kennzeichen: (?:null|.+) \\| Type: [a-zA-Z]+ \\| Besitzer: (?:\\[UC])*([a-zA-Z0-9_]+)$");
+
+    /**
+     * {@link com.rettichlp.UnicacityAddon.events.faction.EmergencyCallBoxEventHandler}
+     */
+    public static final Pattern SERVICE_CALL_BOX_PATTERN = Pattern.compile("^ {2}➡ (?:\\[UC])*([a-zA-Z0-9_]+) » (.+)$");
 }
