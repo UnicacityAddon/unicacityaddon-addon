@@ -293,7 +293,7 @@ public class ConfigElements {
     }
 
     public static String getCocaineAmount() {
-        return UnicacityAddon.ADDON.getConfig().has("EIGENBEDARF_COCAINE_AMOUNT_SETTINGS") && !UnicacityAddon.ADDON.getConfig().get("EIGENBEDARF_COCAINE_AMOUNT_SETTINGS").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("COCAINE_AMOUNT").getAsString().equals("0")
+        return UnicacityAddon.ADDON.getConfig().has("EIGENBEDARF_COCAINE_AMOUNT_SETTINGS") && !UnicacityAddon.ADDON.getConfig().get("EIGENBEDARF_COCAINE_AMOUNT_SETTINGS").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("EIGENBEDARF_COCAINE_AMOUNT_SETTINGS").getAsString().equals("0")
                 ? UnicacityAddon.ADDON.getConfig().get("EIGENBEDARF_COCAINE_AMOUNT_SETTINGS").getAsString()
                 : "15";
     }
@@ -314,7 +314,7 @@ public class ConfigElements {
     }
 
     public static String getMarihuanaAmount() {
-        return UnicacityAddon.ADDON.getConfig().has("EIGENBEDARF_MARIHUANA_AMOUNT_SETTINGS") && !UnicacityAddon.ADDON.getConfig().get("EIGENBEDARF_MARIHUANA_AMOUNT_SETTINGS").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("MARIHUANA_AMOUNT").getAsString().equals("0")
+        return UnicacityAddon.ADDON.getConfig().has("EIGENBEDARF_MARIHUANA_AMOUNT_SETTINGS") && !UnicacityAddon.ADDON.getConfig().get("EIGENBEDARF_MARIHUANA_AMOUNT_SETTINGS").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("EIGENBEDARF_MARIHUANA_AMOUNT_SETTINGS").getAsString().equals("0")
                 ? UnicacityAddon.ADDON.getConfig().get("EIGENBEDARF_MARIHUANA_AMOUNT_SETTINGS").getAsString()
                 : "15";
     }
@@ -335,7 +335,7 @@ public class ConfigElements {
     }
 
     public static String getMethAmount() {
-        return UnicacityAddon.ADDON.getConfig().has("EIGENBEDARF_METH_AMOUNT_SETTINGS") && !UnicacityAddon.ADDON.getConfig().get("EIGENBEDARF_METH_AMOUNT_SETTINGS").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("METH_AMOUNT").getAsString().equals("0")
+        return UnicacityAddon.ADDON.getConfig().has("EIGENBEDARF_METH_AMOUNT_SETTINGS") && !UnicacityAddon.ADDON.getConfig().get("EIGENBEDARF_METH_AMOUNT_SETTINGS").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("EIGENBEDARF_METH_AMOUNT_SETTINGS").getAsString().equals("0")
                 ? UnicacityAddon.ADDON.getConfig().get("EIGENBEDARF_METH_AMOUNT_SETTINGS").getAsString()
                 : "15";
     }
