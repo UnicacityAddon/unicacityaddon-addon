@@ -276,6 +276,12 @@ public class ConfigElements {
                 .getAsBoolean(); // default = true
     }
 
+    // Minus Karma
+    public static boolean getEstimatedDespawnTime() {
+        return !UnicacityAddon.ADDON.getConfig().has("ESTIMATED_DESPAWN_TIME_SETTINGS") || UnicacityAddon.ADDON.getConfig().get("ESTIMATED_DESPAWN_TIME_SETTINGS")
+                .getAsBoolean(); // default = true
+    }
+
     // EIGENBEDARF SETTINGS
     public static boolean getCocainActivated() {
         return !UnicacityAddon.ADDON.getConfig().has("EIGENBEDARF_COCAINE_SETTINGS") || UnicacityAddon.ADDON.getConfig().get("EIGENBEDARF_COCAINE_SETTINGS")
