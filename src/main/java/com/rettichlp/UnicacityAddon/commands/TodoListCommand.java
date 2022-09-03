@@ -98,7 +98,7 @@ public class TodoListCommand extends CommandBase {
                     .of("» " + id + ". ").color(ColorCode.GRAY).advance()
                     .of(todolistEntry.getTodo()).color(ColorCode.AQUA).strikethrough().advance()
                     .space()
-                    .of("[Löschen]").color(ColorCode.RED)
+                    .of("[✕]").color(ColorCode.RED)
                             .clickEvent(ClickEvent.Action.RUN_COMMAND, "/todo delete " + id)
                             .advance()
                     .createComponent());
@@ -106,11 +106,11 @@ public class TodoListCommand extends CommandBase {
                     .of("» " + id + ". ").color(ColorCode.GRAY).advance()
                     .of(todolistEntry.getTodo()).color(ColorCode.AQUA).advance()
                     .space()
-                    .of("[Erledigt]").color(ColorCode.GREEN)
+                    .of("[✔]").color(ColorCode.GREEN)
                             .clickEvent(ClickEvent.Action.RUN_COMMAND, "/todo done " + id)
                             .advance()
                     .space()
-                    .of("[Löschen]").color(ColorCode.RED)
+                    .of("[✕]").color(ColorCode.RED)
                             .clickEvent(ClickEvent.Action.RUN_COMMAND, "/todo delete " + id)
                             .advance()
                     .createComponent());
