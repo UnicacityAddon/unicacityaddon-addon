@@ -83,6 +83,19 @@ public class TodoListCommand extends CommandBase {
             FileManager.saveData();
             p.sendInfoMessage("Aufgabe aus Todoliste gelöscht.");
             p.sendChatMessage("/todo");
+        } else if (args[0].equalsIgnoreCase("edit") && MathUtils.isInteger(args[1])) {
+            int index = Integer.parseInt(args[1]) - 1;
+            if (index > todolist.size() - 1) {
+                p.sendErrorMessage("Keinen Eintrag mit dieser ID gefunden.");
+                return;
+            }
+            String todo = TextUtils.makeStringByArgs(args, " ").replace("edit ", "");
+            TodolistEntry todolistEntry = new TodolistEntry(todo);
+            todolist.set(index, todolistEntry);
+            FileManager.saveData();
+            p.sendInfoMessage("Aufgabe editiert.");
+            p.sendChatMessage("/todo");
+
         }
     }
 
@@ -98,6 +111,9 @@ public class TodoListCommand extends CommandBase {
                     .of("» " + id + ". ").color(ColorCode.GRAY).advance()
                     .of(todolistEntry.getTodo()).color(ColorCode.AQUA).strikethrough().advance()
                     .space()
+                    .of("[✐]").color(ColorCode.GOLD)
+                            .clickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/todo edit " + id)
+                            .advance().space()
                     .of("[✕]").color(ColorCode.RED)
                             .clickEvent(ClickEvent.Action.RUN_COMMAND, "/todo delete " + id)
                             .advance()
@@ -110,6 +126,9 @@ public class TodoListCommand extends CommandBase {
                             .clickEvent(ClickEvent.Action.RUN_COMMAND, "/todo done " + id)
                             .advance()
                     .space()
+                    .of("[✐]").color(ColorCode.GOLD)
+                            .clickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/todo edit " + id)
+                            .advance().space()
                     .of("[✕]").color(ColorCode.RED)
                             .clickEvent(ClickEvent.Action.RUN_COMMAND, "/todo delete " + id)
                             .advance()
