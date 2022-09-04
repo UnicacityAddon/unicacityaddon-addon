@@ -19,32 +19,44 @@ import java.util.concurrent.TimeUnit;
 @UCCommand
 public class ACaptureCommand extends CommandBase {
 
-    final Timer timer = new Timer();
+    public static boolean isActive;
 
-    @Override @Nonnull
+    @Override
+    @Nonnull
     public String getName() {
         return "capture";
     }
 
-    @Override @Nonnull public String getUsage(@Nonnull ICommandSender sender) {
+    @Override
+    @Nonnull
+    public String getUsage(@Nonnull ICommandSender sender) {
         return "/capture";
     }
 
-    @Override @Nonnull public List<String> getAliases() {
+    @Override
+    @Nonnull
+    public List<String> getAliases() {
         return Collections.emptyList();
     }
 
-    @Override public boolean checkPermission(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender) {
+    @Override
+    public boolean checkPermission(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender) {
         return true;
     }
 
-    @Override public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
-        AbstractionLayer.getPlayer().sendChatMessage("/capture");
+    @Override
+    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
+        if (isActive) return;
 
+        AbstractionLayer.getPlayer().sendChatMessage("/capture");
+        isActive = true;
+
+        Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
                 AbstractionLayer.getPlayer().sendChatMessage("/capture");
+                isActive = false;
             }
         }, TimeUnit.SECONDS.toMillis(15));
     }
