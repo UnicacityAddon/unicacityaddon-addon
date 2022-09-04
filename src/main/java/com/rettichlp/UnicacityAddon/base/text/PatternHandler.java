@@ -234,4 +234,10 @@ public class PatternHandler {
      * {@link com.rettichlp.UnicacityAddon.events.faction.EmergencyCallBoxEventHandler}
      */
     public static final Pattern SERVICE_CALL_BOX_PATTERN = Pattern.compile("^ {2}➡ (?:\\[UC])*([a-zA-Z0-9_]+) » (.+)$");
+
+    /**
+     * {@link com.rettichlp.UnicacityAddon.base.location.NavigationUtils}
+     */
+    public static final Pattern ROUTE_PATTERNS = Pattern.compile("^Du hast keine Route\\.$" +
+            "|^Du hast deine Route gelöscht\\.$");
 }
