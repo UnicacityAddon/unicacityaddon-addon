@@ -14,37 +14,9 @@ import java.util.stream.Collectors;
 public enum Faction {
 
     NULL("", "Keine Auswahl", "", ""),
-    CALDERON("calderon", "Calderon Kartell", "Kartell", Message.getBuilder()
-            .of("◤").color(ColorCode.DARK_GRAY).advance()
-            .of("☀").color(ColorCode.GOLD).advance()
-            .of("◢").color(ColorCode.DARK_GRAY).advance().create()),
     FBI("fbi", "F.B.I", "FBI", Message.getBuilder()
             .of("◤").color(ColorCode.DARK_GRAY).advance()
             .of("✯").color(ColorCode.DARK_BLUE).advance()
-            .of("◢").color(ColorCode.DARK_GRAY).advance().create()),
-    HITMAN("hitman", "Hitman", "Hitman", Message.getBuilder()
-            .of("◤").color(ColorCode.DARK_GRAY).advance()
-            .of("➹").color(ColorCode.AQUA).advance()
-            .of("◢").color(ColorCode.DARK_GRAY).advance().create()),
-    KERZAKOV("kerzakov", "Kerzakov Familie", "Kerzakov", Message.getBuilder()
-            .of("◤").color(ColorCode.DARK_GRAY).advance()
-            .of("✮").color(ColorCode.RED).advance()
-            .of("◢").color(ColorCode.DARK_GRAY).advance().create()),
-    KIRCHE("kirche", "Kirche", "Kirche", Message.getBuilder()
-            .of("◤").color(ColorCode.DARK_GRAY).advance()
-            .of("†").color(ColorCode.LIGHT_PURPLE).advance()
-            .of("◢").color(ColorCode.DARK_GRAY).advance().create()),
-    LACOSANOSTRA("lacosanostra", "La Cosa Nostra", "Mafia", Message.getBuilder()
-            .of("◤").color(ColorCode.DARK_GRAY).advance()
-            .of("⚜").color(ColorCode.DARK_AQUA).advance()
-            .of("◢").color(ColorCode.DARK_GRAY).advance().create()),
-    NEWS("news", "News", "News", Message.getBuilder()
-            .of("◤").color(ColorCode.DARK_GRAY).advance()
-            .of("✉").color(ColorCode.YELLOW).advance()
-            .of("◢").color(ColorCode.DARK_GRAY).advance().create()),
-    OBRIEN("obrien", "O'brien", "Obrien", Message.getBuilder()
-            .of("◤").color(ColorCode.DARK_GRAY).advance()
-            .of("☘").color(ColorCode.DARK_GREEN).advance()
             .of("◢").color(ColorCode.DARK_GRAY).advance().create()),
     POLIZEI("polizei", "Polizei", "Polizei", Message.getBuilder()
             .of("◤").color(ColorCode.DARK_GRAY).advance()
@@ -54,9 +26,22 @@ public enum Faction {
             .of("◤").color(ColorCode.DARK_GRAY).advance()
             .of("✚").color(ColorCode.DARK_RED).advance()
             .of("◢").color(ColorCode.DARK_GRAY).advance().create()),
-    TERRORISTEN("terroristen", "Terroristen", "Terroristen", Message.getBuilder()
+
+    CALDERON("calderon", "Calderon Kartell", "Kartell", Message.getBuilder()
             .of("◤").color(ColorCode.DARK_GRAY).advance()
-            .of("❇").color(ColorCode.GRAY).advance()
+            .of("☀").color(ColorCode.GOLD).advance()
+            .of("◢").color(ColorCode.DARK_GRAY).advance().create()),
+    KERZAKOV("kerzakov", "Kerzakov Familie", "Kerzakov", Message.getBuilder()
+            .of("◤").color(ColorCode.DARK_GRAY).advance()
+            .of("✮").color(ColorCode.RED).advance()
+            .of("◢").color(ColorCode.DARK_GRAY).advance().create()),
+    LACOSANOSTRA("lacosanostra", "La Cosa Nostra", "Mafia", Message.getBuilder()
+            .of("◤").color(ColorCode.DARK_GRAY).advance()
+            .of("⚜").color(ColorCode.DARK_AQUA).advance()
+            .of("◢").color(ColorCode.DARK_GRAY).advance().create()),
+    OBRIEN("obrien", "O'brien", "Obrien", Message.getBuilder()
+            .of("◤").color(ColorCode.DARK_GRAY).advance()
+            .of("☘").color(ColorCode.DARK_GREEN).advance()
             .of("◢").color(ColorCode.DARK_GRAY).advance().create()),
     TRIADEN("triaden", "Triaden", "Triaden", Message.getBuilder()
             .of("◤").color(ColorCode.DARK_GRAY).advance()
@@ -65,6 +50,23 @@ public enum Faction {
     WESTSIDEBALLAS("westsideballas", "Westside Ballas", "Gang", Message.getBuilder()
             .of("◤").color(ColorCode.DARK_GRAY).advance()
             .of("☠").color(ColorCode.DARK_PURPLE).advance()
+            .of("◢").color(ColorCode.DARK_GRAY).advance().create()),
+
+    HITMAN("hitman", "Hitman", "Hitman", Message.getBuilder()
+            .of("◤").color(ColorCode.DARK_GRAY).advance()
+            .of("➹").color(ColorCode.AQUA).advance()
+            .of("◢").color(ColorCode.DARK_GRAY).advance().create()),
+    KIRCHE("kirche", "Kirche", "Kirche", Message.getBuilder()
+            .of("◤").color(ColorCode.DARK_GRAY).advance()
+            .of("†").color(ColorCode.LIGHT_PURPLE).advance()
+            .of("◢").color(ColorCode.DARK_GRAY).advance().create()),
+    NEWS("news", "News", "News", Message.getBuilder()
+            .of("◤").color(ColorCode.DARK_GRAY).advance()
+            .of("✉").color(ColorCode.YELLOW).advance()
+            .of("◢").color(ColorCode.DARK_GRAY).advance().create()),
+    TERRORISTEN("terroristen", "Terroristen", "Terroristen", Message.getBuilder()
+            .of("◤").color(ColorCode.DARK_GRAY).advance()
+            .of("❇").color(ColorCode.GRAY).advance()
             .of("◢").color(ColorCode.DARK_GRAY).advance().create());
 
     private final String apiName;
