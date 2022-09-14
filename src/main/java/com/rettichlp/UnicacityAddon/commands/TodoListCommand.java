@@ -56,7 +56,7 @@ public class TodoListCommand extends CommandBase {
         if (args.length == 0) {
             todoList();
         } else if (args.length > 1 && args[0].equalsIgnoreCase("add")) {
-            String todo = TextUtils.makeStringByArgs(args, " ").replace("add ", "");
+            String todo = TextUtils.makeStringByArgs(args, " ").replaceAll("(?i)add ", "");
             TodolistEntry todolistEntry = new TodolistEntry(todo);
             todolist.add(todolistEntry);
             FileManager.saveData();
@@ -89,7 +89,7 @@ public class TodoListCommand extends CommandBase {
                 p.sendErrorMessage("Keinen Eintrag mit dieser ID gefunden.");
                 return;
             }
-            String todo = TextUtils.makeStringByArgs(args, " ").replace("edit ", "");
+            String todo = TextUtils.makeStringByArgs(args, " ").replaceAll("(?i)edit ", "");
             TodolistEntry todolistEntry = new TodolistEntry(todo);
             todolist.set(index, todolistEntry);
             FileManager.saveData();
@@ -111,7 +111,7 @@ public class TodoListCommand extends CommandBase {
                     .of(todolistEntry.getTodo()).color(ColorCode.AQUA).strikethrough().advance()
                     .space()
                     .of("[✐]").color(ColorCode.GOLD)
-                            .clickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/todo edit " + id)
+                            .clickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/todo edit " + id + " ")
                             .advance().space()
                     .of("[✕]").color(ColorCode.RED)
                             .clickEvent(ClickEvent.Action.RUN_COMMAND, "/todo delete " + id)
