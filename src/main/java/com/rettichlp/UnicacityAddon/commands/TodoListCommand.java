@@ -95,7 +95,6 @@ public class TodoListCommand extends CommandBase {
             FileManager.saveData();
             p.sendInfoMessage("Aufgabe editiert.");
             p.sendChatMessage("/todo");
-
         }
     }
 

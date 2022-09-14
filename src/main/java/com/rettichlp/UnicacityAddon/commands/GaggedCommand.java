@@ -1,9 +1,8 @@
 package com.rettichlp.UnicacityAddon.commands;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
+import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
-import com.rettichlp.UnicacityAddon.base.text.ColorCode;
-import com.rettichlp.UnicacityAddon.base.text.Message;
 import com.rettichlp.UnicacityAddon.events.GaggedEventHandler;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
@@ -37,13 +36,10 @@ public class GaggedCommand extends CommandBase {
     }
 
     @Override public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
-        if (GaggedEventHandler.getGagged())
-            Message.getBuilder().prefix().of("Ab sofort kannst du nurnoch flüstern.").color(ColorCode.GRAY).advance()
-                    .sendTo(AbstractionLayer.getPlayer().getPlayer());
-        if (!GaggedEventHandler.getGagged())
-            Message.getBuilder().prefix().of("Ab sofort kannst wieder normal reden.").color(ColorCode.GRAY).advance()
-                    .sendTo(AbstractionLayer.getPlayer().getPlayer());
+        UPlayer p = AbstractionLayer.getPlayer();
+        GaggedEventHandler.toggleGagged();
 
-        GaggedEventHandler.changeGaggedState();
+        if (GaggedEventHandler.isGagged()) p.sendInfoMessage("Ab sofort kannst du nur noch flüstern.");
+        else p.sendInfoMessage("Ab sofort kannst du wieder normal reden.");
     }
 }

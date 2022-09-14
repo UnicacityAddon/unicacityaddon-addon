@@ -1,7 +1,5 @@
 package com.rettichlp.UnicacityAddon.commands;
 
-import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
-import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.AFbankEinzahlenCommand;
 import net.minecraft.command.CommandBase;

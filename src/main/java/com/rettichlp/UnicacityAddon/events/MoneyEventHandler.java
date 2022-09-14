@@ -114,7 +114,7 @@ public class MoneyEventHandler {
                 CashMoneyModule.setBalance(0);
                 return false;
             }
-            BankMoneyModule.removeBalance(27); // successfully revived by medic = 27$
+            BankMoneyModule.removeBalance(50); // successfully revived by medic = 50$
             return false;
         }
 

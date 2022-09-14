@@ -10,27 +10,21 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 @UCEvent
 public class GaggedEventHandler {
 
-    private static boolean isGagged = false;
+    private static boolean gagged = false;
 
     @SubscribeEvent
     public boolean onClientChat(ClientChatEvent e) {
-        if (!isGagged) return false;
-        if (e.getMessage().startsWith("/")) return false;
+        if (!gagged || e.getMessage().startsWith("/")) return false;
 
         e.setMessage("/w " + e.getMessage());
         return false;
     }
 
-    public static boolean getGagged() {
-        return isGagged;
+    public static boolean isGagged() {
+        return gagged;
     }
 
-    public static void changeGaggedState() {
-        if (isGagged) {
-            isGagged = false;
-            return;
-        }
-
-        isGagged = true;
+    public static void toggleGagged() {
+        gagged = !gagged;
     }
 }
