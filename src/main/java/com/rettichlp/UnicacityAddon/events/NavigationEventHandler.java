@@ -1,12 +1,17 @@
 package com.rettichlp.UnicacityAddon.events;
 
 import com.rettichlp.UnicacityAddon.base.location.NavigationUtils;
+import com.rettichlp.UnicacityAddon.base.registry.annotation.UCEvent;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.regex.Matcher;
 
+/**
+ * @author Dimiikou
+ */
+@UCEvent
 public class NavigationEventHandler {
 
     @SubscribeEvent
