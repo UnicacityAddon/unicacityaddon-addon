@@ -10,6 +10,7 @@ public class Data {
     private int jobBalance;
     private int jobExperience;
     private int payDayTime;
+    private int serviceCount;
     private List<TodolistEntry> todolist;
     private String carInfo;
 
@@ -32,7 +33,9 @@ public class Data {
         this.jobBalance = jobBalance;
     }
 
-    public int getJobExperience() { return jobExperience; }
+    public int getJobExperience() {
+        return jobExperience;
+    }
 
     public void setJobExperience(int jobExperience) {
         this.jobExperience = jobExperience;
@@ -52,6 +55,14 @@ public class Data {
 
     public void setPayDayTime(int payDayTime) {
         this.payDayTime = payDayTime;
+    }
+
+    public int getServiceCount() {
+        return serviceCount;
+    }
+
+    public void setServiceCount(int serviceCount) {
+        this.serviceCount = serviceCount;
     }
 
     public List<TodolistEntry> getTodolist() {
