@@ -240,4 +240,9 @@ public class PatternHandler {
      */
     public static final Pattern ROUTE_PATTERNS = Pattern.compile("^Du hast keine Route\\.$" +
             "|^Du hast deine Route gelöscht\\.$");
+
+    /**
+     * {@link com.rettichlp.UnicacityAddon.events.ReichensteuerEventHandler}
+     */
+    public static final Pattern ATM_INFO = Pattern.compile("^ATM (\\d+): (\\d+)\\$/100000\\$$");
 }
