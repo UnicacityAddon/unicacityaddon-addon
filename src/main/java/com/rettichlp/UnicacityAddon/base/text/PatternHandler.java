@@ -245,4 +245,9 @@ public class PatternHandler {
      * {@link com.rettichlp.UnicacityAddon.events.ReichensteuerEventHandler}
      */
     public static final Pattern ATM_INFO = Pattern.compile("^ATM (\\d+): (\\d+)\\$/100000\\$$");
+
+    /**
+     * {@link com.rettichlp.UnicacityAddon.events.faction.ServiceCountEventHandler}
+     */
+    public static final Pattern SERVICE_DONE_PATTERN = Pattern.compile("^Du hast den Service von (?:\\[UC])*(\\w+) als 'Erledigt' markiert!$");
 }
