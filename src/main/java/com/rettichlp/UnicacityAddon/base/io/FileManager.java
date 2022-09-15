@@ -148,7 +148,7 @@ public class FileManager {
                 JobModule.setBalance(0);
                 JobModule.setExperience(0);
                 PayDayModule.setTime(0);
-                ServiceCountCommand.setServiceCount(0);
+                ServiceCountCommand.serviceCount = 0;
                 TodoListCommand.todolist = Collections.emptyList();
                 CarOpenModule.info = "";
                 return;

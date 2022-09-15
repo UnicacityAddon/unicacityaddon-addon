@@ -50,9 +50,9 @@ public class ServiceCountCommand extends CommandBase {
     @Override
     public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
         UPlayer p = AbstractionLayer.getPlayer();
-        if (args.length > 1) {
+        if (args.length > 0) {
             if (!args[0].equalsIgnoreCase("reset")) return;
-            setServiceCount(0);
+            serviceCount = 0;
             p.sendInfoMessage("Servicecount wurde zurückgesetzt.");
             return;
         }
@@ -69,11 +69,7 @@ public class ServiceCountCommand extends CommandBase {
         return Arrays.asList("reset");
     }
 
-    public static void setServiceCount(int serviceCount) {
-        ServiceCountCommand.serviceCount = serviceCount;
-    }
-
     public static void addService() {
-        setServiceCount(serviceCount++);
+        serviceCount++;
     }
 }
