@@ -21,6 +21,7 @@ import java.util.TimerTask;
 public class ReichensteuerCommand extends CommandBase {
 
     public static int cashInATM = 0;
+    public static boolean isActive = false;
 
     @Override
     @Nonnull
@@ -50,7 +51,10 @@ public class ReichensteuerCommand extends CommandBase {
         UPlayer p = AbstractionLayer.getPlayer();
 
         if (BankMoneyModule.bankBalance > 100000) {
+            if (isActive) return;
+
             p.sendChatMessage("/atminfo");
+            isActive = true;
 
             (new Timer()).schedule(new TimerTask() {
                 @Override
@@ -58,9 +62,11 @@ public class ReichensteuerCommand extends CommandBase {
                     if (cashInATM < BankMoneyModule.bankBalance) {
                         p.sendChatMessage("/bank abbuchen " + (cashInATM));
                         p.sendInfoMessage("Du musst noch " + ((BankMoneyModule.bankBalance - 100000) - cashInATM) + " abbuchen.");
+                        isActive = false;
                         return;
                     }
                     p.sendChatMessage("/bank abbuchen " + (BankMoneyModule.bankBalance - 100000));
+                    isActive = false;
                 }
             }, 400);
 

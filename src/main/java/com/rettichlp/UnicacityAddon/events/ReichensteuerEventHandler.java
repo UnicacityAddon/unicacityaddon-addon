@@ -16,11 +16,13 @@ public class ReichensteuerEventHandler {
 
     @SubscribeEvent
     public boolean onClientChatReceived(ClientChatReceivedEvent e) {
+        if (!ReichensteuerCommand.isActive) return false;
 
         Matcher m = PatternHandler.ATM_INFO.matcher(e.getMessage().getUnformattedText());
         if (!m.find()) return false;
 
         ReichensteuerCommand.cashInATM = Integer.parseInt(m.group(2));
+        e.setCanceled(true);
         return false;
     }
 }
