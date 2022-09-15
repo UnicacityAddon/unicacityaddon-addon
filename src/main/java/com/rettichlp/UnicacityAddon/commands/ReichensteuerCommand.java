@@ -11,12 +11,16 @@ import net.minecraft.server.MinecraftServer;
 import javax.annotation.Nonnull;
 import java.util.Collections;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * @author Dimiikou
  */
 @UCCommand
 public class ReichensteuerCommand extends CommandBase {
+
+    public static int cashInATM = 0;
 
     @Override
     @Nonnull
@@ -45,9 +49,23 @@ public class ReichensteuerCommand extends CommandBase {
     public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
         UPlayer p = AbstractionLayer.getPlayer();
 
-        if (BankMoneyModule.bankBalance > 100000)
-            p.sendChatMessage("/bank abbuchen " + (BankMoneyModule.bankBalance - 100000));
-        else
+        if (BankMoneyModule.bankBalance > 100000) {
+            p.sendChatMessage("/atminfo");
+
+            (new Timer()).schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    if (cashInATM < BankMoneyModule.bankBalance) {
+                        p.sendChatMessage("/bank abbuchen " + (cashInATM));
+                        p.sendInfoMessage("Du musst noch " + ((BankMoneyModule.bankBalance - 100000) - cashInATM) + " abbuchen.");
+                        return;
+                    }
+                    p.sendChatMessage("/bank abbuchen " + (BankMoneyModule.bankBalance - 100000));
+                }
+            }, 400);
+
+        } else {
             p.sendErrorMessage("Dein Kontostand beträgt bereits 100.000$!");
+        }
     }
 }
