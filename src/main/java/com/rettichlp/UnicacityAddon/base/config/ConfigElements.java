@@ -348,7 +348,7 @@ public class ConfigElements {
 
     public static String getTeamspeakAPIKey() {
         return UnicacityAddon.ADDON.getConfig().has("TEAMSPEAK_API_KEY")
-                ? UnicacityAddon.ADDON.getConfig().get("TS_API_KEY").getAsString()
+                ? UnicacityAddon.ADDON.getConfig().get("TEAMSPEAK_API_KEY").getAsString()
                 : Strings.EMPTY;
     }
 
@@ -357,12 +357,12 @@ public class ConfigElements {
     }
 
     public static boolean getTeamspeakNotifyWaitingSupport() {
-        return UnicacityAddon.ADDON.getConfig().has("TEAMSPEAK_NOTIFY_WAITING_SUPPORT") && UnicacityAddon.ADDON.getConfig().get("TS_NOTIFY_WAITING_SUPPORT")
+        return UnicacityAddon.ADDON.getConfig().has("TEAMSPEAK_NOTIFY_WAITING_SUPPORT") && UnicacityAddon.ADDON.getConfig().get("TEAMSPEAK_NOTIFY_WAITING_SUPPORT")
                 .getAsBoolean(); // default = false
     }
 
     public static boolean getTeamspeakNotifyWaitingPublic() {
-        return UnicacityAddon.ADDON.getConfig().has("TEAMSPEAK_NOTIFY_WAITING_PUBLIC") && UnicacityAddon.ADDON.getConfig().get("TS_NOTIFY_WAITING_PUBLIC")
+        return UnicacityAddon.ADDON.getConfig().has("TEAMSPEAK_NOTIFY_WAITING_PUBLIC") && UnicacityAddon.ADDON.getConfig().get("TEAMSPEAK_NOTIFY_WAITING_PUBLIC")
                 .getAsBoolean(); // default = false
     }
 }

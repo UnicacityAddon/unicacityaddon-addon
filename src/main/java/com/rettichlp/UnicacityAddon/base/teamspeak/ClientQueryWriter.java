@@ -24,7 +24,7 @@ public class ClientQueryWriter extends Thread implements Closeable {
         this.query = query;
         this.writer = writer;
 
-        setName("UCUtils-TSClientQuery-ClientQueryWriter");
+        setName("UnicacityAddon-TSClientQuery-ClientQueryWriter");
     }
 
     @Override

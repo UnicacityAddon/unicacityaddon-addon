@@ -17,7 +17,7 @@ public class KeepAliveThread extends Thread implements Closeable {
     public KeepAliveThread(TSClientQuery clientQuery) {
         this.clientQuery = clientQuery;
 
-        setName("UCUtils-TSClientQuery-KeepAliveThread");
+        setName("UnicacityAddon-TSClientQuery-KeepAliveThread");
     }
 
     @Override

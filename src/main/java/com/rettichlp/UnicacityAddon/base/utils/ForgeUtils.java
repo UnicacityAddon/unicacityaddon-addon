@@ -9,6 +9,7 @@ import net.minecraft.client.network.NetworkPlayerInfo;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -39,5 +40,26 @@ public class ForgeUtils {
 
     public static String stripPrefix(String string) {
         return PatternHandler.STRIP_PREFIX_PATTERN.matcher(string).replaceAll("");
+    }
+
+    public static <T> T getMostMatching(Iterable<T> list, String input, Function<T, String> toStringFunction) {
+        input = input.toLowerCase();
+
+        int delta = Integer.MAX_VALUE;
+        T found = null;
+        for (T t : list) {
+            String string = toStringFunction.apply(t).toLowerCase();
+            if (!string.startsWith(input)) continue;
+
+            int curDelta = Math.abs(string.length() - input.length());
+            if (curDelta < delta) {
+                found = t;
+                delta = curDelta;
+            }
+
+            if (curDelta == 0) break;
+        }
+
+        return found;
     }
 }

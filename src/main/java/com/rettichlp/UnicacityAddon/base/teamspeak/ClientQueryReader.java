@@ -30,7 +30,7 @@ public class ClientQueryReader extends Thread implements Closeable {
         this.query = query;
         this.reader = reader;
 
-        setName("UCUtils-TSClientQuery-ClientQueryReader");
+        setName("UnicacityAddon-TSClientQuery-ClientQueryReader");
     }
 
     @Override
