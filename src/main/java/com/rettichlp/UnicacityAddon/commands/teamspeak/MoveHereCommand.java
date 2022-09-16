@@ -1,54 +1,87 @@
-/*
 package com.rettichlp.UnicacityAddon.commands.teamspeak;
 
+import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
+import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
+import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import com.rettichlp.UnicacityAddon.base.teamspeak.CommandResponse;
 import com.rettichlp.UnicacityAddon.base.teamspeak.TSUtils;
 import com.rettichlp.UnicacityAddon.base.teamspeak.commands.ClientMoveCommand;
-import de.fuzzlemann.ucutils.base.command.Command;
-import de.fuzzlemann.ucutils.base.text.TextUtils;
-import de.fuzzlemann.ucutils.teamspeak.CommandResponse;
-import de.fuzzlemann.ucutils.teamspeak.TSUtils;
-import de.fuzzlemann.ucutils.teamspeak.commands.ClientMoveCommand;
-import de.fuzzlemann.ucutils.teamspeak.objects.Client;
-import de.fuzzlemann.ucutils.utils.mcapi.MojangAPI;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import com.rettichlp.UnicacityAddon.base.teamspeak.objects.Client;
+import com.rettichlp.UnicacityAddon.base.utils.ForgeUtils;
+import net.minecraft.command.CommandBase;
+import net.minecraft.command.CommandException;
+import net.minecraft.command.ICommandSender;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.math.BlockPos;
 
-import java.util.ArrayList;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Collections;
 import java.util.List;
 
-*/
 /**
  * @author Fuzzlemann
- *//*
+ */
+@UCCommand
+public class MoveHereCommand extends CommandBase {
 
-@SideOnly(Side.CLIENT)
-public class MoveHereCommand {
+    @Override
+    @Nonnull
+    public String getName() {
+        return "movehere";
+    }
 
-    @Command(value = "movehere", usage = "/%label% [Spieler...]", async = true)
-    public boolean onCommand(String[] players) {
-        if (players.length == 0) return false;
+    @Override
+    @Nonnull
+    public String getUsage(@Nonnull ICommandSender sender) {
+        return "/movehere [Spieler]";
+    }
 
-        List<String> names = new ArrayList<>();
-        for (String arg : players) {
-            names.addAll(MojangAPI.getEarlierNames(arg));
+    @Override
+    @Nonnull
+    public List<String> getAliases() {
+        return Collections.emptyList();
+    }
+
+    @Override
+    public boolean checkPermission(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender) {
+        return true;
+    }
+
+    @Override
+    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args) throws CommandException {
+        UPlayer p = AbstractionLayer.getPlayer();
+
+        if (args.length < 1) {
+            p.sendSyntaxMessage(getUsage(sender));
+            return;
         }
 
+        String name = args[0];
+
         int channelID = TSUtils.getMyChannelID();
-        List<Client> clients = TSUtils.getClientsByName(names);
+
+        List<Client> clients = TSUtils.getClientsByName(Collections.singletonList(name));
         if (clients.isEmpty()) {
-            TextUtils.error("Es wurde kein Spieler auf dem TeamSpeak mit diesem Namen gefunden.");
-            return true;
+            p.sendErrorMessage("Es wurde kein Spieler auf dem TeamSpeak mit diesem Namen gefunden.");
+            return;
         }
 
         CommandResponse response = new ClientMoveCommand(channelID, clients).getResponse();
         if (!response.succeeded()) {
-            TextUtils.error("Das Moven ist fehlgeschlagen.");
-            return true;
+            p.sendErrorMessage("Das Moven ist fehlgeschlagen.");
+            return;
         }
 
-        TextUtils.simpleMessage("Du hast die Personen zu dir gemoved.");
-        return true;
+        p.sendInfoMessage("Du hast die Person zu dir gemoved.");
+    }
+
+    @Override
+    @Nonnull
+    public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
+        List<String> tabCompletions = ForgeUtils.getOnlinePlayers();
+        String input = args[args.length - 1].toLowerCase().replace('-', ' ');
+        tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
+        return tabCompletions;
     }
 }
-*/

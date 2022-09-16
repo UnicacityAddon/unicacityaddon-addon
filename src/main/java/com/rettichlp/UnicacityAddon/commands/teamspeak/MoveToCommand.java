@@ -1,55 +1,96 @@
-/*
 package com.rettichlp.UnicacityAddon.commands.teamspeak;
 
+import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
+import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
+import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import com.rettichlp.UnicacityAddon.base.teamspeak.CommandResponse;
 import com.rettichlp.UnicacityAddon.base.teamspeak.TSUtils;
 import com.rettichlp.UnicacityAddon.base.teamspeak.commands.ClientMoveCommand;
 import com.rettichlp.UnicacityAddon.base.teamspeak.objects.Client;
-import de.fuzzlemann.ucutils.base.command.Command;
-import de.fuzzlemann.ucutils.base.text.Message;
-import de.fuzzlemann.ucutils.base.text.TextUtils;
-import de.fuzzlemann.ucutils.teamspeak.CommandResponse;
-import de.fuzzlemann.ucutils.teamspeak.TSUtils;
-import de.fuzzlemann.ucutils.teamspeak.commands.ClientMoveCommand;
-import de.fuzzlemann.ucutils.teamspeak.objects.Client;
-import de.fuzzlemann.ucutils.utils.mcapi.MojangAPI;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import com.rettichlp.UnicacityAddon.base.text.Message;
+import com.rettichlp.UnicacityAddon.base.utils.ForgeUtils;
+import net.minecraft.command.CommandBase;
+import net.minecraft.command.CommandException;
+import net.minecraft.command.ICommandSender;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.math.BlockPos;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Collections;
 import java.util.List;
 
-*/
 /**
  * @author Fuzzlemann
- *//*
+ */
+@UCCommand
+public class MoveToCommand extends CommandBase {
 
-@SideOnly(Side.CLIENT)
-public class MoveToCommand {
+    @Override
+    @Nonnull
+    public String getName() {
+        return "moveto";
+    }
 
-    @Command(value = "moveto", usage = "/%label% [Spieler]", async = true)
-    public boolean onCommand(String name) {
-        List<String> names = MojangAPI.getEarlierNames(name);
-        List<Client> clients = TSUtils.getClientsByName(names);
+    @Override
+    @Nonnull
+    public String getUsage(@Nonnull ICommandSender sender) {
+        return "/moveto [Spieler]";
+    }
+
+    @Override
+    @Nonnull
+    public List<String> getAliases() {
+        return Collections.emptyList();
+    }
+
+    @Override
+    public boolean checkPermission(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender) {
+        return true;
+    }
+
+    @Override
+    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args) throws CommandException {
+        UPlayer p = AbstractionLayer.getPlayer();
+
+        if (args.length < 1) {
+            p.sendSyntaxMessage(getUsage(sender));
+            return;
+        }
+
+        String name = args[0];
+
+        // List<String> names = MojangAPI.getEarlierNames(name);
+        // List<Client> clients = TSUtils.getClientsByName(names);
+
+        List<Client> clients = TSUtils.getClientsByName(Collections.singletonList(name));
         if (clients.isEmpty()) {
-            TextUtils.error("Es wurde kein Spieler auf dem TeamSpeak mit diesem Namen gefunden.");
-            return true;
+            p.sendErrorMessage("Es wurde kein Spieler auf dem TeamSpeak mit diesem Namen gefunden.");
+            return;
         }
 
         Client client = clients.get(0);
         CommandResponse response = new ClientMoveCommand(client.getChannelID(), TSUtils.getMyClientID()).getResponse();
+
         if (!response.succeeded()) {
-            TextUtils.error("Das Bewegen ist fehlgeschlagen.");
-            return true;
+            p.sendErrorMessage("Das Bewegen ist fehlgeschlagen.");
+            return;
         }
 
-        Message.builder()
+        Message.getBuilder()
                 .prefix()
-                .of("Du hast dich zu dem Channel von ").color(TextFormatting.GRAY).advance()
-                .of(name).color(TextFormatting.BLUE).advance()
-                .of(" bewegt.").color(TextFormatting.GRAY).advance()
-                .send();
-        return true;
+                .of("Du hast dich zu dem Channel von ").advance().space()
+                .of(name).advance().space()
+                .of(" bewegt.").advance()
+                .sendTo(p.getPlayer());
+    }
+
+    @Override
+    @Nonnull
+    public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
+        List<String> tabCompletions = ForgeUtils.getOnlinePlayers();
+        String input = args[args.length - 1].toLowerCase().replace('-', ' ');
+        tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
+        return tabCompletions;
     }
 }
-*/

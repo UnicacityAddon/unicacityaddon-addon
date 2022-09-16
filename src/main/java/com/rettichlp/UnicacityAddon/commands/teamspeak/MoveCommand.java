@@ -1,56 +1,88 @@
-/*
 package com.rettichlp.UnicacityAddon.commands.teamspeak;
 
+import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
+import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
+import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import com.rettichlp.UnicacityAddon.base.teamspeak.CommandResponse;
 import com.rettichlp.UnicacityAddon.base.teamspeak.TSUtils;
 import com.rettichlp.UnicacityAddon.base.teamspeak.commands.ClientMoveCommand;
 import com.rettichlp.UnicacityAddon.base.teamspeak.objects.Client;
-import de.fuzzlemann.ucutils.base.command.Command;
-import de.fuzzlemann.ucutils.base.command.CommandParam;
-import de.fuzzlemann.ucutils.base.text.TextUtils;
-import de.fuzzlemann.ucutils.teamspeak.CommandResponse;
-import de.fuzzlemann.ucutils.teamspeak.TSUtils;
-import de.fuzzlemann.ucutils.teamspeak.commands.ClientMoveCommand;
-import de.fuzzlemann.ucutils.teamspeak.objects.Client;
-import de.fuzzlemann.ucutils.utils.mcapi.MojangAPI;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import com.rettichlp.UnicacityAddon.base.utils.ForgeUtils;
+import net.minecraft.command.CommandBase;
+import net.minecraft.command.ICommandSender;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.math.BlockPos;
 
-import java.util.ArrayList;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Collections;
 import java.util.List;
 
-*/
 /**
  * @author Fuzzlemann
- *//*
+ */
+@UCCommand
+public class MoveCommand extends CommandBase {
 
-@SideOnly(Side.CLIENT)
-public class MoveCommand {
+    @Override
+    @Nonnull
+    public String getName() {
+        return "move";
+    }
 
-    @Command(value = "move", usage = "/%label% [Spieler...] [Ziel]", async = true)
-    public boolean onCommand(@CommandParam(arrayStart = true) String[] moveArray, String moveTo) {
-        List<String> moved = new ArrayList<>();
-        for (String move : moveArray) {
-            moved.addAll(MojangAPI.getEarlierNames(move));
+    @Override
+    @Nonnull
+    public String getUsage(@Nonnull ICommandSender sender) {
+        return "/move [Spieler] [Ziel]";
+    }
+
+    @Override
+    @Nonnull
+    public List<String> getAliases() {
+        return Collections.emptyList();
+    }
+
+    @Override
+    public boolean checkPermission(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender) {
+        return true;
+    }
+
+    @Override
+    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
+        UPlayer p = AbstractionLayer.getPlayer();
+
+        if (args.length < 2) {
+            p.sendSyntaxMessage(getUsage(sender));
+            return;
         }
 
-        List<Client> clientsMoved = TSUtils.getClientsByName(moved);
-        List<Client> clientsMoveTo = TSUtils.getClientsByName(MojangAPI.getEarlierNames(moveTo));
+        String name = args[0];
+        String target = args[1];
+
+        List<Client> clientsMoved = TSUtils.getClientsByName(Collections.singletonList(name));
+        List<Client> clientsMoveTo = TSUtils.getClientsByName(Collections.singletonList(target));
 
         if (clientsMoved.isEmpty() || clientsMoveTo.isEmpty()) {
-            TextUtils.error("Einer der Spieler befindet sich nicht auf dem TeamSpeak.");
-            return true;
+            p.sendErrorMessage("Einer der Spieler befindet sich nicht auf dem TeamSpeak.");
+            return;
         }
 
         Client moveToClient = clientsMoveTo.get(0);
         CommandResponse response = new ClientMoveCommand(moveToClient.getChannelID(), clientsMoved).getResponse();
         if (!response.succeeded()) {
-            TextUtils.error("Das Moven ist fehlgeschlagen.");
-            return true;
+            p.sendErrorMessage("Das Moven ist fehlgeschlagen.");
+            return;
         }
 
-        TextUtils.simpleMessage("Du hast die Personen gemoved.");
-        return true;
+        p.sendInfoMessage("Du hast die Personen gemoved.");
+    }
+
+    @Override
+    @Nonnull
+    public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
+        List<String> tabCompletions = ForgeUtils.getOnlinePlayers();
+        String input = args[args.length - 1].toLowerCase().replace('-', ' ');
+        tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
+        return tabCompletions;
     }
 }
-*/
