@@ -3,6 +3,7 @@ package com.rettichlp.UnicacityAddon.events;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
 import com.rettichlp.UnicacityAddon.base.config.ConfigElements;
+import com.rettichlp.UnicacityAddon.base.location.NavigationUtils;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCEvent;
 import com.rettichlp.UnicacityAddon.base.io.FileManager;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
@@ -36,6 +37,7 @@ public class CarEventHandler {
 
         Matcher carPositionMatcher = PatternHandler.CAR_POSITION_PATTERN.matcher(msg);
         if (carPositionMatcher.find() && ConfigElements.getEventCarFind()) {
+            NavigationUtils.stopRoute();
             p.setNaviRoute(Integer.parseInt(carPositionMatcher.group(1)), Integer.parseInt(carPositionMatcher.group(2)), Integer.parseInt(carPositionMatcher.group(3)));
         }
         return false;

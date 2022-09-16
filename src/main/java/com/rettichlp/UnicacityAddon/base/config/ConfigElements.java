@@ -150,9 +150,19 @@ public class ConfigElements {
                 .getAsBoolean(); // default = false
     }
 
+    public static ColorCode getNameTagFactionSpecificColor() {
+        return UnicacityAddon.ADDON.getConfig().has("NAMETAG_FACTIONSPECIFIC_COLOR_SETTINGS") ?
+                ColorCode.valueOf(UnicacityAddon.ADDON.getConfig().get("NAMETAG_FACTIONSPECIFIC_COLOR_SETTINGS").getAsString()) :
+                ColorCode.DARK_RED; // default = DARK_RED
+    }
+
+    public static void setNameTagFactionSpecificColor(ColorCode factionSpecificColor) {
+        UnicacityAddon.ADDON.getConfig().addProperty("NAMETAG_FACTIONSPECIFIC_COLOR_SETTINGS", factionSpecificColor.toString());
+    }
+
     // Delay
     public static String getRefreshDisplayNamesInterval() {
-        return UnicacityAddon.ADDON.getConfig().has("NAMETAG_DELAY_SETTINGS") && !UnicacityAddon.ADDON.getConfig().get("NAMETAG_DELAY_SETTINGS").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("NAMETAG_DELAY").getAsString().equals("0") && !UnicacityAddon.ADDON.getConfig().get("NAMETAG_DELAY").getAsString().startsWith("-")
+        return UnicacityAddon.ADDON.getConfig().has("NAMETAG_DELAY_SETTINGS") && !UnicacityAddon.ADDON.getConfig().get("NAMETAG_DELAY_SETTINGS").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("NAMETAG_DELAY_SETTINGS").getAsString().equals("0") && !UnicacityAddon.ADDON.getConfig().get("NAMETAG_DELAY_SETTINGS").getAsString().startsWith("-")
                 ? UnicacityAddon.ADDON.getConfig().get("NAMETAG_DELAY_SETTINGS").getAsString()
                 : "5";
     }
@@ -266,6 +276,12 @@ public class ConfigElements {
                 .getAsBoolean(); // default = true
     }
 
+    // Minus Karma
+    public static boolean getEstimatedDespawnTime() {
+        return !UnicacityAddon.ADDON.getConfig().has("ESTIMATED_DESPAWN_TIME_SETTINGS") || UnicacityAddon.ADDON.getConfig().get("ESTIMATED_DESPAWN_TIME_SETTINGS")
+                .getAsBoolean(); // default = true
+    }
+
     // EIGENBEDARF SETTINGS
     public static boolean getCocainActivated() {
         return !UnicacityAddon.ADDON.getConfig().has("EIGENBEDARF_COCAINE_SETTINGS") || UnicacityAddon.ADDON.getConfig().get("EIGENBEDARF_COCAINE_SETTINGS")
@@ -283,7 +299,7 @@ public class ConfigElements {
     }
 
     public static String getCocaineAmount() {
-        return UnicacityAddon.ADDON.getConfig().has("EIGENBEDARF_COCAINE_AMOUNT_SETTINGS") && !UnicacityAddon.ADDON.getConfig().get("EIGENBEDARF_COCAINE_AMOUNT_SETTINGS").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("COCAINE_AMOUNT").getAsString().equals("0")
+        return UnicacityAddon.ADDON.getConfig().has("EIGENBEDARF_COCAINE_AMOUNT_SETTINGS") && !UnicacityAddon.ADDON.getConfig().get("EIGENBEDARF_COCAINE_AMOUNT_SETTINGS").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("EIGENBEDARF_COCAINE_AMOUNT_SETTINGS").getAsString().equals("0")
                 ? UnicacityAddon.ADDON.getConfig().get("EIGENBEDARF_COCAINE_AMOUNT_SETTINGS").getAsString()
                 : "15";
     }
@@ -304,7 +320,7 @@ public class ConfigElements {
     }
 
     public static String getMarihuanaAmount() {
-        return UnicacityAddon.ADDON.getConfig().has("EIGENBEDARF_MARIHUANA_AMOUNT_SETTINGS") && !UnicacityAddon.ADDON.getConfig().get("EIGENBEDARF_MARIHUANA_AMOUNT_SETTINGS").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("MARIHUANA_AMOUNT").getAsString().equals("0")
+        return UnicacityAddon.ADDON.getConfig().has("EIGENBEDARF_MARIHUANA_AMOUNT_SETTINGS") && !UnicacityAddon.ADDON.getConfig().get("EIGENBEDARF_MARIHUANA_AMOUNT_SETTINGS").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("EIGENBEDARF_MARIHUANA_AMOUNT_SETTINGS").getAsString().equals("0")
                 ? UnicacityAddon.ADDON.getConfig().get("EIGENBEDARF_MARIHUANA_AMOUNT_SETTINGS").getAsString()
                 : "15";
     }
@@ -325,7 +341,7 @@ public class ConfigElements {
     }
 
     public static String getMethAmount() {
-        return UnicacityAddon.ADDON.getConfig().has("EIGENBEDARF_METH_AMOUNT_SETTINGS") && !UnicacityAddon.ADDON.getConfig().get("EIGENBEDARF_METH_AMOUNT_SETTINGS").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("METH_AMOUNT").getAsString().equals("0")
+        return UnicacityAddon.ADDON.getConfig().has("EIGENBEDARF_METH_AMOUNT_SETTINGS") && !UnicacityAddon.ADDON.getConfig().get("EIGENBEDARF_METH_AMOUNT_SETTINGS").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("EIGENBEDARF_METH_AMOUNT_SETTINGS").getAsString().equals("0")
                 ? UnicacityAddon.ADDON.getConfig().get("EIGENBEDARF_METH_AMOUNT_SETTINGS").getAsString()
                 : "15";
     }

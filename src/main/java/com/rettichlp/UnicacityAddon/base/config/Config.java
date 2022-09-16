@@ -87,6 +87,9 @@ public class Config {
         BooleanElement hqMessageSettings = new BooleanElement("HQ Nachrichten", unicacityAddon, new ControlElement.IconData(Material.LEASH), "HQ_MESSAGE_SETTINGS", ConfigElements.getHQMessagesActivated());
         list.add(hqMessageSettings);
 
+        BooleanElement despawnTimeAfterKarma = new BooleanElement("Despawn Zeitpunkt", unicacityAddon, new ControlElement.IconData(Material.SKULL_ITEM), "ESTIMATED_DESPAWN_TIME_SETTINGS", ConfigElements.getEstimatedDespawnTime());
+        list.add(despawnTimeAfterKarma);
+
         // Certain LabyMod themes cover the lower settings. To counteract this, empty lines are appended.
         list.add(emptyLine);
         list.add(emptyLine);

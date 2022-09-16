@@ -110,8 +110,11 @@ public class MoneyEventHandler {
 
         Matcher reviveByMedicFinishMatcher = PatternHandler.REVIVE_BY_MEDIC_FINISH_PATTERN.matcher(msg);
         if (reviveByMedicFinishMatcher.find()) {
-            if (System.currentTimeMillis() - reviveByMedicStartTime > TimeUnit.SECONDS.toMillis(10)) return false;
-            BankMoneyModule.removeBalance(27); // successfully revived by medic = 27$
+            if (System.currentTimeMillis() - reviveByMedicStartTime > TimeUnit.SECONDS.toMillis(10)) {
+                CashMoneyModule.setBalance(0);
+                return false;
+            }
+            BankMoneyModule.removeBalance(50); // successfully revived by medic = 50$
             return false;
         }
 

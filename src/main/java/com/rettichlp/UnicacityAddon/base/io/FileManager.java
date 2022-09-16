@@ -5,6 +5,7 @@ import com.rettichlp.UnicacityAddon.UnicacityAddon;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.json.Data;
 import com.rettichlp.UnicacityAddon.commands.TodoListCommand;
+import com.rettichlp.UnicacityAddon.commands.faction.ServiceCountCommand;
 import com.rettichlp.UnicacityAddon.modules.BankMoneyModule;
 import com.rettichlp.UnicacityAddon.modules.CarOpenModule;
 import com.rettichlp.UnicacityAddon.modules.CashMoneyModule;
@@ -94,6 +95,16 @@ public class FileManager {
         return null;
     }
 
+    public static File getSharesDataFile() throws IOException {
+        if (getUnicacityAddonDir() == null) return null;
+        File sharesDataFile = new File(getUnicacityAddonDir().getAbsolutePath() + "/sharesData.json");
+        if (sharesDataFile.exists() || sharesDataFile.createNewFile()) return sharesDataFile;
+
+        AbstractionLayer.getPlayer().sendErrorMessage("Datei 'sharesData.json' wurde nicht gefunden!");
+
+        return null;
+    }
+
     public static File getNewImageFile() throws IOException {
         if (getAddonScreenshotDir() == null) return null;
 
@@ -137,6 +148,7 @@ public class FileManager {
                 JobModule.setBalance(0);
                 JobModule.setExperience(0);
                 PayDayModule.setTime(0);
+                ServiceCountCommand.serviceCount = 0;
                 TodoListCommand.todolist = Collections.emptyList();
                 CarOpenModule.info = "";
                 return;
@@ -148,6 +160,7 @@ public class FileManager {
             JobModule.jobBalance = data.getJobBalance();
             JobModule.jobExperience = data.getJobExperience();
             PayDayModule.currentTime = data.getPayDayTime();
+            ServiceCountCommand.serviceCount = data.getServiceCount();
             TodoListCommand.todolist = data.getTodolist();
             CarOpenModule.info = data.getCarInfo() == null ? Strings.EMPTY : data.getCarInfo();
         } catch (IOException e) {
@@ -168,6 +181,7 @@ public class FileManager {
             data.setPayDayTime(PayDayModule.currentTime);
             data.setTodolist(TodoListCommand.todolist);
             data.setCarInfo(CarOpenModule.info);
+            data.setServiceCount(ServiceCountCommand.serviceCount);
             FileUtils.writeStringToFile(dataFile, g.toJson(data), StandardCharsets.UTF_8.toString());
         } catch (IOException e) {
             throw new RuntimeException(e);

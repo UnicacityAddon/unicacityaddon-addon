@@ -40,6 +40,7 @@ public class ConfigSettings {
         settings.add(nameTagDutySettings);
 
         BooleanElement nameTagFactionSpecificSettings = new BooleanElement("WPS/Blacklist/Contract", unicacityAddon, new ControlElement.IconData(Material.IRON_FENCE), "NAMETAG_FACTIONSPECIFIC_SETTINGS", ConfigElements.getNameTagFactionSpecific());
+        nameTagFactionSpecificSettings.setSubSettings(ConfigSubSettings.getNameTagFactionSpecificSubSettings());
         settings.add(nameTagFactionSpecificSettings);
 
         return settings;
