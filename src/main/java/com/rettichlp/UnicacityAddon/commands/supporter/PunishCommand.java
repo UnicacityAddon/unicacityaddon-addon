@@ -61,15 +61,14 @@ public class PunishCommand  extends CommandBase {
         if (punishment.getBanDuration() == -1) p.sendChatMessage("/ban " + args[0] + " " + reason);
         if (punishment.isLoyalityPointReset()) p.sendChatMessage("/resettreuebonus " + args[0]);
         if (punishment.getWeaponLock() > 0) p.sendChatMessage("/waffensperre " + args[0] + " " + punishment.getWeaponLock() + " 0 0");
-        if (punishment.getWarnAmmount() > 0) {
-            if (punishment.getWarnAmmount() == 1) {
+        if (punishment.getWarnAmmount() > 0)
+            if (punishment.getWarnAmmount() == 1)
                 p.sendChatMessage("/warn " + args[0] + " " + reason);
-            } else {
-                for (int i = 0;i < punishment.getWarnAmmount();i++)
+            else
+                for (int i = 0;i < punishment.getWarnAmmount();i++) {
                     p.sendChatMessage("/warn " + args[0] + " " + reason);
-            }
+                }
 
-        }
     }
 
     @Override @Nonnull public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
