@@ -96,6 +96,6 @@ public class UnicacityAddon extends LabyModAddon {
         String ip = serverData.serverIP;
         if (ip.contains(":")) ip = ip.split(":")[0]; // strip unused port
 
-        return ip.endsWith("unicacity.de");
+        return ip.toLowerCase().endsWith("unicacity.de");
     }
 }
