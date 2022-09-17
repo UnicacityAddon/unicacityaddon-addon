@@ -74,7 +74,7 @@ public class MoveCommand extends CommandBase {
             return;
         }
 
-        p.sendInfoMessage("Du hast die Personen gemoved.");
+        p.sendInfoMessage("Du hast die Person gemoved.");
     }
 
     @Override

@@ -7,6 +7,7 @@ import com.rettichlp.UnicacityAddon.base.teamspeak.CommandResponse;
 import com.rettichlp.UnicacityAddon.base.teamspeak.TSUtils;
 import com.rettichlp.UnicacityAddon.base.teamspeak.commands.ClientMoveCommand;
 import com.rettichlp.UnicacityAddon.base.teamspeak.objects.Client;
+import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
 import com.rettichlp.UnicacityAddon.base.utils.ForgeUtils;
 import net.minecraft.command.CommandBase;
@@ -79,9 +80,9 @@ public class MoveToCommand extends CommandBase {
 
         Message.getBuilder()
                 .prefix()
-                .of("Du hast dich zu dem Channel von").advance().space()
-                .of(name).advance().space()
-                .of("bewegt.").advance()
+                .of("Du bist in den Channel von").color(ColorCode.GRAY).advance().space()
+                .of(name).color(ColorCode.AQUA).advance().space()
+                .of("gegangen.").color(ColorCode.GRAY).advance()
                 .sendTo(p.getPlayer());
     }
 

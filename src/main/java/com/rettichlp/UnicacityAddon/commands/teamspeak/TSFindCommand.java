@@ -7,6 +7,7 @@ import com.rettichlp.UnicacityAddon.base.teamspeak.TSUtils;
 import com.rettichlp.UnicacityAddon.base.teamspeak.commands.ChannelListCommand;
 import com.rettichlp.UnicacityAddon.base.teamspeak.objects.Channel;
 import com.rettichlp.UnicacityAddon.base.teamspeak.objects.Client;
+import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
 import com.rettichlp.UnicacityAddon.base.utils.ForgeUtils;
 import net.minecraft.command.CommandBase;
@@ -77,10 +78,10 @@ public class TSFindCommand extends CommandBase {
 
         Message.getBuilder()
                 .prefix()
-                .of(name).advance().space()
-                .of("befindet sich im Channel").advance().space()
-                .of(channel.getName()).advance()
-                .of(".").advance()
+                .of(name).color(ColorCode.AQUA).advance().space()
+                .of("befindet sich im Channel").color(ColorCode.GRAY).advance().space()
+                .of(channel.getName()).color(ColorCode.AQUA).advance()
+                .of(".").color(ColorCode.GRAY).advance()
                 .sendTo(p.getPlayer());
     }
 

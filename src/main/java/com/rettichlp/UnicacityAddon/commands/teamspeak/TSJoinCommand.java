@@ -9,6 +9,7 @@ import com.rettichlp.UnicacityAddon.base.teamspeak.TSUtils;
 import com.rettichlp.UnicacityAddon.base.teamspeak.commands.ChannelListCommand;
 import com.rettichlp.UnicacityAddon.base.teamspeak.commands.ClientMoveCommand;
 import com.rettichlp.UnicacityAddon.base.teamspeak.objects.Channel;
+import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
 import com.rettichlp.UnicacityAddon.base.utils.ForgeUtils;
 import com.rettichlp.UnicacityAddon.base.utils.TextUtils;
@@ -105,9 +106,9 @@ public class TSJoinCommand extends CommandBase {
 
         Message.getBuilder()
                 .prefix()
-                .of("Du hast dich zu dem Channel \"").advance()
-                .of(foundChannel.getName()).advance()
-                .of("\" bewegt.").advance()
+                .of("Du bist in den Channel \"").color(ColorCode.GRAY).advance()
+                .of(foundChannel.getName()).color(ColorCode.AQUA).advance()
+                .of("\" gegangen.").color(ColorCode.GRAY).advance()
                 .sendTo(p.getPlayer());
     }
 
