@@ -38,10 +38,10 @@ public class Message {
 
         public Builder prefix() {
             return add(Message.getBuilder()
-                    .of("UCA").color(ColorCode.DARK_GREEN).advance()
-                    .space()
-                    .of("-").color(ColorCode.DARK_GRAY).advance()
-                    .space()
+                    .of("U").color(ColorCode.BLUE).advance()
+                    .of("C").color(ColorCode.RED).advance()
+                    .of("A").color(ColorCode.BLUE).advance().space()
+                    .of("●").color(ColorCode.DARK_GRAY).advance().space()
                     .create());
         }
 
