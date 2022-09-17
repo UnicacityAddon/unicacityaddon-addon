@@ -6,6 +6,7 @@ import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.json.Data;
 import com.rettichlp.UnicacityAddon.commands.TodoListCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.ServiceCountCommand;
+import com.rettichlp.UnicacityAddon.events.DeathsKillsEventHandler;
 import com.rettichlp.UnicacityAddon.modules.BankMoneyModule;
 import com.rettichlp.UnicacityAddon.modules.CarOpenModule;
 import com.rettichlp.UnicacityAddon.modules.CashMoneyModule;
@@ -149,6 +150,8 @@ public class FileManager {
                 JobModule.setExperience(0);
                 PayDayModule.setTime(0);
                 ServiceCountCommand.serviceCount = 0;
+                DeathsKillsEventHandler.deaths = 0;
+                DeathsKillsEventHandler.kills = 0;
                 TodoListCommand.todolist = Collections.emptyList();
                 CarOpenModule.info = "";
                 return;
@@ -161,6 +164,8 @@ public class FileManager {
             JobModule.jobExperience = data.getJobExperience();
             PayDayModule.currentTime = data.getPayDayTime();
             ServiceCountCommand.serviceCount = data.getServiceCount();
+            DeathsKillsEventHandler.deaths = data.getDeaths();
+            DeathsKillsEventHandler.kills = data.getKills();
             TodoListCommand.todolist = data.getTodolist();
             CarOpenModule.info = data.getCarInfo() == null ? Strings.EMPTY : data.getCarInfo();
         } catch (IOException e) {
@@ -182,6 +187,8 @@ public class FileManager {
             data.setTodolist(TodoListCommand.todolist);
             data.setCarInfo(CarOpenModule.info);
             data.setServiceCount(ServiceCountCommand.serviceCount);
+            data.setDeaths(DeathsKillsEventHandler.deaths);
+            data.setKills(DeathsKillsEventHandler.kills);
             FileUtils.writeStringToFile(dataFile, g.toJson(data), StandardCharsets.UTF_8.toString());
         } catch (IOException e) {
             throw new RuntimeException(e);

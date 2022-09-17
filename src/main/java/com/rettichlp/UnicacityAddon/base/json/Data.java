@@ -11,6 +11,8 @@ public class Data {
     private int jobExperience;
     private int payDayTime;
     private int serviceCount;
+    private int deaths;
+    private int kills;
     private List<TodolistEntry> todolist;
     private String carInfo;
 
@@ -63,6 +65,22 @@ public class Data {
 
     public void setServiceCount(int serviceCount) {
         this.serviceCount = serviceCount;
+    }
+
+    public int getDeaths() {
+        return deaths;
+    }
+
+    public void setDeaths(int deaths) {
+        this.deaths = deaths;
+    }
+
+    public int getKills() {
+        return kills;
+    }
+
+    public void setKills(int kills) {
+        this.kills = kills;
     }
 
     public List<TodolistEntry> getTodolist() {
