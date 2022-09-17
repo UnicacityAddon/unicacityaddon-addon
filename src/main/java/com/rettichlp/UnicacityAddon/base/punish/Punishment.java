@@ -1,7 +1,5 @@
 package com.rettichlp.UnicacityAddon.base.punish;
 
-import com.rettichlp.UnicacityAddon.base.location.NaviPoint;
-
 public enum Punishment {
     AFK_FARMING("AFK-Farming", 300, 180, 0, true, 0),
     ACCOUNT_SHARING("Account Sharing", 0, -1, 0, false, 0),
