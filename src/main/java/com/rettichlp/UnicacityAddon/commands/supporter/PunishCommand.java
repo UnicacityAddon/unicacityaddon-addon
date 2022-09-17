@@ -2,8 +2,11 @@ package com.rettichlp.UnicacityAddon.commands.supporter;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
+import com.rettichlp.UnicacityAddon.base.faction.polizei.WantedReason;
 import com.rettichlp.UnicacityAddon.base.punish.Punishment;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
+import com.rettichlp.UnicacityAddon.base.utils.ForgeUtils;
+import com.rettichlp.UnicacityAddon.commands.faction.polizei.ASUCommand;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
@@ -61,6 +64,8 @@ public class PunishCommand  extends CommandBase {
         if (punishment.getBanDuration() == -1) p.sendChatMessage("/ban " + args[0] + " " + reason);
         if (punishment.isLoyalityPointReset()) p.sendChatMessage("/resettreuebonus " + args[0]);
         if (punishment.getWeaponLock() > 0) p.sendChatMessage("/waffensperre " + args[0] + " " + punishment.getWeaponLock() + " 0 0");
+        if (punishment.getFactionLock() > 0) p.sendChatMessage("/fraksperre " + args[0] + " " + punishment.getFactionLock() + " " + reason);
+        if (punishment.isKick()) p.sendChatMessage("/kick " + args[0] + " " + reason);
         if (punishment.getWarnAmmount() > 0)
             if (punishment.getWarnAmmount() == 1)
                 p.sendChatMessage("/warn " + args[0] + " " + reason);
@@ -72,10 +77,22 @@ public class PunishCommand  extends CommandBase {
     }
 
     @Override @Nonnull public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
-        List<String> tabCompletions = Arrays.stream(Punishment.values()).map(Punishment::getReason).sorted().collect(Collectors.toList());
-        String input = args[args.length - 1].toLowerCase().replace('-', ' ');
-        tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
-        return tabCompletions;
+        if (args.length == 1) {
+            List<String> tabCompletions = ForgeUtils.getOnlinePlayers();
+            String input = args[args.length - 1].toLowerCase().replace('-', ' ');
+            tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
+            return tabCompletions;
+        } else {
+            List<String> tabCompletions = Arrays.stream(WantedReason.values()).map(WantedReason::getReason).sorted().collect(Collectors.toList());
+            tabCompletions.addAll(ForgeUtils.getOnlinePlayers());
+
+            String input = args[args.length - 1].toLowerCase().replace('-', ' ');
+            tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
+
+            tabCompletions.addAll(Arrays.stream(Punishment.values()).map(Punishment::getReason).sorted().collect(Collectors.toList()));
+
+            return tabCompletions;
+        }
     }
 
     private String getBanDurationString(int banDuration) {
