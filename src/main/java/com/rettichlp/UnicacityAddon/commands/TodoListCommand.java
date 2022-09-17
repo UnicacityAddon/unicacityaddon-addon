@@ -89,7 +89,7 @@ public class TodoListCommand extends CommandBase {
                 p.sendErrorMessage("Keinen Eintrag mit dieser ID gefunden.");
                 return;
             }
-            String todo = TextUtils.makeStringByArgs(args, " ").replaceAll("(?i)edit ", "");
+            String todo = TextUtils.makeStringByArgs(args, " ").replaceAll("(?i)edit " + args[1] + " ", "");
             TodolistEntry todolistEntry = new TodolistEntry(todo);
             todolist.set(index, todolistEntry);
             FileManager.saveData();
