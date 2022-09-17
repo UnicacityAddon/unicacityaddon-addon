@@ -19,7 +19,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * @author Fuzzlemann
+ * @author Fuzzlemann, RettichLP
  */
 @UCCommand
 public class MoveCommand extends CommandBase {

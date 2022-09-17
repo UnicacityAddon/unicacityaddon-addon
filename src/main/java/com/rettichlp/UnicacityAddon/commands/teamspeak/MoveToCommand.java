@@ -21,7 +21,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * @author Fuzzlemann
+ * @author Fuzzlemann, RettichLP
  */
 @UCCommand
 public class MoveToCommand extends CommandBase {
@@ -79,9 +79,9 @@ public class MoveToCommand extends CommandBase {
 
         Message.getBuilder()
                 .prefix()
-                .of("Du hast dich zu dem Channel von ").advance().space()
+                .of("Du hast dich zu dem Channel von").advance().space()
                 .of(name).advance().space()
-                .of(" bewegt.").advance()
+                .of("bewegt.").advance()
                 .sendTo(p.getPlayer());
     }
 

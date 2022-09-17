@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author Fuzzlemann
+ * @author Fuzzlemann, RettichLP
  */
 @UCCommand
 public class TSJoinCommand extends CommandBase {
