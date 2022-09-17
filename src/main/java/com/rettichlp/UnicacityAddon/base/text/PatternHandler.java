@@ -250,4 +250,11 @@ public class PatternHandler {
      * {@link com.rettichlp.UnicacityAddon.events.faction.ServiceCountEventHandler}
      */
     public static final Pattern SERVICE_DONE_PATTERN = Pattern.compile("^Du hast den Service von (?:\\[UC])*(\\w+) als 'Erledigt' markiert!$");
+
+    /**
+     * {@link com.rettichlp.UnicacityAddon.events.DeathsKillsEventHandler}
+     */
+    public static final Pattern KILL_PATTERN = Pattern.compile("^\\[Karma] -(\\d+) Karma\\.$");
+    public static final Pattern LAST_STATS_MESSAGE_PATTERN = Pattern.compile("^ {2}- Treuebonus: (\\d+) Punkte$");
+
 }
