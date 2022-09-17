@@ -2,11 +2,9 @@ package com.rettichlp.UnicacityAddon.commands.supporter;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
-import com.rettichlp.UnicacityAddon.base.faction.polizei.WantedReason;
 import com.rettichlp.UnicacityAddon.base.punish.Punishment;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import com.rettichlp.UnicacityAddon.base.utils.ForgeUtils;
-import com.rettichlp.UnicacityAddon.commands.faction.polizei.ASUCommand;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
@@ -23,26 +21,33 @@ import java.util.stream.Collectors;
  * @author Dimiikou
  */
 @UCCommand
-public class PunishCommand  extends CommandBase {
+public class PunishCommand extends CommandBase {
 
-    @Override @Nonnull
+    @Override
+    @Nonnull
     public String getName() {
         return "punish";
     }
 
-    @Override @Nonnull public String getUsage(@Nonnull ICommandSender sender) {
+    @Override
+    @Nonnull
+    public String getUsage(@Nonnull ICommandSender sender) {
         return "/punish [Spielername] [Grund]";
     }
 
-    @Override @Nonnull public List<String> getAliases() {
+    @Override
+    @Nonnull
+    public List<String> getAliases() {
         return Collections.emptyList();
     }
 
-    @Override public boolean checkPermission(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender) {
+    @Override
+    public boolean checkPermission(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender) {
         return true;
     }
 
-    @Override public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
+    @Override
+    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
         UPlayer p = AbstractionLayer.getPlayer();
 
         if (args.length < 2) {
@@ -67,30 +72,24 @@ public class PunishCommand  extends CommandBase {
         if (punishment.getFactionLock() > 0) p.sendChatMessage("/fraksperre " + args[0] + " " + punishment.getFactionLock() + " " + reason);
         if (punishment.isKick()) p.sendChatMessage("/kick " + args[0] + " " + reason);
         if (punishment.getWarnAmmount() > 0)
-            if (punishment.getWarnAmmount() == 1)
+            for (int i = 0; i < punishment.getWarnAmmount(); i++) {
                 p.sendChatMessage("/warn " + args[0] + " " + reason);
-            else
-                for (int i = 0;i < punishment.getWarnAmmount();i++) {
-                    p.sendChatMessage("/warn " + args[0] + " " + reason);
-                }
+            }
 
     }
 
-    @Override @Nonnull public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
+    @Override
+    @Nonnull
+    public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
         if (args.length == 1) {
             List<String> tabCompletions = ForgeUtils.getOnlinePlayers();
             String input = args[args.length - 1].toLowerCase().replace('-', ' ');
             tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
             return tabCompletions;
         } else {
-            List<String> tabCompletions = Arrays.stream(WantedReason.values()).map(WantedReason::getReason).sorted().collect(Collectors.toList());
-            tabCompletions.addAll(ForgeUtils.getOnlinePlayers());
-
+            List<String> tabCompletions = Arrays.stream(Punishment.values()).map(Punishment::getTabReason).sorted().collect(Collectors.toList());
             String input = args[args.length - 1].toLowerCase().replace('-', ' ');
             tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
-
-            tabCompletions.addAll(Arrays.stream(Punishment.values()).map(Punishment::getReason).sorted().collect(Collectors.toList()));
-
             return tabCompletions;
         }
     }
@@ -100,7 +99,7 @@ public class PunishCommand  extends CommandBase {
         int hours = minutes / 60;
         minutes -= hours * 60;
         int days = hours / 60;
-        hours -= days*60;
+        hours -= days * 60;
 
         return days + " " + hours + " " + minutes;
     }
