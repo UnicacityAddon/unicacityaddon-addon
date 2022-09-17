@@ -73,6 +73,12 @@ public class Config {
         eigenbedarfSettings.setSubSettings(ConfigSettings.getEigenbedarfSettings(unicacityAddon));
         list.add(eigenbedarfSettings);
 
+        list.add(new HeaderElement(Message.getBuilder().of("Teamspeak").color(ColorCode.WHITE).advance().create()));
+
+        ListContainerElement teamspeakSettings = new ListContainerElement("Teamspeak", new ControlElement.IconData(Material.NOTE_BLOCK));
+        teamspeakSettings.setSubSettings(ConfigSettings.getTeamspeakSettings(unicacityAddon));
+        list.add(teamspeakSettings);
+
         list.add(new HeaderElement(Message.getBuilder().of("Sonstiges").color(ColorCode.WHITE).advance().create()));
 
         BooleanElement orderedTablistSettings = new BooleanElement("Sortierte Tablist", unicacityAddon, new ControlElement.IconData(Material.COMMAND), "ORDERED_TABLIST_SETTINGS", ConfigElements.getEventTabList());

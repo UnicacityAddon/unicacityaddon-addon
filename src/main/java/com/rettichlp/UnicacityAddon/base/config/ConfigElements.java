@@ -345,4 +345,24 @@ public class ConfigElements {
                 ? UnicacityAddon.ADDON.getConfig().get("EIGENBEDARF_METH_AMOUNT_SETTINGS").getAsString()
                 : "15";
     }
+
+    public static String getTeamspeakAPIKey() {
+        return UnicacityAddon.ADDON.getConfig().has("TEAMSPEAK_API_KEY")
+                ? UnicacityAddon.ADDON.getConfig().get("TEAMSPEAK_API_KEY").getAsString()
+                : Strings.EMPTY;
+    }
+
+    public static void setTeamspeakAPIKey(String tsApiKey) {
+        UnicacityAddon.ADDON.getConfig().addProperty("TEAMSPEAK_API_KEY", tsApiKey);
+    }
+
+    public static boolean getTeamspeakNotifyWaitingSupport() {
+        return UnicacityAddon.ADDON.getConfig().has("TEAMSPEAK_NOTIFY_WAITING_SUPPORT") && UnicacityAddon.ADDON.getConfig().get("TEAMSPEAK_NOTIFY_WAITING_SUPPORT")
+                .getAsBoolean(); // default = false
+    }
+
+    public static boolean getTeamspeakNotifyWaitingPublic() {
+        return UnicacityAddon.ADDON.getConfig().has("TEAMSPEAK_NOTIFY_WAITING_PUBLIC") && UnicacityAddon.ADDON.getConfig().get("TEAMSPEAK_NOTIFY_WAITING_PUBLIC")
+                .getAsBoolean(); // default = false
+    }
 }
