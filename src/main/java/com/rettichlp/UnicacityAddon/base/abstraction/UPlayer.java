@@ -8,7 +8,6 @@ import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.inventory.Container;
 import net.minecraft.scoreboard.Scoreboard;
 import net.minecraft.scoreboard.Team;
-import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
@@ -39,7 +38,7 @@ public interface UPlayer {
 
     void sendChatMessage(String message);
 
-    void playSound(SoundEvent soundIn, float volume, float pitch);
+    void playSound(String soundIn);
 
     String getName();
 
