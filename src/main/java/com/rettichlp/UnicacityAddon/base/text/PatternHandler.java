@@ -254,7 +254,7 @@ public class PatternHandler {
     /**
      * {@link com.rettichlp.UnicacityAddon.events.DeathsKillsEventHandler}
      */
-    public static final Pattern KILL_PATTERN = Pattern.compile("^\\[Karma] -(\\d) Karma\\.$");
+    public static final Pattern KILL_PATTERN = Pattern.compile("^\\[Karma] (-\\d) Karma\\.$");
     public static final Pattern LAST_STATS_MESSAGE_PATTERN = Pattern.compile("^ {2}- Treuebonus: (\\d+) Punkte$");
     public static final Pattern DEATH_PATTERN = Pattern.compile("^Du bist nun für (\\d+) Minuten auf dem Friedhof\\.$");
 

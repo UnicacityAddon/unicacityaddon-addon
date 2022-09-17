@@ -55,23 +55,24 @@ public class ReichensteuerCommand extends CommandBase {
 
             p.sendChatMessage("/atminfo");
             isActive = true;
+            int removeMoneyAmount = BankMoneyModule.bankBalance-100000;
 
             (new Timer()).schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    if (cashInATM < BankMoneyModule.bankBalance) {
-                        p.sendChatMessage("/bank abbuchen " + (cashInATM));
-                        p.sendInfoMessage("Du musst noch " + ((BankMoneyModule.bankBalance - 100000) - cashInATM) + " abbuchen.");
+                    if (cashInATM < removeMoneyAmount) {
+                        p.sendChatMessage("/bank abbuchen " + (removeMoneyAmount));
+                        p.sendInfoMessage("Du musst noch " + (removeMoneyAmount - cashInATM) + " abbuchen.");
                         isActive = false;
                         return;
                     }
-                    p.sendChatMessage("/bank abbuchen " + (BankMoneyModule.bankBalance - 100000));
+                    p.sendChatMessage("/bank abbuchen " + removeMoneyAmount);
                     isActive = false;
                 }
             }, 400);
 
         } else {
-            p.sendErrorMessage("Dein Kontostand beträgt bereits 100.000$!");
+            p.sendErrorMessage("Dein Kontostand ist bereits unter 100.001$!");
         }
     }
 }
