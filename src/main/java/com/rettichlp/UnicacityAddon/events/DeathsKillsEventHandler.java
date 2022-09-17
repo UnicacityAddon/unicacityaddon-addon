@@ -32,7 +32,7 @@ public class DeathsKillsEventHandler {
             return false;
         }
 
-        if (msg.equalsIgnoreCase("Du bist nun für 5 Minuten auf dem Friedhof.")) {
+        if (PatternHandler.DEATH_PATTERN.matcher(msg).find()) {
             deaths++;
             return false;
         }
