@@ -12,7 +12,6 @@ import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
 import com.rettichlp.UnicacityAddon.base.utils.ImageUploadUtils;
 import net.labymod.main.LabyMod;
-import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.shader.Framebuffer;
 import net.minecraft.util.ScreenShotHelper;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
@@ -71,7 +70,7 @@ public class HotkeyEventHandler {
             }
         }
 
-        if (UnicacityAddon.MINECRAFT.currentScreen instanceof GuiChat) return;
+        if (UnicacityAddon.MINECRAFT.currentScreen != null) return;
 
         if (Keyboard.isKeyDown(KeyBindRegistry.adFreigeben.getKeyCode())) {
             handleAd("freigeben");

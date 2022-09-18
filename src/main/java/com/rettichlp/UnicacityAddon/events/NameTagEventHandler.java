@@ -149,9 +149,10 @@ public class NameTagEventHandler {
             }
 
             if (BlacklistEventHandler.BLACKLIST_MAP.get(playerName) != null)
-                prefix.append(ColorCode.DARK_RED.getCode());
+                prefix.append(ConfigElements.getNameTagFactionSpecificColor().getCode());
 
-            if (ContractEventHandler.CONTRACT_LIST.contains(playerName)) prefix.append(ColorCode.DARK_RED.getCode());
+            if (ContractEventHandler.CONTRACT_LIST.contains(playerName))
+                prefix.append(ConfigElements.getNameTagFactionSpecificColor().getCode());
         }
 
         if (FactionHandler.getPlayerFactionMap().containsKey(playerName)) {

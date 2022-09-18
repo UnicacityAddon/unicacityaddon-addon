@@ -40,6 +40,7 @@ public class ConfigSettings {
         settings.add(nameTagDutySettings);
 
         BooleanElement nameTagFactionSpecificSettings = new BooleanElement("WPS/Blacklist/Contract", unicacityAddon, new ControlElement.IconData(Material.IRON_FENCE), "NAMETAG_FACTIONSPECIFIC_SETTINGS", ConfigElements.getNameTagFactionSpecific());
+        nameTagFactionSpecificSettings.setSubSettings(ConfigSubSettings.getNameTagFactionSpecificSubSettings());
         settings.add(nameTagFactionSpecificSettings);
 
         return settings;
@@ -62,6 +63,21 @@ public class ConfigSettings {
 
         StringElement slocSettings = new StringElement("Position", unicacityAddon, new ControlElement.IconData(Material.BOOK_AND_QUILL), "SLOC_SETTINGS", ConfigElements.getPatternSloc());
         settings.add(slocSettings);
+
+        return settings;
+    }
+
+    static Settings getTeamspeakSettings(UnicacityAddon unicacityAddon) {
+        Settings settings = new Settings();
+
+        StringElement teamspeakAPIKey = new StringElement("API Key", unicacityAddon, new ControlElement.IconData(Material.BOOK_AND_QUILL), "TEAMSPEAK_API_KEY", ConfigElements.getTeamspeakAPIKey());
+        settings.add(teamspeakAPIKey);
+
+        BooleanElement teamspeakNotifyWaitingSupport = new BooleanElement("Support betreten Nachricht", unicacityAddon, new ControlElement.IconData(Material.NOTE_BLOCK), "TEAMSPEAK_NOTIFY_WAITING_SUPPORT", ConfigElements.getTeamspeakNotifyWaitingSupport());
+        settings.add(teamspeakNotifyWaitingSupport);
+
+        BooleanElement teamspeakNotifyWaitingPublic = new BooleanElement("Öffentlich betreten Nachricht", unicacityAddon, new ControlElement.IconData(Material.NOTE_BLOCK), "TEAMSPEAK_NOTIFY_WAITING_PUBLIC", ConfigElements.getTeamspeakNotifyWaitingPublic());
+        settings.add(teamspeakNotifyWaitingPublic);
 
         return settings;
     }

@@ -56,7 +56,7 @@ public class TodoListCommand extends CommandBase {
         if (args.length == 0) {
             todoList();
         } else if (args.length > 1 && args[0].equalsIgnoreCase("add")) {
-            String todo = TextUtils.makeStringByArgs(args, " ").replace("add ", "");
+            String todo = TextUtils.makeStringByArgs(args, " ").replaceAll("(?i)add ", "");
             TodolistEntry todolistEntry = new TodolistEntry(todo);
             todolist.add(todolistEntry);
             FileManager.saveData();
@@ -83,6 +83,18 @@ public class TodoListCommand extends CommandBase {
             FileManager.saveData();
             p.sendInfoMessage("Aufgabe aus Todoliste gelöscht.");
             p.sendChatMessage("/todo");
+        } else if (args[0].equalsIgnoreCase("edit") && MathUtils.isInteger(args[1])) {
+            int index = Integer.parseInt(args[1]) - 1;
+            if (index > todolist.size() - 1) {
+                p.sendErrorMessage("Keinen Eintrag mit dieser ID gefunden.");
+                return;
+            }
+            String todo = TextUtils.makeStringByArgs(args, " ").replaceAll("(?i)edit " + args[1] + " ", "");
+            TodolistEntry todolistEntry = new TodolistEntry(todo);
+            todolist.set(index, todolistEntry);
+            FileManager.saveData();
+            p.sendInfoMessage("Aufgabe editiert.");
+            p.sendChatMessage("/todo");
         }
     }
 
@@ -98,7 +110,10 @@ public class TodoListCommand extends CommandBase {
                     .of("» " + id + ". ").color(ColorCode.GRAY).advance()
                     .of(todolistEntry.getTodo()).color(ColorCode.AQUA).strikethrough().advance()
                     .space()
-                    .of("[Löschen]").color(ColorCode.RED)
+                    .of("[✐]").color(ColorCode.GOLD)
+                            .clickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/todo edit " + id + " ")
+                            .advance().space()
+                    .of("[✕]").color(ColorCode.RED)
                             .clickEvent(ClickEvent.Action.RUN_COMMAND, "/todo delete " + id)
                             .advance()
                     .createComponent());
@@ -106,11 +121,14 @@ public class TodoListCommand extends CommandBase {
                     .of("» " + id + ". ").color(ColorCode.GRAY).advance()
                     .of(todolistEntry.getTodo()).color(ColorCode.AQUA).advance()
                     .space()
-                    .of("[Erledigt]").color(ColorCode.GREEN)
+                    .of("[✔]").color(ColorCode.GREEN)
                             .clickEvent(ClickEvent.Action.RUN_COMMAND, "/todo done " + id)
                             .advance()
                     .space()
-                    .of("[Löschen]").color(ColorCode.RED)
+                    .of("[✐]").color(ColorCode.GOLD)
+                            .clickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/todo edit " + id)
+                            .advance().space()
+                    .of("[✕]").color(ColorCode.RED)
                             .clickEvent(ClickEvent.Action.RUN_COMMAND, "/todo delete " + id)
                             .advance()
                     .createComponent());

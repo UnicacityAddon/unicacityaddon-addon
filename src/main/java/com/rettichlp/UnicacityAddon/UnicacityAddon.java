@@ -15,6 +15,7 @@ import com.rettichlp.UnicacityAddon.modules.CashMoneyModule;
 import com.rettichlp.UnicacityAddon.modules.EmergencyServiceModule;
 import com.rettichlp.UnicacityAddon.modules.ExplosiveBeltTimerModule;
 import com.rettichlp.UnicacityAddon.modules.FBIHackModule;
+import com.rettichlp.UnicacityAddon.modules.HearthAmountModule;
 import com.rettichlp.UnicacityAddon.modules.JobModule;
 import com.rettichlp.UnicacityAddon.modules.PayDayModule;
 import com.rettichlp.UnicacityAddon.modules.PlantFertilizeTimerModule;
@@ -36,7 +37,7 @@ import java.util.List;
 @Mod(name = "UnicacityAddon", modid = "unicacityaddon", version = UnicacityAddon.VERSION, clientSideOnly = true, acceptedMinecraftVersions = "[1.12,1.12.2]")
 public class UnicacityAddon extends LabyModAddon {
 
-    public static final String VERSION = "1.3.2";
+    public static final String VERSION = "1.4.0";
     public static final Minecraft MINECRAFT = Minecraft.getMinecraft();
     public static UnicacityAddon ADDON;
 
@@ -64,6 +65,7 @@ public class UnicacityAddon extends LabyModAddon {
         ADDON.getApi().registerModule(new EmergencyServiceModule());
         ADDON.getApi().registerModule(new ExplosiveBeltTimerModule());
         ADDON.getApi().registerModule(new FBIHackModule());
+        ADDON.getApi().registerModule(new HearthAmountModule());
         ADDON.getApi().registerModule(new JobModule());
         ADDON.getApi().registerModule(new PayDayModule());
         ADDON.getApi().registerModule(new PlantFertilizeTimerModule());
@@ -94,6 +96,6 @@ public class UnicacityAddon extends LabyModAddon {
         String ip = serverData.serverIP;
         if (ip.contains(":")) ip = ip.split(":")[0]; // strip unused port
 
-        return ip.equalsIgnoreCase("server.unicacity.de") || ip.equalsIgnoreCase("unicacity.de");
+        return ip.toLowerCase().endsWith("unicacity.de");
     }
 }

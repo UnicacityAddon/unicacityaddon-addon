@@ -128,7 +128,8 @@ public class PatternHandler {
      * {@link com.rettichlp.UnicacityAddon.events.job.ADropEventHandler}
      */
     public static final Pattern DROP_TRANSPORT_PATTERN = Pattern.compile("^\\[Transport] Du hast eine (Kiste|Waffenkiste) abgeliefert\\.$" +
-            "|^\\[Transport] Du hast ein Weizen Paket abgeliefert\\.$");
+            "|^\\[Transport] Du hast ein Weizen Paket abgeliefert\\.$" +
+            "|^\\[Transport] Du hast eine Schwarzpulverkiste abgeliefert\\.$");
     public static final Pattern DROP_DRINK_PATTERN = Pattern.compile("^\\[Bar] Du hast eine Flasche abgegeben!$");
 
     /**
@@ -174,6 +175,7 @@ public class PatternHandler {
     public static final Pattern CASH_GET_PATTERN = Pattern.compile("^ {2}\\+(\\d+)\\$$");
     public static final Pattern CASH_REMOVE_PATTERN = Pattern.compile("^ {2}-(\\d+)\\$$");
     public static final Pattern CASH_STATS_PATTERN = Pattern.compile("^ {2}- Geld: (\\d+)\\$$");
+    public static final Pattern SHARES_BUY_PATTERN = Pattern.compile("^\\[Aktie] Du hast dir eine (\\.+) Aktie gekauft!$");
 
     /**
      * {@link com.rettichlp.UnicacityAddon.events.PayDayEventHandler}
@@ -189,7 +191,7 @@ public class PatternHandler {
             "|^\\[Deal] (?:\\[UC])*(\\w+) hat das Angebot abgelehnt\\.$");
 
     /**
-     * {@link com.rettichlp.UnicacityAddon.events.job.ADropMoneyEventHandler}
+     * {@link com.rettichlp.UnicacityAddon.events.job.ADropEventHandler}
      */
     public static final Pattern PREVIOUS_BANK_VALUE_PATTERN = Pattern.compile("^ {2}Vorheriger Kontostand: (\\d+)\\$$");
 
@@ -227,4 +229,40 @@ public class PatternHandler {
      */
     public static final Pattern CHECK_KFZ_PATTERN = Pattern.compile("^HQ: Das Fahrzeug mit dem Kennzeichen (?:null|.+) ist auf den Spieler (?:\\[UC])*([a-zA-Z0-9_]+) registriert, over.$" +
             "|^Kennzeichen: (?:null|.+) \\| Type: [a-zA-Z]+ \\| Besitzer: (?:\\[UC])*([a-zA-Z0-9_]+)$");
+
+    /**
+     * {@link com.rettichlp.UnicacityAddon.events.faction.EmergencyCallBoxEventHandler}
+     */
+    public static final Pattern SERVICE_CALL_BOX_PATTERN = Pattern.compile("^ {2}➡ (?:\\[UC])*([a-zA-Z0-9_]+) » (.+)$");
+
+    /**
+     * {@link com.rettichlp.UnicacityAddon.base.location.NavigationUtils}
+     */
+    public static final Pattern ROUTE_PATTERNS = Pattern.compile("^Du hast keine Route\\.$" +
+            "|^Du hast deine Route gelöscht\\.$");
+
+    /**
+     * {@link com.rettichlp.UnicacityAddon.events.ReichensteuerEventHandler}
+     */
+    public static final Pattern ATM_INFO = Pattern.compile("^ATM (\\d+): (\\d+)\\$/100000\\$$");
+
+    /**
+     * {@link com.rettichlp.UnicacityAddon.events.faction.ServiceCountEventHandler}
+     */
+    public static final Pattern SERVICE_DONE_PATTERN = Pattern.compile("^Du hast den Service von (?:\\[UC])*(\\w+) als 'Erledigt' markiert!$");
+
+    /**
+     * {@link com.rettichlp.UnicacityAddon.events.DeathsKillsEventHandler}
+     */
+    public static final Pattern KILL_PATTERN = Pattern.compile("^\\[Karma] (-\\d) Karma\\.$");
+    public static final Pattern LAST_STATS_MESSAGE_PATTERN = Pattern.compile("^ {2}- Treuebonus: (\\d+) Punkte$");
+    public static final Pattern DEATH_PATTERN = Pattern.compile("^Du bist nun für (\\d+) Minuten auf dem Friedhof\\.$");
+
+    /**
+     * {@link com.rettichlp.UnicacityAddon.events.HouseSignEventHandler}
+     */
+    public static final Pattern WASTE_JOB_START_PATTERN = Pattern.compile("^\\[Müllmann] Entleere bis zu \\d Mülltonnen an den Haustüren der Häuser und entlade hier alles\\.$");
+    public static final Pattern WASTE_JOB_END_PATTERN = Pattern.compile("^\\[Müllmann] Du hast genug Mülltonnen entleert\\.$");
+    public static final Pattern NEWSPAPER_JOB_START_PATTERN = Pattern.compile("^\\[Zeitung] Bring bitte das alles zu Häuser deiner Wahl\\.$");
+    public static final Pattern NEWSPAPER_JOB_END_PATTERN = Pattern.compile("^\\[Zeitung] Du hast den Job beendet\\.$");
 }

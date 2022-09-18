@@ -73,6 +73,12 @@ public class Config {
         eigenbedarfSettings.setSubSettings(ConfigSettings.getEigenbedarfSettings(unicacityAddon));
         list.add(eigenbedarfSettings);
 
+        list.add(new HeaderElement(Message.getBuilder().of("Teamspeak").color(ColorCode.WHITE).advance().create()));
+
+        ListContainerElement teamspeakSettings = new ListContainerElement("Teamspeak", new ControlElement.IconData(Material.NOTE_BLOCK));
+        teamspeakSettings.setSubSettings(ConfigSettings.getTeamspeakSettings(unicacityAddon));
+        list.add(teamspeakSettings);
+
         list.add(new HeaderElement(Message.getBuilder().of("Sonstiges").color(ColorCode.WHITE).advance().create()));
 
         BooleanElement orderedTablistSettings = new BooleanElement("Sortierte Tablist", unicacityAddon, new ControlElement.IconData(Material.COMMAND), "ORDERED_TABLIST_SETTINGS", ConfigElements.getEventTabList());
@@ -80,6 +86,9 @@ public class Config {
 
         BooleanElement hqMessageSettings = new BooleanElement("HQ Nachrichten", unicacityAddon, new ControlElement.IconData(Material.LEASH), "HQ_MESSAGE_SETTINGS", ConfigElements.getHQMessagesActivated());
         list.add(hqMessageSettings);
+
+        BooleanElement despawnTimeAfterKarma = new BooleanElement("Despawn Zeitpunkt", unicacityAddon, new ControlElement.IconData(Material.SKULL_ITEM), "ESTIMATED_DESPAWN_TIME_SETTINGS", ConfigElements.getEstimatedDespawnTime());
+        list.add(despawnTimeAfterKarma);
 
         // Certain LabyMod themes cover the lower settings. To counteract this, empty lines are appended.
         list.add(emptyLine);
