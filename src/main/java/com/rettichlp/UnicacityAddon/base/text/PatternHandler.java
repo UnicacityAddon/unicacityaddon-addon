@@ -258,4 +258,11 @@ public class PatternHandler {
     public static final Pattern LAST_STATS_MESSAGE_PATTERN = Pattern.compile("^ {2}- Treuebonus: (\\d+) Punkte$");
     public static final Pattern DEATH_PATTERN = Pattern.compile("^Du bist nun für (\\d+) Minuten auf dem Friedhof\\.$");
 
+    /**
+     * {@link com.rettichlp.UnicacityAddon.events.HouseSignEventHandler}
+     */
+    public static final Pattern WASTE_JOB_START_PATTERN = Pattern.compile("^\\[Müllmann] Entleere bis zu \\d Mülltonnen an den Haustüren der Häuser und entlade hier alles\\.$");
+    public static final Pattern WASTE_JOB_END_PATTERN = Pattern.compile("^\\[Müllmann] Du hast genug Mülltonnen entleert\\.$");
+    public static final Pattern NEWSPAPER_JOB_START_PATTERN = Pattern.compile("^\\[Zeitung] Bring bitte das alles zu Häuser deiner Wahl\\.$");
+    public static final Pattern NEWSPAPER_JOB_END_PATTERN = Pattern.compile("^\\[Zeitung] Du hast den Job beendet\\.$");
 }
