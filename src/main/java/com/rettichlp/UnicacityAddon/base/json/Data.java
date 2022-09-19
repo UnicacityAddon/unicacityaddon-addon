@@ -14,6 +14,7 @@ public class Data {
     private int deaths;
     private int kills;
     private List<TodolistEntry> todolist;
+    private List<CoordlistEntry> coordlist;
     private String carInfo;
 
     public Data() {
@@ -89,6 +90,14 @@ public class Data {
 
     public void setTodolist(List<TodolistEntry> todolist) {
         this.todolist = todolist;
+    }
+
+    public List<CoordlistEntry> getCoordlist() {
+        return coordlist == null ? new ArrayList<>() : coordlist;
+    }
+
+    public void setCoordlist(List<CoordlistEntry> coordlist) {
+        this.coordlist = coordlist;
     }
 
     public String getCarInfo() {
