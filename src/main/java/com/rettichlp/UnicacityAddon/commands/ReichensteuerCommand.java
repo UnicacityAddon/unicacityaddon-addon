@@ -61,7 +61,7 @@ public class ReichensteuerCommand extends CommandBase {
                 @Override
                 public void run() {
                     if (cashInATM < removeMoneyAmount) {
-                        p.sendChatMessage("/bank abbuchen " + (removeMoneyAmount));
+                        p.sendChatMessage("/bank abbuchen " + (cashInATM));
                         p.sendInfoMessage("Du musst noch " + (removeMoneyAmount - cashInATM) + " abbuchen.");
                         isActive = false;
                         return;
