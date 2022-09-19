@@ -32,23 +32,31 @@ public class ASUCommand extends CommandBase {
 
     private final Timer timer = new Timer();
 
-    @Override @Nonnull public String getName() {
+    @Override
+    @Nonnull
+    public String getName() {
         return "asu";
     }
 
-    @Override @Nonnull public String getUsage(@Nonnull ICommandSender sender) {
+    @Override
+    @Nonnull
+    public String getUsage(@Nonnull ICommandSender sender) {
         return "/asu [Spieler...] [Grund] (-v/-b/-fsa/-wsa)";
     }
 
-    @Override @Nonnull public List<String> getAliases() {
+    @Override
+    @Nonnull
+    public List<String> getAliases() {
         return Collections.emptyList();
     }
 
-    @Override public boolean checkPermission(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender) {
+    @Override
+    public boolean checkPermission(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender) {
         return true;
     }
 
-    @Override public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args) {
+    @Override
+    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args) {
         UPlayer p = AbstractionLayer.getPlayer();
 
         if (args.length < 2) {
@@ -104,24 +112,26 @@ public class ASUCommand extends CommandBase {
                     issuer.sendChatMessage("/su " + maxAmount + " " + player + " " + reason);
                 }
             }, 0, TimeUnit.SECONDS.toMillis(1));
-        } else{
+        } else {
             for (String player : players) {
                 issuer.sendChatMessage("/su " + amount + " " + player + " " + reason);
             }
         }
     }
 
-    @Override @Nonnull public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
+    @Override
+    @Nonnull
+    public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
         if (args.length == 1) {
             List<String> tabCompletions = ForgeUtils.getOnlinePlayers();
-            String input = args[args.length - 1].toLowerCase().replace('-', ' ');
+            String input = args[args.length - 1].toLowerCase();
             tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
             return tabCompletions;
         } else {
             List<String> tabCompletions = Arrays.stream(WantedReason.values()).map(WantedReason::getReason).sorted().collect(Collectors.toList());
             tabCompletions.addAll(ForgeUtils.getOnlinePlayers());
 
-            String input = args[args.length - 1].toLowerCase().replace('-', ' ');
+            String input = args[args.length - 1].toLowerCase();
             tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
 
             tabCompletions.addAll(Arrays.stream(Flag.values()).map(Flag::getFlagArgument).sorted().collect(Collectors.toList()));

@@ -26,15 +26,20 @@ import java.util.Set;
 @UCCommand
 public class ShareLocationCommand extends CommandBase {
 
-    @Override @Nonnull public String getName() {
+    @Override
+    @Nonnull
+    public String getName() {
         return "sharelocation";
     }
 
-    @Override @Nonnull public String getUsage(@Nonnull ICommandSender sender) {
+    @Override
+    @Nonnull
+    public String getUsage(@Nonnull ICommandSender sender) {
         return "/sharelocation [Player...] (-d)";
     }
 
-    @Override @Nonnull
+    @Override
+    @Nonnull
     public List<String> getAliases() {
         return Arrays.asList("sloc", "shareloc");
     }
@@ -86,9 +91,11 @@ public class ShareLocationCommand extends CommandBase {
                 .of(".").color(ColorCode.GRAY).advance().sendTo(p.getPlayer());
     }
 
-    @Override @Nonnull public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
+    @Override
+    @Nonnull
+    public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
         List<String> tabCompletions = ForgeUtils.getOnlinePlayers();
-        String input = args[args.length - 1].toLowerCase().replace('-', ' ');
+        String input = args[args.length - 1].toLowerCase();
         tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
         return tabCompletions;
     }

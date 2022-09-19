@@ -18,21 +18,29 @@ import java.util.List;
  * @author RettichLP
  */
 @UCCommand
-public class TriggerEventCommand extends CommandBase {
+@Deprecated
+public class TriggerEventCommand extends CommandBase { // TODO: 19.09.2022 DELETE
 
-    @Override @Nonnull public String getName() {
+    @Override
+    @Nonnull
+    public String getName() {
         return "triggerevent";
     }
 
-    @Override @Nonnull public String getUsage(@Nonnull ICommandSender sender) {
+    @Override
+    @Nonnull
+    public String getUsage(@Nonnull ICommandSender sender) {
         return "/triggerevent [TriggerableEvent]";
     }
 
-    @Override @Nonnull public List<String> getAliases() {
+    @Override
+    @Nonnull
+    public List<String> getAliases() {
         return Collections.singletonList("tevent");
     }
 
-    @Override public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args) {
+    @Override
+    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args) {
         UPlayer p = AbstractionLayer.getPlayer();
 
         if (args.length == 1) {
@@ -43,7 +51,9 @@ public class TriggerEventCommand extends CommandBase {
         }
     }
 
-    @Override @Nonnull public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
+    @Override
+    @Nonnull
+    public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
         if (args.length == 1) {
             return getListOfStringsMatchingLastWord(args, Arrays.asList(TriggerableEvent.values()));
         } else {

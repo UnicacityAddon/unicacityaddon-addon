@@ -64,7 +64,7 @@ public class TSJoinCommand extends CommandBase {
             return;
         }
 
-        String channelName = TextUtils.makeStringByArgs(args, " ");
+        String channelName = TextUtils.makeStringByArgs(args, "-");
 
         ChannelListCommand.Response channelListResponse = new ChannelListCommand().getResponse();
         if (!channelListResponse.succeeded()) {
@@ -83,7 +83,6 @@ public class TSJoinCommand extends CommandBase {
             channelMaps.put(name, channel);
         }
 
-        channelName = channelName.replace('-', ' ');
         Channel foundChannel;
         if (channelName.equalsIgnoreCase("Öffentlich") && !p.getFaction().equals(Faction.NULL)) {
             foundChannel = new Channel(p.getFaction().getPublicChannelId(), "Öffentlich", 0, 0);
@@ -126,15 +125,12 @@ public class TSJoinCommand extends CommandBase {
             tabCompletions.add(name);
         }
 
-        String input = args[args.length - 1].toLowerCase().replace('-', ' ');
+        String input = args[args.length - 1].toLowerCase();
         tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
         return tabCompletions;
     }
 
     private String modifyChannelName(String input) {
-        input = input.replace("»", "");
-        input = input.trim();
-
-        return input;
+        return input.replace("»", "").trim().replace(" ", "-");
     }
 }
