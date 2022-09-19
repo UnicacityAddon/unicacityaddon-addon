@@ -2,6 +2,7 @@ package com.rettichlp.UnicacityAddon.commands.teamspeak;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
+import com.rettichlp.UnicacityAddon.base.config.ConfigElements;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import com.rettichlp.UnicacityAddon.base.teamspeak.TSUtils;
 import com.rettichlp.UnicacityAddon.base.teamspeak.commands.ChannelListCommand;
@@ -55,6 +56,11 @@ public class TSFindCommand extends CommandBase {
 
         if (args.length < 1) {
             p.sendSyntaxMessage(getUsage(sender));
+            return;
+        }
+
+        if (!ConfigElements.getTeamspeakAPIKey().matches("([A-Z0-9]{4}(-*)){6}")) {
+            p.sendErrorMessage("Teamspeak API Key ist nicht gültig!");
             return;
         }
 
