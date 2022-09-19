@@ -60,7 +60,7 @@ public class NaviCommand extends CommandBase {
             return;
         }
 
-        NaviPoint naviPoint = getNaviPointByName(args[0]);
+        NaviPoint naviPoint = getNaviPointByName(args[0].trim().replace(" ", "-"));
         if (naviPoint == null) {
             p.sendChatMessage("/navi " + TextUtils.makeStringByArgs(args, " "));
             return;
@@ -72,7 +72,7 @@ public class NaviCommand extends CommandBase {
     @Override
     @Nonnull
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
-        List<String> tabCompletions = Arrays.stream(NaviPoint.values()).map(NaviPoint::getName).sorted().collect(Collectors.toList());
+        List<String> tabCompletions = Arrays.stream(NaviPoint.values()).map(NaviPoint::getTabName).sorted().collect(Collectors.toList());
         String input = args[args.length - 1].toLowerCase();
         tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
         return tabCompletions;
@@ -80,7 +80,7 @@ public class NaviCommand extends CommandBase {
 
     private NaviPoint getNaviPointByName(String s) {
         for (NaviPoint naviPoint : NaviPoint.values()) {
-            if (naviPoint.getName().equals(s)) return naviPoint;
+            if (naviPoint.getTabName().equals(s)) return naviPoint;
         }
         return null;
     }
