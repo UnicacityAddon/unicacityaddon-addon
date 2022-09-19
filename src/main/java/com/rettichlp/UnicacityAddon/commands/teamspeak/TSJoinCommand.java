@@ -14,10 +14,11 @@ import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
 import com.rettichlp.UnicacityAddon.base.utils.ForgeUtils;
 import com.rettichlp.UnicacityAddon.base.utils.TextUtils;
-import net.minecraft.command.CommandBase;
+import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.client.IClientCommand;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -31,7 +32,7 @@ import java.util.Map;
  * @author Fuzzlemann, RettichLP
  */
 @UCCommand
-public class TSJoinCommand extends CommandBase {
+public class TSJoinCommand implements IClientCommand {
 
     @Override
     @Nonnull
@@ -136,7 +137,22 @@ public class TSJoinCommand extends CommandBase {
         return tabCompletions;
     }
 
+    @Override
+    public boolean isUsernameIndex(String[] args, int index) {
+        return false;
+    }
+
     private String modifyChannelName(String input) {
         return input.replace("»", "").trim().replace(" ", "-");
+    }
+
+    @Override
+    public boolean allowUsageWithoutPrefix(ICommandSender sender, String message) {
+        return false;
+    }
+
+    @Override
+    public int compareTo(ICommand o) {
+        return 0;
     }
 }
