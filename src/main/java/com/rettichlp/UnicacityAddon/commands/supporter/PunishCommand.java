@@ -87,12 +87,12 @@ public class PunishCommand extends CommandBase {
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
         if (args.length == 1) {
             List<String> tabCompletions = ForgeUtils.getOnlinePlayers();
-            String input = args[args.length - 1].toLowerCase().replace('-', ' ');
+            String input = args[args.length - 1].toLowerCase();
             tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
             return tabCompletions;
         } else {
             List<String> tabCompletions = Arrays.stream(Punishment.values()).map(Punishment::getTabReason).sorted().collect(Collectors.toList());
-            String input = args[args.length - 1].toLowerCase().replace('-', ' ');
+            String input = args[args.length - 1].toLowerCase();
             tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
             return tabCompletions;
         }

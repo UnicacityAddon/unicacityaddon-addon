@@ -25,23 +25,31 @@ import java.util.stream.Collectors;
 @UCCommand
 public class ModifyWantedsCommand extends CommandBase {
 
-    @Override @Nonnull public String getName() {
+    @Override
+    @Nonnull
+    public String getName() {
         return "modifywanteds";
     }
 
-    @Override @Nonnull public String getUsage(@Nonnull ICommandSender sender) {
+    @Override
+    @Nonnull
+    public String getUsage(@Nonnull ICommandSender sender) {
         return "/mw [Spieler] [GF/SF/SSF/S/DA5/DA10/DA15/FSA/WSA/WGV]";
     }
 
-    @Override @Nonnull public List<String> getAliases() {
+    @Override
+    @Nonnull
+    public List<String> getAliases() {
         return Collections.singletonList("mw");
     }
 
-    @Override public boolean checkPermission(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender) {
+    @Override
+    public boolean checkPermission(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender) {
         return true;
     }
 
-    @Override public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args) {
+    @Override
+    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args) {
         UPlayer p = AbstractionLayer.getPlayer();
 
         if (args.length < 2) return;
@@ -95,10 +103,12 @@ public class ModifyWantedsCommand extends CommandBase {
         p.sendChatMessage("/su " + wantedAmount + " " + target + " " + wantedReason);
     }
 
-    @Override @Nonnull public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
+    @Override
+    @Nonnull
+    public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
         if (args.length == 1) {
             List<String> tabCompletions = ForgeUtils.getOnlinePlayers();
-            String input = args[args.length - 1].toLowerCase().replace('-', ' ');
+            String input = args[args.length - 1].toLowerCase();
             tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
             return tabCompletions;
         } else {

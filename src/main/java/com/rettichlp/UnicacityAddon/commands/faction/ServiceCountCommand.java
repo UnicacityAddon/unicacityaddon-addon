@@ -12,7 +12,6 @@ import net.minecraft.util.math.BlockPos;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -65,8 +64,8 @@ public class ServiceCountCommand extends CommandBase {
 
     @Override
     @Nonnull
-    public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
-        return Arrays.asList("reset");
+    public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
+        return Collections.singletonList("reset");
     }
 
     public static void addService() {

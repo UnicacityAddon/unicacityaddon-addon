@@ -76,7 +76,7 @@ public class ASetBlacklistCommand extends CommandBase {
         if (args.length > 1 && BlacklistEventHandler.BLACKLIST != null) {
             tabCompletions.addAll(BlacklistEventHandler.BLACKLIST.getBlacklistReasons());
         }
-        String input = args[args.length - 1].toLowerCase().replace('-', ' ');
+        String input = args[args.length - 1].toLowerCase();
         tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
         return tabCompletions;
     }

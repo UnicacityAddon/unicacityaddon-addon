@@ -89,7 +89,7 @@ public class ModifyBlacklistCommand extends CommandBase {
             tabCompletions.add("-v");
         }
 
-        String input = args[args.length - 1].toLowerCase().replace('-', ' ');
+        String input = args[args.length - 1].toLowerCase();
         tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
         return tabCompletions;
     }
