@@ -14,7 +14,9 @@ public enum ScreenshotType {
     VERHAFTUNG("verhaftung"),
     KORRUPTION("korruption"),
     TICKET("ticket"),
-    BLACKLIST("blacklist");
+    BLACKLIST("blacklist"),
+    NOTRUF("notruf"),
+    ANDERE("andere");
 
     private final String displayName;
 
