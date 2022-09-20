@@ -365,4 +365,14 @@ public class ConfigElements {
         return UnicacityAddon.ADDON.getConfig().has("TEAMSPEAK_NOTIFY_WAITING_PUBLIC") && UnicacityAddon.ADDON.getConfig().get("TEAMSPEAK_NOTIFY_WAITING_PUBLIC")
                 .getAsBoolean(); // default = false
     }
+
+    public static String getAPIToken() {
+        return UnicacityAddon.ADDON.getConfig().has("API_TOKEN")
+                ? UnicacityAddon.ADDON.getConfig().get("API_TOKEN").getAsString()
+                : Strings.EMPTY;
+    }
+
+    public static void setAPIToken(String apiToken) {
+        UnicacityAddon.ADDON.getConfig().addProperty("API_TOKEN", apiToken);
+    }
 }

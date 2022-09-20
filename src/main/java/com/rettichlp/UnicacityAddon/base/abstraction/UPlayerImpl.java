@@ -78,6 +78,16 @@ public class UPlayerImpl implements UPlayer {
     }
 
     @Override
+    public void sendAPIMessage(String message) {
+        sendMessage(Message.getBuilder()
+                .prefix()
+                .of("API Response:").color(ColorCode.GRAY).advance().space()
+                .of(message).color(message.contains("✓") ? ColorCode.GREEN : ColorCode.RED).advance()
+                .createComponent());
+        System.out.println("[DEBUG] API Response: " + message);
+    }
+
+    @Override
     public void sendEmptyMessage() {
         getPlayer().sendMessage(Message.getBuilder().createComponent());
     }
@@ -85,7 +95,7 @@ public class UPlayerImpl implements UPlayer {
     @Override
     public void sendChatMessage(String message) {
         getPlayer().sendChatMessage(message);
-        System.out.println("UPlayer send chat message: " + message);
+        System.out.println("[DEBUG] UPlayer send chat message: " + message);
     }
 
     @Override
