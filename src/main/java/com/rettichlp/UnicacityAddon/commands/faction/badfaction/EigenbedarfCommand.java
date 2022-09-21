@@ -4,11 +4,15 @@ import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
 import com.rettichlp.UnicacityAddon.base.config.ConfigElements;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
-import net.minecraft.command.CommandBase;
+import com.rettichlp.UnicacityAddon.base.utils.ForgeUtils;
+import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.client.IClientCommand;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
 import java.util.Timer;
@@ -18,7 +22,7 @@ import java.util.TimerTask;
  * @author Dimiikou
  */
 @UCCommand
-public class EigenbedarfCommand extends CommandBase {
+public class EigenbedarfCommand implements IClientCommand {
 
     @Override
     @Nonnull
@@ -41,6 +45,16 @@ public class EigenbedarfCommand extends CommandBase {
     @Override
     public boolean checkPermission(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender) {
         return true;
+    }
+
+    @Override
+    public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
+        return ForgeUtils.getOnlinePlayers();
+    }
+
+    @Override
+    public boolean isUsernameIndex(String[] args, int index) {
+        return false;
     }
 
     @Override
@@ -89,4 +103,13 @@ public class EigenbedarfCommand extends CommandBase {
             p.sendChatMessage("/dbank get Meth " + ConfigElements.getMethAmount() + " " + ConfigElements.getMethDrugPurity().getPurity());
     }
 
+    @Override
+    public boolean allowUsageWithoutPrefix(ICommandSender sender, String message) {
+        return false;
+    }
+
+    @Override
+    public int compareTo(ICommand o) {
+        return 0;
+    }
 }
