@@ -4,12 +4,19 @@ import com.rettichlp.UnicacityAddon.UnicacityAddon;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
 import com.rettichlp.UnicacityAddon.base.config.ConfigElements;
+import com.rettichlp.UnicacityAddon.base.faction.Faction;
 import com.rettichlp.UnicacityAddon.base.io.FileManager;
 import com.rettichlp.UnicacityAddon.base.reflection.ReflectionUtils;
 import com.rettichlp.UnicacityAddon.base.registry.KeyBindRegistry;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCEvent;
+import com.rettichlp.UnicacityAddon.base.teamspeak.CommandResponse;
+import com.rettichlp.UnicacityAddon.base.teamspeak.TSUtils;
+import com.rettichlp.UnicacityAddon.base.teamspeak.commands.ClientMoveCommand;
+import com.rettichlp.UnicacityAddon.base.teamspeak.objects.Channel;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
+import com.rettichlp.UnicacityAddon.base.text.Message;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
+import com.rettichlp.UnicacityAddon.base.utils.ForgeUtils;
 import com.rettichlp.UnicacityAddon.base.utils.ImageUploadUtils;
 import net.labymod.main.LabyMod;
 import net.minecraft.client.shader.Framebuffer;
@@ -85,6 +92,32 @@ public class HotkeyEventHandler {
             p.sendChatMessage("/aduty");
         } else if (Keyboard.isKeyDown(KeyBindRegistry.aDutySilent.getKeyCode())) {
             p.sendChatMessage("/aduty -s");
+        } else if (Keyboard.isKeyDown(KeyBindRegistry.publicChannelJoin.getKeyCode())) {
+            if (p.getFaction().equals(Faction.NULL)) {
+                p.sendErrorMessage("Du befindest dich in keiner Fraktion.");
+                return;
+            }
+
+            Channel foundChannel = new Channel(p.getFaction().getPublicChannelId(), "Öffentlich", 0, 0);
+            if (foundChannel == null) {
+                p.sendErrorMessage("Es wurde kein Channel gefunden.");
+                return;
+            }
+
+            ClientMoveCommand clientMoveCommand = new ClientMoveCommand(foundChannel.getChannelID(), TSUtils.getMyClientID());
+
+            CommandResponse commandResponse = clientMoveCommand.getResponse();
+            if (!commandResponse.succeeded()) {
+                p.sendErrorMessage("Das Bewegen ist fehlgeschlagen.");
+                return;
+            }
+
+            Message.getBuilder()
+                    .prefix()
+                    .of("Du bist in deinen").color(ColorCode.GRAY).advance().space()
+                    .of("\"Öffentlich Channel\"").color(ColorCode.AQUA).advance()
+                    .of(" gegangen.").color(ColorCode.GRAY).advance()
+                    .sendTo(p.getPlayer());
         }
     }
 

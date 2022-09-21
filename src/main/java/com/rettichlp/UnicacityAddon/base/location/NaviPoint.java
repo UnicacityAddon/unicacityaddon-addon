@@ -37,12 +37,14 @@ public enum NaviPoint {
     STADTHALLE("Stadthalle", 110, 69, 157);
 
     private final String name;
+    private final String tabName;
     private final int x;
     private final int y;
     private final int z;
 
     NaviPoint(String name, int x, int y, int z) {
         this.name = name;
+        this.tabName = name.replace(" ", "-");
         this.x = x;
         this.y = y;
         this.z = z;
@@ -50,6 +52,10 @@ public enum NaviPoint {
 
     public String getName() {
         return name;
+    }
+
+    public String getTabName() {
+        return tabName;
     }
 
     public int getX() {

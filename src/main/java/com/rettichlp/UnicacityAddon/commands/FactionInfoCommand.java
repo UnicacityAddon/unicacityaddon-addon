@@ -8,12 +8,13 @@ import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
 import com.rettichlp.UnicacityAddon.events.FactionInfoEventHandler;
-import net.minecraft.command.CommandBase;
+import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.event.ClickEvent;
 import net.minecraft.util.text.event.HoverEvent;
+import net.minecraftforge.client.IClientCommand;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -31,7 +32,7 @@ import java.util.stream.Collectors;
  * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/commands/faction/CheckActiveMembersCommand.java">UCUtils by paulzhng</a>
  */
 @UCCommand
-public class FactionInfoCommand extends CommandBase {
+public class FactionInfoCommand implements IClientCommand {
 
     @Override
     @Nonnull
@@ -103,6 +104,11 @@ public class FactionInfoCommand extends CommandBase {
         return tabCompletions;
     }
 
+    @Override
+    public boolean isUsernameIndex(String[] args, int index) {
+        return false;
+    }
+
     private Map<Boolean, Integer> getMembers(Faction faction) {
         FactionInfoEventHandler.future = new CompletableFuture<>();
         AbstractionLayer.getPlayer().sendChatMessage("/memberinfo " + faction.getFactionKey());
@@ -114,5 +120,15 @@ public class FactionInfoCommand extends CommandBase {
         } finally {
             FactionInfoEventHandler.future = null;
         }
+    }
+
+    @Override
+    public boolean allowUsageWithoutPrefix(ICommandSender sender, String message) {
+        return false;
+    }
+
+    @Override
+    public int compareTo(ICommand o) {
+        return 0;
     }
 }
