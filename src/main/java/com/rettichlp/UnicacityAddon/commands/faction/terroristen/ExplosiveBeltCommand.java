@@ -14,6 +14,7 @@ import net.minecraftforge.client.IClientCommand;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -33,7 +34,7 @@ public class ExplosiveBeltCommand implements IClientCommand {
 
     @Override
     public List<String> getAliases() {
-        return null;
+        return Collections.emptyList();
     }
 
     @Override public boolean checkPermission(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender) { return true; }
