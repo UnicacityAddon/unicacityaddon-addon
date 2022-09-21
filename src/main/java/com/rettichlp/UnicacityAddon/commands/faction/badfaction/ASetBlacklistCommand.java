@@ -49,7 +49,10 @@ public class ASetBlacklistCommand implements IClientCommand {
     @Override
     public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
         UPlayer p = AbstractionLayer.getPlayer();
-        if (args.length < 2) return;
+        if (args.length < 2) {
+            p.sendSyntaxMessage(getUsage(sender));
+            return;
+        }
 
         if (BlacklistEventHandler.BLACKLIST == null) {
             p.sendErrorMessage("Datei 'blacklistData.json' ist falsch formatiert!");
