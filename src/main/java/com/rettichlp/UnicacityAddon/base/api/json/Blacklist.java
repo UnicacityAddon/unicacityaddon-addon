@@ -62,4 +62,7 @@ public class Blacklist {
     public void setWestsideballasBlacklistEntryList(List<BlacklistEntry> westsideballasBlacklistEntryList) {
         this.westsideballasBlacklistEntryList = westsideballasBlacklistEntryList;
     }
+
+
+    // TODO: 22.09.2022 Add Remus to Blacklist (UUID = 33892e68450e4b97a5084b014d0f0e03)
 }

@@ -78,11 +78,11 @@ public class UPlayerImpl implements UPlayer {
     }
 
     @Override
-    public void sendAPIMessage(String message) {
+    public void sendAPIMessage(String message, boolean success) {
         sendMessage(Message.getBuilder()
                 .prefix()
                 .of("API Response:").color(ColorCode.GRAY).advance().space()
-                .of(message).color(message.contains("✓") ? ColorCode.GREEN : ColorCode.RED).advance()
+                .of(message).color(success ? ColorCode.GREEN : ColorCode.RED).advance()
                 .createComponent());
         System.out.println("[DEBUG] API Response: " + message);
     }
