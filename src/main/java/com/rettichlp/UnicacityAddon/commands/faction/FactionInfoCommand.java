@@ -1,4 +1,4 @@
-package com.rettichlp.UnicacityAddon.commands;
+package com.rettichlp.UnicacityAddon.commands.faction;
 
 import com.google.common.util.concurrent.Uninterruptibles;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;

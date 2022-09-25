@@ -1,9 +1,9 @@
-package com.rettichlp.UnicacityAddon.commands;
+package com.rettichlp.UnicacityAddon.commands.faction;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
-import com.rettichlp.UnicacityAddon.events.GaggedEventHandler;
+import com.rettichlp.UnicacityAddon.base.utils.MathUtils;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
@@ -13,18 +13,19 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * @author Dimiikou
+ * @author RettichLP
  */
 @UCCommand
-public class GaggedCommand extends CommandBase {
+public class AEquipCommand extends CommandBase {
 
-    @Override @Nonnull
-    public String getName() {
-        return "geknebelt";
+    public static int amount = 0;
+
+    @Override @Nonnull public String getName() {
+        return "aequip";
     }
 
     @Override @Nonnull public String getUsage(@Nonnull ICommandSender sender) {
-        return "/geknebelt";
+        return "/aequip [Menge]";
     }
 
     @Override @Nonnull public List<String> getAliases() {
@@ -37,9 +38,15 @@ public class GaggedCommand extends CommandBase {
 
     @Override public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
         UPlayer p = AbstractionLayer.getPlayer();
-        GaggedEventHandler.toggleGagged();
 
-        if (GaggedEventHandler.isGagged()) p.sendInfoMessage("Ab sofort kannst du nur noch flüstern.");
-        else p.sendInfoMessage("Ab sofort kannst du wieder normal reden.");
+        if (args.length > 0) {
+            if (!MathUtils.isInteger(args[0])) {
+                p.sendSyntaxMessage(getUsage(sender));
+                return;
+            }
+            amount = Integer.parseInt(args[0]);
+        }
+
+        p.sendInfoMessage("Menge für AEquip wurde eingestellt.");
     }
 }

@@ -1,4 +1,4 @@
-package com.rettichlp.UnicacityAddon.commands;
+package com.rettichlp.UnicacityAddon.commands.faction.rettungsdienst;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -92,7 +92,7 @@ public class HousebanCommand implements IClientCommand {
     }
 
     @Override
-    public boolean isUsernameIndex(String[] args, int index) {
+    public boolean isUsernameIndex(@Nonnull String[] args, int index) {
         return false;
     }
 
@@ -102,7 +102,7 @@ public class HousebanCommand implements IClientCommand {
     }
 
     @Override
-    public int compareTo(ICommand o) {
+    public int compareTo(@Nonnull ICommand o) {
         return 0;
     }
 }
