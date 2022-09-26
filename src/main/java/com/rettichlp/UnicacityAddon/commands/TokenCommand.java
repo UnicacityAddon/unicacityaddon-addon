@@ -1,13 +1,13 @@
 package com.rettichlp.UnicacityAddon.commands;
 
+import com.mojang.authlib.exceptions.AuthenticationException;
+import com.rettichlp.UnicacityAddon.UnicacityAddon;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
-import com.rettichlp.UnicacityAddon.base.api.APIHandler;
+import com.rettichlp.UnicacityAddon.base.api.AuthHash;
 import com.rettichlp.UnicacityAddon.base.config.ConfigElements;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
-import com.rettichlp.UnicacityAddon.base.text.ColorCode;
-import com.rettichlp.UnicacityAddon.base.text.Message;
-import net.minecraft.command.CommandBase;
+import net.minecraft.client.Minecraft;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
@@ -25,7 +25,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author RettichLP
@@ -65,17 +64,37 @@ public class TokenCommand implements IClientCommand {
             return;
         }
 
-        Map.Entry<String, Boolean> response;
+        Minecraft mc = UnicacityAddon.MINECRAFT;
+        AuthHash authHash = new AuthHash(AbstractionLayer.getPlayer().getName());
+
+        try {
+            mc.getSessionService().joinServer(mc.getSession().getProfile(), mc.getSession().getToken(), authHash.getHash());
+        } catch (AuthenticationException ignored) {
+        }
+
+        System.out.println(authHash.getUsername());
+        System.out.println(authHash.getHash());
+
+        /*String response = post("http://tomcat.fuzzlemann.de/factiononline/generateauthkey", "username", authHash.getUsername(), "hash", authHash.getHash());
+        if (response == null || response.isEmpty()) return null;
+
+        return response;*/
+
+
+
+        //UnicacityAddon.MINECRAFT.getSessionService().joinServer();
+
+        /*Map.Entry<String, Boolean> response;
         if (args[0].equalsIgnoreCase("create") || args[0].equalsIgnoreCase("renew")) {
-            response = APIHandler.getInfo(generateToken(), "/register?uuid=" + p.getUniqueID().toString());
+            response = APIRequest.getInfo(generateToken(), "/register?uuid=" + p.getUniqueID().toString());
         } else if (args[0].equalsIgnoreCase("revoke")) {
-            response = APIHandler.getInfo(ConfigElements.getAPIToken(), "/revoke");
+            response = APIRequest.getInfo(ConfigElements.getAPIToken(), "/revoke");
         } else {
             p.sendSyntaxMessage(getUsage(sender));
             return;
-        }
+        }*/
 
-        p.sendAPIMessage(response.getKey(), response.getValue());
+        //p.sendAPIMessage(response.getKey(), response.getValue());
     }
 
     @Override

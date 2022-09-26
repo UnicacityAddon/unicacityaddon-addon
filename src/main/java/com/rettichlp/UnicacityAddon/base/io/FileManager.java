@@ -176,6 +176,9 @@ public class FileManager {
         }
     }
 
+    /**
+     * Quote: "Wenn du keine Brüste hast, rede ich nicht mehr mit dir!" - Dimiikou, 25.09.2022
+     */
     public static void saveData() {
         try {
             File dataFile = FileManager.getDataFile();

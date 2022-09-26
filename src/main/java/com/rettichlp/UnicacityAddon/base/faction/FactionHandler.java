@@ -34,9 +34,10 @@ public class FactionHandler {
         return playerRankMap;
     }
 
-    public static boolean checkPlayerHouseBan(String playerName) {
+    @Deprecated
+    public static boolean checkPlayerHouseBan(String playerName) { // TODO: 25.09.2022  
         if (websiteSource.isEmpty()) {
-            Thread thread = new Thread(() -> websiteSource = WebsiteUtils.websiteToString("https://fuzzlemann.de/commons/houseBans"));
+            Thread thread = new Thread(() -> websiteSource = WebsiteUtils.websiteToString("https://fuzzlemann.de/commons/houseBans").getKey());
             thread.start();
         }
         return websiteSource.contains(playerName);

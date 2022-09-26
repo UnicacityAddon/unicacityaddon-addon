@@ -1,5 +1,6 @@
 package com.rettichlp.UnicacityAddon.base.utils;
 
+import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import joptsimple.internal.Strings;
 
 import java.io.IOException;
@@ -9,6 +10,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.util.AbstractMap;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -17,56 +20,52 @@ import java.util.Scanner;
  */
 public class WebsiteUtils {
 
-    public static String websiteToString(String urlString) {
-        String content = null;
+    public static Map.Entry<String, Integer> websiteToString(String urlString) {
+        Scanner scanner;
+        StringBuilder websiteSource = new StringBuilder();
+        Map.Entry<String, Integer> response;
+        int statusCode;
 
         if (urlString != null) {
             try {
-                HttpURLConnection httpURLConnection = request(new URL(urlString));
-                if (httpURLConnection.getResponseCode() != HttpURLConnection.HTTP_OK) return Strings.EMPTY;
-                content = getContent(httpURLConnection);
+                HttpURLConnection openConnection = (HttpURLConnection) new URL(urlString).openConnection();
+                openConnection.addRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:25.0) Gecko/20100101 Firefox/25.0");
+                statusCode = openConnection.getResponseCode();
+                if (statusCode == HttpURLConnection.HTTP_OK) {
+                    scanner = new Scanner(new InputStreamReader(openConnection.getInputStream(), StandardCharsets.UTF_8));
+                    while (scanner.hasNextLine()) websiteSource.append(scanner.nextLine()).append("\n\r");
+                }
+                response = new AbstractMap.SimpleEntry<>(websiteSource.toString(), statusCode);
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                AbstractionLayer.getPlayer().sendAPIMessage("Der Server ist nicht erreichbar!", false);
+                return new AbstractMap.SimpleEntry<>(Strings.EMPTY, HttpURLConnection.HTTP_UNAVAILABLE);
             }
+        } else {
+            response = new AbstractMap.SimpleEntry<>(Strings.EMPTY, HttpURLConnection.HTTP_BAD_REQUEST);
         }
-
-        return content;
+        return response;
     }
 
-    public static URL createUrl(String path, Map<String, String> parameters) throws UnsupportedEncodingException, MalformedURLException {
-        String urlString = path + getParamsString(parameters);
-        return new URL(urlString);
+    public static String createUrl(String path, Map<String, String> parameters) {
+        return path + getParamsString(parameters);
     }
 
-    public static HttpURLConnection request(URL url) throws IOException {
-        HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-        httpURLConnection.addRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:25.0) Gecko/20100101 Firefox/25.0");
-        httpURLConnection.setRequestMethod("GET");
-        httpURLConnection.connect();
-        return httpURLConnection;
-    }
-
-    public static String getParamsString(Map<String, String> params)
-            throws UnsupportedEncodingException {
+    public static String getParamsString(Map<String, String> params) {
         StringBuilder result = new StringBuilder();
 
-        for (Map.Entry<String, String> entry : params.entrySet()) {
-            result.append(URLEncoder.encode(entry.getKey(), "UTF-8"));
-            result.append("=");
-            result.append(URLEncoder.encode(entry.getValue(), "UTF-8"));
-            result.append("&");
+        try {
+            for (Map.Entry<String, String> entry : params.entrySet()) {
+                result.append(URLEncoder.encode(entry.getKey(), "UTF-8"));
+                result.append("=");
+                result.append(URLEncoder.encode(entry.getValue(), "UTF-8"));
+                result.append("&");
+            }
+            String resultString = result.toString();
+            return resultString.length() > 0
+                    ? "?" + resultString.substring(0, resultString.length() - 1)
+                    : resultString;
+        } catch (UnsupportedEncodingException e) {
+            return Strings.EMPTY;
         }
-
-        String resultString = result.toString();
-        return resultString.length() > 0
-                ? "?" + resultString.substring(0, resultString.length() - 1)
-                : resultString;
-    }
-
-    public static String getContent(HttpURLConnection httpURLConnection) throws IOException {
-        StringBuilder stringBuilder = new StringBuilder();
-        Scanner scanner = new Scanner(new InputStreamReader(httpURLConnection.getInputStream()));
-        while (scanner.hasNextLine()) stringBuilder.append(scanner.nextLine()).append("\n\r");
-        return stringBuilder.toString();
     }
 }

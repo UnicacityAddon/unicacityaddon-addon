@@ -7,6 +7,7 @@ import com.rettichlp.UnicacityAddon.base.registry.CommandRegistry;
 import com.rettichlp.UnicacityAddon.base.registry.EventRegistry;
 import com.rettichlp.UnicacityAddon.base.registry.KeyBindRegistry;
 import com.rettichlp.UnicacityAddon.base.registry.ModuleRegistry;
+import com.rettichlp.UnicacityAddon.base.teamspeak.TSClientQuery;
 import com.rettichlp.UnicacityAddon.events.TabListEventHandler;
 import com.rettichlp.UnicacityAddon.modules.BankMoneyModule;
 import com.rettichlp.UnicacityAddon.modules.BombTimerModule;
@@ -74,6 +75,8 @@ public class UnicacityAddon extends LabyModAddon {
         // FactionHandler sync player data
         FactionHandler.syncPlayerFactions();
         FactionHandler.syncPlayerRanks();
+
+        new Thread(TSClientQuery::getInstance).start();
     }
 
     @Override

@@ -78,7 +78,7 @@ public class NaviCommand extends CommandBase {
         return tabCompletions;
     }
 
-    private NaviPoint getNaviPointByName(String s) {
+    private NaviPoint getNaviPointByName(String s) { // TODO: 26.09.2022  
         for (NaviPoint naviPoint : NaviPoint.values()) {
             if (naviPoint.getTabName().equals(s)) return naviPoint;
         }

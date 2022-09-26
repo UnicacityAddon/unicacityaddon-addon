@@ -105,7 +105,7 @@ public enum Faction {
     }
 
     public String getWebsiteSource() {
-        return WebsiteUtils.websiteToString(this.getWebsiteUrl());
+        return WebsiteUtils.websiteToString(this.getWebsiteUrl()).getKey();
     }
 
     public List<String> getMember() {
