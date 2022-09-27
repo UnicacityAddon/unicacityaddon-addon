@@ -24,7 +24,8 @@ public class KeyBindRegistry {
     public static KeyBinding aDutySilent;
     public static KeyBinding aBuy;
     public static KeyBinding publicChannelJoin;
-    public static KeyBinding reinforcement;
+    public static KeyBinding freinforcement;
+    public static KeyBinding dreinforcement;
 
 
     public static void registerKeyBinds() {
@@ -40,7 +41,8 @@ public class KeyBindRegistry {
         int hotkeyADutySilent = config.has("HOTKEY_ADUTY_SILENT") ? config.get("HOTKEY_ADUTY_SILENT").getAsInt() : Keyboard.KEY_NONE;
         int hotkeyABuy = config.has("HOTKEY_ABUY") ? config.get("HOTKEY_ABUY").getAsInt() : Keyboard.KEY_NONE;
         int hotkeyPublicChannelJoin = config.has("HOTKEY_PUBLICCHANNELJOIN") ? config.get("HOTKEY_PUBLICCHANNELJOIN").getAsInt() : Keyboard.KEY_NONE;
-        int hotkeyReinforcement = config.has("HOTKEY_REINFORCEMENT") ? config.get("HOTKEY_REINFORCEMENT").getAsInt() : Keyboard.KEY_NONE;
+        int hotkeyFReinforcement = config.has("HOTKEY_FREINFORCEMENT") ? config.get("HOTKEY_FREINFORCEMENT").getAsInt() : Keyboard.KEY_NONE;
+        int hotkeyDReinforcement = config.has("HOTKEY_DREINFORCEMENT") ? config.get("HOTKEY_DREINFORCEMENT").getAsInt() : Keyboard.KEY_NONE;
 
         addonScreenshot = new KeyBinding("Screenshot mit Upload", hotkeyAddonScreenshot, KEY_CATEGORY);
         adFreigeben = new KeyBinding("Werbung freigeben", hotkeyAdFreigeben, KEY_CATEGORY);
@@ -51,7 +53,8 @@ public class KeyBindRegistry {
         aDutySilent = new KeyBinding("ADuty (silent)", hotkeyADutySilent, KEY_CATEGORY);
         aBuy = new KeyBinding("ABuy", hotkeyABuy, KEY_CATEGORY);
         publicChannelJoin = new KeyBinding("Öffentlich-Join", hotkeyPublicChannelJoin, KEY_CATEGORY);
-        reinforcement = new KeyBinding("Reinforcement", hotkeyReinforcement, KEY_CATEGORY);
+        freinforcement = new KeyBinding("Reinforcement (Fraktion)", hotkeyFReinforcement, KEY_CATEGORY);
+        dreinforcement = new KeyBinding("Reinforcement (Bündnis)", hotkeyDReinforcement, KEY_CATEGORY);
 
         ClientRegistry.registerKeyBinding(addonScreenshot);
         ClientRegistry.registerKeyBinding(adFreigeben);
@@ -62,8 +65,8 @@ public class KeyBindRegistry {
         ClientRegistry.registerKeyBinding(aDutySilent);
         ClientRegistry.registerKeyBinding(aBuy);
         ClientRegistry.registerKeyBinding(publicChannelJoin);
-        ClientRegistry.registerKeyBinding(reinforcement);
-
+        ClientRegistry.registerKeyBinding(freinforcement);
+        ClientRegistry.registerKeyBinding(dreinforcement);
         executed = true;
     }
 }
