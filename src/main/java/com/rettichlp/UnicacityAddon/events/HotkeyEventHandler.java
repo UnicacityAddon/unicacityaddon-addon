@@ -95,16 +95,10 @@ public class HotkeyEventHandler {
             p.sendChatMessage("/aduty -s");
         } else if (Keyboard.isKeyDown(KeyBindRegistry.freinforcement.getKeyCode())) {
             BlockPos position = p.getPosition();
-            int posX = position.getX();
-            int posY = position.getY();
-            int posZ = position.getZ();
-            p.sendChatMessage("/f Benötige Verstärkung! -> X: " + posX + " | Y: " + posY + " | Z: " + posZ);
+            p.sendChatMessage("/f Benötige Verstärkung! -> X: " + position.getX() + " | Y: " + position.getX() + " | Z: " + position.getZ());
         } else if (Keyboard.isKeyDown(KeyBindRegistry.dreinforcement.getKeyCode())) {
             BlockPos position = p.getPosition();
-            int posX = position.getX();
-            int posY = position.getY();
-            int posZ = position.getZ();
-            p.sendChatMessage("/d Benötige Verstärkung! -> X: " + posX + " | Y: " + posY + " | Z: " + posZ);
+            p.sendChatMessage("/d Benötige Verstärkung! -> X: " + position.getX() + " | Y: " + position.getX() + " | Z: " + position.getZ());
         } else if (Keyboard.isKeyDown(KeyBindRegistry.publicChannelJoin.getKeyCode())) {
             if (p.getFaction().equals(Faction.NULL)) {
                 p.sendErrorMessage("Du befindest dich in keiner Fraktion.");
