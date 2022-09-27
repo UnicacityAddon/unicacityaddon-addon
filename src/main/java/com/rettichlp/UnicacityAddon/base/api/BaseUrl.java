@@ -9,7 +9,9 @@ public enum BaseUrl {
     HOUSEBAN("/houseban"),
     HOUSEBAN_REASON("/housebanreason"),
     NAVIPOINT("/navipoint"),
-    WANTED_REASON("/wantedreason");
+    WANTED_REASON("/wantedreason"),
+    TOKEN_CREATE("/create"),
+    TOKEN_REVOKE("/revoke");
 
     private final String path;
 
@@ -18,7 +20,6 @@ public enum BaseUrl {
     }
 
     public String getPath() {
-        ConfigElements.setAPIToken("aaaaaaaaaabbbbbbbbbbaaaaaaaaaabbbbbbbbbb"); // TODO: 26.09.2022  
         return "http://rettichlp.de:8888/unicacityaddon/v1/" + ConfigElements.getAPIToken() + path;
     }
 

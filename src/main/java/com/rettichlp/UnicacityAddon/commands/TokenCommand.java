@@ -1,13 +1,12 @@
 package com.rettichlp.UnicacityAddon.commands;
 
-import com.mojang.authlib.exceptions.AuthenticationException;
+import com.google.gson.JsonObject;
 import com.rettichlp.UnicacityAddon.UnicacityAddon;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
-import com.rettichlp.UnicacityAddon.base.api.AuthHash;
+import com.rettichlp.UnicacityAddon.base.api.APIRequest;
 import com.rettichlp.UnicacityAddon.base.config.ConfigElements;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
-import net.minecraft.client.Minecraft;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
@@ -17,14 +16,12 @@ import net.minecraftforge.client.IClientCommand;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.math.BigInteger;
-import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author RettichLP
@@ -41,7 +38,7 @@ public class TokenCommand implements IClientCommand {
     @Override
     @Nonnull
     public String getUsage(@Nonnull ICommandSender sender) {
-        return "/token [create|renew|revoke]";
+        return "/token (renew|revoke)";
     }
 
     @Override
@@ -59,67 +56,37 @@ public class TokenCommand implements IClientCommand {
     public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args) {
         UPlayer p = AbstractionLayer.getPlayer();
 
-        if (args.length < 1) {
-            p.sendSyntaxMessage(getUsage(sender));
-            return;
-        }
-
-        Minecraft mc = UnicacityAddon.MINECRAFT;
-        AuthHash authHash = new AuthHash(AbstractionLayer.getPlayer().getName());
-
-        try {
-            mc.getSessionService().joinServer(mc.getSession().getProfile(), mc.getSession().getToken(), authHash.getHash());
-        } catch (AuthenticationException ignored) {
-        }
-
-        System.out.println(authHash.getUsername());
-        System.out.println(authHash.getHash());
-
-        /*String response = post("http://tomcat.fuzzlemann.de/factiononline/generateauthkey", "username", authHash.getUsername(), "hash", authHash.getHash());
-        if (response == null || response.isEmpty()) return null;
-
-        return response;*/
-
-
-
-        //UnicacityAddon.MINECRAFT.getSessionService().joinServer();
-
-        /*Map.Entry<String, Boolean> response;
-        if (args[0].equalsIgnoreCase("create") || args[0].equalsIgnoreCase("renew")) {
-            response = APIRequest.getInfo(generateToken(), "/register?uuid=" + p.getUniqueID().toString());
-        } else if (args[0].equalsIgnoreCase("revoke")) {
-            response = APIRequest.getInfo(ConfigElements.getAPIToken(), "/revoke");
+        if (args.length == 0 || (args.length == 1 && args[0].equalsIgnoreCase("renew"))) {
+            String authToken = UnicacityAddon.MINECRAFT.getSession().getToken();
+            createToken(p.getUniqueID(), authToken);
+            JsonObject response = APIRequest.sendTokenCreateRequest(authToken);
+            if (response == null) return;
+            p.sendAPIMessage(response.get("info").getAsString(), true);
+        } else if (args.length == 1 && args[0].equalsIgnoreCase("revoke")) {
+            JsonObject response = APIRequest.sendTokenRevokeRequest();
+            if (response == null) return;
+            p.sendAPIMessage(response.get("info").getAsString(), true);
         } else {
             p.sendSyntaxMessage(getUsage(sender));
-            return;
-        }*/
-
-        //p.sendAPIMessage(response.getKey(), response.getValue());
+        }
     }
 
     @Override
     @Nonnull
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
-        List<String> tabCompletions = new ArrayList<>(Arrays.asList("create", "renew", "revoke"));
+        List<String> tabCompletions = new ArrayList<>();
+        if (args.length == 1) {
+            tabCompletions.add("renew");
+            tabCompletions.add("revoke");
+        }
         String input = args[args.length - 1].toLowerCase();
         tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
         return tabCompletions;
     }
 
     @Override
-    public boolean isUsernameIndex(String[] args, int index) {
+    public boolean isUsernameIndex(@Nonnull String[] args, int index) {
         return false;
-    }
-
-    private static String hash(String str) {
-        try {
-            MessageDigest md = MessageDigest.getInstance("SHA-1");
-            byte[] strBytes = str.getBytes(StandardCharsets.UTF_8);
-            byte[] digest = md.digest(strBytes);
-            return (new BigInteger(digest)).toString(16);
-        } catch (NoSuchAlgorithmException var2) {
-            throw new RuntimeException(var2);
-        }
     }
 
     @Override
@@ -128,19 +95,44 @@ public class TokenCommand implements IClientCommand {
     }
 
     @Override
-    public int compareTo(ICommand o) {
+    public int compareTo(@Nonnull ICommand o) {
         return 0;
     }
 
-    private String generateToken() {
-        String username = AbstractionLayer.getPlayer().getName();
-        long currentTime = System.currentTimeMillis();
-        SecureRandom randomLong = new SecureRandom();
+    private void createToken(UUID uniqueID, String authToken) {
+        String SECRET_SALT = "423WhKRMTfRv4mn6u8hLcPj7bYesKh4Ex4yRErYuW4KsgYjpo35nSU11QYj3OINAJwcd0TPDD6AkqhSq";
+        String hash = hash(uniqueID.toString().replace("-", "") + SECRET_SALT + authToken);
+        ConfigElements.setAPIToken(hash);
+    }
 
-        String token = hash(username + currentTime + randomLong).replace("-", "");
-        System.out.println("[DEBUG] Token: " + token); // TODO: 20.09.2022 Remove loggin of token 
+    public static String hash(String input) {
+        try {
+            // getInstance() method is called with algorithm SHA-1
+            MessageDigest md = MessageDigest.getInstance("SHA-1");
 
-        ConfigElements.setAPIToken(token);
-        return token;
+            // digest() method is called
+            // to calculate message digest of the input string
+            // returned as array of byte
+            byte[] messageDigest = md.digest(input.getBytes());
+
+            // Convert byte array into signum representation
+            BigInteger no = new BigInteger(1, messageDigest);
+
+            // Convert message digest into hex value
+            StringBuilder hashtext = new StringBuilder(no.toString(16));
+
+            // Add preceding 0s to make it 32 bit
+            while (hashtext.length() < 32) {
+                hashtext.insert(0, "0");
+            }
+
+            // return the HashText
+            return hashtext.toString();
+        }
+
+        // For specifying wrong message digest algorithms
+        catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

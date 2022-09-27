@@ -88,6 +88,16 @@ public class APIResponseHandler {
         return getJsonElement(urlString).getAsJsonObject();
     }
 
+    public static JsonObject getTokenCreateResponse(Map<String, String> parameters) throws APIUnsuccessResponseException {
+        String urlString = WebsiteUtils.createUrl(BaseUrl.TOKEN_CREATE.getPath(), parameters);
+        return getJsonElement(urlString).getAsJsonObject();
+    }
+
+    public static JsonObject getTokenRevokeResponse(Map<String, String> parameters) throws APIUnsuccessResponseException {
+        String urlString = WebsiteUtils.createUrl(BaseUrl.TOKEN_REVOKE.getPath(), parameters);
+        return getJsonElement(urlString).getAsJsonObject();
+    }
+
     private static JsonElement getJsonElement(String urlString) throws APIUnsuccessResponseException {
         Map.Entry<String, Integer> response = WebsiteUtils.websiteToString(urlString);
 

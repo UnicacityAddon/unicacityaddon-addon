@@ -196,4 +196,27 @@ public class APIRequest {
             return null;
         }
     }
+
+    public static JsonObject sendTokenCreateRequest(String authToken) {
+        Map<String, String> parameters = new HashMap<>();
+        parameters.put("authToken", authToken);
+
+        try {
+            return APIResponseHandler.getTokenCreateResponse(parameters);
+        } catch (APIUnsuccessResponseException e) {
+            e.sendIngameInfoMessage();
+            return null;
+        }
+    }
+
+    public static JsonObject sendTokenRevokeRequest() {
+        Map<String, String> parameters = new HashMap<>();
+
+        try {
+            return APIResponseHandler.getTokenRevokeResponse(parameters);
+        } catch (APIUnsuccessResponseException e) {
+            e.sendIngameInfoMessage();
+            return null;
+        }
+    }
 }
