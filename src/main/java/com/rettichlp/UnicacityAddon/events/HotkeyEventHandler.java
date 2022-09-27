@@ -44,6 +44,7 @@ public class HotkeyEventHandler {
     private String adIssuer;
     private long adTime;
     private static long lastScreenshot;
+    private static long lastReportClosed = -1;
 
     @SubscribeEvent
     public void onKeyInput(InputEvent.KeyInputEvent e) {
@@ -86,7 +87,10 @@ public class HotkeyEventHandler {
         } else if (Keyboard.isKeyDown(KeyBindRegistry.acceptReport.getKeyCode())) {
             p.sendChatMessage("/ar");
         } else if (Keyboard.isKeyDown(KeyBindRegistry.cancelReport.getKeyCode())) {
-            if (!ConfigElements.getReportFarewell().isEmpty()) p.sendChatMessage(ConfigElements.getReportFarewell());
+            if ((!ConfigElements.getReportFarewell().isEmpty()) && (System.currentTimeMillis() - lastReportClosed < 1000L)) {
+                p.sendChatMessage(ConfigElements.getReportFarewell());
+                lastReportClosed = System.currentTimeMillis();
+            }
             p.sendChatMessage("/cr");
         } else if (Keyboard.isKeyDown(KeyBindRegistry.aDuty.getKeyCode())) {
             p.sendChatMessage("/aduty");
