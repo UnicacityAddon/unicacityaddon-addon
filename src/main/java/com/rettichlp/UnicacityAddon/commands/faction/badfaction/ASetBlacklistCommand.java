@@ -6,10 +6,11 @@ import com.rettichlp.UnicacityAddon.base.json.BlacklistEntry;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import com.rettichlp.UnicacityAddon.base.utils.ForgeUtils;
 import com.rettichlp.UnicacityAddon.events.faction.BlacklistEventHandler;
-import net.minecraft.command.CommandBase;
+import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.client.IClientCommand;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -20,7 +21,7 @@ import java.util.List;
  * @author RettichLP
  */
 @UCCommand
-public class ASetBlacklistCommand extends CommandBase {
+public class ASetBlacklistCommand implements IClientCommand {
 
     @Override
     @Nonnull
@@ -48,7 +49,10 @@ public class ASetBlacklistCommand extends CommandBase {
     @Override
     public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
         UPlayer p = AbstractionLayer.getPlayer();
-        if (args.length < 2) return;
+        if (args.length < 2) {
+            p.sendSyntaxMessage(getUsage(sender));
+            return;
+        }
 
         if (BlacklistEventHandler.BLACKLIST == null) {
             p.sendErrorMessage("Datei 'blacklistData.json' ist falsch formatiert!");
@@ -79,5 +83,20 @@ public class ASetBlacklistCommand extends CommandBase {
         String input = args[args.length - 1].toLowerCase();
         tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
         return tabCompletions;
+    }
+
+    @Override
+    public boolean isUsernameIndex(String[] args, int index) {
+        return false;
+    }
+
+    @Override
+    public boolean allowUsageWithoutPrefix(ICommandSender sender, String message) {
+        return false;
+    }
+
+    @Override
+    public int compareTo(ICommand o) {
+        return 0;
     }
 }

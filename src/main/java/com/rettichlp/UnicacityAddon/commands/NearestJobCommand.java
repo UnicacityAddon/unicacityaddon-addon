@@ -6,13 +6,17 @@ import com.rettichlp.UnicacityAddon.base.location.NavigationUtils;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
-import net.minecraft.command.CommandBase;
+import com.rettichlp.UnicacityAddon.base.utils.ForgeUtils;
+import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.event.ClickEvent;
 import net.minecraft.util.text.event.HoverEvent;
+import net.minecraftforge.client.IClientCommand;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +25,7 @@ import java.util.Map;
  * @author RettichLP
  */
 @UCCommand
-public class NearestJobCommand extends CommandBase {
+public class NearestJobCommand implements IClientCommand {
 
     @Override @Nonnull public String getName() {
         return "nearestjob";
@@ -37,6 +41,16 @@ public class NearestJobCommand extends CommandBase {
 
     @Override public boolean checkPermission(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender) {
         return true;
+    }
+
+    @Override
+    public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
+        return ForgeUtils.getOnlinePlayers();
+    }
+
+    @Override
+    public boolean isUsernameIndex(String[] args, int index) {
+        return false;
     }
 
     @Override public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
@@ -62,5 +76,15 @@ public class NearestJobCommand extends CommandBase {
                             .createComponent())
                     .advance()
                 .createComponent());
+    }
+
+    @Override
+    public boolean allowUsageWithoutPrefix(ICommandSender sender, String message) {
+        return false;
+    }
+
+    @Override
+    public int compareTo(ICommand o) {
+        return 0;
     }
 }

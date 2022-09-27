@@ -6,10 +6,11 @@ import com.rettichlp.UnicacityAddon.base.location.NaviPoint;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import com.rettichlp.UnicacityAddon.base.utils.MathUtils;
 import com.rettichlp.UnicacityAddon.base.utils.TextUtils;
-import net.minecraft.command.CommandBase;
+import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.client.IClientCommand;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -22,7 +23,7 @@ import java.util.stream.Collectors;
  * @author RettichLP
  */
 @UCCommand
-public class NaviCommand extends CommandBase {
+public class NaviCommand implements IClientCommand {
 
     @Override
     @Nonnull
@@ -78,10 +79,25 @@ public class NaviCommand extends CommandBase {
         return tabCompletions;
     }
 
-    private NaviPoint getNaviPointByName(String s) { // TODO: 26.09.2022  
+    @Override
+    public boolean isUsernameIndex(String[] args, int index) {
+        return false;
+    }
+
+    private NaviPoint getNaviPointByName(String s) { // TODO: 26.09.2022
         for (NaviPoint naviPoint : NaviPoint.values()) {
             if (naviPoint.getTabName().equals(s)) return naviPoint;
         }
         return null;
+    }
+
+    @Override
+    public boolean allowUsageWithoutPrefix(ICommandSender sender, String message) {
+        return false;
+    }
+
+    @Override
+    public int compareTo(ICommand o) {
+        return 0;
     }
 }
