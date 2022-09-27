@@ -21,6 +21,7 @@ import com.rettichlp.UnicacityAddon.base.utils.ImageUploadUtils;
 import net.labymod.main.LabyMod;
 import net.minecraft.client.shader.Framebuffer;
 import net.minecraft.util.ScreenShotHelper;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -92,6 +93,12 @@ public class HotkeyEventHandler {
             p.sendChatMessage("/aduty");
         } else if (Keyboard.isKeyDown(KeyBindRegistry.aDutySilent.getKeyCode())) {
             p.sendChatMessage("/aduty -s");
+        } else if (Keyboard.isKeyDown(KeyBindRegistry.freinforcement.getKeyCode())) {
+            BlockPos position = p.getPosition();
+            p.sendChatMessage("/f Benötige Verstärkung! -> X: " + position.getX() + " | Y: " + position.getY() + " | Z: " + position.getZ());
+        } else if (Keyboard.isKeyDown(KeyBindRegistry.dreinforcement.getKeyCode())) {
+            BlockPos position = p.getPosition();
+            p.sendChatMessage("/d Benötige Verstärkung! -> X: " + position.getX() + " | Y: " + position.getY() + " | Z: " + position.getZ());
         } else if (Keyboard.isKeyDown(KeyBindRegistry.publicChannelJoin.getKeyCode())) {
             if (p.getFaction().equals(Faction.NULL)) {
                 p.sendErrorMessage("Du befindest dich in keiner Fraktion.");
