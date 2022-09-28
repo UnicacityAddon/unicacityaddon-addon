@@ -365,4 +365,9 @@ public class ConfigElements {
         return UnicacityAddon.ADDON.getConfig().has("TEAMSPEAK_NOTIFY_WAITING_PUBLIC") && UnicacityAddon.ADDON.getConfig().get("TEAMSPEAK_NOTIFY_WAITING_PUBLIC")
                 .getAsBoolean(); // default = false
     }
+
+    public static boolean automaticReinfscreen() {
+        return !UnicacityAddon.ADDON.getConfig().has("AUTOMATIC_REINFSCREEN") || UnicacityAddon.ADDON.getConfig().get("AUTOMATIC_REINFSCREEN")
+                .getAsBoolean(); // default = true
+    }
 }
