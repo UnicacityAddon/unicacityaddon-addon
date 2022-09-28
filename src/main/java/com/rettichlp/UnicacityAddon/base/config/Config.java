@@ -90,9 +90,6 @@ public class Config {
         BooleanElement despawnTimeAfterKarma = new BooleanElement("Despawn Zeitpunkt", unicacityAddon, new ControlElement.IconData(Material.SKULL_ITEM), "ESTIMATED_DESPAWN_TIME_SETTINGS", ConfigElements.getEstimatedDespawnTime());
         list.add(despawnTimeAfterKarma);
 
-        BooleanElement automaticReinfscreen = new BooleanElement("Reinforcement Screenshot", unicacityAddon, new ControlElement.IconData(Material.LEATHER), "AUTOMATIC_REINFSCREEN", ConfigElements.automaticReinfscreen());
-        list.add(automaticReinfscreen);
-
         // Certain LabyMod themes cover the lower settings. To counteract this, empty lines are appended.
         list.add(emptyLine);
         list.add(emptyLine);

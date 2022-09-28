@@ -367,7 +367,7 @@ public class ConfigElements {
     }
 
     public static boolean automaticReinfscreen() {
-        return !UnicacityAddon.ADDON.getConfig().has("AUTOMATIC_REINFSCREEN") || UnicacityAddon.ADDON.getConfig().get("AUTOMATIC_REINFSCREEN")
+        return !UnicacityAddon.ADDON.getConfig().has("REINFORCEMENT_SCREENSHOT_SETTINGS") || UnicacityAddon.ADDON.getConfig().get("REINFORCEMENT_SCREENSHOT_SETTINGS")
                 .getAsBoolean(); // default = true
     }
 }

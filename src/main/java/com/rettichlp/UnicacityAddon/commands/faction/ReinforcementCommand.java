@@ -8,6 +8,7 @@ import com.rettichlp.UnicacityAddon.base.location.NavigationUtils;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import com.rettichlp.UnicacityAddon.base.text.ChatType;
 import com.rettichlp.UnicacityAddon.base.utils.MathUtils;
+import com.rettichlp.UnicacityAddon.events.HotkeyEventHandler;
 import com.rettichlp.UnicacityAddon.events.MobileEventHandler;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
@@ -24,8 +25,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-
-import static com.rettichlp.UnicacityAddon.events.HotkeyEventHandler.handleScreenshot;
 
 /**
  * @author Dimiikou
@@ -84,8 +83,8 @@ public class ReinforcementCommand implements IClientCommand {
             p.setNaviRoute(x, y, z);
             if (ConfigElements.automaticReinfscreen()) {
                 try {
-                    File file = FileManager.getNewImageFile();
-                    handleScreenshot(file);
+                    File file = FileManager.getNewActivityImageFile("reinforcement");
+                    HotkeyEventHandler.handleScreenshot(file);
                     return;
                 } catch (IOException e) {
                     throw new RuntimeException(e);
