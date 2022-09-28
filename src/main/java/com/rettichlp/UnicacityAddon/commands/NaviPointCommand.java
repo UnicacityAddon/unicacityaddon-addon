@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
 import com.rettichlp.UnicacityAddon.base.api.APIRequest;
+import com.rettichlp.UnicacityAddon.base.api.Syncer;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
@@ -55,10 +56,12 @@ public class NaviPointCommand implements IClientCommand {
             JsonObject response = APIRequest.sendNaviPointAddRequest(args[1], args[2], args[3], args[4]);
             if (response == null) return;
             p.sendAPIMessage(response.get("info").getAsString(), true);
+            Syncer.syncNaviPointList();
         } else if (args.length == 2 && args[0].equalsIgnoreCase("remove")) {
             JsonObject response = APIRequest.sendNaviPointRemoveRequest(args[1]);
             if (response == null) return;
             p.sendAPIMessage(response.get("info").getAsString(), true);
+            Syncer.syncNaviPointList();
         } else {
             p.sendSyntaxMessage(getUsage(sender));
         }

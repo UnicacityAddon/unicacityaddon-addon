@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
 import com.rettichlp.UnicacityAddon.base.api.APIRequest;
+import com.rettichlp.UnicacityAddon.base.api.Syncer;
 import com.rettichlp.UnicacityAddon.base.faction.Faction;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
@@ -100,10 +101,12 @@ public class HousebanCommand implements IClientCommand {
             JsonObject response = APIRequest.sendHouseBanAddRequest(args[1], args[2]);
             if (response == null) return;
             p.sendAPIMessage(response.get("info").getAsString(), true);
+            Syncer.syncHouseBanList();
         } else if (args.length == 3 && args[0].equalsIgnoreCase("remove")) {
             JsonObject response = APIRequest.sendHouseBanRemoveRequest(args[1], args[2]);
             if (response == null) return;
             p.sendAPIMessage(response.get("info").getAsString(), true);
+            Syncer.syncHouseBanList();
         } else {
             p.sendSyntaxMessage(getUsage(sender));
         }

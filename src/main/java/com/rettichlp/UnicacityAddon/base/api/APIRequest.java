@@ -2,6 +2,7 @@ package com.rettichlp.UnicacityAddon.base.api;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.rettichlp.UnicacityAddon.UnicacityAddon;
 import com.rettichlp.UnicacityAddon.base.api.exception.APIUnsuccessResponseException;
 
 import java.util.HashMap;
@@ -197,9 +198,9 @@ public class APIRequest {
         }
     }
 
-    public static JsonObject sendTokenCreateRequest(String authToken) {
+    public static JsonObject sendTokenCreateRequest() {
         Map<String, String> parameters = new HashMap<>();
-        parameters.put("authToken", authToken);
+        parameters.put("authToken", UnicacityAddon.MINECRAFT.getSession().getToken());
 
         try {
             return APIResponseHandler.getTokenCreateResponse(parameters);

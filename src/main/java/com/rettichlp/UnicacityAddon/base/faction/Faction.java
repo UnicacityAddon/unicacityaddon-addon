@@ -4,10 +4,6 @@ import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
 import com.rettichlp.UnicacityAddon.base.utils.WebsiteUtils;
 
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 /**
  * @author RettichLP
  */
@@ -106,13 +102,6 @@ public enum Faction {
 
     public String getWebsiteSource() {
         return WebsiteUtils.websiteToString(this.getWebsiteUrl()).getKey();
-    }
-
-    public List<String> getMember() {
-        return FactionHandler.getPlayerFactionMap().entrySet().stream()
-                .filter(entry -> entry.getValue().equals(this))
-                .map(Map.Entry::getKey)
-                .collect(Collectors.toList());
     }
 
     public static Faction getFactionByFactionKey(String s) {

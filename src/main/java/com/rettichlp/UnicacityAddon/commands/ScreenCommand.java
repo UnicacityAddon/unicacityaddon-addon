@@ -2,7 +2,7 @@ package com.rettichlp.UnicacityAddon.commands;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
-import com.rettichlp.UnicacityAddon.base.faction.ScreenshotType;
+import com.rettichlp.UnicacityAddon.base.io.ScreenshotType;
 import com.rettichlp.UnicacityAddon.base.io.FileManager;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import com.rettichlp.UnicacityAddon.events.HotkeyEventHandler;
@@ -83,7 +83,7 @@ public class ScreenCommand implements IClientCommand {
     }
 
     @Override
-    public boolean isUsernameIndex(String[] args, int index) {
+    public boolean isUsernameIndex(@Nonnull String[] args, int index) {
         return false;
     }
 
@@ -93,7 +93,7 @@ public class ScreenCommand implements IClientCommand {
     }
 
     @Override
-    public int compareTo(ICommand o) {
+    public int compareTo(@Nonnull ICommand o) {
         return 0;
     }
 }

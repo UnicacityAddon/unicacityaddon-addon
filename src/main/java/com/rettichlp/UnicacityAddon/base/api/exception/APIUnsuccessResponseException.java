@@ -1,7 +1,6 @@
 package com.rettichlp.UnicacityAddon.base.api.exception;
 
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import io.netty.handler.codec.http.HttpResponseStatus;
@@ -29,7 +28,6 @@ public class APIUnsuccessResponseException extends APIException {
 
     public void sendIngameInfoMessage() {
         AbstractionLayer.getPlayer().sendAPIMessage("Fehler [" + responseCode + "]: " + getReason(), false);
-        System.out.println("DEBUG: " + responseCode + " - " + urlString); // TODO: 26.09.2022  
     }
 
     private String getReason() {

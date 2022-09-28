@@ -1,7 +1,8 @@
 package com.rettichlp.UnicacityAddon;
 
+import com.rettichlp.UnicacityAddon.base.api.Syncer;
+import com.rettichlp.UnicacityAddon.base.api.TokenManager;
 import com.rettichlp.UnicacityAddon.base.config.Config;
-import com.rettichlp.UnicacityAddon.base.faction.FactionHandler;
 import com.rettichlp.UnicacityAddon.base.io.FileManager;
 import com.rettichlp.UnicacityAddon.base.registry.CommandRegistry;
 import com.rettichlp.UnicacityAddon.base.registry.EventRegistry;
@@ -72,9 +73,8 @@ public class UnicacityAddon extends LabyModAddon {
         ADDON.getApi().registerModule(new PlantFertilizeTimerModule());
         ADDON.getApi().registerModule(new PlantWaterTimerModule());
 
-        // FactionHandler sync player data
-        FactionHandler.syncPlayerFactions();
-        FactionHandler.syncPlayerRanks();
+        TokenManager.createToken();
+        Syncer.syncAll();
 
         new Thread(TSClientQuery::getInstance).start();
     }

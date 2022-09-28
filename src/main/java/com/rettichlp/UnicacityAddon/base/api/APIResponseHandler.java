@@ -5,7 +5,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.rettichlp.UnicacityAddon.base.api.exception.APIUnsuccessResponseException;
-import com.rettichlp.UnicacityAddon.base.config.ConfigElements;
 import com.rettichlp.UnicacityAddon.base.utils.WebsiteUtils;
 import org.apache.http.HttpStatus;
 
@@ -101,7 +100,8 @@ public class APIResponseHandler {
     private static JsonElement getJsonElement(String urlString) throws APIUnsuccessResponseException {
         Map.Entry<String, Integer> response = WebsiteUtils.websiteToString(urlString);
 
-        System.out.println(urlString.replace(ConfigElements.getAPIToken(), "TOKEN") + " - " + response.getValue()); // TODO: 26.09.2022 DEBUG
+        System.out.println("[DEBUG] Request: " + urlString.replace(TokenManager.API_TOKEN, "TOKEN") + " - " + response.getValue()); // TODO: 28.09.2022
+        System.out.println(TokenManager.API_TOKEN);
 
         if (response.getValue() != HttpStatus.SC_OK)
             throw new APIUnsuccessResponseException(urlString, response.getKey(), response.getValue());

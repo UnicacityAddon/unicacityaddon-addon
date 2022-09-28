@@ -1,7 +1,6 @@
 package com.rettichlp.UnicacityAddon.base.api;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
-import com.rettichlp.UnicacityAddon.base.config.ConfigElements;
 
 public enum BaseUrl {
 
@@ -20,7 +19,7 @@ public enum BaseUrl {
     }
 
     public String getPath() {
-        return "http://rettichlp.de:8888/unicacityaddon/v1/" + ConfigElements.getAPIToken() + path;
+        return "http://rettichlp.de:8888/unicacityaddon/v1/" + TokenManager.API_TOKEN + path;
     }
 
     public String getAddPath() {
