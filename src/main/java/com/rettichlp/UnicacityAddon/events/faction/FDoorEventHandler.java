@@ -40,7 +40,6 @@ public class FDoorEventHandler {
         if (!fDoor.canBeToggled()) return;
 
         lastClick = System.currentTimeMillis();
-        System.out.println(pos.getX() + " " + pos.getY() + " " + pos.getZ());
         p.sendChatMessage("/fdoor");
     }
 
@@ -54,7 +53,7 @@ public class FDoorEventHandler {
                 if (pos.equals(closePosition)) return fDoor;
             }
         }
-        System.out.println("Fraktür nicht gefunden");
+        System.out.println("Fraktür nicht gefunden"); // TODO:
         return null;
     }
 
@@ -87,7 +86,6 @@ public class FDoorEventHandler {
 
                 for (int y = lowerCorner.getY(); y <= upperCorner.getY(); y++) {
                     BlockPos openPos = new BlockPos(xConstant ? constantCoordinate : i, y, !xConstant ? constantCoordinate : i);
-                    System.out.println(openPos.getX() + openPos.getY() + openPos.getZ());
                     openPositions.add(openPos);
                 }
             }
