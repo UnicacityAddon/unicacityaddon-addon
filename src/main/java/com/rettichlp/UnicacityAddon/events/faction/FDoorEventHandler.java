@@ -21,8 +21,8 @@ public class FDoorEventHandler {
 
     private final Set<FDoor> F_DOORS = ImmutableSet.of(
             new FDoor(new BlockPos(-167, 69, 204), new BlockPos(-167, 71, 205)), // Ballas HQ
-            new FDoor(new BlockPos(993, 70, -100), new BlockPos(993, 72, -104)),  // Triads HQ
-            new FDoor(new BlockPos(878, 62, -89), new BlockPos(880, 64, -89)) // FBI HQ
+            new FDoor(new BlockPos(878, 62, -89), new BlockPos(880, 64, -89)), // FBI HQ
+            new FDoor(new BlockPos(273, 69, -273), new BlockPos(273, 72, -275)) // le Milieu Garage
     );
     private static long lastClick;
 
@@ -53,7 +53,7 @@ public class FDoorEventHandler {
                 if (pos.equals(closePosition)) return fDoor;
             }
         }
-
+        System.out.println("Fraktür nicht gefunden"); // TODO:
         return null;
     }
 
@@ -104,7 +104,6 @@ public class FDoorEventHandler {
                     if (air != open) return false;
                 }
             }
-
             return true;
         }
 
