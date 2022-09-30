@@ -62,7 +62,7 @@ public enum ATM {
     ATM_56(56, 1440, 72, 126), // LU Bank
     ATM_57(57, 1439, 72, 124), // LU Bank
     ATM_58(58, 1439, 72, 121), // LU BANK
-    ATM_59(59,222,69,-240); // le Milieu ATM
+    ATM_59(59, 222, 69, -240); // le Milieu ATM
 
     private final int id;
     private final int x;
