@@ -29,7 +29,7 @@ public class ReportAcceptEventHandler {
         t.schedule(new TimerTask() {
             @Override
             public void run() {
-                if (System.currentTimeMillis() - lastExecution < 1000L) {
+                if (System.currentTimeMillis() - lastExecution > 1000L) {
                     AbstractionLayer.getPlayer().sendChatMessage(ConfigElements.getReportGreeting());
                     lastExecution = System.currentTimeMillis();
                 }
