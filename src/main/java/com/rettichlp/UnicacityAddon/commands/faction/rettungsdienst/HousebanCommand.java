@@ -75,7 +75,25 @@ public class HousebanCommand implements IClientCommand {
                 long minutes = seconds / 60;
                 long hours = minutes / 60;
                 long days = hours / 24;
-                String duration = days + ":" + hours % 24 + ":" + minutes % 60 + ":" + seconds % 60;
+
+                String duration = Message.getBuilder()
+                        .of(String.valueOf(days)).color(ColorCode.DARK_AQUA).advance().space()
+                        .of(days == 1 ? "Tag" : "Tage").color(ColorCode.AQUA).advance().space()
+                        .of(String.valueOf(hours % 24)).color(ColorCode.DARK_AQUA).advance().space()
+                        .of(hours % 24 == 1 ? "Stunde" : "Stunden").color(ColorCode.AQUA).advance().space()
+                        .of(String.valueOf(minutes % 60)).color(ColorCode.DARK_AQUA).advance().space()
+                        .of(minutes % 60 == 1 ? "Minute" : "Minuten").color(ColorCode.AQUA).advance().space()
+                        .of(String.valueOf(seconds % 60)).color(ColorCode.DARK_AQUA).advance().space()
+                        .of(seconds % 60 == 1 ? "Sekunde" : "Sekunden").color(ColorCode.AQUA).advance().space()
+                        .create();
+
+                ColorCode colorCode = ColorCode.AQUA;
+                if (days == 0) colorCode = ColorCode.DARK_GREEN;
+                else if (days > 0 && days <= 5) colorCode = ColorCode.GREEN;
+                else if (days > 5 && days <= 14) colorCode = ColorCode.YELLOW;
+                else if (days > 14 && days <= 25) colorCode = ColorCode.GOLD;
+                else if (days > 25 && days <= 50) colorCode = ColorCode.RED;
+                else if (days > 50) colorCode = ColorCode.DARK_RED;
 
                 Message.Builder builder = Message.getBuilder();
                 o.get("houseBanReasonList").getAsJsonArray().forEach(jsonElement1 -> builder
@@ -87,7 +105,7 @@ public class HousebanCommand implements IClientCommand {
 
                 p.sendMessage(Message.getBuilder()
                         .of("»").color(ColorCode.GRAY).advance().space()
-                        .of(name).color(ColorCode.AQUA).advance().space()
+                        .of(name).color(colorCode).advance().space()
                         .of("-").color(ColorCode.GRAY).advance().space()
                         .of(duration).color(ColorCode.AQUA)
                             .hoverEvent(HoverEvent.Action.SHOW_TEXT, builder.createComponent())

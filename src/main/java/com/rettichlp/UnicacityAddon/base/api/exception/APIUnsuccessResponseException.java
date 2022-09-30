@@ -5,14 +5,13 @@ import com.google.gson.JsonParser;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import io.netty.handler.codec.http.HttpResponseStatus;
 
-public class APIUnsuccessResponseException extends APIException {
+public class APIUnsuccessResponseException extends Throwable {
 
     private final String urlString;
     private final String response;
     private final int responseCode;
 
     public APIUnsuccessResponseException(String urlString, String response, int responseCode) {
-        super(urlString, response);
         this.urlString = urlString;
         this.response = response;
         this.responseCode = responseCode;
@@ -32,8 +31,17 @@ public class APIUnsuccessResponseException extends APIException {
 
     private String getReason() {
         if (response != null) {
+
+            System.out.println("RE: " + response);
+
             JsonElement jsonElement = new JsonParser().parse(response);
-            if (jsonElement.isJsonObject() && jsonElement.getAsJsonObject().has("info")) {
+
+            boolean isJsonObject = jsonElement.isJsonObject();
+
+            System.out.println("B: " + isJsonObject);
+
+            if (jsonElement.getAsJsonObject().has("info")) {
+                System.out.println("cond true - " + jsonElement.getAsJsonObject().get("info").getAsString());
                 return jsonElement.getAsJsonObject().get("info").getAsString();
             }
         }

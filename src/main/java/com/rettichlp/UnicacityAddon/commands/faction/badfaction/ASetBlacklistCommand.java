@@ -1,11 +1,13 @@
 package com.rettichlp.UnicacityAddon.commands.faction.badfaction;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
+import com.rettichlp.UnicacityAddon.base.api.APIRequest;
 import com.rettichlp.UnicacityAddon.base.json.BlacklistEntry;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import com.rettichlp.UnicacityAddon.base.utils.ForgeUtils;
-import com.rettichlp.UnicacityAddon.events.faction.BlacklistEventHandler;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
@@ -16,6 +18,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @author RettichLP
@@ -54,31 +57,42 @@ public class ASetBlacklistCommand implements IClientCommand {
             return;
         }
 
-        if (BlacklistEventHandler.BLACKLIST == null) {
-            p.sendErrorMessage("Datei 'blacklistData.json' ist falsch formatiert!");
-            return;
-        }
+        String reasonString = args[args.length - 1];
 
-        String reason = args[args.length - 1];
-        BlacklistEntry ble = BlacklistEventHandler.BLACKLIST.getBlackListEntryByReason(reason);
+        JsonArray response = APIRequest.sendBlacklistReasonRequest();
+        if (response == null) return;
 
-        if (ble == null) {
-            p.sendErrorMessage("Blacklistgrund wurde nicht gefunden!");
+        AtomicReference<BlacklistEntry> blacklistEntry = new AtomicReference<>();
+        response.forEach(jsonElement -> {
+            JsonObject o = jsonElement.getAsJsonObject();
+            String reason = o.get("reason").getAsString();
+
+            if (reason.equalsIgnoreCase(reasonString)) {
+                int kills = o.get("kills").getAsInt();
+                int price = o.get("price").getAsInt();
+                blacklistEntry.set(new BlacklistEntry(reason, kills, price));
+            }
+        });
+
+        if (blacklistEntry.get() == null) {
+            p.sendErrorMessage("Der Blacklistgrund wurde nicht gefunden!");
             return;
         }
 
         for (int i = 0; i < args.length - 1; i++) {
-            p.sendChatMessage("/bl set " + args[i] + " " + ble.getKills() + " " + ble.getPrice() + " " + ble.getReason().replace("-", " "));
+            p.sendChatMessage("/bl set " + args[i] + " " + blacklistEntry.get().getKills() + " " + blacklistEntry.get().getPrice() + " " + blacklistEntry.get().getReason().replace("-", " "));
         }
     }
 
     @Override
     @Nonnull
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
-        BlacklistEventHandler.refreshBlacklistReasons();
         List<String> tabCompletions = ForgeUtils.getOnlinePlayers();
-        if (args.length > 1 && BlacklistEventHandler.BLACKLIST != null) {
-            tabCompletions.addAll(BlacklistEventHandler.BLACKLIST.getBlacklistReasons());
+        if (args.length > 1) {
+            JsonArray response = APIRequest.sendBlacklistReasonRequest();
+            if (response != null) {
+                response.forEach(jsonElement -> tabCompletions.add(jsonElement.getAsJsonObject().get("reason").getAsString()));
+            }
         }
         String input = args[args.length - 1].toLowerCase();
         tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
@@ -86,7 +100,7 @@ public class ASetBlacklistCommand implements IClientCommand {
     }
 
     @Override
-    public boolean isUsernameIndex(String[] args, int index) {
+    public boolean isUsernameIndex(@Nonnull String[] args, int index) {
         return false;
     }
 
@@ -96,7 +110,7 @@ public class ASetBlacklistCommand implements IClientCommand {
     }
 
     @Override
-    public int compareTo(ICommand o) {
+    public int compareTo(@Nonnull ICommand o) {
         return 0;
     }
 }

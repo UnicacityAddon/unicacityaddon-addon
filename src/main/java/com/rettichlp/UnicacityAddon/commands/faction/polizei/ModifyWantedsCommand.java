@@ -115,6 +115,7 @@ public class ModifyWantedsCommand implements IClientCommand {
         } else {
             List<String> tabCompletions = Arrays.stream(Type.values()).map(Type::getFlagArgument).sorted().collect(Collectors.toList());
 
+            // TODO: 30.09.2022
             String input = args[args.length - 1].toLowerCase().replace('-', ' ');
             tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
 

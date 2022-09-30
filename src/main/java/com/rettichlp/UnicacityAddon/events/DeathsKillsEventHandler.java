@@ -2,6 +2,7 @@ package com.rettichlp.UnicacityAddon.events;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
+import com.rettichlp.UnicacityAddon.base.api.APIRequest;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCEvent;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
@@ -29,30 +30,37 @@ public class DeathsKillsEventHandler {
         Matcher karmaMatcher = PatternHandler.KILL_PATTERN.matcher(msg);
 
         if (karmaMatcher.find()) {
-            if (Integer.parseInt(karmaMatcher.group(1)) < 6)
+            if (Integer.parseInt(karmaMatcher.group(1)) < 6) {
                 kills++;
+                APIRequest.sendStatisticAddKillRequest();
+            }
 
             return false;
         }
 
         Matcher jailKillMatcher = PatternHandler.WANTED_KILL.matcher(msg);
         if (jailKillMatcher.find()) {
-            if (jailKillMatcher.group(2).equals(p.getName()))
+            if (jailKillMatcher.group(2).equals(p.getName())) {
                 kills++;
+                APIRequest.sendStatisticAddKillRequest();
+            }
 
             return false;
         }
 
         Matcher contractKillPattern = PatternHandler.CONTRACT_REMOVED_PATTERN.matcher(msg);
         if (contractKillPattern.find()) {
-            if (contractKillPattern.group(1).equals(p.getName()))
+            if (contractKillPattern.group(1).equals(p.getName())) {
                 kills++;
+                APIRequest.sendStatisticAddKillRequest();
+            }
 
             return false;
         }
 
         if (PatternHandler.DEATH_PATTERN.matcher(msg).find()) {
             deaths++;
+            APIRequest.sendStatisticAddDeathRequest();
             return false;
         }
 

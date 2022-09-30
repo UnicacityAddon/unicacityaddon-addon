@@ -8,7 +8,7 @@ import com.rettichlp.UnicacityAddon.base.api.APIRequest;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
-import com.rettichlp.UnicacityAddon.base.utils.MathUtils;
+import com.rettichlp.UnicacityAddon.base.utils.ForgeUtils;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
@@ -26,18 +26,18 @@ import java.util.List;
  * @author RettichLP
  */
 @UCCommand
-public class HousebanReasonCommand implements IClientCommand {
+public class BlacklistReasonCommand implements IClientCommand {
 
     @Override
     @Nonnull
     public String getName() {
-        return "housebanreason";
+        return "blacklistreason";
     }
 
     @Override
     @Nonnull
     public String getUsage(@Nonnull ICommandSender sender) {
-        return "/housebanreason (add|remove) (Grund) (Tage)";
+        return "/blacklistreason (add|remove) (Name) (Grund)";
     }
 
     @Override
@@ -56,42 +56,41 @@ public class HousebanReasonCommand implements IClientCommand {
         UPlayer p = AbstractionLayer.getPlayer();
 
         if (args.length < 1) {
-            JsonArray response = APIRequest.sendHouseBanReasonRequest();
+            JsonArray response = APIRequest.sendBlacklistReasonRequest();
             if (response == null) return;
 
             p.sendEmptyMessage();
             p.sendMessage(Message.getBuilder()
-                    .of("Hausverbot-Gründe:").color(ColorCode.DARK_AQUA).bold().advance()
+                    .of("Blacklist-Gründe:").color(ColorCode.DARK_AQUA).bold().advance()
                     .createComponent());
 
             response.forEach(jsonElement -> {
                 JsonObject o = jsonElement.getAsJsonObject();
                 String reason = o.get("reason").getAsString();
-                int days = o.get("days").getAsInt();
-                String creatorName = o.get("creatorName").getAsString();
+                int price = o.get("price").getAsInt();
+                int kills = o.get("kills").getAsInt();
 
                 p.sendMessage(Message.getBuilder()
                         .of("»").color(ColorCode.GRAY).advance().space()
                         .of(reason).color(ColorCode.AQUA)
-                                .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder()
-                                        .of("Hinzugefügt von").color(ColorCode.GRAY).advance().space()
-                                        .of(creatorName).color(ColorCode.RED).advance()
-                                        .createComponent())
-                                .advance().space()
-                        .of("-").color(ColorCode.GRAY).advance().space()
-                        .of(String.valueOf(days)).color(ColorCode.AQUA).advance().space()
-                        .of(days == 1 ? "Tag" : "Tage").color(ColorCode.AQUA).advance()
+                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder()
+                                    .of("Preis:").color(ColorCode.RED).advance().space()
+                                    .of(String.valueOf(price)).color(ColorCode.DARK_RED).advance().space()
+                                    .of("Kills:").color(ColorCode.RED).advance().space()
+                                    .of(String.valueOf(kills)).color(ColorCode.DARK_RED).advance()
+                                    .createComponent())
+                            .advance()
                         .createComponent());
             });
 
             p.sendEmptyMessage();
 
-        } else if (args.length == 3 && args[0].equalsIgnoreCase("add") && MathUtils.isInteger(args[2])) {
-            JsonObject response = APIRequest.sendHouseBanReasonAddRequest(args[1], args[2]);
+        } else if (args.length == 4 && args[0].equalsIgnoreCase("add")) {
+            JsonObject response = APIRequest.sendBlacklistReasonAddRequest(args[1], args[2], args[3]);
             if (response == null) return;
             p.sendAPIMessage(response.get("info").getAsString(), true);
         } else if (args.length == 2 && args[0].equalsIgnoreCase("remove")) {
-            JsonObject response = APIRequest.sendHouseBanReasonRemoveRequest(args[1]);
+            JsonObject response = APIRequest.sendBlacklistReasonRemoveRequest(args[1]);
             if (response == null) return;
             p.sendAPIMessage(response.get("info").getAsString(), true);
         } else {
@@ -107,10 +106,12 @@ public class HousebanReasonCommand implements IClientCommand {
             tabCompletions.add("add");
             tabCompletions.add("remove");
         } else if (args.length == 2) {
-            JsonArray response = APIRequest.sendHouseBanReasonRequest();
+            JsonArray response = APIRequest.sendBlacklistReasonRequest();
             if (response != null) {
                 response.forEach(jsonElement -> tabCompletions.add(jsonElement.getAsJsonObject().get("reason").getAsString()));
             }
+        } else {
+            tabCompletions.addAll(ForgeUtils.getOnlinePlayers());
         }
         String input = args[args.length - 1].toLowerCase();
         tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));

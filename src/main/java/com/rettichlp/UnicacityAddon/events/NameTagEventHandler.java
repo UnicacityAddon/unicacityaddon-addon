@@ -61,7 +61,7 @@ public class NameTagEventHandler {
             String name = entityItem.getCustomNameTag();
             String playerName = name.substring(3);
 
-            if (!Syncer.PLAYERFACTIONMAP.containsKey(name.substring(3))) return;
+            if (!Syncer.getPlayerFactionMap().containsKey(name.substring(3))) return;
             if (name.contains("◤")) return; // already edited
 
             String prefix = getPrefix(playerName, true);
@@ -99,10 +99,10 @@ public class NameTagEventHandler {
         houseBan.append(FormattingCode.RESET.getCode());
 
         if (ConfigElements.getNameTagHouseBan()) {
-            if (Syncer.HOUSEBANLIST.contains(playerName)) houseBan.append(Message.getBuilder()
+            if (Syncer.getHouseBanList().contains(playerName)) houseBan.append(Message.getBuilder()
                     .of("[").color(ColorCode.DARK_GRAY).advance()
                     .of("HV").color(ColorCode.RED).advance()
-                    .of("]").color(ColorCode.DARK_GRAY).advance()
+                    .of("]").color(ColorCode.DARK_GRAY).advance().space()
                     .add(FormattingCode.RESET.getCode())
                     .create());
         }
@@ -156,8 +156,8 @@ public class NameTagEventHandler {
                 prefix.append(ConfigElements.getNameTagFactionSpecificColor().getCode());
         }
 
-        if (Syncer.PLAYERFACTIONMAP.containsKey(playerName)) {
-            Faction targetPlayerFaction = Syncer.PLAYERFACTIONMAP.get(playerName);
+        if (Syncer.getPlayerFactionMap().containsKey(playerName)) {
+            Faction targetPlayerFaction = Syncer.getPlayerFactionMap().get(playerName);
 
             if (ConfigElements.getNameTagFaction()) {
                 if (targetPlayerFaction.equals(AbstractionLayer.getPlayer().getFaction()))
@@ -182,8 +182,8 @@ public class NameTagEventHandler {
         StringBuilder suffix = new StringBuilder();
         suffix.append(FormattingCode.RESET.getCode());
 
-        if (Syncer.PLAYERFACTIONMAP.containsKey(playerName)) {
-            Faction targetPlayerFaction = Syncer.PLAYERFACTIONMAP.get(playerName);
+        if (Syncer.getPlayerFactionMap().containsKey(playerName)) {
+            Faction targetPlayerFaction = Syncer.getPlayerFactionMap().get(playerName);
             if (ConfigElements.getNameTagFactionSuffix())
                 suffix.append(" ").append(targetPlayerFaction.getNameTagSuffix());
         }

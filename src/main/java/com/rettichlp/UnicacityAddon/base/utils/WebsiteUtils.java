@@ -31,10 +31,8 @@ public class WebsiteUtils {
                 HttpURLConnection openConnection = (HttpURLConnection) new URL(urlString).openConnection();
                 openConnection.addRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:25.0) Gecko/20100101 Firefox/25.0");
                 statusCode = openConnection.getResponseCode();
-                if (statusCode == HttpURLConnection.HTTP_OK) {
-                    scanner = new Scanner(new InputStreamReader(openConnection.getInputStream(), StandardCharsets.UTF_8));
-                    while (scanner.hasNextLine()) websiteSource.append(scanner.nextLine()).append("\n\r");
-                }
+                scanner = new Scanner(new InputStreamReader(openConnection.getInputStream(), StandardCharsets.UTF_8));
+                while (scanner.hasNextLine()) websiteSource.append(scanner.nextLine()).append("\n\r");
                 response = new AbstractMap.SimpleEntry<>(websiteSource.toString(), statusCode);
             } catch (IOException e) {
                 AbstractionLayer.getPlayer().sendAPIMessage("Der Server ist nicht erreichbar!", false);

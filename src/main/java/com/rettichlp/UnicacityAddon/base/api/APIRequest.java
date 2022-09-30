@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class APIRequest {
 
-    public static JsonArray sendBlacklistRequest() {
+    public static JsonArray sendBlacklistReasonRequest() {
         Map<String, String> parameters = new HashMap<>();
 
         try {
@@ -21,7 +21,7 @@ public class APIRequest {
         }
     }
 
-    public static JsonObject sendBlacklistAddRequest(String reason, String price, String kills) {
+    public static JsonObject sendBlacklistReasonAddRequest(String reason, String price, String kills) {
         Map<String, String> parameters = new HashMap<>();
         parameters.put("reason", reason);
         parameters.put("price", price);
@@ -35,12 +35,35 @@ public class APIRequest {
         }
     }
 
-    public static JsonObject sendBlacklistRemoveRequest(String reason) {
+    public static JsonObject sendBlacklistReasonRemoveRequest(String reason) {
         Map<String, String> parameters = new HashMap<>();
         parameters.put("reason", reason);
 
         try {
             return APIResponseHandler.getBlacklistRemoveResponse(parameters);
+        } catch (APIUnsuccessResponseException e) {
+            e.sendIngameInfoMessage();
+            return null;
+        }
+    }
+
+    public static JsonArray sendBroadcastQueueRequest() {
+        Map<String, String> parameters = new HashMap<>();
+
+        try {
+            return APIResponseHandler.getBroadcastQueueResponse(parameters);
+        } catch (APIUnsuccessResponseException e) {
+            e.sendIngameInfoMessage();
+            return null;
+        }
+    }
+
+    public static JsonObject sendBroadcastSendRequest(String message) {
+        Map<String, String> parameters = new HashMap<>();
+        parameters.put("message", message);
+
+        try {
+            return APIResponseHandler.getBroadcastSendResponse(parameters);
         } catch (APIUnsuccessResponseException e) {
             e.sendIngameInfoMessage();
             return null;
@@ -162,6 +185,132 @@ public class APIRequest {
         }
     }
 
+    public static JsonObject sendPlayerRequest() {
+        Map<String, String> parameters = new HashMap<>();
+
+        try {
+            return APIResponseHandler.getPlayerResponse(parameters);
+        } catch (APIUnsuccessResponseException e) {
+            e.sendIngameInfoMessage();
+            return null;
+        }
+    }
+
+    public static JsonArray sendPlayerGroupRequest() {
+        Map<String, String> parameters = new HashMap<>();
+
+        try {
+            return APIResponseHandler.getPlayerGroupResponse(parameters);
+        } catch (APIUnsuccessResponseException e) {
+            e.sendIngameInfoMessage();
+            return null;
+        }
+    }
+
+    public static JsonObject sendPlayerAddRequest(String name, String group) {
+        Map<String, String> parameters = new HashMap<>();
+        parameters.put("name", name);
+        parameters.put("group", group);
+
+        try {
+            return APIResponseHandler.getPlayerAddResponse(parameters);
+        } catch (APIUnsuccessResponseException e) {
+            e.sendIngameInfoMessage();
+            return null;
+        }
+    }
+
+    public static JsonObject sendPlayerRemoveRequest(String name, String group) {
+        Map<String, String> parameters = new HashMap<>();
+        parameters.put("name", name);
+        parameters.put("group", group);
+
+        try {
+            return APIResponseHandler.getPlayerRemoveResponse(parameters);
+        } catch (APIUnsuccessResponseException e) {
+            e.sendIngameInfoMessage();
+            return null;
+        }
+    }
+
+    public static JsonArray sendStatisticRequest() {
+        Map<String, String> parameters = new HashMap<>();
+
+        try {
+            return APIResponseHandler.getStatisticResponse(parameters);
+        } catch (APIUnsuccessResponseException e) {
+            e.sendIngameInfoMessage();
+            return null;
+        }
+    }
+
+    public static JsonObject sendStatisticAddKillRequest() {
+        Map<String, String> parameters = new HashMap<>();
+
+        try {
+            return APIResponseHandler.getStatisticAddKillResponse(parameters);
+        } catch (APIUnsuccessResponseException e) {
+            e.sendIngameInfoMessage();
+            return null;
+        }
+    }
+
+    public static JsonObject sendStatisticAddDeathRequest() {
+        Map<String, String> parameters = new HashMap<>();
+
+        try {
+            return APIResponseHandler.getStatisticAddDeathResponse(parameters);
+        } catch (APIUnsuccessResponseException e) {
+            e.sendIngameInfoMessage();
+            return null;
+        }
+    }
+
+    public static JsonObject sendStatisticAddReviveRequest() {
+        Map<String, String> parameters = new HashMap<>();
+
+        try {
+            return APIResponseHandler.getStatisticAddReviveResponse(parameters);
+        } catch (APIUnsuccessResponseException e) {
+            e.sendIngameInfoMessage();
+            return null;
+        }
+    }
+
+    public static JsonObject sendStatisticAddServiceRequest() {
+        Map<String, String> parameters = new HashMap<>();
+
+        try {
+            return APIResponseHandler.getStatisticAddServiceResponse(parameters);
+        } catch (APIUnsuccessResponseException e) {
+            e.sendIngameInfoMessage();
+            return null;
+        }
+    }
+
+    public static JsonObject sendTokenCreateRequest() {
+        Map<String, String> parameters = new HashMap<>();
+        parameters.put("authToken", UnicacityAddon.MINECRAFT.getSession().getToken());
+
+        try {
+            return APIResponseHandler.getTokenCreateResponse(parameters);
+        } catch (APIUnsuccessResponseException e) {
+            e.sendIngameInfoMessage();
+            return null;
+        }
+    }
+
+    public static JsonObject sendTokenRevokeRequest() {
+        Map<String, String> parameters = new HashMap<>();
+
+        try {
+            return APIResponseHandler.getTokenRevokeResponse(parameters);
+        } catch (APIUnsuccessResponseException e) {
+            e.sendIngameInfoMessage();
+            return null;
+        }
+    }
+
     public static JsonArray sendWantedReasonRequest() {
         Map<String, String> parameters = new HashMap<>();
 
@@ -192,29 +341,6 @@ public class APIRequest {
 
         try {
             return APIResponseHandler.getWantedReasonRemoveResponse(parameters);
-        } catch (APIUnsuccessResponseException e) {
-            e.sendIngameInfoMessage();
-            return null;
-        }
-    }
-
-    public static JsonObject sendTokenCreateRequest() {
-        Map<String, String> parameters = new HashMap<>();
-        parameters.put("authToken", UnicacityAddon.MINECRAFT.getSession().getToken());
-
-        try {
-            return APIResponseHandler.getTokenCreateResponse(parameters);
-        } catch (APIUnsuccessResponseException e) {
-            e.sendIngameInfoMessage();
-            return null;
-        }
-    }
-
-    public static JsonObject sendTokenRevokeRequest() {
-        Map<String, String> parameters = new HashMap<>();
-
-        try {
-            return APIResponseHandler.getTokenRevokeResponse(parameters);
         } catch (APIUnsuccessResponseException e) {
             e.sendIngameInfoMessage();
             return null;

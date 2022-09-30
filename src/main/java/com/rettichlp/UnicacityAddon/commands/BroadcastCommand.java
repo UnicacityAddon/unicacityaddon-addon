@@ -1,4 +1,4 @@
-package com.rettichlp.UnicacityAddon.commands.faction.rettungsdienst;
+package com.rettichlp.UnicacityAddon.commands;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -8,12 +8,12 @@ import com.rettichlp.UnicacityAddon.base.api.APIRequest;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
-import com.rettichlp.UnicacityAddon.base.utils.MathUtils;
+import com.rettichlp.UnicacityAddon.base.utils.ForgeUtils;
+import com.rettichlp.UnicacityAddon.base.utils.TextUtils;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.event.HoverEvent;
 import net.minecraftforge.client.IClientCommand;
 
 import javax.annotation.Nonnull;
@@ -26,18 +26,18 @@ import java.util.List;
  * @author RettichLP
  */
 @UCCommand
-public class HousebanReasonCommand implements IClientCommand {
+public class BroadcastCommand implements IClientCommand {
 
     @Override
     @Nonnull
     public String getName() {
-        return "housebanreason";
+        return "broadcast";
     }
 
     @Override
     @Nonnull
     public String getUsage(@Nonnull ICommandSender sender) {
-        return "/housebanreason (add|remove) (Grund) (Tage)";
+        return "/broadcast [queue|send]";
     }
 
     @Override
@@ -51,47 +51,41 @@ public class HousebanReasonCommand implements IClientCommand {
         return true;
     }
 
+    /**
+     * Quote: *Stille* "Hat das Vorteile?" - RettichLP zu der WG von Fio, 29.09.2022
+     */
     @Override
     public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args) {
         UPlayer p = AbstractionLayer.getPlayer();
 
-        if (args.length < 1) {
-            JsonArray response = APIRequest.sendHouseBanReasonRequest();
+        if (args.length == 1 && args[0].equalsIgnoreCase("queue")) {
+            JsonArray response = APIRequest.sendBroadcastQueueRequest();
             if (response == null) return;
 
             p.sendEmptyMessage();
             p.sendMessage(Message.getBuilder()
-                    .of("Hausverbot-Gründe:").color(ColorCode.DARK_AQUA).bold().advance()
+                    .of("Aktive Broadcasts:").color(ColorCode.DARK_AQUA).bold().advance()
                     .createComponent());
 
             response.forEach(jsonElement -> {
                 JsonObject o = jsonElement.getAsJsonObject();
-                String reason = o.get("reason").getAsString();
-                int days = o.get("days").getAsInt();
-                String creatorName = o.get("creatorName").getAsString();
+                String broadcast = o.get("broadcast").getAsString();
+                String issuerName = o.get("issuerName").getAsString();
 
                 p.sendMessage(Message.getBuilder()
                         .of("»").color(ColorCode.GRAY).advance().space()
-                        .of(reason).color(ColorCode.AQUA)
-                                .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder()
-                                        .of("Hinzugefügt von").color(ColorCode.GRAY).advance().space()
-                                        .of(creatorName).color(ColorCode.RED).advance()
-                                        .createComponent())
-                                .advance().space()
-                        .of("-").color(ColorCode.GRAY).advance().space()
-                        .of(String.valueOf(days)).color(ColorCode.AQUA).advance().space()
-                        .of(days == 1 ? "Tag" : "Tage").color(ColorCode.AQUA).advance()
+                        .of(broadcast).color(ColorCode.AQUA).advance().space()
+                        .of("(").color(ColorCode.GRAY).advance()
+                        .of(issuerName).color(ColorCode.GRAY).advance()
+                        .of(")").color(ColorCode.GRAY).advance()
                         .createComponent());
             });
 
             p.sendEmptyMessage();
 
-        } else if (args.length == 3 && args[0].equalsIgnoreCase("add") && MathUtils.isInteger(args[2])) {
-            JsonObject response = APIRequest.sendHouseBanReasonAddRequest(args[1], args[2]);
-            if (response == null) return;
-            p.sendAPIMessage(response.get("info").getAsString(), true);
-        } else if (args.length == 2 && args[0].equalsIgnoreCase("remove")) {
-            JsonObject response = APIRequest.sendHouseBanReasonRemoveRequest(args[1]);
+        } else if (args.length > 1 && args[0].equalsIgnoreCase("send")) {
+            String broadcast = TextUtils.makeStringByArgs(args, " ").replace("send ", "");
+            JsonObject response = APIRequest.sendBroadcastSendRequest(broadcast);
             if (response == null) return;
             p.sendAPIMessage(response.get("info").getAsString(), true);
         } else {
@@ -104,13 +98,10 @@ public class HousebanReasonCommand implements IClientCommand {
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
         List<String> tabCompletions = new ArrayList<>();
         if (args.length == 1) {
-            tabCompletions.add("add");
-            tabCompletions.add("remove");
-        } else if (args.length == 2) {
-            JsonArray response = APIRequest.sendHouseBanReasonRequest();
-            if (response != null) {
-                response.forEach(jsonElement -> tabCompletions.add(jsonElement.getAsJsonObject().get("reason").getAsString()));
-            }
+            tabCompletions.add("queue");
+            tabCompletions.add("send");
+        } else {
+            tabCompletions.addAll(ForgeUtils.getOnlinePlayers());
         }
         String input = args[args.length - 1].toLowerCase();
         tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
