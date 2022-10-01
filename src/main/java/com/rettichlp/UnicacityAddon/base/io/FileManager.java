@@ -8,6 +8,7 @@ import com.rettichlp.UnicacityAddon.commands.CoordlistCommand;
 import com.rettichlp.UnicacityAddon.commands.TodoListCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.ServiceCountCommand;
 import com.rettichlp.UnicacityAddon.events.DeathsKillsEventHandler;
+import com.rettichlp.UnicacityAddon.events.faction.rettungsdienst.FirstAidEventHandler;
 import com.rettichlp.UnicacityAddon.modules.BankMoneyModule;
 import com.rettichlp.UnicacityAddon.modules.CarOpenModule;
 import com.rettichlp.UnicacityAddon.modules.CashMoneyModule;
@@ -153,6 +154,7 @@ public class FileManager {
                 ServiceCountCommand.serviceCount = 0;
                 DeathsKillsEventHandler.deaths = 0;
                 DeathsKillsEventHandler.kills = 0;
+                FirstAidEventHandler.timeMilliesOnFirstAidReceipt = 0;
                 TodoListCommand.todolist = Collections.emptyList();
                 CoordlistCommand.coordlist = Collections.emptyList();
                 CarOpenModule.info = "";
@@ -168,6 +170,7 @@ public class FileManager {
             ServiceCountCommand.serviceCount = data.getServiceCount();
             DeathsKillsEventHandler.deaths = data.getDeaths();
             DeathsKillsEventHandler.kills = data.getKills();
+            FirstAidEventHandler.timeMilliesOnFirstAidReceipt = data.getFirstAidDate();
             TodoListCommand.todolist = data.getTodolist();
             CoordlistCommand.coordlist = data.getCoordlist();
             CarOpenModule.info = data.getCarInfo() == null ? Strings.EMPTY : data.getCarInfo();
@@ -187,6 +190,7 @@ public class FileManager {
             data.setJobBalance(JobModule.jobBalance);
             data.setJobExperience(JobModule.jobExperience);
             data.setPayDayTime(PayDayModule.currentTime);
+            data.setFirstAidDate(FirstAidEventHandler.timeMilliesOnFirstAidReceipt);
             data.setTodolist(TodoListCommand.todolist);
             data.setCoordlist(CoordlistCommand.coordlist);
             data.setCarInfo(CarOpenModule.info);
