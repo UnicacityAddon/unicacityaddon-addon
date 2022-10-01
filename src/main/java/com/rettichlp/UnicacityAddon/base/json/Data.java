@@ -13,6 +13,7 @@ public class Data {
     private int serviceCount;
     private int deaths;
     private int kills;
+    private long firstAidDate;
     private List<TodolistEntry> todolist;
     private List<CoordlistEntry> coordlist;
     private String carInfo;
@@ -82,6 +83,14 @@ public class Data {
 
     public void setKills(int kills) {
         this.kills = kills;
+    }
+
+    public long getFirstAidDate() {
+        return firstAidDate;
+    }
+
+    public void setFirstAidDate(long firstAidDate) {
+        this.firstAidDate = firstAidDate;
     }
 
     public List<TodolistEntry> getTodolist() {
