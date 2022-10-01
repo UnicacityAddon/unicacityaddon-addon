@@ -1,12 +1,11 @@
 package com.rettichlp.UnicacityAddon.commands.api;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
+import com.rettichlp.UnicacityAddon.base.api.Syncer;
 import com.rettichlp.UnicacityAddon.base.api.entries.BlacklistReasonEntry;
 import com.rettichlp.UnicacityAddon.base.api.request.APIRequest;
-import com.rettichlp.UnicacityAddon.base.api.Syncer;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
@@ -64,8 +63,7 @@ public class BlacklistReasonCommand implements IClientCommand {
                     .of("Blacklist-Gründe:").color(ColorCode.DARK_AQUA).bold().advance()
                     .createComponent());
 
-            Syncer.getBlacklistReasonEntryList().forEach(blacklistReasonEntry -> {
-                p.sendMessage(Message.getBuilder()
+            Syncer.getBlacklistReasonEntryList().forEach(blacklistReasonEntry -> p.sendMessage(Message.getBuilder()
                         .of("»").color(ColorCode.GRAY).advance().space()
                         .of(blacklistReasonEntry.getReason()).color(ColorCode.AQUA)
                                 .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder()
@@ -75,8 +73,7 @@ public class BlacklistReasonCommand implements IClientCommand {
                                         .of(String.valueOf(blacklistReasonEntry.getKills())).color(ColorCode.DARK_RED).advance()
                                         .createComponent())
                                 .advance()
-                        .createComponent());
-            });
+                        .createComponent()));
 
             p.sendEmptyMessage();
 

@@ -1,6 +1,6 @@
 package com.rettichlp.UnicacityAddon.base.api.entries;
 
-import java.util.List;
+import com.rettichlp.UnicacityAddon.base.api.Syncer;
 
 public class BlacklistReasonEntry {
 
@@ -36,5 +36,12 @@ public class BlacklistReasonEntry {
 
     public String getIssuerName() {
         return issuerName;
+    }
+
+    public static BlacklistReasonEntry getBlacklistReasonEntryByReason(String reason) {
+        return Syncer.getBlacklistReasonEntryList().stream()
+                .filter(blacklistReasonEntry -> blacklistReasonEntry.getReason().equals(reason))
+                .findFirst()
+                .orElse(null);
     }
 }

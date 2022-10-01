@@ -1,10 +1,9 @@
 package com.rettichlp.UnicacityAddon.commands.faction.polizei;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
-import com.rettichlp.UnicacityAddon.base.api.request.APIRequest;
+import com.rettichlp.UnicacityAddon.base.api.Syncer;
+import com.rettichlp.UnicacityAddon.base.api.entries.WantedReasonEntry;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import com.rettichlp.UnicacityAddon.base.utils.ForgeUtils;
 import com.rettichlp.UnicacityAddon.base.utils.MathUtils;
@@ -18,10 +17,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -70,28 +67,16 @@ public class ASUCommand implements IClientCommand {
 
         Set<Flag> flags = getFlags(args);
         int reasonIndex = args.length - flags.size() - 1;
-
         List<String> players = Arrays.asList(args).subList(0, reasonIndex);
-        String reasonString = args[reasonIndex];
 
-        JsonArray response = APIRequest.sendWantedReasonRequest();
-        if (response == null) return;
-
-        Map<String, Integer> wantedPointMap = new HashMap<>();
-        response.forEach(jsonElement -> {
-            JsonObject o = jsonElement.getAsJsonObject();
-            String reason = o.get("reason").getAsString();
-            int points = o.get("points").getAsInt();
-            wantedPointMap.put(reason, points);
-        });
-
-        if (!wantedPointMap.containsKey(reasonString)) {
+        WantedReasonEntry wantedReasonEntry = WantedReasonEntry.getWantedReasonEntryByReason(args[reasonIndex]);
+        if (wantedReasonEntry == null) {
             p.sendErrorMessage("Der Wantedgrund wurde nicht gefunden!");
             return;
         }
 
-        String wantedReasonString = reasonString.replace('-', ' ');
-        int wantedReasonAmount = wantedPointMap.get(reasonString);
+        String wantedReasonString = wantedReasonEntry.getReason().replace("-", " ");
+        int wantedReasonAmount = wantedReasonEntry.getPoints();
 
         for (Flag flag : flags) {
             wantedReasonString = flag.modifyWantedReasonString(wantedReasonString);
@@ -132,10 +117,7 @@ public class ASUCommand implements IClientCommand {
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
         List<String> tabCompletions = ForgeUtils.getOnlinePlayers();
         if (args.length > 1) {
-            JsonArray response = APIRequest.sendWantedReasonRequest();
-            if (response != null) {
-                response.forEach(jsonElement -> tabCompletions.add(jsonElement.getAsJsonObject().get("reason").getAsString()));
-            }
+            tabCompletions.addAll(Syncer.getWantedReaonEntryList().stream().map(WantedReasonEntry::getReason).sorted().collect(Collectors.toList()));
         }
         String input = args[args.length - 1].toLowerCase();
         tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));

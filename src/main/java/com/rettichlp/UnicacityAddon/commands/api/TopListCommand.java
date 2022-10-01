@@ -69,10 +69,6 @@ public class TopListCommand implements IClientCommand {
         response.forEach(jsonElement -> {
             JsonObject o = jsonElement.getAsJsonObject();
             String name = o.get("name").getAsString();
-            // int kills = o.get("kills").getAsInt();
-            // int services = o.get("services").getAsInt();
-            // int deaths = o.get("deaths").getAsInt();
-            // int revives = o.get("revives").getAsInt();
             float kd = o.get("kd").getAsFloat();
 
             // float points = (0.5f + kd) * (services + revives); // TODO: 30.09.2022 Neue Formel überlegen - Dimiikou

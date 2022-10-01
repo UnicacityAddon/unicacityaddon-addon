@@ -26,6 +26,8 @@ import java.awt.datatransfer.StringSelection;
 import java.util.Objects;
 import java.util.UUID;
 
+import static com.rettichlp.UnicacityAddon.base.utils.DebugUtils.Debug;
+
 /**
  * @author RettichLP
  * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/base/abstraction/UPlayerImpl.java">UCUtils by paulzhng</a>
@@ -45,7 +47,7 @@ public class UPlayerImpl implements UPlayer {
     @Override
     public void sendMessage(ITextComponent textComponent) {
         if (!UnicacityAddon.ADDON.getApi().isIngame()) {
-            System.out.println("UPlayer nicht im Spiel! Nachricht abgebrochen.");
+            Debug(UPlayerImpl.class, "UPlayer not in game! Aborting message.");
             return;
         }
         getPlayer().sendMessage(textComponent);
@@ -84,7 +86,7 @@ public class UPlayerImpl implements UPlayer {
                 .of("API Response:").color(ColorCode.GRAY).advance().space()
                 .of(message).color(success ? ColorCode.GREEN : ColorCode.RED).advance()
                 .createComponent());
-        System.out.println("[DEBUG] API Response: " + message);
+        Debug(UPlayerImpl.class, "API Response: " + message);
     }
 
     @Override
@@ -95,7 +97,7 @@ public class UPlayerImpl implements UPlayer {
     @Override
     public void sendChatMessage(String message) {
         getPlayer().sendChatMessage(message);
-        System.out.println("[DEBUG] UPlayer send chat message: " + message);
+        Debug(UPlayerImpl.class, "UPlayer sent chat message: " + message);
     }
 
     @Override

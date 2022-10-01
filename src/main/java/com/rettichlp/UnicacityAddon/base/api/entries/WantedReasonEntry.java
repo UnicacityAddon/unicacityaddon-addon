@@ -20,10 +20,6 @@ public class WantedReasonEntry {
         return reason;
     }
 
-    public String getTabReason() {
-        return reason.replace(" ", "-");
-    }
-
     public String getCreatorUUID() {
         return creatorUUID;
     }
@@ -36,9 +32,9 @@ public class WantedReasonEntry {
         return points;
     }
 
-    public static WantedReasonEntry getWantedReasonEntryByTabReason(String tabReason) {
+    public static WantedReasonEntry getWantedReasonEntryByReason(String reason) {
         return Syncer.getWantedReaonEntryList().stream()
-                .filter(wantedReasonEntry -> wantedReasonEntry.getTabReason().equals(tabReason))
+                .filter(wantedReasonEntry -> wantedReasonEntry.getReason().equals(reason))
                 .findFirst()
                 .orElse(null);
     }

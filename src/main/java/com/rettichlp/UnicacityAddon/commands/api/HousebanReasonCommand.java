@@ -1,6 +1,5 @@
 package com.rettichlp.UnicacityAddon.commands.api;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
@@ -64,8 +63,7 @@ public class HousebanReasonCommand implements IClientCommand {
                     .of("Hausverbot-Gründe:").color(ColorCode.DARK_AQUA).bold().advance()
                     .createComponent());
 
-            Syncer.getHouseBanReasonEntryList().forEach(houseBanReasonEntry -> {
-                p.sendMessage(Message.getBuilder()
+            Syncer.getHouseBanReasonEntryList().forEach(houseBanReasonEntry -> p.sendMessage(Message.getBuilder()
                         .of("»").color(ColorCode.GRAY).advance().space()
                         .of(houseBanReasonEntry.getReason()).color(ColorCode.AQUA)
                                 .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder()
@@ -76,8 +74,7 @@ public class HousebanReasonCommand implements IClientCommand {
                         .of("-").color(ColorCode.GRAY).advance().space()
                         .of(String.valueOf(houseBanReasonEntry.getDays())).color(ColorCode.AQUA).advance().space()
                         .of(houseBanReasonEntry.getDays() == 1 ? "Tag" : "Tage").color(ColorCode.AQUA).advance()
-                        .createComponent());
-            });
+                        .createComponent()));
 
             p.sendEmptyMessage();
 
@@ -96,6 +93,9 @@ public class HousebanReasonCommand implements IClientCommand {
         }
     }
 
+    /**
+     * Lou, 16, sortiert nachts um 04:11 Uhr ihre Bücher
+     */
     @Override
     @Nonnull
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {

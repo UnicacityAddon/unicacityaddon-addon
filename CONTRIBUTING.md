@@ -26,7 +26,7 @@ Dieses Projekt und alle daran Beteiligten unterliegen dem [Verhaltenskodex](CODE
 ## Ich möchte nicht alles lesen, ich habe nur eine Frage!!!
 
 Bitte erstellen Sie kein Issue für eine Frage. Wenn Sie eine Frage haben, ist es meistens schneller uns direkt zu kontaktieren über [Teamspeak](ts3server://unicacity.de?port=9987).
-Desweiteren haben wir eine Webseite mit einem FAQ und ein Wiki.
+Des Weiteren haben wir eine Webseite mit einem FAQ und ein Wiki.
 
 ## Wie kann ich beitragen?
 

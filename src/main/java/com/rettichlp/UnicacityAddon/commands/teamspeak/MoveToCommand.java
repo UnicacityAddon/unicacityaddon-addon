@@ -68,9 +68,6 @@ public class MoveToCommand implements IClientCommand {
 
         String name = args[0];
 
-        // List<String> names = MojangAPI.getEarlierNames(name);
-        // List<Client> clients = TSUtils.getClientsByName(names);
-
         List<Client> clients = TSUtils.getClientsByName(Collections.singletonList(name));
         if (clients.isEmpty()) {
             p.sendErrorMessage("Es wurde kein Spieler auf dem TeamSpeak mit diesem Namen gefunden.");
@@ -103,7 +100,7 @@ public class MoveToCommand implements IClientCommand {
     }
 
     @Override
-    public boolean isUsernameIndex(String[] args, int index) {
+    public boolean isUsernameIndex(@Nonnull String[] args, int index) {
         return false;
     }
 
@@ -113,7 +110,7 @@ public class MoveToCommand implements IClientCommand {
     }
 
     @Override
-    public int compareTo(ICommand o) {
+    public int compareTo(@Nonnull ICommand o) {
         return 0;
     }
 }

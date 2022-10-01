@@ -16,7 +16,6 @@ import com.rettichlp.UnicacityAddon.base.teamspeak.objects.Channel;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
-import com.rettichlp.UnicacityAddon.base.utils.ForgeUtils;
 import com.rettichlp.UnicacityAddon.base.utils.ImageUploadUtils;
 import net.labymod.main.LabyMod;
 import net.minecraft.client.shader.Framebuffer;
@@ -110,10 +109,6 @@ public class HotkeyEventHandler {
             }
 
             Channel foundChannel = new Channel(p.getFaction().getPublicChannelId(), "Öffentlich", 0, 0);
-            if (foundChannel == null) {
-                p.sendErrorMessage("Es wurde kein Channel gefunden.");
-                return;
-            }
 
             ClientMoveCommand clientMoveCommand = new ClientMoveCommand(foundChannel.getChannelID(), TSUtils.getMyClientID());
 

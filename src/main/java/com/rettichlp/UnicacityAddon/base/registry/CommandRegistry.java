@@ -5,6 +5,8 @@ import net.minecraft.command.ICommand;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.fml.common.discovery.ASMDataTable;
 
+import static com.rettichlp.UnicacityAddon.base.utils.DebugUtils.Debug;
+
 public class CommandRegistry {
 
     public static void register(ASMDataTable asmDataTable) {
@@ -12,7 +14,7 @@ public class CommandRegistry {
             try {
                 Class<?> clazz = Class.forName(asmData.getClassName());
                 ClientCommandHandler.instance.registerCommand((ICommand) clazz.newInstance());
-                System.out.println("UCCommand: " + clazz.getSimpleName());
+                Debug(CommandRegistry.class, "UCCommand: " + clazz.getSimpleName());
             } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
                 // TODO: 14.08.2022
                 throw new RuntimeException(e);

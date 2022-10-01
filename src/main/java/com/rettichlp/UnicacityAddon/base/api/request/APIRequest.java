@@ -16,7 +16,7 @@ public class APIRequest {
         try {
             return APIResponseHandler.getBlacklistResponse(parameters);
         } catch (APIUnsuccessResponseException e) {
-            e.sendIngameInfoMessage();
+            e.sendInfoMessage();
             return null;
         }
     }
@@ -30,7 +30,7 @@ public class APIRequest {
         try {
             return APIResponseHandler.getBlacklistAddResponse(parameters);
         } catch (APIUnsuccessResponseException e) {
-            e.sendIngameInfoMessage();
+            e.sendInfoMessage();
             return null;
         }
     }
@@ -42,7 +42,7 @@ public class APIRequest {
         try {
             return APIResponseHandler.getBlacklistRemoveResponse(parameters);
         } catch (APIUnsuccessResponseException e) {
-            e.sendIngameInfoMessage();
+            e.sendInfoMessage();
             return null;
         }
     }
@@ -53,7 +53,7 @@ public class APIRequest {
         try {
             return APIResponseHandler.getBroadcastQueueResponse(parameters);
         } catch (APIUnsuccessResponseException e) {
-            e.sendIngameInfoMessage();
+            e.sendInfoMessage();
             return null;
         }
     }
@@ -65,7 +65,7 @@ public class APIRequest {
         try {
             return APIResponseHandler.getBroadcastSendResponse(parameters);
         } catch (APIUnsuccessResponseException e) {
-            e.sendIngameInfoMessage();
+            e.sendInfoMessage();
             return null;
         }
     }
@@ -77,7 +77,7 @@ public class APIRequest {
         try {
             return APIResponseHandler.getHouseBanResponse(parameters);
         } catch (APIUnsuccessResponseException e) {
-            e.sendIngameInfoMessage();
+            e.sendInfoMessage();
             return null;
         }
     }
@@ -90,7 +90,7 @@ public class APIRequest {
         try {
             return APIResponseHandler.getHouseBanAddResponse(parameters);
         } catch (APIUnsuccessResponseException e) {
-            e.sendIngameInfoMessage();
+            e.sendInfoMessage();
             return null;
         }
     }
@@ -103,7 +103,7 @@ public class APIRequest {
         try {
             return APIResponseHandler.getHouseBanRemoveResponse(parameters);
         } catch (APIUnsuccessResponseException e) {
-            e.sendIngameInfoMessage();
+            e.sendInfoMessage();
             return null;
         }
     }
@@ -117,7 +117,7 @@ public class APIRequest {
         try {
             return APIResponseHandler.getHouseBanReasonResponse(parameters);
         } catch (APIUnsuccessResponseException e) {
-            e.sendIngameInfoMessage();
+            e.sendInfoMessage();
             return null;
         }
     }
@@ -130,7 +130,7 @@ public class APIRequest {
         try {
             return APIResponseHandler.getHouseBanReasonAddResponse(parameters);
         } catch (APIUnsuccessResponseException e) {
-            e.sendIngameInfoMessage();
+            e.sendInfoMessage();
             return null;
         }
     }
@@ -142,7 +142,7 @@ public class APIRequest {
         try {
             return APIResponseHandler.getHouseBanReasonRemoveResponse(parameters);
         } catch (APIUnsuccessResponseException e) {
-            e.sendIngameInfoMessage();
+            e.sendInfoMessage();
             return null;
         }
     }
@@ -153,7 +153,7 @@ public class APIRequest {
         try {
             return APIResponseHandler.getNaviPointResponse(parameters);
         } catch (APIUnsuccessResponseException e) {
-            e.sendIngameInfoMessage();
+            e.sendInfoMessage();
             return null;
         }
     }
@@ -168,7 +168,7 @@ public class APIRequest {
         try {
             return APIResponseHandler.getNaviPointAddResponse(parameters);
         } catch (APIUnsuccessResponseException e) {
-            e.sendIngameInfoMessage();
+            e.sendInfoMessage();
             return null;
         }
     }
@@ -180,7 +180,7 @@ public class APIRequest {
         try {
             return APIResponseHandler.getNaviPointRemoveResponse(parameters);
         } catch (APIUnsuccessResponseException e) {
-            e.sendIngameInfoMessage();
+            e.sendInfoMessage();
             return null;
         }
     }
@@ -191,7 +191,7 @@ public class APIRequest {
         try {
             return APIResponseHandler.getPlayerResponse(parameters);
         } catch (APIUnsuccessResponseException e) {
-            e.sendIngameInfoMessage();
+            e.sendInfoMessage();
             return null;
         }
     }
@@ -202,7 +202,7 @@ public class APIRequest {
         try {
             return APIResponseHandler.getPlayerGroupResponse(parameters);
         } catch (APIUnsuccessResponseException e) {
-            e.sendIngameInfoMessage();
+            e.sendInfoMessage();
             return null;
         }
     }
@@ -215,7 +215,7 @@ public class APIRequest {
         try {
             return APIResponseHandler.getPlayerAddResponse(parameters);
         } catch (APIUnsuccessResponseException e) {
-            e.sendIngameInfoMessage();
+            e.sendInfoMessage();
             return null;
         }
     }
@@ -228,7 +228,7 @@ public class APIRequest {
         try {
             return APIResponseHandler.getPlayerRemoveResponse(parameters);
         } catch (APIUnsuccessResponseException e) {
-            e.sendIngameInfoMessage();
+            e.sendInfoMessage();
             return null;
         }
     }
@@ -239,52 +239,48 @@ public class APIRequest {
         try {
             return APIResponseHandler.getStatisticResponse(parameters);
         } catch (APIUnsuccessResponseException e) {
-            e.sendIngameInfoMessage();
+            e.sendInfoMessage();
             return null;
         }
     }
 
-    public static JsonObject sendStatisticAddKillRequest() {
+    public static void sendStatisticAddKillRequest() {
         Map<String, String> parameters = new HashMap<>();
 
         try {
-            return APIResponseHandler.getStatisticAddKillResponse(parameters);
+            APIResponseHandler.getStatisticAddKillResponse(parameters);
         } catch (APIUnsuccessResponseException e) {
-            e.sendIngameInfoMessage();
-            return null;
+            e.sendInfoMessage();
         }
     }
 
-    public static JsonObject sendStatisticAddDeathRequest() {
+    public static void sendStatisticAddDeathRequest() {
         Map<String, String> parameters = new HashMap<>();
 
         try {
-            return APIResponseHandler.getStatisticAddDeathResponse(parameters);
+            APIResponseHandler.getStatisticAddDeathResponse(parameters);
         } catch (APIUnsuccessResponseException e) {
-            e.sendIngameInfoMessage();
-            return null;
+            e.sendInfoMessage();
         }
     }
 
-    public static JsonObject sendStatisticAddReviveRequest() {
+    public static void sendStatisticAddReviveRequest() {
         Map<String, String> parameters = new HashMap<>();
 
         try {
-            return APIResponseHandler.getStatisticAddReviveResponse(parameters);
+            APIResponseHandler.getStatisticAddReviveResponse(parameters);
         } catch (APIUnsuccessResponseException e) {
-            e.sendIngameInfoMessage();
-            return null;
+            e.sendInfoMessage();
         }
     }
 
-    public static JsonObject sendStatisticAddServiceRequest() {
+    public static void sendStatisticAddServiceRequest() {
         Map<String, String> parameters = new HashMap<>();
 
         try {
-            return APIResponseHandler.getStatisticAddServiceResponse(parameters);
+            APIResponseHandler.getStatisticAddServiceResponse(parameters);
         } catch (APIUnsuccessResponseException e) {
-            e.sendIngameInfoMessage();
-            return null;
+            e.sendInfoMessage();
         }
     }
 
@@ -295,7 +291,7 @@ public class APIRequest {
         try {
             return APIResponseHandler.getTokenCreateResponse(parameters);
         } catch (APIUnsuccessResponseException e) {
-            e.sendIngameInfoMessage();
+            e.sendInfoMessage();
             return null;
         }
     }
@@ -306,7 +302,7 @@ public class APIRequest {
         try {
             return APIResponseHandler.getTokenRevokeResponse(parameters);
         } catch (APIUnsuccessResponseException e) {
-            e.sendIngameInfoMessage();
+            e.sendInfoMessage();
             return null;
         }
     }
@@ -317,7 +313,7 @@ public class APIRequest {
         try {
             return APIResponseHandler.getWantedReasonResponse(parameters);
         } catch (APIUnsuccessResponseException e) {
-            e.sendIngameInfoMessage();
+            e.sendInfoMessage();
             return null;
         }
     }
@@ -330,7 +326,7 @@ public class APIRequest {
         try {
             return APIResponseHandler.getWantedReasonAddResponse(parameters);
         } catch (APIUnsuccessResponseException e) {
-            e.sendIngameInfoMessage();
+            e.sendInfoMessage();
             return null;
         }
     }
@@ -342,7 +338,7 @@ public class APIRequest {
         try {
             return APIResponseHandler.getWantedReasonRemoveResponse(parameters);
         } catch (APIUnsuccessResponseException e) {
-            e.sendIngameInfoMessage();
+            e.sendInfoMessage();
             return null;
         }
     }

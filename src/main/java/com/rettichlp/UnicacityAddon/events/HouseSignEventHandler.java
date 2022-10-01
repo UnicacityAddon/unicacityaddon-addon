@@ -17,6 +17,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.rettichlp.UnicacityAddon.base.utils.DebugUtils.Debug;
+
 /**
  * @author RettichLP
  */
@@ -43,7 +45,7 @@ public class HouseSignEventHandler {
         dropNewspaper();
         dropWaste();
 
-        System.out.println("[DEBUG] ClickedHouseNumber: " + Integer.parseInt(matcher.group(1)));
+        Debug(HouseSignEventHandler.class, "Clicked house number: " + Integer.parseInt(matcher.group(1)));
     }
 
     @SubscribeEvent
