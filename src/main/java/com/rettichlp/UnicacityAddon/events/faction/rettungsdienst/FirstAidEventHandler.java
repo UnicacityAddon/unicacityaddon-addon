@@ -9,6 +9,8 @@ import net.minecraft.util.text.event.HoverEvent;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * @author Dimiikou
  */
@@ -18,7 +20,7 @@ public class FirstAidEventHandler {
     public static long timeMilliesOnFirstAidReceipt;
 
     @SubscribeEvent
-    public void onRecipeAcceptFeedback(ClientChatReceivedEvent e) {
+    public void onFirstAidReceipt(ClientChatReceivedEvent e) {
         String msg = e.getMessage().getUnformattedText();
         if (PatternHandler.FIRST_AID_RECEIVE_PATTERN.matcher(msg).find()) {
             timeMilliesOnFirstAidReceipt = System.currentTimeMillis();
@@ -26,7 +28,7 @@ public class FirstAidEventHandler {
         }
 
         if (!PatternHandler.FIRST_AID_LICENCE_PATTERN.matcher(msg).find()) return;
-        long expiryDate = timeMilliesOnFirstAidReceipt + 14 * 24 * 60 * 60 * 1000; // Erhaltsdatum + 14 Tage = Auslaufdatum
+        long expiryDate = timeMilliesOnFirstAidReceipt + TimeUnit.DAYS.toMillis(14); // Erhaltsdatum + 14 Tage = Auslaufdatum
         long durationTime = expiryDate - System.currentTimeMillis(); // Auslaufdatum - aktuelle Datum = Dauer des Scheins
         e.setMessage(Message.getBuilder().of("  -").color(ColorCode.GRAY).advance().space()
                 .of("Erste-Hilfe-Schein").color(ColorCode.BLUE).advance()
