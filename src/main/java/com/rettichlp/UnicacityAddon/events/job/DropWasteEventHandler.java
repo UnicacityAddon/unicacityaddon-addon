@@ -26,7 +26,7 @@ public class DropWasteEventHandler {
     private static boolean isDropState = false;
     private static long lastUse = -1;
 
-    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    @SubscribeEvent
     public void onPlayerInteract(PlayerInteractEvent e) {
         if (!(e instanceof PlayerInteractEvent.RightClickBlock) || !UnicacityAddon.isUnicacity()) return;
         if (!isDropState) return;
