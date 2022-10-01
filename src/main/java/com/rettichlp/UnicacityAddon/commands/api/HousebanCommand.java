@@ -1,12 +1,11 @@
-package com.rettichlp.UnicacityAddon.commands.faction.rettungsdienst;
+package com.rettichlp.UnicacityAddon.commands.api;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
-import com.rettichlp.UnicacityAddon.base.api.APIRequest;
 import com.rettichlp.UnicacityAddon.base.api.Syncer;
-import com.rettichlp.UnicacityAddon.base.faction.Faction;
+import com.rettichlp.UnicacityAddon.base.api.entries.HouseBanReasonEntry;
+import com.rettichlp.UnicacityAddon.base.api.request.APIRequest;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
@@ -23,6 +22,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author RettichLP
@@ -58,18 +58,13 @@ public class HousebanCommand implements IClientCommand {
         UPlayer p = AbstractionLayer.getPlayer();
 
         if (args.length < 1) {
-            JsonArray response = APIRequest.sendHouseBanRequest(p.getFaction().equals(Faction.RETTUNGSDIENST));
-            if (response == null) return;
-
             p.sendEmptyMessage();
             p.sendMessage(Message.getBuilder()
                     .of("Hausverbote:").color(ColorCode.DARK_AQUA).bold().advance()
                     .createComponent());
 
-            response.forEach(jsonElement -> {
-                JsonObject o = jsonElement.getAsJsonObject();
-                String name = o.get("name").getAsString();
-                long durationInMillis = o.get("expirationTime").getAsLong() - System.currentTimeMillis();
+            Syncer.getHouseBanEntryList().forEach(houseBanEntry -> {
+                long durationInMillis = houseBanEntry.getExpirationTime() - System.currentTimeMillis();
 
                 long seconds = durationInMillis / 1000;
                 long minutes = seconds / 60;
@@ -96,20 +91,20 @@ public class HousebanCommand implements IClientCommand {
                 else if (days > 50) colorCode = ColorCode.DARK_RED;
 
                 Message.Builder builder = Message.getBuilder();
-                o.get("houseBanReasonList").getAsJsonArray().forEach(jsonElement1 -> builder
-                        .of(jsonElement1.getAsJsonObject().get("reason").getAsString()).color(ColorCode.RED).advance().space()
-                        .of(jsonElement1.getAsJsonObject().has("issuerName") ? "(" : "").color(ColorCode.GRAY).advance()
-                        .of(jsonElement1.getAsJsonObject().has("issuerName") ? jsonElement1.getAsJsonObject().get("issuerName").getAsString() : "").color(ColorCode.GRAY).advance()
-                        .of(jsonElement1.getAsJsonObject().has("issuerName") ? ")" : "").color(ColorCode.GRAY).advance().space()
+                houseBanEntry.getHouseBanReasonList().forEach(houseBanReasonEntry -> builder
+                        .of(houseBanReasonEntry.getReason()).color(ColorCode.RED).advance().space()
+                        .of(houseBanReasonEntry.getCreatorName() != null ? "(" : "").color(ColorCode.GRAY).advance()
+                        .of(houseBanReasonEntry.getCreatorName() != null ? houseBanReasonEntry.getCreatorName() : "").color(ColorCode.GRAY).advance()
+                        .of(houseBanReasonEntry.getCreatorName() != null ? ")" : "").color(ColorCode.GRAY).advance().space()
                         .newline());
 
                 p.sendMessage(Message.getBuilder()
                         .of("»").color(ColorCode.GRAY).advance().space()
-                        .of(name).color(colorCode).advance().space()
+                        .of(houseBanEntry.getName()).color(colorCode).advance().space()
                         .of("-").color(ColorCode.GRAY).advance().space()
                         .of(duration).color(ColorCode.AQUA)
-                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, builder.createComponent())
-                            .advance()
+                                .hoverEvent(HoverEvent.Action.SHOW_TEXT, builder.createComponent())
+                                .advance()
                         .createComponent());
             });
 
@@ -119,12 +114,12 @@ public class HousebanCommand implements IClientCommand {
             JsonObject response = APIRequest.sendHouseBanAddRequest(args[1], args[2]);
             if (response == null) return;
             p.sendAPIMessage(response.get("info").getAsString(), true);
-            Syncer.syncHouseBanList();
+            Syncer.syncHouseBanEntryList();
         } else if (args.length == 3 && args[0].equalsIgnoreCase("remove")) {
             JsonObject response = APIRequest.sendHouseBanRemoveRequest(args[1], args[2]);
             if (response == null) return;
             p.sendAPIMessage(response.get("info").getAsString(), true);
-            Syncer.syncHouseBanList();
+            Syncer.syncHouseBanEntryList();
         } else {
             p.sendSyntaxMessage(getUsage(sender));
         }
@@ -140,10 +135,7 @@ public class HousebanCommand implements IClientCommand {
         } else if (args.length == 2) {
             tabCompletions.addAll(ForgeUtils.getOnlinePlayers());
         } else if (args.length == 3) {
-            JsonArray response = APIRequest.sendHouseBanReasonRequest();
-            if (response != null) {
-                response.forEach(jsonElement -> tabCompletions.add(jsonElement.getAsJsonObject().get("reason").getAsString()));
-            }
+            tabCompletions.addAll(Syncer.getHouseBanReasonEntryList().stream().map(HouseBanReasonEntry::getReason).sorted().collect(Collectors.toList()));
         }
         String input = args[args.length - 1].toLowerCase();
         tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));

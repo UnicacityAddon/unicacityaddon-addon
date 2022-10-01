@@ -1,6 +1,7 @@
-package com.rettichlp.UnicacityAddon.base.api;
+package com.rettichlp.UnicacityAddon.base.api.request;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
+import com.rettichlp.UnicacityAddon.base.api.TokenManager;
 
 public enum BaseUrl {
 

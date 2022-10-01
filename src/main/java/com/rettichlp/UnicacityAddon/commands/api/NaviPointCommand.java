@@ -1,11 +1,11 @@
-package com.rettichlp.UnicacityAddon.commands;
+package com.rettichlp.UnicacityAddon.commands.api;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
-import com.rettichlp.UnicacityAddon.base.api.APIRequest;
+import com.rettichlp.UnicacityAddon.base.api.request.APIRequest;
 import com.rettichlp.UnicacityAddon.base.api.Syncer;
+import com.rettichlp.UnicacityAddon.base.api.entries.NaviPointEntry;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
@@ -18,6 +18,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author RettichLP
@@ -56,12 +57,12 @@ public class NaviPointCommand implements IClientCommand {
             JsonObject response = APIRequest.sendNaviPointAddRequest(args[1], args[2], args[3], args[4]);
             if (response == null) return;
             p.sendAPIMessage(response.get("info").getAsString(), true);
-            Syncer.syncNaviPointList();
+            Syncer.syncNaviPointEntryList();
         } else if (args.length == 2 && args[0].equalsIgnoreCase("remove")) {
             JsonObject response = APIRequest.sendNaviPointRemoveRequest(args[1]);
             if (response == null) return;
             p.sendAPIMessage(response.get("info").getAsString(), true);
-            Syncer.syncNaviPointList();
+            Syncer.syncNaviPointEntryList();
         } else {
             p.sendSyntaxMessage(getUsage(sender));
         }
@@ -76,10 +77,7 @@ public class NaviPointCommand implements IClientCommand {
             tabCompletions.add("add");
             tabCompletions.add("remove");
         } else if (args.length == 2) {
-            JsonArray response = APIRequest.sendNaviPointRequest();
-            if (response != null) {
-                response.forEach(jsonElement -> tabCompletions.add(jsonElement.getAsJsonObject().get("name").getAsString()));
-            }
+            tabCompletions = Syncer.getNaviPointEntryList().stream().map(NaviPointEntry::getName).sorted().collect(Collectors.toList());
         } else if (args.length == 3) { // x
             tabCompletions.add(String.valueOf(p.getPosition().getX()));
         } else if (args.length == 4) { // y
@@ -91,6 +89,7 @@ public class NaviPointCommand implements IClientCommand {
         tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
         return tabCompletions;
     }
+    // TODO: 01.10.2022 look @ tab completions
 
     @Override
     public boolean isUsernameIndex(@Nonnull String[] args, int index) {

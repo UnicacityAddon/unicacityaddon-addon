@@ -1,6 +1,6 @@
 package com.rettichlp.UnicacityAddon.events.faction;
 
-import com.rettichlp.UnicacityAddon.base.api.APIRequest;
+import com.rettichlp.UnicacityAddon.base.api.request.APIRequest;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCEvent;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
 import com.rettichlp.UnicacityAddon.commands.faction.ServiceCountCommand;

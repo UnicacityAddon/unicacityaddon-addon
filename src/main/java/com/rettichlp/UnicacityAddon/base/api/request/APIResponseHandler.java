@@ -1,11 +1,11 @@
-package com.rettichlp.UnicacityAddon.base.api;
+package com.rettichlp.UnicacityAddon.base.api.request;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.rettichlp.UnicacityAddon.base.api.TokenManager;
 import com.rettichlp.UnicacityAddon.base.api.exception.APIUnsuccessResponseException;
-import com.rettichlp.UnicacityAddon.base.faction.Faction;
 import com.rettichlp.UnicacityAddon.base.utils.WebsiteUtils;
 import org.apache.http.HttpStatus;
 

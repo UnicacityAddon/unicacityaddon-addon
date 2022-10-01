@@ -35,7 +35,7 @@ public enum Faction {
             .of("◤").color(ColorCode.DARK_GRAY).advance()
             .of("⚜").color(ColorCode.DARK_AQUA).advance()
             .of("◢").color(ColorCode.DARK_GRAY).advance().create()),
-    LEMILIEU("lemilieu", "Le Milieu", "le_milieu", 179, Message.getBuilder()
+    LEMILIEU("lemilieu", "Le Milieu", "France", 179, Message.getBuilder()
             .of("◤").color(ColorCode.DARK_GRAY).advance()
             .of("Ⓜ").color(ColorCode.DARK_AQUA).advance()
             .of("◢").color(ColorCode.DARK_GRAY).advance().create()),

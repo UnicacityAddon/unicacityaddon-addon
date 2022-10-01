@@ -1,10 +1,12 @@
-package com.rettichlp.UnicacityAddon.commands.faction.rettungsdienst;
+package com.rettichlp.UnicacityAddon.commands.api;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
-import com.rettichlp.UnicacityAddon.base.api.APIRequest;
+import com.rettichlp.UnicacityAddon.base.api.Syncer;
+import com.rettichlp.UnicacityAddon.base.api.entries.HouseBanReasonEntry;
+import com.rettichlp.UnicacityAddon.base.api.request.APIRequest;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
@@ -21,6 +23,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author RettichLP
@@ -56,31 +59,23 @@ public class HousebanReasonCommand implements IClientCommand {
         UPlayer p = AbstractionLayer.getPlayer();
 
         if (args.length < 1) {
-            JsonArray response = APIRequest.sendHouseBanReasonRequest();
-            if (response == null) return;
-
             p.sendEmptyMessage();
             p.sendMessage(Message.getBuilder()
                     .of("Hausverbot-Gründe:").color(ColorCode.DARK_AQUA).bold().advance()
                     .createComponent());
 
-            response.forEach(jsonElement -> {
-                JsonObject o = jsonElement.getAsJsonObject();
-                String reason = o.get("reason").getAsString();
-                int days = o.get("days").getAsInt();
-                String creatorName = o.get("creatorName").getAsString();
-
+            Syncer.getHouseBanReasonEntryList().forEach(houseBanReasonEntry -> {
                 p.sendMessage(Message.getBuilder()
                         .of("»").color(ColorCode.GRAY).advance().space()
-                        .of(reason).color(ColorCode.AQUA)
+                        .of(houseBanReasonEntry.getReason()).color(ColorCode.AQUA)
                                 .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder()
                                         .of("Hinzugefügt von").color(ColorCode.GRAY).advance().space()
-                                        .of(creatorName).color(ColorCode.RED).advance()
+                                        .of(houseBanReasonEntry.getCreatorName()).color(ColorCode.RED).advance()
                                         .createComponent())
                                 .advance().space()
                         .of("-").color(ColorCode.GRAY).advance().space()
-                        .of(String.valueOf(days)).color(ColorCode.AQUA).advance().space()
-                        .of(days == 1 ? "Tag" : "Tage").color(ColorCode.AQUA).advance()
+                        .of(String.valueOf(houseBanReasonEntry.getDays())).color(ColorCode.AQUA).advance().space()
+                        .of(houseBanReasonEntry.getDays() == 1 ? "Tag" : "Tage").color(ColorCode.AQUA).advance()
                         .createComponent());
             });
 
@@ -90,10 +85,12 @@ public class HousebanReasonCommand implements IClientCommand {
             JsonObject response = APIRequest.sendHouseBanReasonAddRequest(args[1], args[2]);
             if (response == null) return;
             p.sendAPIMessage(response.get("info").getAsString(), true);
+            Syncer.syncHouseBanReasonEntryList();
         } else if (args.length == 2 && args[0].equalsIgnoreCase("remove")) {
             JsonObject response = APIRequest.sendHouseBanReasonRemoveRequest(args[1]);
             if (response == null) return;
             p.sendAPIMessage(response.get("info").getAsString(), true);
+            Syncer.syncHouseBanReasonEntryList();
         } else {
             p.sendSyntaxMessage(getUsage(sender));
         }
@@ -107,10 +104,7 @@ public class HousebanReasonCommand implements IClientCommand {
             tabCompletions.add("add");
             tabCompletions.add("remove");
         } else if (args.length == 2) {
-            JsonArray response = APIRequest.sendHouseBanReasonRequest();
-            if (response != null) {
-                response.forEach(jsonElement -> tabCompletions.add(jsonElement.getAsJsonObject().get("reason").getAsString()));
-            }
+            tabCompletions.addAll(Syncer.getHouseBanReasonEntryList().stream().map(HouseBanReasonEntry::getReason).sorted().collect(Collectors.toList()));
         }
         String input = args[args.length - 1].toLowerCase();
         tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));

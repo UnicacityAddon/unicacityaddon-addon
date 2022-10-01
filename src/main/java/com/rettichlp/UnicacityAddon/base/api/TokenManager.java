@@ -2,6 +2,7 @@ package com.rettichlp.UnicacityAddon.base.api;
 
 import com.rettichlp.UnicacityAddon.UnicacityAddon;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
+import com.rettichlp.UnicacityAddon.base.api.request.APIRequest;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;

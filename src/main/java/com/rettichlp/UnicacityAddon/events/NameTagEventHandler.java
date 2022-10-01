@@ -99,7 +99,7 @@ public class NameTagEventHandler {
         houseBan.append(FormattingCode.RESET.getCode());
 
         if (ConfigElements.getNameTagHouseBan()) {
-            if (Syncer.getHouseBanList().contains(playerName)) houseBan.append(Message.getBuilder()
+            if (Syncer.getHouseBanEntryList().stream().anyMatch(houseBanEntry -> houseBanEntry.getName().equals(playerName))) houseBan.append(Message.getBuilder()
                     .of("[").color(ColorCode.DARK_GRAY).advance()
                     .of("HV").color(ColorCode.RED).advance()
                     .of("]").color(ColorCode.DARK_GRAY).advance().space()

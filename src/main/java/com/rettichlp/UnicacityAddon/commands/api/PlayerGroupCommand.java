@@ -1,10 +1,11 @@
-package com.rettichlp.UnicacityAddon.commands.faction.rettungsdienst;
+package com.rettichlp.UnicacityAddon.commands.api;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
-import com.rettichlp.UnicacityAddon.base.api.APIRequest;
+import com.rettichlp.UnicacityAddon.base.api.Syncer;
+import com.rettichlp.UnicacityAddon.base.api.entries.PlayerGroupEntry;
+import com.rettichlp.UnicacityAddon.base.api.request.APIRequest;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
@@ -55,29 +56,38 @@ public class PlayerGroupCommand implements IClientCommand {
         UPlayer p = AbstractionLayer.getPlayer();
 
         if (args.length == 1) {
-            JsonObject response = APIRequest.sendPlayerRequest();
-            if (response == null) return;
-
-            if (!response.has(args[0])) {
-                p.sendSyntaxMessage(getUsage(sender));
-                return;
+            List<PlayerGroupEntry> playerGroupEntryList = new ArrayList<>();
+            switch (args[0]) {
+                case "BLACKLIST":
+                    playerGroupEntryList = Syncer.getBlacklistPlayerGroupEntryList();
+                    break;
+                case "DEV":
+                    playerGroupEntryList = Syncer.getDevPlayerGroupEntryList();
+                    break;
+                case "LEMILIEU":
+                    playerGroupEntryList = Syncer.getLeMilieuPlayerGroupEntryList();
+                    break;
+                case "DYAVOL":
+                    playerGroupEntryList = Syncer.getDyavolPlayerGroupEntryList();
+                    break;
+                case "VIP":
+                    playerGroupEntryList = Syncer.getVipPlayerGroupEntryList();
+                    break;
+                case "BETA":
+                    playerGroupEntryList = Syncer.getBetaPlayerGroupEntryList();
+                    break;
             }
 
             p.sendEmptyMessage();
             p.sendMessage(Message.getBuilder()
-                    .of("PlayerGroup:").color(ColorCode.DARK_AQUA).bold().advance().space()
+                    .of("Spielergruppe:").color(ColorCode.DARK_AQUA).bold().advance().space()
                     .of(args[0]).color(ColorCode.DARK_AQUA).advance()
                     .createComponent());
 
-            response.get(args[0]).getAsJsonArray().forEach(jsonElement -> {
-                JsonObject o = jsonElement.getAsJsonObject();
-                String name = o.get("name").getAsString();
-
-                p.sendMessage(Message.getBuilder()
-                        .of("»").color(ColorCode.GRAY).advance().space()
-                        .of(name).color(ColorCode.AQUA).advance()
-                        .createComponent());
-            });
+            playerGroupEntryList.forEach(playerGroupEntry -> p.sendMessage(Message.getBuilder()
+                    .of("»").color(ColorCode.GRAY).advance().space()
+                    .of(playerGroupEntry.getName()).color(ColorCode.AQUA).advance()
+                    .createComponent()));
 
             p.sendEmptyMessage();
 
@@ -85,10 +95,12 @@ public class PlayerGroupCommand implements IClientCommand {
             JsonObject response = APIRequest.sendPlayerAddRequest(args[1], args[2]);
             if (response == null) return;
             p.sendAPIMessage(response.get("info").getAsString(), true);
+            Syncer.syncPlayerGroupEntryList();
         } else if (args.length == 3 && args[0].equalsIgnoreCase("remove")) {
             JsonObject response = APIRequest.sendPlayerRemoveRequest(args[1], args[2]);
             if (response == null) return;
             p.sendAPIMessage(response.get("info").getAsString(), true);
+            Syncer.syncPlayerGroupEntryList();
         } else {
             p.sendSyntaxMessage(getUsage(sender));
         }
@@ -99,19 +111,13 @@ public class PlayerGroupCommand implements IClientCommand {
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
         List<String> tabCompletions = new ArrayList<>();
         if (args.length == 1) {
-            JsonArray response = APIRequest.sendPlayerGroupRequest();
-            if (response != null) {
-                response.forEach(jsonElement -> tabCompletions.add(jsonElement.getAsString()));
-            }
+            tabCompletions.addAll(Syncer.getPlayerGroups());
             tabCompletions.add("add");
             tabCompletions.add("remove");
         } else if (args.length == 2) {
             tabCompletions.addAll(ForgeUtils.getOnlinePlayers());
         } else if (args.length == 3) {
-            JsonArray response = APIRequest.sendPlayerGroupRequest();
-            if (response != null) {
-                response.forEach(jsonElement -> tabCompletions.add(jsonElement.getAsString()));
-            }
+            tabCompletions.addAll(Syncer.getPlayerGroups());
         }
         String input = args[args.length - 1].toLowerCase();
         tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
