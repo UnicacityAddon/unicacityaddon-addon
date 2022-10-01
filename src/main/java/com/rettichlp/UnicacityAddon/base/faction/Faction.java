@@ -39,13 +39,13 @@ public enum Faction {
             .of("◤").color(ColorCode.DARK_GRAY).advance()
             .of("⚜").color(ColorCode.DARK_AQUA).advance()
             .of("◢").color(ColorCode.DARK_GRAY).advance().create()),
+    LEMILIEU("lemilieu", "Le Milieu", "le_milieu", 179, Message.getBuilder()
+            .of("◤").color(ColorCode.DARK_GRAY).advance()
+            .of("Ⓜ").color(ColorCode.DARK_AQUA).advance()
+            .of("◢").color(ColorCode.DARK_GRAY).advance().create()),
     OBRIEN("obrien", "O'brien", "Obrien", 191, Message.getBuilder()
             .of("◤").color(ColorCode.DARK_GRAY).advance()
             .of("☘").color(ColorCode.DARK_GREEN).advance()
-            .of("◢").color(ColorCode.DARK_GRAY).advance().create()),
-    TRIADEN("triaden", "Triaden", "Triaden", 179, Message.getBuilder()
-            .of("◤").color(ColorCode.DARK_GRAY).advance()
-            .of("是").color(ColorCode.RED).advance()
             .of("◢").color(ColorCode.DARK_GRAY).advance().create()),
     WESTSIDEBALLAS("westsideballas", "Westside Ballas", "Gang", 142, Message.getBuilder()
             .of("◤").color(ColorCode.DARK_GRAY).advance()
