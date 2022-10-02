@@ -92,7 +92,8 @@ public class PatternHandler {
     public static final Pattern NUMBER_PATTERN = Pattern.compile("^Nummer von (?:\\[UC])*\\w+: (\\d+)$");
     public static final Pattern SMS_PATTERN = Pattern.compile("^Dein Handy klingelt! Eine Nachricht von (?:\\[UC])*(\\w+) \\((\\d+)\\)\\.$");
     public static final Pattern COMMUNICATIONS_REMOVE_PATTERN = Pattern.compile("^((?:\\[UC])*\\w+) hat dir deine Kommunikationsgeräte abgenommen\\.$");
-    public static final Pattern COMMUNICATIONS_GET_PATTERN = Pattern.compile("^Du hast dein Handy genommen\\.$");
+    public static final Pattern COMMUNICATIONS_GET_PATTERN = Pattern.compile("^Du hast dein Handy genommen\\.$" +
+            "|^((?:\\[UC])*\\w+) hat dir deine Kommunikationsgeräte wiedergegeben\\.$");
     public static final Pattern ACCOUNT_LOCKED_PATTERN = Pattern.compile("^ {2}Info: Gebe bitte dein Passwort ein\\. /passwort \\[Passwort]$");
     public static final Pattern ACCOUNT_UNLOCKED_PATTERN = Pattern.compile("^Du hast deinen Account freigeschaltet\\.$");
     public static final Pattern ACCOUNT_WELCOME_BACK_PATTERN = Pattern.compile("^Willkommen zurück!$");
@@ -265,4 +266,10 @@ public class PatternHandler {
     public static final Pattern WASTE_JOB_END_PATTERN = Pattern.compile("^\\[Müllmann] Du hast genug Mülltonnen entleert\\.$");
     public static final Pattern NEWSPAPER_JOB_START_PATTERN = Pattern.compile("^\\[Zeitung] Bring bitte das alles zu Häuser deiner Wahl\\.$");
     public static final Pattern NEWSPAPER_JOB_END_PATTERN = Pattern.compile("^\\[Zeitung] Du hast den Job beendet\\.$");
+
+    /**
+     * {@link com.rettichlp.UnicacityAddon.events.faction.rettungsdienst.FirstAidEventHandler}
+     */
+    public static final Pattern FIRST_AID_RECEIVE_PATTERN = Pattern.compile("^\\[Erste-Hilfe] Notarzt (?:\\[UC])*(\\w+) hat dir einen Erste-Hilfe-Schein für 14 Tage ausgestellt\\.$");
+    public static final Pattern FIRST_AID_LICENCE_PATTERN = Pattern.compile("^ {2}- Erste-Hilfe-Schein: Vorhanden$");
 }
