@@ -1,10 +1,9 @@
-package com.rettichlp.UnicacityAddon.commands.faction.badfaction;
+package com.rettichlp.UnicacityAddon.commands.faction.chat;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
-import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import com.rettichlp.UnicacityAddon.base.utils.ForgeUtils;
-import com.rettichlp.UnicacityAddon.events.faction.badfaction.GaggedEventHandler;
+import com.rettichlp.UnicacityAddon.base.utils.TextUtils;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
@@ -17,25 +16,31 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * @author Dimiikou
+ * @author RettichLP
  */
 @UCCommand
-public class GaggedCommand implements IClientCommand {
+public class FForceCommand implements IClientCommand {
 
-    @Override @Nonnull
+    @Override
+    @Nonnull
     public String getName() {
-        return "geknebelt";
+        return "fforce";
     }
 
-    @Override @Nonnull public String getUsage(@Nonnull ICommandSender sender) {
-        return "/geknebelt";
+    @Override
+    @Nonnull
+    public String getUsage(@Nonnull ICommandSender sender) {
+        return "/fforce [Nachricht]";
     }
 
-    @Override @Nonnull public List<String> getAliases() {
+    @Override
+    @Nonnull
+    public List<String> getAliases() {
         return Collections.emptyList();
     }
 
-    @Override public boolean checkPermission(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender) {
+    @Override
+    public boolean checkPermission(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender) {
         return true;
     }
 
@@ -50,12 +55,10 @@ public class GaggedCommand implements IClientCommand {
         return false;
     }
 
-    @Override public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
-        UPlayer p = AbstractionLayer.getPlayer();
-        GaggedEventHandler.toggleGagged();
-
-        if (GaggedEventHandler.isGagged()) p.sendInfoMessage("Ab sofort kannst du nur noch flüstern.");
-        else p.sendInfoMessage("Ab sofort kannst du wieder normal reden.");
+    @Override
+    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
+        String message = TextUtils.makeStringByArgs(args, " ");
+        AbstractionLayer.getPlayer().sendChatMessage("/f " + message);
     }
 
     @Override

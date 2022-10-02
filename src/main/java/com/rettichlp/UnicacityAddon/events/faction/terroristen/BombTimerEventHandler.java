@@ -1,4 +1,4 @@
-package com.rettichlp.UnicacityAddon.events;
+package com.rettichlp.UnicacityAddon.events.faction.terroristen;
 
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCEvent;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;

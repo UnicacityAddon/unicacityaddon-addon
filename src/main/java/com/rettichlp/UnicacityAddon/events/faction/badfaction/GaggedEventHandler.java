@@ -1,4 +1,4 @@
-package com.rettichlp.UnicacityAddon.events;
+package com.rettichlp.UnicacityAddon.events.faction.badfaction;
 
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCEvent;
 import net.minecraftforge.client.event.ClientChatEvent;
