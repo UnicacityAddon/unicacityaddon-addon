@@ -50,7 +50,7 @@ public class DeathsKillsEventHandler {
 
         Matcher contractKillPattern = PatternHandler.CONTRACT_REMOVED_PATTERN.matcher(msg);
         if (contractKillPattern.find()) {
-            if (contractKillPattern.group(1).equals(p.getName())) {
+            if (msg.contains(p.getName())) {
                 kills++;
                 APIRequest.sendStatisticAddKillRequest();
             }
