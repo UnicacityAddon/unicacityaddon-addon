@@ -1,6 +1,7 @@
 package com.rettichlp.UnicacityAddon.base.text;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
+import com.rettichlp.UnicacityAddon.events.faction.AEquipEventHandler;
 
 import java.util.regex.Pattern;
 
@@ -210,7 +211,7 @@ public class PatternHandler {
             "|^Verkäufer: Dieses Produkt kostet \\d+\\$\\.$" + "|^Verkäufer: Du hast leider nicht genug Geld dabei\\.$");
 
     /**
-     * {@link com.rettichlp.UnicacityAddon.events.AEquipEventHandler}
+     * {@link AEquipEventHandler}
      */
     public static final Pattern EQUIP_INTERRUPTED_PATTERN = Pattern.compile("^\\[Equip] Du bist nicht im Dienst\\.$");
 
