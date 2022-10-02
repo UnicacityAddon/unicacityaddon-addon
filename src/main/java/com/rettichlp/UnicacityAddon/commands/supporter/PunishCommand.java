@@ -5,10 +5,11 @@ import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
 import com.rettichlp.UnicacityAddon.base.punish.Punishment;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import com.rettichlp.UnicacityAddon.base.utils.ForgeUtils;
-import net.minecraft.command.CommandBase;
+import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.client.IClientCommand;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -21,7 +22,7 @@ import java.util.stream.Collectors;
  * @author Dimiikou
  */
 @UCCommand
-public class PunishCommand extends CommandBase {
+public class PunishCommand implements IClientCommand {
 
     @Override
     @Nonnull
@@ -67,11 +68,11 @@ public class PunishCommand extends CommandBase {
         if (punishment.getCheckpoints() > 0)
             p.sendChatMessage("/checkpoints " + args[0] + " " + punishment.getCheckpoints() + " " + reason);
         if (punishment.getBanDuration() > 0)
-            p.sendChatMessage("/tban " + args[0] + " " + getBanDurationString(banDuration) + " " + reason);
+            p.sendChatMessage("/tban " + args[0] + " 0 0 " + banDuration + " " + reason);
         if (punishment.getBanDuration() == -1) p.sendChatMessage("/ban " + args[0] + " " + reason);
         if (punishment.isLoyalityPointReset()) p.sendChatMessage("/resettreuebonus " + args[0]);
         if (punishment.getWeaponLock() > 0)
-            p.sendChatMessage("/waffensperre " + args[0] + " " + punishment.getWeaponLock() + " 0 0");
+            p.sendChatMessage("/waffensperre " + args[0] + " 0 0 " + punishment.getWeaponLock() * 24 * 60 + " " + reason);
         if (punishment.getFactionLock() > 0)
             p.sendChatMessage("/fraksperre " + args[0] + " " + punishment.getFactionLock() + " " + reason);
         if (punishment.isKick()) p.sendChatMessage("/kick " + args[0] + " " + reason);
@@ -98,6 +99,11 @@ public class PunishCommand extends CommandBase {
         }
     }
 
+    @Override
+    public boolean isUsernameIndex(@Nonnull String[] args, int index) {
+        return false;
+    }
+
     private String getBanDurationString(int banDuration) {
         int minutes = banDuration;
         int hours = minutes / 60;
@@ -113,5 +119,15 @@ public class PunishCommand extends CommandBase {
             if (punishment.getTabReason().equals(s)) return punishment;
         }
         return null;
+    }
+
+    @Override
+    public boolean allowUsageWithoutPrefix(ICommandSender sender, String message) {
+        return false;
+    }
+
+    @Override
+    public int compareTo(@Nonnull ICommand o) {
+        return 0;
     }
 }

@@ -1,4 +1,4 @@
-package com.rettichlp.UnicacityAddon.base.faction;
+package com.rettichlp.UnicacityAddon.base.io;
 
 /**
  * @author RettichLP
@@ -14,7 +14,9 @@ public enum ScreenshotType {
     VERHAFTUNG("verhaftung"),
     KORRUPTION("korruption"),
     TICKET("ticket"),
-    BLACKLIST("blacklist");
+    BLACKLIST("blacklist"),
+    NOTRUF("notruf"),
+    ANDERE("andere");
 
     private final String displayName;
 

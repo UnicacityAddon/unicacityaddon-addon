@@ -3,13 +3,17 @@ package com.rettichlp.UnicacityAddon.commands.faction.rettungsdienst;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
+import com.rettichlp.UnicacityAddon.base.utils.ForgeUtils;
 import com.rettichlp.UnicacityAddon.base.utils.MathUtils;
 import com.rettichlp.UnicacityAddon.events.faction.rettungsdienst.MedicationEventHandler;
-import net.minecraft.command.CommandBase;
+import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.client.IClientCommand;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
 
@@ -17,7 +21,7 @@ import java.util.List;
  * @author RettichLP
  */
 @UCCommand
-public class ARezeptAnnehmenCommand extends CommandBase {
+public class ARezeptAnnehmenCommand implements IClientCommand {
 
     public static int amount = 0;
 
@@ -45,6 +49,17 @@ public class ARezeptAnnehmenCommand extends CommandBase {
     }
 
     @Override
+    @Nonnull
+    public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
+        return ForgeUtils.getOnlinePlayers();
+    }
+
+    @Override
+    public boolean isUsernameIndex(@Nonnull String[] args, int index) {
+        return false;
+    }
+
+    @Override
     public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args) {
         UPlayer p = AbstractionLayer.getPlayer();
 
@@ -56,5 +71,15 @@ public class ARezeptAnnehmenCommand extends CommandBase {
         if (!MathUtils.isInteger(args[0])) return;
         amount = Integer.parseInt(args[0]);
         MedicationEventHandler.acceptRecipe();
+    }
+
+    @Override
+    public boolean allowUsageWithoutPrefix(ICommandSender sender, String message) {
+        return false;
+    }
+
+    @Override
+    public int compareTo(@Nonnull ICommand o) {
+        return 0;
     }
 }

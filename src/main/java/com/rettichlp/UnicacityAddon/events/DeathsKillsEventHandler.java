@@ -2,6 +2,7 @@ package com.rettichlp.UnicacityAddon.events;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
+import com.rettichlp.UnicacityAddon.base.api.request.APIRequest;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCEvent;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
@@ -24,21 +25,46 @@ public class DeathsKillsEventHandler {
     @SubscribeEvent
     public boolean onClientChatReceived(ClientChatReceivedEvent e) {
         String msg = e.getMessage().getUnformattedText();
-        Matcher m = PatternHandler.KILL_PATTERN.matcher(msg);
-        if (m.find()) {
-            if (Integer.parseInt(m.group(1)) < 6)
+        UPlayer p = AbstractionLayer.getPlayer();
+
+        Matcher karmaMatcher = PatternHandler.KILL_PATTERN.matcher(msg);
+
+        if (karmaMatcher.find()) {
+            if (Integer.parseInt(karmaMatcher.group(1)) < 6) {
                 kills++;
+                APIRequest.sendStatisticAddKillRequest();
+            }
+
+            return false;
+        }
+
+        Matcher jailKillMatcher = PatternHandler.WANTED_KILL.matcher(msg);
+        if (jailKillMatcher.find()) {
+            if (jailKillMatcher.group(2).equals(p.getName())) {
+                kills++;
+                APIRequest.sendStatisticAddKillRequest();
+            }
+
+            return false;
+        }
+
+        Matcher contractKillPattern = PatternHandler.CONTRACT_REMOVED_PATTERN.matcher(msg);
+        if (contractKillPattern.find()) {
+            if (contractKillPattern.group(1).equals(p.getName())) {
+                kills++;
+                APIRequest.sendStatisticAddKillRequest();
+            }
 
             return false;
         }
 
         if (PatternHandler.DEATH_PATTERN.matcher(msg).find()) {
             deaths++;
+            APIRequest.sendStatisticAddDeathRequest();
             return false;
         }
 
         if (PatternHandler.LAST_STATS_MESSAGE_PATTERN.matcher(msg).find()) {
-            UPlayer p = AbstractionLayer.getPlayer();
             final DecimalFormat format = new DecimalFormat("###0.0#");
 
             Message.getBuilder().of("  - ").color(ColorCode.DARK_GRAY).advance()

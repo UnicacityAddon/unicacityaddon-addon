@@ -2,7 +2,7 @@ package com.rettichlp.UnicacityAddon.base.json;
 
 public class TodolistEntry {
 
-    private String todo;
+    private final String todo;
     private boolean done;
 
     public TodolistEntry(String todo) {

@@ -1,8 +1,5 @@
 package com.rettichlp.UnicacityAddon.events.faction;
 
-import com.google.gson.Gson;
-import com.rettichlp.UnicacityAddon.base.json.Blacklist;
-import com.rettichlp.UnicacityAddon.base.io.FileManager;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCEvent;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
 import net.minecraft.util.text.ITextComponent;
@@ -10,11 +7,6 @@ import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -26,7 +18,6 @@ import java.util.regex.Matcher;
 @UCEvent
 public class BlacklistEventHandler {
 
-    public static Blacklist BLACKLIST;
     public static final Map<String, Boolean> BLACKLIST_MAP = new HashMap<>();
 
     private static long blacklistShown;
@@ -79,18 +70,6 @@ public class BlacklistEventHandler {
             String name = matcher.group(1);
 
             BLACKLIST_MAP.remove(name);
-        }
-    }
-
-    public static void refreshBlacklistReasons() {
-        try {
-            File blacklistDataFile = FileManager.getBlacklistDataFile();
-            if (blacklistDataFile == null) return;
-            BufferedReader reader = Files.newBufferedReader(Paths.get(blacklistDataFile.getAbsolutePath()));
-            Gson g = new Gson();
-            BLACKLIST = g.fromJson(reader, Blacklist.class);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
 }

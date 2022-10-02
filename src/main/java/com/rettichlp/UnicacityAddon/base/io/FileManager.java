@@ -8,6 +8,7 @@ import com.rettichlp.UnicacityAddon.commands.CoordlistCommand;
 import com.rettichlp.UnicacityAddon.commands.TodoListCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.ServiceCountCommand;
 import com.rettichlp.UnicacityAddon.events.DeathsKillsEventHandler;
+import com.rettichlp.UnicacityAddon.events.faction.rettungsdienst.FirstAidEventHandler;
 import com.rettichlp.UnicacityAddon.modules.BankMoneyModule;
 import com.rettichlp.UnicacityAddon.modules.CarOpenModule;
 import com.rettichlp.UnicacityAddon.modules.CashMoneyModule;
@@ -77,16 +78,6 @@ public class FileManager {
         return new File(getLabyModAddonDir().getAbsolutePath() + "/UnicacityAddon-" + UnicacityAddon.VERSION + ".jar");
     }
 
-    public static File getBlacklistDataFile() throws IOException {
-        if (getUnicacityAddonDir() == null) return null;
-        File blacklistDataFile = new File(getUnicacityAddonDir().getAbsolutePath() + "/blacklistData.json");
-        if (blacklistDataFile.exists() || blacklistDataFile.createNewFile()) return blacklistDataFile;
-
-        AbstractionLayer.getPlayer().sendErrorMessage("Datei 'blacklistData.json' wurde nicht gefunden!");
-
-        return null;
-    }
-
     public static File getDataFile() throws IOException {
         if (getUnicacityAddonDir() == null) return null;
         File dataFile = new File(getUnicacityAddonDir().getAbsolutePath() + "/data.json");
@@ -153,6 +144,7 @@ public class FileManager {
                 ServiceCountCommand.serviceCount = 0;
                 DeathsKillsEventHandler.deaths = 0;
                 DeathsKillsEventHandler.kills = 0;
+                FirstAidEventHandler.timeMilliesOnFirstAidReceipt = 0;
                 TodoListCommand.todolist = Collections.emptyList();
                 CoordlistCommand.coordlist = Collections.emptyList();
                 CarOpenModule.info = "";
@@ -168,6 +160,7 @@ public class FileManager {
             ServiceCountCommand.serviceCount = data.getServiceCount();
             DeathsKillsEventHandler.deaths = data.getDeaths();
             DeathsKillsEventHandler.kills = data.getKills();
+            FirstAidEventHandler.timeMilliesOnFirstAidReceipt = data.getFirstAidDate();
             TodoListCommand.todolist = data.getTodolist();
             CoordlistCommand.coordlist = data.getCoordlist();
             CarOpenModule.info = data.getCarInfo() == null ? Strings.EMPTY : data.getCarInfo();
@@ -176,6 +169,9 @@ public class FileManager {
         }
     }
 
+    /**
+     * Quote: "Wenn du keine Brüste hast, rede ich nicht mehr mit dir!" - Dimiikou, 25.09.2022
+     */
     public static void saveData() {
         try {
             File dataFile = FileManager.getDataFile();
@@ -187,6 +183,7 @@ public class FileManager {
             data.setJobBalance(JobModule.jobBalance);
             data.setJobExperience(JobModule.jobExperience);
             data.setPayDayTime(PayDayModule.currentTime);
+            data.setFirstAidDate(FirstAidEventHandler.timeMilliesOnFirstAidReceipt);
             data.setTodolist(TodoListCommand.todolist);
             data.setCoordlist(CoordlistCommand.coordlist);
             data.setCarInfo(CarOpenModule.info);

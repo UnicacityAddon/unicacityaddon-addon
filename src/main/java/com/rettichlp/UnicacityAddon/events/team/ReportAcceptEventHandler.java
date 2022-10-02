@@ -17,6 +17,7 @@ import java.util.TimerTask;
 public class ReportAcceptEventHandler {
 
     private static final Timer t = new Timer();
+    private long lastExecution = -1;
 
     @SubscribeEvent
     public boolean onClientChatReceive(ClientChatReceivedEvent e) {
@@ -27,7 +28,10 @@ public class ReportAcceptEventHandler {
         t.schedule(new TimerTask() {
             @Override
             public void run() {
-                AbstractionLayer.getPlayer().sendChatMessage(ConfigElements.getReportGreeting());
+                if (System.currentTimeMillis() - lastExecution > 1000L) {
+                    AbstractionLayer.getPlayer().sendChatMessage(ConfigElements.getReportGreeting());
+                    lastExecution = System.currentTimeMillis();
+                }
             }
         }, 1000);
 

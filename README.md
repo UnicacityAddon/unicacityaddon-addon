@@ -22,7 +22,7 @@ There are no development versions available for installation. If such want to be
    ![image](https://user-images.githubusercontent.com/97811064/184894304-0851e2d1-928b-4379-9026-490760c5925f.png)
 5. Heruntergeladene `.jar` Datei in diesen Ordner verschieben.<br>
    ![image](https://user-images.githubusercontent.com/97811064/184894050-1f36337a-18a1-4247-876f-039f7b2a39d0.png)
-6. Fertig! Jetzt nur noch Minecraft neustarten.
+6. Fertig! Jetzt nur noch Minecraft neu starten.
 
 ## Contribute
 

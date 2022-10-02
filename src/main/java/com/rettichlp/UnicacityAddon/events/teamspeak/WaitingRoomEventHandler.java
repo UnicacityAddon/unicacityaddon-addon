@@ -14,6 +14,8 @@ import net.minecraft.util.text.event.HoverEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+import static com.rettichlp.UnicacityAddon.base.utils.DebugUtils.Debug;
+
 /**
  * @author Fuzzlemann, RettichLP
  */
@@ -23,7 +25,6 @@ public class WaitingRoomEventHandler {
 
     @SubscribeEvent
     public static void onClientMoved(ClientMovedEvent e) {
-        //System.out.println(0);
         UPlayer p = AbstractionLayer.getPlayer();
 
         if (!UnicacityAddon.isUnicacity()) return;
@@ -80,7 +81,7 @@ public class WaitingRoomEventHandler {
                         .advance()
                     .createComponent());
 
-            System.out.println("[DEBUG] EnterPublicChannel: " + name);
+            Debug(WaitingRoomEventHandler.class, "Entered public channel: " + name);
         }).start();
     }
 }

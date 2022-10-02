@@ -5,10 +5,11 @@ import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
 import com.rettichlp.UnicacityAddon.base.aktien.Aktie;
 import com.rettichlp.UnicacityAddon.base.aktien.AktienManager;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
-import net.minecraft.command.CommandBase;
+import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.client.IClientCommand;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -21,7 +22,7 @@ import java.util.stream.Collectors;
  * @author RettichLP
  */
 @UCCommand
-public class AktienRemoveCommand extends CommandBase {
+public class AktienRemoveCommand implements IClientCommand {
 
     @Override
     @Nonnull
@@ -74,5 +75,20 @@ public class AktienRemoveCommand extends CommandBase {
         String input = args[args.length - 1].toLowerCase();
         tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
         return tabCompletions;
+    }
+
+    @Override
+    public boolean isUsernameIndex(@Nonnull String[] args, int index) {
+        return false;
+    }
+
+    @Override
+    public boolean allowUsageWithoutPrefix(ICommandSender sender, String message) {
+        return false;
+    }
+
+    @Override
+    public int compareTo(@Nonnull ICommand o) {
+        return 0;
     }
 }

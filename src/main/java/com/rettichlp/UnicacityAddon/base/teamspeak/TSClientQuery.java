@@ -24,7 +24,6 @@ import java.nio.charset.StandardCharsets;
 public class TSClientQuery implements Closeable {
 
     private static TSClientQuery instance;
-    private final String apiKey;
     private Socket socket;
     private volatile ClientQueryWriter writer;
     private volatile ClientQueryReader reader;
@@ -32,13 +31,12 @@ public class TSClientQuery implements Closeable {
     private volatile boolean authenticated;
     private volatile int schandlerID;
 
-    private TSClientQuery(String apiKey) {
-        this.apiKey = apiKey;
+    private TSClientQuery() {
     }
 
     public static TSClientQuery getInstance() {
         if (instance == null) {
-            instance = new TSClientQuery(ConfigElements.getTeamspeakAPIKey());
+            instance = new TSClientQuery();
             try {
                 instance.connect();
             } catch (IOException e) {
@@ -96,10 +94,7 @@ public class TSClientQuery implements Closeable {
     }
 
     private void authenticate() {
-        if (apiKey.length() != 29)
-            throw new ClientQueryAuthenticationException("API Key was not entered correctly (apiKey.length() != 29)");
-
-        AuthCommand authCommand = new AuthCommand(apiKey);
+        AuthCommand authCommand = new AuthCommand(ConfigElements.getTeamspeakAPIKey());
         authCommand.execute(this);
 
         CommandResponse response = authCommand.getResponse();

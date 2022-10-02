@@ -4,10 +4,6 @@ import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
 import com.rettichlp.UnicacityAddon.base.utils.WebsiteUtils;
 
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 /**
  * @author RettichLP
  */
@@ -39,13 +35,13 @@ public enum Faction {
             .of("◤").color(ColorCode.DARK_GRAY).advance()
             .of("⚜").color(ColorCode.DARK_AQUA).advance()
             .of("◢").color(ColorCode.DARK_GRAY).advance().create()),
+    LEMILIEU("", "Le Milieu", "France", 179, Message.getBuilder() // TODO: 02.10.2022 Add Le Milieu website
+            .of("◤").color(ColorCode.DARK_GRAY).advance()
+            .of("Ⓜ").color(ColorCode.DARK_AQUA).advance()
+            .of("◢").color(ColorCode.DARK_GRAY).advance().create()),
     OBRIEN("obrien", "O'brien", "Obrien", 191, Message.getBuilder()
             .of("◤").color(ColorCode.DARK_GRAY).advance()
             .of("☘").color(ColorCode.DARK_GREEN).advance()
-            .of("◢").color(ColorCode.DARK_GRAY).advance().create()),
-    TRIADEN("triaden", "Triaden", "Triaden", 179, Message.getBuilder()
-            .of("◤").color(ColorCode.DARK_GRAY).advance()
-            .of("是").color(ColorCode.RED).advance()
             .of("◢").color(ColorCode.DARK_GRAY).advance().create()),
     WESTSIDEBALLAS("westsideballas", "Westside Ballas", "Gang", 142, Message.getBuilder()
             .of("◤").color(ColorCode.DARK_GRAY).advance()
@@ -105,14 +101,7 @@ public enum Faction {
     }
 
     public String getWebsiteSource() {
-        return WebsiteUtils.websiteToString(this.getWebsiteUrl());
-    }
-
-    public List<String> getMember() {
-        return FactionHandler.getPlayerFactionMap().entrySet().stream()
-                .filter(entry -> entry.getValue().equals(this))
-                .map(Map.Entry::getKey)
-                .collect(Collectors.toList());
+        return WebsiteUtils.websiteToString(this.getWebsiteUrl()).getKey();
     }
 
     public static Faction getFactionByFactionKey(String s) {

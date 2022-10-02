@@ -2,6 +2,7 @@ package com.rettichlp.UnicacityAddon.commands.teamspeak;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
+import com.rettichlp.UnicacityAddon.base.config.ConfigElements;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import com.rettichlp.UnicacityAddon.base.teamspeak.TSUtils;
 import com.rettichlp.UnicacityAddon.base.teamspeak.commands.ChannelListCommand;
@@ -10,10 +11,11 @@ import com.rettichlp.UnicacityAddon.base.teamspeak.objects.Client;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
 import com.rettichlp.UnicacityAddon.base.utils.ForgeUtils;
-import net.minecraft.command.CommandBase;
+import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.client.IClientCommand;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -24,7 +26,7 @@ import java.util.List;
  * @author Fuzzlemann, RettichLP
  */
 @UCCommand
-public class TSFindCommand extends CommandBase {
+public class TSFindCommand implements IClientCommand {
 
     @Override
     @Nonnull
@@ -58,10 +60,12 @@ public class TSFindCommand extends CommandBase {
             return;
         }
 
-        String name = args[0];
+        if (!ConfigElements.getTeamspeakAPIKey().matches("([A-Z0-9]{4}(-*)){6}")) {
+            p.sendErrorMessage("Teamspeak API Key ist nicht gültig!");
+            return;
+        }
 
-        // List<String> names = MojangAPI.getEarlierNames(name);
-        // List<Client> clients = TSUtils.getClientsByName(names);
+        String name = args[0];
 
         List<Client> clients = TSUtils.getClientsByName(Collections.singletonList(name));
         if (clients.isEmpty()) {
@@ -92,5 +96,20 @@ public class TSFindCommand extends CommandBase {
         String input = args[args.length - 1].toLowerCase();
         tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
         return tabCompletions;
+    }
+
+    @Override
+    public boolean isUsernameIndex(@Nonnull String[] args, int index) {
+        return false;
+    }
+
+    @Override
+    public boolean allowUsageWithoutPrefix(ICommandSender sender, String message) {
+        return false;
+    }
+
+    @Override
+    public int compareTo(@Nonnull ICommand o) {
+        return 0;
     }
 }
