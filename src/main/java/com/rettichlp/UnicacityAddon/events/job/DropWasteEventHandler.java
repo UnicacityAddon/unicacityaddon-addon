@@ -37,10 +37,10 @@ public class DropWasteEventHandler {
         if (System.currentTimeMillis() - lastUse < 1000) return;
         lastUse = System.currentTimeMillis();
 
-        if ((blockPos.getDistance(DropPositions.GLAS_DROP_POSITION.x, DropPositions.GLAS_DROP_POSITION.y, DropPositions.GLAS_DROP_POSITION.z) < 1.5)
-                || (blockPos.getDistance(DropPositions.WASTE_DROP_POSITION.x, DropPositions.WASTE_DROP_POSITION.y, DropPositions.WASTE_DROP_POSITION.z) < 1.5)
-                || (blockPos.getDistance(DropPositions.METAL_DROP_POSITION.x, DropPositions.METAL_DROP_POSITION.y, DropPositions.METAL_DROP_POSITION.z) < 1.5)
-                || (blockPos.getDistance(DropPositions.WOOD_DROP_POSITION.x, DropPositions.WOOD_DROP_POSITION.y, DropPositions.WOOD_DROP_POSITION.z) < 1.5))
+        if ((blockPos.getDistance(DropPositions.GLAS_DROP_POSITION.x, DropPositions.GLAS_DROP_POSITION.y, DropPositions.GLAS_DROP_POSITION.z) < 3)
+                || (blockPos.getDistance(DropPositions.WASTE_DROP_POSITION.x, DropPositions.WASTE_DROP_POSITION.y, DropPositions.WASTE_DROP_POSITION.z) < 3)
+                || (blockPos.getDistance(DropPositions.METAL_DROP_POSITION.x, DropPositions.METAL_DROP_POSITION.y, DropPositions.METAL_DROP_POSITION.z) < 3)
+                || (blockPos.getDistance(DropPositions.WOOD_DROP_POSITION.x, DropPositions.WOOD_DROP_POSITION.y, DropPositions.WOOD_DROP_POSITION.z) < 3))
             dropWaste();
     }
 
