@@ -16,10 +16,6 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
-      - name: Get complete NaviPoint file
-        env:
-          LINK_TO_COMPLETE_NAVIPOINT: ${{ secrets.LINK_TO_COMPLETE_NAVIPOINT }}
-        run: curl "$LINK_TO_COMPLETE_NAVIPOINT" -o ./src/main/java/com/rettichlp/UnicacityAddon/base/location/NaviPoint.java
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: Build with Gradle
