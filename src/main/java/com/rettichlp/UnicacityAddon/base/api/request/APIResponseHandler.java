@@ -16,17 +16,17 @@ import static com.rettichlp.UnicacityAddon.base.utils.DebugUtils.Debug;
 public class APIResponseHandler {
 
     public static JsonArray getBlacklistResponse(Map<String, String> parameters) throws APIUnsuccessResponseException {
-        String urlString = WebsiteUtils.createUrl(BaseUrl.BLACKLISTREASON.getPath(), parameters);
+        String urlString = WebsiteUtils.createUrl(BaseUrl.BLACKLISTREASON.getFactionPath(), parameters);
         return getJsonElement(urlString).getAsJsonArray();
     }
 
     public static JsonObject getBlacklistAddResponse(Map<String, String> parameters) throws APIUnsuccessResponseException {
-        String urlString = WebsiteUtils.createUrl(BaseUrl.BLACKLISTREASON.getAddPath(), parameters);
+        String urlString = WebsiteUtils.createUrl(BaseUrl.BLACKLISTREASON.getFactionAddPath(), parameters);
         return getJsonElement(urlString).getAsJsonObject();
     }
 
     public static JsonObject getBlacklistRemoveResponse(Map<String, String> parameters) throws APIUnsuccessResponseException {
-        String urlString = WebsiteUtils.createUrl(BaseUrl.BLACKLISTREASON.getRemovePath(), parameters);
+        String urlString = WebsiteUtils.createUrl(BaseUrl.BLACKLISTREASON.getFactionRemovePath(), parameters);
         return getJsonElement(urlString).getAsJsonObject();
     }
 

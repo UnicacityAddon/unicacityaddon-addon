@@ -39,7 +39,7 @@ public class BlacklistReasonCommand implements IClientCommand {
     @Override
     @Nonnull
     public String getUsage(@Nonnull ICommandSender sender) {
-        return "/blacklistreason (add|remove) (Name) (Grund)";
+        return "/blacklistreason (add|remove) (Grund) (Preis) (Kills)";
     }
 
     @Override

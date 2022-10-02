@@ -5,7 +5,7 @@ import com.rettichlp.UnicacityAddon.base.api.TokenManager;
 
 public enum BaseUrl {
 
-    BLACKLISTREASON("/blacklistreason/" + AbstractionLayer.getPlayer().getFaction()),
+    BLACKLISTREASON("/blacklistreason"),
     BROADCAST_QUEUE("/broadcast/queue"),
     BROADCAST_SEND("/broadcast/send"),
     HOUSEBAN("/houseban"),
@@ -38,5 +38,17 @@ public enum BaseUrl {
 
     public String getRemovePath() {
         return getPath() + "/remove";
+    }
+
+    public String getFactionPath() {
+        return getPath() + "/" + AbstractionLayer.getPlayer().getFaction();
+    }
+
+    public String getFactionAddPath() {
+        return getFactionPath() + "/add";
+    }
+
+    public String getFactionRemovePath() {
+        return getFactionPath() + "/remove";
     }
 }
