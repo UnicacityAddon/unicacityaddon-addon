@@ -366,7 +366,7 @@ public class ConfigElements {
                 .getAsBoolean(); // default = false
     }
 
-    public static boolean automaticReinfscreen() {
+    public static boolean getReinforcementScreenshot() {
         return !UnicacityAddon.ADDON.getConfig().has("REINFORCEMENT_SCREENSHOT_SETTINGS") || UnicacityAddon.ADDON.getConfig().get("REINFORCEMENT_SCREENSHOT_SETTINGS")
                 .getAsBoolean(); // default = true
     }

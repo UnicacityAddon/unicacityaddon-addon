@@ -55,7 +55,7 @@ public class ConfigSettings {
         StringElement reinforcementReplySettings = new StringElement("Reinforcement Antwort", unicacityAddon, new ControlElement.IconData(Material.BOOK_AND_QUILL), "REINFORCEMENT_REPLY_SETTINGS", ConfigElements.getPatternReinforcementReply());
         settings.add(reinforcementReplySettings);
 
-        BooleanElement automaticReinfscreen = new BooleanElement("Reinforcement Screenshot", unicacityAddon, new ControlElement.IconData(Material.LEATHER), "REINFORCEMENT_SCREENSHOT_SETTINGS", ConfigElements.automaticReinfscreen());
+        BooleanElement automaticReinfscreen = new BooleanElement("Reinforcement Screenshot", unicacityAddon, new ControlElement.IconData(Material.LEATHER), "REINFORCEMENT_SCREENSHOT_SETTINGS", ConfigElements.getReinforcementScreenshot());
         settings.add(automaticReinfscreen);
 
         return settings;

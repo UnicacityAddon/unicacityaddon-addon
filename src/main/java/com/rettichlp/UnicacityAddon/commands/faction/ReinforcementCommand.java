@@ -81,7 +81,7 @@ public class ReinforcementCommand implements IClientCommand {
             p.sendChatMessage(chatType.getChatCommand() + " " + name + ", ich bin zu deinem Verstärkungsruf unterwegs! (" + (int) p.getPosition().getDistance(x, y, z) + " Meter entfernt)");
             NavigationUtils.stopRoute();
             p.setNaviRoute(x, y, z);
-            if (ConfigElements.automaticReinfscreen()) {
+            if (ConfigElements.getReinforcementScreenshot()) {
                 try {
                     File file = FileManager.getNewActivityImageFile("reinforcement");
                     HotkeyEventHandler.handleScreenshot(file);
