@@ -94,9 +94,6 @@ public class TSClientQuery implements Closeable {
     }
 
     private void authenticate() {
-        // if (apiKey.length() != 29)
-        //     throw new ClientQueryAuthenticationException("API Key was not entered correctly (apiKey.length() != 29)");
-
         AuthCommand authCommand = new AuthCommand(ConfigElements.getTeamspeakAPIKey());
         authCommand.execute(this);
 

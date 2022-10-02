@@ -2,7 +2,8 @@ package com.rettichlp.UnicacityAddon.commands.faction.polizei;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
-import com.rettichlp.UnicacityAddon.base.faction.polizei.WantedReason;
+import com.rettichlp.UnicacityAddon.base.api.Syncer;
+import com.rettichlp.UnicacityAddon.base.api.entries.WantedReasonEntry;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import com.rettichlp.UnicacityAddon.base.utils.ForgeUtils;
 import com.rettichlp.UnicacityAddon.base.utils.MathUtils;
@@ -59,7 +60,6 @@ public class ASUCommand implements IClientCommand {
     @Override
     public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args) {
         UPlayer p = AbstractionLayer.getPlayer();
-
         if (args.length < 2) {
             p.sendSyntaxMessage(getUsage(sender));
             return;
@@ -67,24 +67,16 @@ public class ASUCommand implements IClientCommand {
 
         Set<Flag> flags = getFlags(args);
         int reasonIndex = args.length - flags.size() - 1;
-
         List<String> players = Arrays.asList(args).subList(0, reasonIndex);
-        String reason = args[reasonIndex];
 
-        WantedReason wantedReason = null;
-        for (WantedReason wanted : WantedReason.values()) {
-            if (wanted.getReason().equals(reason)) {
-                wantedReason = wanted;
-            }
-        }
-
-        if (wantedReason == null) {
+        WantedReasonEntry wantedReasonEntry = WantedReasonEntry.getWantedReasonEntryByReason(args[reasonIndex]);
+        if (wantedReasonEntry == null) {
             p.sendErrorMessage("Der Wantedgrund wurde nicht gefunden!");
             return;
         }
 
-        String wantedReasonString = wantedReason.getReason().replace('-', ' ');
-        int wantedReasonAmount = wantedReason.getAmount();
+        String wantedReasonString = wantedReasonEntry.getReason().replace("-", " ");
+        int wantedReasonAmount = wantedReasonEntry.getPoints();
 
         for (Flag flag : flags) {
             wantedReasonString = flag.modifyWantedReasonString(wantedReasonString);
@@ -123,26 +115,18 @@ public class ASUCommand implements IClientCommand {
     @Override
     @Nonnull
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
-        if (args.length == 1) {
-            List<String> tabCompletions = ForgeUtils.getOnlinePlayers();
-            String input = args[args.length - 1].toLowerCase();
-            tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
-            return tabCompletions;
-        } else {
-            List<String> tabCompletions = Arrays.stream(WantedReason.values()).map(WantedReason::getReason).sorted().collect(Collectors.toList());
-            tabCompletions.addAll(ForgeUtils.getOnlinePlayers());
-
-            String input = args[args.length - 1].toLowerCase();
-            tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
-
-            tabCompletions.addAll(Arrays.stream(Flag.values()).map(Flag::getFlagArgument).sorted().collect(Collectors.toList()));
-
-            return tabCompletions;
+        List<String> tabCompletions = ForgeUtils.getOnlinePlayers();
+        if (args.length > 1) {
+            tabCompletions.addAll(Syncer.getWantedReasonEntryList().stream().map(WantedReasonEntry::getReason).sorted().collect(Collectors.toList()));
         }
+        String input = args[args.length - 1].toLowerCase();
+        tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
+        tabCompletions.addAll(Arrays.stream(Flag.values()).map(Flag::getFlagArgument).sorted().collect(Collectors.toList()));
+        return tabCompletions;
     }
 
     @Override
-    public boolean isUsernameIndex(String[] args, int index) {
+    public boolean isUsernameIndex(@Nonnull String[] args, int index) {
         return false;
     }
 
@@ -165,7 +149,7 @@ public class ASUCommand implements IClientCommand {
     }
 
     @Override
-    public int compareTo(ICommand o) {
+    public int compareTo(@Nonnull ICommand o) {
         return 0;
     }
 

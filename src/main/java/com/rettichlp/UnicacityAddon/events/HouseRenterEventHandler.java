@@ -28,14 +28,14 @@ import java.util.regex.Matcher;
 @UCEvent
 public class HouseRenterEventHandler {
 
-    public static Map<Integer, Map.Entry<Integer, Integer>> HOUSE_RENTER_MAP = new HashMap<>();
+    public static final Map<Integer, Map.Entry<Integer, Integer>> HOUSE_RENTER_MAP = new HashMap<>();
 
     private int lastHouseNumber = 0;
     private int lastRenterAmount = 0;
 
     private int lastRenterOnlineAmount = 0;
 
-    Timer TIMER = new Timer();
+    final Timer TIMER = new Timer();
 
     @SubscribeEvent
     public boolean onClientChatReceived(ClientChatEvent e) {

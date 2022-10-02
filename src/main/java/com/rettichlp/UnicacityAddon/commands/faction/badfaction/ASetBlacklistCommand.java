@@ -2,10 +2,10 @@ package com.rettichlp.UnicacityAddon.commands.faction.badfaction;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
-import com.rettichlp.UnicacityAddon.base.json.BlacklistEntry;
+import com.rettichlp.UnicacityAddon.base.api.Syncer;
+import com.rettichlp.UnicacityAddon.base.api.entries.BlacklistReasonEntry;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import com.rettichlp.UnicacityAddon.base.utils.ForgeUtils;
-import com.rettichlp.UnicacityAddon.events.faction.BlacklistEventHandler;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
@@ -16,6 +16,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author RettichLP
@@ -54,31 +55,23 @@ public class ASetBlacklistCommand implements IClientCommand {
             return;
         }
 
-        if (BlacklistEventHandler.BLACKLIST == null) {
-            p.sendErrorMessage("Datei 'blacklistData.json' ist falsch formatiert!");
-            return;
-        }
-
-        String reason = args[args.length - 1];
-        BlacklistEntry ble = BlacklistEventHandler.BLACKLIST.getBlackListEntryByReason(reason);
-
-        if (ble == null) {
-            p.sendErrorMessage("Blacklistgrund wurde nicht gefunden!");
+        BlacklistReasonEntry blacklistReasonEntry = BlacklistReasonEntry.getBlacklistReasonEntryByReason(args[args.length - 1]);
+        if (blacklistReasonEntry == null) {
+            p.sendErrorMessage("Der Blacklistgrund wurde nicht gefunden!");
             return;
         }
 
         for (int i = 0; i < args.length - 1; i++) {
-            p.sendChatMessage("/bl set " + args[i] + " " + ble.getKills() + " " + ble.getPrice() + " " + ble.getReason().replace("-", " "));
+            p.sendChatMessage("/bl set " + args[i] + " " + blacklistReasonEntry.getKills() + " " + blacklistReasonEntry.getPrice() + " " + blacklistReasonEntry.getReason().replace("-", " "));
         }
     }
 
     @Override
     @Nonnull
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
-        BlacklistEventHandler.refreshBlacklistReasons();
         List<String> tabCompletions = ForgeUtils.getOnlinePlayers();
-        if (args.length > 1 && BlacklistEventHandler.BLACKLIST != null) {
-            tabCompletions.addAll(BlacklistEventHandler.BLACKLIST.getBlacklistReasons());
+        if (args.length > 1) {
+            tabCompletions.addAll(Syncer.getBlacklistReasonEntryList().stream().map(BlacklistReasonEntry::getReason).sorted().collect(Collectors.toList()));
         }
         String input = args[args.length - 1].toLowerCase();
         tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
@@ -86,7 +79,7 @@ public class ASetBlacklistCommand implements IClientCommand {
     }
 
     @Override
-    public boolean isUsernameIndex(String[] args, int index) {
+    public boolean isUsernameIndex(@Nonnull String[] args, int index) {
         return false;
     }
 
@@ -96,7 +89,7 @@ public class ASetBlacklistCommand implements IClientCommand {
     }
 
     @Override
-    public int compareTo(ICommand o) {
+    public int compareTo(@Nonnull ICommand o) {
         return 0;
     }
 }

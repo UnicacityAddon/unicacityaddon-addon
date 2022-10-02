@@ -39,8 +39,5 @@ public class TSConsole implements TSListener {
 
     @EventHandler
     public void onClientMoved(ClientMovedEvent e) {
-        System.out.println("e.getClientID() = " + e.getClientID());
-        System.out.println("e.getTargetChannelID() = " + e.getTargetChannelID());
-        System.out.println("e.getInvokerName() = " + e.getInvokerName());
     }
 }

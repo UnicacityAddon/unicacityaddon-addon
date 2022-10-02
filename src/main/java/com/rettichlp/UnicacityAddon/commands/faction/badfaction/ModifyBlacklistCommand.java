@@ -2,10 +2,10 @@ package com.rettichlp.UnicacityAddon.commands.faction.badfaction;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
-import com.rettichlp.UnicacityAddon.base.json.BlacklistEntry;
+import com.rettichlp.UnicacityAddon.base.api.Syncer;
+import com.rettichlp.UnicacityAddon.base.api.entries.BlacklistReasonEntry;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import com.rettichlp.UnicacityAddon.base.utils.ForgeUtils;
-import com.rettichlp.UnicacityAddon.events.faction.BlacklistEventHandler;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
@@ -16,6 +16,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Dimiikou
@@ -25,7 +26,7 @@ public class ModifyBlacklistCommand implements IClientCommand {
 
     public static String target;
     public static ModifyBlacklistType type;
-    public static BlacklistEntry addReason;
+    public static BlacklistReasonEntry addReason;
     public static long executedTime = -1;
 
     @Override
@@ -61,15 +62,16 @@ public class ModifyBlacklistCommand implements IClientCommand {
         }
 
         String reason = args[1];
-        BlacklistEntry ble = BlacklistEventHandler.BLACKLIST.getBlackListEntryByReason(reason);
-        if (!reason.equalsIgnoreCase("-v") && ble == null) {
+
+        BlacklistReasonEntry blacklistReasonEntry = BlacklistReasonEntry.getBlacklistReasonEntryByReason(reason);
+        if (!reason.equalsIgnoreCase("-v") && blacklistReasonEntry == null) {
             p.sendErrorMessage("Blacklistgrund wurde nicht gefunden!");
             return;
         }
 
         target = args[0];
-        if (ble != null) {
-            addReason = ble;
+        if (blacklistReasonEntry != null) {
+            addReason = blacklistReasonEntry;
             type = ModifyBlacklistType.MODIFY_REASON;
         } else {
             type = ModifyBlacklistType.OUTLAW;
@@ -83,20 +85,18 @@ public class ModifyBlacklistCommand implements IClientCommand {
     @Override
     @Nonnull
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
-        BlacklistEventHandler.refreshBlacklistReasons();
         List<String> tabCompletions = ForgeUtils.getOnlinePlayers();
-        if (args.length > 1 && BlacklistEventHandler.BLACKLIST != null) {
-            tabCompletions.addAll(BlacklistEventHandler.BLACKLIST.getBlacklistReasons());
+        if (args.length > 1) {
+            tabCompletions.addAll(Syncer.getBlacklistReasonEntryList().stream().map(BlacklistReasonEntry::getReason).sorted().collect(Collectors.toList()));
             tabCompletions.add("-v");
         }
-
         String input = args[args.length - 1].toLowerCase();
         tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
         return tabCompletions;
     }
 
     @Override
-    public boolean isUsernameIndex(String[] args, int index) {
+    public boolean isUsernameIndex(@Nonnull String[] args, int index) {
         return false;
     }
 
@@ -106,7 +106,7 @@ public class ModifyBlacklistCommand implements IClientCommand {
     }
 
     @Override
-    public int compareTo(ICommand o) {
+    public int compareTo(@Nonnull ICommand o) {
         return 0;
     }
 
@@ -114,5 +114,4 @@ public class ModifyBlacklistCommand implements IClientCommand {
         MODIFY_REASON,
         OUTLAW
     }
-
 }

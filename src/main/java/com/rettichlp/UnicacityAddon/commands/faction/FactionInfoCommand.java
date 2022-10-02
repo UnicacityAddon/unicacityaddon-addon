@@ -1,4 +1,4 @@
-package com.rettichlp.UnicacityAddon.commands;
+package com.rettichlp.UnicacityAddon.commands.faction;
 
 import com.google.common.util.concurrent.Uninterruptibles;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
@@ -105,7 +105,7 @@ public class FactionInfoCommand implements IClientCommand {
     }
 
     @Override
-    public boolean isUsernameIndex(String[] args, int index) {
+    public boolean isUsernameIndex(@Nonnull String[] args, int index) {
         return false;
     }
 
@@ -128,7 +128,7 @@ public class FactionInfoCommand implements IClientCommand {
     }
 
     @Override
-    public int compareTo(ICommand o) {
+    public int compareTo(@Nonnull ICommand o) {
         return 0;
     }
 }

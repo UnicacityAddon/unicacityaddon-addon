@@ -1,8 +1,8 @@
 package com.rettichlp.UnicacityAddon.base.abstraction;
 
 import com.rettichlp.UnicacityAddon.UnicacityAddon;
+import com.rettichlp.UnicacityAddon.base.api.Syncer;
 import com.rettichlp.UnicacityAddon.base.faction.Faction;
-import com.rettichlp.UnicacityAddon.base.faction.FactionHandler;
 import com.rettichlp.UnicacityAddon.base.faction.rettungsdienst.Medication;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
@@ -26,6 +26,8 @@ import java.awt.datatransfer.StringSelection;
 import java.util.Objects;
 import java.util.UUID;
 
+import static com.rettichlp.UnicacityAddon.base.utils.DebugUtils.Debug;
+
 /**
  * @author RettichLP
  * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/base/abstraction/UPlayerImpl.java">UCUtils by paulzhng</a>
@@ -45,7 +47,7 @@ public class UPlayerImpl implements UPlayer {
     @Override
     public void sendMessage(ITextComponent textComponent) {
         if (!UnicacityAddon.ADDON.getApi().isIngame()) {
-            System.out.println("UPlayer nicht im Spiel! Nachricht abgebrochen.");
+            Debug(UPlayerImpl.class, "UPlayer not in game! Aborting message.");
             return;
         }
         getPlayer().sendMessage(textComponent);
@@ -78,6 +80,16 @@ public class UPlayerImpl implements UPlayer {
     }
 
     @Override
+    public void sendAPIMessage(String message, boolean success) {
+        sendMessage(Message.getBuilder()
+                .prefix()
+                .of("API Response:").color(ColorCode.GRAY).advance().space()
+                .of(message).color(success ? ColorCode.GREEN : ColorCode.RED).advance()
+                .createComponent());
+        Debug(UPlayerImpl.class, "API Response: " + message);
+    }
+
+    @Override
     public void sendEmptyMessage() {
         getPlayer().sendMessage(Message.getBuilder().createComponent());
     }
@@ -85,7 +97,7 @@ public class UPlayerImpl implements UPlayer {
     @Override
     public void sendChatMessage(String message) {
         getPlayer().sendChatMessage(message);
-        System.out.println("UPlayer send chat message: " + message);
+        Debug(UPlayerImpl.class, "UPlayer sent chat message: " + message);
     }
 
     @Override
@@ -152,7 +164,7 @@ public class UPlayerImpl implements UPlayer {
 
     @Override
     public Faction getFaction() {
-        return FactionHandler.getPlayerFactionMap().get(getName());
+        return Syncer.getPlayerFactionMap().get(getName());
     }
 
     @Override

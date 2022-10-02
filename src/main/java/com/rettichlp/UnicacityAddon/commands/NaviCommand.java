@@ -2,7 +2,8 @@ package com.rettichlp.UnicacityAddon.commands;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
-import com.rettichlp.UnicacityAddon.base.location.NaviPoint;
+import com.rettichlp.UnicacityAddon.base.api.Syncer;
+import com.rettichlp.UnicacityAddon.base.api.entries.NaviPointEntry;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import com.rettichlp.UnicacityAddon.base.utils.MathUtils;
 import com.rettichlp.UnicacityAddon.base.utils.TextUtils;
@@ -14,7 +15,6 @@ import net.minecraftforge.client.IClientCommand;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -61,34 +61,27 @@ public class NaviCommand implements IClientCommand {
             return;
         }
 
-        NaviPoint naviPoint = getNaviPointByName(args[0].trim().replace(" ", "-"));
-        if (naviPoint == null) {
+        NaviPointEntry naviPointEntry = NaviPointEntry.getNaviPointEntryByTabName(args[0].trim());
+        if (naviPointEntry == null) {
             p.sendChatMessage("/navi " + TextUtils.makeStringByArgs(args, " "));
             return;
         }
 
-        p.setNaviRoute(naviPoint.getBlockPos());
+        p.setNaviRoute(naviPointEntry.getBlockPos());
     }
 
     @Override
     @Nonnull
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
-        List<String> tabCompletions = Arrays.stream(NaviPoint.values()).map(NaviPoint::getTabName).sorted().collect(Collectors.toList());
+        List<String> tabCompletions = Syncer.getNaviPointEntryList().stream().map(NaviPointEntry::getName).sorted().collect(Collectors.toList());
         String input = args[args.length - 1].toLowerCase();
         tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
         return tabCompletions;
     }
 
     @Override
-    public boolean isUsernameIndex(String[] args, int index) {
+    public boolean isUsernameIndex(@Nonnull String[] args, int index) {
         return false;
-    }
-
-    private NaviPoint getNaviPointByName(String s) {
-        for (NaviPoint naviPoint : NaviPoint.values()) {
-            if (naviPoint.getTabName().equals(s)) return naviPoint;
-        }
-        return null;
     }
 
     @Override
@@ -97,7 +90,7 @@ public class NaviCommand implements IClientCommand {
     }
 
     @Override
-    public int compareTo(ICommand o) {
+    public int compareTo(@Nonnull ICommand o) {
         return 0;
     }
 }

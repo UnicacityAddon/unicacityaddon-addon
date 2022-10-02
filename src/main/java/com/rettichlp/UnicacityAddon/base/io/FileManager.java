@@ -78,16 +78,6 @@ public class FileManager {
         return new File(getLabyModAddonDir().getAbsolutePath() + "/UnicacityAddon-" + UnicacityAddon.VERSION + ".jar");
     }
 
-    public static File getBlacklistDataFile() throws IOException {
-        if (getUnicacityAddonDir() == null) return null;
-        File blacklistDataFile = new File(getUnicacityAddonDir().getAbsolutePath() + "/blacklistData.json");
-        if (blacklistDataFile.exists() || blacklistDataFile.createNewFile()) return blacklistDataFile;
-
-        AbstractionLayer.getPlayer().sendErrorMessage("Datei 'blacklistData.json' wurde nicht gefunden!");
-
-        return null;
-    }
-
     public static File getDataFile() throws IOException {
         if (getUnicacityAddonDir() == null) return null;
         File dataFile = new File(getUnicacityAddonDir().getAbsolutePath() + "/data.json");
@@ -179,6 +169,9 @@ public class FileManager {
         }
     }
 
+    /**
+     * Quote: "Wenn du keine Brüste hast, rede ich nicht mehr mit dir!" - Dimiikou, 25.09.2022
+     */
     public static void saveData() {
         try {
             File dataFile = FileManager.getDataFile();

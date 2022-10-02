@@ -1,7 +1,7 @@
 package com.rettichlp.UnicacityAddon.commands;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
-import com.rettichlp.UnicacityAddon.base.faction.FactionHandler;
+import com.rettichlp.UnicacityAddon.base.api.Syncer;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import com.rettichlp.UnicacityAddon.base.utils.ForgeUtils;
 import net.minecraft.command.ICommand;
@@ -45,20 +45,20 @@ public class SyncPlayerDataCommand implements IClientCommand {
     }
 
     @Override
-    public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
+    @Nonnull
+    public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
         return ForgeUtils.getOnlinePlayers();
     }
 
     @Override
-    public boolean isUsernameIndex(String[] args, int index) {
+    public boolean isUsernameIndex(@Nonnull String[] args, int index) {
         return false;
     }
 
     @Override
     public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
         AbstractionLayer.getPlayer().sendInfoMessage("Synchronisierung gestartet.");
-        FactionHandler.syncPlayerFactions();
-        FactionHandler.syncPlayerRanks();
+        Syncer.syncAll();
     }
 
     @Override
@@ -67,7 +67,7 @@ public class SyncPlayerDataCommand implements IClientCommand {
     }
 
     @Override
-    public int compareTo(ICommand o) {
+    public int compareTo(@Nonnull ICommand o) {
         return 0;
     }
 }

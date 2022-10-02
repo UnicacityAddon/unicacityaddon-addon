@@ -1,4 +1,4 @@
-package com.rettichlp.UnicacityAddon.base.faction;
+package com.rettichlp.UnicacityAddon.base.io;
 
 /**
  * @author RettichLP

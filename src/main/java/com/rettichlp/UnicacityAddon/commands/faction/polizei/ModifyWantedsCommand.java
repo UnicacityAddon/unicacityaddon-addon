@@ -115,6 +115,7 @@ public class ModifyWantedsCommand implements IClientCommand {
         } else {
             List<String> tabCompletions = Arrays.stream(Type.values()).map(Type::getFlagArgument).sorted().collect(Collectors.toList());
 
+            // TODO: 30.09.2022
             String input = args[args.length - 1].toLowerCase().replace('-', ' ');
             tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
 
@@ -123,7 +124,7 @@ public class ModifyWantedsCommand implements IClientCommand {
     }
 
     @Override
-    public boolean isUsernameIndex(String[] args, int index) {
+    public boolean isUsernameIndex(@Nonnull String[] args, int index) {
         return false;
     }
 
@@ -133,7 +134,7 @@ public class ModifyWantedsCommand implements IClientCommand {
     }
 
     @Override
-    public int compareTo(ICommand o) {
+    public int compareTo(@Nonnull ICommand o) {
         return 0;
     }
 
