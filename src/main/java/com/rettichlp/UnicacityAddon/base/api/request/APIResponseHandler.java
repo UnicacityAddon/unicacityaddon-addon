@@ -155,7 +155,6 @@ public class APIResponseHandler {
         Map.Entry<String, Integer> response = WebsiteUtils.websiteToString(urlString);
 
         Debug(APIResponseHandler.class, urlString.replace(TokenManager.API_TOKEN, "TOKEN") + " - " + response.getValue());
-        System.out.println(TokenManager.API_TOKEN); // TODO: 01.10.2022
 
         if (response.getValue() != HttpStatus.SC_OK) {
             throw new APIUnsuccessResponseException(response.getKey(), response.getValue());
