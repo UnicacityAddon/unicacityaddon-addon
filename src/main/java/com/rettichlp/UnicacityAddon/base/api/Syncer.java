@@ -14,6 +14,7 @@ import com.rettichlp.UnicacityAddon.base.faction.Faction;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
 import com.rettichlp.UnicacityAddon.base.utils.ListUtils;
+import com.rettichlp.UnicacityAddon.events.NameTagEventHandler;
 import net.labymod.main.LabyMod;
 
 import java.util.ArrayList;
@@ -24,34 +25,12 @@ import java.util.Map;
 
 public class Syncer {
 
-    private static final Map<String,Faction> PLAYERFACTIONMAP = new HashMap<>();
-    private static final Map<String,Integer> PLAYERRANKMAP = new HashMap<>();
-    private static final List<BlacklistReasonEntry> BLACKLIST_REASON_ENTRY_LIST = new ArrayList<>();
-    private static final List<HouseBanEntry> HOUSE_BAN_ENTRY_LIST = new ArrayList<>();
-    private static final List<HouseBanReasonEntry> HOUSE_BAN_REASON_ENTRY_LIST = new ArrayList<>();
-    private static final List<NaviPointEntry> NAVI_POINT_ENTRY_LIST = new ArrayList<>();
-    private static final List<PlayerGroupEntry> BLACKLIST_PLAYER_GROUP_ENTRY_LIST = new ArrayList<>();
-    private static final List<PlayerGroupEntry> DEV_PLAYER_GROUP_ENTRY_LIST = new ArrayList<>();
-    private static final List<PlayerGroupEntry> LEMILIEU_PLAYER_GROUP_ENTRY_LIST = new ArrayList<>();
-    private static final List<PlayerGroupEntry> DYAVOL_PLAYER_GROUP_ENTRY_LIST = new ArrayList<>();
-    private static final List<PlayerGroupEntry> VIP_PLAYER_GROUP_ENTRY_LIST = new ArrayList<>();
-    private static final List<PlayerGroupEntry> BETA_PLAYER_GROUP_ENTRY_LIST = new ArrayList<>();
-    private static final List<WantedReasonEntry> WANTED_REASON_ENTRY_LIST = new ArrayList<>();
+    private static final Map<String, Faction> PLAYERFACTIONMAP = new HashMap<>();
+    private static final Map<String, Integer> PLAYERRANKMAP = new HashMap<>();
 
     public static void syncAll() {
-        syncPlayerFactionMap();
-        syncPlayerRankMap();
-
-        syncBlacklistReasonEntryList();
-        syncHouseBanEntryList();
-        syncHouseBanReasonEntryList();
-        syncNaviPointEntryList();
-        syncPlayerGroupEntryList();
-        syncWantedReasonEntryList();
-    }
-
-    public static List<String> getPlayerGroups() {
-        return Arrays.asList("BLACKLIST", "DEV", "LEMILIEU", "DYAVOL", "VIP", "BETA");
+        Syncer.syncPlayerFactionMap();
+        Syncer.syncPlayerRankMap();
     }
 
     public static Map<String, Faction> getPlayerFactionMap() {
@@ -64,61 +43,6 @@ public class Syncer {
         return PLAYERRANKMAP;
     }
 
-    public static List<BlacklistReasonEntry> getBlacklistReasonEntryList() {
-        if (BLACKLIST_REASON_ENTRY_LIST.isEmpty()) syncBlacklistReasonEntryList();
-        return BLACKLIST_REASON_ENTRY_LIST;
-    }
-
-    public static List<HouseBanEntry> getHouseBanEntryList() {
-        if (HOUSE_BAN_ENTRY_LIST.isEmpty()) syncHouseBanEntryList();
-        return HOUSE_BAN_ENTRY_LIST;
-    }
-
-    public static List<HouseBanReasonEntry> getHouseBanReasonEntryList() {
-        if (HOUSE_BAN_REASON_ENTRY_LIST.isEmpty()) syncHouseBanReasonEntryList();
-        return HOUSE_BAN_REASON_ENTRY_LIST;
-    }
-
-    public static List<NaviPointEntry> getNaviPointEntryList() {
-        if (NAVI_POINT_ENTRY_LIST.isEmpty()) syncNaviPointEntryList();
-        return NAVI_POINT_ENTRY_LIST;
-    }
-
-    public static List<PlayerGroupEntry> getBlacklistPlayerGroupEntryList() {
-        if (BLACKLIST_PLAYER_GROUP_ENTRY_LIST.isEmpty()) syncPlayerGroupEntryList();
-        return BLACKLIST_PLAYER_GROUP_ENTRY_LIST;
-    }
-
-    public static List<PlayerGroupEntry> getDevPlayerGroupEntryList() {
-        if (DEV_PLAYER_GROUP_ENTRY_LIST.isEmpty()) syncPlayerGroupEntryList();
-        return DEV_PLAYER_GROUP_ENTRY_LIST;
-    }
-
-    public static List<PlayerGroupEntry> getLeMilieuPlayerGroupEntryList() {
-        if (LEMILIEU_PLAYER_GROUP_ENTRY_LIST.isEmpty()) syncPlayerGroupEntryList();
-        return LEMILIEU_PLAYER_GROUP_ENTRY_LIST;
-    }
-
-    public static List<PlayerGroupEntry> getDyavolPlayerGroupEntryList() {
-        if (DYAVOL_PLAYER_GROUP_ENTRY_LIST.isEmpty()) syncPlayerGroupEntryList();
-        return DYAVOL_PLAYER_GROUP_ENTRY_LIST;
-    }
-
-    public static List<PlayerGroupEntry> getVipPlayerGroupEntryList() {
-        if (VIP_PLAYER_GROUP_ENTRY_LIST.isEmpty()) syncPlayerGroupEntryList();
-        return VIP_PLAYER_GROUP_ENTRY_LIST;
-    }
-
-    public static List<PlayerGroupEntry> getBetaPlayerGroupEntryList() {
-        if (BETA_PLAYER_GROUP_ENTRY_LIST.isEmpty()) syncPlayerGroupEntryList();
-        return BETA_PLAYER_GROUP_ENTRY_LIST;
-    }
-
-    public static List<WantedReasonEntry> getWantedReaonEntryList() {
-        if (WANTED_REASON_ENTRY_LIST.isEmpty()) syncWantedReasonEntryList();
-        return WANTED_REASON_ENTRY_LIST;
-    }
-
     public static void syncPlayerFactionMap() {
         new Thread(() -> {
             PLAYERFACTIONMAP.clear();
@@ -127,10 +51,12 @@ public class Syncer {
                 nameList.forEach(name -> PLAYERFACTIONMAP.put(name.replace("<h4 class=\"h5 g-mb-5\"><strong>", ""), faction));
             }
 
-            getDyavolPlayerGroupEntryList().forEach(playerGroupEntry -> PLAYERFACTIONMAP.put(playerGroupEntry.getName(), Faction.LEMILIEU));
+            getPlayerGroupEntryList("LEMILIEU").forEach(playerGroupEntry -> PLAYERFACTIONMAP.put(playerGroupEntry.getName(), Faction.LEMILIEU));
 
-            // TODO: 30.09.2022 remove souts überall
             LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Fraktionen aktualisiert.");
+
+            // Workaround to update house bans and not on name tag update interval
+            NameTagEventHandler.HOUSEBANENTRYLIST = Syncer.getHouseBanEntryList();
         }).start();
     }
 
@@ -150,174 +76,121 @@ public class Syncer {
         }).start();
     }
 
-    public static void syncBlacklistReasonEntryList() {
-        new Thread(() -> {
-            JsonArray response = APIRequest.sendBlacklistReasonRequest();
-            if (response == null) return;
-            BLACKLIST_REASON_ENTRY_LIST.clear();
-            response.forEach(jsonElement -> {
-                JsonObject o = jsonElement.getAsJsonObject();
-
-                int kills = o.get("kills").getAsInt();
-                String reason = o.get("reason").getAsString();
-                String issuerUUID = o.get("issuerUUID").getAsString();
-                int price = o.get("price").getAsInt();
-                String issuerName = o.get("issuerName").getAsString();
-
-                BLACKLIST_REASON_ENTRY_LIST.add(new BlacklistReasonEntry(kills, reason, issuerUUID, price, issuerName));
-            });
-            LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Blacklist-Gründe aktualisiert.");
-        }).start();
+    public static List<String> getPlayerGroups() {
+        return Arrays.asList("BLACKLIST", "DEV", "LEMILIEU", "DYAVOL", "VIP", "BETA");
     }
 
-    public static void syncHouseBanEntryList() {
-        new Thread(() -> {
-            JsonArray response = APIRequest.sendHouseBanRequest(AbstractionLayer.getPlayer().getFaction().equals(Faction.RETTUNGSDIENST));
-            if (response == null) return;
-            HOUSE_BAN_ENTRY_LIST.clear();
-            response.forEach(jsonElement -> {
-                JsonObject o = jsonElement.getAsJsonObject();
+    public static List<BlacklistReasonEntry> getBlacklistReasonEntryList() {
+        JsonArray response = APIRequest.sendBlacklistReasonRequest();
+        if (response == null) return new ArrayList<>();
+        List<BlacklistReasonEntry> blacklistReasonEntryList = new ArrayList<>();
+        response.forEach(jsonElement -> {
+            JsonObject o = jsonElement.getAsJsonObject();
 
-                long duration = o.get("duration").getAsLong();
-                List<HouseBanReasonEntry> houseBanReasonList = new ArrayList<>();
-                long expirationTime = o.get("expirationTime").getAsLong();
-                String name = o.get("name").getAsString();
-                long startTime = o.get("startTime").getAsLong();
-                String uuid = o.get("uuid").getAsString();
+            int kills = o.get("kills").getAsInt();
+            String reason = o.get("reason").getAsString();
+            String issuerUUID = o.get("issuerUUID").getAsString();
+            int price = o.get("price").getAsInt();
+            String issuerName = o.get("issuerName").getAsString();
 
-                o.get("houseBanReasonList").getAsJsonArray().forEach(jsonElement1 -> {
-                    JsonObject o1 = jsonElement1.getAsJsonObject();
-
-                    String reason = o1.get("reason").getAsString();
-                    String issuerUUID = o.has("issuerUUID") ? o.get("issuerUUID").getAsString() : null;
-                    String issuerName = o.has("issuerName") ? o.get("issuerName").getAsString() : null;
-                    int days = o1.get("days").getAsInt();
-
-                    houseBanReasonList.add(new HouseBanReasonEntry(reason, issuerUUID, issuerName, days));
-                });
-
-                HOUSE_BAN_ENTRY_LIST.add(new HouseBanEntry(duration, houseBanReasonList, expirationTime, name, startTime, uuid));
-            });
-            LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Hausverbote aktualisiert.");
-        }).start();
+            blacklistReasonEntryList.add(new BlacklistReasonEntry(kills, reason, issuerUUID, price, issuerName));
+        });
+        return blacklistReasonEntryList;
     }
 
-    public static void syncHouseBanReasonEntryList() {
-        new Thread(() -> {
-            JsonArray response = APIRequest.sendHouseBanReasonRequest();
-            if (response == null) return;
-            HOUSE_BAN_REASON_ENTRY_LIST.clear();
-            response.forEach(jsonElement -> {
-                JsonObject o = jsonElement.getAsJsonObject();
+    public static List<HouseBanEntry> getHouseBanEntryList() {
+        JsonArray response = APIRequest.sendHouseBanRequest(AbstractionLayer.getPlayer().getFaction().equals(Faction.RETTUNGSDIENST));
+        if (response == null) return new ArrayList<>();
+        List<HouseBanEntry> houseBanEntryList = new ArrayList<>();
+        response.forEach(jsonElement -> {
+            JsonObject o = jsonElement.getAsJsonObject();
 
-                String reason = o.get("reason").getAsString();
-                String creatorUUID = o.has("creatorUUID") ? o.get("creatorUUID").getAsString() : null;
-                String creatorName = o.has("creatorName") ? o.get("creatorName").getAsString() : null;
-                int days = o.get("days").getAsInt();
+            long duration = o.get("duration").getAsLong();
+            List<HouseBanReasonEntry> houseBanReasonList = new ArrayList<>();
+            long expirationTime = o.get("expirationTime").getAsLong();
+            String name = o.get("name").getAsString();
+            long startTime = o.get("startTime").getAsLong();
+            String uuid = o.get("uuid").getAsString();
 
-                HOUSE_BAN_REASON_ENTRY_LIST.add(new HouseBanReasonEntry(reason, creatorUUID, creatorName, days));
+            o.get("houseBanReasonList").getAsJsonArray().forEach(jsonElement1 -> {
+                JsonObject o1 = jsonElement1.getAsJsonObject();
+
+                String reason = o1.get("reason").getAsString();
+                String issuerUUID = o1.has("issuerUUID") ? o1.get("issuerUUID").getAsString() : null;
+                String issuerName = o1.has("issuerName") ? o1.get("issuerName").getAsString() : null;
+                int days = o1.get("days").getAsInt();
+
+                houseBanReasonList.add(new HouseBanReasonEntry(reason, issuerUUID, issuerName, days));
             });
-            LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Hausverbot-Gründe aktualisiert.");
-        }).start();
+
+            houseBanEntryList.add(new HouseBanEntry(duration, houseBanReasonList, expirationTime, name, startTime, uuid));
+        });
+        return houseBanEntryList;
     }
 
-    public static void syncNaviPointEntryList() {
-        new Thread(() -> {
-            JsonArray response = APIRequest.sendNaviPointRequest();
-            if (response == null) return;
-            NAVI_POINT_ENTRY_LIST.clear();
-            response.forEach(jsonElement -> {
-                JsonObject o = jsonElement.getAsJsonObject();
+    public static List<HouseBanReasonEntry> getHouseBanReasonEntryList() {
+        JsonArray response = APIRequest.sendHouseBanReasonRequest();
+        if (response == null) return new ArrayList<>();
+        List<HouseBanReasonEntry> houseBanReasonEntryList = new ArrayList<>();
+        response.forEach(jsonElement -> {
+            JsonObject o = jsonElement.getAsJsonObject();
 
-                String name = o.get("name").getAsString();
-                int x = o.get("x").getAsInt();
-                int y = o.get("y").getAsInt();
-                int z = o.get("z").getAsInt();
+            String reason = o.get("reason").getAsString();
+            String creatorUUID = o.has("creatorUUID") ? o.get("creatorUUID").getAsString() : null;
+            String creatorName = o.has("creatorName") ? o.get("creatorName").getAsString() : null;
+            int days = o.get("days").getAsInt();
 
-                NAVI_POINT_ENTRY_LIST.add(new NaviPointEntry(name, x, y, z));
-            });
-            LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Navipunkte aktualisiert.");
-        }).start();
+            houseBanReasonEntryList.add(new HouseBanReasonEntry(reason, creatorUUID, creatorName, days));
+        });
+        return houseBanReasonEntryList;
     }
 
-    public static void syncPlayerGroupEntryList() {
-        new Thread(() -> {
-            JsonObject response = APIRequest.sendPlayerRequest();
-            if (response == null) return;
-            BLACKLIST_PLAYER_GROUP_ENTRY_LIST.clear();
-            DEV_PLAYER_GROUP_ENTRY_LIST.clear();
-            LEMILIEU_PLAYER_GROUP_ENTRY_LIST.clear();
-            DYAVOL_PLAYER_GROUP_ENTRY_LIST.clear();
-            VIP_PLAYER_GROUP_ENTRY_LIST.clear();
-            BETA_PLAYER_GROUP_ENTRY_LIST.clear();
-            response.get("BLACKLIST").getAsJsonArray().forEach(jsonElement -> {
-                JsonObject o = jsonElement.getAsJsonObject();
+    public static List<NaviPointEntry> getNaviPointEntryList() {
+        JsonArray response = APIRequest.sendNaviPointRequest();
+        if (response == null) return new ArrayList<>();
+        List<NaviPointEntry> naviPointEntryList = new ArrayList<>();
+        response.forEach(jsonElement -> {
+            JsonObject o = jsonElement.getAsJsonObject();
 
-                String name = o.get("name").getAsString();
-                String uuid = o.get("uuid").getAsString();
+            String name = o.get("name").getAsString();
+            int x = o.get("x").getAsInt();
+            int y = o.get("y").getAsInt();
+            int z = o.get("z").getAsInt();
 
-                BLACKLIST_PLAYER_GROUP_ENTRY_LIST.add(new PlayerGroupEntry(name, uuid));
-            });
-            response.get("DEV").getAsJsonArray().forEach(jsonElement -> {
-                JsonObject o = jsonElement.getAsJsonObject();
-
-                String name = o.get("name").getAsString();
-                String uuid = o.get("uuid").getAsString();
-
-                DEV_PLAYER_GROUP_ENTRY_LIST.add(new PlayerGroupEntry(name, uuid));
-            });
-            response.get("LEMILIEU").getAsJsonArray().forEach(jsonElement -> {
-                JsonObject o = jsonElement.getAsJsonObject();
-
-                String name = o.get("name").getAsString();
-                String uuid = o.get("uuid").getAsString();
-
-                LEMILIEU_PLAYER_GROUP_ENTRY_LIST.add(new PlayerGroupEntry(name, uuid));
-            });
-            response.get("DYAVOL").getAsJsonArray().forEach(jsonElement -> {
-                JsonObject o = jsonElement.getAsJsonObject();
-
-                String name = o.get("name").getAsString();
-                String uuid = o.get("uuid").getAsString();
-
-                DYAVOL_PLAYER_GROUP_ENTRY_LIST.add(new PlayerGroupEntry(name, uuid));
-            });
-            response.get("VIP").getAsJsonArray().forEach(jsonElement -> {
-                JsonObject o = jsonElement.getAsJsonObject();
-
-                String name = o.get("name").getAsString();
-                String uuid = o.get("uuid").getAsString();
-
-                VIP_PLAYER_GROUP_ENTRY_LIST.add(new PlayerGroupEntry(name, uuid));
-            });
-            response.get("BETA").getAsJsonArray().forEach(jsonElement -> {
-                JsonObject o = jsonElement.getAsJsonObject();
-
-                String name = o.get("name").getAsString();
-                String uuid = o.get("uuid").getAsString();
-
-                BETA_PLAYER_GROUP_ENTRY_LIST.add(new PlayerGroupEntry(name, uuid));
-            });
-            LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Gruppen aktualisiert.");
-        }).start();
+            naviPointEntryList.add(new NaviPointEntry(name, x, y, z));
+        });
+        return naviPointEntryList;
     }
 
-    public static void syncWantedReasonEntryList() {
-        new Thread(() -> {
-            JsonArray response = APIRequest.sendWantedReasonRequest();
-            if (response == null) return;
-            WANTED_REASON_ENTRY_LIST.clear();
-            response.forEach(jsonElement -> {
-                JsonObject o = jsonElement.getAsJsonObject();
+    public static List<PlayerGroupEntry> getPlayerGroupEntryList(String group) {
+        JsonObject response = APIRequest.sendPlayerRequest();
+        if (response == null || !response.has(group)) return new ArrayList<>();
+        List<PlayerGroupEntry> playerGroupEntryList = new ArrayList<>();
+        response.get(group).getAsJsonArray().forEach(jsonElement -> {
+            JsonObject o = jsonElement.getAsJsonObject();
 
-                String reason = o.get("reason").getAsString();
-                String creatorUUID = o.get("creatorUUID").getAsString();
-                String creatorName = o.get("creatorName").getAsString();
-                int points = o.get("points").getAsInt();
+            String name = o.get("name").getAsString();
+            String uuid = o.get("uuid").getAsString();
 
-                WANTED_REASON_ENTRY_LIST.add(new WantedReasonEntry(reason, creatorUUID, creatorName, points));
-            });
-            LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Wanted-Gründe aktualisiert.");
-        }).start();
+            playerGroupEntryList.add(new PlayerGroupEntry(name, uuid));
+        });
+        return playerGroupEntryList;
+    }
+
+    public static List<WantedReasonEntry> getWantedReasonEntryList() {
+        JsonArray response = APIRequest.sendWantedReasonRequest();
+        if (response == null) return new ArrayList<>();
+        List<WantedReasonEntry> wantedReasonEntryList = new ArrayList<>();
+        response.forEach(jsonElement -> {
+            JsonObject o = jsonElement.getAsJsonObject();
+
+            String reason = o.get("reason").getAsString();
+            String creatorUUID = o.get("creatorUUID").getAsString();
+            String creatorName = o.get("creatorName").getAsString();
+            int points = o.get("points").getAsInt();
+
+            wantedReasonEntryList.add(new WantedReasonEntry(reason, creatorUUID, creatorName, points));
+        });
+        return wantedReasonEntryList;
     }
 }

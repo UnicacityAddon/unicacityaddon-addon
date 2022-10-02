@@ -33,7 +33,7 @@ public class WantedReasonEntry {
     }
 
     public static WantedReasonEntry getWantedReasonEntryByReason(String reason) {
-        return Syncer.getWantedReaonEntryList().stream()
+        return Syncer.getWantedReasonEntryList().stream()
                 .filter(wantedReasonEntry -> wantedReasonEntry.getReason().equals(reason))
                 .findFirst()
                 .orElse(null);

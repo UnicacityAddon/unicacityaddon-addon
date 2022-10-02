@@ -14,7 +14,7 @@ public class CommandRegistry {
             try {
                 Class<?> clazz = Class.forName(asmData.getClassName());
                 ClientCommandHandler.instance.registerCommand((ICommand) clazz.newInstance());
-                Debug(CommandRegistry.class, "UCCommand: " + clazz.getSimpleName());
+                Debug(CommandRegistry.class, clazz.getSimpleName());
             } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
                 // TODO: 14.08.2022
                 throw new RuntimeException(e);

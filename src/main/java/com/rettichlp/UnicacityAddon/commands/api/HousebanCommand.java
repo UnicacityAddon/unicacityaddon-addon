@@ -114,12 +114,10 @@ public class HousebanCommand implements IClientCommand {
             JsonObject response = APIRequest.sendHouseBanAddRequest(args[1], args[2]);
             if (response == null) return;
             p.sendAPIMessage(response.get("info").getAsString(), true);
-            Syncer.syncHouseBanEntryList();
         } else if (args.length == 3 && args[0].equalsIgnoreCase("remove")) {
             JsonObject response = APIRequest.sendHouseBanRemoveRequest(args[1], args[2]);
             if (response == null) return;
             p.sendAPIMessage(response.get("info").getAsString(), true);
-            Syncer.syncHouseBanEntryList();
         } else {
             p.sendSyntaxMessage(getUsage(sender));
         }

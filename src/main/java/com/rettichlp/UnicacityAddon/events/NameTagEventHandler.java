@@ -3,6 +3,7 @@ package com.rettichlp.UnicacityAddon.events;
 import com.rettichlp.UnicacityAddon.UnicacityAddon;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.api.Syncer;
+import com.rettichlp.UnicacityAddon.base.api.entries.HouseBanEntry;
 import com.rettichlp.UnicacityAddon.base.config.ConfigElements;
 import com.rettichlp.UnicacityAddon.base.faction.Faction;
 import com.rettichlp.UnicacityAddon.base.faction.FactionHandler;
@@ -22,6 +23,7 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -33,7 +35,12 @@ public class NameTagEventHandler {
 
     private static int tick;
     private static int syncTick;
+    public static List<HouseBanEntry> HOUSEBANENTRYLIST = new ArrayList<>();
 
+    /**
+     * Quote: "Wenn ich gleich nicht mehr antworte, einfach laut meinen Namen sagen." - Lou, 02.10.2022
+     *        "Fällst du dann aus dem Bett?" - RettichLP und Ullrich, 02.10.2022
+     */
     @SubscribeEvent
     public void onRenderNameTag(PlayerEvent.NameFormat e) {
         if (!UnicacityAddon.isUnicacity()) return;
@@ -51,8 +58,8 @@ public class NameTagEventHandler {
     }
 
     @SubscribeEvent
-    public void onTick(TickEvent.ClientTickEvent e) {
-        if (e.phase != TickEvent.Phase.END) return;
+    public void onTick(TickEvent.ClientTickEvent event) {
+        if (event.phase != TickEvent.Phase.END) return;
         if (UnicacityAddon.MINECRAFT.world == null) return;
         if (tick++ != 20) return;
 
@@ -99,7 +106,7 @@ public class NameTagEventHandler {
         houseBan.append(FormattingCode.RESET.getCode());
 
         if (ConfigElements.getNameTagHouseBan()) {
-            if (Syncer.getHouseBanEntryList().stream().anyMatch(houseBanEntry -> houseBanEntry.getName().equals(playerName))) houseBan.append(Message.getBuilder()
+            if (HOUSEBANENTRYLIST.stream().anyMatch(houseBanEntry -> houseBanEntry.getName().equals(playerName))) houseBan.append(Message.getBuilder()
                     .of("[").color(ColorCode.DARK_GRAY).advance()
                     .of("HV").color(ColorCode.RED).advance()
                     .of("]").color(ColorCode.DARK_GRAY).advance().space()

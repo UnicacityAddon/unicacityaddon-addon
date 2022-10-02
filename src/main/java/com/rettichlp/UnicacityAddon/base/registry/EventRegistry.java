@@ -13,7 +13,7 @@ public class EventRegistry {
             try {
                 Class<?> clazz = Class.forName(asmData.getClassName());
                 MinecraftForge.EVENT_BUS.register(clazz.newInstance());
-                Debug(EventRegistry.class, "UCEvent: " + clazz.getSimpleName());
+                Debug(EventRegistry.class, clazz.getSimpleName());
             } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
                 // TODO: 14.08.2022
                 throw new RuntimeException(e);

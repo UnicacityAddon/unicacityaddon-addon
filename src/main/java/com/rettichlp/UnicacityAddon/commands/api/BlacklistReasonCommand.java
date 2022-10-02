@@ -81,12 +81,10 @@ public class BlacklistReasonCommand implements IClientCommand {
             JsonObject response = APIRequest.sendBlacklistReasonAddRequest(args[1], args[2], args[3]);
             if (response == null) return;
             p.sendAPIMessage(response.get("info").getAsString(), true);
-            Syncer.syncBlacklistReasonEntryList();
         } else if (args.length == 2 && args[0].equalsIgnoreCase("remove")) {
             JsonObject response = APIRequest.sendBlacklistReasonRemoveRequest(args[1]);
             if (response == null) return;
             p.sendAPIMessage(response.get("info").getAsString(), true);
-            Syncer.syncBlacklistReasonEntryList();
         } else {
             p.sendSyntaxMessage(getUsage(sender));
         }

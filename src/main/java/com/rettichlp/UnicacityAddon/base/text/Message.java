@@ -67,6 +67,10 @@ public class Message {
             return add(" ");
         }
 
+        public Builder newline() {
+            return add("\n");
+        }
+
         public Builder messageParts(MessagePart... messageParts) {
             Collections.addAll(this.messageParts, messageParts);
             return this;

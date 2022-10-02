@@ -57,12 +57,10 @@ public class NaviPointCommand implements IClientCommand {
             JsonObject response = APIRequest.sendNaviPointAddRequest(args[1], args[2], args[3], args[4]);
             if (response == null) return;
             p.sendAPIMessage(response.get("info").getAsString(), true);
-            Syncer.syncNaviPointEntryList();
         } else if (args.length == 2 && args[0].equalsIgnoreCase("remove")) {
             JsonObject response = APIRequest.sendNaviPointRemoveRequest(args[1]);
             if (response == null) return;
             p.sendAPIMessage(response.get("info").getAsString(), true);
-            Syncer.syncNaviPointEntryList();
         } else {
             p.sendSyntaxMessage(getUsage(sender));
         }

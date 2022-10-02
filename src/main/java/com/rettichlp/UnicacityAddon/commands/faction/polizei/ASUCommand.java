@@ -117,7 +117,7 @@ public class ASUCommand implements IClientCommand {
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
         List<String> tabCompletions = ForgeUtils.getOnlinePlayers();
         if (args.length > 1) {
-            tabCompletions.addAll(Syncer.getWantedReaonEntryList().stream().map(WantedReasonEntry::getReason).sorted().collect(Collectors.toList()));
+            tabCompletions.addAll(Syncer.getWantedReasonEntryList().stream().map(WantedReasonEntry::getReason).sorted().collect(Collectors.toList()));
         }
         String input = args[args.length - 1].toLowerCase();
         tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));

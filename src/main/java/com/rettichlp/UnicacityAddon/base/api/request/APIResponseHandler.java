@@ -11,6 +11,8 @@ import org.apache.http.HttpStatus;
 
 import java.util.Map;
 
+import static com.rettichlp.UnicacityAddon.base.utils.DebugUtils.Debug;
+
 public class APIResponseHandler {
 
     public static JsonArray getBlacklistResponse(Map<String, String> parameters) throws APIUnsuccessResponseException {
@@ -152,10 +154,11 @@ public class APIResponseHandler {
     private static JsonElement getJsonElement(String urlString) throws APIUnsuccessResponseException {
         Map.Entry<String, Integer> response = WebsiteUtils.websiteToString(urlString);
 
+        Debug(APIResponseHandler.class, urlString.replace(TokenManager.API_TOKEN, "TOKEN") + " - " + response.getValue());
         System.out.println(TokenManager.API_TOKEN); // TODO: 01.10.2022
 
         if (response.getValue() != HttpStatus.SC_OK) {
-            throw new APIUnsuccessResponseException(urlString, response.getKey(), response.getValue());
+            throw new APIUnsuccessResponseException(response.getKey(), response.getValue());
         }
 
         return new JsonParser().parse(response.getKey());

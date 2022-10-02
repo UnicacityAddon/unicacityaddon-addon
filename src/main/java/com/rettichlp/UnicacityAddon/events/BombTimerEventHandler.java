@@ -15,7 +15,8 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 @UCEvent
 public class BombTimerEventHandler {
 
-    @SubscribeEvent public void onTick(TickEvent.ClientTickEvent event) {
+    @SubscribeEvent
+    public void onTick(TickEvent.ClientTickEvent event) {
         if (event.phase != TickEvent.Phase.END) return;
 
         if (!BombTimerModule.isBomb || ++BombTimerModule.currentTick != 20) return;

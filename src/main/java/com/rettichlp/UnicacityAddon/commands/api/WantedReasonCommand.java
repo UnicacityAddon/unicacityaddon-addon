@@ -57,12 +57,10 @@ public class WantedReasonCommand implements IClientCommand {
             JsonObject response = APIRequest.sendWantedReasonAddRequest(args[1], args[2]);
             if (response == null) return;
             p.sendAPIMessage(response.get("info").getAsString(), true);
-            Syncer.syncWantedReasonEntryList();
         } else if (args.length == 2 && args[0].equalsIgnoreCase("remove")) {
             JsonObject response = APIRequest.sendWantedReasonRemoveRequest(args[1]);
             if (response == null) return;
             p.sendAPIMessage(response.get("info").getAsString(), true);
-            Syncer.syncWantedReasonEntryList();
         } else {
             p.sendSyntaxMessage(getUsage(sender));
         }
@@ -76,7 +74,7 @@ public class WantedReasonCommand implements IClientCommand {
             tabCompletions.add("add");
             tabCompletions.add("remove");
         } else if (args.length == 2) {
-            tabCompletions.addAll(Syncer.getWantedReaonEntryList().stream().map(WantedReasonEntry::getReason).sorted().collect(Collectors.toList()));
+            tabCompletions.addAll(Syncer.getWantedReasonEntryList().stream().map(WantedReasonEntry::getReason).sorted().collect(Collectors.toList()));
         }
         String input = args[args.length - 1].toLowerCase();
         tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));

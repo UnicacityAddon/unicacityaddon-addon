@@ -4,7 +4,6 @@ import com.google.gson.JsonObject;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
 import com.rettichlp.UnicacityAddon.base.api.Syncer;
-import com.rettichlp.UnicacityAddon.base.api.entries.PlayerGroupEntry;
 import com.rettichlp.UnicacityAddon.base.api.request.APIRequest;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
@@ -56,35 +55,13 @@ public class PlayerGroupCommand implements IClientCommand {
         UPlayer p = AbstractionLayer.getPlayer();
 
         if (args.length == 1) {
-            List<PlayerGroupEntry> playerGroupEntryList = new ArrayList<>();
-            switch (args[0]) {
-                case "BLACKLIST":
-                    playerGroupEntryList = Syncer.getBlacklistPlayerGroupEntryList();
-                    break;
-                case "DEV":
-                    playerGroupEntryList = Syncer.getDevPlayerGroupEntryList();
-                    break;
-                case "LEMILIEU":
-                    playerGroupEntryList = Syncer.getLeMilieuPlayerGroupEntryList();
-                    break;
-                case "DYAVOL":
-                    playerGroupEntryList = Syncer.getDyavolPlayerGroupEntryList();
-                    break;
-                case "VIP":
-                    playerGroupEntryList = Syncer.getVipPlayerGroupEntryList();
-                    break;
-                case "BETA":
-                    playerGroupEntryList = Syncer.getBetaPlayerGroupEntryList();
-                    break;
-            }
-
             p.sendEmptyMessage();
             p.sendMessage(Message.getBuilder()
                     .of("Spielergruppe:").color(ColorCode.DARK_AQUA).bold().advance().space()
                     .of(args[0]).color(ColorCode.DARK_AQUA).advance()
                     .createComponent());
 
-            playerGroupEntryList.forEach(playerGroupEntry -> p.sendMessage(Message.getBuilder()
+            Syncer.getPlayerGroupEntryList(args[0]).forEach(playerGroupEntry -> p.sendMessage(Message.getBuilder()
                     .of("»").color(ColorCode.GRAY).advance().space()
                     .of(playerGroupEntry.getName()).color(ColorCode.AQUA).advance()
                     .createComponent()));
@@ -95,12 +72,10 @@ public class PlayerGroupCommand implements IClientCommand {
             JsonObject response = APIRequest.sendPlayerAddRequest(args[1], args[2]);
             if (response == null) return;
             p.sendAPIMessage(response.get("info").getAsString(), true);
-            Syncer.syncPlayerGroupEntryList();
         } else if (args.length == 3 && args[0].equalsIgnoreCase("remove")) {
             JsonObject response = APIRequest.sendPlayerRemoveRequest(args[1], args[2]);
             if (response == null) return;
             p.sendAPIMessage(response.get("info").getAsString(), true);
-            Syncer.syncPlayerGroupEntryList();
         } else {
             p.sendSyntaxMessage(getUsage(sender));
         }
