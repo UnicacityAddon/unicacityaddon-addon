@@ -23,6 +23,8 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -81,15 +83,21 @@ public class ReinforcementCommand implements IClientCommand {
             p.sendChatMessage(chatType.getChatCommand() + " " + name + ", ich bin zu deinem Verstärkungsruf unterwegs! (" + (int) p.getPosition().getDistance(x, y, z) + " Meter entfernt)");
             NavigationUtils.stopRoute();
             p.setNaviRoute(x, y, z);
-            if (ConfigElements.automaticReinfscreen()) {
-                try {
-                    File file = FileManager.getNewActivityImageFile("reinforcement");
-                    HotkeyEventHandler.handleScreenshot(file);
-                    return;
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+
+            new Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    if (ConfigElements.automaticReinfscreen()) {
+                        try {
+                            File file = FileManager.getNewActivityImageFile("reinforcement");
+                            HotkeyEventHandler.handleScreenshot(file);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
                 }
-            }
+            }, 0);
+
             return;
         }
 
