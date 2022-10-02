@@ -2,8 +2,8 @@ package com.rettichlp.UnicacityAddon.events.faction;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
+import com.rettichlp.UnicacityAddon.base.api.entries.NaviPointEntry;
 import com.rettichlp.UnicacityAddon.base.config.ConfigElements;
-import com.rettichlp.UnicacityAddon.base.location.NaviPoint;
 import com.rettichlp.UnicacityAddon.base.location.NavigationUtils;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCEvent;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
@@ -59,7 +59,7 @@ public class ReinforcementEventHandler {
                     .of("" + posZ).color(ColorCode.AQUA).advance()
                     .createComponent();
 
-            Map.Entry<Double, NaviPoint > nearestNaviPoint = NavigationUtils.getNearestNaviPoint(posX, posY, posZ);
+            Map.Entry<Double, NaviPointEntry> nearestNaviPoint = NavigationUtils.getNearestNaviPoint(posX, posY, posZ);
 
             p.sendMessageAsString(ConfigElements.getPatternReinforcement()
                     .replace("&", "§")
@@ -68,7 +68,7 @@ public class ReinforcementEventHandler {
                     .replace("%x%", String.valueOf(posX))
                     .replace("%y%", String.valueOf(posY))
                     .replace("%z%", String.valueOf(posZ))
-                    .replace("%navipoint%", nearestNaviPoint.getValue().getName())
+                    .replace("%navipoint%", nearestNaviPoint.getValue().getName().replace("-", " "))
                     .replace("%distance%", String.valueOf(distance)));
 
             p.sendMessage(Message.getBuilder()

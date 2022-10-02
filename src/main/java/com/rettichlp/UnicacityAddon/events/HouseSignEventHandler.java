@@ -11,11 +11,12 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static com.rettichlp.UnicacityAddon.base.utils.DebugUtils.Debug;
 
 /**
  * @author RettichLP
@@ -26,7 +27,7 @@ public class HouseSignEventHandler {
     private boolean isActiveNewspaperJob = false;
     private boolean isActiveWasteJob = false;
 
-    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    @SubscribeEvent
     public void onPlayerInteract(PlayerInteractEvent e) {
         if (!(e instanceof PlayerInteractEvent.RightClickBlock) || !UnicacityAddon.isUnicacity()) return;
 
@@ -43,7 +44,7 @@ public class HouseSignEventHandler {
         dropNewspaper();
         dropWaste();
 
-        System.out.println("[DEBUG] ClickedHouseNumber: " + Integer.parseInt(matcher.group(1)));
+        Debug(HouseSignEventHandler.class, "Clicked house number: " + Integer.parseInt(matcher.group(1)));
     }
 
     @SubscribeEvent

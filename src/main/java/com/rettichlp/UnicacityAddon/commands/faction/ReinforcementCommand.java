@@ -3,18 +3,23 @@ package com.rettichlp.UnicacityAddon.commands.faction;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
 import com.rettichlp.UnicacityAddon.base.config.ConfigElements;
+import com.rettichlp.UnicacityAddon.base.io.FileManager;
 import com.rettichlp.UnicacityAddon.base.location.NavigationUtils;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import com.rettichlp.UnicacityAddon.base.text.ChatType;
 import com.rettichlp.UnicacityAddon.base.utils.MathUtils;
+import com.rettichlp.UnicacityAddon.events.HotkeyEventHandler;
 import com.rettichlp.UnicacityAddon.events.MobileEventHandler;
-import net.minecraft.command.CommandBase;
+import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.client.IClientCommand;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -26,25 +31,33 @@ import java.util.stream.Collectors;
  * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/commands/faction/CallReinforcementCommand.java">UCUtils by paulzhng</a>
  */
 @UCCommand
-public class ReinforcementCommand extends CommandBase {
+public class ReinforcementCommand implements IClientCommand {
 
-    @Override @Nonnull public String getName() {
+    @Override
+    @Nonnull
+    public String getName() {
         return "reinforcement";
     }
 
-    @Override @Nonnull public String getUsage(@Nonnull ICommandSender sender) {
+    @Override
+    @Nonnull
+    public String getUsage(@Nonnull ICommandSender sender) {
         return "/reinforcement (-d/-r/-rd/-e/-ed/-m/-lb/-da/-ct/-p/-b/-gn/-t)";
     }
 
-    @Override @Nonnull public List<String> getAliases() {
+    @Override
+    @Nonnull
+    public List<String> getAliases() {
         return Arrays.asList("callreinforcement", "reinf", "verstärkung");
     }
 
-    @Override public boolean checkPermission(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender) {
+    @Override
+    public boolean checkPermission(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender) {
         return true;
     }
 
-    @Override public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
+    @Override
+    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
         UPlayer p = AbstractionLayer.getPlayer();
 
         if (!MobileEventHandler.hasCommunications) {
@@ -68,7 +81,15 @@ public class ReinforcementCommand extends CommandBase {
             p.sendChatMessage(chatType.getChatCommand() + " " + name + ", ich bin zu deinem Verstärkungsruf unterwegs! (" + (int) p.getPosition().getDistance(x, y, z) + " Meter entfernt)");
             NavigationUtils.stopRoute();
             p.setNaviRoute(x, y, z);
-
+            if (ConfigElements.automaticReinfscreen()) {
+                try {
+                    File file = FileManager.getNewActivityImageFile("reinforcement");
+                    HotkeyEventHandler.handleScreenshot(file);
+                    return;
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
             return;
         }
 
@@ -83,15 +104,32 @@ public class ReinforcementCommand extends CommandBase {
         p.sendChatMessage(chatType.getChatCommand() + " Benötige Verstärkung! -> X: " + posX + " | Y: " + posY + " | Z: " + posZ);
     }
 
-    @Override @Nonnull public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
+    @Override
+    @Nonnull
+    public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
         List<String> tabCompletions = Collections.emptyList();
         if (args.length == 1) {
             tabCompletions = Arrays.stream(Type.values()).map(Type::getArgument).sorted().collect(Collectors.toList());
             tabCompletions.add("ontheway");
-            String input = args[args.length - 1].toLowerCase().replace('-', ' ');
+            String input = args[args.length - 1].toLowerCase();
             tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
         }
         return tabCompletions;
+    }
+
+    @Override
+    public boolean isUsernameIndex(@Nonnull String[] args, int index) {
+        return false;
+    }
+
+    @Override
+    public boolean allowUsageWithoutPrefix(ICommandSender sender, String message) {
+        return false;
+    }
+
+    @Override
+    public int compareTo(@Nonnull ICommand o) {
+        return 0;
     }
 
     public enum Type {

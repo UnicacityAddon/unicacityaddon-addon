@@ -34,6 +34,8 @@ public interface UPlayer {
 
     void sendSyntaxMessage(String message);
 
+    void sendAPIMessage(String message, boolean success);
+
     void sendEmptyMessage();
 
     void sendChatMessage(String message);

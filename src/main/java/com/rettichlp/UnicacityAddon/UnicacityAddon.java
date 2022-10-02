@@ -1,12 +1,14 @@
 package com.rettichlp.UnicacityAddon;
 
+import com.rettichlp.UnicacityAddon.base.api.Syncer;
+import com.rettichlp.UnicacityAddon.base.api.TokenManager;
 import com.rettichlp.UnicacityAddon.base.config.Config;
-import com.rettichlp.UnicacityAddon.base.faction.FactionHandler;
 import com.rettichlp.UnicacityAddon.base.io.FileManager;
 import com.rettichlp.UnicacityAddon.base.registry.CommandRegistry;
 import com.rettichlp.UnicacityAddon.base.registry.EventRegistry;
 import com.rettichlp.UnicacityAddon.base.registry.KeyBindRegistry;
 import com.rettichlp.UnicacityAddon.base.registry.ModuleRegistry;
+import com.rettichlp.UnicacityAddon.base.teamspeak.TSClientQuery;
 import com.rettichlp.UnicacityAddon.events.TabListEventHandler;
 import com.rettichlp.UnicacityAddon.modules.BankMoneyModule;
 import com.rettichlp.UnicacityAddon.modules.BombTimerModule;
@@ -37,7 +39,7 @@ import java.util.List;
 @Mod(name = "UnicacityAddon", modid = "unicacityaddon", version = UnicacityAddon.VERSION, clientSideOnly = true, acceptedMinecraftVersions = "[1.12,1.12.2]")
 public class UnicacityAddon extends LabyModAddon {
 
-    public static final String VERSION = "1.4.0";
+    public static final String VERSION = "1.5.0";
     public static final Minecraft MINECRAFT = Minecraft.getMinecraft();
     public static UnicacityAddon ADDON;
 
@@ -71,9 +73,10 @@ public class UnicacityAddon extends LabyModAddon {
         ADDON.getApi().registerModule(new PlantFertilizeTimerModule());
         ADDON.getApi().registerModule(new PlantWaterTimerModule());
 
-        // FactionHandler sync player data
-        FactionHandler.syncPlayerFactions();
-        FactionHandler.syncPlayerRanks();
+        TokenManager.createToken();
+        Syncer.syncAll();
+
+        new Thread(TSClientQuery::getInstance).start();
     }
 
     @Override

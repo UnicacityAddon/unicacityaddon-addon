@@ -3,6 +3,8 @@ package com.rettichlp.UnicacityAddon.base.location;
 import com.google.common.collect.Maps;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
+import com.rettichlp.UnicacityAddon.base.api.Syncer;
+import com.rettichlp.UnicacityAddon.base.api.entries.NaviPointEntry;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.Map;
@@ -45,23 +47,23 @@ public class NavigationUtils {
         return Maps.immutableEntry(nearestDistance, nearestJob);
     }
 
-    public static Map.Entry<Double, NaviPoint> getNearestNaviPoint(int x, int y, int z) {
+    public static Map.Entry<Double, NaviPointEntry> getNearestNaviPoint(int x, int y, int z) {
         return getNearestNaviPoint(new BlockPos(x, y, z));
     }
 
-    public static Map.Entry<Double, NaviPoint> getNearestNaviPoint(UPlayer p) {
+    public static Map.Entry<Double, NaviPointEntry> getNearestNaviPoint(UPlayer p) {
         return getNearestNaviPoint(p.getPosition());
     }
 
-    public static Map.Entry<Double, NaviPoint> getNearestNaviPoint(BlockPos blockPos) {
-        NaviPoint nearestNaviPoint = null;
+    public static Map.Entry<Double, NaviPointEntry> getNearestNaviPoint(BlockPos blockPos) {
+        NaviPointEntry nearestNaviPoint = null;
         double nearestDistance = Double.MAX_VALUE;
 
-        for (NaviPoint naviPoint : NaviPoint.values()) {
-            double distance = blockPos.getDistance(naviPoint.getX(), naviPoint.getY(), naviPoint.getZ());
+        for (NaviPointEntry naviPointEntry : Syncer.getNaviPointEntryList()) {
+            double distance = blockPos.getDistance(naviPointEntry.getX(), naviPointEntry.getY(), naviPointEntry.getZ());
             if (distance < nearestDistance) {
                 nearestDistance = distance;
-                nearestNaviPoint = naviPoint;
+                nearestNaviPoint = naviPointEntry;
             }
         }
 
@@ -72,5 +74,4 @@ public class NavigationUtils {
         routeMessageClearExecuteTime = System.currentTimeMillis();
         AbstractionLayer.getPlayer().sendChatMessage("/stoproute");
     }
-
 }

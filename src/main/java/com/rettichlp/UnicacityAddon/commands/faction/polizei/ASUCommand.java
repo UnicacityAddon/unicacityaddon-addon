@@ -2,14 +2,16 @@ package com.rettichlp.UnicacityAddon.commands.faction.polizei;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
-import com.rettichlp.UnicacityAddon.base.faction.polizei.WantedReason;
+import com.rettichlp.UnicacityAddon.base.api.Syncer;
+import com.rettichlp.UnicacityAddon.base.api.entries.WantedReasonEntry;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import com.rettichlp.UnicacityAddon.base.utils.ForgeUtils;
 import com.rettichlp.UnicacityAddon.base.utils.MathUtils;
-import net.minecraft.command.CommandBase;
+import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.client.IClientCommand;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -28,29 +30,36 @@ import java.util.stream.Collectors;
  * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/commands/faction/police/ASUCommand.java">UCUtils by paulzhng</a>
  */
 @UCCommand
-public class ASUCommand extends CommandBase {
+public class ASUCommand implements IClientCommand {
 
     private final Timer timer = new Timer();
 
-    @Override @Nonnull public String getName() {
+    @Override
+    @Nonnull
+    public String getName() {
         return "asu";
     }
 
-    @Override @Nonnull public String getUsage(@Nonnull ICommandSender sender) {
+    @Override
+    @Nonnull
+    public String getUsage(@Nonnull ICommandSender sender) {
         return "/asu [Spieler...] [Grund] (-v/-b/-fsa/-wsa)";
     }
 
-    @Override @Nonnull public List<String> getAliases() {
+    @Override
+    @Nonnull
+    public List<String> getAliases() {
         return Collections.emptyList();
     }
 
-    @Override public boolean checkPermission(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender) {
+    @Override
+    public boolean checkPermission(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender) {
         return true;
     }
 
-    @Override public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args) {
+    @Override
+    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args) {
         UPlayer p = AbstractionLayer.getPlayer();
-
         if (args.length < 2) {
             p.sendSyntaxMessage(getUsage(sender));
             return;
@@ -58,24 +67,16 @@ public class ASUCommand extends CommandBase {
 
         Set<Flag> flags = getFlags(args);
         int reasonIndex = args.length - flags.size() - 1;
-
         List<String> players = Arrays.asList(args).subList(0, reasonIndex);
-        String reason = args[reasonIndex];
 
-        WantedReason wantedReason = null;
-        for (WantedReason wanted : WantedReason.values()) {
-            if (wanted.getReason().equals(reason)) {
-                wantedReason = wanted;
-            }
-        }
-
-        if (wantedReason == null) {
+        WantedReasonEntry wantedReasonEntry = WantedReasonEntry.getWantedReasonEntryByReason(args[reasonIndex]);
+        if (wantedReasonEntry == null) {
             p.sendErrorMessage("Der Wantedgrund wurde nicht gefunden!");
             return;
         }
 
-        String wantedReasonString = wantedReason.getReason().replace('-', ' ');
-        int wantedReasonAmount = wantedReason.getAmount();
+        String wantedReasonString = wantedReasonEntry.getReason().replace("-", " ");
+        int wantedReasonAmount = wantedReasonEntry.getPoints();
 
         for (Flag flag : flags) {
             wantedReasonString = flag.modifyWantedReasonString(wantedReasonString);
@@ -104,30 +105,29 @@ public class ASUCommand extends CommandBase {
                     issuer.sendChatMessage("/su " + maxAmount + " " + player + " " + reason);
                 }
             }, 0, TimeUnit.SECONDS.toMillis(1));
-        } else{
+        } else {
             for (String player : players) {
                 issuer.sendChatMessage("/su " + amount + " " + player + " " + reason);
             }
         }
     }
 
-    @Override @Nonnull public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
-        if (args.length == 1) {
-            List<String> tabCompletions = ForgeUtils.getOnlinePlayers();
-            String input = args[args.length - 1].toLowerCase().replace('-', ' ');
-            tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
-            return tabCompletions;
-        } else {
-            List<String> tabCompletions = Arrays.stream(WantedReason.values()).map(WantedReason::getReason).sorted().collect(Collectors.toList());
-            tabCompletions.addAll(ForgeUtils.getOnlinePlayers());
-
-            String input = args[args.length - 1].toLowerCase().replace('-', ' ');
-            tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
-
-            tabCompletions.addAll(Arrays.stream(Flag.values()).map(Flag::getFlagArgument).sorted().collect(Collectors.toList()));
-
-            return tabCompletions;
+    @Override
+    @Nonnull
+    public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
+        List<String> tabCompletions = ForgeUtils.getOnlinePlayers();
+        if (args.length > 1) {
+            tabCompletions.addAll(Syncer.getWantedReasonEntryList().stream().map(WantedReasonEntry::getReason).sorted().collect(Collectors.toList()));
         }
+        String input = args[args.length - 1].toLowerCase();
+        tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
+        tabCompletions.addAll(Arrays.stream(Flag.values()).map(Flag::getFlagArgument).sorted().collect(Collectors.toList()));
+        return tabCompletions;
+    }
+
+    @Override
+    public boolean isUsernameIndex(@Nonnull String[] args, int index) {
+        return false;
     }
 
     private Set<Flag> getFlags(String[] args) {
@@ -141,6 +141,16 @@ public class ASUCommand extends CommandBase {
         }
 
         return flags;
+    }
+
+    @Override
+    public boolean allowUsageWithoutPrefix(ICommandSender sender, String message) {
+        return false;
+    }
+
+    @Override
+    public int compareTo(@Nonnull ICommand o) {
+        return 0;
     }
 
     private enum Flag {

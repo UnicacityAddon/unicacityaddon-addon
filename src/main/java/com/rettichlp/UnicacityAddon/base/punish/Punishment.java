@@ -81,7 +81,9 @@ public enum Punishment {
     FACTION_ALLIANCE("Fraktionsbündnis", "Fraktionsbündnis", 0, 0, 0, false, false, 0, 7),
     INVITE_WITHOUT_APPLICATION("Annahme-ohne-Bewerbung", "Invite in eine Fraktion ohne Bewerbung", 0, 0, 0, false, false, 0, 7),
     VIOLATION_OF_ROLEPLAY_CHAT("Missachten-der-Roleplay-Chat-Regel-(Kick)", "Missachten der Roleplay Chat-Regel", 0, 0, 0, false, true, 0, 0),
-    VIOLATION_OF_ROLEPLAY_CHAT_CHECKPOINTS("Missachten-der-Roleplay-Chat-Regel-(Checkpoints)", "Missachten der Roleplay Chat-Regel", 100, 0, 0, false, true, 0, 0);
+    VIOLATION_OF_ROLEPLAY_CHAT_CHECKPOINTS("Missachten-der-Roleplay-Chat-Regel-(Checkpoints)", "Missachten der Roleplay Chat-Regel", 100, 0, 0, false, true, 0, 0),
+    VIOLATION_OF_VOICECHAT_RULE("Missachten-der-VoiceChat-Regel-(unter-Level5)", "Missachten der VoiceChat-Regel", 0, 60, 0, false, true, 0, 0),
+    VIOLATION_OF_VOICECHAT_RULE_OVER_LEVEL5("Missachten-der-VoiceChat-Regel-(über-Level5)", "Missachten der VoiceChat-Regel", 150, 280, 0, false, true, 0, 0);
 
     private final String tabReason;
     private final String reason;

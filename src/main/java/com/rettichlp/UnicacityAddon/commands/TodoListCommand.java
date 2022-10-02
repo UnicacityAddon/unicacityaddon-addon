@@ -7,14 +7,18 @@ import com.rettichlp.UnicacityAddon.base.json.TodolistEntry;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
+import com.rettichlp.UnicacityAddon.base.utils.ForgeUtils;
 import com.rettichlp.UnicacityAddon.base.utils.MathUtils;
 import com.rettichlp.UnicacityAddon.base.utils.TextUtils;
-import net.minecraft.command.CommandBase;
+import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.event.ClickEvent;
+import net.minecraftforge.client.IClientCommand;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
 
@@ -22,7 +26,7 @@ import java.util.List;
  * @author RettichLP
  */
 @UCCommand
-public class TodoListCommand extends CommandBase {
+public class TodoListCommand implements IClientCommand {
 
     public static List<TodolistEntry> todolist;
 
@@ -47,6 +51,17 @@ public class TodoListCommand extends CommandBase {
     @Override
     public boolean checkPermission(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender) {
         return true;
+    }
+
+    @Override
+    @Nonnull
+    public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
+        return ForgeUtils.getOnlinePlayers();
+    }
+
+    @Override
+    public boolean isUsernameIndex(@Nonnull String[] args, int index) {
+        return false;
     }
 
     @Override
@@ -134,5 +149,15 @@ public class TodoListCommand extends CommandBase {
                     .createComponent());
         });
         p.sendEmptyMessage();
+    }
+
+    @Override
+    public boolean allowUsageWithoutPrefix(ICommandSender sender, String message) {
+        return false;
+    }
+
+    @Override
+    public int compareTo(@Nonnull ICommand o) {
+        return 0;
     }
 }
