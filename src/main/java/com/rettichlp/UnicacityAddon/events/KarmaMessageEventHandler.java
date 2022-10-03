@@ -71,7 +71,7 @@ public class KarmaMessageEventHandler {
         e.setMessage(Message.getBuilder().of("[").color(ColorCode.DARK_GRAY).advance()
                     .of("Karma").color(ColorCode.BLUE).advance()
                     .of("] ").color(ColorCode.DARK_GRAY).advance()
-                    .of("" + karma).color(ColorCode.AQUA).advance().space()
+                    .of("+" + karma).color(ColorCode.AQUA).advance().space()
                     .of("Karma ").color(ColorCode.AQUA).advance()
                     .of("(").color(ColorCode.DARK_GRAY).advance()
                     .of(karmaMatcher.group(1)).color(ColorCode.AQUA).advance()
