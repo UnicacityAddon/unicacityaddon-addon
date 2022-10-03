@@ -106,57 +106,57 @@ public class ServiceMessageEventHandler {
                     return false;
                 }
 
-            e.setMessage(Message.getBuilder().of("➥").color(ColorCode.DARK_GRAY).advance().space()
-                    .of(m.group(1)).color(ColorCode.YELLOW).advance().space()
-                    .of("-").color(ColorCode.GRAY).advance().space()
-                    .of("Nein").color(ColorCode.YELLOW).hoverEvent(HoverEvent.Action.SHOW_TEXT,
-                            Message.getBuilder().of("➥" + m.group(2) + " " + m.group(3)).color(ColorCode.YELLOW).advance().newline()
-                                    .of("➥" + m.group(5) + " " + m.group(6)).color(ColorCode.YELLOW).advance().createComponent())
-                    .advance().createComponent());
-        }
+                e.setMessage(Message.getBuilder().of("➥").color(ColorCode.DARK_GRAY).advance().space()
+                        .of(m.group(1)).color(ColorCode.YELLOW).advance().space()
+                        .of("-").color(ColorCode.GRAY).advance().space()
+                        .of("Nein").color(ColorCode.YELLOW).hoverEvent(HoverEvent.Action.SHOW_TEXT,
+                                Message.getBuilder().of("➥" + m.group(2) + " " + m.group(3)).color(ColorCode.YELLOW).advance().newline()
+                                        .of("➥" + m.group(5) + " " + m.group(6)).color(ColorCode.YELLOW).advance().createComponent())
+                        .advance().createComponent());
+            }
 
-        m = PatternHandler.SERVICE_ACCEPTED_PATTERN.matcher(msg);
-        if (m.find()) {
-            e.setMessage(Message.getBuilder().of("Angenommen").color(ColorCode.GREEN).advance().space()
-                    .of("-").color(ColorCode.GRAY).advance().space()
-                    .of(m.group(1)).color(ColorCode.YELLOW).advance().space()
-                    .of("-").color(ColorCode.GRAY).advance().space()
-                    .of(m.group(2)).color(ColorCode.YELLOW).advance().space()
-                    .of("-").color(ColorCode.GRAY).advance().space()
-                    .of(m.group(3) + "m").color(ColorCode.YELLOW).advance().createComponent());
-            return false;
-        }
+            m = PatternHandler.SERVICE_ACCEPTED_PATTERN.matcher(msg);
+            if (m.find()) {
+                e.setMessage(Message.getBuilder().of("Angenommen").color(ColorCode.GREEN).advance().space()
+                        .of("-").color(ColorCode.GRAY).advance().space()
+                        .of(m.group(1)).color(ColorCode.YELLOW).advance().space()
+                        .of("-").color(ColorCode.GRAY).advance().space()
+                        .of(m.group(2)).color(ColorCode.YELLOW).advance().space()
+                        .of("-").color(ColorCode.GRAY).advance().space()
+                        .of(m.group(3) + "m").color(ColorCode.YELLOW).advance().createComponent());
+                return false;
+            }
 
-        m = PatternHandler.SERVICE_DELETED_PATTERN.matcher(msg);
-        if (m.find()) {
-            e.setMessage(Message.getBuilder().of("Gelöscht").color(ColorCode.RED).advance().space()
-                    .of("-").color(ColorCode.GRAY).advance().space()
-                    .of(m.group(2)).color(ColorCode.YELLOW).advance().space() // Löscher
-                    .of("-").color(ColorCode.GRAY).advance().space()
-                    .of(m.group(1)).color(ColorCode.YELLOW).advance().createComponent()); // Service sender
-            return false;
-        }
+            m = PatternHandler.SERVICE_DELETED_PATTERN.matcher(msg);
+            if (m.find()) {
+                e.setMessage(Message.getBuilder().of("Gelöscht").color(ColorCode.RED).advance().space()
+                        .of("-").color(ColorCode.GRAY).advance().space()
+                        .of(m.group(2)).color(ColorCode.YELLOW).advance().space() // Löscher
+                        .of("-").color(ColorCode.GRAY).advance().space()
+                        .of(m.group(1)).color(ColorCode.YELLOW).advance().createComponent()); // Service sender
+                return false;
+            }
 
-        m = PatternHandler.SERVICE_BLOCKED_PATTERN.matcher(msg);
-        if (m.find()) {
-            e.setMessage(Message.getBuilder().of("Blockiert").color(ColorCode.RED).advance().space()
-                    .of("-").color(ColorCode.GRAY).advance().space()
-                    .of(m.group(2)).color(ColorCode.YELLOW).advance().space() // Blockierer
-                    .of("-").color(ColorCode.GRAY).advance().space()
-                    .of(m.group(1)).color(ColorCode.YELLOW).advance().createComponent()); // Blockierter
-            return false;
-        }
+            m = PatternHandler.SERVICE_BLOCKED_PATTERN.matcher(msg);
+            if (m.find()) {
+                e.setMessage(Message.getBuilder().of("Blockiert").color(ColorCode.RED).advance().space()
+                        .of("-").color(ColorCode.GRAY).advance().space()
+                        .of(m.group(2)).color(ColorCode.YELLOW).advance().space() // Blockierer
+                        .of("-").color(ColorCode.GRAY).advance().space()
+                        .of(m.group(1)).color(ColorCode.YELLOW).advance().createComponent()); // Blockierter
+                return false;
+            }
 
-        m = PatternHandler.SERVICE_UNBLOCKED_PATTERN.matcher(msg);
-        if (m.find()) {
-            e.setMessage(Message.getBuilder().of("Entblockt").color(ColorCode.GREEN).advance().space()
-                    .of("-").color(ColorCode.GRAY).advance().space()
-                    .of(m.group(2)).color(ColorCode.YELLOW).advance().space() // Entblocker
-                    .of("-").color(ColorCode.GRAY).advance().space()
-                    .of(m.group(1)).color(ColorCode.YELLOW).advance().createComponent()); // Blockierter
-            return false;
+            m = PatternHandler.SERVICE_UNBLOCKED_PATTERN.matcher(msg);
+            if (m.find()) {
+                e.setMessage(Message.getBuilder().of("Entblockt").color(ColorCode.GREEN).advance().space()
+                        .of("-").color(ColorCode.GRAY).advance().space()
+                        .of(m.group(2)).color(ColorCode.YELLOW).advance().space() // Entblocker
+                        .of("-").color(ColorCode.GRAY).advance().space()
+                        .of(m.group(1)).color(ColorCode.YELLOW).advance().createComponent()); // Blockierter
+                return false;
+            }
         }
-    }
         return false;
+    }
 }
-                }
