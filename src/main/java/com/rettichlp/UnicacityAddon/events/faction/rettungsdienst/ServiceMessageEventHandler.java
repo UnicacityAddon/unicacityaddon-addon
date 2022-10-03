@@ -116,9 +116,9 @@ public class ServiceMessageEventHandler {
             if (m.find()) {
                 e.setMessage(Message.getBuilder().of("Angenommen").color(ColorCode.GREEN).advance().space()
                         .of("-").color(ColorCode.GRAY).advance().space()
-                        .of(m.group(1)).color(ColorCode.BLUE).advance().space()
+                        .of(m.group(1)).color(ColorCode.YELLOW).advance().space()
                         .of("-").color(ColorCode.GRAY).advance().space()
-                        .of(m.group(2)).color(ColorCode.BLUE).advance().space()
+                        .of(m.group(2)).color(ColorCode.YELLOW).advance().space()
                         .of("-").color(ColorCode.GRAY).advance().space()
                         .of(m.group(3) + "m").color(ColorCode.YELLOW).advance().createComponent());
                 return false;
@@ -128,9 +128,9 @@ public class ServiceMessageEventHandler {
             if (m.find()) {
                 e.setMessage(Message.getBuilder().of("Gelöscht").color(ColorCode.RED).advance().space()
                         .of("-").color(ColorCode.GRAY).advance().space()
-                        .of(m.group(2)).color(ColorCode.BLUE).advance().space() // Löscher
+                        .of(m.group(2)).color(ColorCode.YELLOW).advance().space() // Löscher
                         .of("-").color(ColorCode.GRAY).advance().space()
-                        .of(m.group(1)).color(ColorCode.BLUE).advance().createComponent()); // Service sender
+                        .of(m.group(1)).color(ColorCode.YELLOW).advance().createComponent()); // Service sender
                 return false;
             }
 
@@ -138,9 +138,9 @@ public class ServiceMessageEventHandler {
             if (m.find()) {
                 e.setMessage(Message.getBuilder().of("Blockiert").color(ColorCode.RED).advance().space()
                         .of("-").color(ColorCode.GRAY).advance().space()
-                        .of(m.group(2)).color(ColorCode.BLUE).advance().space() // Blockierer
+                        .of(m.group(2)).color(ColorCode.YELLOW).advance().space() // Blockierer
                         .of("-").color(ColorCode.GRAY).advance().space()
-                        .of(m.group(1)).color(ColorCode.BLUE).advance().createComponent()); // Blockierter
+                        .of(m.group(1)).color(ColorCode.YELLOW).advance().createComponent()); // Blockierter
                 return false;
             }
 
@@ -148,9 +148,9 @@ public class ServiceMessageEventHandler {
             if (m.find()) {
                 e.setMessage(Message.getBuilder().of("Entblockt").color(ColorCode.GREEN).advance().space()
                         .of("-").color(ColorCode.GRAY).advance().space()
-                        .of(m.group(2)).color(ColorCode.BLUE).advance().space() // Entblocker
+                        .of(m.group(2)).color(ColorCode.YELLOW).advance().space() // Entblocker
                         .of("-").color(ColorCode.GRAY).advance().space()
-                        .of(m.group(1)).color(ColorCode.BLUE).advance().createComponent()); // Blockierter
+                        .of(m.group(1)).color(ColorCode.YELLOW).advance().createComponent()); // Blockierter
                 return false;
             }
         }
