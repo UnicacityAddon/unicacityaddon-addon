@@ -201,8 +201,8 @@ public class PatternHandler {
     /**
      * {@link com.rettichlp.UnicacityAddon.events.KarmaMessageEventHandler}
      */
-    public static final Pattern KARMA_CHANGED_PATTERN = Pattern.compile("^\\[Karma] (-?\\d+) Karma\\.$");
-    public static final Pattern KARMA_PATTERN = Pattern.compile("^\\[Karma] Du hast ein Karma von (-?\\d+)\\.$");
+    public static final Pattern KARMA_CHANGED_PATTERN = Pattern.compile("^\\[Karma] ([+-]\\d+) Karma\\.$");
+    public static final Pattern KARMA_PATTERN = Pattern.compile("^\\[Karma] Du hast ein Karma von ([+-]\\d+)\\.$");
 
     /**
      * {@link com.rettichlp.UnicacityAddon.events.ABuyEventHandler}
