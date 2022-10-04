@@ -1,4 +1,4 @@
-package com.rettichlp.UnicacityAddon.commands;
+package com.rettichlp.UnicacityAddon.commands.api;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
