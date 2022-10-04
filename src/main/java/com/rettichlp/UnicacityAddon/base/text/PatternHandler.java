@@ -40,9 +40,9 @@ public class PatternHandler {
      * {@link com.rettichlp.UnicacityAddon.events.faction.EmergencyServiceEventHandler}
      */
     public static final Pattern SERVICE_ARRIVED_PATTERN = Pattern.compile("^Ein Notruf von ((?:\\[UC])*\\w+) \\((\\d+)\\): \"(.*)\"$");
-    public static final Pattern SERVICE_LOCATION_PATTERN = Pattern.compile("^Der näheste Punkt ist (.+)\\.$");
-    public static final Pattern SERVICE_LOCATION_PATTERN_ONE_NEAREST = Pattern.compile("^Der näheste Punkt ist (.+)\\. Die nähesten Personen sind ((?:\\[UC])*\\w+) \\(((\\d+)m)\\)\\.$");
-    public static final Pattern SERVICE_LOCATION_PATTERN_TWO_NEAREST = Pattern.compile("^Der näheste Punkt ist (.+)\\. Die nähesten Personen sind ((?:\\[UC])*\\w+) \\(((\\d+)m)\\), ((?:\\[UC])*\\w+) \\(((\\d+)m)\\)\\.$");
+    public static final Pattern SERVICE_LOCATION_PATTERN = Pattern.compile("^Der näheste Punkt ist ([a-zA-Z-\\[\\]äöüßÄÖÜ]+)\\.$");
+    public static final Pattern SERVICE_LOCATION_PATTERN_ONE_NEAREST = Pattern.compile("^Der näheste Punkt ist ([a-zA-Z-\\[\\]äöüßÄÖÜ]+)\\. Die nähesten Personen sind ((?:\\[UC])*\\w+) \\(((\\d+)m)\\)\\.$");
+    public static final Pattern SERVICE_LOCATION_PATTERN_TWO_NEAREST = Pattern.compile("^Der näheste Punkt ist ([a-zA-Z-\\[\\]äöüßÄÖÜ]+)\\. Die nähesten Personen sind ((?:\\[UC])*\\w+) \\(((\\d+)m)\\), ((?:\\[UC])*\\w+) \\(((\\d+)m)\\)\\.$");
     public static final Pattern SERVICE_ACCEPTED_PATTERN = Pattern.compile("^((?:\\[UC])*\\w+) hat den Notruf von ((?:\\[UC])*\\w+) angenommen\\. \\((\\d+)m entfernt\\)$");
     public static final Pattern SERVICE_REQUEUED_PATTERN = Pattern.compile("^((?:\\[UC])*\\w+) hat den Notruf von ((?:\\[UC])*\\w+) \\((\\d+)\\) wieder geöffnet\\.$");
     public static final Pattern SERVICE_DELETED_PATTERN = Pattern.compile("^Der Notruf von ((?:\\[UC])*\\w+) wurde von ((?:\\[UC])*\\w+) gelöscht\\.$");
