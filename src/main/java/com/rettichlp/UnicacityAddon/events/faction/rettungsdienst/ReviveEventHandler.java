@@ -17,17 +17,11 @@ import java.util.concurrent.TimeUnit;
 @UCEvent
 public class ReviveEventHandler {
 
-    private long time = 0;
+    private static long time = 0;
 
     @SubscribeEvent
     public void onReviveStart(ClientChatReceivedEvent e) {
         String msg = e.getMessage().getUnformattedText();
-
-        if (PatternHandler.KARMA_CHANGED_PATTERN.matcher(msg).find()) {
-            if (System.currentTimeMillis() - time < TimeUnit.SECONDS.toMillis(10))
-                APIRequest.sendStatisticAddReviveRequest();
-            return;
-        }
 
         if (PatternHandler.REVIVE_BY_MEDIC_FINISH_PATTERN.matcher(msg).find()) {
             if (MobileEventHandler.hasCommunications)
@@ -37,5 +31,10 @@ public class ReviveEventHandler {
 
         if (PatternHandler.REVIVE_START_PATTERN.matcher(msg).find() && UnicacityAddon.isUnicacity())
             time = System.currentTimeMillis();
+    }
+
+    public static void handleRevive() {
+        if (System.currentTimeMillis() - time < TimeUnit.SECONDS.toMillis(10))
+            APIRequest.sendStatisticAddReviveRequest();
     }
 }

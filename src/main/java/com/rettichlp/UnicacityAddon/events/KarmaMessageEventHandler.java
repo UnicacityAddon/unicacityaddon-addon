@@ -7,6 +7,7 @@ import com.rettichlp.UnicacityAddon.base.registry.annotation.UCEvent;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
+import com.rettichlp.UnicacityAddon.events.faction.rettungsdienst.ReviveEventHandler;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -31,7 +32,10 @@ public class KarmaMessageEventHandler {
 
         if (PayDayEventHandler.isAfk) return false;
         Matcher karmaChangedPattern = PatternHandler.KARMA_CHANGED_PATTERN.matcher(msg);
+
         if (karmaChangedPattern.find()) {
+            ReviveEventHandler.handleRevive();
+
             p.sendChatMessage("/karma");
             karmaCheck = true;
             e.setCanceled(true);
