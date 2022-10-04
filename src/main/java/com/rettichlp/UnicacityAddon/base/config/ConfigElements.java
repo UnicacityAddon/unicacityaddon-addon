@@ -276,6 +276,12 @@ public class ConfigElements {
                 .getAsBoolean(); // default = true
     }
 
+    // HQ Nachrichten
+    public static boolean getServiceMessagesActivated() {
+        return !UnicacityAddon.ADDON.getConfig().has("SERVICE_MESSAGE_SETTINGS") || UnicacityAddon.ADDON.getConfig().get("SERVICE_MESSAGE_SETTINGS")
+                .getAsBoolean(); // default = true
+    }
+
     // Minus Karma
     public static boolean getEstimatedDespawnTime() {
         return !UnicacityAddon.ADDON.getConfig().has("ESTIMATED_DESPAWN_TIME_SETTINGS") || UnicacityAddon.ADDON.getConfig().get("ESTIMATED_DESPAWN_TIME_SETTINGS")
