@@ -61,22 +61,22 @@ public class TopListCommand implements IClientCommand {
     public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
         UPlayer p = AbstractionLayer.getPlayer();
 
-
         JsonArray response = APIRequest.sendStatisticRequest();
         if (response == null) return;
 
-        Map<String, Float> topList = new HashMap<>();
+        Map<String, Float> topListMap = new HashMap<>();
         response.forEach(jsonElement -> {
             JsonObject o = jsonElement.getAsJsonObject();
             String name = o.get("name").getAsString();
             float kd = o.get("kd").getAsFloat();
 
             // float points = (0.5f + kd) * (services + revives); // TODO: 30.09.2022 Neue Formel überlegen - Dimiikou
-            topList.put(name, kd);
+            topListMap.put(name, kd);
         });
 
-        List<Map.Entry<String, Float>> list = new ArrayList<>(topList.entrySet());
+        List<Map.Entry<String, Float>> list = new ArrayList<>(topListMap.entrySet());
         list.sort(Map.Entry.comparingByValue());
+        Collections.reverse(list);
         LinkedHashMap<String, Float> sortedMap = new LinkedHashMap<>();
         list.forEach(e -> sortedMap.put(e.getKey(), e.getValue()));
 
