@@ -2,6 +2,7 @@ package com.rettichlp.UnicacityAddon;
 
 import com.rettichlp.UnicacityAddon.base.api.Syncer;
 import com.rettichlp.UnicacityAddon.base.api.TokenManager;
+import com.rettichlp.UnicacityAddon.base.api.checks.BroadcastChecker;
 import com.rettichlp.UnicacityAddon.base.config.Config;
 import com.rettichlp.UnicacityAddon.base.io.FileManager;
 import com.rettichlp.UnicacityAddon.base.registry.CommandRegistry;
@@ -73,6 +74,7 @@ public class UnicacityAddon extends LabyModAddon {
         ADDON.getApi().registerModule(new PlantFertilizeTimerModule());
         ADDON.getApi().registerModule(new PlantWaterTimerModule());
 
+        BroadcastChecker.start();
         TokenManager.createToken();
         Syncer.syncAll();
 
