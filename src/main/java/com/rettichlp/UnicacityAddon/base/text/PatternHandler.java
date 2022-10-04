@@ -61,7 +61,7 @@ public class PatternHandler {
     public static final Pattern WANTED_KILL = Pattern.compile("^HQ: (?:\\[UC])*([a-zA-Z0-9_]+) wurde von (?:\\[UC])*([a-zA-Z0-9_]+) get\u00f6tet\\.$");
     public static final Pattern WANTED_DELETE = Pattern.compile("^HQ: .+ (?:\\[UC])*([a-zA-Z0-9_]+) hat (?:\\[UC])*([a-zA-Z0-9_]+)'s Akten gel\u00f6scht, over\\.$");
     public static final Pattern WANTED_JAIL = Pattern.compile("^HQ: (?:\\[UC])*([a-zA-Z0-9_]+) wurde von (?:\\[UC])*([a-zA-Z0-9_]+) eingesperrt\\.$");
-    public static final Pattern WANTEDS_TICKET_PATTERN = Pattern.compile("^HQ: .+ (?:\\[UC])*([0-9A-Za-z_]+) hat (?:\\[UC])*([a-zA-Z0-9_]+)(?:'s)*(?: seine| ihre)* Akten gel\u00f6scht, over\\.$");
+    public static final Pattern WANTEDS_TICKET_PATTERN = Pattern.compile("^HQ: .+ (?:\\[UC])*([a-zA-Z0-9_]+) hat (?:\\[UC])*([a-zA-Z0-9_]+)(?:'s)*(?: seine| ihre)* Akten gel\u00f6scht, over\\.$");
     public static final Pattern WANTED_DELETED_PATTERN = Pattern.compile("^HQ: (?:\\[UC])*(\\w+) wurde von (?:\\[UC])*\\w+ eingesperrt\\.$" +
             "|^HQ: (?:\\[UC])*(\\w+) wurde von (?:\\[UC])*\\w+ getötet\\.$" +
             "|^HQ: .+ (?:\\[UC])*\\w+ hat (?:\\[UC])*(\\w+)(?:'s)*(?: seine| ihre)* Akten gelöscht, over\\.$");
