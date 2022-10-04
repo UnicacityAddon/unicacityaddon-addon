@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.api.entries.BlacklistReasonEntry;
+import com.rettichlp.UnicacityAddon.base.api.entries.BroadcastEntry;
 import com.rettichlp.UnicacityAddon.base.api.entries.HouseBanEntry;
 import com.rettichlp.UnicacityAddon.base.api.entries.HouseBanReasonEntry;
 import com.rettichlp.UnicacityAddon.base.api.entries.NaviPointEntry;
@@ -96,6 +97,25 @@ public class Syncer {
             blacklistReasonEntryList.add(new BlacklistReasonEntry(kills, reason, issuerUUID, price, issuerName));
         });
         return blacklistReasonEntryList;
+    }
+
+    public static List<BroadcastEntry> getBroadcastEntryList() {
+        JsonArray response = APIRequest.sendBroadcastQueueRequest();
+        if (response == null) return new ArrayList<>();
+        List<BroadcastEntry> broadcastEntryList = new ArrayList<>();
+        response.forEach(jsonElement -> {
+            JsonObject o = jsonElement.getAsJsonObject();
+
+            String broadcast = o.get("broadcast").getAsString();
+            int id = o.get("id").getAsInt();
+            String issuerName = o.get("issuerName").getAsString();
+            String issuerUUID = o.get("issuerUUID").getAsString();
+            long sendTime = o.get("sendTime").getAsLong();
+            long time = o.get("time").getAsLong();
+
+            broadcastEntryList.add(new BroadcastEntry(broadcast, id, issuerName, issuerUUID, sendTime, time));
+        });
+        return broadcastEntryList;
     }
 
     public static List<HouseBanEntry> getHouseBanEntryList() {

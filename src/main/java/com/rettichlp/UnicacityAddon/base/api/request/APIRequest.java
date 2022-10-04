@@ -53,7 +53,6 @@ public class APIRequest {
         try {
             return APIResponseHandler.getBroadcastQueueResponse(parameters);
         } catch (APIUnsuccessResponseException e) {
-            e.sendInfoMessage();
             return null;
         }
     }
