@@ -51,6 +51,7 @@ public class DBankMessages {
                     .of("|").color(ColorCode.GRAY).advance().space()
                     .of(dropMatcher.group(1)).color(ColorCode.DARK_AQUA).bold().advance()
                     .createComponent());
+            return false;
         }
 
         Matcher getMatcher = PatternHandler.DBANK_GET_PATTERN.matcher(msg);
