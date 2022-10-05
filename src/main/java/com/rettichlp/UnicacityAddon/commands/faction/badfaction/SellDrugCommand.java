@@ -12,6 +12,7 @@ import net.minecraftforge.client.IClientCommand;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -48,10 +49,17 @@ public class SellDrugCommand implements IClientCommand {
     @Override
     @Nonnull
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
-        if (args.length == 2) return Arrays.asList("Kokain", "Marihuana", "Methamphetamin", "LSD", "Schmerzmittel", "Antibiotika", "Hustensaft", "Maske");
-        if (args.length == 3) return Arrays.asList("0", "1", "2", "3");
-
-        return ForgeUtils.getOnlinePlayers();
+        List<String> tabCompletions = new ArrayList<>();
+        if (args.length == 1) {
+            tabCompletions = ForgeUtils.getOnlinePlayers();
+        } else if (args.length == 2) {
+            tabCompletions.addAll(Arrays.asList("Kokain", "Marihuana", "Methamphetamin", "LSD", "Schmerzmittel", "Antibiotika", "Hustensaft", "Maske"));
+        } else if (args.length == 3) {
+            tabCompletions.addAll(Arrays.asList("0", "1", "2", "3"));
+        }
+        String input = args[args.length - 1].toLowerCase();
+        tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
+        return tabCompletions;
     }
 
     @Override
