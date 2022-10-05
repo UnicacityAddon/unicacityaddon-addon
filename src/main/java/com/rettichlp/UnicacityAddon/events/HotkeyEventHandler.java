@@ -68,13 +68,8 @@ public class HotkeyEventHandler {
         UPlayer p = AbstractionLayer.getPlayer();
 
         if (Keyboard.isKeyDown(KeyBindRegistry.addonScreenshot.getKeyCode())) {
-            try {
-                File file = FileManager.getNewImageFile();
-                handleScreenshot(file);
-                return;
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            handleScreenshot();
+            lastHotkeyUse = System.currentTimeMillis();
         }
 
         if (UnicacityAddon.MINECRAFT.currentScreen != null) return;
@@ -89,11 +84,8 @@ public class HotkeyEventHandler {
             p.sendChatMessage("/ar");
             lastHotkeyUse = System.currentTimeMillis();
         } else if (Keyboard.isKeyDown(KeyBindRegistry.cancelReport.getKeyCode())) {
-            if ((!ConfigElements.getReportFarewell().isEmpty()) && (System.currentTimeMillis() - lastReportClosed > 1000L)) {
-                p.sendChatMessage(ConfigElements.getReportFarewell());
-                p.sendChatMessage("/cr");
-                lastReportClosed = System.currentTimeMillis();
-            }
+            handleCancelReport();
+            lastHotkeyUse = System.currentTimeMillis();
         } else if (Keyboard.isKeyDown(KeyBindRegistry.aDuty.getKeyCode())) {
             p.sendChatMessage("/aduty");
             lastHotkeyUse = System.currentTimeMillis();
@@ -107,48 +99,17 @@ public class HotkeyEventHandler {
             BlockPos position = p.getPosition();
             p.sendChatMessage("/d Benötige Verstärkung! -> X: " + position.getX() + " | Y: " + position.getY() + " | Z: " + position.getZ());
         } else if (Keyboard.isKeyDown(KeyBindRegistry.publicChannelJoin.getKeyCode())) {
-            if (p.getFaction().equals(Faction.NULL)) {
-                p.sendErrorMessage("Du befindest dich in keiner Fraktion.");
-                return;
-            }
-
-            Channel foundChannel = new Channel(p.getFaction().getPublicChannelId(), "Öffentlich", 0, 0);
-
-            ClientMoveCommand clientMoveCommand = new ClientMoveCommand(foundChannel.getChannelID(), TSUtils.getMyClientID());
-
-            CommandResponse commandResponse = clientMoveCommand.getResponse();
-            if (!commandResponse.succeeded()) {
-                p.sendErrorMessage("Das Bewegen ist fehlgeschlagen.");
-                return;
-            }
-
-            Message.getBuilder()
-                    .prefix()
-                    .of("Du bist in deinen").color(ColorCode.GRAY).advance().space()
-                    .of("\"Öffentlich Channel\"").color(ColorCode.AQUA).advance()
-                    .of(" gegangen.").color(ColorCode.GRAY).advance()
-                    .sendTo(p.getPlayer());
+            handlePublicChannelJoin();
+            lastHotkeyUse = System.currentTimeMillis();
         }
     }
 
-    public static void handleScreenshot(File file) {
+    private void handleScreenshot() {
+        File file;
         try {
-            if (file == null) {
-                LabyMod.getInstance().notifyMessageRaw(ColorCode.RED.getCode() + "Fehler!", "Screenshot konnte nicht erstellt werden.");
-                return;
-            }
-
-            Framebuffer framebuffer = ReflectionUtils.getValue(UnicacityAddon.MINECRAFT, Framebuffer.class);
-            assert framebuffer != null;
-            BufferedImage image = ScreenShotHelper.createScreenshot(UnicacityAddon.MINECRAFT.displayWidth, UnicacityAddon.MINECRAFT.displayHeight, framebuffer);
-            ImageIO.write(image, "jpg", file);
-            LabyMod.getInstance().notifyMessageRaw(ColorCode.GREEN.getCode() + "Screenshot erstellt!", "Wird hochgeladen...");
-
-            lastScreenshot = System.currentTimeMillis();
-
-            Thread thread = new Thread(() -> uploadScreenshot(file));
-            thread.start();
-
+            file = FileManager.getNewImageFile();
+            if (ConfigElements.getAutomatedUpload()) handleScreenshotWithUpload(file);
+            else handleScreenshotWithoutUpload(file);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -184,5 +145,36 @@ public class HotkeyEventHandler {
         if (adIssuer == null || System.currentTimeMillis() - adTime > TimeUnit.SECONDS.toMillis(20)) return;
         AbstractionLayer.getPlayer().sendChatMessage("/adcontrol " + adIssuer + " " + type);
         adIssuer = null;
+    }
+
+    private void handleCancelReport() {
+        UPlayer p = AbstractionLayer.getPlayer();
+        if (ConfigElements.getReportFarewell().isEmpty()) return;
+        p.sendChatMessage(ConfigElements.getReportFarewell());
+        p.sendChatMessage("/cr");
+    }
+
+    private void handlePublicChannelJoin() {
+        UPlayer p = AbstractionLayer.getPlayer();
+        if (p.getFaction().equals(Faction.NULL)) {
+            p.sendErrorMessage("Du befindest dich in keiner Fraktion.");
+            return;
+        }
+
+        Channel foundChannel = new Channel(p.getFaction().getPublicChannelId(), "Öffentlich", 0, 0);
+        ClientMoveCommand clientMoveCommand = new ClientMoveCommand(foundChannel.getChannelID(), TSUtils.getMyClientID());
+
+        CommandResponse commandResponse = clientMoveCommand.getResponse();
+        if (!commandResponse.succeeded()) {
+            p.sendErrorMessage("Das Bewegen ist fehlgeschlagen.");
+            return;
+        }
+
+        Message.getBuilder()
+                .prefix()
+                .of("Du bist in deinen").color(ColorCode.GRAY).advance().space()
+                .of("\"Öffentlich Channel\"").color(ColorCode.AQUA).advance()
+                .of(" gegangen.").color(ColorCode.GRAY).advance()
+                .sendTo(p.getPlayer());
     }
 }
