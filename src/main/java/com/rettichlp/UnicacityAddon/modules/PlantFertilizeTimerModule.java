@@ -22,45 +22,58 @@ public class PlantFertilizeTimerModule extends SimpleModule {
     public static final int timeNeeded = 4200;
     public static String timer = "";
 
-    @Override public String getControlName() {
+    @Override
+    public String getControlName() {
         return "Plantage Düngen";
     }
 
-    @Override public String getSettingName() {
+    @Override
+    public String getSettingName() {
         return null;
     }
 
-    @Override public String getDisplayName() {
+    @Override
+    public String getDisplayName() {
         return "Düngen";
     }
 
-    @Override public String getDisplayValue() {
+    @Override
+    public String getDisplayValue() {
         return timer;
     }
 
-    @Override public String getDefaultValue() {
+    @Override
+    public String getDefaultValue() {
         return "00:00";
     }
 
-    @Override public String getDescription() {
+    @Override
+    public String getDescription() {
         return "Zeigt einen Timer an, welcher die Zeit zum nächsten Düngen beschreibt.";
     }
 
-    @Override public ControlElement.IconData getIconData() { return new ControlElement.IconData(Material.DIRT); }
+    @Override
+    public ControlElement.IconData getIconData() {
+        return new ControlElement.IconData(Material.DIRT);
+    }
 
-    @Override public ModuleCategory getCategory() {
+    @Override
+    public ModuleCategory getCategory() {
         return ModuleRegistry.UNICACITY;
     }
 
-    @Override public boolean isShown() {
+    @Override
+    public boolean isShown() {
         return plantRunning;
     }
 
-    @Override public int getSortingId() {
+    @Override
+    public int getSortingId() {
         return 0;
     }
 
-    @Override public void loadSettings() {
+    @Override
+    public void loadSettings() {
     }
 
     public static void stopPlant() {
@@ -71,8 +84,8 @@ public class PlantFertilizeTimerModule extends SimpleModule {
     }
 
     public static String calcTimer(int count) {
-        int minutes = count/60;
-        int seconds = count-(minutes*60);
+        int minutes = count / 60;
+        int seconds = count - (minutes * 60);
         final DecimalFormat format = new DecimalFormat("00");
 
         return format.format(minutes) + ":" + format.format(seconds);

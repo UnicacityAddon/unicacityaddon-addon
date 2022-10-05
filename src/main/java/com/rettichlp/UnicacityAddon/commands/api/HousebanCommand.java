@@ -72,14 +72,14 @@ public class HousebanCommand implements IClientCommand {
                 long days = hours / 24;
 
                 String duration = Message.getBuilder()
-                        .of(String.valueOf(days)).color(ColorCode.DARK_AQUA).advance().space()
-                        .of(days == 1 ? "Tag" : "Tage").color(ColorCode.AQUA).advance().space()
-                        .of(String.valueOf(hours % 24)).color(ColorCode.DARK_AQUA).advance().space()
-                        .of(hours % 24 == 1 ? "Stunde" : "Stunden").color(ColorCode.AQUA).advance().space()
-                        .of(String.valueOf(minutes % 60)).color(ColorCode.DARK_AQUA).advance().space()
-                        .of(minutes % 60 == 1 ? "Minute" : "Minuten").color(ColorCode.AQUA).advance().space()
-                        .of(String.valueOf(seconds % 60)).color(ColorCode.DARK_AQUA).advance().space()
-                        .of(seconds % 60 == 1 ? "Sekunde" : "Sekunden").color(ColorCode.AQUA).advance().space()
+                        .of(String.valueOf(days)).color(ColorCode.DARK_AQUA).advance()
+                        .of("d").color(ColorCode.AQUA).advance().space()
+                        .of(String.valueOf(hours % 24)).color(ColorCode.DARK_AQUA).advance()
+                        .of("h").color(ColorCode.AQUA).advance().space()
+                        .of(String.valueOf(minutes % 60)).color(ColorCode.DARK_AQUA).advance()
+                        .of("m").color(ColorCode.AQUA).advance().space()
+                        .of(String.valueOf(seconds % 60)).color(ColorCode.DARK_AQUA).advance()
+                        .of("s").color(ColorCode.AQUA).advance().space()
                         .create();
 
                 ColorCode colorCode = ColorCode.AQUA;

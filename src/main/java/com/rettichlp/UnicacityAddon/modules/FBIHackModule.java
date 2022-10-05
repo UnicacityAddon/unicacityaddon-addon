@@ -15,49 +15,61 @@ import net.labymod.utils.ModUtils;
 public class FBIHackModule extends SimpleModule {
 
     public static int currentCount = 0;
-    public static int currentTick = 0;
     public static boolean fbiHackStarted = false;
     public static String timer = "0";
 
-    @Override public String getControlName() {
+    @Override
+    public String getControlName() {
         return "FBI Hack Countdown";
     }
 
-    @Override public String getSettingName() {
+    @Override
+    public String getSettingName() {
         return null;
     }
 
-    @Override public String getDisplayName() {
+    @Override
+    public String getDisplayName() {
         return "WP-Clear";
     }
 
-    @Override public String getDisplayValue() {
+    @Override
+    public String getDisplayValue() {
         return timer;
     }
 
-    @Override public String getDefaultValue() {
+    @Override
+    public String getDefaultValue() {
         return "00:00";
     }
 
-    @Override public String getDescription() {
+    @Override
+    public String getDescription() {
         return "Zeigt einen Countdown an, welcher die Zeit bis zum WP Clear im FBI HQ beschreibt.";
     }
 
-    @Override public ControlElement.IconData getIconData() { return new ControlElement.IconData(Material.BOOK); }
+    @Override
+    public ControlElement.IconData getIconData() {
+        return new ControlElement.IconData(Material.BOOK);
+    }
 
-    @Override public ModuleCategory getCategory() {
+    @Override
+    public ModuleCategory getCategory() {
         return ModuleRegistry.UNICACITY;
     }
 
-    @Override public boolean isShown() {
+    @Override
+    public boolean isShown() {
         return fbiHackStarted;
     }
 
-    @Override public int getSortingId() {
+    @Override
+    public int getSortingId() {
         return 0;
     }
 
-    @Override public void loadSettings() {
+    @Override
+    public void loadSettings() {
     }
 
     public static void startCountdown(int seconds) {
@@ -69,5 +81,4 @@ public class FBIHackModule extends SimpleModule {
     public static void stopCountdown() {
         fbiHackStarted = false;
     }
-
 }
