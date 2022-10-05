@@ -376,4 +376,9 @@ public class ConfigElements {
         return !UnicacityAddon.ADDON.getConfig().has("REINFORCEMENT_SCREENSHOT_SETTINGS") || UnicacityAddon.ADDON.getConfig().get("REINFORCEMENT_SCREENSHOT_SETTINGS")
                 .getAsBoolean(); // default = true
     }
+
+    public static boolean getAutomatedUpload() {
+        return UnicacityAddon.ADDON.getConfig().has("AUTOMATED_UPLOAD_IN_SCREEN") && UnicacityAddon.ADDON.getConfig().get("AUTOMATED_UPLOAD_IN_SCREEN")
+                .getAsBoolean(); // default = false
+    }
 }
