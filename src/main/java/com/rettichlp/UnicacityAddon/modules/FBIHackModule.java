@@ -81,5 +81,4 @@ public class FBIHackModule extends SimpleModule {
     public static void stopCountdown() {
         fbiHackStarted = false;
     }
-
 }

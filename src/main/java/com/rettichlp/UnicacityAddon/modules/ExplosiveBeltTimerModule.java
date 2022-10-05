@@ -70,4 +70,10 @@ public class ExplosiveBeltTimerModule extends SimpleModule {
     @Override
     public void loadSettings() {
     }
+
+    public static void stopBombTimer() {
+        explosiveBeltStarted = false;
+        currentCount = 0;
+        timer = "";
+    }
 }

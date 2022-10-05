@@ -22,13 +22,7 @@ public class BombTimerEventHandler {
             return false;
         }
 
-        if (PatternHandler.BOMB_REMOVED_PATTERN.matcher(msg).find()) stopBombTimer();
+        if (PatternHandler.BOMB_REMOVED_PATTERN.matcher(msg).find()) BombTimerModule.stopBombTimer();
         return false;
-    }
-
-    public static void stopBombTimer() {
-        BombTimerModule.isBomb = false;
-        BombTimerModule.currentCount = 0;
-        BombTimerModule.timer = "";
     }
 }

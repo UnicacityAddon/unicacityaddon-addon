@@ -70,4 +70,10 @@ public class BombTimerModule extends SimpleModule {
     @Override
     public void loadSettings() {
     }
+
+    public static void stopBombTimer() {
+        isBomb = false;
+        currentCount = 0;
+        timer = "";
+    }
 }

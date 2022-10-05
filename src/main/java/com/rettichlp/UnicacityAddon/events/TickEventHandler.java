@@ -6,8 +6,6 @@ import com.rettichlp.UnicacityAddon.base.config.ConfigElements;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCEvent;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.utils.MathUtils;
-import com.rettichlp.UnicacityAddon.events.faction.terroristen.BombTimerEventHandler;
-import com.rettichlp.UnicacityAddon.events.faction.terroristen.ExplosiveBeltTimerEventHandler;
 import com.rettichlp.UnicacityAddon.modules.BombTimerModule;
 import com.rettichlp.UnicacityAddon.modules.ExplosiveBeltTimerModule;
 import com.rettichlp.UnicacityAddon.modules.FBIHackModule;
@@ -23,7 +21,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import java.util.List;
 
 @UCEvent
-public class OnTickEventHandler {
+public class TickEventHandler {
 
     private int currentTick = 0;
 
@@ -48,7 +46,7 @@ public class OnTickEventHandler {
         // CUSTOM SECONDS
         String intervalString = ConfigElements.getRefreshDisplayNamesInterval();
         int interval = 5 * 20; // every 5 seconds
-        if (MathUtils.isInteger(intervalString)) interval = Integer.parseInt(intervalString);
+        if (MathUtils.isInteger(intervalString)) interval = Integer.parseInt(intervalString) * 20;
         if (currentTick % interval == 0) handleNameTagSyncDisplayName();
     }
 
@@ -85,14 +83,14 @@ public class OnTickEventHandler {
         if (BombTimerModule.currentCount++ >= 780)
             BombTimerModule.timer = ColorCode.RED.getCode() + ModUtils.parseTimer(BombTimerModule.currentCount);
         else BombTimerModule.timer = ModUtils.parseTimer(BombTimerModule.currentCount);
-        if (BombTimerModule.currentCount > 1200) BombTimerEventHandler.stopBombTimer();
+        if (BombTimerModule.currentCount > 1200) BombTimerModule.stopBombTimer();
     }
 
     private void handleExplosiveBeltTimer() {
         if (!ExplosiveBeltTimerModule.explosiveBeltStarted) return;
         ExplosiveBeltTimerModule.currentCount--;
         ExplosiveBeltTimerModule.timer = String.valueOf(ExplosiveBeltTimerModule.currentCount);
-        if (ExplosiveBeltTimerModule.currentCount <= 0) ExplosiveBeltTimerEventHandler.stopBombTimer();
+        if (ExplosiveBeltTimerModule.currentCount <= 0) ExplosiveBeltTimerModule.stopBombTimer();
     }
 
     private void handleFBIHack() {
