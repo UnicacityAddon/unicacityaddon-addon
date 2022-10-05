@@ -48,7 +48,7 @@ public class MobileEventHandler {
         Matcher numberMatcher = PatternHandler.NUMBER_PATTERN.matcher(msg);
         if (numberMatcher.find()) {
             lastCheckedNumber = Integer.parseInt(numberMatcher.group(1));
-            if (ACallCommand.isActive || ASMSCommand.isActive) {
+            if (ACallCommand.isActive || ASMSCommand.isActive || SMSEventHandler.isActive) {
                 e.setCanceled(true);
                 ACallCommand.isActive = ASMSCommand.isActive = false;
             }
