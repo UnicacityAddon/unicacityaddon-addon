@@ -68,7 +68,7 @@ public class ScreenCommand implements IClientCommand {
 
         try {
             File file = FileManager.getNewActivityImageFile(args[0]);
-            if (ConfigElements.getAutomatedUpload()) HotkeyEventHandler.handleScreenshot(file);
+            if (ConfigElements.getAutomatedUpload()) HotkeyEventHandler.handleScreenshotWithUpload(file);
             else HotkeyEventHandler.handleScreenshotWithoutUpload(file);
         } catch (IOException e) {
             throw new RuntimeException(e);

@@ -115,27 +115,35 @@ public class HotkeyEventHandler {
         }
     }
 
-    public static void handleScreenshotWithoutUpload(File file) {
-        try {
-            if (file == null) {
-                LabyMod.getInstance().notifyMessageRaw(ColorCode.RED.getCode() + "Fehler!", "Screenshot konnte nicht erstellt werden.");
-                return;
+    private static File handleScreenshot(File file) {
+        if (file != null) {
+            try {
+                Framebuffer framebuffer = ReflectionUtils.getValue(UnicacityAddon.MINECRAFT, Framebuffer.class);
+                assert framebuffer != null;
+                BufferedImage image = ScreenShotHelper.createScreenshot(UnicacityAddon.MINECRAFT.displayWidth, UnicacityAddon.MINECRAFT.displayHeight, framebuffer);
+                ImageIO.write(image, "jpg", file);
+                LabyMod.getInstance().notifyMessageRaw(ColorCode.GREEN.getCode() + "Screenshot erstellt!", "Wird gespeichert...");
+                return file;
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
-
-            Framebuffer framebuffer = ReflectionUtils.getValue(UnicacityAddon.MINECRAFT, Framebuffer.class);
-            assert framebuffer != null;
-            BufferedImage image = ScreenShotHelper.createScreenshot(UnicacityAddon.MINECRAFT.displayWidth, UnicacityAddon.MINECRAFT.displayHeight, framebuffer);
-            ImageIO.write(image, "jpg", file);
-            LabyMod.getInstance().notifyMessageRaw(ColorCode.GREEN.getCode() + "Screenshot erstellt!", "");
-
-            lastScreenshot = System.currentTimeMillis();
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
+        LabyMod.getInstance().notifyMessageRaw(ColorCode.RED.getCode() + "Fehler!", "Screenshot konnte nicht erstellt werden.");
+        return null;
+    }
+
+    public static void handleScreenshotWithUpload(File file) {
+        File screenFile = handleScreenshot(file);
+        Thread thread = new Thread(() -> uploadScreenshot(screenFile));
+        thread.start();
+    }
+
+    public static void handleScreenshotWithoutUpload(File file) {
+        handleScreenshot(file);
     }
 
     private static void uploadScreenshot(File screenshotFile) {
+        if (screenshotFile == null) return;
         String link = ImageUploadUtils.uploadToLink(screenshotFile);
         AbstractionLayer.getPlayer().copyToClipboard(link);
         LabyMod.getInstance().notifyMessageRaw(ColorCode.GREEN.getCode() + "Screenshot hochgeladen!", "Link in Zwischenablage kopiert.");

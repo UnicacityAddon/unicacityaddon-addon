@@ -84,7 +84,8 @@ public class ReinforcementCommand implements IClientCommand {
             if (ConfigElements.getReinforcementScreenshot()) {
                 try {
                     File file = FileManager.getNewActivityImageFile("reinforcement");
-                    HotkeyEventHandler.handleScreenshot(file);
+                    if (ConfigElements.getAutomatedUpload()) HotkeyEventHandler.handleScreenshotWithUpload(file);
+                    else HotkeyEventHandler.handleScreenshotWithoutUpload(file);
                     return;
                 } catch (IOException e) {
                     throw new RuntimeException(e);
