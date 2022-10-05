@@ -1,12 +1,10 @@
 package com.rettichlp.UnicacityAddon.events;
 
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCEvent;
-import com.rettichlp.UnicacityAddon.UnicacityAddon;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
 import com.rettichlp.UnicacityAddon.modules.PayDayModule;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import java.util.regex.Matcher;
 
@@ -17,7 +15,6 @@ import java.util.regex.Matcher;
 public class PayDayEventHandler {
 
     public static boolean isAfk = false;
-    private int currentTick;
 
     @SubscribeEvent
     public boolean onClientChatReceived(ClientChatReceivedEvent e) {
@@ -40,14 +37,5 @@ public class PayDayEventHandler {
         }
 
         return false;
-    }
-
-    @SubscribeEvent
-    public void onTick(TickEvent.ClientTickEvent event) {
-        if (isAfk || event.phase != TickEvent.Phase.END || !UnicacityAddon.isUnicacity()) return;
-
-        if (currentTick++ != 1200) return;
-        PayDayModule.addTime(1);
-        currentTick = 0;
     }
 }

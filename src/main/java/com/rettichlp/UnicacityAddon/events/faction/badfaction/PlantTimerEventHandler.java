@@ -1,15 +1,12 @@
 package com.rettichlp.UnicacityAddon.events.faction.badfaction;
 
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCEvent;
-import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
-import com.rettichlp.UnicacityAddon.base.utils.MathUtils;
 import com.rettichlp.UnicacityAddon.modules.PlantFertilizeTimerModule;
 import com.rettichlp.UnicacityAddon.modules.PlantWaterTimerModule;
 import net.labymod.utils.ModUtils;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import java.util.regex.Matcher;
 
@@ -52,22 +49,5 @@ public class PlantTimerEventHandler {
         }
 
         return false;
-    }
-
-    @SubscribeEvent
-    public void onTick(TickEvent.ClientTickEvent event) {
-        if (event.phase != TickEvent.Phase.END) return;
-
-        if (!PlantFertilizeTimerModule.plantRunning || ++PlantFertilizeTimerModule.currentTick != 20) return;
-        PlantFertilizeTimerModule.currentTick = 0;
-
-        if (!PlantFertilizeTimerModule.timer.isEmpty() && MathUtils.isInteger(PlantFertilizeTimerModule.timer.replace(":", "")))
-            PlantFertilizeTimerModule.timer = PlantFertilizeTimerModule.calcTimer(--PlantFertilizeTimerModule.currentCount);
-
-        if (!PlantWaterTimerModule.timer.isEmpty() && MathUtils.isInteger(PlantWaterTimerModule.timer.replace(":", "")))
-            PlantWaterTimerModule.timer = ModUtils.parseTimer(--PlantWaterTimerModule.currentCount);
-
-        if (PlantFertilizeTimerModule.currentCount <= 0) PlantFertilizeTimerModule.timer = ColorCode.RED.getCode() + "Jetzt";
-        if (PlantWaterTimerModule.currentCount <= 0) PlantWaterTimerModule.timer = ColorCode.RED.getCode() + "Jetzt";
     }
 }
