@@ -7,6 +7,7 @@ import com.rettichlp.UnicacityAddon.base.registry.annotation.UCEvent;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
+import com.rettichlp.UnicacityAddon.commands.faction.AFbankEinzahlenCommand;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -53,6 +54,7 @@ public class DeathsKillsEventHandler {
             if (msg.contains(p.getName())) {
                 kills++;
                 APIRequest.sendStatisticAddKillRequest();
+                AFbankEinzahlenCommand.sendClockMessage();
             }
 
             return false;
