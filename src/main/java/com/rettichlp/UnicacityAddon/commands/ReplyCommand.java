@@ -53,12 +53,12 @@ public class ReplyCommand implements IClientCommand {
 
     @Override public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
         UPlayer p = AbstractionLayer.getPlayer();
-        if (args.length < 2) {
+        if (args.length < 1) {
             p.sendSyntaxMessage(getUsage(sender));
             return;
         }
 
-        String message = TextUtils.makeStringByArgs(args, " ").replace(args[0], "");
+        String message = TextUtils.makeStringByArgs(args, " ");
         p.sendChatMessage("/sms " + MobileEventHandler.lastCheckedNumber + " " + message);
     }
 
