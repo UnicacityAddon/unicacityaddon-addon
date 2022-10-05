@@ -96,6 +96,9 @@ public class Config {
         BooleanElement betterKarmaMessage = new BooleanElement("Verbesserte Karmanachricht", unicacityAddon, new ControlElement.IconData(Material.SPIDER_EYE), "BETTER_KARMA_MESSAGE", ConfigElements.betterKarmaMessage());
         list.add(betterKarmaMessage);
 
+        BooleanElement uploadAfterScreenCommand = new BooleanElement("Upload bei /screen", unicacityAddon, new ControlElement.IconData(Material.LEATHER), "AUTOMATED_SCREENSHOT_UPLOAD_SETTINGS", ConfigElements.getAutomatedScreenshotUpload());
+        list.add(uploadAfterScreenCommand);
+
         // Certain LabyMod themes cover the lower settings. To counteract this, empty lines are appended.
         list.add(emptyLine);
         list.add(emptyLine);
