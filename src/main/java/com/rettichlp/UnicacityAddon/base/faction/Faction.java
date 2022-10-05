@@ -1,8 +1,10 @@
 package com.rettichlp.UnicacityAddon.base.faction;
 
+import com.rettichlp.UnicacityAddon.base.api.exception.APIUnsuccessResponseException;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
 import com.rettichlp.UnicacityAddon.base.utils.WebsiteUtils;
+import joptsimple.internal.Strings;
 
 /**
  * @author RettichLP
@@ -101,7 +103,11 @@ public enum Faction {
     }
 
     public String getWebsiteSource() {
-        return WebsiteUtils.websiteToString(this.getWebsiteUrl()).getKey();
+        try {
+            return WebsiteUtils.websiteToString(this.getWebsiteUrl()).getKey();
+        } catch (APIUnsuccessResponseException e) {
+            return Strings.EMPTY;
+        }
     }
 
     public static Faction getFactionByFactionKey(String s) {
