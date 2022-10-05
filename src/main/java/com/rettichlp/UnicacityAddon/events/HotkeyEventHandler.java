@@ -108,8 +108,7 @@ public class HotkeyEventHandler {
         File file;
         try {
             file = FileManager.getNewImageFile();
-            if (ConfigElements.getAutomatedScreenshotUpload()) handleScreenshotWithUpload(file);
-            else handleScreenshotWithoutUpload(file);
+            handleScreenshotWithUpload(file);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
