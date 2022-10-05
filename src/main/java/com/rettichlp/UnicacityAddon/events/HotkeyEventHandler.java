@@ -43,8 +43,7 @@ public class HotkeyEventHandler {
 
     private String adIssuer;
     private long adTime;
-    private static long lastScreenshot;
-    private static long lastReportClosed = -1;
+    private static long lastHotkeyUse = -1;
 
     @SubscribeEvent
     public void onKeyInput(InputEvent.KeyInputEvent e) {
@@ -65,7 +64,7 @@ public class HotkeyEventHandler {
     }
 
     private void handleHotkey() {
-        if (System.currentTimeMillis() - lastScreenshot < TimeUnit.SECONDS.toMillis(1)) return;
+        if (System.currentTimeMillis() - lastHotkeyUse < TimeUnit.SECONDS.toMillis(1)) return;
         UPlayer p = AbstractionLayer.getPlayer();
 
         if (Keyboard.isKeyDown(KeyBindRegistry.addonScreenshot.getKeyCode())) {
@@ -82,10 +81,13 @@ public class HotkeyEventHandler {
 
         if (Keyboard.isKeyDown(KeyBindRegistry.adFreigeben.getKeyCode())) {
             handleAd("freigeben");
+            lastHotkeyUse = System.currentTimeMillis();
         } else if (Keyboard.isKeyDown(KeyBindRegistry.adBlockieren.getKeyCode())) {
             handleAd("blockieren");
+            lastHotkeyUse = System.currentTimeMillis();
         } else if (Keyboard.isKeyDown(KeyBindRegistry.acceptReport.getKeyCode())) {
             p.sendChatMessage("/ar");
+            lastHotkeyUse = System.currentTimeMillis();
         } else if (Keyboard.isKeyDown(KeyBindRegistry.cancelReport.getKeyCode())) {
             if ((!ConfigElements.getReportFarewell().isEmpty()) && (System.currentTimeMillis() - lastReportClosed > 1000L)) {
                 p.sendChatMessage(ConfigElements.getReportFarewell());
@@ -94,8 +96,10 @@ public class HotkeyEventHandler {
             }
         } else if (Keyboard.isKeyDown(KeyBindRegistry.aDuty.getKeyCode())) {
             p.sendChatMessage("/aduty");
+            lastHotkeyUse = System.currentTimeMillis();
         } else if (Keyboard.isKeyDown(KeyBindRegistry.aDutySilent.getKeyCode())) {
             p.sendChatMessage("/aduty -s");
+            lastHotkeyUse = System.currentTimeMillis();
         } else if (Keyboard.isKeyDown(KeyBindRegistry.freinforcement.getKeyCode())) {
             BlockPos position = p.getPosition();
             p.sendChatMessage("/f Benötige Verstärkung! -> X: " + position.getX() + " | Y: " + position.getY() + " | Z: " + position.getZ());
