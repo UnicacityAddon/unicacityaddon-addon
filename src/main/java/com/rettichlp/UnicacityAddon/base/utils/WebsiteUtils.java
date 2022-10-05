@@ -10,7 +10,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.AbstractMap;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -19,7 +18,7 @@ import java.util.Scanner;
  */
 public class WebsiteUtils {
 
-    public static Map.Entry<String, Integer> websiteToString(String urlString) throws APIUnsuccessResponseException {
+    public static String websiteToString(String urlString) throws APIUnsuccessResponseException {
         HttpURLConnection httpURLConnection;
 
         if (urlString == null || urlString.isEmpty())
@@ -31,21 +30,21 @@ public class WebsiteUtils {
 
             int statusCode = httpURLConnection.getResponseCode();
             if (statusCode != HttpURLConnection.HTTP_OK)
-                throw new APIUnsuccessResponseException(Strings.EMPTY, statusCode);
+                throw new APIUnsuccessResponseException(urlString, statusCode);
         } catch (IOException e) {
-            throw new APIUnsuccessResponseException(Strings.EMPTY, HttpURLConnection.HTTP_NOT_FOUND);
+            throw new APIUnsuccessResponseException(urlString, HttpURLConnection.HTTP_NOT_FOUND);
         }
 
         try {
             StringBuilder websiteSource = new StringBuilder();
             Scanner scanner = new Scanner(new InputStreamReader(httpURLConnection.getInputStream(), StandardCharsets.UTF_8));
             while (scanner.hasNextLine()) websiteSource.append(scanner.nextLine()).append("\n\r");
-            return new AbstractMap.SimpleEntry<>(websiteSource.toString(), HttpURLConnection.HTTP_OK);
+            return websiteSource.toString();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        throw new APIUnsuccessResponseException(Strings.EMPTY, HttpURLConnection.HTTP_NO_CONTENT);
+        throw new APIUnsuccessResponseException(urlString, HttpURLConnection.HTTP_NO_CONTENT);
     }
 
     public static String createUrl(String path, Map<String, String> parameters) {
