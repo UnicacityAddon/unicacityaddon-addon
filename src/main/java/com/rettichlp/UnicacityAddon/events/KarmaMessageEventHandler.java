@@ -35,11 +35,11 @@ public class KarmaMessageEventHandler {
 
         if (karmaChangedPattern.find()) {
             ReviveEventHandler.handleRevive();
-
-            p.sendChatMessage("/karma");
-            karmaCheck = true;
-            e.setCanceled(true);
-
+            if (ConfigElements.betterKarmaMessage()) {
+                p.sendChatMessage("/karma");
+                karmaCheck = true;
+                e.setCanceled(true);
+            }
             karma = Integer.parseInt(karmaChangedPattern.group(1));
             return false;
         }

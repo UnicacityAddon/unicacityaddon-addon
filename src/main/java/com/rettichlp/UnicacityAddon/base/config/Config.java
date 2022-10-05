@@ -93,6 +93,9 @@ public class Config {
         BooleanElement despawnTimeAfterKarma = new BooleanElement("Despawn Zeitpunkt", unicacityAddon, new ControlElement.IconData(Material.SKULL_ITEM), "ESTIMATED_DESPAWN_TIME_SETTINGS", ConfigElements.getEstimatedDespawnTime());
         list.add(despawnTimeAfterKarma);
 
+        BooleanElement betterKarmaMessage = new BooleanElement("Verbesserte Karmanachricht", unicacityAddon, new ControlElement.IconData(Material.SPIDER_EYE), "BETTER_KARMA_MESSAGE", ConfigElements.betterKarmaMessage());
+        list.add(betterKarmaMessage);
+
         // Certain LabyMod themes cover the lower settings. To counteract this, empty lines are appended.
         list.add(emptyLine);
         list.add(emptyLine);

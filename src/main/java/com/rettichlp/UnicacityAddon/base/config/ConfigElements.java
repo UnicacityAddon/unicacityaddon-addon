@@ -288,6 +288,12 @@ public class ConfigElements {
                 .getAsBoolean(); // default = true
     }
 
+    // Bessere Karma Nachricht
+    public static boolean betterKarmaMessage() {
+        return !UnicacityAddon.ADDON.getConfig().has("BETTER_KARMA_MESSAGE") || UnicacityAddon.ADDON.getConfig().get("BETTER_KARMA_MESSAGE")
+                .getAsBoolean(); // default = true
+    }
+
     // EIGENBEDARF SETTINGS
     public static boolean getCocainActivated() {
         return !UnicacityAddon.ADDON.getConfig().has("EIGENBEDARF_COCAINE_SETTINGS") || UnicacityAddon.ADDON.getConfig().get("EIGENBEDARF_COCAINE_SETTINGS")
