@@ -108,7 +108,7 @@ public class HotkeyEventHandler {
         File file;
         try {
             file = FileManager.getNewImageFile();
-            if (ConfigElements.getAutomatedUpload()) handleScreenshotWithUpload(file);
+            if (ConfigElements.getAutomatedScreenshotUpload()) handleScreenshotWithUpload(file);
             else handleScreenshotWithoutUpload(file);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -157,8 +157,8 @@ public class HotkeyEventHandler {
 
     private void handleCancelReport() {
         UPlayer p = AbstractionLayer.getPlayer();
-        if (ConfigElements.getReportFarewell().isEmpty()) return;
-        p.sendChatMessage(ConfigElements.getReportFarewell());
+        String farewell =  ConfigElements.getReportFarewell();
+        if (!farewell.isEmpty()) p.sendChatMessage(farewell);
         p.sendChatMessage("/cr");
     }
 

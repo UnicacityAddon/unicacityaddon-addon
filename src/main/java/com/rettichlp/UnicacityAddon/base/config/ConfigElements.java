@@ -377,8 +377,8 @@ public class ConfigElements {
                 .getAsBoolean(); // default = true
     }
 
-    public static boolean getAutomatedUpload() {
-        return UnicacityAddon.ADDON.getConfig().has("AUTOMATED_SCREENSHOT_UPLOAD_SETTINGS") && UnicacityAddon.ADDON.getConfig().get("AUTOMATED_SCREENSHOT_UPLOAD_SETTINGS")
-                .getAsBoolean(); // default = false
+    public static boolean getAutomatedScreenshotUpload() {
+        return !UnicacityAddon.ADDON.getConfig().has("AUTOMATED_SCREENSHOT_UPLOAD_SETTINGS") || UnicacityAddon.ADDON.getConfig().get("AUTOMATED_SCREENSHOT_UPLOAD_SETTINGS")
+                .getAsBoolean(); // default = true
     }
 }
