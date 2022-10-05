@@ -93,6 +93,9 @@ public class Config {
         BooleanElement despawnTimeAfterKarma = new BooleanElement("Despawn Zeitpunkt", unicacityAddon, new ControlElement.IconData(Material.SKULL_ITEM), "ESTIMATED_DESPAWN_TIME_SETTINGS", ConfigElements.getEstimatedDespawnTime());
         list.add(despawnTimeAfterKarma);
 
+        BooleanElement uploadAfterScreenCommand = new BooleanElement("Upload bei /screen", unicacityAddon, new ControlElement.IconData(Material.LEATHER), "AUTOMATED_SCREENSHOT_UPLOAD_SETTINGS", ConfigElements.getAutomatedScreenshotUpload());
+        list.add(uploadAfterScreenCommand);
+
         // Certain LabyMod themes cover the lower settings. To counteract this, empty lines are appended.
         list.add(emptyLine);
         list.add(emptyLine);

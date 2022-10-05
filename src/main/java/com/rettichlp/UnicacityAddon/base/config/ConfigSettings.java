@@ -76,10 +76,10 @@ public class ConfigSettings {
         StringElement teamspeakAPIKey = new StringElement("API Key", unicacityAddon, new ControlElement.IconData(Material.BOOK_AND_QUILL), "TEAMSPEAK_API_KEY", ConfigElements.getTeamspeakAPIKey());
         settings.add(teamspeakAPIKey);
 
-        BooleanElement teamspeakNotifyWaitingSupport = new BooleanElement("Support betreten Nachricht", unicacityAddon, new ControlElement.IconData(Material.NOTE_BLOCK), "TEAMSPEAK_NOTIFY_WAITING_SUPPORT", ConfigElements.getTeamspeakNotifyWaitingSupport());
+        BooleanElement teamspeakNotifyWaitingSupport = new BooleanElement("Support betreten Nachricht", unicacityAddon, new ControlElement.IconData(Material.NOTE_BLOCK), "TEAMSPEAK_NOTIFY_WAITING_SUPPORT_SETTINGS", ConfigElements.getTeamspeakNotifyWaitingSupport());
         settings.add(teamspeakNotifyWaitingSupport);
 
-        BooleanElement teamspeakNotifyWaitingPublic = new BooleanElement("Öffentlich betreten Nachricht", unicacityAddon, new ControlElement.IconData(Material.NOTE_BLOCK), "TEAMSPEAK_NOTIFY_WAITING_PUBLIC", ConfigElements.getTeamspeakNotifyWaitingPublic());
+        BooleanElement teamspeakNotifyWaitingPublic = new BooleanElement("Öffentlich betreten Nachricht", unicacityAddon, new ControlElement.IconData(Material.NOTE_BLOCK), "TEAMSPEAK_NOTIFY_WAITING_PUBLIC_SETTINGS", ConfigElements.getTeamspeakNotifyWaitingPublic());
         settings.add(teamspeakNotifyWaitingPublic);
 
         return settings;

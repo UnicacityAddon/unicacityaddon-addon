@@ -363,17 +363,22 @@ public class ConfigElements {
     }
 
     public static boolean getTeamspeakNotifyWaitingSupport() {
-        return UnicacityAddon.ADDON.getConfig().has("TEAMSPEAK_NOTIFY_WAITING_SUPPORT") && UnicacityAddon.ADDON.getConfig().get("TEAMSPEAK_NOTIFY_WAITING_SUPPORT")
+        return UnicacityAddon.ADDON.getConfig().has("TEAMSPEAK_NOTIFY_WAITING_SUPPORT_SETTINGS") && UnicacityAddon.ADDON.getConfig().get("TEAMSPEAK_NOTIFY_WAITING_SUPPORT_SETTINGS")
                 .getAsBoolean(); // default = false
     }
 
     public static boolean getTeamspeakNotifyWaitingPublic() {
-        return UnicacityAddon.ADDON.getConfig().has("TEAMSPEAK_NOTIFY_WAITING_PUBLIC") && UnicacityAddon.ADDON.getConfig().get("TEAMSPEAK_NOTIFY_WAITING_PUBLIC")
+        return UnicacityAddon.ADDON.getConfig().has("TEAMSPEAK_NOTIFY_WAITING_PUBLIC_SETTINGS") && UnicacityAddon.ADDON.getConfig().get("TEAMSPEAK_NOTIFY_WAITING_PUBLIC_SETTINGS")
                 .getAsBoolean(); // default = false
     }
 
     public static boolean getReinforcementScreenshot() {
         return !UnicacityAddon.ADDON.getConfig().has("REINFORCEMENT_SCREENSHOT_SETTINGS") || UnicacityAddon.ADDON.getConfig().get("REINFORCEMENT_SCREENSHOT_SETTINGS")
+                .getAsBoolean(); // default = true
+    }
+
+    public static boolean getAutomatedScreenshotUpload() {
+        return !UnicacityAddon.ADDON.getConfig().has("AUTOMATED_SCREENSHOT_UPLOAD_SETTINGS") || UnicacityAddon.ADDON.getConfig().get("AUTOMATED_SCREENSHOT_UPLOAD_SETTINGS")
                 .getAsBoolean(); // default = true
     }
 }
