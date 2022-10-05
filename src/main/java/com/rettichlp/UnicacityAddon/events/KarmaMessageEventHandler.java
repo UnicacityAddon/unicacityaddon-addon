@@ -3,6 +3,7 @@ package com.rettichlp.UnicacityAddon.events;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
 import com.rettichlp.UnicacityAddon.base.config.ConfigElements;
+import com.rettichlp.UnicacityAddon.base.faction.Faction;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCEvent;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
@@ -36,19 +37,22 @@ public class KarmaMessageEventHandler {
         if (karmaChangedPattern.find()) {
             ReviveEventHandler.handleRevive();
 
-            p.sendChatMessage("/karma");
-            karmaCheck = true;
-            e.setCanceled(true);
+            // WORKAROUND START (for medics because ✨UCMDMOD✨) TODO: Remove later
+            if (!p.getFaction().equals(Faction.RETTUNGSDIENST)) {
+                p.sendChatMessage("/karma");
+                karmaCheck = true;
+                e.setCanceled(true);
+            }
+            // WORKAROUND END
 
             karma = Integer.parseInt(karmaChangedPattern.group(1));
             return false;
         }
 
-        if (!karmaCheck) return false;
         Matcher karmaMatcher = PatternHandler.KARMA_PATTERN.matcher(msg);
-        if (!karmaMatcher.find()) return false;
+        if (!karmaCheck || !karmaMatcher.find()) return false;
 
-        if ((karma < 0) && ConfigElements.getEstimatedDespawnTime()) {
+        if (karma < 0 && ConfigElements.getEstimatedDespawnTime()) {
             Calendar cal = Calendar.getInstance();
             cal.add(Calendar.MINUTE, 5);
             Date date = cal.getTime();
@@ -68,11 +72,9 @@ public class KarmaMessageEventHandler {
                     .of("(").color(ColorCode.DARK_GRAY).advance()
                     .of(timeFormat.format(date)).color(ColorCode.AQUA).advance()
                     .of(")").color(ColorCode.DARK_GRAY).advance().createComponent());
-            karmaCheck = false;
-            return false;
-        }
-
-        e.setMessage(Message.getBuilder().of("[").color(ColorCode.DARK_GRAY).advance()
+            karmaCheck = !karmaCheck;
+        } else {
+            e.setMessage(Message.getBuilder().of("[").color(ColorCode.DARK_GRAY).advance()
                     .of("Karma").color(ColorCode.BLUE).advance()
                     .of("] ").color(ColorCode.DARK_GRAY).advance()
                     .of("+" + karma).color(ColorCode.AQUA).advance().space()
@@ -82,7 +84,8 @@ public class KarmaMessageEventHandler {
                     .of("/").color(ColorCode.DARK_GRAY).advance()
                     .of("100").color(ColorCode.AQUA).advance()
                     .of(")").color(ColorCode.DARK_GRAY).advance().createComponent());
-        karmaCheck = false;
+            karmaCheck = !karmaCheck;
+        }
         return false;
     }
 }
