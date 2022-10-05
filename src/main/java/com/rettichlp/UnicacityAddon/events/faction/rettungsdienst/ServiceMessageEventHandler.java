@@ -31,9 +31,9 @@ public class ServiceMessageEventHandler {
 
                 e.setMessage(Message.getBuilder().of("Neuer Notruf").color(ColorCode.RED).advance().space()
                         .of("-").color(ColorCode.GRAY).advance().space()
-                        .of(m.group(1)).color(ColorCode.DARK_AQUA).bold().advance().space() // Notruf Sender
+                        .of(m.group(1)).color(ColorCode.AQUA).bold().advance().space() // Notruf Sender
                         .of("-").color(ColorCode.GRAY).advance().space()
-                        .of(m.group(3)).color(ColorCode.DARK_AQUA).bold().hoverEvent(HoverEvent.Action.SHOW_TEXT, hoverMessage) // Grund
+                        .of(m.group(3)).color(ColorCode.AQUA).bold().hoverEvent(HoverEvent.Action.SHOW_TEXT, hoverMessage) // Grund
                         .clickEvent(ClickEvent.Action.RUN_COMMAND, "/acceptservice " + m.group(1).replace("[UC]", ""))
                         .advance().createComponent());
                 return false;
@@ -45,9 +45,9 @@ public class ServiceMessageEventHandler {
 
                 e.setMessage(Message.getBuilder().of("Neu geöffnet").color(ColorCode.RED).advance().space()
                         .of("-").color(ColorCode.GRAY).advance().space()
-                        .of(m.group(1)).color(ColorCode.DARK_AQUA).bold().advance().space() // Öffner
+                        .of(m.group(1)).color(ColorCode.AQUA).bold().advance().space() // Öffner
                         .of("-").color(ColorCode.GRAY).advance().space()
-                        .of(m.group(2)).color(ColorCode.DARK_AQUA).bold().hoverEvent(HoverEvent.Action.SHOW_TEXT, hoverMessage) // Notruf sender
+                        .of(m.group(2)).color(ColorCode.AQUA).bold().hoverEvent(HoverEvent.Action.SHOW_TEXT, hoverMessage) // Notruf sender
                         .clickEvent(ClickEvent.Action.RUN_COMMAND, "/acceptservice " + m.group(1).replace("[UC]", ""))
                         .advance().createComponent());
                 return false;
@@ -56,7 +56,7 @@ public class ServiceMessageEventHandler {
             m = PatternHandler.SERVICE_LOCATION_PATTERN.matcher(msg);
             if (m.find()) {
                 e.setMessage(Message.getBuilder().of("➥").color(ColorCode.DARK_GRAY).advance().space()
-                        .of(m.group(1)).color(ColorCode.DARK_AQUA).bold().advance().createComponent());
+                        .of(m.group(1)).color(ColorCode.AQUA).bold().advance().createComponent());
                 return false;
             }
 
@@ -64,15 +64,15 @@ public class ServiceMessageEventHandler {
             if (m.find()) { // Eine näheste Person
                 if (m.group(2).replace("[UC]", "").equals(AbstractionLayer.getPlayer().getName()))
                     e.setMessage(Message.getBuilder().of("➥").color(ColorCode.DARK_GRAY).advance().space()
-                            .of(m.group(1)).color(ColorCode.DARK_AQUA).bold().advance().space()
+                            .of(m.group(1)).color(ColorCode.AQUA).bold().advance().space()
                             .of("-").color(ColorCode.GRAY).advance().space()
-                            .of("Ja " + m.group(3)).color(ColorCode.DARK_AQUA).bold().advance().createComponent());
+                            .of("Ja " + m.group(3)).color(ColorCode.AQUA).bold().advance().createComponent());
                 else
                     e.setMessage(Message.getBuilder().of("➥").color(ColorCode.DARK_GRAY).advance().space()
-                            .of(m.group(1)).color(ColorCode.DARK_AQUA).bold().advance().space()
+                            .of(m.group(1)).color(ColorCode.AQUA).bold().advance().space()
                             .of("-").color(ColorCode.GRAY).advance().space()
-                            .of("Nein").color(ColorCode.DARK_AQUA).bold().hoverEvent(HoverEvent.Action.SHOW_TEXT,
-                                    Message.getBuilder().of("➥" + m.group(2) + m.group(3)).color(ColorCode.DARK_AQUA).bold().advance().createComponent())
+                            .of("Nein").color(ColorCode.AQUA).bold().hoverEvent(HoverEvent.Action.SHOW_TEXT,
+                                    Message.getBuilder().of("➥" + m.group(2) + m.group(3)).color(ColorCode.AQUA).bold().advance().createComponent())
                             .advance().createComponent());
                 return false;
             }
@@ -81,31 +81,31 @@ public class ServiceMessageEventHandler {
             if (m.find()) {
                 if (m.group(2).replace("[UC]", "").equals(AbstractionLayer.getPlayer().getName())) {
                     e.setMessage(Message.getBuilder().of("➥").color(ColorCode.DARK_GRAY).advance().space()
-                            .of(m.group(1)).color(ColorCode.DARK_AQUA).bold().advance().space()
+                            .of(m.group(1)).color(ColorCode.AQUA).bold().advance().space()
                             .of("-").color(ColorCode.GRAY).advance().space()
-                            .of("Ja " + m.group(3)).color(ColorCode.DARK_AQUA).bold().hoverEvent(HoverEvent.Action.SHOW_TEXT,
-                                    Message.getBuilder().of("➥" + m.group(2) + m.group(3)).color(ColorCode.DARK_AQUA).bold().advance().newline()
-                                            .of("➥" + m.group(5) + m.group(6)).color(ColorCode.DARK_AQUA).bold().advance().createComponent())
+                            .of("Ja " + m.group(3)).color(ColorCode.AQUA).bold().hoverEvent(HoverEvent.Action.SHOW_TEXT,
+                                    Message.getBuilder().of("➥" + m.group(2) + m.group(3)).color(ColorCode.AQUA).bold().advance().newline()
+                                            .of("➥" + m.group(5) + m.group(6)).color(ColorCode.AQUA).bold().advance().createComponent())
                             .advance().createComponent());
                     return false;
 
                 } else if (m.group(5).replace("[UC]", "").equals(AbstractionLayer.getPlayer().getName())) { // 5 + 6 2. nähester
                     e.setMessage(Message.getBuilder().of("➥").color(ColorCode.DARK_GRAY).advance().space()
-                            .of(m.group(1)).color(ColorCode.DARK_AQUA).bold().advance().space()
+                            .of(m.group(1)).color(ColorCode.AQUA).bold().advance().space()
                             .of("-").color(ColorCode.GRAY).advance().space()
-                            .of("Vlt " + m.group(3) + " (" + m.group(6) + ")").color(ColorCode.DARK_AQUA).bold().hoverEvent(HoverEvent.Action.SHOW_TEXT,
-                                    Message.getBuilder().of("➥" + m.group(2) + " " + m.group(3)).color(ColorCode.DARK_AQUA).bold().advance().newline()
-                                            .of("➥" + m.group(5) + " " + m.group(6)).color(ColorCode.DARK_AQUA).bold().advance().createComponent())
+                            .of("Vlt " + m.group(3) + " (" + m.group(6) + ")").color(ColorCode.AQUA).bold().hoverEvent(HoverEvent.Action.SHOW_TEXT,
+                                    Message.getBuilder().of("➥" + m.group(2) + " " + m.group(3)).color(ColorCode.AQUA).bold().advance().newline()
+                                            .of("➥" + m.group(5) + " " + m.group(6)).color(ColorCode.AQUA).bold().advance().createComponent())
                             .advance().createComponent());
                     return false;
                 }
 
                 e.setMessage(Message.getBuilder().of("➥").color(ColorCode.DARK_GRAY).advance().space()
-                        .of(m.group(1)).color(ColorCode.DARK_AQUA).bold().advance().space()
+                        .of(m.group(1)).color(ColorCode.AQUA).bold().advance().space()
                         .of("-").color(ColorCode.GRAY).advance().space()
-                        .of("Nein").color(ColorCode.DARK_AQUA).bold().hoverEvent(HoverEvent.Action.SHOW_TEXT,
-                                Message.getBuilder().of("➥" + m.group(2) + " " + m.group(3)).color(ColorCode.DARK_AQUA).bold().advance().newline()
-                                        .of("➥" + m.group(5) + " " + m.group(6)).color(ColorCode.DARK_AQUA).bold().advance().createComponent())
+                        .of("Nein").color(ColorCode.AQUA).bold().hoverEvent(HoverEvent.Action.SHOW_TEXT,
+                                Message.getBuilder().of("➥" + m.group(2) + " " + m.group(3)).color(ColorCode.AQUA).bold().advance().newline()
+                                        .of("➥" + m.group(5) + " " + m.group(6)).color(ColorCode.AQUA).bold().advance().createComponent())
                         .advance().createComponent());
             }
 
@@ -113,11 +113,11 @@ public class ServiceMessageEventHandler {
             if (m.find()) {
                 e.setMessage(Message.getBuilder().of("Angenommen").color(ColorCode.GREEN).advance().space()
                         .of("-").color(ColorCode.GRAY).advance().space()
-                        .of(m.group(1)).color(ColorCode.DARK_AQUA).bold().advance().space()
+                        .of(m.group(1)).color(ColorCode.AQUA).bold().advance().space()
                         .of("-").color(ColorCode.GRAY).advance().space()
-                        .of(m.group(2)).color(ColorCode.DARK_AQUA).bold().advance().space()
+                        .of(m.group(2)).color(ColorCode.AQUA).bold().advance().space()
                         .of("-").color(ColorCode.GRAY).advance().space()
-                        .of(m.group(3) + "m").color(ColorCode.DARK_AQUA).bold().advance().createComponent());
+                        .of(m.group(3) + "m").color(ColorCode.AQUA).bold().advance().createComponent());
                 return false;
             }
 
@@ -125,9 +125,9 @@ public class ServiceMessageEventHandler {
             if (m.find()) {
                 e.setMessage(Message.getBuilder().of("Gelöscht").color(ColorCode.RED).advance().space()
                         .of("-").color(ColorCode.GRAY).advance().space()
-                        .of(m.group(2)).color(ColorCode.DARK_AQUA).bold().advance().space() // Löscher
+                        .of(m.group(2)).color(ColorCode.AQUA).bold().advance().space() // Löscher
                         .of("-").color(ColorCode.GRAY).advance().space()
-                        .of(m.group(1)).color(ColorCode.DARK_AQUA).bold().advance().createComponent()); // Service sender
+                        .of(m.group(1)).color(ColorCode.AQUA).bold().advance().createComponent()); // Service sender
                 return false;
             }
 
@@ -135,9 +135,9 @@ public class ServiceMessageEventHandler {
             if (m.find()) {
                 e.setMessage(Message.getBuilder().of("Blockiert").color(ColorCode.RED).advance().space()
                         .of("-").color(ColorCode.GRAY).advance().space()
-                        .of(m.group(2)).color(ColorCode.DARK_AQUA).bold().advance().space() // Blockierer
+                        .of(m.group(2)).color(ColorCode.AQUA).bold().advance().space() // Blockierer
                         .of("-").color(ColorCode.GRAY).advance().space()
-                        .of(m.group(1)).color(ColorCode.DARK_AQUA).bold().advance().createComponent()); // Blockierter
+                        .of(m.group(1)).color(ColorCode.AQUA).bold().advance().createComponent()); // Blockierter
                 return false;
             }
 
@@ -145,9 +145,9 @@ public class ServiceMessageEventHandler {
             if (m.find()) {
                 e.setMessage(Message.getBuilder().of("Entblockt").color(ColorCode.GREEN).advance().space()
                         .of("-").color(ColorCode.GRAY).advance().space()
-                        .of(m.group(2)).color(ColorCode.DARK_AQUA).bold().advance().space() // Entblocker
+                        .of(m.group(2)).color(ColorCode.AQUA).bold().advance().space() // Entblocker
                         .of("-").color(ColorCode.GRAY).advance().space()
-                        .of(m.group(1)).color(ColorCode.DARK_AQUA).bold().advance().createComponent()); // Blockierter
+                        .of(m.group(1)).color(ColorCode.AQUA).bold().advance().createComponent()); // Blockierter
                 return false;
             }
         }
