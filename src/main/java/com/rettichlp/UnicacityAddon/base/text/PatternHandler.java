@@ -284,5 +284,5 @@ public class PatternHandler {
      * {@link com.rettichlp.UnicacityAddon.events.faction.badfaction.DBankMessages}
      */
     public static final Pattern DBANK_DROP_PATTERN = Pattern.compile("^(?:\\[UC])*(\\w+) hat (\\d+)g (Kokain|Marihuana|Methamphetamin|LSD) \\((Höchste|Gute|Mittlere|Schlechte) Reinheit\\) \\((\\d+)g\\) eingelagert\\.$");
-    public static final Pattern DBANK_GET_PATTERN = Pattern.compile("^$"); // TODO: Pattern erstellen
+    public static final Pattern DBANK_GET_PATTERN = Pattern.compile("^(?:\\[UC])*(\\w+) hat (\\d+)g (Kokain|Marihuana|Methamphetamin|LSD) \\((Höchste|Gute|Mittlere|Schlechte) Reinheit\\) \\((\\d+)g\\) aus der Drogenbank genommen\\.$");
 }

@@ -282,6 +282,12 @@ public class ConfigElements {
                 .getAsBoolean(); // default = true
     }
 
+    // D-Bank Nachrichten
+    public static boolean getDrugBankMessagesActivated() {
+        return !UnicacityAddon.ADDON.getConfig().has("DBANK_MESSAGE_SETTINGS") || UnicacityAddon.ADDON.getConfig().get("DBANK_MESSAGE_SETTINGS")
+                .getAsBoolean(); // default = true
+    }
+
     // Minus Karma
     public static boolean getEstimatedDespawnTime() {
         return !UnicacityAddon.ADDON.getConfig().has("ESTIMATED_DESPAWN_TIME_SETTINGS") || UnicacityAddon.ADDON.getConfig().get("ESTIMATED_DESPAWN_TIME_SETTINGS")
