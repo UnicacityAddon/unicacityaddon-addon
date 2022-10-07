@@ -52,8 +52,6 @@ public class HouseBankEventHandler {
 
         Matcher houseBankRemoveMatcher = PatternHandler.HOUSEBANK_WITHDRAW_PATTERN.matcher(msg);
         if (houseBankRemoveMatcher.find()) {
-            int value = Integer.parseInt(houseBankRemoveMatcher.group(1));
-
             (new Timer()).schedule(new TimerTask() {
                 @Override
                 public void run() {
@@ -61,27 +59,12 @@ public class HouseBankEventHandler {
                     AbstractionLayer.getPlayer().sendChatMessage("/hkasse");
                 }
             }, 1000);
-
-            (new Timer()).schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    if (!HouseBankEntry.houseNumbers.contains(lastCheckedHouseNumber)) {
-                        houseBanks.add(new HouseBankEntry(lastCheckedHouseNumber, Integer.parseInt(houseBankValueMatcher.group(1))));
-                        return;
-                    }
-
-                    for (HouseBankEntry houseBank : houseBanks)
-                        if (houseBank.getHouseNumber() == lastCheckedHouseNumber) houseBank.removeValue(value);
-                }
-            },1500);
 
             return false;
         }
 
         Matcher houseBankAddMatcher = PatternHandler.HOUSEBANK_DEPOSIT_PATTERN.matcher(msg);
         if (houseBankAddMatcher.find()) {
-            int value = Integer.parseInt(houseBankAddMatcher.group(1));
-
             (new Timer()).schedule(new TimerTask() {
                 @Override
                 public void run() {
@@ -90,19 +73,6 @@ public class HouseBankEventHandler {
                 }
             }, 1000);
 
-            (new Timer()).schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    if (!HouseBankEntry.houseNumbers.contains(lastCheckedHouseNumber)) {
-                        houseBanks.add(new HouseBankEntry(lastCheckedHouseNumber, Integer.parseInt(houseBankValueMatcher.group(1))));
-                        return;
-                    }
-
-                    for (HouseBankEntry houseBank : houseBanks)
-                        if (houseBank.getHouseNumber() == lastCheckedHouseNumber) houseBank.addValue(value);
-                }
-            },1500);
-            return false;
         }
 
         return false;

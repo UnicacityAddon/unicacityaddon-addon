@@ -15,6 +15,7 @@ import net.minecraftforge.client.IClientCommand;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -34,7 +35,7 @@ public class HouseBankCommand implements IClientCommand {
     }
 
     @Override @Nonnull public List<String> getAliases() {
-        return Collections.emptyList();
+        return Arrays.asList("hkasseninfo");
     }
 
     @Override public boolean checkPermission(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender) {
