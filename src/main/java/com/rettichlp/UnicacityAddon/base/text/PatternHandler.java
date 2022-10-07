@@ -289,8 +289,8 @@ public class PatternHandler {
     /**
      * {@link com.rettichlp.UnicacityAddon.events.HouseBankEventHandler}
      */
-    public static final Pattern HOUSEBANK_HEADER_PATTERN = Pattern.compile("^$"); //TODO: Pattern erstellen
-    public static final Pattern HOUSEBANK_VALUE_PATTERN = Pattern.compile("^$"); //TODO: Pattern erstellen
-    public static final Pattern HOUSEBANK_DEPOSIT_PATTERN = Pattern.compile("^$"); // TODO: Pattern erstellen
-    public static final Pattern HOUSEBANK_WITHDRAW_PATTERN = Pattern.compile("^$"); // TODO: Pattern erstellen
+    public static final Pattern HOUSEBANK_HEADER_PATTERN = Pattern.compile("^=== Hauskasse Haus (\\d+) ===$");
+    public static final Pattern HOUSEBANK_VALUE_PATTERN = Pattern.compile("^ {2}» (\\d+)\\$$");
+    public static final Pattern HOUSEBANK_DEPOSIT_PATTERN = Pattern.compile("^\\[Haus] Du hast (\\d+)\\$ in die Hauskasse gelegt\\.$");
+    public static final Pattern HOUSEBANK_WITHDRAW_PATTERN = Pattern.compile("^\\[Haus] Du hast (\\d+)\\$ aus der Hauskasse genommen\\.$");
 }

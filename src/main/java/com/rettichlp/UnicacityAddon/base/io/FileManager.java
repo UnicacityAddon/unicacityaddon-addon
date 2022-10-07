@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.rettichlp.UnicacityAddon.UnicacityAddon;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.json.Data;
+import com.rettichlp.UnicacityAddon.base.json.HouseBankEntry;
 import com.rettichlp.UnicacityAddon.commands.CoordlistCommand;
 import com.rettichlp.UnicacityAddon.commands.TodoListCommand;
 import com.rettichlp.UnicacityAddon.commands.faction.ServiceCountCommand;
@@ -167,6 +168,10 @@ public class FileManager {
             CoordlistCommand.coordlist = data.getCoordlist();
             HouseBankEventHandler.houseBanks = data.getHouseBanks();
             CarOpenModule.info = data.getCarInfo() == null ? Strings.EMPTY : data.getCarInfo();
+
+            for (HouseBankEntry houseBankEntry : HouseBankEventHandler.houseBanks)
+                HouseBankEntry.houseNumbers.add(houseBankEntry.getHouseNumber());
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

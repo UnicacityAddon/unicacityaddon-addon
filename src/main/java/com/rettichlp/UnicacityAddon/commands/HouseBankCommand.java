@@ -65,7 +65,7 @@ public class HouseBankCommand implements IClientCommand {
         HouseBankEventHandler.houseBanks.forEach(houseBankEntry ->
                 p.sendMessage(Message.getBuilder()
                 .of("» " + houseBankEntry.getHouseNumber() + ": ").color(ColorCode.GRAY).advance()
-                .of(houseBankEntry.getValue() + "$+").color(ColorCode.AQUA).strikethrough().advance()
+                .of(houseBankEntry.getValue() + "$").color(ColorCode.AQUA).advance()
                 .createComponent()));
         p.sendEmptyMessage();
     }
