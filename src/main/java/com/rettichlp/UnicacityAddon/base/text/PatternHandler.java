@@ -285,4 +285,12 @@ public class PatternHandler {
      */
     public static final Pattern DBANK_DROP_PATTERN = Pattern.compile("^(?:\\[UC])*(\\w+) hat (\\d+)g (Kokain|Marihuana|Methamphetamin|LSD) \\((Höchste|Gute|Mittlere|Schlechte) Reinheit\\) \\((\\d+)g\\) eingelagert\\.$");
     public static final Pattern DBANK_GET_PATTERN = Pattern.compile("^(?:\\[UC])*(\\w+) hat (\\d+)g (Kokain|Marihuana|Methamphetamin|LSD) \\((Höchste|Gute|Mittlere|Schlechte) Reinheit\\) \\((\\d+)g\\) aus der Drogenbank genommen\\.$");
+
+    /**
+     * {@link com.rettichlp.UnicacityAddon.events.HouseBankEventHandler}
+     */
+    public static final Pattern HOUSEBANK_HEADER_PATTERN = Pattern.compile("^=== Hauskasse Haus (\\d+) ===$");
+    public static final Pattern HOUSEBANK_VALUE_PATTERN = Pattern.compile("^ {2}» (\\d+)\\$$");
+    public static final Pattern HOUSEBANK_DEPOSIT_PATTERN = Pattern.compile("^\\[Haus] Du hast (\\d+)\\$ in die Hauskasse gelegt\\.$");
+    public static final Pattern HOUSEBANK_WITHDRAW_PATTERN = Pattern.compile("^\\[Haus] Du hast (\\d+)\\$ aus der Hauskasse genommen\\.$");
 }

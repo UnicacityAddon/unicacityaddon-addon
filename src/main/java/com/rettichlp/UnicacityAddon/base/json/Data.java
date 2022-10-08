@@ -16,6 +16,7 @@ public class Data {
     private long firstAidDate;
     private List<TodolistEntry> todolist;
     private List<CoordlistEntry> coordlist;
+    private List<HouseBankEntry> houseBanks;
     private String carInfo;
 
     public Data() {
@@ -107,6 +108,14 @@ public class Data {
 
     public void setCoordlist(List<CoordlistEntry> coordlist) {
         this.coordlist = coordlist;
+    }
+
+    public List<HouseBankEntry> getHouseBanks() {
+        return houseBanks == null ? new ArrayList<>() : houseBanks;
+    }
+
+    public void setHouseBanks(List<HouseBankEntry> houseBanks) {
+        this.houseBanks = houseBanks;
     }
 
     public String getCarInfo() {
