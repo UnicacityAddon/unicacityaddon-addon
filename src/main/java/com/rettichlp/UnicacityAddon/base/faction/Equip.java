@@ -21,7 +21,7 @@ public enum Equip {
     HELMET("Helm", "Helm", ConfigElements.getHelmetPrice()),
     SWATSHIELD("SWAT-Schild", "Einsatzschild", ConfigElements.getSwatShieldPrice()),
     MASK("Maske", "Maske", ConfigElements.getMaskPrice()),
-    FLASHBANG("Blendgranate", "Blendgranate", ConfigElements.getFlasBangPrice()),
+    FLASHBANG("Blendgranate", "Blendgranate", ConfigElements.getFlashBangPrice()),
     SMOKEGRENADE("Smoke", "Rauchgranate", ConfigElements.getSmokeGrenadePrice()),
     TAZER("Tazer", "Tazer", ConfigElements.getTazerPrice()),
     CUFFS("Handschellen", "Handschellen", ConfigElements.getHandCuffPrice()),
@@ -38,6 +38,7 @@ public enum Equip {
     private final String equipName;
     private final String messageName;
     private final String price;
+
     Equip(String equipName, String messageName, String price) {
         this.equipName = equipName;
         this.messageName = messageName;

@@ -491,7 +491,7 @@ public class ConfigElements {
                 : "800";
     }
 
-    public static String getFlasBangPrice() {
+    public static String getFlashBangPrice() {
         return UnicacityAddon.ADDON.getConfig().has("EQUIP_FLASHBANG_SETTING") && !UnicacityAddon.ADDON.getConfig().get("EQUIP_FLASHBANG_SETTING").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("EQUIP_FLASHBANG_SETTING").getAsString().startsWith("-")
                 ? UnicacityAddon.ADDON.getConfig().get("EQUIP_FLASHBANG_SETTING").getAsString()
                 : "250";
