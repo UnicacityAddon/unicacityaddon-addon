@@ -10,17 +10,17 @@ import java.util.List;
  */
 public class EquipLogEntry {
 
-    private final Equip equip;
+    private final String type;
     private int amount;
     public static List<EquipLogEntry> equipEntry = new ArrayList<>();
 
     public EquipLogEntry(Equip equip, int amount) {
-        this.equip = equip;
+        this.type = equip.toString();
         this.amount = amount;
     }
 
     public Equip getEquip() {
-        return equip;
+        return Equip.valueOf(type);
     }
 
     public int getAmount() {
@@ -28,7 +28,7 @@ public class EquipLogEntry {
     }
 
     public int getPrice() {
-        return equip.getPrice() * amount;
+        return getEquip().getPrice() * amount;
     }
 
     public void addEquip() {

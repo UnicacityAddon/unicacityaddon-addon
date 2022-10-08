@@ -55,10 +55,10 @@ public class EquipListCommand implements IClientCommand {
 
     @Override public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
         if (args.length == 1 && args[0].equalsIgnoreCase("reset")) EquipLogEntry.equipEntry = new ArrayList<>();
-        else equiList();
+        else equipList();
     }
 
-    private void equiList() {
+    private void equipList() {
         UPlayer p = AbstractionLayer.getPlayer();
         p.sendEmptyMessage();
         p.sendMessage(Message.getBuilder()

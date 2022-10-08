@@ -297,6 +297,6 @@ public class PatternHandler {
     /**
      * {@link com.rettichlp.UnicacityAddon.events.faction.EquipEventHandler}
      */
-    public static final Pattern EQUIP_PATTERN = Pattern.compile("^\\[Equip] Du hast dir eine ([a-zA-Z-äöüßÄÖÜ]+) equippt!$");
+    public static final Pattern EQUIP_PATTERN = Pattern.compile("^\\[Equip] Du hast dir eine(|n) ([a-zA-Z-äöüßÄÖÜ]+) equippt!$");
     public static final Pattern TRACKER_PATTERN = Pattern.compile("^Du hast einen Peilsender an (?:\\[UC])*(\\w+) befestigt\\.$");
 }
