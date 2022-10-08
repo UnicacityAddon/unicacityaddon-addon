@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.rettichlp.UnicacityAddon.UnicacityAddon;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.json.Data;
+import com.rettichlp.UnicacityAddon.base.json.EquipLogEntry;
 import com.rettichlp.UnicacityAddon.base.json.HouseBankEntry;
 import com.rettichlp.UnicacityAddon.commands.CoordlistCommand;
 import com.rettichlp.UnicacityAddon.commands.TodoListCommand;
@@ -150,6 +151,7 @@ public class FileManager {
                 TodoListCommand.todolist = Collections.emptyList();
                 CoordlistCommand.coordlist = Collections.emptyList();
                 HouseBankEventHandler.houseBanks = Collections.emptyList();
+                EquipLogEntry.equipEntry = Collections.emptyList();
                 CarOpenModule.info = "";
                 return;
             }
@@ -167,6 +169,7 @@ public class FileManager {
             TodoListCommand.todolist = data.getTodolist();
             CoordlistCommand.coordlist = data.getCoordlist();
             HouseBankEventHandler.houseBanks = data.getHouseBanks();
+            EquipLogEntry.equipEntry = data.getEquipList();
             CarOpenModule.info = data.getCarInfo() == null ? Strings.EMPTY : data.getCarInfo();
 
             for (HouseBankEntry houseBankEntry : HouseBankEventHandler.houseBanks)
@@ -195,6 +198,7 @@ public class FileManager {
             data.setTodolist(TodoListCommand.todolist);
             data.setCoordlist(CoordlistCommand.coordlist);
             data.setHouseBanks(HouseBankEventHandler.houseBanks);
+            data.setEquipList(EquipLogEntry.equipEntry);
             data.setCarInfo(CarOpenModule.info);
             data.setServiceCount(ServiceCountCommand.serviceCount);
             data.setDeaths(DeathsKillsEventHandler.deaths);
