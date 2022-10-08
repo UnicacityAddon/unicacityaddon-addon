@@ -97,7 +97,7 @@ public class ConfigSubSettings {
         StringElement smokeSettings = new StringElement(Equip.SMOKEGRENADE.getName(), unicacityAddon, new ControlElement.IconData(Material.SNOW_BALL), "EQUIP_SMOKEGRENADE_SETTING", ConfigElements.getSmokeGrenadePrice());
         settings.add(smokeSettings);
 
-        StringElement maskSettings = new StringElement(Equip.MASK.getName(), unicacityAddon, new ControlElement.IconData(Material.SNOW_BALL), "EQUIP_MASK_SETTING", ConfigElements.getMaskPrice());
+        StringElement maskSettings = new StringElement(Equip.MASK.getName(), unicacityAddon, new ControlElement.IconData(Material.SKULL), "EQUIP_MASK_SETTING", ConfigElements.getMaskPrice());
         settings.add(maskSettings);
 
         StringElement elytraSettings = new StringElement(Equip.WINGSUIT.getName(), unicacityAddon, new ControlElement.IconData(Material.WOOL), "EQUIP_WINGSUIT_SETTING", ConfigElements.getWingsuitPrice());
@@ -145,7 +145,7 @@ public class ConfigSubSettings {
         StringElement flashBangSettings = new StringElement(Equip.FLASHBANG.getName(), unicacityAddon, new ControlElement.IconData(Material.SLIME_BALL), "EQUIP_FLASHBANG_SETTING", ConfigElements.getFlashBangPrice());
         settings.add(flashBangSettings);
 
-        StringElement maskSettings = new StringElement(Equip.MASK.getName(), unicacityAddon, new ControlElement.IconData(Material.SNOW_BALL), "EQUIP_MASK_SETTING", ConfigElements.getMaskPrice());
+        StringElement maskSettings = new StringElement(Equip.MASK.getName(), unicacityAddon, new ControlElement.IconData(Material.SKULL), "EQUIP_MASK_SETTING", ConfigElements.getMaskPrice());
         settings.add(maskSettings);
 
         StringElement elytraSettings = new StringElement(Equip.WINGSUIT.getName(), unicacityAddon, new ControlElement.IconData(Material.WOOL), "EQUIP_WINGSUIT_SETTING", ConfigElements.getWingsuitPrice());
@@ -178,7 +178,7 @@ public class ConfigSubSettings {
         StringElement breadSettings = new StringElement(Equip.BREAD.getName(), unicacityAddon, new ControlElement.IconData(Material.BREAD), "EQUIP_BREAD_SETTING", ConfigElements.getBreadPrice());
         settings.add(breadSettings);
 
-        StringElement waterSettings = new StringElement(Equip.WATER.getName(), unicacityAddon, new ControlElement.IconData(Material.BREAD), "EQUIP_WATER_SETTING", ConfigElements.getWaterPrice());
+        StringElement waterSettings = new StringElement(Equip.WATER.getName(), unicacityAddon, new ControlElement.IconData(Material.GLASS_BOTTLE), "EQUIP_WATER_SETTING", ConfigElements.getWaterPrice());
         settings.add(waterSettings);
 
         return settings;
@@ -187,7 +187,7 @@ public class ConfigSubSettings {
     static Settings getFireFighterSettings(UnicacityAddon unicacityAddon) {
         Settings settings = new Settings();
 
-        StringElement axeSettings = new StringElement(Equip.AXE.getName(), unicacityAddon, new ControlElement.IconData(Material.LEVER), "EQUIP_AXE_SETTING", ConfigElements.getAxePrice());
+        StringElement axeSettings = new StringElement(Equip.AXE.getName(), unicacityAddon, new ControlElement.IconData(Material.IRON_AXE), "EQUIP_AXE_SETTING", ConfigElements.getAxePrice());
         settings.add(axeSettings);
 
         StringElement fireExtinguisherSettings = new StringElement(Equip.FIREEXTINGUISHER.getName(), unicacityAddon, new ControlElement.IconData(Material.LEVER), "EQUIP_FIREEXTINGUISHER_SETTING", ConfigElements.getFireExtinguisherPrice());
@@ -205,7 +205,7 @@ public class ConfigSubSettings {
         StringElement breadSettings = new StringElement(Equip.BREAD.getName(), unicacityAddon, new ControlElement.IconData(Material.BREAD), "EQUIP_BREAD_SETTING", ConfigElements.getBreadPrice());
         settings.add(breadSettings);
 
-        StringElement waterSettings = new StringElement(Equip.WATER.getName(), unicacityAddon, new ControlElement.IconData(Material.BREAD), "EQUIP_WATER_SETTING", ConfigElements.getWaterPrice());
+        StringElement waterSettings = new StringElement(Equip.WATER.getName(), unicacityAddon, new ControlElement.IconData(Material.GLASS_BOTTLE), "EQUIP_WATER_SETTING", ConfigElements.getWaterPrice());
         settings.add(waterSettings);
 
         return settings;
@@ -235,7 +235,7 @@ public class ConfigSubSettings {
         StringElement sniperSettings = new StringElement(Equip.SNIPER.getName(), unicacityAddon, new ControlElement.IconData(Material.STONE_HOE), "EQUIP_SNIPER_SETTING", ConfigElements.getSniperPrice());
         settings.add(sniperSettings);
 
-        StringElement maskSettings = new StringElement(Equip.MASK.getName(), unicacityAddon, new ControlElement.IconData(Material.SNOW_BALL), "EQUIP_MASK_SETTING", ConfigElements.getMaskPrice());
+        StringElement maskSettings = new StringElement(Equip.MASK.getName(), unicacityAddon, new ControlElement.IconData(Material.SKULL), "EQUIP_MASK_SETTING", ConfigElements.getMaskPrice());
         settings.add(maskSettings);
 
         StringElement lightKevlarSettings = new StringElement(Equip.KEVLAR.getName(), unicacityAddon, new ControlElement.IconData(Material.LEATHER_CHESTPLATE), "EQUIP_LKEV_SETTING", ConfigElements.getLightKevlarPrice());
