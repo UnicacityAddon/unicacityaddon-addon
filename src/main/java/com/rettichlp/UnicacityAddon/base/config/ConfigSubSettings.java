@@ -193,7 +193,7 @@ public class ConfigSubSettings {
         StringElement fireExtinguisherSettings = new StringElement(Equip.FIREEXTINGUISHER.getName(), unicacityAddon, new ControlElement.IconData(Material.LEVER), "EQUIP_FIREEXTINGUISHER_SETTING", ConfigElements.getFireExtinguisherPrice());
         settings.add(fireExtinguisherSettings);
 
-        StringElement helmetSettings = new StringElement(Equip.HELMET.getName(), unicacityAddon, new ControlElement.IconData(Material.LEATHER_HELMET), "EQUIP_HELMET_SETTING", ConfigElements.getFireExtinguisherPrice());
+        StringElement helmetSettings = new StringElement(Equip.HELMET.getName(), unicacityAddon, new ControlElement.IconData(Material.LEATHER_HELMET), "EQUIP_HELMET_SETTING", ConfigElements.getHelmetPrice());
         settings.add(helmetSettings);
 
         return settings;
