@@ -70,6 +70,21 @@ public class ConfigSettings {
         return settings;
     }
 
+    static Settings getMessageSettings(UnicacityAddon unicacityAddon) {
+        Settings settings = new Settings();
+
+        BooleanElement hqMessageSettings = new BooleanElement("HQ Nachrichten", unicacityAddon, new ControlElement.IconData(Material.LEASH), "HQ_MESSAGE_SETTINGS", ConfigElements.getHQMessagesActivated());
+        settings.add(hqMessageSettings);
+
+        BooleanElement serviceMessageSetting = new BooleanElement("Service Nachrichten", unicacityAddon, new ControlElement.IconData(Material.PAPER), "SERVICE_MESSAGE_SETTINGS", ConfigElements.getServiceMessagesActivated());
+        settings.add(serviceMessageSetting);
+
+        BooleanElement dbankMessageSettings = new BooleanElement("D-Bank Nachrichten", unicacityAddon, new ControlElement.IconData(Material.SUGAR), "DBANK_MESSAGE_SETTINGS", ConfigElements.getDrugBankMessagesActivated());
+        settings.add(dbankMessageSettings);
+
+        return settings;
+    }
+
     static Settings getTeamspeakSettings(UnicacityAddon unicacityAddon) {
         Settings settings = new Settings();
 
