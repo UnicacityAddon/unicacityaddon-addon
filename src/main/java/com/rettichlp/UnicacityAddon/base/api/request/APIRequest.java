@@ -292,6 +292,18 @@ public class APIRequest {
         }).start();
     }
 
+    public static void sendStatisticAddPlayTimeRequest() {
+        Map<String, String> parameters = new HashMap<>();
+
+        new Thread(() -> {
+            try {
+                APIResponseHandler.getStatisticAddPlayTimeResponse(parameters);
+            } catch (APIUnsuccessResponseException e) {
+                e.sendInfoMessage();
+            }
+        }).start();
+    }
+
     public static JsonObject sendTokenCreateRequest() {
         Map<String, String> parameters = new HashMap<>();
         parameters.put("authToken", UnicacityAddon.MINECRAFT.getSession().getToken());

@@ -18,6 +18,7 @@ public enum BaseUrl {
     STATISTIC_DEATH("/statistic/addDeath"),
     STATISTIC_REVIVE("/statistic/addRevive"),
     STATISTIC_SERVICE("/statistic/addService"),
+    STATISTIC_PLAYTIME("/statistic/playTime"),
     TOKEN_CREATE("/create"),
     TOKEN_REVOKE("/revoke"),
     WANTED_REASON("/wantedreason");
