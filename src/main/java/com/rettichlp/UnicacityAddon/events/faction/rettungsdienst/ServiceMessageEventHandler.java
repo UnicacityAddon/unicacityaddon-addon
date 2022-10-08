@@ -60,23 +60,23 @@ public class ServiceMessageEventHandler {
                 e.setMessage(Message.getBuilder()
                         .of("Neu geöffnet").color(ColorCode.GOLD).bold()
                                 .hoverEvent(HoverEvent.Action.SHOW_TEXT, hoverMessage) // Grund
-                                .clickEvent(ClickEvent.Action.RUN_COMMAND, "/acceptservice " + m.group(1).replace("[UC]", ""))
+                                .clickEvent(ClickEvent.Action.RUN_COMMAND, "/acceptservice " + m.group(2).replace("[UC]", ""))
                                 .advance().space()
                         .of("-").color(ColorCode.GRAY)
                                 .hoverEvent(HoverEvent.Action.SHOW_TEXT, hoverMessage) // Grund
-                                .clickEvent(ClickEvent.Action.RUN_COMMAND, "/acceptservice " + m.group(1).replace("[UC]", ""))
+                                .clickEvent(ClickEvent.Action.RUN_COMMAND, "/acceptservice " + m.group(2).replace("[UC]", ""))
                                 .advance().space()
                         .of(m.group(1)).color(ColorCode.DARK_RED)
                                 .hoverEvent(HoverEvent.Action.SHOW_TEXT, hoverMessage) // Grund
-                                .clickEvent(ClickEvent.Action.RUN_COMMAND, "/acceptservice " + m.group(1).replace("[UC]", ""))
+                                .clickEvent(ClickEvent.Action.RUN_COMMAND, "/acceptservice " + m.group(2).replace("[UC]", ""))
                                 .advance().space() // Öffner
                         .of("-").color(ColorCode.GRAY)
                                 .hoverEvent(HoverEvent.Action.SHOW_TEXT, hoverMessage) // Grund
-                                .clickEvent(ClickEvent.Action.RUN_COMMAND, "/acceptservice " + m.group(1).replace("[UC]", ""))
+                                .clickEvent(ClickEvent.Action.RUN_COMMAND, "/acceptservice " + m.group(2).replace("[UC]", ""))
                                 .advance().space()
                         .of(m.group(2)).color(ColorCode.DARK_RED)
                                 .hoverEvent(HoverEvent.Action.SHOW_TEXT, hoverMessage) // Grund
-                                .clickEvent(ClickEvent.Action.RUN_COMMAND, "/acceptservice " + m.group(1).replace("[UC]", ""))
+                                .clickEvent(ClickEvent.Action.RUN_COMMAND, "/acceptservice " + m.group(2).replace("[UC]", ""))
                                 .advance().space() // Notruf sender
                         .createComponent());
                 return false;
