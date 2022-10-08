@@ -128,6 +128,11 @@ public class APIResponseHandler {
         getJsonElement(urlString);
     }
 
+    public static void getStatisticAddPlayTimeResponse(Map<String, String> parameters) throws APIUnsuccessResponseException {
+        String urlString = WebsiteUtils.createUrl(BaseUrl.STATISTIC_PLAYTIME.getPath(), parameters);
+        getJsonElement(urlString);
+    }
+
     public static JsonObject getTokenCreateResponse(Map<String, String> parameters) throws APIUnsuccessResponseException {
         String urlString = WebsiteUtils.createUrl(BaseUrl.TOKEN_CREATE.getPath(), parameters);
         return getJsonElement(urlString).getAsJsonObject();
