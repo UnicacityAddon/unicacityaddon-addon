@@ -3,9 +3,9 @@ package com.rettichlp.UnicacityAddon.commands.api;
 import com.google.gson.JsonObject;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
-import com.rettichlp.UnicacityAddon.base.api.request.APIRequest;
-import com.rettichlp.UnicacityAddon.base.api.Syncer;
 import com.rettichlp.UnicacityAddon.base.api.entries.NaviPointEntry;
+import com.rettichlp.UnicacityAddon.base.api.request.APIRequest;
+import com.rettichlp.UnicacityAddon.base.location.NavigationUtils;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
@@ -75,7 +75,7 @@ public class NaviPointCommand implements IClientCommand {
             tabCompletions.add("add");
             tabCompletions.add("remove");
         } else if (args.length == 2) {
-            tabCompletions = Syncer.getNaviPointEntryList().stream().map(NaviPointEntry::getName).sorted().collect(Collectors.toList());
+            tabCompletions = NavigationUtils.NAVIPOINTLIST.stream().map(NaviPointEntry::getName).sorted().collect(Collectors.toList());
         } else if (args.length == 3) { // x
             tabCompletions.add(String.valueOf(p.getPosition().getX()));
         } else if (args.length == 4) { // y
