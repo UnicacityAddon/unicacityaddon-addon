@@ -1,6 +1,6 @@
 package com.rettichlp.UnicacityAddon.base.api.entries;
 
-import com.rettichlp.UnicacityAddon.base.api.Syncer;
+import com.rettichlp.UnicacityAddon.base.location.NavigationUtils;
 import net.minecraft.util.math.BlockPos;
 
 public class NaviPointEntry {
@@ -42,7 +42,7 @@ public class NaviPointEntry {
     }
 
     public static NaviPointEntry getNaviPointEntryByTabName(String tabName) {
-        return Syncer.getNaviPointEntryList().stream()
+        return NavigationUtils.NAVIPOINTLIST.stream()
                 .filter(naviPointEntry -> naviPointEntry.getTabName().equals(tabName))
                 .findFirst()
                 .orElse(null);

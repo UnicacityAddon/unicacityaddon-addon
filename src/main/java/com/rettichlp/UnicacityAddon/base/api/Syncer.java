@@ -12,6 +12,7 @@ import com.rettichlp.UnicacityAddon.base.api.entries.PlayerGroupEntry;
 import com.rettichlp.UnicacityAddon.base.api.entries.WantedReasonEntry;
 import com.rettichlp.UnicacityAddon.base.api.request.APIRequest;
 import com.rettichlp.UnicacityAddon.base.faction.Faction;
+import com.rettichlp.UnicacityAddon.base.location.NavigationUtils;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
 import com.rettichlp.UnicacityAddon.base.utils.ListUtils;
@@ -32,6 +33,14 @@ public class Syncer {
     public static void syncAll() {
         Syncer.syncPlayerFactionMap();
         Syncer.syncPlayerRankMap();
+
+        new Thread(() -> {
+            // Workaround to update house bans and not on name tag update interval
+            NameTagEventHandler.HOUSEBANENTRYLIST = Syncer.getHouseBanEntryList();
+            // Workaround to update navi points and not on every reinforcement
+            NavigationUtils.NAVIPOINTLIST = Syncer.getNaviPointEntryList();
+            LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "API Daten aktualisiert.");
+        }).start();
     }
 
     public static Map<String, Faction> getPlayerFactionMap() {
@@ -55,9 +64,6 @@ public class Syncer {
             getPlayerGroupEntryList("LEMILIEU").forEach(playerGroupEntry -> PLAYERFACTIONMAP.put(playerGroupEntry.getName(), Faction.LEMILIEU));
 
             LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Fraktionen aktualisiert.");
-
-            // Workaround to update house bans and not on name tag update interval
-            NameTagEventHandler.HOUSEBANENTRYLIST = Syncer.getHouseBanEntryList();
         }).start();
     }
 
