@@ -28,17 +28,6 @@ public class DeathsKillsEventHandler {
         String msg = e.getMessage().getUnformattedText();
         UPlayer p = AbstractionLayer.getPlayer();
 
-        Matcher karmaMatcher = PatternHandler.KILL_PATTERN.matcher(msg);
-
-        if (karmaMatcher.find()) {
-            if (Integer.parseInt(karmaMatcher.group(1)) < 6) {
-                kills++;
-                APIRequest.sendStatisticAddKillRequest();
-            }
-
-            return false;
-        }
-
         Matcher jailKillMatcher = PatternHandler.WANTED_KILL.matcher(msg);
         if (jailKillMatcher.find()) {
             if (jailKillMatcher.group(2).equals(p.getName())) {
