@@ -2,6 +2,7 @@ package com.rettichlp.UnicacityAddon.commands.faction;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
+import com.rettichlp.UnicacityAddon.base.json.EquipLogEntry;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
@@ -78,10 +79,18 @@ public class EquipListCommand implements IClientCommand {
                 .of("Equip:").color(ColorCode.DARK_AQUA).bold().advance()
                 .createComponent());
         EquipEventHandler.equipLogEntryList.forEach(equipLogEntry ->
-                p.sendMessage(Message.getBuilder()
-                        .of("» " + equipLogEntry.getAmount() + "x " + equipLogEntry.getEquip().getName() + ": ").color(ColorCode.GRAY).advance()
-                        .of(equipLogEntry.getPrice() + "$").color(ColorCode.AQUA).advance()
-                        .createComponent()));
+            p.sendMessage(Message.getBuilder()
+                    .of("» " + equipLogEntry.getAmount() + "x " + equipLogEntry.getEquip().getName() + ": ").color(ColorCode.GRAY).advance()
+                    .of(equipLogEntry.getPrice() + "$").color(ColorCode.AQUA).advance()
+                    .createComponent()));
+
+        int totalAmount = EquipEventHandler.equipLogEntryList.stream().map(EquipLogEntry::getPrice).reduce(0, Integer::sum);
+
+        p.sendMessage(Message.getBuilder()
+                .of("» ").color(ColorCode.GRAY).advance()
+                .of(totalAmount + "$").color(ColorCode.AQUA).bold().advance()
+                .createComponent());
+
         p.sendEmptyMessage();
     }
 
