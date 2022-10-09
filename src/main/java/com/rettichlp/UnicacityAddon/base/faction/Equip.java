@@ -5,7 +5,7 @@ import com.rettichlp.UnicacityAddon.base.config.ConfigElements;
 public enum Equip {
 
     BASI("Baseballschläger","Baseballschläger", ConfigElements.getBaseballBatPrice()),
-    DONUT("Donut", "Donut", ConfigElements.getDonutPrice()),
+    DONUT("Donut", "Donuts", ConfigElements.getDonutPrice()),
     KEVLAR("Leichte Kevlar", "Kevlar", ConfigElements.getLightKevlarPrice()),
     HEAVYKEVLAR("Schwere Kevlar", "schwere Kevlar", ConfigElements.getHeavyKevlarPrice()),
     PISTOL("Pistole", "Pistole", ConfigElements.getPistolPrice()),
@@ -32,8 +32,8 @@ public enum Equip {
     EXPLOSIVEBELT("Sprenggürtel", "Sprenggürtel", ConfigElements.getExplosiveBeltPrice()),
     RPG7("RPG-7", "RPG-7", ConfigElements.getRPG7Price()),
     NOTEPAD("Notizblock", "Notizblock", ConfigElements.getNotePadPrice()), // UnicaCity Bug (Nachricht gibt es noch nicht)
-    GLASSCUTTER("Glasschneider", "", ConfigElements.getGlassCutterPrice()), // TODO: Equipname
-    LOCKPICK("Dietrich", "", ConfigElements.getLockPickPrice()); // TODO: Equipname
+    GLASSCUTTER("Glasschneider", "Glasschneider", ConfigElements.getGlassCutterPrice()), // TODO: Equipname
+    LOCKPICK("Dietrich", "Dietrich", ConfigElements.getLockPickPrice()); // TODO: Equipname
 
     private final String equipName;
     private final String messageName;

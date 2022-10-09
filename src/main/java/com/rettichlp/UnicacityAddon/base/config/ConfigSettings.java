@@ -144,6 +144,10 @@ public class ConfigSettings {
         hitmanEquip.setSubSettings(ConfigSubSettings.getHitmanEquipSettings(unicacityAddon));
         settings.add(hitmanEquip);
 
+        ListContainerElement terrorEquip = new ListContainerElement("Terror-Equip", new ControlElement.IconData(Material.TNT));
+        terrorEquip.setSubSettings(ConfigSubSettings.getTerrorEquipSettings(unicacityAddon));
+        settings.add(terrorEquip);
+
         return settings;
     }
 

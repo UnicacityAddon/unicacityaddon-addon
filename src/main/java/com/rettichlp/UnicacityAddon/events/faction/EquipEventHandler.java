@@ -46,7 +46,7 @@ public class EquipEventHandler {
         boolean found = false;
 
         for (Equip equipEntry : Equip.values())
-            if (equipEntry.getMessageName().equalsIgnoreCase(equipMatcher.group(2))) equip = equipEntry;
+            if (msg.contains(equipEntry.getMessageName())) equip = equipEntry;
 
         if (equip == null) {
             AbstractionLayer.getPlayer().sendErrorMessage("Equiptyp wurde nicht gefunden.");

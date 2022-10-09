@@ -253,6 +253,30 @@ public class ConfigSubSettings {
         return settings;
     }
 
+    static Settings getTerrorEquipSettings(UnicacityAddon unicacityAddon) {
+        Settings settings = new Settings();
+
+        StringElement lightKevlarSettings = new StringElement(Equip.KEVLAR.getName(), unicacityAddon, new ControlElement.IconData(Material.LEATHER_CHESTPLATE), "EQUIP_LKEV_SETTING", ConfigElements.getLightKevlarPrice());
+        settings.add(lightKevlarSettings);
+
+        StringElement heavyKevlarSettings = new StringElement(Equip.HEAVYKEVLAR.getName(), unicacityAddon, new ControlElement.IconData(Material.LEATHER_CHESTPLATE), "EQUIP_SKEV_SETTING", ConfigElements.getHeavyKevlarPrice());
+        settings.add(heavyKevlarSettings);
+
+        StringElement mpSettings = new StringElement(Equip.MP5.getName(), unicacityAddon, new ControlElement.IconData(Material.GOLD_HOE), "EQUIP_MP5_SETTING", ConfigElements.getMP5Price());
+        settings.add(mpSettings);
+
+        StringElement pistolSettings = new StringElement(Equip.PISTOL.getName(), unicacityAddon, new ControlElement.IconData(Material.IRON_HOE), "EQUIP_PISTOLE_SETTING", ConfigElements.getPistolPrice());
+        settings.add(pistolSettings);
+
+        StringElement explosiveBeltSettings = new StringElement(Equip.EXPLOSIVEBELT.getName(), unicacityAddon, new ControlElement.IconData(Material.LEATHER_CHESTPLATE), "EQUIP_EXPLOSIVEBELT_SETTING", ConfigElements.getExplosiveBeltPrice());
+        settings.add(explosiveBeltSettings);
+
+        StringElement rpg7Settings = new StringElement(Equip.RPG7.getName(), unicacityAddon, new ControlElement.IconData(Material.GOLD_AXE), "EQUIP_RPG7_SETTING", ConfigElements.getRPG7Price());
+        settings.add(rpg7Settings);
+
+        return settings;
+    }
+
     static Settings getNameTagAllianceSubSettings() {
         Settings settings = new Settings();
 
