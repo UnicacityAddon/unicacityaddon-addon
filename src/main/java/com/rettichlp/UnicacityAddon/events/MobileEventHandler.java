@@ -50,7 +50,7 @@ public class MobileEventHandler {
             lastCheckedNumber = Integer.parseInt(numberMatcher.group(1));
             if (ACallCommand.isActive || ASMSCommand.isActive || SMSEventHandler.isActive) {
                 e.setCanceled(true);
-                ACallCommand.isActive = ASMSCommand.isActive = false;
+                ACallCommand.isActive = ASMSCommand.isActive = SMSEventHandler.isActive = false;
             }
         }
     }

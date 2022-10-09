@@ -19,7 +19,11 @@ public class SMSEventHandler {
     @SubscribeEvent
     public boolean onClientChatReceived(ClientChatReceivedEvent e) {
         Matcher smsMatcher = PatternHandler.SMS_PATTERN.matcher(e.getMessage().getUnformattedText());
-        if (smsMatcher.find()) AbstractionLayer.getPlayer().sendChatMessage("/nummer " + smsMatcher.group(1));
+
+        if (!smsMatcher.find()) return false;
+        AbstractionLayer.getPlayer().sendChatMessage("/nummer " + smsMatcher.group(1));
+        isActive = true;
+
         return false;
     }
 }
