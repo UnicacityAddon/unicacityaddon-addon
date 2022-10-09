@@ -3,11 +3,10 @@ package com.rettichlp.UnicacityAddon.base.location;
 import com.google.common.collect.Maps;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
+import com.rettichlp.UnicacityAddon.base.api.Syncer;
 import com.rettichlp.UnicacityAddon.base.api.entries.NaviPointEntry;
 import net.minecraft.util.math.BlockPos;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,7 +15,6 @@ import java.util.Map;
  */
 public class NavigationUtils {
 
-    public static List<NaviPointEntry> NAVIPOINTLIST = new ArrayList<>();
     public static long routeMessageClearExecuteTime = -1;
 
     public static Map.Entry<Double, ATM> getNearestATM() {
@@ -61,7 +59,7 @@ public class NavigationUtils {
         NaviPointEntry nearestNaviPoint = null;
         double nearestDistance = Double.MAX_VALUE;
 
-        for (NaviPointEntry naviPointEntry : NavigationUtils.NAVIPOINTLIST) {
+        for (NaviPointEntry naviPointEntry : Syncer.NAVIPOINTLIST) {
             double distance = blockPos.getDistance(naviPointEntry.getX(), naviPointEntry.getY(), naviPointEntry.getZ());
             if (distance < nearestDistance) {
                 nearestDistance = distance;

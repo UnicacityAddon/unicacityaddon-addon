@@ -58,7 +58,7 @@ public class TickEventHandler {
             String name = entityItem.getCustomNameTag();
             String playerName = name.substring(3);
 
-            if (!Syncer.getPlayerFactionMap().containsKey(name.substring(3))) return;
+            if (!Syncer.PLAYERFACTIONMAP.containsKey(name.substring(3))) return;
             if (name.contains("◤")) return; // already edited
 
             String prefix = NameTagEventHandler.getPrefix(playerName, true);

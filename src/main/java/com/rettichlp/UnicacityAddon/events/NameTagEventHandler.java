@@ -3,7 +3,6 @@ package com.rettichlp.UnicacityAddon.events;
 import com.rettichlp.UnicacityAddon.UnicacityAddon;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.api.Syncer;
-import com.rettichlp.UnicacityAddon.base.api.entries.HouseBanEntry;
 import com.rettichlp.UnicacityAddon.base.config.ConfigElements;
 import com.rettichlp.UnicacityAddon.base.faction.Faction;
 import com.rettichlp.UnicacityAddon.base.faction.FactionHandler;
@@ -19,7 +18,6 @@ import net.minecraft.scoreboard.ScorePlayerTeam;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -28,8 +26,6 @@ import java.util.Objects;
  */
 @UCEvent
 public class NameTagEventHandler {
-
-    public static List<HouseBanEntry> HOUSEBANENTRYLIST = new ArrayList<>();
 
     /**
      * Quote: "Wenn ich gleich nicht mehr antworte, einfach laut meinen Namen sagen." - Lou, 02.10.2022
@@ -56,7 +52,7 @@ public class NameTagEventHandler {
         houseBan.append(FormattingCode.RESET.getCode());
 
         if (ConfigElements.getNameTagHouseBan()) {
-            if (HOUSEBANENTRYLIST.stream().anyMatch(houseBanEntry -> houseBanEntry.getName().equals(playerName)))
+            if (Syncer.HOUSEBANENTRYLIST.stream().anyMatch(houseBanEntry -> houseBanEntry.getName().equals(playerName)))
                 houseBan.append(Message.getBuilder()
                         .of("[").color(ColorCode.DARK_GRAY).advance()
                         .of("HV").color(ColorCode.RED).advance()
@@ -114,8 +110,8 @@ public class NameTagEventHandler {
                 prefix.append(ConfigElements.getNameTagFactionSpecificColor().getCode());
         }
 
-        if (Syncer.getPlayerFactionMap().containsKey(playerName)) {
-            Faction targetPlayerFaction = Syncer.getPlayerFactionMap().get(playerName);
+        if (Syncer.PLAYERFACTIONMAP.containsKey(playerName)) {
+            Faction targetPlayerFaction = Syncer.PLAYERFACTIONMAP.get(playerName);
 
             if (ConfigElements.getNameTagFaction()) {
                 if (targetPlayerFaction.equals(AbstractionLayer.getPlayer().getFaction()))
@@ -140,8 +136,8 @@ public class NameTagEventHandler {
         StringBuilder suffix = new StringBuilder();
         suffix.append(FormattingCode.RESET.getCode());
 
-        if (Syncer.getPlayerFactionMap().containsKey(playerName)) {
-            Faction targetPlayerFaction = Syncer.getPlayerFactionMap().get(playerName);
+        if (Syncer.PLAYERFACTIONMAP.containsKey(playerName)) {
+            Faction targetPlayerFaction = Syncer.PLAYERFACTIONMAP.get(playerName);
             if (ConfigElements.getNameTagFactionSuffix())
                 suffix.append(" ").append(targetPlayerFaction.getNameTagSuffix());
         }

@@ -12,11 +12,9 @@ import com.rettichlp.UnicacityAddon.base.api.entries.PlayerGroupEntry;
 import com.rettichlp.UnicacityAddon.base.api.entries.WantedReasonEntry;
 import com.rettichlp.UnicacityAddon.base.api.request.APIRequest;
 import com.rettichlp.UnicacityAddon.base.faction.Faction;
-import com.rettichlp.UnicacityAddon.base.location.NavigationUtils;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
 import com.rettichlp.UnicacityAddon.base.utils.ListUtils;
-import com.rettichlp.UnicacityAddon.events.NameTagEventHandler;
 import net.labymod.main.LabyMod;
 
 import java.util.ArrayList;
@@ -27,30 +25,20 @@ import java.util.Map;
 
 public class Syncer {
 
-    private static final Map<String, Faction> PLAYERFACTIONMAP = new HashMap<>();
-    private static final Map<String, Integer> PLAYERRANKMAP = new HashMap<>();
+    public static final Map<String, Faction> PLAYERFACTIONMAP = new HashMap<>();
+    public static final Map<String, Integer> PLAYERRANKMAP = new HashMap<>();
+    public static List<HouseBanEntry> HOUSEBANENTRYLIST = new ArrayList<>();
+    public static List<NaviPointEntry> NAVIPOINTLIST = new ArrayList<>();
 
     public static void syncAll() {
-        Syncer.syncPlayerFactionMap();
-        Syncer.syncPlayerRankMap();
-
         new Thread(() -> {
-            // Workaround to update house bans and not on name tag update interval
-            NameTagEventHandler.HOUSEBANENTRYLIST = Syncer.getHouseBanEntryList();
-            // Workaround to update navi points and not on every reinforcement
-            NavigationUtils.NAVIPOINTLIST = Syncer.getNaviPointEntryList();
-            LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "API Daten aktualisiert.");
+            TokenManager.createToken();
+
+            syncPlayerFactionMap();
+            syncPlayerRankMap();
+            syncHousebanEntryList();
+            syncNaviPointEntryList();
         }).start();
-    }
-
-    public static Map<String, Faction> getPlayerFactionMap() {
-        if (PLAYERFACTIONMAP.isEmpty()) syncPlayerFactionMap();
-        return PLAYERFACTIONMAP;
-    }
-
-    public static Map<String, Integer> getPlayerRankMap() {
-        if (PLAYERRANKMAP.isEmpty()) syncPlayerRankMap();
-        return PLAYERRANKMAP;
     }
 
     public static void syncPlayerFactionMap() {
@@ -80,6 +68,20 @@ public class Syncer {
                                 .charAt(0)))));
             }
             LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Ränge aktualisiert.");
+        }).start();
+    }
+
+    public static void syncHousebanEntryList() {
+        new Thread(() -> {
+            HOUSEBANENTRYLIST = getHouseBanEntryList();
+            LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Hausverbote aktualisiert.");
+        }).start();
+    }
+
+    public static void syncNaviPointEntryList() {
+        new Thread(() -> {
+            NAVIPOINTLIST = getNaviPointEntryList();
+            LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Navipunkte aktualisiert.");
         }).start();
     }
 
