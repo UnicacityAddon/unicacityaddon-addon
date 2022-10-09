@@ -15,10 +15,12 @@ import net.minecraftforge.client.IClientCommand;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * @author Dimiikou
@@ -74,6 +76,7 @@ public class EquipListCommand implements IClientCommand {
     }
 
     private void equipList(UPlayer p) {
+        NumberFormat numberFormat = NumberFormat.getNumberInstance(new Locale("da", "DK"));
         p.sendEmptyMessage();
         p.sendMessage(Message.getBuilder()
                 .of("Equip:").color(ColorCode.DARK_AQUA).bold().advance()
@@ -81,14 +84,14 @@ public class EquipListCommand implements IClientCommand {
         EquipEventHandler.equipLogEntryList.forEach(equipLogEntry ->
             p.sendMessage(Message.getBuilder()
                     .of("» " + equipLogEntry.getAmount() + "x " + equipLogEntry.getEquip().getName() + ": ").color(ColorCode.GRAY).advance()
-                    .of(equipLogEntry.getPrice() + "$").color(ColorCode.AQUA).advance()
+                    .of(numberFormat.format(equipLogEntry.getPrice()) + "$").color(ColorCode.AQUA).advance()
                     .createComponent()));
 
         int totalAmount = EquipEventHandler.equipLogEntryList.stream().map(EquipLogEntry::getPrice).reduce(0, Integer::sum);
 
         p.sendMessage(Message.getBuilder()
                 .of("» ").color(ColorCode.GRAY).advance()
-                .of(totalAmount + "$").color(ColorCode.AQUA).bold().advance()
+                .of(numberFormat.format(totalAmount) + "$").color(ColorCode.AQUA).bold().advance()
                 .createComponent());
 
         p.sendEmptyMessage();
