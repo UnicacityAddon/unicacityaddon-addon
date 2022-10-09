@@ -301,6 +301,6 @@ public class PatternHandler {
     public static final Pattern TRACKER_PATTERN = Pattern.compile("^Du hast einen Peilsender an (?:\\[UC])*(\\w+) befestigt\\.$");
 
     /**
-     * Quote: "Rettich: In welchem Forum ist der Vorschlag drinne? Leon: in Vorschläge" - RettichLP und Dimiikou. 09.10.2022
+     * Quote: Rettich: "In welchem Forum ist der Vorschlag drin?" Leon: "In Vorschläge" - RettichLP und Dimiikou, 09.10.2022
      */
 }
