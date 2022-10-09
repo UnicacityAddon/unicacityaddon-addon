@@ -293,4 +293,10 @@ public class PatternHandler {
     public static final Pattern HOUSEBANK_VALUE_PATTERN = Pattern.compile("^ {2}» (\\d+)\\$$");
     public static final Pattern HOUSEBANK_DEPOSIT_PATTERN = Pattern.compile("^\\[Haus] Du hast (\\d+)\\$ in die Hauskasse gelegt\\.$");
     public static final Pattern HOUSEBANK_WITHDRAW_PATTERN = Pattern.compile("^\\[Haus] Du hast (\\d+)\\$ aus der Hauskasse genommen\\.$");
+
+    /**
+     * {@link com.rettichlp.UnicacityAddon.events.faction.EquipEventHandler}
+     */
+    public static final Pattern EQUIP_PATTERN = Pattern.compile("^\\[Equip] Du hast dir (|ein |eine |einen )([a-zA-Z-äöüßÄÖÜ]+) equippt!$");
+    public static final Pattern TRACKER_PATTERN = Pattern.compile("^Du hast einen Peilsender an (?:\\[UC])*(\\w+) befestigt\\.$");
 }

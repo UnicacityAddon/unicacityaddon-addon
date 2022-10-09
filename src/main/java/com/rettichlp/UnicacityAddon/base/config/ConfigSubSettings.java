@@ -1,6 +1,7 @@
 package com.rettichlp.UnicacityAddon.base.config;
 
 import com.rettichlp.UnicacityAddon.UnicacityAddon;
+import com.rettichlp.UnicacityAddon.base.faction.Equip;
 import com.rettichlp.UnicacityAddon.base.faction.Faction;
 import com.rettichlp.UnicacityAddon.base.faction.badfaction.DrugPurity;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
@@ -26,6 +27,228 @@ public class ConfigSubSettings {
         DropDownElement<ColorCode> nameTagFactionDropDownElement0 = new DropDownElement<>("", nameTagFactionDropDownMenu0);
         nameTagFactionDropDownElement0.setChangeListener(ConfigElements::setNameTagFactionColor);
         settings.add(nameTagFactionDropDownElement0);
+
+        return settings;
+    }
+
+    static Settings getBadFrakEquipSettings(UnicacityAddon unicacityAddon) {
+        Settings settings = new Settings();
+
+        StringElement basiSetting = new StringElement(Equip.BASI.getName(), unicacityAddon, new ControlElement.IconData(Material.BONE), "EQUIP_BASEBALLBAT_SETTING", ConfigElements.getBaseballBatPrice());
+        settings.add(basiSetting);
+
+        StringElement donutSettings = new StringElement(Equip.DONUT.getName(), unicacityAddon, new ControlElement.IconData(Material.COOKIE), "EQUIP_DONUT_SETTING", ConfigElements.getDonutPrice());
+        settings.add(donutSettings);
+
+        StringElement lightKevlarSettings = new StringElement(Equip.KEVLAR.getName(), unicacityAddon, new ControlElement.IconData(Material.LEATHER_CHESTPLATE), "EQUIP_LKEV_SETTING", ConfigElements.getLightKevlarPrice());
+        settings.add(lightKevlarSettings);
+
+        StringElement heavyKevlarSettings = new StringElement(Equip.HEAVYKEVLAR.getName(), unicacityAddon, new ControlElement.IconData(Material.LEATHER_CHESTPLATE), "EQUIP_SKEV_SETTING", ConfigElements.getHeavyKevlarPrice());
+        settings.add(heavyKevlarSettings);
+
+        StringElement pistolSettings = new StringElement(Equip.PISTOL.getName(), unicacityAddon, new ControlElement.IconData(Material.IRON_HOE), "EQUIP_PISTOLE_SETTING", ConfigElements.getPistolPrice());
+        settings.add(pistolSettings);
+
+        StringElement mpSettings = new StringElement(Equip.MP5.getName(), unicacityAddon, new ControlElement.IconData(Material.GOLD_HOE), "EQUIP_MP5_SETTING", ConfigElements.getMP5Price());
+        settings.add(mpSettings);
+
+        return settings;
+    }
+
+    static Settings getPoliceEquipSettings(UnicacityAddon unicacityAddon) {
+        Settings settings = new Settings();
+
+        StringElement lightKevlarSettings = new StringElement(Equip.KEVLAR.getName(), unicacityAddon, new ControlElement.IconData(Material.LEATHER_CHESTPLATE), "EQUIP_LKEV_SETTING", ConfigElements.getLightKevlarPrice());
+        settings.add(lightKevlarSettings);
+
+        StringElement pepperSpraySettings = new StringElement(Equip.PEPPERSPRAY.getName(), unicacityAddon, new ControlElement.IconData(Material.LEVER), "EQUIP_PEPPERSPRAY_SETTING", ConfigElements.getPeppersprayPrice());
+        settings.add(pepperSpraySettings);
+
+        StringElement mpSettings = new StringElement(Equip.MP5.getName(), unicacityAddon, new ControlElement.IconData(Material.GOLD_HOE), "EQUIP_MP5_SETTING", ConfigElements.getMP5Price());
+        settings.add(mpSettings);
+
+        StringElement pistolSettings = new StringElement(Equip.PISTOL.getName(), unicacityAddon, new ControlElement.IconData(Material.IRON_HOE), "EQUIP_PISTOLE_SETTING", ConfigElements.getPistolPrice());
+        settings.add(pistolSettings);
+
+        StringElement tazerSettings = new StringElement(Equip.TAZER.getName(), unicacityAddon, new ControlElement.IconData(Material.WOOD_HOE), "EQUIP_TAZER_SETTING", ConfigElements.getTazerPrice());
+        settings.add(tazerSettings);
+
+        StringElement cuffSettings = new StringElement(Equip.CUFFS.getName(), unicacityAddon, new ControlElement.IconData(Material.LEASH), "EQUIP_HANDCUFF_SETTING", ConfigElements.getHandCuffPrice());
+        settings.add(cuffSettings);
+
+        StringElement donutSettings = new StringElement(Equip.DONUT.getName(), unicacityAddon, new ControlElement.IconData(Material.COOKIE), "EQUIP_DONUT_SETTING", ConfigElements.getDonutPrice());
+        settings.add(donutSettings);
+
+        return settings;
+    }
+
+    static Settings getSWATEquipSettings(UnicacityAddon unicacityAddon) {
+        Settings settings = new Settings();
+
+        StringElement heavyKevlarSettings = new StringElement(Equip.HEAVYKEVLAR.getName(), unicacityAddon, new ControlElement.IconData(Material.LEATHER_CHESTPLATE), "EQUIP_SKEV_SETTING", ConfigElements.getHeavyKevlarPrice());
+        settings.add(heavyKevlarSettings);
+
+        StringElement swatShieldSettings = new StringElement(Equip.SWATSHIELD.getName(), unicacityAddon, new ControlElement.IconData(Material.WOOD), "EQUIP_SWATSHIELD_SETTING", ConfigElements.getSwatShieldPrice());
+        settings.add(swatShieldSettings);
+
+        StringElement flashBangSettings = new StringElement(Equip.FLASHBANG.getName(), unicacityAddon, new ControlElement.IconData(Material.SLIME_BALL), "EQUIP_FLASHBANG_SETTING", ConfigElements.getFlashBangPrice());
+        settings.add(flashBangSettings);
+
+        StringElement smokeSettings = new StringElement(Equip.SMOKEGRENADE.getName(), unicacityAddon, new ControlElement.IconData(Material.SNOW_BALL), "EQUIP_SMOKEGRENADE_SETTING", ConfigElements.getSmokeGrenadePrice());
+        settings.add(smokeSettings);
+
+        StringElement maskSettings = new StringElement(Equip.MASK.getName(), unicacityAddon, new ControlElement.IconData(Material.SKULL), "EQUIP_MASK_SETTING", ConfigElements.getMaskPrice());
+        settings.add(maskSettings);
+
+        StringElement elytraSettings = new StringElement(Equip.WINGSUIT.getName(), unicacityAddon, new ControlElement.IconData(Material.WOOL), "EQUIP_WINGSUIT_SETTING", ConfigElements.getWingsuitPrice());
+        settings.add(elytraSettings);
+
+        StringElement sniperSettings = new StringElement(Equip.SNIPER.getName(), unicacityAddon, new ControlElement.IconData(Material.STONE_HOE), "EQUIP_SNIPER_SETTING", ConfigElements.getSniperPrice());
+        settings.add(sniperSettings);
+
+        return settings;
+    }
+
+    static Settings getFBIEquipSettings(UnicacityAddon unicacityAddon) {
+        Settings settings = new Settings();
+
+        StringElement lightKevlarSettings = new StringElement(Equip.KEVLAR.getName(), unicacityAddon, new ControlElement.IconData(Material.LEATHER_CHESTPLATE), "EQUIP_LKEV_SETTING", ConfigElements.getLightKevlarPrice());
+        settings.add(lightKevlarSettings);
+
+        StringElement pepperSpraySettings = new StringElement(Equip.PEPPERSPRAY.getName(), unicacityAddon, new ControlElement.IconData(Material.LEVER), "EQUIP_PEPPERSPRAY_SETTING", ConfigElements.getPeppersprayPrice());
+        settings.add(pepperSpraySettings);
+
+        StringElement mpSettings = new StringElement(Equip.MP5.getName(), unicacityAddon, new ControlElement.IconData(Material.GOLD_HOE), "EQUIP_MP5_SETTING", ConfigElements.getMP5Price());
+        settings.add(mpSettings);
+
+        StringElement pistolSettings = new StringElement(Equip.PISTOL.getName(), unicacityAddon, new ControlElement.IconData(Material.IRON_HOE), "EQUIP_PISTOLE_SETTING", ConfigElements.getPistolPrice());
+        settings.add(pistolSettings);
+
+        StringElement tazerSettings = new StringElement(Equip.TAZER.getName(), unicacityAddon, new ControlElement.IconData(Material.WOOD_HOE), "EQUIP_TAZER_SETTING", ConfigElements.getTazerPrice());
+        settings.add(tazerSettings);
+
+        StringElement cuffSettings = new StringElement(Equip.CUFFS.getName(), unicacityAddon, new ControlElement.IconData(Material.LEASH), "EQUIP_HANDCUFF_SETTING", ConfigElements.getHandCuffPrice());
+        settings.add(cuffSettings);
+
+        StringElement donutSettings = new StringElement(Equip.DONUT.getName(), unicacityAddon, new ControlElement.IconData(Material.COOKIE), "EQUIP_DONUT_SETTING", ConfigElements.getDonutPrice());
+        settings.add(donutSettings);
+
+        return settings;
+    }
+
+    static Settings getHRTEquipSettings(UnicacityAddon unicacityAddon) {
+        Settings settings = new Settings();
+
+        StringElement heavyKevlarSettings = new StringElement(Equip.HEAVYKEVLAR.getName(), unicacityAddon, new ControlElement.IconData(Material.LEATHER_CHESTPLATE), "EQUIP_SKEV_SETTING", ConfigElements.getHeavyKevlarPrice());
+        settings.add(heavyKevlarSettings);
+
+        StringElement flashBangSettings = new StringElement(Equip.FLASHBANG.getName(), unicacityAddon, new ControlElement.IconData(Material.SLIME_BALL), "EQUIP_FLASHBANG_SETTING", ConfigElements.getFlashBangPrice());
+        settings.add(flashBangSettings);
+
+        StringElement maskSettings = new StringElement(Equip.MASK.getName(), unicacityAddon, new ControlElement.IconData(Material.SKULL), "EQUIP_MASK_SETTING", ConfigElements.getMaskPrice());
+        settings.add(maskSettings);
+
+        StringElement elytraSettings = new StringElement(Equip.WINGSUIT.getName(), unicacityAddon, new ControlElement.IconData(Material.WOOL), "EQUIP_WINGSUIT_SETTING", ConfigElements.getWingsuitPrice());
+        settings.add(elytraSettings);
+
+        StringElement sniperSettings = new StringElement(Equip.SNIPER.getName(), unicacityAddon, new ControlElement.IconData(Material.STONE_HOE), "EQUIP_SNIPER_SETTING", ConfigElements.getSniperPrice());
+        settings.add(sniperSettings);
+
+        StringElement defuseKitSettings = new StringElement(Equip.DEFUSEKIT.getName(), unicacityAddon, new ControlElement.IconData(Material.GOLD_INGOT), "EQUIP_DEFUSEKIT_SETTING", ConfigElements.getDefuseKitPrice());
+        settings.add(defuseKitSettings);
+
+        return settings;
+    }
+
+    static Settings getMedicEquipSettings(UnicacityAddon unicacityAddon) {
+        Settings settings = new Settings();
+
+        StringElement bandageSettings = new StringElement(Equip.BANDAGES.getName(), unicacityAddon, new ControlElement.IconData(Material.PAPER), "EQUIP_BANDAGE_SETTING", ConfigElements.getBandagePrice());
+        settings.add(bandageSettings);
+
+        StringElement painKillerSettings = new StringElement(Equip.PAINKILLER.getName(), unicacityAddon, new ControlElement.IconData(Material.BLAZE_ROD), "EQUIP_PAINKILLER_SETTING", ConfigElements.getBandagePrice());
+        settings.add(painKillerSettings);
+
+        StringElement pepperSpraySettings = new StringElement(Equip.PEPPERSPRAY.getName(), unicacityAddon, new ControlElement.IconData(Material.LEVER), "EQUIP_PEPPERSPRAY_SETTING", ConfigElements.getPeppersprayPrice());
+        settings.add(pepperSpraySettings);
+
+        StringElement syringeSettings = new StringElement(Equip.SYRINGE.getName(), unicacityAddon, new ControlElement.IconData(Material.IRON_FENCE), "EQUIP_SYRINGE_SETTING", ConfigElements.getSyringePrice());
+        settings.add(syringeSettings);
+
+        StringElement breadSettings = new StringElement(Equip.BREAD.getName(), unicacityAddon, new ControlElement.IconData(Material.BREAD), "EQUIP_BREAD_SETTING", ConfigElements.getBreadPrice());
+        settings.add(breadSettings);
+
+        StringElement waterSettings = new StringElement(Equip.WATER.getName(), unicacityAddon, new ControlElement.IconData(Material.GLASS_BOTTLE), "EQUIP_WATER_SETTING", ConfigElements.getWaterPrice());
+        settings.add(waterSettings);
+
+        return settings;
+    }
+
+    static Settings getFireFighterSettings(UnicacityAddon unicacityAddon) {
+        Settings settings = new Settings();
+
+        StringElement axeSettings = new StringElement(Equip.AXE.getName(), unicacityAddon, new ControlElement.IconData(Material.IRON_AXE), "EQUIP_AXE_SETTING", ConfigElements.getAxePrice());
+        settings.add(axeSettings);
+
+        StringElement fireExtinguisherSettings = new StringElement(Equip.FIREEXTINGUISHER.getName(), unicacityAddon, new ControlElement.IconData(Material.LEVER), "EQUIP_FIREEXTINGUISHER_SETTING", ConfigElements.getFireExtinguisherPrice());
+        settings.add(fireExtinguisherSettings);
+
+        StringElement helmetSettings = new StringElement(Equip.HELMET.getName(), unicacityAddon, new ControlElement.IconData(Material.LEATHER_HELMET), "EQUIP_HELMET_SETTING", ConfigElements.getHelmetPrice());
+        settings.add(helmetSettings);
+
+        return settings;
+    }
+
+    static Settings getChurchEquipSettings(UnicacityAddon unicacityAddon) {
+        Settings settings = new Settings();
+
+        StringElement breadSettings = new StringElement(Equip.BREAD.getName(), unicacityAddon, new ControlElement.IconData(Material.BREAD), "EQUIP_BREAD_SETTING", ConfigElements.getBreadPrice());
+        settings.add(breadSettings);
+
+        StringElement waterSettings = new StringElement(Equip.WATER.getName(), unicacityAddon, new ControlElement.IconData(Material.GLASS_BOTTLE), "EQUIP_WATER_SETTING", ConfigElements.getWaterPrice());
+        settings.add(waterSettings);
+
+        return settings;
+    }
+
+    static Settings getNewsEquipSettings(UnicacityAddon unicacityAddon) {
+        Settings settings = new Settings();
+
+        StringElement breadSettings = new StringElement(Equip.BREAD.getName(), unicacityAddon, new ControlElement.IconData(Material.BREAD), "EQUIP_BREAD_SETTING", ConfigElements.getBreadPrice());
+        settings.add(breadSettings);
+
+        StringElement notepadSettings = new StringElement(Equip.NOTEPAD.getName(), unicacityAddon, new ControlElement.IconData(Material.BOOK_AND_QUILL), "EQUIP_NOTEPAD_SETTING", ConfigElements.getNotePadPrice());
+        settings.add(notepadSettings);
+
+        return settings;
+    }
+
+    static Settings getHitmanEquipSettings(UnicacityAddon unicacityAddon) {
+        Settings settings = new Settings();
+
+        StringElement mpSettings = new StringElement(Equip.MP5.getName(), unicacityAddon, new ControlElement.IconData(Material.GOLD_HOE), "EQUIP_MP5_SETTING", ConfigElements.getMP5Price());
+        settings.add(mpSettings);
+
+        StringElement pistolSettings = new StringElement(Equip.PISTOL.getName(), unicacityAddon, new ControlElement.IconData(Material.IRON_HOE), "EQUIP_PISTOLE_SETTING", ConfigElements.getPistolPrice());
+        settings.add(pistolSettings);
+
+        StringElement sniperSettings = new StringElement(Equip.SNIPER.getName(), unicacityAddon, new ControlElement.IconData(Material.STONE_HOE), "EQUIP_SNIPER_SETTING", ConfigElements.getSniperPrice());
+        settings.add(sniperSettings);
+
+        StringElement maskSettings = new StringElement(Equip.MASK.getName(), unicacityAddon, new ControlElement.IconData(Material.SKULL), "EQUIP_MASK_SETTING", ConfigElements.getMaskPrice());
+        settings.add(maskSettings);
+
+        StringElement lightKevlarSettings = new StringElement(Equip.KEVLAR.getName(), unicacityAddon, new ControlElement.IconData(Material.LEATHER_CHESTPLATE), "EQUIP_LKEV_SETTING", ConfigElements.getLightKevlarPrice());
+        settings.add(lightKevlarSettings);
+
+        StringElement heavyKevlarSettings = new StringElement(Equip.HEAVYKEVLAR.getName(), unicacityAddon, new ControlElement.IconData(Material.LEATHER_CHESTPLATE), "EQUIP_SKEV_SETTING", ConfigElements.getHeavyKevlarPrice());
+        settings.add(heavyKevlarSettings);
+
+        StringElement lockpickSettings = new StringElement(Equip.LOCKPICK.getName(), unicacityAddon, new ControlElement.IconData(Material.GOLD_SWORD), "EQUIP_LOCKPICK_SETTING", ConfigElements.getHeavyKevlarPrice());
+        settings.add(lockpickSettings);
+
+        StringElement glassCutterSettings = new StringElement(Equip.GLASSCUTTER.getName(), unicacityAddon, new ControlElement.IconData(Material.TRIPWIRE_HOOK), "EQUIP_GLASSCUTTER_SETTING", ConfigElements.getHeavyKevlarPrice());
+        settings.add(glassCutterSettings);
 
         return settings;
     }

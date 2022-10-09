@@ -387,4 +387,185 @@ public class ConfigElements {
         return !UnicacityAddon.ADDON.getConfig().has("AUTOMATED_SCREENSHOT_UPLOAD_SETTINGS") || UnicacityAddon.ADDON.getConfig().get("AUTOMATED_SCREENSHOT_UPLOAD_SETTINGS")
                 .getAsBoolean(); // default = true
     }
+
+    // EquipSettings
+    public static String getBaseballBatPrice() {
+        return UnicacityAddon.ADDON.getConfig().has("EQUIP_BASEBALLBAT_SETTING") && !UnicacityAddon.ADDON.getConfig().get("EQUIP_BASEBALLBAT_SETTING").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("EQUIP_BASEBALLBAT_SETTING").getAsString().startsWith("-")
+                ? UnicacityAddon.ADDON.getConfig().get("EQUIP_BASEBALLBAT_SETTING").getAsString()
+                : "80";
+    }
+
+    public static String getDonutPrice() {
+        return UnicacityAddon.ADDON.getConfig().has("EQUIP_DONUT_SETTING") && !UnicacityAddon.ADDON.getConfig().get("EQUIP_DONUT_SETTING").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("EQUIP_DONUT_SETTING").getAsString().startsWith("-")
+                ? UnicacityAddon.ADDON.getConfig().get("EQUIP_DONUT_SETTING").getAsString()
+                : "30";
+    }
+
+    public static String getLightKevlarPrice() {
+        return UnicacityAddon.ADDON.getConfig().has("EQUIP_LKEV_SETTING") && !UnicacityAddon.ADDON.getConfig().get("EQUIP_LKEV_SETTING").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("EQUIP_LKEV_SETTING").getAsString().startsWith("-")
+                ? UnicacityAddon.ADDON.getConfig().get("EQUIP_LKEV_SETTING").getAsString()
+                : "1450";
+    }
+
+    public static String getHeavyKevlarPrice() {
+        return UnicacityAddon.ADDON.getConfig().has("EQUIP_SKEV_SETTING") && !UnicacityAddon.ADDON.getConfig().get("EQUIP_SKEV_SETTING").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("EQUIP_SKEV_SETTING").getAsString().startsWith("-")
+                ? UnicacityAddon.ADDON.getConfig().get("EQUIP_SKEV_SETTING").getAsString()
+                : "2200";
+    }
+
+    public static String getPistolPrice() {
+        return UnicacityAddon.ADDON.getConfig().has("EQUIP_PISTOLE_SETTING") && !UnicacityAddon.ADDON.getConfig().get("EQUIP_PISTOLE_SETTING").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("EQUIP_PISTOLE_SETTING").getAsString().startsWith("-")
+                ? UnicacityAddon.ADDON.getConfig().get("EQUIP_PISTOLE_SETTING").getAsString()
+                : "350";
+    }
+
+    public static String getMP5Price() {
+        return UnicacityAddon.ADDON.getConfig().has("EQUIP_MP5_SETTING") && !UnicacityAddon.ADDON.getConfig().get("EQUIP_MP5_SETTING").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("EQUIP_MP5_SETTING").getAsString().startsWith("-")
+                ? UnicacityAddon.ADDON.getConfig().get("EQUIP_MP5_SETTING").getAsString()
+                : "550";
+    }
+
+    public static String getBandagePrice() {
+        return UnicacityAddon.ADDON.getConfig().has("EQUIP_BANDAGE_SETTING") && !UnicacityAddon.ADDON.getConfig().get("EQUIP_BANDAGE_SETTING").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("EQUIP_BANDAGE_SETTING").getAsString().startsWith("-")
+                ? UnicacityAddon.ADDON.getConfig().get("EQUIP_BANDAGE_SETTING").getAsString()
+                : "80";
+    }
+
+    public static String getPainKillerPrice() {
+        return UnicacityAddon.ADDON.getConfig().has("EQUIP_PAINKILLER_SETTING") && !UnicacityAddon.ADDON.getConfig().get("EQUIP_PAINKILLER_SETTING").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("EQUIP_PAINKILLER_SETTING").getAsString().startsWith("-")
+                ? UnicacityAddon.ADDON.getConfig().get("EQUIP_PAINKILLER_SETTING").getAsString()
+                : "80";
+    }
+
+    public static String getWaterPrice() {
+        return UnicacityAddon.ADDON.getConfig().has("EQUIP_WATER_SETTING") && !UnicacityAddon.ADDON.getConfig().get("EQUIP_WATER_SETTING").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("EQUIP_WATER_SETTING").getAsString().startsWith("-")
+                ? UnicacityAddon.ADDON.getConfig().get("EQUIP_WATER_SETTING").getAsString()
+                : "0";
+    }
+
+    public static String getSyringePrice() {
+        return UnicacityAddon.ADDON.getConfig().has("EQUIP_SYRINGE_SETTING") && !UnicacityAddon.ADDON.getConfig().get("EQUIP_SYRINGE_SETTING").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("EQUIP_SYRINGE_SETTING").getAsString().startsWith("-")
+                ? UnicacityAddon.ADDON.getConfig().get("EQUIP_SYRINGE_SETTING").getAsString()
+                : "120";
+    }
+
+    public static String getBreadPrice() {
+        return UnicacityAddon.ADDON.getConfig().has("EQUIP_BREAD_SETTING") && !UnicacityAddon.ADDON.getConfig().get("EQUIP_BREAD_SETTING").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("EQUIP_BREAD_SETTING").getAsString().startsWith("-")
+                ? UnicacityAddon.ADDON.getConfig().get("EQUIP_BREAD_SETTING").getAsString()
+                : "40";
+    }
+
+    public static String getPeppersprayPrice() {
+        return UnicacityAddon.ADDON.getConfig().has("EQUIP_PEPPERSPRAY_SETTING") && !UnicacityAddon.ADDON.getConfig().get("EQUIP_PEPPERSPRAY_SETTING").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("EQUIP_PEPPERSPRAY_SETTING").getAsString().startsWith("-")
+                ? UnicacityAddon.ADDON.getConfig().get("EQUIP_PEPPERSPRAY_SETTING").getAsString()
+                : "400";
+    }
+
+    public static String getFireExtinguisherPrice() {
+        return UnicacityAddon.ADDON.getConfig().has("EQUIP_FIREEXTINGUISHER_SETTING") && !UnicacityAddon.ADDON.getConfig().get("EQUIP_FIREEXTINGUISHER_SETTING").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("EQUIP_FIREEXTINGUISHER_SETTING").getAsString().startsWith("-")
+                ? UnicacityAddon.ADDON.getConfig().get("EQUIP_FIREEXTINGUISHER_SETTING").getAsString()
+                : "400";
+    }
+
+    public static String getAxePrice() {
+        return UnicacityAddon.ADDON.getConfig().has("EQUIP_AXE_SETTING") && !UnicacityAddon.ADDON.getConfig().get("EQUIP_AXE_SETTING").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("EQUIP_AXE_SETTING").getAsString().startsWith("-")
+                ? UnicacityAddon.ADDON.getConfig().get("EQUIP_AXE_SETTING").getAsString()
+                : "50";
+    }
+
+    public static String getHelmetPrice() {
+        return UnicacityAddon.ADDON.getConfig().has("EQUIP_HELMET_SETTING") && !UnicacityAddon.ADDON.getConfig().get("EQUIP_HELMET_SETTING").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("EQUIP_HELMET_SETTING").getAsString().startsWith("-")
+                ? UnicacityAddon.ADDON.getConfig().get("EQUIP_HELMET_SETTING").getAsString()
+                : "250";
+    }
+
+    public static String getSwatShieldPrice() {
+        return UnicacityAddon.ADDON.getConfig().has("EQUIP_SWATSHIELD_SETTING") && !UnicacityAddon.ADDON.getConfig().get("EQUIP_SWATSHIELD_SETTING").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("EQUIP_SWATSHIELD_SETTING").getAsString().startsWith("-")
+                ? UnicacityAddon.ADDON.getConfig().get("EQUIP_SWATSHIELD_SETTING").getAsString()
+                : "0";
+    }
+
+    public static String getMaskPrice() {
+        return UnicacityAddon.ADDON.getConfig().has("EQUIP_MASK_SETTING") && !UnicacityAddon.ADDON.getConfig().get("EQUIP_MASK_SETTING").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("EQUIP_MASK_SETTING").getAsString().startsWith("-")
+                ? UnicacityAddon.ADDON.getConfig().get("EQUIP_MASK_SETTING").getAsString()
+                : "800";
+    }
+
+    public static String getFlashBangPrice() {
+        return UnicacityAddon.ADDON.getConfig().has("EQUIP_FLASHBANG_SETTING") && !UnicacityAddon.ADDON.getConfig().get("EQUIP_FLASHBANG_SETTING").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("EQUIP_FLASHBANG_SETTING").getAsString().startsWith("-")
+                ? UnicacityAddon.ADDON.getConfig().get("EQUIP_FLASHBANG_SETTING").getAsString()
+                : "250";
+    }
+
+    public static String getSmokeGrenadePrice() {
+        return UnicacityAddon.ADDON.getConfig().has("EQUIP_SMOKEGRENADE_SETTING") && !UnicacityAddon.ADDON.getConfig().get("EQUIP_SMOKEGRENADE_SETTING").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("EQUIP_SMOKEGRENADE_SETTING").getAsString().startsWith("-")
+                ? UnicacityAddon.ADDON.getConfig().get("EQUIP_SMOKEGRENADE_SETTING").getAsString()
+                : "300";
+    }
+
+    public static String getTazerPrice() {
+        return UnicacityAddon.ADDON.getConfig().has("EQUIP_TAZER_SETTING") && !UnicacityAddon.ADDON.getConfig().get("EQUIP_TAZER_SETTING").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("EQUIP_TAZER_SETTING").getAsString().startsWith("-")
+                ? UnicacityAddon.ADDON.getConfig().get("EQUIP_TAZER_SETTING").getAsString()
+                : "0";
+    }
+
+    public static String getHandCuffPrice() {
+        return UnicacityAddon.ADDON.getConfig().has("EQUIP_HANDCUFF_SETTING") && !UnicacityAddon.ADDON.getConfig().get("EQUIP_HANDCUFF_SETTING").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("EQUIP_HANDCUFF_SETTING").getAsString().startsWith("-")
+                ? UnicacityAddon.ADDON.getConfig().get("EQUIP_HANDCUFF_SETTING").getAsString()
+                : "0";
+    }
+
+    public static String getWingsuitPrice() {
+        return UnicacityAddon.ADDON.getConfig().has("EQUIP_WINGSUIT_SETTING") && !UnicacityAddon.ADDON.getConfig().get("EQUIP_WINGSUIT_SETTING").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("EQUIP_WINGSUIT_SETTING").getAsString().startsWith("-")
+                ? UnicacityAddon.ADDON.getConfig().get("EQUIP_WINGSUIT_SETTING").getAsString()
+                : "450";
+    }
+
+    public static String getSniperPrice() {
+        return UnicacityAddon.ADDON.getConfig().has("EQUIP_SNIPER_SETTING") && !UnicacityAddon.ADDON.getConfig().get("EQUIP_SNIPER_SETTING").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("EQUIP_SNIPER_SETTING").getAsString().startsWith("-")
+                ? UnicacityAddon.ADDON.getConfig().get("EQUIP_SNIPER_SETTING").getAsString()
+                : "2700";
+    }
+
+    public static String getDefuseKitPrice() {
+        return UnicacityAddon.ADDON.getConfig().has("EQUIP_DEFUSEKIT_SETTING") && !UnicacityAddon.ADDON.getConfig().get("EQUIP_DEFUSEKIT_SETTING").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("EQUIP_DEFUSEKIT_SETTING").getAsString().startsWith("-")
+                ? UnicacityAddon.ADDON.getConfig().get("EQUIP_DEFUSEKIT_SETTING").getAsString()
+                : "500";
+    }
+
+    public static String getTrackerPrice() {
+        return UnicacityAddon.ADDON.getConfig().has("EQUIP_TRACKER_SETTING") && !UnicacityAddon.ADDON.getConfig().get("EQUIP_TRACKER_SETTING").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("EQUIP_TRACKER_SETTING").getAsString().startsWith("-")
+                ? UnicacityAddon.ADDON.getConfig().get("EQUIP_TRACKER_SETTING").getAsString()
+                : "600";
+    }
+
+    public static String getExplosiveBeltPrice() {
+        return UnicacityAddon.ADDON.getConfig().has("EQUIP_EXPLOSIVEBELT_SETTING") && !UnicacityAddon.ADDON.getConfig().get("EQUIP_EXPLOSIVEBELT_SETTING").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("EQUIP_EXPLOSIVEBELT_SETTING").getAsString().startsWith("-")
+                ? UnicacityAddon.ADDON.getConfig().get("EQUIP_EXPLOSIVEBELT_SETTING").getAsString()
+                : "4000";
+    }
+
+    public static String getRPG7Price() {
+        return UnicacityAddon.ADDON.getConfig().has("EQUIP_RPG7_SETTING") && !UnicacityAddon.ADDON.getConfig().get("EQUIP_RPG7_SETTING").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("EQUIP_RPG7_SETTING").getAsString().startsWith("-")
+                ? UnicacityAddon.ADDON.getConfig().get("EQUIP_RPG7_SETTING").getAsString()
+                : "13000";
+    }
+
+    public static String getNotePadPrice() {
+        return UnicacityAddon.ADDON.getConfig().has("EQUIP_NOTEPAD_SETTING") && !UnicacityAddon.ADDON.getConfig().get("EQUIP_NOTEPAD_SETTING").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("EQUIP_NOTEPAD_SETTING").getAsString().startsWith("-")
+                ? UnicacityAddon.ADDON.getConfig().get("EQUIP_NOTEPAD_SETTING").getAsString()
+                : "4500";
+    }
+
+    public static String getGlassCutterPrice() {
+        return UnicacityAddon.ADDON.getConfig().has("EQUIP_GLASSCUTTER_SETTING") && !UnicacityAddon.ADDON.getConfig().get("EQUIP_GLASSCUTTER_SETTING").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("EQUIP_GLASSCUTTER_SETTING").getAsString().startsWith("-")
+                ? UnicacityAddon.ADDON.getConfig().get("EQUIP_GLASSCUTTER_SETTING").getAsString()
+                : "4500";
+    }
+
+    public static String getLockPickPrice() {
+        return UnicacityAddon.ADDON.getConfig().has("EQUIP_LOCKPICK_SETTING") && !UnicacityAddon.ADDON.getConfig().get("EQUIP_LOCKPICK_SETTING").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("EQUIP_LOCKPICK_SETTING").getAsString().startsWith("-")
+                ? UnicacityAddon.ADDON.getConfig().get("EQUIP_LOCKPICK_SETTING").getAsString()
+                : "4500";
+    }
 }
