@@ -32,17 +32,31 @@ public class Syncer {
 
     public static void syncAll() {
         new Thread(() -> {
-            TokenManager.createToken();
+            Thread t1 = syncPlayerFactionMap();
+            Thread t2 = syncPlayerRankMap();
+            Thread t3 = syncHousebanEntryList();
+            Thread t4 = syncNaviPointEntryList();
 
-            syncPlayerFactionMap();
-            syncPlayerRankMap();
-            syncHousebanEntryList();
-            syncNaviPointEntryList();
+            try {
+                t1.start();
+                t1.join();
+
+                t2.start();
+                t2.join();
+
+                t3.start();
+                t3.join();
+
+                t4.start();
+                t4.join();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }).start();
     }
 
-    public static void syncPlayerFactionMap() {
-        new Thread(() -> {
+    public static Thread syncPlayerFactionMap() {
+        return new Thread(() -> {
             PLAYERFACTIONMAP.clear();
             for (Faction faction : Faction.values()) {
                 List<String> nameList = ListUtils.getAllMatchesFromString(PatternHandler.NAME_PATTERN, faction.getWebsiteSource());
@@ -52,11 +66,11 @@ public class Syncer {
             getPlayerGroupEntryList("LEMILIEU").forEach(playerGroupEntry -> PLAYERFACTIONMAP.put(playerGroupEntry.getName(), Faction.LEMILIEU));
 
             LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Fraktionen aktualisiert.");
-        }).start();
+        });
     }
 
-    public static void syncPlayerRankMap() {
-        new Thread(() -> {
+    public static Thread syncPlayerRankMap() {
+        return new Thread(() -> {
             PLAYERRANKMAP.clear();
             for (Faction faction : Faction.values()) {
                 List<String> nameList = ListUtils.getAllMatchesFromString(PatternHandler.NAME_PATTERN, faction.getWebsiteSource());
@@ -68,21 +82,21 @@ public class Syncer {
                                 .charAt(0)))));
             }
             LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Ränge aktualisiert.");
-        }).start();
+        });
     }
 
-    public static void syncHousebanEntryList() {
-        new Thread(() -> {
+    public static Thread syncHousebanEntryList() {
+        return new Thread(() -> {
             HOUSEBANENTRYLIST = getHouseBanEntryList();
             LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Hausverbote aktualisiert.");
-        }).start();
+        });
     }
 
-    public static void syncNaviPointEntryList() {
-        new Thread(() -> {
+    public static Thread syncNaviPointEntryList() {
+        return new Thread(() -> {
             NAVIPOINTLIST = getNaviPointEntryList();
             LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Navipunkte aktualisiert.");
-        }).start();
+        });
     }
 
     public static List<String> getPlayerGroups() {

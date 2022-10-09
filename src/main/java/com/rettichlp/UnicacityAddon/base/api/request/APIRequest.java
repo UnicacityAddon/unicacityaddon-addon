@@ -307,6 +307,7 @@ public class APIRequest {
     public static JsonObject sendTokenCreateRequest() {
         Map<String, String> parameters = new HashMap<>();
         parameters.put("authToken", UnicacityAddon.MINECRAFT.getSession().getToken());
+        parameters.put("version", UnicacityAddon.VERSION);
 
         try {
             return APIResponseHandler.getTokenCreateResponse(parameters);
