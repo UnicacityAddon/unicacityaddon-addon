@@ -299,4 +299,8 @@ public class PatternHandler {
      */
     public static final Pattern EQUIP_PATTERN = Pattern.compile("^\\[Equip] Du hast dir (|ein |eine |einen )([a-zA-Z-äöüßÄÖÜ]+) equippt!$");
     public static final Pattern TRACKER_PATTERN = Pattern.compile("^Du hast einen Peilsender an (?:\\[UC])*(\\w+) befestigt\\.$");
+
+    /**
+     * Quote: "Rettich: In welchem Forum ist der Vorschlag drinne? Leon: in Vorschläge" - RettichLP und Dimiikou. 09.10.2022
+     */
 }
