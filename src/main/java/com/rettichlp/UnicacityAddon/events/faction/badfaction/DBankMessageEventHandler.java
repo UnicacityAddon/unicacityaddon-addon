@@ -18,7 +18,7 @@ import java.util.regex.Matcher;
  * @author Dimiikou
  */
 @UCEvent
-public class DBankMessages {
+public class DBankMessageEventHandler {
 
     @SubscribeEvent
     public boolean onClientChatReceived(ClientChatReceivedEvent e) {
