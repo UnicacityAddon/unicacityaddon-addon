@@ -97,7 +97,7 @@ public class ServiceMessageEventHandler {
                         .of("➥").color(ColorCode.GRAY).advance().space()
                         .of(m.group(1)).color(ColorCode.DARK_RED).advance().space()
                         .of("-").color(ColorCode.GRAY).advance().space()
-                        .of(m.group(2) + " " + m.group(3) + "m").color(ColorCode.DARK_RED).advance()
+                        .of(m.group(2) + " (" + m.group(3) + ")").color(ColorCode.DARK_RED).advance()
                         .createComponent());
                 return false;
             }
