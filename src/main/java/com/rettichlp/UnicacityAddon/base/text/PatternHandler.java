@@ -281,7 +281,7 @@ public class PatternHandler {
     public static final Pattern FIRST_AID_LICENCE_PATTERN = Pattern.compile("^ {2}- Erste-Hilfe-Schein: Vorhanden$");
 
     /**
-     * {@link com.rettichlp.UnicacityAddon.events.faction.badfaction.DBankMessages}
+     * {@link com.rettichlp.UnicacityAddon.events.faction.badfaction.DBankMessageEventHandler}
      */
     public static final Pattern DBANK_DROP_PATTERN = Pattern.compile("^(?:\\[UC])*(\\w+) hat (\\d+)g (Kokain|Marihuana|Methamphetamin|LSD) \\((Höchste|Gute|Mittlere|Schlechte) Reinheit\\) \\((\\d+)g\\) eingelagert\\.$");
     public static final Pattern DBANK_GET_PATTERN = Pattern.compile("^(?:\\[UC])*(\\w+) hat (\\d+)g (Kokain|Marihuana|Methamphetamin|LSD) \\((Höchste|Gute|Mittlere|Schlechte) Reinheit\\) \\((\\d+)g\\) aus der Drogenbank genommen\\.$");
@@ -297,7 +297,7 @@ public class PatternHandler {
     /**
      * {@link com.rettichlp.UnicacityAddon.events.faction.EquipEventHandler}
      */
-    public static final Pattern EQUIP_PATTERN = Pattern.compile("^\\[Equip] Du hast dir (|ein |eine |einen )([a-zA-Z-äöüßÄÖÜ ]+) equippt!$");
+    public static final Pattern EQUIP_PATTERN = Pattern.compile("^\\[Equip] Du hast dir (|ein |eine |einen |einem )([a-zA-Z-äöüßÄÖÜ ]+) equippt!$");
     public static final Pattern TRACKER_PATTERN = Pattern.compile("^Du hast einen Peilsender an (?:\\[UC])*(\\w+) befestigt\\.$");
 
     /**
