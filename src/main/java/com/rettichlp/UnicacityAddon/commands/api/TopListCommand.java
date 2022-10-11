@@ -25,6 +25,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static com.rettichlp.UnicacityAddon.base.utils.MathUtils.DECIMAL_FORMAT;
+
 /**
  * @author RettichLP
  */
@@ -71,14 +73,16 @@ public class TopListCommand implements IClientCommand {
             float kd = o.get("kd").getAsFloat();
 
             // float points = (0.5f + kd) * (services + revives); // TODO: 30.09.2022 Neue Formel überlegen - Dimiikou
-            topListMap.put(name, kd);
+            topListMap.put(name, Float.valueOf(DECIMAL_FORMAT.format(kd)));
         });
 
         List<Map.Entry<String, Float>> list = new ArrayList<>(topListMap.entrySet());
         list.sort(Map.Entry.comparingByValue());
         Collections.reverse(list);
         LinkedHashMap<String, Float> sortedMap = new LinkedHashMap<>();
-        list.forEach(e -> sortedMap.put(e.getKey(), e.getValue()));
+        list.stream()
+                .limit(10)
+                .forEach(e -> sortedMap.put(e.getKey(), e.getValue()));
 
         p.sendEmptyMessage();
         p.sendMessage(Message.getBuilder()
