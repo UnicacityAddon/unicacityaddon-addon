@@ -44,17 +44,17 @@ public class KeyBindRegistry {
         int hotkeyFReinforcement = config.has("HOTKEY_FREINFORCEMENT") ? config.get("HOTKEY_FREINFORCEMENT").getAsInt() : Keyboard.KEY_NONE;
         int hotkeyDReinforcement = config.has("HOTKEY_DREINFORCEMENT") ? config.get("HOTKEY_DREINFORCEMENT").getAsInt() : Keyboard.KEY_NONE;
 
-        addonScreenshot = new KeyBinding("Screenshot mit Upload", hotkeyAddonScreenshot, KEY_CATEGORY);
-        adFreigeben = new KeyBinding("Werbung freigeben", hotkeyAdFreigeben, KEY_CATEGORY);
-        adBlockieren = new KeyBinding("Werbung blockieren", hotkeyAdBlockieren, KEY_CATEGORY);
-        acceptReport = new KeyBinding("Report annehmen", hotkeyAcceptReport, KEY_CATEGORY);
-        cancelReport = new KeyBinding("Report beenden (+Verabschiedung)", hotkeyCancelReport, KEY_CATEGORY);
+        addonScreenshot = new KeyBinding("Screenshot with upload", hotkeyAddonScreenshot, KEY_CATEGORY);
+        adFreigeben = new KeyBinding("Accept ad", hotkeyAdFreigeben, KEY_CATEGORY);
+        adBlockieren = new KeyBinding("Decline ad", hotkeyAdBlockieren, KEY_CATEGORY);
+        acceptReport = new KeyBinding("Accept report", hotkeyAcceptReport, KEY_CATEGORY);
+        cancelReport = new KeyBinding("End report (+farewell)", hotkeyCancelReport, KEY_CATEGORY);
         aDuty = new KeyBinding("ADuty", hotkeyADuty, KEY_CATEGORY);
         aDutySilent = new KeyBinding("ADuty (silent)", hotkeyADutySilent, KEY_CATEGORY);
         aBuy = new KeyBinding("ABuy", hotkeyABuy, KEY_CATEGORY);
-        publicChannelJoin = new KeyBinding("Öffentlich-Join", hotkeyPublicChannelJoin, KEY_CATEGORY);
-        freinforcement = new KeyBinding("Reinforcement (Fraktion)", hotkeyFReinforcement, KEY_CATEGORY);
-        dreinforcement = new KeyBinding("Reinforcement (Bündnis)", hotkeyDReinforcement, KEY_CATEGORY);
+        publicChannelJoin = new KeyBinding("Public channel join", hotkeyPublicChannelJoin, KEY_CATEGORY);
+        freinforcement = new KeyBinding("Reinforcement (faction)", hotkeyFReinforcement, KEY_CATEGORY);
+        dreinforcement = new KeyBinding("Reinforcement (alliance faction)", hotkeyDReinforcement, KEY_CATEGORY);
 
         ClientRegistry.registerKeyBinding(addonScreenshot);
         ClientRegistry.registerKeyBinding(adFreigeben);
