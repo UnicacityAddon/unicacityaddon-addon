@@ -125,6 +125,7 @@ public class TickEventHandler {
 
 
     private void handleScoreboardCheck() {
+        if (!UnicacityAddon.isUnicacity()) return;
         Scoreboard scoreboard = AbstractionLayer.getPlayer().getWorldScoreboard();
         CarEventHandler.checkTank(scoreboard);
     }

@@ -53,14 +53,14 @@ public class CarEventHandler {
 
     public static void checkTank(Scoreboard scoreboard) {
         UPlayer p = AbstractionLayer.getPlayer();
-        Score score = scoreboard.getScores().stream()
-                .filter(scorePredicate -> scorePredicate.getPlayerName().equals(ColorCode.GREEN.getCode() + "Tank" + ColorCode.DARK_GRAY.getCode() + ": "))
+        Score tankScore = scoreboard.getScores().stream()
+                .filter(score -> score.getPlayerName().equals(ColorCode.GREEN.getCode() + "Tank" + ColorCode.DARK_GRAY.getCode() + ":"))
                 .findFirst()
                 .orElse(null);
 
-        if (score == null) return;
+        if (tankScore == null) return;
 
-        int tank = score.getScorePoints();
+        int tank = tankScore.getScorePoints();
         if (tank < 5 && System.currentTimeMillis() - lastTankWarningMessage > TimeUnit.MINUTES.toMillis(3)) {
             p.sendInfoMessage("Dein Tank hat nur noch " + tank + " Liter.");
             p.playSound("block.note.xylophone");
