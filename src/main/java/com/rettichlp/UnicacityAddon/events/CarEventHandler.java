@@ -9,7 +9,12 @@ import com.rettichlp.UnicacityAddon.base.io.FileManager;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
 import com.rettichlp.UnicacityAddon.modules.CarOpenModule;
+
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
+
+import net.minecraft.scoreboard.Score;
+import net.minecraft.scoreboard.Scoreboard;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -19,7 +24,10 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 @UCEvent
 public class CarEventHandler {
 
-    @SubscribeEvent public boolean onClientChatReceived(ClientChatReceivedEvent e) {
+    static long lastTankWarningMessage = 0;
+
+    @SubscribeEvent
+    public boolean onClientChatReceived(ClientChatReceivedEvent e) {
         UPlayer p = AbstractionLayer.getPlayer();
         String msg = e.getMessage().getUnformattedText();
 
@@ -41,5 +49,21 @@ public class CarEventHandler {
             p.setNaviRoute(Integer.parseInt(carPositionMatcher.group(1)), Integer.parseInt(carPositionMatcher.group(2)), Integer.parseInt(carPositionMatcher.group(3)));
         }
         return false;
+    }
+
+    public static void checkTank(Scoreboard scoreboard) {
+        UPlayer p = AbstractionLayer.getPlayer();
+        Score score = scoreboard.getScores().stream()
+                .filter(scorePredicate -> scorePredicate.getPlayerName().equals(ColorCode.GREEN.getCode() + "Tank" + ColorCode.DARK_GRAY.getCode() + ": "))
+                .findFirst()
+                .orElse(null);
+
+        if (score == null) return;
+
+        int tank = score.getScorePoints();
+        if (tank < 5 && System.currentTimeMillis() - lastTankWarningMessage > TimeUnit.MINUTES.toMillis(3)) {
+            p.sendInfoMessage("Dein Tank hat nur noch " + tank + " Liter.");
+            p.playSound("block.note.xylophone");
+        }
     }
 }
