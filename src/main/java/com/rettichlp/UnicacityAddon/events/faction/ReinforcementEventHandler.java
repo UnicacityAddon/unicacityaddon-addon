@@ -10,6 +10,7 @@ import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
 import com.rettichlp.UnicacityAddon.commands.faction.ReinforcementCommand;
+import com.rettichlp.UnicacityAddon.events.TickEventHandler;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.event.ClickEvent;
 import net.minecraft.util.text.event.HoverEvent;
@@ -29,7 +30,7 @@ import java.util.regex.Pattern;
 public class ReinforcementEventHandler {
 
     private static ReinforcementCommand.ReinforcementType lastReinforcement;
-    private static boolean activeReinforcement;
+    public static int activeReinforcement = 0;
 
     @SubscribeEvent
     public boolean onClientChatReceive(ClientChatReceivedEvent e) {
@@ -125,6 +126,7 @@ public class ReinforcementEventHandler {
 
     @SubscribeEvent
     public void onClientChat(ClientChatEvent e) {
-        activeReinforcement = ConfigElements.automaticReinfscreen() || e.getMessage().toLowerCase().startsWith("/reinforcement ontheway ");
+        if (ConfigElements.getReinforcementScreenshot() && e.getMessage().toLowerCase().startsWith("/reinforcement ontheway "))
+            activeReinforcement = TickEventHandler.currentTick;
     }
 }

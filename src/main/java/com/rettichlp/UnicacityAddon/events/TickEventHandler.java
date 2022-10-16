@@ -3,9 +3,11 @@ package com.rettichlp.UnicacityAddon.events;
 import com.rettichlp.UnicacityAddon.UnicacityAddon;
 import com.rettichlp.UnicacityAddon.base.api.Syncer;
 import com.rettichlp.UnicacityAddon.base.config.ConfigElements;
+import com.rettichlp.UnicacityAddon.base.io.FileManager;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCEvent;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.utils.MathUtils;
+import com.rettichlp.UnicacityAddon.events.faction.ReinforcementEventHandler;
 import com.rettichlp.UnicacityAddon.modules.BombTimerModule;
 import com.rettichlp.UnicacityAddon.modules.ExplosiveBeltTimerModule;
 import com.rettichlp.UnicacityAddon.modules.FBIHackModule;
@@ -18,18 +20,23 @@ import net.minecraft.item.ItemSkull;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 @UCEvent
 public class TickEventHandler {
 
-    private int currentTick = 0;
+    public static int currentTick = 0;
 
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
         if (event.phase != TickEvent.Phase.END) return;
 
         currentTick++;
+
+        // EVERY TICK
+        handleReinforcementScreenshot();
 
         // 1 SECOND
         if (currentTick % 20 == 0) {
@@ -48,6 +55,17 @@ public class TickEventHandler {
         int interval = 5 * 20; // every 5 seconds
         if (MathUtils.isInteger(intervalString)) interval = Integer.parseInt(intervalString) * 20;
         if (currentTick % interval == 0) handleNameTagSyncDisplayName();
+    }
+
+    private void handleReinforcementScreenshot() {
+        if (ReinforcementEventHandler.activeReinforcement + 5 != currentTick) return;
+
+        try {
+            File file = FileManager.getNewActivityImageFile("reinforcement");
+            HotkeyEventHandler.handleScreenshot(file);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void handleNameTag() {
