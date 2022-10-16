@@ -32,7 +32,7 @@ import java.util.Date;
  */
 public class FileManager {
 
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy_HH-mm-ss");
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
 
     public static File getMinecraftDir() {
         return UnicacityAddon.MINECRAFT.mcDataDir;
@@ -67,8 +67,8 @@ public class FileManager {
     }
 
     public static File getAddonActivityScreenDir(String type) {
-        if (getUnicacityAddonDir() == null) return null;
-        File addonScreenshotDir = new File(getUnicacityAddonDir().getAbsolutePath() + "/screenshots/" + type);
+        if (getAddonScreenshotDir() == null) return null;
+        File addonScreenshotDir = new File(getAddonScreenshotDir().getAbsolutePath() + "/" + type);
         if (addonScreenshotDir.exists() || addonScreenshotDir.mkdir()) return addonScreenshotDir;
 
         AbstractionLayer.getPlayer().sendErrorMessage("Ordner 'screenshots/" + type + "' wurde nicht gefunden!");
