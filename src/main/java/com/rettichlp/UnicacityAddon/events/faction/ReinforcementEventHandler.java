@@ -13,6 +13,7 @@ import com.rettichlp.UnicacityAddon.commands.faction.ReinforcementCommand;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.event.ClickEvent;
 import net.minecraft.util.text.event.HoverEvent;
+import net.minecraftforge.client.event.ClientChatEvent;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -28,8 +29,10 @@ import java.util.regex.Pattern;
 public class ReinforcementEventHandler {
 
     private static ReinforcementCommand.ReinforcementType lastReinforcement;
+    private static boolean activeReinforcement;
 
-    @SubscribeEvent public boolean onClientChatReceive(ClientChatReceivedEvent e) {
+    @SubscribeEvent
+    public boolean onClientChatReceive(ClientChatReceivedEvent e) {
         UPlayer p = AbstractionLayer.getPlayer();
         Matcher reinforcementMatcher = PatternHandler.REINFORCEMENT_PATTERN.matcher(e.getMessage().getUnformattedText());
 
@@ -118,5 +121,10 @@ public class ReinforcementEventHandler {
         }
 
         return false;
+    }
+
+    @SubscribeEvent
+    public void onClientChat(ClientChatEvent e) {
+        activeReinforcement = ConfigElements.automaticReinfscreen() || e.getMessage().toLowerCase().startsWith("/reinforcement ontheway ");
     }
 }
