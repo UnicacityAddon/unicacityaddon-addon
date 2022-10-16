@@ -11,13 +11,14 @@ import java.util.Locale;
  */
 public class MathUtils {
 
-    private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("###,###.###", DecimalFormatSymbols.getInstance(Locale.GERMAN));
+    public static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("###.##");
+    private static final DecimalFormat CALCULATOR_DECIMAL_FORMAT = new DecimalFormat("###,###.###", DecimalFormatSymbols.getInstance(Locale.GERMAN));
     private static final String[] TO_REPLACE = new String[]{"PI", "E", "ANS"};
     private static final String[] REPLACER = new String[]{String.valueOf(Math.PI), String.valueOf(Math.E), "0"};
     private static double lastResult;
 
     static {
-        DECIMAL_FORMAT.setMaximumFractionDigits(5);
+        CALCULATOR_DECIMAL_FORMAT.setMaximumFractionDigits(5);
     }
 
     private double result = Double.NaN;
@@ -33,7 +34,7 @@ public class MathUtils {
     public String parse() {
         if (Double.isNaN(result)) evaluate();
 
-        return DECIMAL_FORMAT.format(result);
+        return CALCULATOR_DECIMAL_FORMAT.format(result);
     }
 
     public double evaluate() {

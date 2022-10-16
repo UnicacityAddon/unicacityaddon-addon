@@ -42,7 +42,7 @@ public class NaviPointEntry {
     }
 
     public static NaviPointEntry getNaviPointEntryByTabName(String tabName) {
-        return Syncer.getNaviPointEntryList().stream()
+        return Syncer.NAVIPOINTLIST.stream()
                 .filter(naviPointEntry -> naviPointEntry.getTabName().equals(tabName))
                 .findFirst()
                 .orElse(null);

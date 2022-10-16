@@ -6,18 +6,24 @@ import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+import java.util.regex.Matcher;
+
 /**
  * @author Dimiikou
  */
 @UCEvent
-public class ReviveEventHandler {
+public class SMSEventHandler {
+
+    public static boolean isActive = false;
 
     @SubscribeEvent
     public boolean onClientChatReceived(ClientChatReceivedEvent e) {
-        String msg = e.getMessage().getUnformattedText();
+        Matcher smsMatcher = PatternHandler.SMS_PATTERN.matcher(e.getMessage().getUnformattedText());
 
-        if (!PatternHandler.REVIVE_BY_MEDIC_FINISH_PATTERN.matcher(msg).find()) return false;
-        if (MobileEventHandler.hasCommunications) AbstractionLayer.getPlayer().sendChatMessage("/togglephone");
+        if (!smsMatcher.find()) return false;
+        AbstractionLayer.getPlayer().sendChatMessage("/nummer " + smsMatcher.group(1));
+        isActive = true;
+
         return false;
     }
 }

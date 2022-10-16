@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.api.entries.BlacklistReasonEntry;
+import com.rettichlp.UnicacityAddon.base.api.entries.BroadcastEntry;
 import com.rettichlp.UnicacityAddon.base.api.entries.HouseBanEntry;
 import com.rettichlp.UnicacityAddon.base.api.entries.HouseBanReasonEntry;
 import com.rettichlp.UnicacityAddon.base.api.entries.NaviPointEntry;
@@ -14,7 +15,6 @@ import com.rettichlp.UnicacityAddon.base.faction.Faction;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
 import com.rettichlp.UnicacityAddon.base.utils.ListUtils;
-import com.rettichlp.UnicacityAddon.events.NameTagEventHandler;
 import net.labymod.main.LabyMod;
 
 import java.util.ArrayList;
@@ -25,26 +25,38 @@ import java.util.Map;
 
 public class Syncer {
 
-    private static final Map<String, Faction> PLAYERFACTIONMAP = new HashMap<>();
-    private static final Map<String, Integer> PLAYERRANKMAP = new HashMap<>();
+    public static final Map<String, Faction> PLAYERFACTIONMAP = new HashMap<>();
+    public static final Map<String, Integer> PLAYERRANKMAP = new HashMap<>();
+    public static List<HouseBanEntry> HOUSEBANENTRYLIST = new ArrayList<>();
+    public static List<NaviPointEntry> NAVIPOINTLIST = new ArrayList<>();
 
     public static void syncAll() {
-        Syncer.syncPlayerFactionMap();
-        Syncer.syncPlayerRankMap();
-    }
-
-    public static Map<String, Faction> getPlayerFactionMap() {
-        if (PLAYERFACTIONMAP.isEmpty()) syncPlayerFactionMap();
-        return PLAYERFACTIONMAP;
-    }
-
-    public static Map<String, Integer> getPlayerRankMap() {
-        if (PLAYERRANKMAP.isEmpty()) syncPlayerRankMap();
-        return PLAYERRANKMAP;
-    }
-
-    public static void syncPlayerFactionMap() {
         new Thread(() -> {
+            Thread t1 = syncPlayerFactionMap();
+            Thread t2 = syncPlayerRankMap();
+            Thread t3 = syncHousebanEntryList();
+            Thread t4 = syncNaviPointEntryList();
+
+            try {
+                t1.start();
+                t1.join();
+
+                t2.start();
+                t2.join();
+
+                t3.start();
+                t3.join();
+
+                t4.start();
+                t4.join();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }).start();
+    }
+
+    public static Thread syncPlayerFactionMap() {
+        return new Thread(() -> {
             PLAYERFACTIONMAP.clear();
             for (Faction faction : Faction.values()) {
                 List<String> nameList = ListUtils.getAllMatchesFromString(PatternHandler.NAME_PATTERN, faction.getWebsiteSource());
@@ -54,14 +66,11 @@ public class Syncer {
             getPlayerGroupEntryList("LEMILIEU").forEach(playerGroupEntry -> PLAYERFACTIONMAP.put(playerGroupEntry.getName(), Faction.LEMILIEU));
 
             LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Fraktionen aktualisiert.");
-
-            // Workaround to update house bans and not on name tag update interval
-            NameTagEventHandler.HOUSEBANENTRYLIST = Syncer.getHouseBanEntryList();
-        }).start();
+        });
     }
 
-    public static void syncPlayerRankMap() {
-        new Thread(() -> {
+    public static Thread syncPlayerRankMap() {
+        return new Thread(() -> {
             PLAYERRANKMAP.clear();
             for (Faction faction : Faction.values()) {
                 List<String> nameList = ListUtils.getAllMatchesFromString(PatternHandler.NAME_PATTERN, faction.getWebsiteSource());
@@ -73,7 +82,21 @@ public class Syncer {
                                 .charAt(0)))));
             }
             LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Ränge aktualisiert.");
-        }).start();
+        });
+    }
+
+    public static Thread syncHousebanEntryList() {
+        return new Thread(() -> {
+            HOUSEBANENTRYLIST = getHouseBanEntryList();
+            LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Hausverbote aktualisiert.");
+        });
+    }
+
+    public static Thread syncNaviPointEntryList() {
+        return new Thread(() -> {
+            NAVIPOINTLIST = getNaviPointEntryList();
+            LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Navipunkte aktualisiert.");
+        });
     }
 
     public static List<String> getPlayerGroups() {
@@ -96,6 +119,25 @@ public class Syncer {
             blacklistReasonEntryList.add(new BlacklistReasonEntry(kills, reason, issuerUUID, price, issuerName));
         });
         return blacklistReasonEntryList;
+    }
+
+    public static List<BroadcastEntry> getBroadcastEntryList() {
+        JsonArray response = APIRequest.sendBroadcastQueueRequest();
+        if (response == null) return new ArrayList<>();
+        List<BroadcastEntry> broadcastEntryList = new ArrayList<>();
+        response.forEach(jsonElement -> {
+            JsonObject o = jsonElement.getAsJsonObject();
+
+            String broadcast = o.get("broadcast").getAsString();
+            int id = o.get("id").getAsInt();
+            String issuerName = o.get("issuerName").getAsString();
+            String issuerUUID = o.get("issuerUUID").getAsString();
+            long sendTime = o.get("sendTime").getAsLong();
+            long time = o.get("time").getAsLong();
+
+            broadcastEntryList.add(new BroadcastEntry(broadcast, id, issuerName, issuerUUID, sendTime, time));
+        });
+        return broadcastEntryList;
     }
 
     public static List<HouseBanEntry> getHouseBanEntryList() {

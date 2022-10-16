@@ -48,6 +48,12 @@ public class Config {
         slocSettings.setSubSettings(ConfigSettings.getSlocSettings(unicacityAddon));
         list.add(slocSettings);
 
+        list.add(new HeaderElement(Message.getBuilder().of("Nachrichten").color(ColorCode.WHITE).advance().create()));
+
+        ListContainerElement messageSettings = new ListContainerElement("Nachrichten", new ControlElement.IconData(Material.BOOK_AND_QUILL));
+        messageSettings.setSubSettings(ConfigSettings.getMessageSettings(unicacityAddon));
+        list.add(messageSettings);
+
         list.add(new HeaderElement(Message.getBuilder().of("Automatisierung").color(ColorCode.WHITE).advance().create()));
 
         ListContainerElement reportSettings = new ListContainerElement("Report Nachrichten", new ControlElement.IconData(Material.SIGN));
@@ -61,11 +67,11 @@ public class Config {
         BooleanElement carFindSettings = new BooleanElement("Route bei /car find", unicacityAddon, new ControlElement.IconData(Material.MINECART), "CAR_FIND_SETTINGS", ConfigElements.getEventCarFind());
         list.add(carFindSettings);
 
-        BooleanElement passwordSettings = new BooleanElement("Automatisches /passwort", unicacityAddon, new ControlElement.IconData(Material.TRIPWIRE_HOOK), "PASSWORD_SETTINGS", ConfigElements.getPasswordAutomation());
+        BooleanElement passwordSettings = new BooleanElement("Automatisches Passwort", unicacityAddon, new ControlElement.IconData(Material.TRIPWIRE_HOOK), "PASSWORD_SETTINGS", ConfigElements.getPasswordAutomation());
         passwordSettings.setSubSettings(ConfigSettings.getPasswordSettings(unicacityAddon));
         list.add(passwordSettings);
 
-        BooleanElement automateCommandsSettings = new BooleanElement("Automatische Befehle", unicacityAddon, new ControlElement.IconData(Material.REDSTONE_COMPARATOR), "AUTOMATE_COMMANDS_SETTINGS", ConfigElements.getCommandAutomation());
+        BooleanElement automateCommandsSettings = new BooleanElement("Join-Befehle", unicacityAddon, new ControlElement.IconData(Material.REDSTONE_COMPARATOR), "AUTOMATE_COMMANDS_SETTINGS", ConfigElements.getCommandAutomation());
         automateCommandsSettings.setSubSettings(ConfigSettings.getAutomateCommandsSettings(unicacityAddon));
         list.add(automateCommandsSettings);
 
@@ -79,16 +85,22 @@ public class Config {
         teamspeakSettings.setSubSettings(ConfigSettings.getTeamspeakSettings(unicacityAddon));
         list.add(teamspeakSettings);
 
+        list.add(new HeaderElement(Message.getBuilder().of("Equip").color(ColorCode.WHITE).advance().create()));
+
+        ListContainerElement equipSettings = new ListContainerElement("Equip", new ControlElement.IconData(Material.ANVIL));
+        equipSettings.setSubSettings(ConfigSettings.getEquipSettings(unicacityAddon));
+        list.add(equipSettings);
+
         list.add(new HeaderElement(Message.getBuilder().of("Sonstiges").color(ColorCode.WHITE).advance().create()));
 
         BooleanElement orderedTablistSettings = new BooleanElement("Sortierte Tablist", unicacityAddon, new ControlElement.IconData(Material.COMMAND), "ORDERED_TABLIST_SETTINGS", ConfigElements.getEventTabList());
         list.add(orderedTablistSettings);
 
-        BooleanElement hqMessageSettings = new BooleanElement("HQ Nachrichten", unicacityAddon, new ControlElement.IconData(Material.LEASH), "HQ_MESSAGE_SETTINGS", ConfigElements.getHQMessagesActivated());
-        list.add(hqMessageSettings);
-
         BooleanElement despawnTimeAfterKarma = new BooleanElement("Despawn Zeitpunkt", unicacityAddon, new ControlElement.IconData(Material.SKULL_ITEM), "ESTIMATED_DESPAWN_TIME_SETTINGS", ConfigElements.getEstimatedDespawnTime());
         list.add(despawnTimeAfterKarma);
+
+        BooleanElement uploadAfterScreenCommand = new BooleanElement("Upload bei /screen", unicacityAddon, new ControlElement.IconData(Material.LEATHER), "AUTOMATED_SCREENSHOT_UPLOAD_SETTINGS", ConfigElements.getAutomatedScreenshotUpload());
+        list.add(uploadAfterScreenCommand);
 
         // Certain LabyMod themes cover the lower settings. To counteract this, empty lines are appended.
         list.add(emptyLine);

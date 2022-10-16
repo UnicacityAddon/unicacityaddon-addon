@@ -1,6 +1,7 @@
 package com.rettichlp.UnicacityAddon.base.text;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
+import com.rettichlp.UnicacityAddon.events.faction.AEquipEventHandler;
 
 import java.util.regex.Pattern;
 
@@ -39,11 +40,16 @@ public class PatternHandler {
      * {@link com.rettichlp.UnicacityAddon.events.faction.EmergencyServiceEventHandler}
      */
     public static final Pattern SERVICE_ARRIVED_PATTERN = Pattern.compile("^Ein Notruf von ((?:\\[UC])*\\w+) \\((\\d+)\\): \"(.*)\"$");
+    public static final Pattern SERVICE_LOCATION_PATTERN = Pattern.compile("^Der näheste Punkt ist ([a-zA-Z-\\[\\]äöüßÄÖÜ]+)\\.$");
+    public static final Pattern SERVICE_LOCATION_PATTERN_ONE_NEAREST = Pattern.compile("^Der näheste Punkt ist ([a-zA-Z-\\[\\]äöüßÄÖÜ]+)\\. Die nähesten Personen sind ((?:\\[UC])*\\w+) \\(((\\d+)m)\\)\\.$");
+    public static final Pattern SERVICE_LOCATION_PATTERN_TWO_NEAREST = Pattern.compile("^Der näheste Punkt ist ([a-zA-Z-\\[\\]äöüßÄÖÜ]+)\\. Die nähesten Personen sind ((?:\\[UC])*\\w+) \\(((\\d+)m)\\), ((?:\\[UC])*\\w+) \\(((\\d+)m)\\)\\.$");
     public static final Pattern SERVICE_ACCEPTED_PATTERN = Pattern.compile("^((?:\\[UC])*\\w+) hat den Notruf von ((?:\\[UC])*\\w+) angenommen\\. \\((\\d+)m entfernt\\)$");
     public static final Pattern SERVICE_REQUEUED_PATTERN = Pattern.compile("^((?:\\[UC])*\\w+) hat den Notruf von ((?:\\[UC])*\\w+) \\((\\d+)\\) wieder geöffnet\\.$");
     public static final Pattern SERVICE_DELETED_PATTERN = Pattern.compile("^Der Notruf von ((?:\\[UC])*\\w+) wurde von ((?:\\[UC])*\\w+) gelöscht\\.$");
     public static final Pattern SERVICE_OVERVIEW_PATTERN = Pattern.compile("^\\nOffene Notrufe \\((\\d+)\\):((.|\\n)*)$");
     public static final Pattern SERVICE_NO_SERVICE_PATTERN = Pattern.compile("^Fehler: Es ist kein Service offen\\.$");
+    public static final Pattern SERVICE_BLOCKED_PATTERN = Pattern.compile("^Notrufe von ((?:\\[UC])*\\w+) wurden von ((?:\\[UC])*\\w+) blockiert\\.$");
+    public static final Pattern SERVICE_UNBLOCKED_PATTERN = Pattern.compile("^Notrufe von ((?:\\[UC])*\\w+) wurden von ((?:\\[UC])*\\w+) wieder zugelassen\\.$");
 
     /**
      * {@link com.rettichlp.UnicacityAddon.events.faction.polizei.WantedEventHandler}
@@ -200,8 +206,8 @@ public class PatternHandler {
     /**
      * {@link com.rettichlp.UnicacityAddon.events.KarmaMessageEventHandler}
      */
-    public static final Pattern KARMA_CHANGED_PATTERN = Pattern.compile("^\\[Karma] (-?\\d+) Karma\\.$");
-    public static final Pattern KARMA_PATTERN = Pattern.compile("^\\[Karma] Du hast ein Karma von (-?\\d+)\\.$");
+    public static final Pattern KARMA_CHANGED_PATTERN = Pattern.compile("^\\[Karma] ([+-]\\d+) Karma\\.$");
+    public static final Pattern KARMA_PATTERN = Pattern.compile("^\\[Karma] Du hast ein Karma von ([+-]\\d+)\\.$");
 
     /**
      * {@link com.rettichlp.UnicacityAddon.events.ABuyEventHandler}
@@ -210,7 +216,7 @@ public class PatternHandler {
             "|^Verkäufer: Dieses Produkt kostet \\d+\\$\\.$" + "|^Verkäufer: Du hast leider nicht genug Geld dabei\\.$");
 
     /**
-     * {@link com.rettichlp.UnicacityAddon.events.AEquipEventHandler}
+     * {@link AEquipEventHandler}
      */
     public static final Pattern EQUIP_INTERRUPTED_PATTERN = Pattern.compile("^\\[Equip] Du bist nicht im Dienst\\.$");
 
@@ -273,4 +279,28 @@ public class PatternHandler {
      */
     public static final Pattern FIRST_AID_RECEIVE_PATTERN = Pattern.compile("^\\[Erste-Hilfe] Notarzt (?:\\[UC])*(\\w+) hat dir einen Erste-Hilfe-Schein für 14 Tage ausgestellt\\.$");
     public static final Pattern FIRST_AID_LICENCE_PATTERN = Pattern.compile("^ {2}- Erste-Hilfe-Schein: Vorhanden$");
+
+    /**
+     * {@link com.rettichlp.UnicacityAddon.events.faction.badfaction.DBankMessageEventHandler}
+     */
+    public static final Pattern DBANK_DROP_PATTERN = Pattern.compile("^(?:\\[UC])*(\\w+) hat (\\d+)g (Kokain|Marihuana|Methamphetamin|LSD) \\((Höchste|Gute|Mittlere|Schlechte) Reinheit\\) \\((\\d+)g\\) eingelagert\\.$");
+    public static final Pattern DBANK_GET_PATTERN = Pattern.compile("^(?:\\[UC])*(\\w+) hat (\\d+)g (Kokain|Marihuana|Methamphetamin|LSD) \\((Höchste|Gute|Mittlere|Schlechte) Reinheit\\) \\((\\d+)g\\) aus der Drogenbank genommen\\.$");
+
+    /**
+     * {@link com.rettichlp.UnicacityAddon.events.HouseBankEventHandler}
+     */
+    public static final Pattern HOUSEBANK_HEADER_PATTERN = Pattern.compile("^=== Hauskasse Haus (\\d+) ===$");
+    public static final Pattern HOUSEBANK_VALUE_PATTERN = Pattern.compile("^ {2}» (\\d+)\\$$");
+    public static final Pattern HOUSEBANK_DEPOSIT_PATTERN = Pattern.compile("^\\[Haus] Du hast (\\d+)\\$ in die Hauskasse gelegt\\.$");
+    public static final Pattern HOUSEBANK_WITHDRAW_PATTERN = Pattern.compile("^\\[Haus] Du hast (\\d+)\\$ aus der Hauskasse genommen\\.$");
+
+    /**
+     * {@link com.rettichlp.UnicacityAddon.events.faction.EquipEventHandler}
+     */
+    public static final Pattern EQUIP_PATTERN = Pattern.compile("^(|\\[Equip] )Du hast (dir|dich mit) (|ein |eine |einen |einem )([a-zA-Z-äöüßÄÖÜ ]+) equip(|p)t[!.]$");
+    public static final Pattern TRACKER_PATTERN = Pattern.compile("^Du hast einen Peilsender an (?:\\[UC])*(\\w+) befestigt\\.$");
+
+    /**
+     * Quote: Rettich: "In welchem Forum ist der Vorschlag drin?" Leon: "In Vorschläge" - RettichLP und Dimiikou, 09.10.2022
+     */
 }

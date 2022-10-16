@@ -247,46 +247,67 @@ public class APIRequest {
     public static void sendStatisticAddKillRequest() {
         Map<String, String> parameters = new HashMap<>();
 
-        try {
-            APIResponseHandler.getStatisticAddKillResponse(parameters);
-        } catch (APIUnsuccessResponseException e) {
-            e.sendInfoMessage();
-        }
+        new Thread(() -> {
+            try {
+                APIResponseHandler.getStatisticAddKillResponse(parameters);
+            } catch (APIUnsuccessResponseException e) {
+                e.sendInfoMessage();
+            }
+        }).start();
     }
 
     public static void sendStatisticAddDeathRequest() {
         Map<String, String> parameters = new HashMap<>();
 
-        try {
-            APIResponseHandler.getStatisticAddDeathResponse(parameters);
-        } catch (APIUnsuccessResponseException e) {
-            e.sendInfoMessage();
-        }
+        new Thread(() -> {
+            try {
+                APIResponseHandler.getStatisticAddDeathResponse(parameters);
+            } catch (APIUnsuccessResponseException e) {
+                e.sendInfoMessage();
+            }
+        }).start();
     }
 
     public static void sendStatisticAddReviveRequest() {
         Map<String, String> parameters = new HashMap<>();
 
-        try {
-            APIResponseHandler.getStatisticAddReviveResponse(parameters);
-        } catch (APIUnsuccessResponseException e) {
-            e.sendInfoMessage();
-        }
+        new Thread(() -> {
+            try {
+                APIResponseHandler.getStatisticAddReviveResponse(parameters);
+            } catch (APIUnsuccessResponseException e) {
+                e.sendInfoMessage();
+            }
+        }).start();
     }
 
     public static void sendStatisticAddServiceRequest() {
         Map<String, String> parameters = new HashMap<>();
 
-        try {
-            APIResponseHandler.getStatisticAddServiceResponse(parameters);
-        } catch (APIUnsuccessResponseException e) {
-            e.sendInfoMessage();
-        }
+        new Thread(() -> {
+            try {
+                APIResponseHandler.getStatisticAddServiceResponse(parameters);
+            } catch (APIUnsuccessResponseException e) {
+                e.sendInfoMessage();
+            }
+        }).start();
+    }
+
+    public static void sendStatisticAddPlayTimeRequest() {
+        Map<String, String> parameters = new HashMap<>();
+
+        new Thread(() -> {
+            try {
+                APIResponseHandler.getStatisticAddPlayTimeResponse(parameters);
+            } catch (APIUnsuccessResponseException e) {
+                e.sendInfoMessage();
+            }
+        }).start();
     }
 
     public static JsonObject sendTokenCreateRequest() {
         Map<String, String> parameters = new HashMap<>();
         parameters.put("authToken", UnicacityAddon.MINECRAFT.getSession().getToken());
+        parameters.put("version", UnicacityAddon.VERSION);
 
         try {
             return APIResponseHandler.getTokenCreateResponse(parameters);

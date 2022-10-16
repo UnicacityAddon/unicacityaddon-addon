@@ -164,7 +164,7 @@ public class UPlayerImpl implements UPlayer {
 
     @Override
     public Faction getFaction() {
-        return Syncer.getPlayerFactionMap().get(getName());
+        return Syncer.PLAYERFACTIONMAP.get(getName());
     }
 
     @Override
