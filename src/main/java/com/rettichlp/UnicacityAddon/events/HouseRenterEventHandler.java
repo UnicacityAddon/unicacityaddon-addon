@@ -38,7 +38,7 @@ public class HouseRenterEventHandler {
     final Timer TIMER = new Timer();
 
     @SubscribeEvent
-    public boolean onClientChatReceived(ClientChatEvent e) {
+    public boolean onClientChat(ClientChatEvent e) {
         String msg = e.getMessage();
         if (!msg.equals("/mieters")) return false;
 
