@@ -187,7 +187,7 @@ public class MoneyEventHandler {
     }
 
     @SubscribeEvent
-    public boolean onClientChatReceived(ClientChatEvent e) {
+    public boolean onClientChat(ClientChatEvent e) {
         String msg = e.getMessage();
         isGRBankCommand = msg.startsWith("/grkasse get") || msg.startsWith("/grkasse drop");
         return false;

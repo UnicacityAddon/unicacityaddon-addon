@@ -114,7 +114,7 @@ public class HotkeyEventHandler {
         }
     }
 
-    private static File handleScreenshot(File file) {
+    public static File handleScreenshot(File file) {
         if (file != null) {
             try {
                 Framebuffer framebuffer = ReflectionUtils.getValue(UnicacityAddon.MINECRAFT, Framebuffer.class);
