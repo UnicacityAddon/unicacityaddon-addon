@@ -1,6 +1,7 @@
 package com.rettichlp.UnicacityAddon.base.teamspeak;
 
 import com.google.common.util.concurrent.Uninterruptibles;
+import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.config.ConfigElements;
 import com.rettichlp.UnicacityAddon.base.teamspeak.commands.AuthCommand;
 import com.rettichlp.UnicacityAddon.base.teamspeak.commands.BaseCommand;
@@ -19,10 +20,11 @@ import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
 /**
- * @author Fuzzlemann
+ * @author Fuzzlemann, RettichLP
  */
 public class TSClientQuery implements Closeable {
 
+    public static boolean clientQueryConnected = false;
     private static TSClientQuery instance;
     private Socket socket;
     private volatile ClientQueryWriter writer;
@@ -40,16 +42,19 @@ public class TSClientQuery implements Closeable {
             try {
                 instance.connect();
             } catch (IOException e) {
+                clientQueryConnected = false;
                 throw new ClientQueryConnectionException("TeamSpeak ClientQuery failed setting up a connection", e);
             }
         }
 
+        clientQueryConnected = true;
         return instance;
     }
 
     public static void reconnect() {
         disconnect();
         getInstance();
+        AbstractionLayer.getPlayer().sendInfoMessage("TeamSpeak ClientQuery Wiederherstellung abgeschlossen.");
     }
 
     public static void disconnect() {
