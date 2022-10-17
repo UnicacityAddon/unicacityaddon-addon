@@ -4,6 +4,7 @@ import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
 import com.rettichlp.UnicacityAddon.base.api.Syncer;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
+import com.rettichlp.UnicacityAddon.base.teamspeak.TSClientQuery;
 import com.rettichlp.UnicacityAddon.base.teamspeak.TSUtils;
 import com.rettichlp.UnicacityAddon.base.teamspeak.commands.ChannelClientListCommand;
 import com.rettichlp.UnicacityAddon.base.teamspeak.commands.ClientVariableCommand;
@@ -62,6 +63,13 @@ public class ChannelActivityCommand implements IClientCommand {
     public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
         new Thread(() -> {
             UPlayer p = AbstractionLayer.getPlayer();
+
+            if (!TSClientQuery.clientQueryConnected) {
+                p.sendErrorMessage("Keine Verbindung zur TeamSpeak ClientQuery!");
+                TSClientQuery.reconnect();
+                return;
+            }
+
             p.sendInfoMessage("Channel-Aktivität wird erstellt.");
 
             List<String> playersInChannel = getPlayersInChannel();
