@@ -1,6 +1,7 @@
 package com.rettichlp.UnicacityAddon.events;
 
 import com.rettichlp.UnicacityAddon.UnicacityAddon;
+import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.api.Syncer;
 import com.rettichlp.UnicacityAddon.base.config.ConfigElements;
 import com.rettichlp.UnicacityAddon.base.io.FileManager;
@@ -17,6 +18,7 @@ import com.rettichlp.UnicacityAddon.modules.PlantWaterTimerModule;
 import net.labymod.utils.ModUtils;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemSkull;
+import net.minecraft.scoreboard.Scoreboard;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
@@ -47,8 +49,15 @@ public class TickEventHandler {
             handlePlantTimer();
         }
 
+        // 15 SECONDS
+        if (currentTick % 300 == 0) {
+            handleScoreboardCheck();
+        }
+
         // 60 SECONDS
-        if (currentTick % 1200 == 0) handlePayDay();
+        if (currentTick % 1200 == 0) {
+            handlePayDay();
+        }
 
         // CUSTOM SECONDS
         String intervalString = ConfigElements.getRefreshDisplayNamesInterval();
@@ -130,6 +139,13 @@ public class TickEventHandler {
 
         if (PlantFertilizeTimerModule.currentCount <= 0) PlantFertilizeTimerModule.timer = ColorCode.RED.getCode() + "Jetzt";
         if (PlantWaterTimerModule.currentCount <= 0) PlantWaterTimerModule.timer = ColorCode.RED.getCode() + "Jetzt";
+    }
+
+
+    private void handleScoreboardCheck() {
+        if (!UnicacityAddon.isUnicacity()) return;
+        Scoreboard scoreboard = AbstractionLayer.getPlayer().getWorldScoreboard();
+        CarEventHandler.checkTank(scoreboard);
     }
 
     private void handlePayDay() {
