@@ -100,7 +100,7 @@ public class ChannelActivityCommand implements IClientCommand {
                     .of(playerName).color(isOnline ? ColorCode.GREEN : ColorCode.RED).advance().space()
                     .of(isOnline ? "[¡]" : "").color(ColorCode.BLUE)
                             .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Finde " + playerName + " auf dem TS").color(ColorCode.RED).advance().createComponent())
-                            .clickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/tsfind " + playerName)
+                            .clickEvent(ClickEvent.Action.RUN_COMMAND, "/tsfind " + playerName)
                             .advance().space()
                     .of(isOnline ? "[↓]" : "").color(ColorCode.BLUE)
                             .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Move " + playerName + " zu dir").color(ColorCode.RED).advance().createComponent())
