@@ -11,6 +11,7 @@ import java.util.Locale;
  */
 public class MathUtils {
 
+    public static final DecimalFormat HEART_DECIMAL_FORMAT = new DecimalFormat("###.#");
     public static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("###.##");
     private static final DecimalFormat CALCULATOR_DECIMAL_FORMAT = new DecimalFormat("###,###.###", DecimalFormatSymbols.getInstance(Locale.GERMAN));
     private static final String[] TO_REPLACE = new String[]{"PI", "E", "ANS"};

@@ -9,7 +9,7 @@ import net.labymod.ingamegui.moduletypes.SimpleModule;
 import net.labymod.settings.elements.ControlElement;
 import net.labymod.utils.Material;
 
-import static com.rettichlp.UnicacityAddon.base.utils.MathUtils.DECIMAL_FORMAT;
+import static com.rettichlp.UnicacityAddon.base.utils.MathUtils.HEART_DECIMAL_FORMAT;
 
 /**
  * @author Dimiikou
@@ -29,7 +29,7 @@ public class HearthAmountModule extends SimpleModule {
     }
 
     @Override public String getDisplayValue() {
-        return DECIMAL_FORMAT.format(AbstractionLayer.getPlayer().getPlayer().getHealth() / 2) + ColorCode.RED.getCode() + "❤";
+        return HEART_DECIMAL_FORMAT.format(AbstractionLayer.getPlayer().getPlayer().getHealth() / 2) + ColorCode.RED.getCode() + "❤";
     }
 
     @Override public String getDefaultValue() {
