@@ -11,7 +11,7 @@ public enum Equip {
     PISTOL("Pistole", "Pistole", ConfigElements.getPistolPrice()),
     MP5("MP5", "MP5", ConfigElements.getMP5Price()),
     BANDAGES("Bandagen", "Bandagen", ConfigElements.getBandagePrice()),
-    PAINKILLER("Schmerzmittel", "Schmerzmittel", ConfigElements.getPainKillerPrice()),
+    PAINKILLER("Schmerzpillen", "Schmerzpillen", ConfigElements.getPainKillerPrice()),
     WATER("Wasser", "Wasser", ConfigElements.getWaterPrice()),
     SYRINGE("Spritzen", "Spritzen", ConfigElements.getSyringePrice()),
     BREAD("Brot", "Brote", ConfigElements.getBreadPrice()),
