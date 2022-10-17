@@ -3,20 +3,18 @@ package com.rettichlp.UnicacityAddon.events;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
 import com.rettichlp.UnicacityAddon.base.config.ConfigElements;
+import com.rettichlp.UnicacityAddon.base.io.FileManager;
 import com.rettichlp.UnicacityAddon.base.location.NavigationUtils;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCEvent;
-import com.rettichlp.UnicacityAddon.base.io.FileManager;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
 import com.rettichlp.UnicacityAddon.modules.CarOpenModule;
-
-import java.util.concurrent.TimeUnit;
-import java.util.regex.Matcher;
-
 import net.minecraft.scoreboard.Score;
 import net.minecraft.scoreboard.Scoreboard;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+
+import java.util.regex.Matcher;
 
 /**
  * @author RettichLP
@@ -61,9 +59,9 @@ public class CarEventHandler {
         if (tankScore == null) return;
 
         int tank = tankScore.getScorePoints();
-        if (tank < 5 && System.currentTimeMillis() - lastTankWarningMessage > TimeUnit.MINUTES.toMillis(3)) {
-            p.sendInfoMessage("Dein Tank hat nur noch " + tank + " Liter.");
-            p.playSound("block.note.xylophone");
+        if (tank == 15 || tank == 10 || tank == 5) {
+            p.sendInfoMessage("Dein Tank hat noch " + tank + " Liter.");
+            p.playSound("block.note.harp");
         }
     }
 }
