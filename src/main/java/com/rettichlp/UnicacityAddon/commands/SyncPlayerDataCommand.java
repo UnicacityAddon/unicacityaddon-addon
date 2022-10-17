@@ -3,7 +3,6 @@ package com.rettichlp.UnicacityAddon.commands;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.api.Syncer;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
-import com.rettichlp.UnicacityAddon.base.teamspeak.TSClientQuery;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
@@ -63,9 +62,7 @@ public class SyncPlayerDataCommand implements IClientCommand {
     @Override
     public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
         AbstractionLayer.getPlayer().sendInfoMessage("Synchronisierung gestartet.");
-
-        if (args.length > 0 && args[0].equalsIgnoreCase("teamspeak")) TSClientQuery.reconnect();
-        else Syncer.syncAll();
+        Syncer.syncAll();
     }
 
     @Override
