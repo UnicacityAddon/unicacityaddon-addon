@@ -8,6 +8,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * @author RettichLP
  */
@@ -19,6 +22,13 @@ public class FishermanEventHandler {
     private boolean fisherManJob = false;
     private boolean dropFish = false;
     private int count = 0;
+    private final List<BlockPos> FISHER_POSITION_LIST = Arrays.asList(
+            new BlockPos(-570, 62, 160),
+            new BlockPos(-555, 62, 106),
+            new BlockPos(-521, 62, 78),
+            new BlockPos(-569, 62, 50),
+            new BlockPos(-522, 62, 10)
+    );
 
     @SubscribeEvent
     public boolean onClientChatReceive(ClientChatReceivedEvent e) {
@@ -26,9 +36,8 @@ public class FishermanEventHandler {
         UPlayer p = AbstractionLayer.getPlayer();
 
         if (PatternHandler.FISHER_START.matcher(msg).find()) {
-            fisherManJob = true;
-            p.sendChatMessage("/findschwarm");
-            canCatchFish = true;
+            fisherManJob = canCatchFish = true;
+            p.setNaviRoute(getFisherPosition(1));
             return catchFish();
         }
 
@@ -43,7 +52,7 @@ public class FishermanEventHandler {
 
         if (PatternHandler.FISHER_CATCH_START.matcher(msg).find()) {
             canCatchFish = false;
-            p.sendChatMessage("/findschwarm");
+            p.setNaviRoute(getFisherPosition(count + 2));
             return false;
         }
 
@@ -71,6 +80,10 @@ public class FishermanEventHandler {
         }
 
         return false;
+    }
+
+    private BlockPos getFisherPosition(int i) {
+        return FISHER_POSITION_LIST.get(i - 1);
     }
 
     private boolean catchFish() {
