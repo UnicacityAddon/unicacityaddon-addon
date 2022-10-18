@@ -90,8 +90,7 @@ public class FishermanEventHandler {
         UPlayer p = AbstractionLayer.getPlayer();
         if (canCatchFish && onTargetLocation && count < 5) {
             p.sendChatMessage("/catchfish");
-            onTargetLocation = false;
-            canCatchFish = false;
+            onTargetLocation = canCatchFish = false;
             return true;
         }
         return false;
