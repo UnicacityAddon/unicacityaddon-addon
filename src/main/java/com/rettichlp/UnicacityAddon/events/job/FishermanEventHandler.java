@@ -4,6 +4,7 @@ import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCEvent;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -16,6 +17,7 @@ public class FishermanEventHandler {
     private boolean onTargetLocation = false;
     private boolean canCatchFish = false;
     private boolean fisherManJob = false;
+    private boolean dropFish = false;
     private int count = 0;
 
     @SubscribeEvent
@@ -57,10 +59,15 @@ public class FishermanEventHandler {
 
         if (PatternHandler.FISHER_END.matcher(msg).find()) {
             count = 0;
-            fisherManJob = false;
-            onTargetLocation = false;
-            canCatchFish = false;
+            fisherManJob = onTargetLocation = canCatchFish = false;
+            dropFish = true;
+            p.setNaviRoute(new BlockPos(-504, 63, 197)); // Steg
             return false;
+        }
+
+        if (dropFish && msg.equals("Du hast dein Ziel erreicht.")) {
+            p.sendChatMessage("/dropfish");
+            dropFish = false;
         }
 
         return false;
