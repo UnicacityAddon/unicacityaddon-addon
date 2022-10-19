@@ -58,7 +58,7 @@ public class TickEventHandler {
     }
 
     private void handleReinforcementScreenshot() {
-        if (ReinforcementEventHandler.activeReinforcement + 5 != currentTick) return;
+        if (ReinforcementEventHandler.activeReinforcement + 15 != currentTick) return;
 
         try {
             File file = FileManager.getNewActivityImageFile("reinforcement");
