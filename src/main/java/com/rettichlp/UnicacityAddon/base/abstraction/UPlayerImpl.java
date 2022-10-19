@@ -4,6 +4,7 @@ import com.rettichlp.UnicacityAddon.UnicacityAddon;
 import com.rettichlp.UnicacityAddon.base.api.Syncer;
 import com.rettichlp.UnicacityAddon.base.faction.Faction;
 import com.rettichlp.UnicacityAddon.base.faction.rettungsdienst.Medication;
+import com.rettichlp.UnicacityAddon.base.location.NavigationUtils;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -184,11 +185,12 @@ public class UPlayerImpl implements UPlayer {
 
     @Override
     public void setNaviRoute(int x, int y, int z) {
-        sendChatMessage("/navi " + x + "/" + y + "/" + z);
+        setNaviRoute(new BlockPos(x, y, z));
     }
 
     @Override
     public void setNaviRoute(BlockPos blockPos) {
+        NavigationUtils.stopRoute();
         sendChatMessage("/navi " + blockPos.getX() + "/" + blockPos.getY() + "/" + blockPos.getZ());
     }
 

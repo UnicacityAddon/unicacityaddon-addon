@@ -75,7 +75,6 @@ public class ReinforcementCommand implements IClientCommand {
             int z = Integer.parseInt(args[4]);
 
             p.sendChatMessage(chatType.getChatCommand() + " " + name + ", ich bin zu deinem Verstärkungsruf unterwegs! (" + (int) p.getPosition().getDistance(x, y, z) + " Meter entfernt)");
-            NavigationUtils.stopRoute();
             p.setNaviRoute(x, y, z);
             return;
         }
