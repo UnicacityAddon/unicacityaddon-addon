@@ -2,6 +2,7 @@ package com.rettichlp.UnicacityAddon.events;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
+import com.rettichlp.UnicacityAddon.base.api.request.APIRequest;
 import com.rettichlp.UnicacityAddon.base.config.ConfigElements;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCEvent;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
@@ -72,6 +73,7 @@ public class MoneyEventHandler {
 
         Matcher bankPayDayMatcher = PatternHandler.STATS_BANK_PATTERN.matcher(msg);
         if (bankPayDayMatcher.find()) {
+            APIRequest.sendStatisticAddPlayTimeRequest();
             BankMoneyModule.setBalance(Integer.parseInt(bankPayDayMatcher.group(1)));
             JobModule.setBalance(0);
             JobModule.setExperience(0);
@@ -185,7 +187,7 @@ public class MoneyEventHandler {
     }
 
     @SubscribeEvent
-    public boolean onClientChatReceived(ClientChatEvent e) {
+    public boolean onClientChat(ClientChatEvent e) {
         String msg = e.getMessage();
         isGRBankCommand = msg.startsWith("/grkasse get") || msg.startsWith("/grkasse drop");
         return false;

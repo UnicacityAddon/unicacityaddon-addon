@@ -59,7 +59,7 @@ public class NavigationUtils {
         NaviPointEntry nearestNaviPoint = null;
         double nearestDistance = Double.MAX_VALUE;
 
-        for (NaviPointEntry naviPointEntry : Syncer.getNaviPointEntryList()) {
+        for (NaviPointEntry naviPointEntry : Syncer.NAVIPOINTLIST) {
             double distance = blockPos.getDistance(naviPointEntry.getX(), naviPointEntry.getY(), naviPointEntry.getZ());
             if (distance < nearestDistance) {
                 nearestDistance = distance;

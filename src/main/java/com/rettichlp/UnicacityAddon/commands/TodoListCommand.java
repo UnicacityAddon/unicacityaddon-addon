@@ -21,6 +21,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author RettichLP
@@ -70,35 +71,29 @@ public class TodoListCommand implements IClientCommand {
 
         if (args.length == 0) {
             todoList();
-        } else if (args.length > 1 && args[0].equalsIgnoreCase("add")) {
-            String todo = TextUtils.makeStringByArgs(args, " ").replaceAll("(?i)add ", "");
-            TodolistEntry todolistEntry = new TodolistEntry(todo);
-            todolist.add(todolistEntry);
-            FileManager.saveData();
-            p.sendInfoMessage("Aufgabe zur Todoliste hinzugefügt.");
-        } else if (args[0].equalsIgnoreCase("done") && MathUtils.isInteger(args[1])) {
-            int index = Integer.parseInt(args[1]) - 1;
-            if (index > todolist.size() - 1) {
-                p.sendErrorMessage("Keinen Eintrag mit dieser ID gefunden.");
+        } else if (args.length > 1 && args[0].equalsIgnoreCase("done")) {
+            String todo = TextUtils.makeStringByArgs(args, " ").replace("done ", "");
+            Optional<TodolistEntry> todolistEntryOptional = todolist.stream().filter(todolistEntry -> todolistEntry.getTodo().equals(todo)).findFirst();
+            if (!todolistEntryOptional.isPresent()) {
+                p.sendErrorMessage("Keinen Eintrag gefunden.");
                 return;
             }
-            TodolistEntry todolistEntry = todolist.get(index);
+            int index = todolist.indexOf(todolistEntryOptional.get());
+            TodolistEntry todolistEntry = todolistEntryOptional.get();
             todolistEntry.setDone(true);
             todolist.set(index, todolistEntry);
             FileManager.saveData();
             p.sendInfoMessage("Aufgabe als erledigt markiert.");
-            p.sendChatMessage("/todo");
-        } else if (args[0].equalsIgnoreCase("delete") && MathUtils.isInteger(args[1])) {
-            int index = Integer.parseInt(args[1]) - 1;
-            if (index > todolist.size() - 1) {
+        } else if (args.length > 1 && args[0].equalsIgnoreCase("delete")) {
+            String todo = TextUtils.makeStringByArgs(args, " ").replace("delete ", "");
+            boolean success = todolist.removeIf(todolistEntry -> todolistEntry.getTodo().equals(todo));
+            if (!success) {
                 p.sendErrorMessage("Keinen Eintrag mit dieser ID gefunden.");
                 return;
             }
-            todolist.remove(index);
             FileManager.saveData();
             p.sendInfoMessage("Aufgabe aus Todoliste gelöscht.");
-            p.sendChatMessage("/todo");
-        } else if (args[0].equalsIgnoreCase("edit") && MathUtils.isInteger(args[1])) {
+        } else if (args.length > 2 && args[0].equalsIgnoreCase("edit") && MathUtils.isInteger(args[1])) {
             int index = Integer.parseInt(args[1]) - 1;
             if (index > todolist.size() - 1) {
                 p.sendErrorMessage("Keinen Eintrag mit dieser ID gefunden.");
@@ -109,7 +104,16 @@ public class TodoListCommand implements IClientCommand {
             todolist.set(index, todolistEntry);
             FileManager.saveData();
             p.sendInfoMessage("Aufgabe editiert.");
-            p.sendChatMessage("/todo");
+        } else {
+            String todo = TextUtils.makeStringByArgs(args, " ");
+            TodolistEntry todolistEntry = new TodolistEntry(todo);
+            if (todolist.stream().anyMatch(te -> te.getTodo().equals(todo))) {
+                p.sendErrorMessage("Dieses Todo gibt es bereits!");
+                return;
+            }
+            todolist.add(todolistEntry);
+            FileManager.saveData();
+            p.sendInfoMessage("Aufgabe zur Todoliste hinzugefügt.");
         }
     }
 
@@ -126,10 +130,10 @@ public class TodoListCommand implements IClientCommand {
                     .of(todolistEntry.getTodo()).color(ColorCode.AQUA).strikethrough().advance()
                     .space()
                     .of("[✐]").color(ColorCode.GOLD)
-                            .clickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/todo edit " + id + " ")
+                            .clickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/todo edit " + id + " " + todolistEntry.getTodo())
                             .advance().space()
                     .of("[✕]").color(ColorCode.RED)
-                            .clickEvent(ClickEvent.Action.RUN_COMMAND, "/todo delete " + id)
+                            .clickEvent(ClickEvent.Action.RUN_COMMAND, "/todo delete " + todolistEntry.getTodo())
                             .advance()
                     .createComponent());
             else p.sendMessage(Message.getBuilder()
@@ -137,14 +141,14 @@ public class TodoListCommand implements IClientCommand {
                     .of(todolistEntry.getTodo()).color(ColorCode.AQUA).advance()
                     .space()
                     .of("[✔]").color(ColorCode.GREEN)
-                            .clickEvent(ClickEvent.Action.RUN_COMMAND, "/todo done " + id)
+                            .clickEvent(ClickEvent.Action.RUN_COMMAND, "/todo done " + todolistEntry.getTodo())
                             .advance()
                     .space()
                     .of("[✐]").color(ColorCode.GOLD)
-                            .clickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/todo edit " + id)
+                            .clickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/todo edit " + id + " " + todolistEntry.getTodo())
                             .advance().space()
                     .of("[✕]").color(ColorCode.RED)
-                            .clickEvent(ClickEvent.Action.RUN_COMMAND, "/todo delete " + id)
+                            .clickEvent(ClickEvent.Action.RUN_COMMAND, "/todo delete " + todolistEntry.getTodo())
                             .advance()
                     .createComponent());
         });

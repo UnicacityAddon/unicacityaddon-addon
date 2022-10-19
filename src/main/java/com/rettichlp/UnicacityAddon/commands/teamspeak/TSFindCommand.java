@@ -4,6 +4,7 @@ import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
 import com.rettichlp.UnicacityAddon.base.config.ConfigElements;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
+import com.rettichlp.UnicacityAddon.base.teamspeak.TSClientQuery;
 import com.rettichlp.UnicacityAddon.base.teamspeak.TSUtils;
 import com.rettichlp.UnicacityAddon.base.teamspeak.commands.ChannelListCommand;
 import com.rettichlp.UnicacityAddon.base.teamspeak.objects.Channel;
@@ -62,6 +63,12 @@ public class TSFindCommand implements IClientCommand {
 
         if (!ConfigElements.getTeamspeakAPIKey().matches("([A-Z0-9]{4}(-*)){6}")) {
             p.sendErrorMessage("Teamspeak API Key ist nicht gültig!");
+            return;
+        }
+
+        if (!TSClientQuery.clientQueryConnected) {
+            p.sendErrorMessage("Keine Verbindung zur TeamSpeak ClientQuery!");
+            TSClientQuery.reconnect();
             return;
         }
 

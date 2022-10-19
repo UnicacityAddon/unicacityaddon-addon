@@ -7,6 +7,7 @@ import com.rettichlp.UnicacityAddon.base.registry.annotation.UCEvent;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
+import com.rettichlp.UnicacityAddon.commands.faction.AFbankEinzahlenCommand;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -27,17 +28,6 @@ public class DeathsKillsEventHandler {
         String msg = e.getMessage().getUnformattedText();
         UPlayer p = AbstractionLayer.getPlayer();
 
-        Matcher karmaMatcher = PatternHandler.KILL_PATTERN.matcher(msg);
-
-        if (karmaMatcher.find()) {
-            if (Integer.parseInt(karmaMatcher.group(1)) < 6) {
-                kills++;
-                APIRequest.sendStatisticAddKillRequest();
-            }
-
-            return false;
-        }
-
         Matcher jailKillMatcher = PatternHandler.WANTED_KILL.matcher(msg);
         if (jailKillMatcher.find()) {
             if (jailKillMatcher.group(2).equals(p.getName())) {
@@ -49,10 +39,11 @@ public class DeathsKillsEventHandler {
         }
 
         Matcher contractKillPattern = PatternHandler.CONTRACT_REMOVED_PATTERN.matcher(msg);
-        if (contractKillPattern.find()) {
-            if (contractKillPattern.group(1).equals(p.getName())) {
+        if (contractKillPattern.find() && msg.contains("getötet")) {
+            if (msg.contains(p.getName())) {
                 kills++;
                 APIRequest.sendStatisticAddKillRequest();
+                AFbankEinzahlenCommand.sendClockMessage();
             }
 
             return false;

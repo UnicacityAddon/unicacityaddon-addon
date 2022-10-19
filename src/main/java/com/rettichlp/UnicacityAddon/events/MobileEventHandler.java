@@ -25,7 +25,9 @@ public class MobileEventHandler {
     /**
      * If the user has set a password for their account, <code>/mobile</code> cannot be listed until the account is unlocked.
      * As a result, <code>hasCommunications</code> remains false. To avoid this, the check is carried out again when the message
-     * came that the account was unlocked.
+     * came that the account was unlocked.<br><br>
+     *
+     * Quote: "Du hast richtig gedacht aber es einfach falsch verstanden." - Dimiikou, 04.10.2022
      */
     @SubscribeEvent
     public void onClientChatReceived(ClientChatReceivedEvent e) {
@@ -46,9 +48,9 @@ public class MobileEventHandler {
         Matcher numberMatcher = PatternHandler.NUMBER_PATTERN.matcher(msg);
         if (numberMatcher.find()) {
             lastCheckedNumber = Integer.parseInt(numberMatcher.group(1));
-            if (ACallCommand.isActive || ASMSCommand.isActive) {
+            if (ACallCommand.isActive || ASMSCommand.isActive || SMSEventHandler.isActive) {
                 e.setCanceled(true);
-                ACallCommand.isActive = ASMSCommand.isActive = false;
+                ACallCommand.isActive = ASMSCommand.isActive = SMSEventHandler.isActive = false;
             }
         }
     }

@@ -1,6 +1,6 @@
 package com.rettichlp.UnicacityAddon.base.utils;
 
-import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
+import com.rettichlp.UnicacityAddon.base.api.exception.APIUnsuccessResponseException;
 import joptsimple.internal.Strings;
 
 import java.io.IOException;
@@ -10,7 +10,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.AbstractMap;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -19,28 +18,33 @@ import java.util.Scanner;
  */
 public class WebsiteUtils {
 
-    public static Map.Entry<String, Integer> websiteToString(String urlString) {
-        Scanner scanner;
-        StringBuilder websiteSource = new StringBuilder();
-        Map.Entry<String, Integer> response;
-        int statusCode;
+    public static String websiteToString(String urlString) throws APIUnsuccessResponseException {
+        HttpURLConnection httpURLConnection;
 
-        if (urlString != null) {
-            try {
-                HttpURLConnection openConnection = (HttpURLConnection) new URL(urlString).openConnection();
-                openConnection.addRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:25.0) Gecko/20100101 Firefox/25.0");
-                statusCode = openConnection.getResponseCode();
-                scanner = new Scanner(new InputStreamReader(openConnection.getInputStream(), StandardCharsets.UTF_8));
-                while (scanner.hasNextLine()) websiteSource.append(scanner.nextLine()).append("\n\r");
-                response = new AbstractMap.SimpleEntry<>(websiteSource.toString(), statusCode);
-            } catch (IOException e) {
-                AbstractionLayer.getPlayer().sendAPIMessage("Der Server ist nicht erreichbar!", false);
-                return new AbstractMap.SimpleEntry<>(Strings.EMPTY, HttpURLConnection.HTTP_UNAVAILABLE);
-            }
-        } else {
-            response = new AbstractMap.SimpleEntry<>(Strings.EMPTY, HttpURLConnection.HTTP_BAD_REQUEST);
+        if (urlString == null || urlString.isEmpty())
+            throw new APIUnsuccessResponseException(Strings.EMPTY, HttpURLConnection.HTTP_NOT_FOUND);
+
+        try {
+            httpURLConnection = (HttpURLConnection) new URL(urlString).openConnection();
+            httpURLConnection.addRequestProperty("User-Agent", "Mozilla/5.0 Gecko/20100101 Firefox/25.0");
+
+            int statusCode = httpURLConnection.getResponseCode();
+            if (statusCode != HttpURLConnection.HTTP_OK)
+                throw new APIUnsuccessResponseException(urlString, statusCode);
+        } catch (IOException e) {
+            throw new APIUnsuccessResponseException(urlString, HttpURLConnection.HTTP_NOT_FOUND);
         }
-        return response;
+
+        try {
+            StringBuilder websiteSource = new StringBuilder();
+            Scanner scanner = new Scanner(new InputStreamReader(httpURLConnection.getInputStream(), StandardCharsets.UTF_8));
+            while (scanner.hasNextLine()) websiteSource.append(scanner.nextLine()).append("\n\r");
+            return websiteSource.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        throw new APIUnsuccessResponseException(urlString, HttpURLConnection.HTTP_NO_CONTENT);
     }
 
     public static String createUrl(String path, Map<String, String> parameters) {

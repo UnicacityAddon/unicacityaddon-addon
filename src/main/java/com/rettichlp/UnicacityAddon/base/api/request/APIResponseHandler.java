@@ -4,10 +4,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.rettichlp.UnicacityAddon.base.api.TokenManager;
 import com.rettichlp.UnicacityAddon.base.api.exception.APIUnsuccessResponseException;
 import com.rettichlp.UnicacityAddon.base.utils.WebsiteUtils;
-import org.apache.http.HttpStatus;
 
 import java.util.Map;
 
@@ -111,19 +109,28 @@ public class APIResponseHandler {
     }
 
     public static void getStatisticAddKillResponse(Map<String, String> parameters) throws APIUnsuccessResponseException {
-        WebsiteUtils.createUrl(BaseUrl.STATISTIC_KILL.getPath(), parameters);
+        String urlString = WebsiteUtils.createUrl(BaseUrl.STATISTIC_KILL.getPath(), parameters);
+        getJsonElement(urlString);
     }
 
     public static void getStatisticAddDeathResponse(Map<String, String> parameters) throws APIUnsuccessResponseException {
-        WebsiteUtils.createUrl(BaseUrl.STATISTIC_DEATH.getPath(), parameters);
+        String urlString = WebsiteUtils.createUrl(BaseUrl.STATISTIC_DEATH.getPath(), parameters);
+        getJsonElement(urlString);
     }
 
     public static void getStatisticAddReviveResponse(Map<String, String> parameters) throws APIUnsuccessResponseException {
-        WebsiteUtils.createUrl(BaseUrl.STATISTIC_REVIVE.getPath(), parameters);
+        String urlString = WebsiteUtils.createUrl(BaseUrl.STATISTIC_REVIVE.getPath(), parameters);
+        getJsonElement(urlString);
     }
 
     public static void getStatisticAddServiceResponse(Map<String, String> parameters) throws APIUnsuccessResponseException {
-        WebsiteUtils.createUrl(BaseUrl.STATISTIC_SERVICE.getPath(), parameters);
+        String urlString = WebsiteUtils.createUrl(BaseUrl.STATISTIC_SERVICE.getPath(), parameters);
+        getJsonElement(urlString);
+    }
+
+    public static void getStatisticAddPlayTimeResponse(Map<String, String> parameters) throws APIUnsuccessResponseException {
+        String urlString = WebsiteUtils.createUrl(BaseUrl.STATISTIC_PLAYTIME.getPath(), parameters);
+        getJsonElement(urlString);
     }
 
     public static JsonObject getTokenCreateResponse(Map<String, String> parameters) throws APIUnsuccessResponseException {
@@ -152,14 +159,8 @@ public class APIResponseHandler {
     }
 
     private static JsonElement getJsonElement(String urlString) throws APIUnsuccessResponseException {
-        Map.Entry<String, Integer> response = WebsiteUtils.websiteToString(urlString);
-
-        Debug(APIResponseHandler.class, urlString.replace(TokenManager.API_TOKEN, "TOKEN") + " - " + response.getValue());
-
-        if (response.getValue() != HttpStatus.SC_OK) {
-            throw new APIUnsuccessResponseException(response.getKey(), response.getValue());
-        }
-
-        return new JsonParser().parse(response.getKey());
+        String response = WebsiteUtils.websiteToString(urlString);
+        Debug(APIResponseHandler.class, "OK [200]: " + urlString);
+        return new JsonParser().parse(response);
     }
 }

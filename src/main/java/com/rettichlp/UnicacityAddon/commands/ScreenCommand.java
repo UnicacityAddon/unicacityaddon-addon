@@ -2,6 +2,7 @@ package com.rettichlp.UnicacityAddon.commands;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
+import com.rettichlp.UnicacityAddon.base.config.ConfigElements;
 import com.rettichlp.UnicacityAddon.base.io.ScreenshotType;
 import com.rettichlp.UnicacityAddon.base.io.FileManager;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
@@ -67,7 +68,8 @@ public class ScreenCommand implements IClientCommand {
 
         try {
             File file = FileManager.getNewActivityImageFile(args[0]);
-            HotkeyEventHandler.handleScreenshot(file);
+            if (ConfigElements.getAutomatedScreenshotUpload()) HotkeyEventHandler.handleScreenshotWithUpload(file);
+            else HotkeyEventHandler.handleScreenshotWithoutUpload(file);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

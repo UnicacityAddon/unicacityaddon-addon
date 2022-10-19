@@ -9,14 +9,12 @@ import net.labymod.ingamegui.moduletypes.SimpleModule;
 import net.labymod.settings.elements.ControlElement;
 import net.labymod.utils.Material;
 
-import java.text.DecimalFormat;
+import static com.rettichlp.UnicacityAddon.base.utils.MathUtils.HEART_DECIMAL_FORMAT;
 
 /**
  * @author Dimiikou
  */
 public class HearthAmountModule extends SimpleModule {
-
-    public static final DecimalFormat format = new DecimalFormat("#0.0");
 
     @Override public String getControlName() {
         return "Herzen";
@@ -31,7 +29,7 @@ public class HearthAmountModule extends SimpleModule {
     }
 
     @Override public String getDisplayValue() {
-        return format.format(AbstractionLayer.getPlayer().getPlayer().getHealth() / 2) + ColorCode.RED.getCode() + "❤";
+        return HEART_DECIMAL_FORMAT.format(AbstractionLayer.getPlayer().getPlayer().getHealth() / 2) + ColorCode.RED.getCode() + "❤";
     }
 
     @Override public String getDefaultValue() {

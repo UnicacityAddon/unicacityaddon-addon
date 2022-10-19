@@ -4,6 +4,7 @@ import com.rettichlp.UnicacityAddon.UnicacityAddon;
 import net.labymod.settings.Settings;
 import net.labymod.settings.elements.BooleanElement;
 import net.labymod.settings.elements.ControlElement;
+import net.labymod.settings.elements.ListContainerElement;
 import net.labymod.settings.elements.StringElement;
 import net.labymod.utils.Material;
 
@@ -55,7 +56,7 @@ public class ConfigSettings {
         StringElement reinforcementReplySettings = new StringElement("Reinforcement Antwort", unicacityAddon, new ControlElement.IconData(Material.BOOK_AND_QUILL), "REINFORCEMENT_REPLY_SETTINGS", ConfigElements.getPatternReinforcementReply());
         settings.add(reinforcementReplySettings);
 
-        BooleanElement automaticReinfscreen = new BooleanElement("Reinforcement Screenshot", unicacityAddon, new ControlElement.IconData(Material.LEATHER), "REINFORCEMENT_SCREENSHOT_SETTINGS", ConfigElements.automaticReinfscreen());
+        BooleanElement automaticReinfscreen = new BooleanElement("Reinforcement Screenshot", unicacityAddon, new ControlElement.IconData(Material.LEATHER), "REINFORCEMENT_SCREENSHOT_SETTINGS", ConfigElements.getReinforcementScreenshot());
         settings.add(automaticReinfscreen);
 
         return settings;
@@ -70,17 +71,82 @@ public class ConfigSettings {
         return settings;
     }
 
+    static Settings getMessageSettings(UnicacityAddon unicacityAddon) {
+        Settings settings = new Settings();
+
+        BooleanElement hqMessageSettings = new BooleanElement("HQ Nachrichten", unicacityAddon, new ControlElement.IconData(Material.LEASH), "HQ_MESSAGE_SETTINGS", ConfigElements.getHQMessagesActivated());
+        settings.add(hqMessageSettings);
+
+        BooleanElement serviceMessageSetting = new BooleanElement("Service Nachrichten", unicacityAddon, new ControlElement.IconData(Material.PAPER), "SERVICE_MESSAGE_SETTINGS", ConfigElements.getServiceMessagesActivated());
+        settings.add(serviceMessageSetting);
+
+        BooleanElement dbankMessageSettings = new BooleanElement("D-Bank Nachrichten", unicacityAddon, new ControlElement.IconData(Material.SUGAR), "DBANK_MESSAGE_SETTINGS", ConfigElements.getDrugBankMessagesActivated());
+        settings.add(dbankMessageSettings);
+
+        return settings;
+    }
+
     static Settings getTeamspeakSettings(UnicacityAddon unicacityAddon) {
         Settings settings = new Settings();
 
         StringElement teamspeakAPIKey = new StringElement("API Key", unicacityAddon, new ControlElement.IconData(Material.BOOK_AND_QUILL), "TEAMSPEAK_API_KEY", ConfigElements.getTeamspeakAPIKey());
         settings.add(teamspeakAPIKey);
 
-        BooleanElement teamspeakNotifyWaitingSupport = new BooleanElement("Support betreten Nachricht", unicacityAddon, new ControlElement.IconData(Material.NOTE_BLOCK), "TEAMSPEAK_NOTIFY_WAITING_SUPPORT", ConfigElements.getTeamspeakNotifyWaitingSupport());
+        BooleanElement teamspeakNotifyWaitingSupport = new BooleanElement("Support betreten Nachricht", unicacityAddon, new ControlElement.IconData(Material.NOTE_BLOCK), "TEAMSPEAK_NOTIFY_WAITING_SUPPORT_SETTINGS", ConfigElements.getTeamspeakNotifyWaitingSupport());
         settings.add(teamspeakNotifyWaitingSupport);
 
-        BooleanElement teamspeakNotifyWaitingPublic = new BooleanElement("Öffentlich betreten Nachricht", unicacityAddon, new ControlElement.IconData(Material.NOTE_BLOCK), "TEAMSPEAK_NOTIFY_WAITING_PUBLIC", ConfigElements.getTeamspeakNotifyWaitingPublic());
+        BooleanElement teamspeakNotifyWaitingPublic = new BooleanElement("Öffentlich betreten Nachricht", unicacityAddon, new ControlElement.IconData(Material.NOTE_BLOCK), "TEAMSPEAK_NOTIFY_WAITING_PUBLIC_SETTINGS", ConfigElements.getTeamspeakNotifyWaitingPublic());
         settings.add(teamspeakNotifyWaitingPublic);
+
+        return settings;
+    }
+
+    static Settings getEquipSettings(UnicacityAddon unicacityAddon) {
+        Settings settings = new Settings();
+
+        ListContainerElement badFrakEquip = new ListContainerElement("BadFrak-Equip", new ControlElement.IconData(Material.SUGAR));
+        badFrakEquip.setSubSettings(ConfigSubSettings.getBadFrakEquipSettings(unicacityAddon));
+        settings.add(badFrakEquip);
+
+        ListContainerElement copFrakEquip = new ListContainerElement("Polizei-Equip", new ControlElement.IconData(Material.LEASH));
+        copFrakEquip.setSubSettings(ConfigSubSettings.getPoliceEquipSettings(unicacityAddon));
+        settings.add(copFrakEquip);
+
+        ListContainerElement swatFrakEquip = new ListContainerElement("SWAT-Equip", new ControlElement.IconData(Material.LEATHER_CHESTPLATE));
+        swatFrakEquip.setSubSettings(ConfigSubSettings.getSWATEquipSettings(unicacityAddon));
+        settings.add(swatFrakEquip);
+
+        ListContainerElement fbiFrakEquip = new ListContainerElement("FBI-Equip", new ControlElement.IconData(Material.DIAMOND));
+        fbiFrakEquip.setSubSettings(ConfigSubSettings.getFBIEquipSettings(unicacityAddon));
+        settings.add(fbiFrakEquip);
+
+        ListContainerElement hrtFrakEquip = new ListContainerElement("HRT-Equip", new ControlElement.IconData(Material.DIAMOND_CHESTPLATE));
+        hrtFrakEquip.setSubSettings(ConfigSubSettings.getHRTEquipSettings(unicacityAddon));
+        settings.add(hrtFrakEquip);
+
+        ListContainerElement medicFrakEquip = new ListContainerElement("Medic-Equip", new ControlElement.IconData(Material.PAPER));
+        medicFrakEquip.setSubSettings(ConfigSubSettings.getMedicEquipSettings(unicacityAddon));
+        settings.add(medicFrakEquip);
+
+        ListContainerElement fireFightersFrakEquip = new ListContainerElement("Feuerwehr-Equip", new ControlElement.IconData(Material.LEVER));
+        fireFightersFrakEquip.setSubSettings(ConfigSubSettings.getFireFighterSettings(unicacityAddon));
+        settings.add(fireFightersFrakEquip);
+
+        ListContainerElement churchEquip = new ListContainerElement("Kirchen-Equip", new ControlElement.IconData(Material.BOOK));
+        churchEquip.setSubSettings(ConfigSubSettings.getChurchEquipSettings(unicacityAddon));
+        settings.add(churchEquip);
+
+        ListContainerElement newsEquip = new ListContainerElement("News-Equip", new ControlElement.IconData(Material.BOOK_AND_QUILL));
+        newsEquip.setSubSettings(ConfigSubSettings.getNewsEquipSettings(unicacityAddon));
+        settings.add(newsEquip);
+
+        ListContainerElement hitmanEquip = new ListContainerElement("Hitman-Equip", new ControlElement.IconData(Material.GOLD_SWORD));
+        hitmanEquip.setSubSettings(ConfigSubSettings.getHitmanEquipSettings(unicacityAddon));
+        settings.add(hitmanEquip);
+
+        ListContainerElement terrorEquip = new ListContainerElement("Terror-Equip", new ControlElement.IconData(Material.TNT));
+        terrorEquip.setSubSettings(ConfigSubSettings.getTerrorEquipSettings(unicacityAddon));
+        settings.add(terrorEquip);
 
         return settings;
     }

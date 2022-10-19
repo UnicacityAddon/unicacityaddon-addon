@@ -33,9 +33,12 @@ public class FDoorEventHandler {
         UPlayer p = AbstractionLayer.getPlayer();
         BlockPos pos = e.getPos();
 
-        if (p.getPosition().getDistance(pos.getX(), pos.getY(), pos.getZ()) > 4) return;
+        if (p.getPosition().getDistance(-167, 69, 204) > 15
+                && p.getPosition().getDistance(878, 62, -89) > 15
+                && p.getPosition().getDistance(273, 69, -273) > 15
+                || p.getPosition().getDistance(pos.getX(), pos.getY(), pos.getZ()) > 4) return;
 
-        FDoor fDoor = checkForFDoor(pos);
+        FDoor fDoor = checkForFDoor(e.getPos());
         if (fDoor == null) return;
 
         if (System.currentTimeMillis() - lastClick < 1000) return;

@@ -3,7 +3,6 @@ package com.rettichlp.UnicacityAddon.events;
 import com.rettichlp.UnicacityAddon.UnicacityAddon;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.api.Syncer;
-import com.rettichlp.UnicacityAddon.base.api.entries.HouseBanEntry;
 import com.rettichlp.UnicacityAddon.base.config.ConfigElements;
 import com.rettichlp.UnicacityAddon.base.faction.Faction;
 import com.rettichlp.UnicacityAddon.base.faction.FactionHandler;
@@ -11,19 +10,14 @@ import com.rettichlp.UnicacityAddon.base.registry.annotation.UCEvent;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.FormattingCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
-import com.rettichlp.UnicacityAddon.base.utils.MathUtils;
 import com.rettichlp.UnicacityAddon.events.faction.BlacklistEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.ContractEventHandler;
 import com.rettichlp.UnicacityAddon.events.faction.polizei.WantedEventHandler;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemSkull;
 import net.minecraft.scoreboard.ScorePlayerTeam;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -33,13 +27,9 @@ import java.util.Objects;
 @UCEvent
 public class NameTagEventHandler {
 
-    private static int tick;
-    private static int syncTick;
-    public static List<HouseBanEntry> HOUSEBANENTRYLIST = new ArrayList<>();
-
     /**
      * Quote: "Wenn ich gleich nicht mehr antworte, einfach laut meinen Namen sagen." - Lou, 02.10.2022
-     *        "Fällst du dann aus dem Bett?" - RettichLP und Ullrich, 02.10.2022
+     * "Fällst du dann aus dem Bett?" - RettichLP und Ullrich, 02.10.2022
      */
     @SubscribeEvent
     public void onRenderNameTag(PlayerEvent.NameFormat e) {
@@ -57,61 +47,18 @@ public class NameTagEventHandler {
         e.setDisplayname(houseBan + outlaw + prefix + playerName + factionInfo + duty);
     }
 
-    @SubscribeEvent
-    public void onTick(TickEvent.ClientTickEvent event) {
-        if (event.phase != TickEvent.Phase.END) return;
-        if (UnicacityAddon.MINECRAFT.world == null) return;
-        if (tick++ != 20) return;
-
-        List<EntityItem> items = UnicacityAddon.MINECRAFT.world.getEntities(EntityItem.class, (ent) -> ent != null && ent.hasCustomName() && ent.getItem().getItem() instanceof ItemSkull);
-        items.forEach(entityItem -> {
-            String name = entityItem.getCustomNameTag();
-            String playerName = name.substring(3);
-
-            if (!Syncer.getPlayerFactionMap().containsKey(name.substring(3))) return;
-            if (name.contains("◤")) return; // already edited
-
-            String prefix = getPrefix(playerName, true);
-            String factionInfo = getFactionInfo(playerName);
-
-            if (name.startsWith(ColorCode.DARK_GRAY.getCode())) { // non-revivable
-                entityItem.setCustomNameTag(ColorCode.DARK_GRAY.getCode() + "✟" + playerName + factionInfo);
-                return;
-            }
-
-            entityItem.setCustomNameTag(prefix + "✟" + playerName + factionInfo);
-        });
-
-        tick = 0;
-    }
-
-    @SubscribeEvent
-    public void onSyncDisplayName(TickEvent.ClientTickEvent e) {
-        if (e.phase != TickEvent.Phase.END) return;
-        if (UnicacityAddon.MINECRAFT.world == null) return;
-
-        String intervalString = ConfigElements.getRefreshDisplayNamesInterval();
-        int interval = 5 * 20;
-        if (MathUtils.isInteger(intervalString)) {
-            interval = Integer.parseInt(intervalString) * 20;
-        }
-
-        if (syncTick++ < interval) return;
-        refreshAllDisplayNames();
-        syncTick = 0;
-    }
-
     private String getHouseBan(String playerName) {
         StringBuilder houseBan = new StringBuilder();
         houseBan.append(FormattingCode.RESET.getCode());
 
         if (ConfigElements.getNameTagHouseBan()) {
-            if (HOUSEBANENTRYLIST.stream().anyMatch(houseBanEntry -> houseBanEntry.getName().equals(playerName))) houseBan.append(Message.getBuilder()
-                    .of("[").color(ColorCode.DARK_GRAY).advance()
-                    .of("HV").color(ColorCode.RED).advance()
-                    .of("]").color(ColorCode.DARK_GRAY).advance().space()
-                    .add(FormattingCode.RESET.getCode())
-                    .create());
+            if (Syncer.HOUSEBANENTRYLIST.stream().anyMatch(houseBanEntry -> houseBanEntry.getName().equals(playerName)))
+                houseBan.append(Message.getBuilder()
+                        .of("[").color(ColorCode.DARK_GRAY).advance()
+                        .of("HV").color(ColorCode.RED).advance()
+                        .of("]").color(ColorCode.DARK_GRAY).advance().space()
+                        .add(FormattingCode.RESET.getCode())
+                        .create());
         }
 
         return houseBan.toString();
@@ -135,7 +82,7 @@ public class NameTagEventHandler {
         return outlaw.toString();
     }
 
-    private String getPrefix(String playerName, boolean isCorpse) {
+    public static String getPrefix(String playerName, boolean isCorpse) {
         StringBuilder prefix = new StringBuilder();
         prefix.append(FormattingCode.RESET.getCode());
         if (isCorpse) prefix.append(ColorCode.GRAY.getCode());
@@ -163,8 +110,8 @@ public class NameTagEventHandler {
                 prefix.append(ConfigElements.getNameTagFactionSpecificColor().getCode());
         }
 
-        if (Syncer.getPlayerFactionMap().containsKey(playerName)) {
-            Faction targetPlayerFaction = Syncer.getPlayerFactionMap().get(playerName);
+        if (Syncer.PLAYERFACTIONMAP.containsKey(playerName)) {
+            Faction targetPlayerFaction = Syncer.PLAYERFACTIONMAP.get(playerName);
 
             if (ConfigElements.getNameTagFaction()) {
                 if (targetPlayerFaction.equals(AbstractionLayer.getPlayer().getFaction()))
@@ -185,12 +132,12 @@ public class NameTagEventHandler {
         return prefix.toString();
     }
 
-    private String getFactionInfo(String playerName) {
+    public static String getFactionInfo(String playerName) {
         StringBuilder suffix = new StringBuilder();
         suffix.append(FormattingCode.RESET.getCode());
 
-        if (Syncer.getPlayerFactionMap().containsKey(playerName)) {
-            Faction targetPlayerFaction = Syncer.getPlayerFactionMap().get(playerName);
+        if (Syncer.PLAYERFACTIONMAP.containsKey(playerName)) {
+            Faction targetPlayerFaction = Syncer.PLAYERFACTIONMAP.get(playerName);
             if (ConfigElements.getNameTagFactionSuffix())
                 suffix.append(" ").append(targetPlayerFaction.getNameTagSuffix());
         }

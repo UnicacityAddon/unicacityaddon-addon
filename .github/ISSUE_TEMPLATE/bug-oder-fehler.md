@@ -24,5 +24,5 @@ Eine klare und präzise Beschreibung dessen, was erwartet wurde.
 Füge gegebenenfalls Screenshots hinzu, um das Problem zu erläutern.
 
 **Weitere Informationen (bitte ausfüllen):**
-Minecraft Version: `1.16.5`
-Addon Version: `x.y.z`
+Minecraft Version: `1.12.2`
+Addon Version: `1.6.0`
