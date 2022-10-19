@@ -1,6 +1,7 @@
 package com.rettichlp.UnicacityAddon.commands.faction.chat;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
+import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import com.rettichlp.UnicacityAddon.base.utils.ForgeUtils;
 import com.rettichlp.UnicacityAddon.base.utils.TextUtils;
@@ -47,7 +48,10 @@ public class DForceCommand implements IClientCommand {
     @Override
     @Nonnull
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
-        return ForgeUtils.getOnlinePlayers();
+        List<String> tabCompletions = ForgeUtils.getOnlinePlayers();
+        String input = args[args.length - 1].toLowerCase();
+        tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
+        return tabCompletions;
     }
 
     @Override
@@ -57,8 +61,15 @@ public class DForceCommand implements IClientCommand {
 
     @Override
     public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
+        UPlayer p = AbstractionLayer.getPlayer();
+
+        if (args.length == 0) {
+            p.sendSyntaxMessage(getUsage(sender));
+            return;
+        }
+
         String message = TextUtils.makeStringByArgs(args, " ");
-        AbstractionLayer.getPlayer().sendChatMessage("/d " + message);
+        p.sendChatMessage("/d " + message);
     }
 
     @Override
