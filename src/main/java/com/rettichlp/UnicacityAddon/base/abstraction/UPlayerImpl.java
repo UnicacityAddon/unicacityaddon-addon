@@ -56,7 +56,7 @@ public class UPlayerImpl implements UPlayer {
 
     @Override
     public void sendMessageAsString(String message) {
-        getPlayer().sendMessage(new TextComponentString(message));
+        sendMessage(new TextComponentString(message));
     }
 
     @Override
@@ -92,7 +92,7 @@ public class UPlayerImpl implements UPlayer {
 
     @Override
     public void sendEmptyMessage() {
-        getPlayer().sendMessage(Message.getBuilder().createComponent());
+        sendMessage(Message.getBuilder().createComponent());
     }
 
     @Override
