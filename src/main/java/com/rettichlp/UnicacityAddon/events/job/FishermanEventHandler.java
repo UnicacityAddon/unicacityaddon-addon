@@ -23,76 +23,77 @@ public class FishermanEventHandler {
     private boolean dropFish = false;
     private int count = 0;
     private final List<BlockPos> FISHER_POSITION_LIST = Arrays.asList(
-            new BlockPos(-570, 62, 160),
-            new BlockPos(-555, 62, 106),
-            new BlockPos(-521, 62, 78),
-            new BlockPos(-569, 62, 50),
-            new BlockPos(-522, 62, 10)
+            new BlockPos(-570, 63, 160),
+            new BlockPos(-555, 63, 106),
+            new BlockPos(-521, 63, 78),
+            new BlockPos(-569, 63, 50),
+            new BlockPos(-522, 63, 10)
     );
 
     @SubscribeEvent
-    public boolean onClientChatReceive(ClientChatReceivedEvent e) {
+    public void onClientChatReceive(ClientChatReceivedEvent e) {
         String msg = e.getMessage().getUnformattedText();
         UPlayer p = AbstractionLayer.getPlayer();
 
         if (PatternHandler.FISHER_START.matcher(msg).find()) {
             fisherManJob = canCatchFish = true;
             p.setNaviRoute(getFisherPosition(1));
-            return catchFish();
+            catchFish();
+            return;
         }
 
-        if (!fisherManJob) return false;
+        if (dropFish && msg.equals("Du hast dein Ziel erreicht.")) {
+            AbstractionLayer.getPlayer().sendChatMessage("/dropfish");
+            dropFish = false;
+        }
+
+        if (!fisherManJob) return;
 
         if (PatternHandler.FISHER_CATCH_SUCCESS.matcher(msg).find()
                 || PatternHandler.FISHER_CATCH_FAILURE.matcher(msg).find()) {
             canCatchFish = true;
             count++;
-            return catchFish();
+            catchFish();
+            return;
         }
 
         if (PatternHandler.FISHER_CATCH_START.matcher(msg).find()) {
             canCatchFish = false;
             p.setNaviRoute(getFisherPosition(count + 2));
-            return false;
+            return;
         }
 
         if (PatternHandler.FISHER_SPOT_FOUND.matcher(msg).find()) {
             onTargetLocation = true;
-            return catchFish();
+            catchFish();
+            return;
         }
 
         if (PatternHandler.FISHER_SPOT_LOSE.matcher(msg).find()) {
             onTargetLocation = false;
-            return false;
+            return;
         }
 
         if (PatternHandler.FISHER_END.matcher(msg).find()) {
             count = 0;
             fisherManJob = onTargetLocation = canCatchFish = false;
+            if (p.getPosition().getDistance(-504, 63, 197) < 2) {
+                p.sendChatMessage("/dropfish");
+                return;
+            }
             dropFish = true;
-            p.setNaviRoute(new BlockPos(-504, 63, 197)); // Steg
-            return false;
         }
-
-        if (dropFish && msg.equals("Du hast dein Ziel erreicht.")) {
-            p.sendChatMessage("/dropfish");
-            dropFish = false;
-        }
-
-        return false;
     }
 
     private BlockPos getFisherPosition(int i) {
-        return FISHER_POSITION_LIST.get(i - 1);
+        return i > FISHER_POSITION_LIST.size() ? new BlockPos(-504, 63, 197) /* Steg */ : FISHER_POSITION_LIST.get(i - 1);
     }
 
-    private boolean catchFish() {
+    private void catchFish() {
         UPlayer p = AbstractionLayer.getPlayer();
         if (canCatchFish && onTargetLocation && count < 5) {
             p.sendChatMessage("/catchfish");
             onTargetLocation = canCatchFish = false;
-            return true;
         }
-        return false;
     }
 }
