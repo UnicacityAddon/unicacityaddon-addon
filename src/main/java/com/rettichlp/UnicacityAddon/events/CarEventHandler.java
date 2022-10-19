@@ -21,8 +21,6 @@ import java.util.regex.Matcher;
 @UCEvent
 public class CarEventHandler {
 
-    static long lastTankWarningMessage = 0;
-
     @SubscribeEvent
     public boolean onClientChatReceived(ClientChatReceivedEvent e) {
         UPlayer p = AbstractionLayer.getPlayer();

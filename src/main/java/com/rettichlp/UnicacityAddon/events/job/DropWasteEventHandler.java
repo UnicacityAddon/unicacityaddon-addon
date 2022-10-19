@@ -4,18 +4,12 @@ import com.rettichlp.UnicacityAddon.UnicacityAddon;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCEvent;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntitySign;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.World;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author Dimiikou
@@ -31,7 +25,6 @@ public class DropWasteEventHandler {
         if (!(e instanceof PlayerInteractEvent.RightClickBlock) || !UnicacityAddon.isUnicacity()) return;
         if (!isDropState) return;
 
-        World world = e.getWorld();
         BlockPos blockPos = e.getPos();
 
         if (System.currentTimeMillis() - lastUse < 1000) return;
@@ -67,9 +60,9 @@ public class DropWasteEventHandler {
         METAL_DROP_POSITION(899, 67, 394),
         WOOD_DROP_POSITION(874, 68, 378);
 
-        int x;
-        int y;
-        int z;
+        final int x;
+        final int y;
+        final int z;
 
         DropPositions(int x, int y, int z) {
             this.x = x;
