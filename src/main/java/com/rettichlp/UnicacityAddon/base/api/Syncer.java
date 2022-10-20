@@ -18,7 +18,6 @@ import com.rettichlp.UnicacityAddon.base.utils.ListUtils;
 import net.labymod.main.LabyMod;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -97,10 +96,6 @@ public class Syncer {
             NAVIPOINTLIST = getNaviPointEntryList();
             LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Navipunkte aktualisiert.");
         });
-    }
-
-    public static List<String> getPlayerGroups() {
-        return Arrays.asList("BLACKLIST", "DEV", "LEMILIEU", "DYAVOL", "VIP", "BETA");
     }
 
     public static List<BlacklistReasonEntry> getBlacklistReasonEntryList() {
@@ -202,6 +197,15 @@ public class Syncer {
             naviPointEntryList.add(new NaviPointEntry(name, x, y, z));
         });
         return naviPointEntryList;
+    }
+
+    public static List<String> getPlayerGroupList() {
+        JsonArray response = APIRequest.sendPlayerGroupRequest();
+        List<String> playerGroupList = new ArrayList<>();
+        if (response != null) {
+            response.forEach(jsonElement -> playerGroupList.add(jsonElement.getAsString()));
+        }
+        return playerGroupList;
     }
 
     public static List<PlayerGroupEntry> getPlayerGroupEntryList(String group) {

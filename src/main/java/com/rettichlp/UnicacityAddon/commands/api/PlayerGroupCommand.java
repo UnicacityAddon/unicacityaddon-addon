@@ -86,13 +86,13 @@ public class PlayerGroupCommand implements IClientCommand {
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
         List<String> tabCompletions = new ArrayList<>();
         if (args.length == 1) {
-            tabCompletions.addAll(Syncer.getPlayerGroups());
+            tabCompletions.addAll(Syncer.getPlayerGroupList());
             tabCompletions.add("add");
             tabCompletions.add("remove");
         } else if (args.length == 2) {
             tabCompletions.addAll(ForgeUtils.getOnlinePlayers());
         } else if (args.length == 3) {
-            tabCompletions.addAll(Syncer.getPlayerGroups());
+            tabCompletions.addAll(Syncer.getPlayerGroupList());
         }
         String input = args[args.length - 1].toLowerCase();
         tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
