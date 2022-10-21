@@ -1,5 +1,6 @@
 package com.rettichlp.UnicacityAddon.events;
 
+import com.rettichlp.UnicacityAddon.UnicacityAddon;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCEvent;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
@@ -21,7 +22,7 @@ public class SMSEventHandler {
         Matcher smsMatcher = PatternHandler.SMS_PATTERN.matcher(e.getMessage().getUnformattedText());
 
         if (!smsMatcher.find()) return false;
-        AbstractionLayer.getPlayer().sendChatMessage("/nummer " + smsMatcher.group(1));
+        if (!PayDayEventHandler.isAfk) AbstractionLayer.getPlayer().sendChatMessage("/nummer " + smsMatcher.group(1));
         isActive = true;
 
         return false;
