@@ -30,7 +30,7 @@ import java.util.regex.Pattern;
 public class ReinforcementEventHandler {
 
     private static ReinforcementCommand.ReinforcementType lastReinforcement;
-    public static int activeReinforcement = 0;
+    public static int activeReinforcement = -1;
 
     @SubscribeEvent
     public boolean onClientChatReceive(ClientChatReceivedEvent e) {
