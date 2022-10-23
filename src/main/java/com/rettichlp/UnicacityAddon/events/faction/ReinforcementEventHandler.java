@@ -64,6 +64,15 @@ public class ReinforcementEventHandler {
                     .createComponent();
 
             Map.Entry<Double, NaviPointEntry> nearestNaviPoint = NavigationUtils.getNearestNaviPoint(posX, posY, posZ);
+            NaviPointEntry navipoint = nearestNaviPoint.getValue();
+
+            String navipointString;
+            if (navipoint == null) {
+                navipointString = "unbekannter Ort";
+                p.sendErrorMessage("Navipunkte wurden nicht geladen. Versuche /syncdata um diese neu zu laden!");
+            } else {
+                navipointString = navipoint.getName().replace("-", " ");
+            }
 
             p.sendMessageAsString(ConfigElements.getPatternReinforcement()
                     .replace("&", "§")
@@ -72,7 +81,7 @@ public class ReinforcementEventHandler {
                     .replace("%x%", String.valueOf(posX))
                     .replace("%y%", String.valueOf(posY))
                     .replace("%z%", String.valueOf(posZ))
-                    .replace("%navipoint%", nearestNaviPoint.getValue().getName().replace("-", " "))
+                    .replace("%navipoint%", navipointString)
                     .replace("%distance%", String.valueOf(distance)));
 
             p.sendMessage(Message.getBuilder()
