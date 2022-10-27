@@ -54,14 +54,14 @@ public class PlayerGroupCommand implements IClientCommand {
     public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args) {
         UPlayer p = AbstractionLayer.getPlayer();
 
-        if (args.length == 1) {
+        if (args.length == 2 && args[0].equalsIgnoreCase("list")) {
             p.sendEmptyMessage();
             p.sendMessage(Message.getBuilder()
                     .of("Spielergruppe:").color(ColorCode.DARK_AQUA).bold().advance().space()
-                    .of(args[0]).color(ColorCode.DARK_AQUA).advance()
+                    .of(args[1]).color(ColorCode.DARK_AQUA).advance()
                     .createComponent());
 
-            Syncer.getPlayerGroupEntryList(args[0]).forEach(playerGroupEntry -> p.sendMessage(Message.getBuilder()
+            Syncer.getPlayerGroupEntryList(args[1]).forEach(playerGroupEntry -> p.sendMessage(Message.getBuilder()
                     .of("»").color(ColorCode.GRAY).advance().space()
                     .of(playerGroupEntry.getName()).color(ColorCode.AQUA).advance()
                     .createComponent()));
@@ -69,11 +69,11 @@ public class PlayerGroupCommand implements IClientCommand {
             p.sendEmptyMessage();
 
         } else if (args.length == 3 && args[0].equalsIgnoreCase("add")) {
-            JsonObject response = APIRequest.sendPlayerAddRequest(args[1], args[2]);
+            JsonObject response = APIRequest.sendPlayerAddRequest(args[2], args[1]);
             if (response == null) return;
             p.sendAPIMessage(response.get("info").getAsString(), true);
         } else if (args.length == 3 && args[0].equalsIgnoreCase("remove")) {
-            JsonObject response = APIRequest.sendPlayerRemoveRequest(args[1], args[2]);
+            JsonObject response = APIRequest.sendPlayerRemoveRequest(args[2], args[1]);
             if (response == null) return;
             p.sendAPIMessage(response.get("info").getAsString(), true);
         } else {
@@ -86,13 +86,13 @@ public class PlayerGroupCommand implements IClientCommand {
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
         List<String> tabCompletions = new ArrayList<>();
         if (args.length == 1) {
-            tabCompletions.addAll(Syncer.getPlayerGroupList());
+            tabCompletions.add("list");
             tabCompletions.add("add");
             tabCompletions.add("remove");
         } else if (args.length == 2) {
-            tabCompletions.addAll(ForgeUtils.getOnlinePlayers());
-        } else if (args.length == 3) {
             tabCompletions.addAll(Syncer.getPlayerGroupList());
+        } else if (args.length == 3) {
+            tabCompletions.addAll(ForgeUtils.getOnlinePlayers());
         }
         String input = args[args.length - 1].toLowerCase();
         tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
