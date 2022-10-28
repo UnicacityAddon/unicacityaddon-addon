@@ -9,7 +9,6 @@ import net.labymod.settings.elements.HeaderElement;
 import net.labymod.settings.elements.ListContainerElement;
 import net.labymod.settings.elements.SettingsElement;
 import net.labymod.utils.Material;
-import net.minecraft.block.material.Material;
 
 import java.util.List;
 
