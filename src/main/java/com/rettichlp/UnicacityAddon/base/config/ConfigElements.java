@@ -568,4 +568,9 @@ public class ConfigElements {
                 ? UnicacityAddon.ADDON.getConfig().get("EQUIP_LOCKPICK_SETTING").getAsString()
                 : "4500";
     }
+
+    public static boolean getRemoveResourcePackMessage() {
+        return !UnicacityAddon.ADDON.getConfig().has("REMOVE_RESOURCEPACK_MESSAGE") || UnicacityAddon.ADDON.getConfig().get("REMOVE_RESOURCEPACK_MESSAGE")
+                .getAsBoolean(); // default = true
+    }
 }

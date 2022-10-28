@@ -9,6 +9,7 @@ import net.labymod.settings.elements.HeaderElement;
 import net.labymod.settings.elements.ListContainerElement;
 import net.labymod.settings.elements.SettingsElement;
 import net.labymod.utils.Material;
+import net.minecraft.block.material.Material;
 
 import java.util.List;
 
@@ -101,6 +102,9 @@ public class Config {
 
         BooleanElement uploadAfterScreenCommand = new BooleanElement("Upload bei /screen", unicacityAddon, new ControlElement.IconData(Material.LEATHER), "AUTOMATED_SCREENSHOT_UPLOAD_SETTINGS", ConfigElements.getAutomatedScreenshotUpload());
         list.add(uploadAfterScreenCommand);
+
+        BooleanElement removeResourcepackMessage = new BooleanElement("Remove Texturepack Nachricht", unicacityAddon, new ControlElement.IconData(Material.BARRIER), "REMOVE_RESOURCEPACK_MESSAGE", ConfigElements.getRemoveResourcePackMessage());
+        list.add(removeResourcepackMessage);
 
         // Certain LabyMod themes cover the lower settings. To counteract this, empty lines are appended.
         list.add(emptyLine);

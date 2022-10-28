@@ -43,6 +43,8 @@ public class JoinEventHandler {
             handleJoin();
         }
 
+        if (ConfigElements.getRemoveResourcePackMessage() && PatternHandler.RESOURCEPACK_PATTERN.matcher(msg).find()) e.setCanceled(true);
+
         return false;
     }
 
