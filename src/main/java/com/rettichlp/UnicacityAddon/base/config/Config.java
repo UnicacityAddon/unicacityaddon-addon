@@ -102,6 +102,9 @@ public class Config {
         BooleanElement uploadAfterScreenCommand = new BooleanElement("Upload bei /screen", unicacityAddon, new ControlElement.IconData(Material.LEATHER), "AUTOMATED_SCREENSHOT_UPLOAD_SETTINGS", ConfigElements.getAutomatedScreenshotUpload());
         list.add(uploadAfterScreenCommand);
 
+        BooleanElement removeResourcepackMessage = new BooleanElement("Texturepack Nachricht ausblenden", unicacityAddon, new ControlElement.IconData(Material.BARRIER), "REMOVE_RESOURCEPACK_MESSAGE_SETTINGS", ConfigElements.getRemoveResourcePackMessage());
+        list.add(removeResourcepackMessage);
+
         // Certain LabyMod themes cover the lower settings. To counteract this, empty lines are appended.
         list.add(emptyLine);
         list.add(emptyLine);

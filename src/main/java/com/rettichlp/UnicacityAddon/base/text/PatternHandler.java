@@ -303,4 +303,10 @@ public class PatternHandler {
     /**
      * Quote: Rettich: "In welchem Forum ist der Vorschlag drin?" Leon: "In Vorschläge" - RettichLP und Dimiikou, 09.10.2022
      */
+
+    /**
+     * {@link com.rettichlp.UnicacityAddon.events.JoinEventHandler}
+     */
+    public static final Pattern RESOURCEPACK_PATTERN = Pattern.compile("^Wir empfehlen dir unser Resourcepack zu nutzen\\.$|" +
+            "^Unter https://unicacity\\.de/dl/UnicaCity[_a-zA-Z\\d]+.zip kannst du es dir herunterladen.$");
 }

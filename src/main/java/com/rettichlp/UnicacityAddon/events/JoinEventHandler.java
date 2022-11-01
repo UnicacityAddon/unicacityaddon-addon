@@ -43,6 +43,9 @@ public class JoinEventHandler {
             handleJoin();
         }
 
+        if (ConfigElements.getRemoveResourcePackMessage() && PatternHandler.RESOURCEPACK_PATTERN.matcher(msg).find())
+            e.setCanceled(true);
+
         return false;
     }
 
@@ -69,7 +72,8 @@ public class JoinEventHandler {
                     new Timer().schedule(new TimerTask() {
                         @Override
                         public void run() {
-                            if (!ConfigElements.getFirstCommand().isEmpty()) p.sendChatMessage(ConfigElements.getFirstCommand());
+                            if (!ConfigElements.getFirstCommand().isEmpty())
+                                p.sendChatMessage(ConfigElements.getFirstCommand());
                         }
                     }, 500);
 
@@ -77,7 +81,8 @@ public class JoinEventHandler {
                     new Timer().schedule(new TimerTask() {
                         @Override
                         public void run() {
-                            if (!ConfigElements.getSecondCommand().isEmpty()) p.sendChatMessage(ConfigElements.getSecondCommand());
+                            if (!ConfigElements.getSecondCommand().isEmpty())
+                                p.sendChatMessage(ConfigElements.getSecondCommand());
                         }
                     }, 1000);
 
@@ -85,7 +90,8 @@ public class JoinEventHandler {
                     new Timer().schedule(new TimerTask() {
                         @Override
                         public void run() {
-                            if (!ConfigElements.getThirdCommand().isEmpty()) p.sendChatMessage(ConfigElements.getThirdCommand());
+                            if (!ConfigElements.getThirdCommand().isEmpty())
+                                p.sendChatMessage(ConfigElements.getThirdCommand());
                         }
                     }, 1500);
                 }
