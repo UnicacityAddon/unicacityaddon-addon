@@ -22,7 +22,7 @@ public class PatternHandler {
      * {@link com.rettichlp.UnicacityAddon.modules.BombTimerModule}
      */
     public static final Pattern BOMB_PLACED_PATTERN = Pattern.compile("^News: ACHTUNG! Es wurde eine Bombe in der Nähe von .+ gefunden!$");
-    public static final Pattern BOMB_REMOVED_PATTERN = Pattern.compile("^News: Die Bombe konnte (?:nicht|erfolgreich) entschärft werden!$");
+    public static final Pattern BOMB_REMOVED_PATTERN = Pattern.compile("^News: Die Bombe konnte (nicht|erfolgreich) entschärft werden!$");
 
     /**
      * {@link com.rettichlp.UnicacityAddon.modules.CarOpenModule}
