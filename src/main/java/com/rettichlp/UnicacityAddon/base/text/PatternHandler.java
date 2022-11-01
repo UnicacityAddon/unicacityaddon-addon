@@ -267,7 +267,7 @@ public class PatternHandler {
     public static final Pattern DEATH_PATTERN = Pattern.compile("^Du bist nun für (\\d+) Minuten auf dem Friedhof\\.$");
 
     /**
-     * {@link com.rettichlp.UnicacityAddon.events.HouseSignEventHandler}
+     * {@link com.rettichlp.UnicacityAddon.events.job.HouseSignEventHandler}
      */
     public static final Pattern WASTE_JOB_START_PATTERN = Pattern.compile("^\\[Müllmann] Entleere bis zu \\d Mülltonnen an den Haustüren der Häuser und entlade hier alles\\.$");
     public static final Pattern WASTE_JOB_END_PATTERN = Pattern.compile("^\\[Müllmann] Du hast genug Mülltonnen entleert\\.$");
