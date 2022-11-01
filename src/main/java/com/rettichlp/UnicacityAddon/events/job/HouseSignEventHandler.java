@@ -1,4 +1,4 @@
-package com.rettichlp.UnicacityAddon.events;
+package com.rettichlp.UnicacityAddon.events.job;
 
 import com.rettichlp.UnicacityAddon.UnicacityAddon;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
