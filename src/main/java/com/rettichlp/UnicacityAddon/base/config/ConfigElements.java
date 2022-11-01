@@ -570,7 +570,7 @@ public class ConfigElements {
     }
 
     public static boolean getRemoveResourcePackMessage() {
-        return !UnicacityAddon.ADDON.getConfig().has("REMOVE_RESOURCEPACK_MESSAGE") || UnicacityAddon.ADDON.getConfig().get("REMOVE_RESOURCEPACK_MESSAGE")
+        return !UnicacityAddon.ADDON.getConfig().has("REMOVE_RESOURCEPACK_MESSAGE_SETTINGS") || UnicacityAddon.ADDON.getConfig().get("REMOVE_RESOURCEPACK_MESSAGE_SETTINGS")
                 .getAsBoolean(); // default = true
     }
 }
