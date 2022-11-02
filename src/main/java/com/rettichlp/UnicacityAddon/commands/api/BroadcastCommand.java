@@ -18,6 +18,9 @@ import net.minecraftforge.client.IClientCommand;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -37,7 +40,7 @@ public class BroadcastCommand implements IClientCommand {
     @Override
     @Nonnull
     public String getUsage(@Nonnull ICommandSender sender) {
-        return "/broadcast [queue|send]";
+        return "/broadcast [queue|send] (dd.MM.yyyy) (HH:mm:ss) (Nachricht)";
     }
 
     @Override
@@ -83,9 +86,18 @@ public class BroadcastCommand implements IClientCommand {
 
             p.sendEmptyMessage();
 
-        } else if (args.length > 1 && args[0].equalsIgnoreCase("send")) {
-            String broadcast = TextUtils.makeStringByArgs(args, " ").replace("send ", "");
-            JsonObject response = APIRequest.sendBroadcastSendRequest(broadcast);
+        } else if (args.length > 3 && args[0].equalsIgnoreCase("send")) {
+            String date = args[1]; // TT.MM.JJJJ
+            String time = args[2]; // HH:MM:SS
+            String message = TextUtils.makeStringByArgs(args, " ")
+                    .replace("send ", "")
+                    .replace(date + " ", "")
+                    .replace(time + " ", "");
+
+            LocalDateTime localDateTime = LocalDateTime.parse(date + " " + time, DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss"));
+            long sendTime = localDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+
+            JsonObject response = APIRequest.sendBroadcastSendRequest(message, String.valueOf(sendTime));
             if (response == null) return;
             p.sendAPIMessage(response.get("info").getAsString(), true);
         } else {

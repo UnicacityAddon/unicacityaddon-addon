@@ -58,9 +58,10 @@ public class APIRequest {
         }
     }
 
-    public static JsonObject sendBroadcastSendRequest(String message) {
+    public static JsonObject sendBroadcastSendRequest(String message, String sendTime) {
         Map<String, String> parameters = new HashMap<>();
         parameters.put("message", message);
+        parameters.put("sendTime", sendTime);
 
         try {
             return APIResponseHandler.getBroadcastSendResponse(parameters);
