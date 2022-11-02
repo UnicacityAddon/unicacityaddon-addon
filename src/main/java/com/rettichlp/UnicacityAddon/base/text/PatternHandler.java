@@ -138,6 +138,8 @@ public class PatternHandler {
             "|^\\[Transport] Du hast ein Weizen Paket abgeliefert\\.$" +
             "|^\\[Transport] Du hast eine Schwarzpulverkiste abgeliefert\\.$");
     public static final Pattern DROP_DRINK_PATTERN = Pattern.compile("^\\[Bar] Du hast eine Flasche abgegeben!$");
+    public static final Pattern TABAK_DROP_PATTERN = Pattern.compile("^\\[Tabakplantage] Bringe es nun zur Shishabar und gib es mit /droptabak ab\\.$");
+    public static final Pattern TABAK_FINISH_PATTERN = Pattern.compile("^\\[Tabakplantage] Du hast (\\d+)g Tabak abgegeben\\.$");
 
     /**
      * {@link com.rettichlp.UnicacityAddon.events.HotkeyEventHandler}

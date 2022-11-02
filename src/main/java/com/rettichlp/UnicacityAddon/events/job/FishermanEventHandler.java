@@ -17,10 +17,11 @@ import java.util.List;
 @UCEvent
 public class FishermanEventHandler {
 
+    public static boolean dropFish = false;
+
     private boolean onTargetLocation = false;
     private boolean canCatchFish = false;
     private boolean fisherManJob = false;
-    private boolean dropFish = false;
     private int count = 0;
     private final List<BlockPos> FISHER_POSITION_LIST = Arrays.asList(
             new BlockPos(-570, 63, 160),
@@ -40,11 +41,6 @@ public class FishermanEventHandler {
             p.setNaviRoute(getFisherPosition(1));
             catchFish();
             return;
-        }
-
-        if (dropFish && msg.equals("Du hast dein Ziel erreicht.")) {
-            AbstractionLayer.getPlayer().sendChatMessage("/dropfish");
-            dropFish = false;
         }
 
         if (!fisherManJob) return;
