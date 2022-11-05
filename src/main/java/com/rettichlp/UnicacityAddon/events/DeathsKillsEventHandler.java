@@ -32,7 +32,7 @@ public class DeathsKillsEventHandler {
         if (jailKillMatcher.find()) {
             if (jailKillMatcher.group(2).equals(p.getName())) {
                 kills++;
-                APIRequest.sendStatisticAddKillRequest();
+                APIRequest.sendStatisticAddRequest("KILL");
             }
 
             return false;
@@ -42,7 +42,7 @@ public class DeathsKillsEventHandler {
         if (contractKillPattern.find() && msg.contains("getötet")) {
             if (msg.contains(p.getName())) {
                 kills++;
-                APIRequest.sendStatisticAddKillRequest();
+                APIRequest.sendStatisticAddRequest("KILL");
                 AFbankEinzahlenCommand.sendClockMessage();
             }
 
@@ -51,7 +51,7 @@ public class DeathsKillsEventHandler {
 
         if (PatternHandler.DEATH_PATTERN.matcher(msg).find()) {
             deaths++;
-            APIRequest.sendStatisticAddDeathRequest();
+            APIRequest.sendStatisticAddRequest("DEATH");
             return false;
         }
 

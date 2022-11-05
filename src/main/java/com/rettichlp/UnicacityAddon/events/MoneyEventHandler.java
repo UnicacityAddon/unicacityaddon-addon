@@ -73,7 +73,7 @@ public class MoneyEventHandler {
 
         Matcher bankPayDayMatcher = PatternHandler.STATS_BANK_PATTERN.matcher(msg);
         if (bankPayDayMatcher.find()) {
-            APIRequest.sendStatisticAddPlayTimeRequest();
+            APIRequest.sendStatisticAddRequest("PLAYTIME");
             BankMoneyModule.setBalance(Integer.parseInt(bankPayDayMatcher.group(1)));
             JobModule.setBalance(0);
             JobModule.setExperience(0);
