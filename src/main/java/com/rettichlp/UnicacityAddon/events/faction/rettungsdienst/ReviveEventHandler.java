@@ -35,6 +35,6 @@ public class ReviveEventHandler {
 
     public static void handleRevive() {
         if (System.currentTimeMillis() - time < TimeUnit.SECONDS.toMillis(10))
-            APIRequest.sendStatisticAddReviveRequest();
+            APIRequest.sendStatisticAddRequest("REVIVE");
     }
 }

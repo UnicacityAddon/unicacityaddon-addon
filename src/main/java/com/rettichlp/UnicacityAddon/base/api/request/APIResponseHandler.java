@@ -108,28 +108,8 @@ public class APIResponseHandler {
         return getJsonElement(urlString).getAsJsonArray();
     }
 
-    public static void getStatisticAddKillResponse(Map<String, String> parameters) throws APIUnsuccessResponseException {
-        String urlString = WebsiteUtils.createUrl(BaseUrl.STATISTIC_KILL.getPath(), parameters);
-        getJsonElement(urlString);
-    }
-
-    public static void getStatisticAddDeathResponse(Map<String, String> parameters) throws APIUnsuccessResponseException {
-        String urlString = WebsiteUtils.createUrl(BaseUrl.STATISTIC_DEATH.getPath(), parameters);
-        getJsonElement(urlString);
-    }
-
-    public static void getStatisticAddReviveResponse(Map<String, String> parameters) throws APIUnsuccessResponseException {
-        String urlString = WebsiteUtils.createUrl(BaseUrl.STATISTIC_REVIVE.getPath(), parameters);
-        getJsonElement(urlString);
-    }
-
-    public static void getStatisticAddServiceResponse(Map<String, String> parameters) throws APIUnsuccessResponseException {
-        String urlString = WebsiteUtils.createUrl(BaseUrl.STATISTIC_SERVICE.getPath(), parameters);
-        getJsonElement(urlString);
-    }
-
-    public static void getStatisticAddPlayTimeResponse(Map<String, String> parameters) throws APIUnsuccessResponseException {
-        String urlString = WebsiteUtils.createUrl(BaseUrl.STATISTIC_PLAYTIME.getPath(), parameters);
+    public static void getStatisticAddResponse(Map<String, String> parameters) throws APIUnsuccessResponseException {
+        String urlString = WebsiteUtils.createUrl(BaseUrl.STATISTIC_ADD.getPath(), parameters);
         getJsonElement(urlString);
     }
 

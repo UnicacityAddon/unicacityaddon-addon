@@ -17,7 +17,7 @@ public class ServiceCountEventHandler {
     public boolean onClientChatReceived(ClientChatReceivedEvent e) {
         if (PatternHandler.SERVICE_DONE_PATTERN.matcher(e.getMessage().getUnformattedText()).find()) {
             ServiceCountCommand.addService();
-            APIRequest.sendStatisticAddServiceRequest();
+            APIRequest.sendStatisticAddRequest("SERVICE");
         }
 
         return false;

@@ -14,11 +14,7 @@ public enum BaseUrl {
     PLAYER("/player"),
     PLAYER_GROUP("/player/groups"),
     STATISTIC("/statistic"),
-    STATISTIC_KILL("/statistic/addKill"),
-    STATISTIC_DEATH("/statistic/addDeath"),
-    STATISTIC_REVIVE("/statistic/addRevive"),
-    STATISTIC_SERVICE("/statistic/addService"),
-    STATISTIC_PLAYTIME("/statistic/addPlayTime"),
+    STATISTIC_ADD("/statistic/" + AbstractionLayer.getPlayer().getName() + "/add"),
     TOKEN_CREATE("/create"),
     TOKEN_REVOKE("/revoke"),
     WANTED_REASON("/wantedreason");
