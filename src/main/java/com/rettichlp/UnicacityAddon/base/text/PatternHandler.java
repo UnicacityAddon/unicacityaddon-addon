@@ -110,9 +110,10 @@ public class PatternHandler {
     public static final Pattern CAR_POSITION_PATTERN = Pattern.compile("^\\[Car] Das Fahrzeug befindet sich bei . X: (-?\\d+) \\| Y: (-?\\d+) \\| Z: (-?\\d+)$");
 
     /**
-     * {@link com.rettichlp.UnicacityAddon.events.team.ReportAcceptEventHandler}
+     * {@link com.rettichlp.UnicacityAddon.events.team.ReportEventHandler}
      */
     public static final Pattern REPORT_ACCEPTED_PATTERN = Pattern.compile("^\\[Report] Du hast den Report von \\w+ \\[Level \\d+] angenommen! Thema: [a-zA-Z]+$");
+    public static final Pattern REPORT_END_PATTERN = Pattern.compile("^\\[Report] Du hast den Report mit \\w+ beendet! \\(#\\d+\\)$");
 
     /**
      * {@link com.rettichlp.UnicacityAddon.events.faction.badfaction.PlantTimerEventHandler}

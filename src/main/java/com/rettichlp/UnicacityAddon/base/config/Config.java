@@ -20,7 +20,7 @@ public class Config {
         list.add(new HeaderElement(Message.getBuilder()
                 .of("U").color(ColorCode.RED).bold().advance()
                 .of("nica").color(ColorCode.BLUE).bold().advance()
-                .of("C").color(ColorCode.RED).bold().advance()
+                .of("c").color(ColorCode.RED).bold().advance()
                 .of("ity").color(ColorCode.BLUE).bold().advance()
                 .of("A").color(ColorCode.RED).bold().advance()
                 .of("ddon").color(ColorCode.BLUE).bold().advance()
@@ -56,10 +56,6 @@ public class Config {
 
         list.add(new HeaderElement(Message.getBuilder().of("Automatisierung").color(ColorCode.WHITE).advance().create()));
 
-        ListContainerElement reportSettings = new ListContainerElement("Report Nachrichten", new ControlElement.IconData(Material.SIGN));
-        reportSettings.setSubSettings(ConfigSettings.getReportSettings(unicacityAddon));
-        list.add(reportSettings);
-
         BooleanElement atmSettings = new BooleanElement("ATM Info", unicacityAddon, new ControlElement.IconData(Material.PAPER), "ATM_SETTINGS", ConfigElements.getEventATM());
         atmSettings.setSubSettings(ConfigSettings.getATMSettings(unicacityAddon));
         list.add(atmSettings);
@@ -90,6 +86,12 @@ public class Config {
         ListContainerElement equipSettings = new ListContainerElement("Equip", new ControlElement.IconData(Material.ANVIL));
         equipSettings.setSubSettings(ConfigSettings.getEquipSettings(unicacityAddon));
         list.add(equipSettings);
+
+        list.add(new HeaderElement(Message.getBuilder().of("Report").color(ColorCode.WHITE).advance().create()));
+
+        ListContainerElement reportSettings = new ListContainerElement("Report Einstellungen", new ControlElement.IconData(Material.SIGN));
+        reportSettings.setSubSettings(ConfigSettings.getReportSettings(unicacityAddon));
+        list.add(reportSettings);
 
         list.add(new HeaderElement(Message.getBuilder().of("Sonstiges").color(ColorCode.WHITE).advance().create()));
 
