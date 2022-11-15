@@ -234,6 +234,12 @@ public class ConfigElements {
                 : Strings.EMPTY;
     }
 
+    public static String getReportPrefix() {
+        return UnicacityAddon.ADDON.getConfig().has("REPORT_PREFIX_SETTINGS") && !UnicacityAddon.ADDON.getConfig().get("REPORT_PREFIX_SETTINGS").getAsString().isEmpty()
+                ? UnicacityAddon.ADDON.getConfig().get("REPORT_PREFIX_SETTINGS").getAsString()
+                : Strings.EMPTY;
+    }
+
     // PASSWORD SETTINGS
     public static boolean getPasswordAutomation() {
         return UnicacityAddon.ADDON.getConfig().has("PASSWORD_SETTINGS") && UnicacityAddon.ADDON.getConfig().get("PASSWORD_SETTINGS")

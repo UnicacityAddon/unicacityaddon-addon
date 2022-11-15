@@ -160,6 +160,8 @@ public class ConfigSettings {
         StringElement reportFarewellSettings = new StringElement("Report Verabschiedung", unicacityAddon, new ControlElement.IconData(Material.PAPER), "REPORT_FAREWELL_SETTINGS", ConfigElements.getReportFarewell());
         settings.add(reportFarewellSettings);
 
+        StringElement reportPrefixSettings = new StringElement("Report Präfix", unicacityAddon, new ControlElement.IconData(Material.PAPER), "REPORT_PREFIX_SETTINGS", ConfigElements.getReportPrefix());
+        settings.add(reportPrefixSettings);
         return settings;
     }
 
