@@ -87,6 +87,25 @@ public class NameTagEventHandler {
         prefix.append(FormattingCode.RESET.getCode());
         if (isCorpse) prefix.append(ColorCode.GRAY.getCode());
 
+        if (Syncer.PLAYERFACTIONMAP.containsKey(playerName)) {
+            Faction targetPlayerFaction = Syncer.PLAYERFACTIONMAP.get(playerName);
+
+            if (ConfigElements.getNameTagFaction()) {
+                if (targetPlayerFaction.equals(AbstractionLayer.getPlayer().getFaction()))
+                    prefix.append(ConfigElements.getNameTagFactionColor().getCode());
+            }
+
+            if (ConfigElements.getNameTagAlliance()) {
+                if (targetPlayerFaction.equals(ConfigElements.getNameTagAlliance1()) || targetPlayerFaction.equals(ConfigElements.getNameTagAlliance2()))
+                    prefix.append(ConfigElements.getNameTagAllianceColor().getCode());
+            }
+
+            if (ConfigElements.getNameTagStreetwar()) {
+                if (targetPlayerFaction.equals(ConfigElements.getNameTagStreetwar1()) || targetPlayerFaction.equals(ConfigElements.getNameTagStreetwar2()))
+                    prefix.append(ConfigElements.getNameTagStreetwarColor().getCode());
+            }
+        }
+
         if (ConfigElements.getNameTagFactionSpecific()) {
             WantedEventHandler.Wanted wanted = WantedEventHandler.WANTED_MAP.get(playerName);
             if (wanted != null) {
@@ -108,25 +127,6 @@ public class NameTagEventHandler {
 
             if (ContractEventHandler.CONTRACT_LIST.contains(playerName))
                 prefix.append(ConfigElements.getNameTagFactionSpecificColor().getCode());
-        }
-
-        if (Syncer.PLAYERFACTIONMAP.containsKey(playerName)) {
-            Faction targetPlayerFaction = Syncer.PLAYERFACTIONMAP.get(playerName);
-
-            if (ConfigElements.getNameTagFaction()) {
-                if (targetPlayerFaction.equals(AbstractionLayer.getPlayer().getFaction()))
-                    prefix.append(ConfigElements.getNameTagFactionColor().getCode());
-            }
-
-            if (ConfigElements.getNameTagAlliance()) {
-                if (targetPlayerFaction.equals(ConfigElements.getNameTagAlliance1()) || targetPlayerFaction.equals(ConfigElements.getNameTagAlliance2()))
-                    prefix.append(ConfigElements.getNameTagAllianceColor().getCode());
-            }
-
-            if (ConfigElements.getNameTagStreetwar()) {
-                if (targetPlayerFaction.equals(ConfigElements.getNameTagStreetwar1()) || targetPlayerFaction.equals(ConfigElements.getNameTagStreetwar2()))
-                    prefix.append(ConfigElements.getNameTagStreetwarColor().getCode());
-            }
         }
 
         return prefix.toString();
