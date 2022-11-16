@@ -10,6 +10,7 @@ import com.rettichlp.UnicacityAddon.base.registry.EventRegistry;
 import com.rettichlp.UnicacityAddon.base.registry.KeyBindRegistry;
 import com.rettichlp.UnicacityAddon.base.registry.ModuleRegistry;
 import com.rettichlp.UnicacityAddon.base.teamspeak.TSClientQuery;
+import com.rettichlp.UnicacityAddon.events.RenderTagEventHandler;
 import com.rettichlp.UnicacityAddon.events.TabListEventHandler;
 import com.rettichlp.UnicacityAddon.modules.BankMoneyModule;
 import com.rettichlp.UnicacityAddon.modules.BombTimerModule;
@@ -58,6 +59,7 @@ public class UnicacityAddon extends LabyModAddon {
 
         // LabyModEvents -> https://docs.labymod.net/pages/create-addons/labymod_events/
         ADDON.getApi().getEventManager().register(new TabListEventHandler());
+        ADDON.getApi().getEventManager().register(new RenderTagEventHandler());
 
         // Modules -> https://docs.labymod.net/pages/create-addons/module_system/
         // not automation, because ADDON cannot be provided at preInit
