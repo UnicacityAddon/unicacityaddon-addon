@@ -21,9 +21,6 @@ import java.util.regex.Matcher;
 @UCEvent
 public class DeathsKillsEventHandler {
 
-    public static int kills;
-    public static int deaths;
-
     @SubscribeEvent
     public void onClientChatReceived(ClientChatReceivedEvent e) {
         String msg = e.getMessage().getUnformattedText();
@@ -31,18 +28,14 @@ public class DeathsKillsEventHandler {
 
         Matcher jailKillMatcher = PatternHandler.WANTED_KILL.matcher(msg);
         if (jailKillMatcher.find()) {
-            if (jailKillMatcher.group(2).equals(p.getName())) {
-                kills++;
+            if (jailKillMatcher.group(2).equals(p.getName()))
                 APIRequest.sendStatisticAddRequest("KILL");
-            }
-
             return;
         }
 
         Matcher contractKillPattern = PatternHandler.CONTRACT_REMOVED_PATTERN.matcher(msg);
         if (contractKillPattern.find() && msg.contains("getötet")) {
             if (msg.contains(p.getName())) {
-                kills++;
                 APIRequest.sendStatisticAddRequest("KILL");
                 AFbankEinzahlenCommand.sendClockMessage();
             }
@@ -50,7 +43,6 @@ public class DeathsKillsEventHandler {
         }
 
         if (PatternHandler.DEATH_PATTERN.matcher(msg).find()) {
-            deaths++;
             APIRequest.sendStatisticAddRequest("DEATH");
             return;
         }
