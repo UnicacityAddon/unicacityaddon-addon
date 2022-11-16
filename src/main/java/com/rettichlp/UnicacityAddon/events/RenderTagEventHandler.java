@@ -44,7 +44,9 @@ public class RenderTagEventHandler implements RenderEntityEvent {
     }
 
     public static void renderTag(EntityPlayer player, AddonGroup addonGroup, double x, double y, double z) {
-        if (player.isInvisibleToPlayer(AbstractionLayer.getPlayer().getPlayer()) || player.isSneaking() || player.isRiding()) return;
+        EntityPlayer p = AbstractionLayer.getPlayer().getPlayer();
+        if (player.isInvisibleToPlayer(p) || player.isSneaking() || (player.isRiding() && player.equals(p))) return;
+
         RenderManager renderManager = UnicacityAddon.MINECRAFT.getRenderManager();
         String tag = addonGroup.getDisplayName();
         Color color = addonGroup.getColor();
