@@ -234,7 +234,7 @@ public class APIRequest {
         }
     }
 
-    public static JsonArray sendStatisticRequest() {
+    public static JsonObject sendStatisticRequest() {
         Map<String, String> parameters = new HashMap<>();
 
         try {

@@ -1,5 +1,6 @@
 package com.rettichlp.UnicacityAddon.events;
 
+import com.google.gson.JsonObject;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
 import com.rettichlp.UnicacityAddon.base.api.request.APIRequest;
@@ -7,11 +8,11 @@ import com.rettichlp.UnicacityAddon.base.registry.annotation.UCEvent;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
+import com.rettichlp.UnicacityAddon.base.utils.MathUtils;
 import com.rettichlp.UnicacityAddon.commands.faction.AFbankEinzahlenCommand;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-import java.text.DecimalFormat;
 import java.util.regex.Matcher;
 
 /**
@@ -24,7 +25,7 @@ public class DeathsKillsEventHandler {
     public static int deaths;
 
     @SubscribeEvent
-    public boolean onClientChatReceived(ClientChatReceivedEvent e) {
+    public void onClientChatReceived(ClientChatReceivedEvent e) {
         String msg = e.getMessage().getUnformattedText();
         UPlayer p = AbstractionLayer.getPlayer();
 
@@ -35,7 +36,7 @@ public class DeathsKillsEventHandler {
                 APIRequest.sendStatisticAddRequest("KILL");
             }
 
-            return false;
+            return;
         }
 
         Matcher contractKillPattern = PatternHandler.CONTRACT_REMOVED_PATTERN.matcher(msg);
@@ -45,40 +46,44 @@ public class DeathsKillsEventHandler {
                 APIRequest.sendStatisticAddRequest("KILL");
                 AFbankEinzahlenCommand.sendClockMessage();
             }
-
-            return false;
+            return;
         }
 
         if (PatternHandler.DEATH_PATTERN.matcher(msg).find()) {
             deaths++;
             APIRequest.sendStatisticAddRequest("DEATH");
-            return false;
+            return;
         }
 
         if (PatternHandler.LAST_STATS_MESSAGE_PATTERN.matcher(msg).find()) {
-            final DecimalFormat format = new DecimalFormat("###0.0#");
+            JsonObject response = APIRequest.sendStatisticRequest();
+            if (response == null) return;
 
-            Message.getBuilder().of("  - ").color(ColorCode.DARK_GRAY).advance()
+            JsonObject gameplayJsonObject = response.getAsJsonObject("gameplay");
+            int deaths = gameplayJsonObject.get("deaths").getAsInt();
+            int kills = gameplayJsonObject.get("kills").getAsInt();
+            float kd = gameplayJsonObject.get("kd").getAsFloat();
+
+            p.sendMessage(Message.getBuilder()
+                    .of("  - ").color(ColorCode.DARK_GRAY).advance()
                     .of("Tode").color(ColorCode.GOLD).advance()
                     .of(":").color(ColorCode.DARK_GRAY).advance().space()
-                    .of(deaths + " Tode").color(ColorCode.RED).advance().sendTo(p.getPlayer());
+                    .of(deaths + " Tode").color(ColorCode.RED).advance()
+                    .createComponent());
 
-            Message.getBuilder().of("  - ").color(ColorCode.DARK_GRAY).advance()
+            p.sendMessage(Message.getBuilder()
+                    .of("  - ").color(ColorCode.DARK_GRAY).advance()
                     .of("Kills").color(ColorCode.GOLD).advance()
                     .of(":").color(ColorCode.DARK_GRAY).advance().space()
-                    .of(kills + " Kills").color(ColorCode.RED).advance().sendTo(p.getPlayer());
+                    .of(kills + " Kills").color(ColorCode.RED).advance()
+                    .createComponent());
 
-            double kd;
-            if (kills == 0 && deaths == 0)
-                kd = 0.0;
-            else
-                kd = ((double) kills) / ((double) deaths);
-
-            Message.getBuilder().of("  - ").color(ColorCode.DARK_GRAY).advance()
+            p.sendMessage(Message.getBuilder()
+                    .of("  - ").color(ColorCode.DARK_GRAY).advance()
                     .of("K/D").color(ColorCode.GOLD).advance()
                     .of(":").color(ColorCode.DARK_GRAY).advance().space()
-                    .of("" + format.format(kd)).color(ColorCode.RED).advance().sendTo(p.getPlayer());
+                    .of(MathUtils.DECIMAL_FORMAT.format(kd)).color(ColorCode.RED).advance()
+                    .createComponent());
         }
-        return false;
     }
 }

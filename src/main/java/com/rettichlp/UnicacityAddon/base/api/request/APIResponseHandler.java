@@ -103,13 +103,13 @@ public class APIResponseHandler {
         return getJsonElement(urlString).getAsJsonObject();
     }
 
-    public static JsonArray getStatisticResponse(Map<String, String> parameters) throws APIUnsuccessResponseException {
+    public static JsonObject getStatisticResponse(Map<String, String> parameters) throws APIUnsuccessResponseException {
         String urlString = WebsiteUtils.createUrl(BaseUrl.STATISTIC.getPath(), parameters);
-        return getJsonElement(urlString).getAsJsonArray();
+        return getJsonElement(urlString).getAsJsonObject();
     }
 
     public static void getStatisticAddResponse(Map<String, String> parameters) throws APIUnsuccessResponseException {
-        String urlString = WebsiteUtils.createUrl(BaseUrl.STATISTIC_ADD.getPath(), parameters);
+        String urlString = WebsiteUtils.createUrl(BaseUrl.STATISTIC.getAddPath(), parameters);
         getJsonElement(urlString);
     }
 
