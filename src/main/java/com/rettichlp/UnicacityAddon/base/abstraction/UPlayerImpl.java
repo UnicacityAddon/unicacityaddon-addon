@@ -10,6 +10,7 @@ import com.rettichlp.UnicacityAddon.base.text.Message;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.client.network.NetworkPlayerInfo;
+import net.minecraft.entity.Entity;
 import net.minecraft.inventory.Container;
 import net.minecraft.scoreboard.Scoreboard;
 import net.minecraft.scoreboard.Team;
@@ -126,6 +127,16 @@ public class UPlayerImpl implements UPlayer {
     @Override
     public BlockPos getPosition() {
         return getPlayer().getPosition();
+    }
+
+    @Override
+    public double getDistanceToEntity(Entity entity) {
+        return getDistanceToCoords(entity.posX, entity.posY, entity.posZ);
+    }
+
+    @Override
+    public double getDistanceToCoords(double posX, double posY, double posZ) {
+        return getPosition().getDistance((int) posX, (int) posY, (int) posZ);
     }
 
     @Override

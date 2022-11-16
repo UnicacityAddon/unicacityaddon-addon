@@ -5,6 +5,7 @@ import com.rettichlp.UnicacityAddon.base.faction.rettungsdienst.Medication;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.client.network.NetworkPlayerInfo;
+import net.minecraft.entity.Entity;
 import net.minecraft.inventory.Container;
 import net.minecraft.scoreboard.Scoreboard;
 import net.minecraft.scoreboard.Team;
@@ -16,7 +17,8 @@ import net.minecraft.world.World;
 import java.util.UUID;
 
 /**
- * @author Fuzzlemann
+ * @author RettichLP
+ * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/base/abstraction/UPlayer.java">UCUtils by paulzhng</a>
  */
 public interface UPlayer {
 
@@ -49,6 +51,10 @@ public interface UPlayer {
     UUID getUniqueID();
 
     BlockPos getPosition();
+
+    double getDistanceToEntity(Entity entity);
+
+    double getDistanceToCoords(double posX, double posY, double posZ);
 
     Team getTeam();
 

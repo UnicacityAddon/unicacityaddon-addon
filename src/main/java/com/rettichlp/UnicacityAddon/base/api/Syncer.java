@@ -1,6 +1,7 @@
 package com.rettichlp.UnicacityAddon.base.api;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.api.entries.BlacklistReasonEntry;
@@ -31,12 +32,16 @@ public class Syncer {
 
     public static void syncAll() {
         new Thread(() -> {
+            Thread t0 = syncPlayerAddonGroupMap();
             Thread t1 = syncPlayerFactionMap();
             Thread t2 = syncPlayerRankMap();
             Thread t3 = syncHousebanEntryList();
             Thread t4 = syncNaviPointEntryList();
 
             try {
+                t0.start();
+                t0.join();
+
                 t1.start();
                 t1.join();
 
@@ -52,6 +57,21 @@ public class Syncer {
                 throw new RuntimeException(e);
             }
         }).start();
+    }
+
+    public static Thread syncPlayerAddonGroupMap() {
+        return new Thread(() -> {
+            JsonObject response = APIRequest.sendPlayerRequest();
+            if (response != null) {
+                for (AddonGroup addonGroup : AddonGroup.values()) {
+                    addonGroup.getMemberList().clear();
+                    for (JsonElement jsonElement : response.getAsJsonArray(addonGroup.getApiName())) {
+                        addonGroup.getMemberList().add(jsonElement.getAsJsonObject().get("name").getAsString());
+                    }
+                }
+            }
+            LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Addon Gruppen aktualisiert.");
+        });
     }
 
     public static Thread syncPlayerFactionMap() {
