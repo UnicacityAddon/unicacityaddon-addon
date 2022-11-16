@@ -1,6 +1,7 @@
 package com.rettichlp.UnicacityAddon.base.api;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.api.entries.BlacklistReasonEntry;
@@ -24,6 +25,7 @@ import java.util.Map;
 
 public class Syncer {
 
+    public static final Map<String, AddonGroup> UUIDADDONGROUPMAP = new HashMap<>();
     public static final Map<String, Faction> PLAYERFACTIONMAP = new HashMap<>();
     public static final Map<String, Integer> PLAYERRANKMAP = new HashMap<>();
     public static List<HouseBanEntry> HOUSEBANENTRYLIST = new ArrayList<>();
@@ -31,12 +33,16 @@ public class Syncer {
 
     public static void syncAll() {
         new Thread(() -> {
+            Thread t0 = syncPlayerAddonGroupMap();
             Thread t1 = syncPlayerFactionMap();
             Thread t2 = syncPlayerRankMap();
             Thread t3 = syncHousebanEntryList();
             Thread t4 = syncNaviPointEntryList();
 
             try {
+                t0.start();
+                t0.join();
+
                 t1.start();
                 t1.join();
 
@@ -52,6 +58,21 @@ public class Syncer {
                 throw new RuntimeException(e);
             }
         }).start();
+    }
+
+    public static Thread syncPlayerAddonGroupMap() {
+        return new Thread(() -> {
+            UUIDADDONGROUPMAP.clear();
+            JsonObject response = APIRequest.sendPlayerRequest();
+            if (response != null) {
+                for (AddonGroup addonGroup : AddonGroup.values()) {
+                    for (JsonElement jsonElement : response.getAsJsonArray(addonGroup.getApiName())) {
+                        UUIDADDONGROUPMAP.put(jsonElement.getAsJsonObject().get("uuid").getAsString(), addonGroup);
+                    }
+                }
+            }
+            LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Addon Gruppen aktualisiert.");
+        });
     }
 
     public static Thread syncPlayerFactionMap() {
