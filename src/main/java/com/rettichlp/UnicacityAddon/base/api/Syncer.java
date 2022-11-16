@@ -25,7 +25,6 @@ import java.util.Map;
 
 public class Syncer {
 
-    public static final Map<String, AddonGroup> UUIDADDONGROUPMAP = new HashMap<>();
     public static final Map<String, Faction> PLAYERFACTIONMAP = new HashMap<>();
     public static final Map<String, Integer> PLAYERRANKMAP = new HashMap<>();
     public static List<HouseBanEntry> HOUSEBANENTRYLIST = new ArrayList<>();
@@ -62,12 +61,12 @@ public class Syncer {
 
     public static Thread syncPlayerAddonGroupMap() {
         return new Thread(() -> {
-            UUIDADDONGROUPMAP.clear();
             JsonObject response = APIRequest.sendPlayerRequest();
             if (response != null) {
                 for (AddonGroup addonGroup : AddonGroup.values()) {
+                    addonGroup.getMemberList().clear();
                     for (JsonElement jsonElement : response.getAsJsonArray(addonGroup.getApiName())) {
-                        UUIDADDONGROUPMAP.put(jsonElement.getAsJsonObject().get("uuid").getAsString(), addonGroup);
+                        addonGroup.getMemberList().add(jsonElement.getAsJsonObject().get("name").getAsString());
                     }
                 }
             }
