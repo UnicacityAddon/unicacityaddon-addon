@@ -13,6 +13,8 @@ import net.minecraft.scoreboard.Scoreboard;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 
 /**
@@ -20,6 +22,8 @@ import java.util.regex.Matcher;
  */
 @UCEvent
 public class CarEventHandler {
+
+    private static final List<Integer> sentTankWarnings = new ArrayList<>();
 
     @SubscribeEvent
     public boolean onClientChatReceived(ClientChatReceivedEvent e) {
@@ -55,9 +59,19 @@ public class CarEventHandler {
         if (tankScore == null) return;
 
         int tank = tankScore.getScorePoints();
-        if (tank == 15 || tank == 10 || tank == 5) {
-            p.sendInfoMessage("Dein Tank hat noch " + tank + " Liter.");
-            p.playSound("block.note.harp");
+        switch (tank) {
+            case 100:
+                sentTankWarnings.clear();
+                break;
+            case 15:
+            case 10:
+            case 5:
+                if (!sentTankWarnings.contains(tank)) {
+                    p.sendInfoMessage("Dein Tank hat noch " + tank + " Liter.");
+                    p.playSound("block.note.harp");
+                    sentTankWarnings.add(tank);
+                }
+                break;
         }
     }
 }
