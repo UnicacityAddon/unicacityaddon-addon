@@ -49,8 +49,8 @@ public class TickEventHandler {
             handlePlantTimer();
         }
 
-        // 15 SECONDS
-        if (currentTick % 300 == 0) {
+        // 5 SECONDS
+        if (currentTick % 100 == 0) {
             handleScoreboardCheck();
         }
 
