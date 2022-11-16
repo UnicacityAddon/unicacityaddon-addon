@@ -29,13 +29,15 @@ public class BombTimerEventHandler {
         Matcher m = PatternHandler.BOMB_REMOVED_PATTERN.matcher(msg);
         if (m.find()) {
             String state = m.group(1);
+
+            String time = BombTimerModule.timer.startsWith(ColorCode.RED.getCode()) ? BombTimerModule.timer.substring(2) : BombTimerModule.timer;
             e.setMessage(Message.getBuilder()
                     .of("News: Die Bombe konnte").color(ColorCode.GOLD).advance().space()
                     .of(state).color(ColorCode.GOLD).advance().space()
                     .of("entschärft werden!").color(ColorCode.GOLD).advance().space()
-                    .of("(").color(ColorCode.DARK_GRAY).advance()
-                    .of(BombTimerModule.timer).color(state.equals("nicht") ? ColorCode.RED : ColorCode.GREEN).advance()
-                    .of(")").color(ColorCode.DARK_GRAY).advance()
+                    .of(time.isEmpty() ? "" : "(").color(ColorCode.DARK_GRAY).advance()
+                    .of(time).color(state.equals("nicht") ? ColorCode.RED : ColorCode.GREEN).advance()
+                    .of(time.isEmpty() ? "" : ")").color(ColorCode.DARK_GRAY).advance()
                     .createComponent());
             BombTimerModule.stopBombTimer();
         }
