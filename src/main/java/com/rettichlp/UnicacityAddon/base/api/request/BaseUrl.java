@@ -13,8 +13,7 @@ public enum BaseUrl {
     NAVIPOINT("/navipoint"),
     PLAYER("/player"),
     PLAYER_GROUP("/player/groups"),
-    STATISTIC("/statistic"),
-    STATISTIC_ADD("/statistic/" + AbstractionLayer.getPlayer().getName() + "/add"),
+    STATISTIC("/statistic/" + AbstractionLayer.getPlayer().getName()),
     TOKEN_CREATE("/create"),
     TOKEN_REVOKE("/revoke"),
     WANTED_REASON("/wantedreason");

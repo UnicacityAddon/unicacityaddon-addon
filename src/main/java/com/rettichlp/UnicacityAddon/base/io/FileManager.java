@@ -145,8 +145,6 @@ public class FileManager {
                 JobModule.setExperience(0);
                 PayDayModule.setTime(0);
                 ServiceCountCommand.serviceCount = 0;
-                DeathsKillsEventHandler.deaths = 0;
-                DeathsKillsEventHandler.kills = 0;
                 FirstAidEventHandler.timeMilliesOnFirstAidReceipt = 0;
                 TodoListCommand.todolist = Collections.emptyList();
                 CoordlistCommand.coordlist = Collections.emptyList();
@@ -163,8 +161,6 @@ public class FileManager {
             JobModule.jobExperience = data.getJobExperience();
             PayDayModule.currentTime = data.getPayDayTime();
             ServiceCountCommand.serviceCount = data.getServiceCount();
-            DeathsKillsEventHandler.deaths = data.getDeaths();
-            DeathsKillsEventHandler.kills = data.getKills();
             FirstAidEventHandler.timeMilliesOnFirstAidReceipt = data.getFirstAidDate();
             TodoListCommand.todolist = data.getTodolist();
             CoordlistCommand.coordlist = data.getCoordlist();
@@ -201,8 +197,6 @@ public class FileManager {
             data.setEquipList(EquipEventHandler.equipLogEntryList);
             data.setCarInfo(CarOpenModule.info);
             data.setServiceCount(ServiceCountCommand.serviceCount);
-            data.setDeaths(DeathsKillsEventHandler.deaths);
-            data.setKills(DeathsKillsEventHandler.kills);
             FileUtils.writeStringToFile(dataFile, g.toJson(data), StandardCharsets.UTF_8.toString());
         } catch (IOException e) {
             throw new RuntimeException(e);

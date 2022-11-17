@@ -63,7 +63,7 @@ public class TopListCommand implements IClientCommand {
     public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
         UPlayer p = AbstractionLayer.getPlayer();
 
-        JsonArray response = APIRequest.sendStatisticRequest();
+        /*JsonObject response = APIRequest.sendStatisticTopRequest();
         if (response == null) return;
 
         Map<String, Float> topListMap = new HashMap<>();
@@ -100,7 +100,7 @@ public class TopListCommand implements IClientCommand {
                     .of(String.valueOf(points)).color(ColorCode.AQUA).advance().space()
                     .of("Punkte").color(ColorCode.AQUA).advance()
                     .createComponent());
-        });
+        });*/
 
         p.sendEmptyMessage();
     }
