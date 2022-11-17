@@ -3,6 +3,7 @@ package com.rettichlp.UnicacityAddon.base.api.request;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.rettichlp.UnicacityAddon.UnicacityAddon;
+import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.api.exception.APIUnsuccessResponseException;
 
 import java.util.HashMap;
@@ -238,7 +239,18 @@ public class APIRequest {
         Map<String, String> parameters = new HashMap<>();
 
         try {
-            return APIResponseHandler.getStatisticResponse(parameters);
+            return APIResponseHandler.getStatisticResponse(AbstractionLayer.getPlayer().getName(), parameters);
+        } catch (APIUnsuccessResponseException e) {
+            e.sendInfoMessage();
+            return null;
+        }
+    }
+
+    public static JsonObject sendStatisticRequest(String name) {
+        Map<String, String> parameters = new HashMap<>();
+
+        try {
+            return APIResponseHandler.getStatisticResponse(name, parameters);
         } catch (APIUnsuccessResponseException e) {
             e.sendInfoMessage();
             return null;
@@ -256,6 +268,17 @@ public class APIRequest {
                 e.sendInfoMessage();
             }
         }).start();
+    }
+
+    public static JsonObject sendStatisticTopRequest() {
+        Map<String, String> parameters = new HashMap<>();
+
+        try {
+            return APIResponseHandler.getStatisticTopResponse(parameters);
+        } catch (APIUnsuccessResponseException e) {
+            e.sendInfoMessage();
+            return null;
+        }
     }
 
     public static JsonObject sendTokenCreateRequest() {
