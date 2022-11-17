@@ -13,16 +13,13 @@ import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.event.HoverEvent;
 import net.minecraftforge.client.IClientCommand;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.rettichlp.UnicacityAddon.base.utils.MathUtils.DECIMAL_FORMAT;
@@ -63,46 +60,48 @@ public class TopListCommand implements IClientCommand {
     public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
         UPlayer p = AbstractionLayer.getPlayer();
 
-        /*JsonObject response = APIRequest.sendStatisticTopRequest();
-        if (response == null) return;
+        new Thread(() -> {
+            JsonObject response = APIRequest.sendStatisticTopRequest();
+            if (response == null) return;
+            JsonArray kdJsonArray = response.getAsJsonArray("kd");
 
-        Map<String, Float> topListMap = new HashMap<>();
-        response.forEach(jsonElement -> {
-            JsonObject o = jsonElement.getAsJsonObject();
-            String name = o.get("name").getAsString();
-            float kd = o.get("kd").getAsFloat();
-
-            // float points = (0.5f + kd) * (services + revives); // TODO: 30.09.2022 Neue Formel überlegen - Dimiikou
-            topListMap.put(name, Float.valueOf(DECIMAL_FORMAT.format(kd)));
-        });
-
-        List<Map.Entry<String, Float>> list = new ArrayList<>(topListMap.entrySet());
-        list.sort(Map.Entry.comparingByValue());
-        Collections.reverse(list);
-        LinkedHashMap<String, Float> sortedMap = new LinkedHashMap<>();
-        list.stream()
-                .limit(10)
-                .forEach(e -> sortedMap.put(e.getKey(), e.getValue()));
-
-        p.sendEmptyMessage();
-        p.sendMessage(Message.getBuilder()
-                .of("Top 10 Spieler:").color(ColorCode.DARK_AQUA).bold().advance()
-                .createComponent());
-
-        AtomicInteger place = new AtomicInteger();
-        sortedMap.forEach((name, points) -> {
-            place.getAndIncrement();
+            p.sendEmptyMessage();
             p.sendMessage(Message.getBuilder()
-                    .of(String.valueOf(place.get())).color(ColorCode.GOLD).advance()
-                    .of(".").color(ColorCode.GRAY).advance().space()
-                    .of(name).color(ColorCode.AQUA).advance().space()
-                    .of("-").color(ColorCode.GRAY).advance().space()
-                    .of(String.valueOf(points)).color(ColorCode.AQUA).advance().space()
-                    .of("Punkte").color(ColorCode.AQUA).advance()
+                    .of("Top 10 Spieler:").color(ColorCode.DARK_AQUA).bold().advance()
                     .createComponent());
-        });*/
 
-        p.sendEmptyMessage();
+            AtomicInteger place = new AtomicInteger();
+            kdJsonArray.forEach(jsonElement -> {
+                String name = jsonElement.getAsJsonObject().get("name").getAsString();
+                String kd = DECIMAL_FORMAT.format(jsonElement.getAsJsonObject().get("value").getAsFloat());
+
+                JsonObject statisticResponse = APIRequest.sendStatisticRequest(name);
+                if (statisticResponse == null) return;
+
+                JsonObject gameplayJsonObject = statisticResponse.getAsJsonObject("gameplay");
+                int deaths = gameplayJsonObject.get("deaths").getAsInt();
+                int kills = gameplayJsonObject.get("kills").getAsInt();
+
+                place.getAndIncrement();
+                p.sendMessage(Message.getBuilder()
+                        .of(String.valueOf(place.get())).color(ColorCode.GOLD).advance()
+                        .of(".").color(ColorCode.GRAY).advance().space()
+                        .of(name).color(ColorCode.AQUA)
+                                .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder()
+                                        .of("Tode:").color(ColorCode.GRAY).advance().space()
+                                        .of(String.valueOf(deaths)).color(ColorCode.RED).advance().newline()
+                                        .of("Kills:").color(ColorCode.GRAY).advance().space()
+                                        .of(String.valueOf(kills)).color(ColorCode.RED).advance()
+                                        .createComponent())
+                                .advance().space()
+                        .of("-").color(ColorCode.GRAY).advance().space()
+                        .of(kd).color(ColorCode.AQUA).advance().space()
+                        .of("Punkte").color(ColorCode.AQUA).advance().space()
+                        .createComponent());
+            });
+
+            p.sendEmptyMessage();
+        }).start();
     }
 
     @Override

@@ -29,12 +29,12 @@ public class APIResponseHandler {
     }
 
     public static JsonArray getBroadcastQueueResponse(Map<String, String> parameters) throws APIUnsuccessResponseException {
-        String urlString = WebsiteUtils.createUrl(BaseUrl.BROADCAST_QUEUE.getPath(), parameters);
+        String urlString = WebsiteUtils.createUrl(BaseUrl.BROADCAST.getPath("queue"), parameters);
         return getJsonElement(urlString).getAsJsonArray();
     }
 
     public static JsonObject getBroadcastSendResponse(Map<String, String> parameters) throws APIUnsuccessResponseException {
-        String urlString = WebsiteUtils.createUrl(BaseUrl.BROADCAST_SEND.getPath(), parameters);
+        String urlString = WebsiteUtils.createUrl(BaseUrl.BROADCAST.getPath("send"), parameters);
         return getJsonElement(urlString).getAsJsonObject();
     }
 
@@ -89,7 +89,7 @@ public class APIResponseHandler {
     }
 
     public static JsonArray getPlayerGroupResponse(Map<String, String> parameters) throws APIUnsuccessResponseException {
-        String urlString = WebsiteUtils.createUrl(BaseUrl.PLAYER_GROUP.getPath(), parameters);
+        String urlString = WebsiteUtils.createUrl(BaseUrl.PLAYER.getPath("groups"), parameters);
         return getJsonElement(urlString).getAsJsonArray();
     }
 
@@ -103,14 +103,19 @@ public class APIResponseHandler {
         return getJsonElement(urlString).getAsJsonObject();
     }
 
-    public static JsonObject getStatisticResponse(Map<String, String> parameters) throws APIUnsuccessResponseException {
-        String urlString = WebsiteUtils.createUrl(BaseUrl.STATISTIC.getPath(), parameters);
+    public static JsonObject getStatisticResponse(String name, Map<String, String> parameters) throws APIUnsuccessResponseException {
+        String urlString = WebsiteUtils.createUrl(BaseUrl.STATISTIC.getPath(name), parameters);
         return getJsonElement(urlString).getAsJsonObject();
     }
 
     public static void getStatisticAddResponse(Map<String, String> parameters) throws APIUnsuccessResponseException {
         String urlString = WebsiteUtils.createUrl(BaseUrl.STATISTIC.getAddPath(), parameters);
         getJsonElement(urlString);
+    }
+
+    public static JsonObject getStatisticTopResponse(Map<String, String> parameters) throws APIUnsuccessResponseException {
+        String urlString = WebsiteUtils.createUrl(BaseUrl.STATISTIC.getPath("top"), parameters);
+        return getJsonElement(urlString).getAsJsonObject();
     }
 
     public static JsonObject getTokenCreateResponse(Map<String, String> parameters) throws APIUnsuccessResponseException {
