@@ -43,7 +43,10 @@ public class ReplyCommand implements IClientCommand {
     @Override
     @Nonnull
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
-        return ForgeUtils.getOnlinePlayers();
+        List<String> tabCompletions = ForgeUtils.getOnlinePlayers();
+        String input = args[args.length - 1].toLowerCase();
+        tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
+        return tabCompletions;
     }
 
     @Override
