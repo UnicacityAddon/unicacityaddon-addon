@@ -340,4 +340,51 @@ public class APIRequest {
             return null;
         }
     }
+
+    public static JsonArray sendYasinRequest() {
+        Map<String, String> parameters = new HashMap<>();
+
+        try {
+            return APIResponseHandler.getYasinResponse(parameters);
+        } catch (APIUnsuccessResponseException e) {
+            e.sendInfoMessage();
+            return null;
+        }
+    }
+
+    public static JsonObject sendYasinAddRequest(String name) {
+        Map<String, String> parameters = new HashMap<>();
+        parameters.put("name", name);
+
+        try {
+            return APIResponseHandler.getYasinAddResponse(parameters);
+        } catch (APIUnsuccessResponseException e) {
+            e.sendInfoMessage();
+            return null;
+        }
+    }
+
+    public static JsonObject sendYasinRemoveRequest(String name) {
+        Map<String, String> parameters = new HashMap<>();
+        parameters.put("name", name);
+
+        try {
+            return APIResponseHandler.getYasinRemoveResponse(parameters);
+        } catch (APIUnsuccessResponseException e) {
+            e.sendInfoMessage();
+            return null;
+        }
+    }
+
+    public static JsonObject sendYasinDoneRequest(String name) {
+        Map<String, String> parameters = new HashMap<>();
+        parameters.put("name", name);
+
+        try {
+            return APIResponseHandler.getYasinDoneResponse(parameters);
+        } catch (APIUnsuccessResponseException e) {
+            e.sendInfoMessage();
+            return null;
+        }
+    }
 }
