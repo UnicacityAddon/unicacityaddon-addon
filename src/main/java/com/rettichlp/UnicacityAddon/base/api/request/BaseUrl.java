@@ -14,7 +14,8 @@ public enum BaseUrl {
     STATISTIC("/statistic"),
     TOKEN_CREATE("/create"),
     TOKEN_REVOKE("/revoke"),
-    WANTED_REASON("/wantedreason");
+    WANTED_REASON("/wantedreason"),
+    YASIN("/yasin");
 
     private final String path;
 
@@ -36,6 +37,10 @@ public enum BaseUrl {
 
     public String getRemovePath() {
         return getPath("remove");
+    }
+
+    public String getDonePath() {
+        return getPath("done");
     }
 
     public String getFactionPath() {

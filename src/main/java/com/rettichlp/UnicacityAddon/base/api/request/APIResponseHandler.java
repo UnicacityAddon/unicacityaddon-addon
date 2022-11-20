@@ -143,6 +143,26 @@ public class APIResponseHandler {
         return getJsonElement(urlString).getAsJsonObject();
     }
 
+    public static JsonArray getYasinResponse(Map<String, String> parameters) throws APIUnsuccessResponseException {
+        String urlString = WebsiteUtils.createUrl(BaseUrl.YASIN.getPath(), parameters);
+        return getJsonElement(urlString).getAsJsonArray();
+    }
+
+    public static JsonObject getYasinAddResponse(Map<String, String> parameters) throws APIUnsuccessResponseException {
+        String urlString = WebsiteUtils.createUrl(BaseUrl.YASIN.getAddPath(), parameters);
+        return getJsonElement(urlString).getAsJsonObject();
+    }
+
+    public static JsonObject getYasinRemoveResponse(Map<String, String> parameters) throws APIUnsuccessResponseException {
+        String urlString = WebsiteUtils.createUrl(BaseUrl.YASIN.getRemovePath(), parameters);
+        return getJsonElement(urlString).getAsJsonObject();
+    }
+
+    public static JsonObject getYasinDoneResponse(Map<String, String> parameters) throws APIUnsuccessResponseException {
+        String urlString = WebsiteUtils.createUrl(BaseUrl.YASIN.getDonePath(), parameters);
+        return getJsonElement(urlString).getAsJsonObject();
+    }
+
     private static JsonElement getJsonElement(String urlString) throws APIUnsuccessResponseException {
         String response = WebsiteUtils.websiteToString(urlString);
         Debug(APIResponseHandler.class, "OK [200]: " + urlString);
