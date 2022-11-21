@@ -32,16 +32,12 @@ public class Syncer {
 
     public static void syncAll() {
         new Thread(() -> {
-            Thread t0 = syncPlayerAddonGroupMap();
-            Thread t1 = syncPlayerFactionMap();
-            Thread t2 = syncPlayerRankMap();
+            Thread t1 = syncPlayerAddonGroupMap();
+            Thread t2 = syncPlayerFactionData();
             Thread t3 = syncHousebanEntryList();
             Thread t4 = syncNaviPointEntryList();
 
             try {
-                t0.start();
-                t0.join();
-
                 t1.start();
                 t1.join();
 
@@ -74,33 +70,26 @@ public class Syncer {
         });
     }
 
-    public static Thread syncPlayerFactionMap() {
+    public static Thread syncPlayerFactionData() {
         return new Thread(() -> {
             PLAYERFACTIONMAP.clear();
+            PLAYERRANKMAP.clear();
             for (Faction faction : Faction.values()) {
-                List<String> nameList = ListUtils.getAllMatchesFromString(PatternHandler.NAME_PATTERN, faction.getWebsiteSource());
-                nameList.forEach(name -> PLAYERFACTIONMAP.put(name.replace("<h4 class=\"h5 g-mb-5\"><strong>", ""), faction));
+                String factionWebsiteSource = faction.getWebsiteSource();
+                List<String> nameList = ListUtils.getAllMatchesFromString(PatternHandler.NAME_PATTERN, factionWebsiteSource);
+                List<String> rankList = ListUtils.getAllMatchesFromString(PatternHandler.RANK_PATTERN, factionWebsiteSource);
+                nameList.forEach(name -> {
+                    String formattedname = name.replace("<h4 class=\"h5 g-mb-5\"><strong>", "");
+                    PLAYERFACTIONMAP.put(formattedname, faction);
+                    PLAYERRANKMAP.put(formattedname, Integer.parseInt(String.valueOf(rankList.get(nameList.indexOf(name))
+                            .replace("<strong>Rang ", "")
+                            .charAt(0))));
+                });
             }
 
             getPlayerGroupEntryList("LEMILIEU").forEach(playerGroupEntry -> PLAYERFACTIONMAP.put(playerGroupEntry.getName(), Faction.LEMILIEU));
 
             LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Fraktionen aktualisiert.");
-        });
-    }
-
-    public static Thread syncPlayerRankMap() {
-        return new Thread(() -> {
-            PLAYERRANKMAP.clear();
-            for (Faction faction : Faction.values()) {
-                List<String> nameList = ListUtils.getAllMatchesFromString(PatternHandler.NAME_PATTERN, faction.getWebsiteSource());
-                List<String> rankList = ListUtils.getAllMatchesFromString(PatternHandler.RANK_PATTERN, faction.getWebsiteSource());
-                nameList.forEach(name -> PLAYERRANKMAP.put(
-                        name.replace("<h4 class=\"h5 g-mb-5\"><strong>", ""),
-                        Integer.parseInt(String.valueOf(rankList.get(nameList.indexOf(name))
-                                .replace("<strong>Rang ", "")
-                                .charAt(0)))));
-            }
-            LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Ränge aktualisiert.");
         });
     }
 
