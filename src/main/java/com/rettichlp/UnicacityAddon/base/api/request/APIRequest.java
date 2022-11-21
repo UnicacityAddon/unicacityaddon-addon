@@ -20,26 +20,21 @@ public class APIRequest {
     }
 
     public static JsonObject sendBlacklistReasonAddRequest(String reason, String price, String kills) {
-        Map<String, String> parameter = new HashMap<>();
-        parameter.put("reason", reason);
-        parameter.put("price", price);
-        parameter.put("kills", kills);
-
         return RequestBuilder.getBuilder()
                 .applicationPath(ApplicationPath.BLACKLISTREASON)
                 .subPath(AbstractionLayer.getPlayer().getFaction() + "/add")
-                .parameter(parameter)
+                .parameter(mapOf(
+                        "reason", reason,
+                        "price", price,
+                        "kills", kills))
                 .getAsJsonObject();
     }
 
     public static JsonObject sendBlacklistReasonRemoveRequest(String reason) {
-        Map<String, String> parameter = new HashMap<>();
-        parameter.put("reason", reason);
-
         return RequestBuilder.getBuilder()
                 .applicationPath(ApplicationPath.BLACKLISTREASON)
                 .subPath(AbstractionLayer.getPlayer().getFaction() + "/remove")
-                .parameter(parameter)
+                .parameter(mapOf("reason", reason))
                 .getAsJsonObject();
     }
 
@@ -51,36 +46,29 @@ public class APIRequest {
     }
 
     public static JsonObject sendBroadcastSendRequest(String message, String sendTime) {
-        Map<String, String> parameter = new HashMap<>();
-        parameter.put("message", message);
-        parameter.put("sendTime", sendTime);
-
         return RequestBuilder.getBuilder()
                 .applicationPath(ApplicationPath.BROADCAST)
                 .subPath("send")
-                .parameter(parameter)
+                .parameter(mapOf(
+                        "message", message,
+                        "sendTime", sendTime))
                 .getAsJsonObject();
     }
 
     public static JsonArray sendHouseBanRequest(boolean advanced) {
-        Map<String, String> parameter = new HashMap<>();
-        parameter.put("advanced", String.valueOf(advanced));
-
         return RequestBuilder.getBuilder()
                 .applicationPath(ApplicationPath.HOUSEBAN)
-                .parameter(parameter)
+                .parameter(mapOf("advanced", String.valueOf(advanced)))
                 .getAsJsonArray();
     }
 
     public static JsonObject sendHouseBanAddRequest(String name, String reason) {
-        Map<String, String> parameter = new HashMap<>();
-        parameter.put("name", name);
-        parameter.put("reason", reason);
-
         return RequestBuilder.getBuilder()
                 .applicationPath(ApplicationPath.HOUSEBAN)
                 .subPath("add")
-                .parameter(parameter)
+                .parameter(mapOf(
+                        "name", name,
+                        "reason", reason))
                 .getAsJsonObject();
     }
 
@@ -92,7 +80,9 @@ public class APIRequest {
         return RequestBuilder.getBuilder()
                 .applicationPath(ApplicationPath.HOUSEBAN)
                 .subPath("remove")
-                .parameter(parameter)
+                .parameter(mapOf(
+                        "name", name,
+                        "reason", reason))
                 .getAsJsonObject();
     }
 
@@ -106,25 +96,20 @@ public class APIRequest {
     }
 
     public static JsonObject sendHouseBanReasonAddRequest(String reason, String days) {
-        Map<String, String> parameter = new HashMap<>();
-        parameter.put("reason", reason);
-        parameter.put("days", String.valueOf(days));
-
         return RequestBuilder.getBuilder()
                 .applicationPath(ApplicationPath.HOUSEBANREASON)
                 .subPath("add")
-                .parameter(parameter)
+                .parameter(mapOf(
+                        "reason", reason,
+                        "days", days))
                 .getAsJsonObject();
     }
 
     public static JsonObject sendHouseBanReasonRemoveRequest(String reason) {
-        Map<String, String> parameter = new HashMap<>();
-        parameter.put("reason", reason);
-
         return RequestBuilder.getBuilder()
                 .applicationPath(ApplicationPath.HOUSEBANREASON)
                 .subPath("remove")
-                .parameter(parameter)
+                .parameter(mapOf("reason", reason))
                 .getAsJsonObject();
     }
 
@@ -135,27 +120,22 @@ public class APIRequest {
     }
 
     public static JsonObject sendNaviPointAddRequest(String name, String x, String y, String z) {
-        Map<String, String> parameter = new HashMap<>();
-        parameter.put("name", name);
-        parameter.put("x", x);
-        parameter.put("y", y);
-        parameter.put("z", z);
-
         return RequestBuilder.getBuilder()
                 .applicationPath(ApplicationPath.NAVIPOINT)
                 .subPath("add")
-                .parameter(parameter)
+                .parameter(mapOf(
+                        "name", name,
+                        "x", x,
+                        "y", y,
+                        "z", z))
                 .getAsJsonObject();
     }
 
     public static JsonObject sendNaviPointRemoveRequest(String name) {
-        Map<String, String> parameter = new HashMap<>();
-        parameter.put("name", name);
-
         return RequestBuilder.getBuilder()
                 .applicationPath(ApplicationPath.NAVIPOINT)
                 .subPath("remove")
-                .parameter(parameter)
+                .parameter(mapOf("name", name))
                 .getAsJsonObject();
     }
 
@@ -166,26 +146,22 @@ public class APIRequest {
     }
 
     public static JsonObject sendPlayerAddRequest(String name, String group) {
-        Map<String, String> parameter = new HashMap<>();
-        parameter.put("name", name);
-        parameter.put("group", group);
-
         return RequestBuilder.getBuilder()
                 .applicationPath(ApplicationPath.PLAYER)
                 .subPath("add")
-                .parameter(parameter)
+                .parameter(mapOf(
+                        "name", name,
+                        "group", group))
                 .getAsJsonObject();
     }
 
     public static JsonObject sendPlayerRemoveRequest(String name, String group) {
-        Map<String, String> parameter = new HashMap<>();
-        parameter.put("name", name);
-        parameter.put("group", group);
-
         return RequestBuilder.getBuilder()
                 .applicationPath(ApplicationPath.PLAYER)
                 .subPath("remove")
-                .parameter(parameter)
+                .parameter(mapOf(
+                        "name", name,
+                        "group", group))
                 .getAsJsonObject();
     }
 
@@ -211,13 +187,10 @@ public class APIRequest {
     }
 
     public static void sendStatisticAddRequest(StatisticType statisticType) {
-        Map<String, String> parameter = new HashMap<>();
-        parameter.put("type", statisticType.name());
-
         RequestBuilder.getBuilder()
                 .applicationPath(ApplicationPath.STATISTIC)
                 .subPath(AbstractionLayer.getPlayer().getName() + "/add")
-                .parameter(parameter)
+                .parameter(mapOf("type", statisticType.name()))
                 .sendAsync();
     }
 
@@ -229,14 +202,12 @@ public class APIRequest {
     }
 
     public static JsonObject sendTokenCreateRequest() {
-        Map<String, String> parameter = new HashMap<>();
-        parameter.put("authToken", UnicacityAddon.MINECRAFT.getSession().getToken());
-        parameter.put("version", UnicacityAddon.VERSION);
-
         return RequestBuilder.getBuilder()
                 .applicationPath(ApplicationPath.TOKEN)
                 .subPath("create")
-                .parameter(parameter)
+                .parameter(mapOf(
+                        "authToken", UnicacityAddon.MINECRAFT.getSession().getToken(),
+                        "version", UnicacityAddon.VERSION))
                 .getAsJsonObject();
     }
 
@@ -254,25 +225,20 @@ public class APIRequest {
     }
 
     public static JsonObject sendWantedReasonAddRequest(String reason, String points) {
-        Map<String, String> parameter = new HashMap<>();
-        parameter.put("reason", reason);
-        parameter.put("points", points);
-
         return RequestBuilder.getBuilder()
                 .applicationPath(ApplicationPath.WANTEDREASON)
                 .subPath("add")
-                .parameter(parameter)
+                .parameter(mapOf(
+                        "reason", reason,
+                        "points", points))
                 .getAsJsonObject();
     }
 
     public static JsonObject sendWantedReasonRemoveRequest(String reason) {
-        Map<String, String> parameter = new HashMap<>();
-        parameter.put("reason", reason);
-
         return RequestBuilder.getBuilder()
                 .applicationPath(ApplicationPath.WANTEDREASON)
                 .subPath("remove")
-                .parameter(parameter)
+                .parameter(mapOf("reason", reason))
                 .getAsJsonObject();
     }
 
@@ -283,35 +249,56 @@ public class APIRequest {
     }
 
     public static JsonObject sendYasinAddRequest(String name) {
-        Map<String, String> parameter = new HashMap<>();
-        parameter.put("name", name);
-
         return RequestBuilder.getBuilder()
                 .applicationPath(ApplicationPath.YASIN)
                 .subPath("add")
-                .parameter(parameter)
+                .parameter(mapOf("name", name))
                 .getAsJsonObject();
     }
 
     public static JsonObject sendYasinRemoveRequest(String name) {
-        Map<String, String> parameter = new HashMap<>();
-        parameter.put("name", name);
-
         return RequestBuilder.getBuilder()
                 .applicationPath(ApplicationPath.YASIN)
                 .subPath("remove")
-                .parameter(parameter)
+                .parameter(mapOf("name", name))
                 .getAsJsonObject();
     }
 
     public static JsonObject sendYasinDoneRequest(String name) {
-        Map<String, String> parameter = new HashMap<>();
-        parameter.put("name", name);
-
         return RequestBuilder.getBuilder()
                 .applicationPath(ApplicationPath.YASIN)
                 .subPath("done")
-                .parameter(parameter)
+                .parameter(mapOf("name", name))
                 .getAsJsonObject();
+    }
+
+    private static Map<String, String> mapOf(String k1, String v1) {
+        Map<String, String> map = new HashMap<>();
+        map.put(k1, v1);
+        return map;
+    }
+
+    private static Map<String, String> mapOf(String k1, String v1, String k2, String v2) {
+        Map<String, String> map = new HashMap<>();
+        map.put(k1, v1);
+        map.put(k2, v2);
+        return map;
+    }
+
+    private static Map<String, String> mapOf(String k1, String v1, String k2, String v2, String k3, String v3) {
+        Map<String, String> map = new HashMap<>();
+        map.put(k1, v1);
+        map.put(k2, v2);
+        map.put(k3, v3);
+        return map;
+    }
+
+    private static Map<String, String> mapOf(String k1, String v1, String k2, String v2, String k3, String v3, String k4, String v4) {
+        Map<String, String> map = new HashMap<>();
+        map.put(k1, v1);
+        map.put(k2, v2);
+        map.put(k3, v3);
+        map.put(k4, v4);
+        return map;
     }
 }
