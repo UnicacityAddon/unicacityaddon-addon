@@ -15,7 +15,6 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.logging.Level;
 
 /**
  * @author RettichLP
@@ -43,7 +42,7 @@ public class WebsiteUtils {
             StringBuilder websiteSource = new StringBuilder();
             Scanner scanner = new Scanner(new InputStreamReader(httpURLConnection.getInputStream(), StandardCharsets.UTF_8));
             while (scanner.hasNextLine()) websiteSource.append(scanner.nextLine()).append("\n\r");
-            UnicacityAddon.LOGGER.log(Level.INFO, "APIResponse - " + httpURLConnection.getResponseCode() + " [" + urlString.replace(TokenManager.API_TOKEN, "TOKEN") + "]");
+            UnicacityAddon.LOGGER.info("APIResponse - " + httpURLConnection.getResponseCode() + " [" + urlString.replace(TokenManager.API_TOKEN, "TOKEN") + "]");
             return websiteSource.toString();
         } catch (IOException e) {
             e.printStackTrace();
@@ -53,8 +52,11 @@ public class WebsiteUtils {
     }
 
     public static String createUrl(boolean nonProd, ApplicationPath applicationPath, String subPath, Map<String, String> parameter) {
-        String basePath = nonProd ? "http://localhost:8888/unicacityaddon/v1/" : "http://rettichlp.de:8888/unicacityaddon/v1/";
-        return basePath + TokenManager.API_TOKEN + applicationPath.getApplicationPath() + "/" + subPath + getParamsString(parameter);
+        return nonProd ? "http://localhost:8888/unicacityaddon/v1/" : "http://rettichlp.de:8888/unicacityaddon/v1/"
+                + TokenManager.API_TOKEN
+                + applicationPath.getApplicationPath()
+                + (subPath == null ? Strings.EMPTY : "/" + subPath)
+                + (parameter == null || parameter.isEmpty() ? Strings.EMPTY : getParamsString(parameter));
     }
 
     public static String getParamsString(Map<String, String> params) {

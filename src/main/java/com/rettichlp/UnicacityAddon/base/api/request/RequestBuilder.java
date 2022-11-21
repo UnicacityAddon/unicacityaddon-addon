@@ -54,6 +54,7 @@ public class RequestBuilder {
                 String response = WebsiteUtils.sendRequest(urlString);
                 return new JsonParser().parse(response);
             } catch (APIResponseException e) {
+                e.sendInfoMessage();
                 throw new RuntimeException(e);
             }
         }

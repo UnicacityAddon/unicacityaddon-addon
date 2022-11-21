@@ -32,10 +32,10 @@ import net.minecraft.client.multiplayer.ServerData;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.discovery.ASMDataTable;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
-import java.util.logging.LogManager;
-import java.util.logging.Logger;
 
 /**
  * @author RettichLP
@@ -46,7 +46,7 @@ public class UnicacityAddon extends LabyModAddon {
     public static final String VERSION = "1.7.0-dev";
     public static final Minecraft MINECRAFT = Minecraft.getMinecraft();
     public static UnicacityAddon ADDON;
-    public static Logger LOGGER = LogManager.getLogManager().getLogger("UnicacityAddon");
+    public static Logger LOGGER = LogManager.getLogger();
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent e) {

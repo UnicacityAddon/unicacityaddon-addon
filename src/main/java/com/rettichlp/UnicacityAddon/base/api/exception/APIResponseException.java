@@ -1,8 +1,7 @@
 package com.rettichlp.UnicacityAddon.base.api.exception;
 
 import com.rettichlp.UnicacityAddon.UnicacityAddon;
-
-import java.util.logging.Level;
+import org.apache.logging.log4j.Level;
 
 public class APIResponseException extends Throwable {
 
@@ -25,37 +24,37 @@ public class APIResponseException extends Throwable {
                 break;
             case 204:
                 message = "Inhalt nicht gefunden.";
-                level = Level.WARNING;
+                level = Level.WARN;
                 break;
             case 400:
                 message = "Fehlerhafte Anfrage.";
-                level = Level.WARNING;
+                level = Level.WARN;
                 break;
             case 401:
                 message = "Der Zugriff wurde abgelehnt.";
-                level = Level.WARNING;
+                level = Level.WARN;
                 break;
             case 404:
                 message = "Endpunkt nicht gefunden.";
-                level = Level.WARNING;
+                level = Level.WARN;
                 break;
             case 423:
                 message = "Endpunkt gesperrt.";
-                level = Level.WARNING;
+                level = Level.WARN;
                 break;
             case 500:
                 message = "Der Server konnte die Anfrage nicht verarbeiten.";
-                level = Level.WARNING;
+                level = Level.WARN;
                 break;
             case 503:
                 message = "Der Server ist aktuell nicht erreichbar.";
-                level = Level.WARNING;
+                level = Level.WARN;
                 break;
             default:
                 message = "API Fehler.";
-                level = Level.WARNING;
+                level = Level.WARN;
         }
 
-        UnicacityAddon.LOGGER.log(level, "APIResponseException - " + responseCode + " [" + urlString + "]: " + message);
+        UnicacityAddon.LOGGER.atLevel(level).log("APIResponseException - " + responseCode + " [" + urlString + "]: " + message);
     }
 }
