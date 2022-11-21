@@ -18,7 +18,7 @@ import java.util.Scanner;
  */
 public class WebsiteUtils {
 
-    public static String websiteToString(String urlString) throws APIUnsuccessResponseException {
+    public static String sendRequest(String urlString) throws APIUnsuccessResponseException {
         HttpURLConnection httpURLConnection;
 
         if (urlString == null || urlString.isEmpty())

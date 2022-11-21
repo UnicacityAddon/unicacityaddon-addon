@@ -104,7 +104,7 @@ public enum Faction {
 
     public String getWebsiteSource() {
         try {
-            return WebsiteUtils.websiteToString(this.getWebsiteUrl());
+            return WebsiteUtils.sendRequest(this.getWebsiteUrl());
         } catch (APIUnsuccessResponseException e) {
             return Strings.EMPTY;
         }
