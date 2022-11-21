@@ -1,5 +1,7 @@
 package com.rettichlp.UnicacityAddon.base.utils;
 
+import com.rettichlp.UnicacityAddon.base.api.TokenManager;
+import com.rettichlp.UnicacityAddon.base.api.enums.ApplicationPath;
 import com.rettichlp.UnicacityAddon.base.api.exception.APIUnsuccessResponseException;
 import joptsimple.internal.Strings;
 
@@ -47,8 +49,9 @@ public class WebsiteUtils {
         throw new APIUnsuccessResponseException(urlString, HttpURLConnection.HTTP_NO_CONTENT);
     }
 
-    public static String createUrl(String path, Map<String, String> parameters) {
-        return path + getParamsString(parameters);
+    public static String createUrl(boolean nonProd, ApplicationPath applicationPath, String subPath, Map<String, String> parameter) {
+        String basePath = nonProd ? "http://localhost:8888/unicacityaddon/v1/" : "http://rettichlp.de:8888/unicacityaddon/v1/";
+        return basePath + TokenManager.API_TOKEN + applicationPath.getApplicationPath() + "/" + subPath + getParamsString(parameter);
     }
 
     public static String getParamsString(Map<String, String> params) {
