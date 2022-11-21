@@ -2,6 +2,7 @@ package com.rettichlp.UnicacityAddon.events.faction.rettungsdienst;
 
 import com.rettichlp.UnicacityAddon.UnicacityAddon;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
+import com.rettichlp.UnicacityAddon.base.api.enums.StatisticType;
 import com.rettichlp.UnicacityAddon.base.api.request.APIRequest;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCEvent;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
@@ -35,6 +36,6 @@ public class ReviveEventHandler {
 
     public static void handleRevive() {
         if (System.currentTimeMillis() - time < TimeUnit.SECONDS.toMillis(10))
-            APIRequest.sendStatisticAddRequest("REVIVE");
+            APIRequest.sendStatisticAddRequest(StatisticType.REVIVE);
     }
 }

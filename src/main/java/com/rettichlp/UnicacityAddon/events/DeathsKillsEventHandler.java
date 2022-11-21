@@ -3,6 +3,7 @@ package com.rettichlp.UnicacityAddon.events;
 import com.google.gson.JsonObject;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
+import com.rettichlp.UnicacityAddon.base.api.enums.StatisticType;
 import com.rettichlp.UnicacityAddon.base.api.request.APIRequest;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCEvent;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
@@ -29,21 +30,21 @@ public class DeathsKillsEventHandler {
         Matcher jailKillMatcher = PatternHandler.WANTED_KILL.matcher(msg);
         if (jailKillMatcher.find()) {
             if (jailKillMatcher.group(2).equals(p.getName()))
-                APIRequest.sendStatisticAddRequest("KILL");
+                APIRequest.sendStatisticAddRequest(StatisticType.KILL);
             return;
         }
 
         Matcher contractKillPattern = PatternHandler.CONTRACT_REMOVED_PATTERN.matcher(msg);
         if (contractKillPattern.find() && msg.contains("getötet")) {
             if (msg.contains(p.getName())) {
-                APIRequest.sendStatisticAddRequest("KILL");
+                APIRequest.sendStatisticAddRequest(StatisticType.KILL);
                 AFbankEinzahlenCommand.sendClockMessage();
             }
             return;
         }
 
         if (PatternHandler.DEATH_PATTERN.matcher(msg).find()) {
-            APIRequest.sendStatisticAddRequest("DEATH");
+            APIRequest.sendStatisticAddRequest(StatisticType.DEATH);
             return;
         }
 

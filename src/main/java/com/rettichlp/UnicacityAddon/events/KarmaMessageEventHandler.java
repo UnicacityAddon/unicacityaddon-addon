@@ -2,6 +2,7 @@ package com.rettichlp.UnicacityAddon.events;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
+import com.rettichlp.UnicacityAddon.base.api.enums.StatisticType;
 import com.rettichlp.UnicacityAddon.base.api.request.APIRequest;
 import com.rettichlp.UnicacityAddon.base.config.ConfigElements;
 import com.rettichlp.UnicacityAddon.base.faction.Faction;
@@ -49,7 +50,7 @@ public class KarmaMessageEventHandler {
 
             if (karma > 0 || karma < -7) return false; // Wenn das Karma unter 0 ist, und nicht tiefer als 7 geht dann gibt es einen Kill
 
-            APIRequest.sendStatisticAddRequest("KILL");
+            APIRequest.sendStatisticAddRequest(StatisticType.KILL);
             return false;
         }
 
