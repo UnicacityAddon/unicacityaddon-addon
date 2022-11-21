@@ -1,49 +1,61 @@
 package com.rettichlp.UnicacityAddon.base.api.exception;
 
-import static com.rettichlp.UnicacityAddon.base.utils.DebugUtils.Debug;
+import com.rettichlp.UnicacityAddon.UnicacityAddon;
 
-public class APIUnsuccessResponseException extends Throwable {
+import java.util.logging.Level;
+
+public class APIResponseException extends Throwable {
 
     private final String urlString;
     private final int responseCode;
 
-    public APIUnsuccessResponseException(String urlString, int responseCode) {
+    public APIResponseException(String urlString, int responseCode) {
         this.urlString = urlString;
         this.responseCode = responseCode;
     }
 
     public void sendInfoMessage() {
         String message;
+        Level level;
+
         switch (responseCode) {
             case 200:
                 message = "Ok";
+                level = Level.INFO;
                 break;
             case 204:
                 message = "Inhalt nicht gefunden.";
+                level = Level.WARNING;
                 break;
             case 400:
                 message = "Fehlerhafte Anfrage.";
+                level = Level.WARNING;
                 break;
             case 401:
                 message = "Der Zugriff wurde abgelehnt.";
+                level = Level.WARNING;
                 break;
             case 404:
                 message = "Endpunkt nicht gefunden.";
+                level = Level.WARNING;
                 break;
             case 423:
                 message = "Endpunkt gesperrt.";
+                level = Level.WARNING;
                 break;
             case 500:
                 message = "Der Server konnte die Anfrage nicht verarbeiten.";
+                level = Level.WARNING;
                 break;
             case 503:
                 message = "Der Server ist aktuell nicht erreichbar.";
+                level = Level.WARNING;
                 break;
             default:
                 message = "API Fehler.";
+                level = Level.WARNING;
         }
 
-        Debug(APIUnsuccessResponseException.class, "Fehler [" + responseCode + "]: " + message);
-        Debug(APIUnsuccessResponseException.class, "URL: " + urlString);
+        UnicacityAddon.LOGGER.log(level, "APIResponseException - " + responseCode + " [" + urlString + "]: " + message);
     }
 }

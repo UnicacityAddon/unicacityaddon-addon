@@ -1,6 +1,6 @@
 package com.rettichlp.UnicacityAddon.base.faction;
 
-import com.rettichlp.UnicacityAddon.base.api.exception.APIUnsuccessResponseException;
+import com.rettichlp.UnicacityAddon.base.api.exception.APIResponseException;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
 import com.rettichlp.UnicacityAddon.base.utils.WebsiteUtils;
@@ -105,7 +105,7 @@ public enum Faction {
     public String getWebsiteSource() {
         try {
             return WebsiteUtils.sendRequest(this.getWebsiteUrl());
-        } catch (APIUnsuccessResponseException e) {
+        } catch (APIResponseException e) {
             return Strings.EMPTY;
         }
     }

@@ -1,8 +1,9 @@
 package com.rettichlp.UnicacityAddon.base.utils;
 
+import com.rettichlp.UnicacityAddon.UnicacityAddon;
 import com.rettichlp.UnicacityAddon.base.api.TokenManager;
 import com.rettichlp.UnicacityAddon.base.api.enums.ApplicationPath;
-import com.rettichlp.UnicacityAddon.base.api.exception.APIUnsuccessResponseException;
+import com.rettichlp.UnicacityAddon.base.api.exception.APIResponseException;
 import joptsimple.internal.Strings;
 
 import java.io.IOException;
@@ -14,17 +15,18 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.logging.Level;
 
 /**
  * @author RettichLP
  */
 public class WebsiteUtils {
 
-    public static String sendRequest(String urlString) throws APIUnsuccessResponseException {
+    public static String sendRequest(String urlString) throws APIResponseException {
         HttpURLConnection httpURLConnection;
 
         if (urlString == null || urlString.isEmpty())
-            throw new APIUnsuccessResponseException(Strings.EMPTY, HttpURLConnection.HTTP_NOT_FOUND);
+            throw new APIResponseException("URL is null or empty", HttpURLConnection.HTTP_NOT_FOUND);
 
         try {
             httpURLConnection = (HttpURLConnection) new URL(urlString).openConnection();
@@ -32,21 +34,22 @@ public class WebsiteUtils {
 
             int statusCode = httpURLConnection.getResponseCode();
             if (statusCode != HttpURLConnection.HTTP_OK)
-                throw new APIUnsuccessResponseException(urlString, statusCode);
+                throw new APIResponseException(urlString, statusCode);
         } catch (IOException e) {
-            throw new APIUnsuccessResponseException(urlString, HttpURLConnection.HTTP_NOT_FOUND);
+            throw new APIResponseException(urlString, HttpURLConnection.HTTP_NOT_FOUND);
         }
 
         try {
             StringBuilder websiteSource = new StringBuilder();
             Scanner scanner = new Scanner(new InputStreamReader(httpURLConnection.getInputStream(), StandardCharsets.UTF_8));
             while (scanner.hasNextLine()) websiteSource.append(scanner.nextLine()).append("\n\r");
+            UnicacityAddon.LOGGER.log(Level.INFO, "APIResponse - " + httpURLConnection.getResponseCode() + " [" + urlString.replace(TokenManager.API_TOKEN, "TOKEN") + "]");
             return websiteSource.toString();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        throw new APIUnsuccessResponseException(urlString, HttpURLConnection.HTTP_NO_CONTENT);
+        throw new APIResponseException(urlString, HttpURLConnection.HTTP_NO_CONTENT);
     }
 
     public static String createUrl(boolean nonProd, ApplicationPath applicationPath, String subPath, Map<String, String> parameter) {

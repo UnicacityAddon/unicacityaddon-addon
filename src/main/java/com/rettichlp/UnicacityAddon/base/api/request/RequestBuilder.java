@@ -5,7 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.rettichlp.UnicacityAddon.base.api.enums.ApplicationPath;
-import com.rettichlp.UnicacityAddon.base.api.exception.APIUnsuccessResponseException;
+import com.rettichlp.UnicacityAddon.base.api.exception.APIResponseException;
 import com.rettichlp.UnicacityAddon.base.utils.WebsiteUtils;
 
 import java.util.Map;
@@ -52,9 +52,8 @@ public class RequestBuilder {
             try {
                 String urlString = WebsiteUtils.createUrl(this.nonProd, this.applicationPath, this.subPath, this.parameter);
                 String response = WebsiteUtils.sendRequest(urlString);
-                // UnicacityAddon.LOGGER.info("RequestBuilder sent Request - OK [200]: " + urlString.replace(this.token, "TOKEN")); TODO
                 return new JsonParser().parse(response);
-            } catch (APIUnsuccessResponseException e) {
+            } catch (APIResponseException e) {
                 throw new RuntimeException(e);
             }
         }
