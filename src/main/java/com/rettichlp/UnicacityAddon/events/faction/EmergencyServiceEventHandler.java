@@ -2,11 +2,14 @@ package com.rettichlp.UnicacityAddon.events.faction;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
+import com.rettichlp.UnicacityAddon.base.api.enums.StatisticType;
+import com.rettichlp.UnicacityAddon.base.api.request.APIRequest;
 import com.rettichlp.UnicacityAddon.base.location.ServiceCallBox;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCEvent;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
+import com.rettichlp.UnicacityAddon.commands.faction.ServiceCountCommand;
 import com.rettichlp.UnicacityAddon.modules.EmergencyServiceModule;
 import net.minecraft.util.text.event.ClickEvent;
 import net.minecraft.util.text.event.HoverEvent;
@@ -49,6 +52,11 @@ public class EmergencyServiceEventHandler {
         if (PatternHandler.SERVICE_NO_SERVICE_PATTERN.matcher(msg).find()) {
             EmergencyServiceModule.currentCount = 0;
             return;
+        }
+
+        if (PatternHandler.SERVICE_DONE_PATTERN.matcher(msg).find()) {
+            ServiceCountCommand.addService();
+            APIRequest.sendStatisticAddRequest(StatisticType.SERVICE);
         }
 
         Matcher serviceOverviewMatcher = PatternHandler.SERVICE_OVERVIEW_PATTERN.matcher(msg);
