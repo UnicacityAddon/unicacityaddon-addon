@@ -2,6 +2,7 @@ package com.rettichlp.UnicacityAddon.commands;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
+import com.rettichlp.UnicacityAddon.base.api.request.TabCompletionBuilder;
 import com.rettichlp.UnicacityAddon.base.faction.Faction;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import net.minecraft.command.ICommand;
@@ -61,11 +62,10 @@ public class MemberInfoCommand implements IClientCommand {
 
     @Override
     @Nonnull
-    public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
-        List<String> tabCompletions = Arrays.stream(Faction.values()).map(Faction::getFactionKey).sorted().collect(Collectors.toList());
-        String input = args[args.length - 1].toLowerCase();
-        tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
-        return tabCompletions;
+    public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
+        return TabCompletionBuilder.getBuilder(args)
+                .addAtIndex(1, Arrays.stream(Faction.values()).map(Faction::getFactionKey).sorted().collect(Collectors.toList()))
+                .build();
     }
 
     @Override

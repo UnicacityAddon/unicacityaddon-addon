@@ -3,6 +3,7 @@ package com.rettichlp.UnicacityAddon.commands.teamspeak;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
 import com.rettichlp.UnicacityAddon.base.api.Syncer;
+import com.rettichlp.UnicacityAddon.base.api.request.TabCompletionBuilder;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import com.rettichlp.UnicacityAddon.base.teamspeak.TSClientQuery;
 import com.rettichlp.UnicacityAddon.base.teamspeak.TSUtils;
@@ -11,7 +12,6 @@ import com.rettichlp.UnicacityAddon.base.teamspeak.commands.ClientVariableComman
 import com.rettichlp.UnicacityAddon.base.teamspeak.objects.Client;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
-import com.rettichlp.UnicacityAddon.base.utils.ForgeUtils;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
@@ -107,21 +107,21 @@ public class ChannelActivityCommand implements IClientCommand {
                     .of("»").color(ColorCode.GRAY).advance().space()
                     .of(playerName).color(isOnline ? ColorCode.GREEN : ColorCode.RED).advance().space()
                     .of(isOnline ? "[¡]" : "").color(ColorCode.BLUE)
-                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Finde " + playerName + " auf dem TS").color(ColorCode.RED).advance().createComponent())
-                            .clickEvent(ClickEvent.Action.RUN_COMMAND, "/tsfind " + playerName)
-                            .advance().space()
+                    .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Finde " + playerName + " auf dem TS").color(ColorCode.RED).advance().createComponent())
+                    .clickEvent(ClickEvent.Action.RUN_COMMAND, "/tsfind " + playerName)
+                    .advance().space()
                     .of(isOnline ? "[↓]" : "").color(ColorCode.BLUE)
-                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Move " + playerName + " zu dir").color(ColorCode.RED).advance().createComponent())
-                            .clickEvent(ClickEvent.Action.RUN_COMMAND, "/movehere " + playerName)
-                            .advance()
+                    .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Move " + playerName + " zu dir").color(ColorCode.RED).advance().createComponent())
+                    .clickEvent(ClickEvent.Action.RUN_COMMAND, "/movehere " + playerName)
+                    .advance()
                     .createComponent()));
 
             p.sendMessage(Message.getBuilder()
                     .of("➡").color(ColorCode.GRAY).advance().space()
                     .of("Nicht anwesende Spieler kopieren").color(ColorCode.GREEN)
-                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Nicht anwesende Spieler kopieren").color(ColorCode.RED).advance().createComponent())
-                            .clickEvent(ClickEvent.Action.RUN_COMMAND, "/channelactivity copy")
-                            .advance()
+                    .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Nicht anwesende Spieler kopieren").color(ColorCode.RED).advance().createComponent())
+                    .clickEvent(ClickEvent.Action.RUN_COMMAND, "/channelactivity copy")
+                    .advance()
                     .createComponent());
 
             p.sendEmptyMessage();
@@ -130,11 +130,8 @@ public class ChannelActivityCommand implements IClientCommand {
 
     @Override
     @Nonnull
-    public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
-        List<String> tabCompletions = ForgeUtils.getOnlinePlayers();
-        String input = args[args.length - 1].toLowerCase();
-        tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
-        return tabCompletions;
+    public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
+        return TabCompletionBuilder.getBuilder(args).build();
     }
 
     @Override

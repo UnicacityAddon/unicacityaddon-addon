@@ -4,6 +4,7 @@ import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
 import com.rettichlp.UnicacityAddon.base.api.Syncer;
 import com.rettichlp.UnicacityAddon.base.api.entries.NaviPointEntry;
+import com.rettichlp.UnicacityAddon.base.api.request.TabCompletionBuilder;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import com.rettichlp.UnicacityAddon.base.utils.MathUtils;
 import com.rettichlp.UnicacityAddon.base.utils.TextUtils;
@@ -72,11 +73,10 @@ public class NaviCommand implements IClientCommand {
 
     @Override
     @Nonnull
-    public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
-        List<String> tabCompletions = Syncer.NAVIPOINTLIST.stream().map(NaviPointEntry::getName).sorted().collect(Collectors.toList());
-        String input = args[args.length - 1].toLowerCase();
-        tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
-        return tabCompletions;
+    public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
+        return TabCompletionBuilder.getBuilder(args)
+                .addAtIndex(1, Syncer.NAVIPOINTLIST.stream().map(NaviPointEntry::getName).sorted().collect(Collectors.toList()))
+                .build();
     }
 
     @Override

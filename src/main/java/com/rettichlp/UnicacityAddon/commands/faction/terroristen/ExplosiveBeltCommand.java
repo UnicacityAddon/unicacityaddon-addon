@@ -2,8 +2,8 @@ package com.rettichlp.UnicacityAddon.commands.faction.terroristen;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
+import com.rettichlp.UnicacityAddon.base.api.request.TabCompletionBuilder;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
-import com.rettichlp.UnicacityAddon.base.utils.ForgeUtils;
 import com.rettichlp.UnicacityAddon.base.utils.MathUtils;
 import com.rettichlp.UnicacityAddon.modules.ExplosiveBeltTimerModule;
 import net.minecraft.command.ICommand;
@@ -23,12 +23,15 @@ import java.util.List;
 @UCCommand
 public class ExplosiveBeltCommand implements IClientCommand {
 
-    @Override @Nonnull
+    @Override
+    @Nonnull
     public String getName() {
         return "sprenggürtel";
     }
 
-    @Override @Nonnull public String getUsage(@Nonnull ICommandSender sender) {
+    @Override
+    @Nonnull
+    public String getUsage(@Nonnull ICommandSender sender) {
         return "/sprenggürtel [Countdown]";
     }
 
@@ -38,15 +41,15 @@ public class ExplosiveBeltCommand implements IClientCommand {
         return Collections.emptyList();
     }
 
-    @Override public boolean checkPermission(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender) { return true; }
+    @Override
+    public boolean checkPermission(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender) {
+        return true;
+    }
 
     @Override
     @Nonnull
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
-        List<String> tabCompletions = ForgeUtils.getOnlinePlayers();
-        String input = args[args.length - 1].toLowerCase();
-        tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
-        return tabCompletions;
+        return TabCompletionBuilder.getBuilder(args).build();
     }
 
     @Override
@@ -54,7 +57,8 @@ public class ExplosiveBeltCommand implements IClientCommand {
         return false;
     }
 
-    @Override public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args) {
+    @Override
+    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args) {
         UPlayer p = AbstractionLayer.getPlayer();
 
         if (!MathUtils.isInteger(args[0])) {

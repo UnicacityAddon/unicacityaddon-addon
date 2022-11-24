@@ -4,6 +4,7 @@ import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
 import com.rettichlp.UnicacityAddon.base.api.Syncer;
 import com.rettichlp.UnicacityAddon.base.api.entries.WantedReasonEntry;
+import com.rettichlp.UnicacityAddon.base.api.request.TabCompletionBuilder;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import com.rettichlp.UnicacityAddon.base.utils.ForgeUtils;
 import com.rettichlp.UnicacityAddon.base.utils.MathUtils;
@@ -114,15 +115,12 @@ public class ASUCommand implements IClientCommand {
 
     @Override
     @Nonnull
-    public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
-        List<String> tabCompletions = ForgeUtils.getOnlinePlayers();
-        if (args.length > 1) {
-            tabCompletions.addAll(Syncer.getWantedReasonEntryList().stream().map(WantedReasonEntry::getReason).sorted().collect(Collectors.toList()));
-        }
-        String input = args[args.length - 1].toLowerCase();
-        tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
-        tabCompletions.addAll(Arrays.stream(Flag.values()).map(Flag::getFlagArgument).sorted().collect(Collectors.toList()));
-        return tabCompletions;
+    public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
+        return TabCompletionBuilder.getBuilder(args)
+                .addToAllFromIndex(2, Syncer.getWantedReasonEntryList().stream().map(WantedReasonEntry::getReason).sorted().collect(Collectors.toList()))
+                .addToAllFromIndex(2, ForgeUtils.getOnlinePlayers())
+                .addToAllFromIndex(3, Arrays.stream(Flag.values()).map(Flag::getFlagArgument).sorted().collect(Collectors.toList()))
+                .build();
     }
 
     @Override

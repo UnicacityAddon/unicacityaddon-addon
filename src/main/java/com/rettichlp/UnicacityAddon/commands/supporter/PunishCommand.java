@@ -2,9 +2,9 @@ package com.rettichlp.UnicacityAddon.commands.supporter;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
+import com.rettichlp.UnicacityAddon.base.api.request.TabCompletionBuilder;
 import com.rettichlp.UnicacityAddon.base.punish.Punishment;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
-import com.rettichlp.UnicacityAddon.base.utils.ForgeUtils;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
@@ -65,13 +65,18 @@ public class PunishCommand implements IClientCommand {
         String reason = punishment.getReason();
         int banDuration = punishment.getBanDuration();
 
-        if (punishment.getCheckpoints() > 0) p.sendChatMessage("/checkpoints " + args[0] + " " + punishment.getCheckpoints() + " " + reason);
-        if (punishment.getBanDuration() > 0) p.sendChatMessage("/tban " + args[0] + " 0 0 " + banDuration + " " + reason);
+        if (punishment.getCheckpoints() > 0)
+            p.sendChatMessage("/checkpoints " + args[0] + " " + punishment.getCheckpoints() + " " + reason);
+        if (punishment.getBanDuration() > 0)
+            p.sendChatMessage("/tban " + args[0] + " 0 0 " + banDuration + " " + reason);
         if (punishment.getBanDuration() == -1) p.sendChatMessage("/ban " + args[0] + " " + reason);
         if (punishment.isLoyalityPointReset()) p.sendChatMessage("/resettreuebonus " + args[0]);
-        if (punishment.getWeaponLock() > 0) p.sendChatMessage("/waffensperre " + args[0] + " 0 0 " + punishment.getWeaponLock() * 24 * 60 + " " + reason);
-        if (punishment.getFactionLock() > 0) p.sendChatMessage("/fraksperre " + args[0] + " " + punishment.getFactionLock() + " " + reason);
-        if (punishment.getAdLock() > 0) p.sendChatMessage("/adsperre " + args[0] + " " + punishment.getAdLock() + " " + reason);
+        if (punishment.getWeaponLock() > 0)
+            p.sendChatMessage("/waffensperre " + args[0] + " 0 0 " + punishment.getWeaponLock() * 24 * 60 + " " + reason);
+        if (punishment.getFactionLock() > 0)
+            p.sendChatMessage("/fraksperre " + args[0] + " " + punishment.getFactionLock() + " " + reason);
+        if (punishment.getAdLock() > 0)
+            p.sendChatMessage("/adsperre " + args[0] + " " + punishment.getAdLock() + " " + reason);
         if (punishment.isKick()) p.sendChatMessage("/kick " + args[0] + " " + reason);
         if (punishment.getWarnAmmount() > 0)
             for (int i = 0; i < punishment.getWarnAmmount(); i++) {
@@ -82,18 +87,10 @@ public class PunishCommand implements IClientCommand {
 
     @Override
     @Nonnull
-    public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
-        if (args.length == 1) {
-            List<String> tabCompletions = ForgeUtils.getOnlinePlayers();
-            String input = args[args.length - 1].toLowerCase();
-            tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
-            return tabCompletions;
-        } else {
-            List<String> tabCompletions = Arrays.stream(Punishment.values()).map(Punishment::getTabReason).sorted().collect(Collectors.toList());
-            String input = args[args.length - 1].toLowerCase();
-            tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
-            return tabCompletions;
-        }
+    public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
+        return TabCompletionBuilder.getBuilder(args)
+                .addAtIndex(2, Arrays.stream(Punishment.values()).map(Punishment::getTabReason).sorted().collect(Collectors.toList()))
+                .build();
     }
 
     @Override

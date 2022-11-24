@@ -2,8 +2,8 @@ package com.rettichlp.UnicacityAddon.commands;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
+import com.rettichlp.UnicacityAddon.base.api.request.TabCompletionBuilder;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
-import com.rettichlp.UnicacityAddon.base.utils.ForgeUtils;
 import com.rettichlp.UnicacityAddon.base.utils.TextUtils;
 import com.rettichlp.UnicacityAddon.events.MobileEventHandler;
 import net.minecraft.command.ICommand;
@@ -23,30 +23,33 @@ import java.util.List;
 @UCCommand
 public class ReplyCommand implements IClientCommand {
 
-    @Override @Nonnull
+    @Override
+    @Nonnull
     public String getName() {
         return "reply";
     }
 
-    @Override @Nonnull public String getUsage(@Nonnull ICommandSender sender) {
+    @Override
+    @Nonnull
+    public String getUsage(@Nonnull ICommandSender sender) {
         return "/reply [Nachricht]";
     }
 
-    @Override @Nonnull public List<String> getAliases() {
+    @Override
+    @Nonnull
+    public List<String> getAliases() {
         return Collections.singletonList("r");
     }
 
-    @Override public boolean checkPermission(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender) {
+    @Override
+    public boolean checkPermission(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender) {
         return true;
     }
 
     @Override
     @Nonnull
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
-        List<String> tabCompletions = ForgeUtils.getOnlinePlayers();
-        String input = args[args.length - 1].toLowerCase();
-        tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
-        return tabCompletions;
+        return TabCompletionBuilder.getBuilder(args).build();
     }
 
     @Override
@@ -54,7 +57,8 @@ public class ReplyCommand implements IClientCommand {
         return false;
     }
 
-    @Override public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
+    @Override
+    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
         UPlayer p = AbstractionLayer.getPlayer();
         if (args.length < 1) {
             p.sendSyntaxMessage(getUsage(sender));

@@ -2,6 +2,7 @@ package com.rettichlp.UnicacityAddon.commands.faction;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
+import com.rettichlp.UnicacityAddon.base.api.request.TabCompletionBuilder;
 import com.rettichlp.UnicacityAddon.base.json.EquipLogEntry;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
@@ -17,7 +18,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -57,7 +57,9 @@ public class EquipListCommand implements IClientCommand {
     @Override
     @Nonnull
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
-        return Arrays.asList("reset");
+        return TabCompletionBuilder.getBuilder(args)
+                .addAtIndex(1, "reset")
+                .build();
     }
 
     @Override
@@ -81,11 +83,10 @@ public class EquipListCommand implements IClientCommand {
         p.sendMessage(Message.getBuilder()
                 .of("Equip:").color(ColorCode.DARK_AQUA).bold().advance()
                 .createComponent());
-        EquipEventHandler.equipLogEntryList.forEach(equipLogEntry ->
-            p.sendMessage(Message.getBuilder()
-                    .of("» " + equipLogEntry.getAmount() + "x " + equipLogEntry.getEquip().getName() + ": ").color(ColorCode.GRAY).advance()
-                    .of(numberFormat.format(equipLogEntry.getPrice()) + "$").color(ColorCode.AQUA).advance()
-                    .createComponent()));
+        EquipEventHandler.equipLogEntryList.forEach(equipLogEntry -> p.sendMessage(Message.getBuilder()
+                .of("» " + equipLogEntry.getAmount() + "x " + equipLogEntry.getEquip().getName() + ": ").color(ColorCode.GRAY).advance()
+                .of(numberFormat.format(equipLogEntry.getPrice()) + "$").color(ColorCode.AQUA).advance()
+                .createComponent()));
 
         int totalAmount = EquipEventHandler.equipLogEntryList.stream().map(EquipLogEntry::getPrice).reduce(0, Integer::sum);
 

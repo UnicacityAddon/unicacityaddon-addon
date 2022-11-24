@@ -2,10 +2,10 @@ package com.rettichlp.UnicacityAddon.commands;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
+import com.rettichlp.UnicacityAddon.base.api.request.TabCompletionBuilder;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
-import com.rettichlp.UnicacityAddon.base.utils.ForgeUtils;
 import com.rettichlp.UnicacityAddon.events.HouseBankEventHandler;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
@@ -24,30 +24,33 @@ import java.util.List;
 @UCCommand
 public class HouseBankCommand implements IClientCommand {
 
-    @Override @Nonnull
+    @Override
+    @Nonnull
     public String getName() {
         return "hauskasseninfo";
     }
 
-    @Override @Nonnull public String getUsage(@Nonnull ICommandSender sender) {
+    @Override
+    @Nonnull
+    public String getUsage(@Nonnull ICommandSender sender) {
         return "/hauskasseninfo";
     }
 
-    @Override @Nonnull public List<String> getAliases() {
+    @Override
+    @Nonnull
+    public List<String> getAliases() {
         return Arrays.asList("hkasseninfo");
     }
 
-    @Override public boolean checkPermission(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender) {
+    @Override
+    public boolean checkPermission(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender) {
         return true;
     }
 
     @Override
     @Nonnull
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
-        List<String> tabCompletions = ForgeUtils.getOnlinePlayers();
-        String input = args[args.length - 1].toLowerCase();
-        tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
-        return tabCompletions;
+        return TabCompletionBuilder.getBuilder(args).build();
     }
 
     @Override
@@ -55,7 +58,8 @@ public class HouseBankCommand implements IClientCommand {
         return false;
     }
 
-    @Override public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
+    @Override
+    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
         houseBanks();
     }
 
@@ -65,8 +69,7 @@ public class HouseBankCommand implements IClientCommand {
         p.sendMessage(Message.getBuilder()
                 .of("Hauskassen:").color(ColorCode.DARK_AQUA).bold().advance()
                 .createComponent());
-        HouseBankEventHandler.houseBanks.forEach(houseBankEntry ->
-                p.sendMessage(Message.getBuilder()
+        HouseBankEventHandler.houseBanks.forEach(houseBankEntry -> p.sendMessage(Message.getBuilder()
                 .of("» " + houseBankEntry.getHouseNumber() + ": ").color(ColorCode.GRAY).advance()
                 .of(houseBankEntry.getValue() + "$").color(ColorCode.AQUA).advance()
                 .createComponent()));

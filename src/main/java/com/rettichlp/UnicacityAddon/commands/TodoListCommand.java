@@ -2,12 +2,12 @@ package com.rettichlp.UnicacityAddon.commands;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
+import com.rettichlp.UnicacityAddon.base.api.request.TabCompletionBuilder;
 import com.rettichlp.UnicacityAddon.base.io.FileManager;
 import com.rettichlp.UnicacityAddon.base.json.TodolistEntry;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
-import com.rettichlp.UnicacityAddon.base.utils.ForgeUtils;
 import com.rettichlp.UnicacityAddon.base.utils.MathUtils;
 import com.rettichlp.UnicacityAddon.base.utils.TextUtils;
 import net.minecraft.command.ICommand;
@@ -57,10 +57,7 @@ public class TodoListCommand implements IClientCommand {
     @Override
     @Nonnull
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
-        List<String> tabCompletions = ForgeUtils.getOnlinePlayers();
-        String input = args[args.length - 1].toLowerCase();
-        tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
-        return tabCompletions;
+        return TabCompletionBuilder.getBuilder(args).build();
     }
 
     @Override
@@ -130,8 +127,7 @@ public class TodoListCommand implements IClientCommand {
             int id = todolist.indexOf(todolistEntry) + 1;
             if (todolistEntry.isDone()) p.sendMessage(Message.getBuilder()
                     .of("» " + id + ". ").color(ColorCode.GRAY).advance()
-                    .of(todolistEntry.getTodo()).color(ColorCode.AQUA).strikethrough().advance()
-                    .space()
+                    .of(todolistEntry.getTodo()).color(ColorCode.AQUA).strikethrough().advance().space()
                     .of("[✐]").color(ColorCode.GOLD)
                             .clickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/todo edit " + id + " " + todolistEntry.getTodo())
                             .advance().space()
@@ -141,12 +137,10 @@ public class TodoListCommand implements IClientCommand {
                     .createComponent());
             else p.sendMessage(Message.getBuilder()
                     .of("» " + id + ". ").color(ColorCode.GRAY).advance()
-                    .of(todolistEntry.getTodo()).color(ColorCode.AQUA).advance()
-                    .space()
+                    .of(todolistEntry.getTodo()).color(ColorCode.AQUA).advance().space()
                     .of("[✔]").color(ColorCode.GREEN)
                             .clickEvent(ClickEvent.Action.RUN_COMMAND, "/todo done " + todolistEntry.getTodo())
-                            .advance()
-                    .space()
+                            .advance().space()
                     .of("[✐]").color(ColorCode.GOLD)
                             .clickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/todo edit " + id + " " + todolistEntry.getTodo())
                             .advance().space()
