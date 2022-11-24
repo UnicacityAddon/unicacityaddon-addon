@@ -23,6 +23,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -109,11 +110,11 @@ public class BroadcastCommand implements IClientCommand {
     @Override
     @Nonnull
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
-        LocalDateTime localDateTime = LocalDateTime.now();
+        Date now = new Date();
         return TabCompletionBuilder.getBuilder(args)
                 .addAtIndex(1, "queue", "send")
-                .addAtIndex(2, new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN).format(localDateTime))
-                .addAtIndex(3, new SimpleDateFormat("HH:mm:ss", Locale.GERMAN).format(localDateTime))
+                .addAtIndex(2, new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN).format(now))
+                .addAtIndex(3, new SimpleDateFormat("HH:mm:ss", Locale.GERMAN).format(now))
                 .build();
     }
 
