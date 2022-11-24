@@ -312,4 +312,10 @@ public class PatternHandler {
      */
     public static final Pattern RESOURCEPACK_PATTERN = Pattern.compile("^Wir empfehlen dir unser Resourcepack zu nutzen\\.$|" +
             "^Unter https://unicacity\\.de/dl/UnicaCity[_a-zA-Z\\d]+.zip kannst du es dir herunterladen.$");
+
+    /**
+     *
+     */
+    public static final Pattern PIZZA_START_PATTERN = Pattern.compile("^\\[Pizzalieferant] Hier kannst du die frischen Pizzen mit /getpizza abholen\\.$");
+    public static final Pattern PIZZA_PICKUP_PATTERN = Pattern.compile("^\\[Pizzalieferant] Du hast eine Pizza für die Lieferung fertig gemacht\\. \\[(?<count>\\d+)/15]$");
 }
