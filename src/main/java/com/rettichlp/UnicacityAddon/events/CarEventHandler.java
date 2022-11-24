@@ -26,27 +26,34 @@ public class CarEventHandler {
     private static final List<Integer> sentTankWarnings = new ArrayList<>();
 
     @SubscribeEvent
-    public boolean onClientChatReceived(ClientChatReceivedEvent e) {
+    public void onClientChatReceived(ClientChatReceivedEvent e) {
         UPlayer p = AbstractionLayer.getPlayer();
         String msg = e.getMessage().getUnformattedText();
 
         if (PatternHandler.CAR_OPEN_PATTERN.matcher(msg).find()) {
             CarOpenModule.info = ColorCode.GREEN.getCode() + "offen";
             FileManager.saveData();
-            return false;
+            return;
         }
 
         if (PatternHandler.CAR_CLOSE_PATTERN.matcher(msg).find()) {
             CarOpenModule.info = ColorCode.RED.getCode() + "zu";
             FileManager.saveData();
-            return false;
+            return;
         }
 
         Matcher carPositionMatcher = PatternHandler.CAR_POSITION_PATTERN.matcher(msg);
         if (carPositionMatcher.find() && ConfigElements.getEventCarFind()) {
             p.setNaviRoute(Integer.parseInt(carPositionMatcher.group(1)), Integer.parseInt(carPositionMatcher.group(2)), Integer.parseInt(carPositionMatcher.group(3)));
+            return;
         }
-        return false;
+
+        Matcher checkKFZMatcher = PatternHandler.CAR_CHECK_KFZ_PATTERN.matcher(msg);
+        if (checkKFZMatcher.find()) {
+            String name = checkKFZMatcher.group(1);
+            if (name == null) name = checkKFZMatcher.group(2);
+            p.sendChatMessage("/memberinfo " + name);
+        }
     }
 
     public static void checkTank(Scoreboard scoreboard) {
