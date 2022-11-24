@@ -106,7 +106,7 @@ public class ModifyWantedsCommand implements IClientCommand {
 
     @Override
     @Nonnull
-    public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
+    public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
         if (args.length == 1) {
             List<String> tabCompletions = ForgeUtils.getOnlinePlayers();
             String input = args[args.length - 1].toLowerCase();

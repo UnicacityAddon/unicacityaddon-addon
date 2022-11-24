@@ -6,10 +6,10 @@ import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
 import com.rettichlp.UnicacityAddon.base.api.Syncer;
 import com.rettichlp.UnicacityAddon.base.api.entries.BlacklistReasonEntry;
 import com.rettichlp.UnicacityAddon.base.api.request.APIRequest;
+import com.rettichlp.UnicacityAddon.base.api.request.TabCompletionBuilder;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
-import com.rettichlp.UnicacityAddon.base.utils.ForgeUtils;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
@@ -19,7 +19,6 @@ import net.minecraftforge.client.IClientCommand;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -64,16 +63,16 @@ public class BlacklistReasonCommand implements IClientCommand {
                     .createComponent());
 
             Syncer.getBlacklistReasonEntryList().forEach(blacklistReasonEntry -> p.sendMessage(Message.getBuilder()
-                        .of("»").color(ColorCode.GRAY).advance().space()
-                        .of(blacklistReasonEntry.getReason()).color(ColorCode.AQUA)
-                                .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder()
-                                        .of("Preis:").color(ColorCode.RED).advance().space()
-                                        .of(String.valueOf(blacklistReasonEntry.getPrice())).color(ColorCode.DARK_RED).advance().space()
-                                        .of("Kills:").color(ColorCode.RED).advance().space()
-                                        .of(String.valueOf(blacklistReasonEntry.getKills())).color(ColorCode.DARK_RED).advance()
-                                        .createComponent())
-                                .advance()
-                        .createComponent()));
+                    .of("»").color(ColorCode.GRAY).advance().space()
+                    .of(blacklistReasonEntry.getReason()).color(ColorCode.AQUA)
+                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder()
+                                    .of("Preis:").color(ColorCode.RED).advance().space()
+                                    .of(String.valueOf(blacklistReasonEntry.getPrice())).color(ColorCode.DARK_RED).advance().space()
+                                    .of("Kills:").color(ColorCode.RED).advance().space()
+                                    .of(String.valueOf(blacklistReasonEntry.getKills())).color(ColorCode.DARK_RED).advance()
+                                    .createComponent())
+                            .advance()
+                    .createComponent()));
 
             p.sendEmptyMessage();
 
@@ -92,19 +91,11 @@ public class BlacklistReasonCommand implements IClientCommand {
 
     @Override
     @Nonnull
-    public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
-        List<String> tabCompletions = new ArrayList<>();
-        if (args.length == 1) {
-            tabCompletions.add("add");
-            tabCompletions.add("remove");
-        } else if (args.length == 2) {
-            tabCompletions.addAll(Syncer.getBlacklistReasonEntryList().stream().map(BlacklistReasonEntry::getReason).sorted().collect(Collectors.toList()));
-        } else {
-            tabCompletions.addAll(ForgeUtils.getOnlinePlayers());
-        }
-        String input = args[args.length - 1].toLowerCase();
-        tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
-        return tabCompletions;
+    public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
+        return TabCompletionBuilder.getBuilder(args)
+                .addAtIndex(1, "add", "remove")
+                .addAtIndex(2, Syncer.getBlacklistReasonEntryList().stream().map(BlacklistReasonEntry::getReason).sorted().collect(Collectors.toList()))
+                .build();
     }
 
     @Override

@@ -1,12 +1,12 @@
 package com.rettichlp.UnicacityAddon.commands;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
+import com.rettichlp.UnicacityAddon.base.api.request.TabCompletionBuilder;
 import com.rettichlp.UnicacityAddon.base.location.Job;
 import com.rettichlp.UnicacityAddon.base.location.NavigationUtils;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
-import com.rettichlp.UnicacityAddon.base.utils.ForgeUtils;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
@@ -27,29 +27,33 @@ import java.util.Map;
 @UCCommand
 public class NearestJobCommand implements IClientCommand {
 
-    @Override @Nonnull public String getName() {
+    @Override
+    @Nonnull
+    public String getName() {
         return "nearestjob";
     }
 
-    @Override @Nonnull public String getUsage(@Nonnull ICommandSender sender) {
+    @Override
+    @Nonnull
+    public String getUsage(@Nonnull ICommandSender sender) {
         return "/nearestjob";
     }
 
-    @Override @Nonnull public List<String> getAliases() {
+    @Override
+    @Nonnull
+    public List<String> getAliases() {
         return Collections.singletonList("njob");
     }
 
-    @Override public boolean checkPermission(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender) {
+    @Override
+    public boolean checkPermission(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender) {
         return true;
     }
 
     @Override
     @Nonnull
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
-        List<String> tabCompletions = ForgeUtils.getOnlinePlayers();
-        String input = args[args.length - 1].toLowerCase();
-        tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
-        return tabCompletions;
+        return TabCompletionBuilder.getBuilder(args).build();
     }
 
     @Override
@@ -57,28 +61,23 @@ public class NearestJobCommand implements IClientCommand {
         return false;
     }
 
-    @Override public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
+    @Override
+    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
         Map.Entry<Double, Job> nearestJob = NavigationUtils.getNearestJob();
 
         AbstractionLayer.getPlayer().sendMessage(Message.getBuilder()
                 .prefix()
-                .of("Job").color(ColorCode.GRAY).advance()
-                .space()
-                .of(nearestJob.getValue().getName()).color(ColorCode.AQUA).bold().advance()
-                .space()
-                .of("ist").color(ColorCode.GRAY).advance()
-                .space()
-                .of(Math.round(nearestJob.getKey()) + "m").color(ColorCode.AQUA).bold().advance()
-                .space()
-                .of("entfernt.").color(ColorCode.GRAY).advance()
-                .space()
-                .of("➡ Navi")
-                    .color(ColorCode.RED)
-                    .clickEvent(ClickEvent.Action.RUN_COMMAND, nearestJob.getValue().getNaviCommand())
-                    .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder()
-                            .of("Route anzeigen").color(ColorCode.RED).advance()
-                            .createComponent())
-                    .advance()
+                .of("Job").color(ColorCode.GRAY).advance().space()
+                .of(nearestJob.getValue().getName()).color(ColorCode.AQUA).bold().advance().space()
+                .of("ist").color(ColorCode.GRAY).advance().space()
+                .of(Math.round(nearestJob.getKey()) + "m").color(ColorCode.AQUA).bold().advance().space()
+                .of("entfernt.").color(ColorCode.GRAY).advance().space()
+                .of("➡ Navi").color(ColorCode.RED)
+                        .clickEvent(ClickEvent.Action.RUN_COMMAND, nearestJob.getValue().getNaviCommand())
+                        .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder()
+                                .of("Route anzeigen").color(ColorCode.RED).advance()
+                                .createComponent())
+                        .advance()
                 .createComponent());
     }
 

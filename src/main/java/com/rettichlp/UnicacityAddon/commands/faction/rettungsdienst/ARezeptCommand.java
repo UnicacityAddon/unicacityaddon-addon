@@ -2,9 +2,9 @@ package com.rettichlp.UnicacityAddon.commands.faction.rettungsdienst;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
+import com.rettichlp.UnicacityAddon.base.api.request.TabCompletionBuilder;
 import com.rettichlp.UnicacityAddon.base.faction.rettungsdienst.Medication;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
-import com.rettichlp.UnicacityAddon.base.utils.ForgeUtils;
 import com.rettichlp.UnicacityAddon.base.utils.MathUtils;
 import com.rettichlp.UnicacityAddon.events.faction.rettungsdienst.MedicationEventHandler;
 import net.minecraft.command.ICommand;
@@ -73,20 +73,10 @@ public class ARezeptCommand implements IClientCommand {
 
     @Override
     @Nonnull
-    public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
-        if (args.length == 1) {
-            List<String> tabCompletions = ForgeUtils.getOnlinePlayers();
-            String input = args[args.length - 1].toLowerCase();
-            tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
-            return tabCompletions;
-        } else if (args.length == 2) {
-            List<String> tabCompletions = Arrays.stream(Medication.values()).map(Medication::getDisplayName).sorted().collect(Collectors.toList());
-            String input = args[args.length - 1].toLowerCase();
-            tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
-            return tabCompletions;
-        } else {
-            return Collections.emptyList();
-        }
+    public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
+        return TabCompletionBuilder.getBuilder(args)
+                .addAtIndex(2, Arrays.stream(Medication.values()).map(Medication::getDisplayName).sorted().collect(Collectors.toList()))
+                .build();
     }
 
     @Override

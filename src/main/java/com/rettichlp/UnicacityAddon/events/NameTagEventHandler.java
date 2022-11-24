@@ -34,17 +34,18 @@ public class NameTagEventHandler {
     @SubscribeEvent
     public void onRenderNameTag(PlayerEvent.NameFormat e) {
         if (!UnicacityAddon.isUnicacity()) return;
-        String playerName = e.getUsername();
-
-        String displayName = ScorePlayerTeam.formatPlayerName(e.getEntityPlayer().getTeam(), playerName);
+        EntityPlayer entityPlayer = e.getEntityPlayer();
+        String playerUsername = e.getUsername();
+        String displayName = ScorePlayerTeam.formatPlayerName(entityPlayer.getTeam(), playerUsername);
         if (displayName.contains(FormattingCode.OBFUSCATED.getCode())) return;
 
-        String houseBan = getHouseBan(playerName);
-        String outlaw = getOutlaw(playerName);
-        String prefix = getPrefix(playerName, false);
-        String factionInfo = getFactionInfo(playerName);
-        String duty = getDuty(playerName);
-        e.setDisplayname(houseBan + outlaw + prefix + playerName + factionInfo + duty);
+        String houseBan = getHouseBan(playerUsername);
+        String outlaw = getOutlaw(playerUsername);
+        String prefix = getPrefix(playerUsername, false);
+        String factionInfo = getFactionInfo(playerUsername);
+        String duty = getDuty(playerUsername);
+
+        e.setDisplayname(houseBan + outlaw + prefix + playerUsername + factionInfo + duty);
     }
 
     private String getHouseBan(String playerName) {

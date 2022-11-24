@@ -2,6 +2,7 @@ package com.rettichlp.UnicacityAddon.commands.teamspeak;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
+import com.rettichlp.UnicacityAddon.base.api.request.TabCompletionBuilder;
 import com.rettichlp.UnicacityAddon.base.config.ConfigElements;
 import com.rettichlp.UnicacityAddon.base.faction.Faction;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
@@ -23,11 +24,11 @@ import net.minecraftforge.client.IClientCommand;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author Fuzzlemann, RettichLP
@@ -128,20 +129,13 @@ public class TSJoinCommand implements IClientCommand {
     @Override
     @Nonnull
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
-        ChannelListCommand.Response response = new ChannelListCommand().getResponse();
-        List<String> tabCompletions = new ArrayList<>();
-        for (Channel channel : response.getChannels()) {
-            String name = channel.getName();
-            if (name.startsWith("[cspacer")) continue;
-            if (name.startsWith("[spacer")) continue;
-
-            name = modifyChannelName(name);
-            tabCompletions.add(name);
-        }
-
-        String input = args[args.length - 1].toLowerCase();
-        tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
-        return tabCompletions;
+        return TabCompletionBuilder.getBuilder(args)
+                .addAtIndex(1, new ChannelListCommand().getResponse().getChannels().stream()
+                        .map(Channel::getName)
+                        .filter(s -> !s.startsWith("[cspacer") || !s.startsWith("[spacer"))
+                        .map(this::modifyChannelName)
+                        .collect(Collectors.toList()))
+                .build();
     }
 
     @Override
