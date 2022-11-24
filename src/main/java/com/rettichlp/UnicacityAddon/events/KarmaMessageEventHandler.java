@@ -33,10 +33,10 @@ public class KarmaMessageEventHandler {
         String msg = e.getMessage().getUnformattedText();
         UPlayer p = AbstractionLayer.getPlayer();
 
-        if (PayDayEventHandler.isAfk) return false;
-        Matcher karmaChangedPattern = PatternHandler.KARMA_CHANGED_PATTERN.matcher(msg);
+        if (AccountEventHandler.isAfk) return false;
 
-        if (karmaChangedPattern.find()) {
+        Matcher karmaChangedMatcher = PatternHandler.KARMA_CHANGED_PATTERN.matcher(msg);
+        if (karmaChangedMatcher.find()) {
             ReviveEventHandler.handleRevive();
 
             // WORKAROUND START (for medics because ✨UCMDMOD✨) TODO: Remove later
@@ -46,7 +46,7 @@ public class KarmaMessageEventHandler {
                 e.setCanceled(true);
             }
             // WORKAROUND END
-            karma = Integer.parseInt(karmaChangedPattern.group(1));
+            karma = Integer.parseInt(karmaChangedMatcher.group(1));
 
             if (karma > 0 || karma < -7) return false; // Wenn das Karma unter 0 ist, und nicht tiefer als 7 geht dann gibt es einen Kill
 

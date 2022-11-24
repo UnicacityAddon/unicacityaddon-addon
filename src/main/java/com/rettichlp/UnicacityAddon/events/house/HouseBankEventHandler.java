@@ -1,4 +1,4 @@
-package com.rettichlp.UnicacityAddon.events;
+package com.rettichlp.UnicacityAddon.events.house;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.json.HouseBankEntry;
@@ -26,7 +26,7 @@ public class HouseBankEventHandler {
     public boolean onClientChatReceived(ClientChatReceivedEvent e) {
         String msg = e.getMessage().getUnformattedText();
 
-        Matcher houseBankHeaderMatcher = PatternHandler.HOUSEBANK_HEADER_PATTERN.matcher(msg);
+        Matcher houseBankHeaderMatcher = PatternHandler.HOUSE_BANK_HEADER_PATTERN.matcher(msg);
         if (houseBankHeaderMatcher.find()) {
             lastCheckedHouseNumber = Integer.parseInt(houseBankHeaderMatcher.group(1));
 
@@ -34,7 +34,7 @@ public class HouseBankEventHandler {
             return false;
         }
 
-        Matcher houseBankValueMatcher = PatternHandler.HOUSEBANK_VALUE_PATTERN.matcher(msg);
+        Matcher houseBankValueMatcher = PatternHandler.HOUSE_BANK_VALUE_PATTERN.matcher(msg);
         if (houseBankValueMatcher.find()) {
             if (System.currentTimeMillis() - lastCheck < 500) e.setCanceled(true);
 
@@ -50,7 +50,7 @@ public class HouseBankEventHandler {
             return false;
         }
 
-        Matcher houseBankRemoveMatcher = PatternHandler.HOUSEBANK_WITHDRAW_PATTERN.matcher(msg);
+        Matcher houseBankRemoveMatcher = PatternHandler.HOUSE_BANK_WITHDRAW_PATTERN.matcher(msg);
         if (houseBankRemoveMatcher.find()) {
             (new Timer()).schedule(new TimerTask() {
                 @Override
@@ -63,7 +63,7 @@ public class HouseBankEventHandler {
             return false;
         }
 
-        Matcher houseBankAddMatcher = PatternHandler.HOUSEBANK_DEPOSIT_PATTERN.matcher(msg);
+        Matcher houseBankAddMatcher = PatternHandler.HOUSE_BANK_DEPOSIT_PATTERN.matcher(msg);
         if (houseBankAddMatcher.find()) {
             (new Timer()).schedule(new TimerTask() {
                 @Override
