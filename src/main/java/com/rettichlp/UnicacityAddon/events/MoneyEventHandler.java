@@ -20,7 +20,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.text.NumberFormat;
 import java.util.Locale;
-import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 
 /**
@@ -29,7 +28,6 @@ import java.util.regex.Matcher;
 @UCEvent
 public class MoneyEventHandler {
 
-    private long reviveByMedicStartTime;
     private boolean isGRBankCommand;
 
     @SubscribeEvent
@@ -109,28 +107,11 @@ public class MoneyEventHandler {
             return;
         }
 
-        Matcher reviveByMedicStartMatcher = PatternHandler.REVIVE_BY_MEDIC_START_PATTERN.matcher(msg);
-        if (reviveByMedicStartMatcher.find()) {
-            reviveByMedicStartTime = System.currentTimeMillis();
-            return;
-        }
-
-        Matcher reviveByMedicFinishMatcher = PatternHandler.REVIVE_BY_MEDIC_FINISH_PATTERN.matcher(msg);
-        if (reviveByMedicFinishMatcher.find()) {
-            if (System.currentTimeMillis() - reviveByMedicStartTime > TimeUnit.SECONDS.toMillis(10)) {
-                CashMoneyModule.setBalance(0);
-                return;
-            }
-            BankMoneyModule.removeBalance(50); // successfully revived by medic = 50$
-            return;
-        }
-
         Matcher lottoWinMatcher = PatternHandler.LOTTO_WIN.matcher(msg);
         if (lottoWinMatcher.find()) {
             BankMoneyModule.addBalance(Integer.parseInt(lottoWinMatcher.group(1)));
             return;
         }
-
 
         Matcher cashGiveMatcher = PatternHandler.CASH_GIVE_PATTERN.matcher(msg);
         if (cashGiveMatcher.find()) {
