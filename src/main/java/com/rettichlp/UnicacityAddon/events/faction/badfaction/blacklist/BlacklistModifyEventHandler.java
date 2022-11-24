@@ -1,4 +1,4 @@
-package com.rettichlp.UnicacityAddon.events.faction.badfaction;
+package com.rettichlp.UnicacityAddon.events.faction.badfaction.blacklist;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
@@ -14,7 +14,7 @@ import java.util.regex.Matcher;
  * @author Dimiikou
  */
 @UCEvent
-public class ModifyBlacklistEventHandler {
+public class BlacklistModifyEventHandler {
 
     @SubscribeEvent
     public boolean onClientChatReceived(ClientChatReceivedEvent e) {
