@@ -32,7 +32,8 @@ import java.util.Map;
 import java.util.StringTokenizer;
 
 /**
- * @author Bert De Geyter, Roger Baumgartner
+ * @author Bert De Geyter
+ * @author Roger Baumgartner
  */
 public class TSParser {
 

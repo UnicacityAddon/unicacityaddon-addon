@@ -38,9 +38,9 @@ public class HouseRenterEventHandler {
     final Timer TIMER = new Timer();
 
     @SubscribeEvent
-    public boolean onClientChat(ClientChatEvent e) {
+    public void onClientChat(ClientChatEvent e) {
         String msg = e.getMessage();
-        if (!msg.equals("/mieters")) return false;
+        if (!msg.equals("/mieters")) return;
 
         TIMER.schedule(new TimerTask() {
             @Override
@@ -63,8 +63,6 @@ public class HouseRenterEventHandler {
                 });
             }
         }, 500);
-
-        return false;
     }
 
     @SubscribeEvent

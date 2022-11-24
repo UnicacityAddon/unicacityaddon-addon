@@ -73,10 +73,6 @@ public class APIRequest {
     }
 
     public static JsonObject sendHouseBanRemoveRequest(String name, String reason) {
-        Map<String, String> parameter = new HashMap<>();
-        parameter.put("name", name);
-        parameter.put("reason", reason);
-
         return RequestBuilder.getBuilder()
                 .applicationPath(ApplicationPath.HOUSEBAN)
                 .subPath("remove")

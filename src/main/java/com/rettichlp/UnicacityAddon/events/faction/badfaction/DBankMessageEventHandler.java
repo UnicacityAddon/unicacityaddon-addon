@@ -21,10 +21,10 @@ import java.util.regex.Matcher;
 public class DBankMessageEventHandler {
 
     @SubscribeEvent
-    public boolean onClientChatReceived(ClientChatReceivedEvent e) {
+    public void onClientChatReceived(ClientChatReceivedEvent e) {
         String msg = e.getMessage().getUnformattedText();
 
-        if (!ConfigElements.getDrugBankMessagesActivated()) return false;
+        if (!ConfigElements.getDrugBankMessagesActivated()) return;
 
         Matcher dropMatcher = PatternHandler.DBANK_DROP_PATTERN.matcher(msg);
         if (dropMatcher.find()) {
@@ -38,6 +38,8 @@ public class DBankMessageEventHandler {
             for (DrugTypes drugTypes : DrugTypes.values())
                 if (drugTypes.getDrugName().equals(dropMatcher.group(3))) type = drugTypes;
 
+            assert purity != null;
+            assert type != null;
             e.setMessage(Message.getBuilder().of("D").color(ColorCode.GOLD).bold().advance()
                     .of("-").color(ColorCode.GRAY).advance()
                     .of("Bank").color(ColorCode.GOLD).bold().advance().space()
@@ -51,8 +53,6 @@ public class DBankMessageEventHandler {
                     .of("|").color(ColorCode.GRAY).advance().space()
                     .of(dropMatcher.group(1)).color(ColorCode.DARK_AQUA).bold().advance()
                     .createComponent());
-
-            return false;
         }
 
         Matcher getMatcher = PatternHandler.DBANK_GET_PATTERN.matcher(msg);
@@ -67,6 +67,8 @@ public class DBankMessageEventHandler {
             for (DrugTypes drugTypes : DrugTypes.values())
                 if (drugTypes.getDrugName().equals(getMatcher.group(3))) type = drugTypes;
 
+            assert purity != null;
+            assert type != null;
             e.setMessage(Message.getBuilder().of("D").color(ColorCode.GOLD).bold().advance()
                     .of("-").color(ColorCode.GRAY).advance()
                     .of("Bank").color(ColorCode.GOLD).bold().advance().space()
@@ -81,7 +83,5 @@ public class DBankMessageEventHandler {
                     .of(getMatcher.group(1)).color(ColorCode.DARK_AQUA).bold().advance()
                     .createComponent());
         }
-
-        return false;
     }
 }

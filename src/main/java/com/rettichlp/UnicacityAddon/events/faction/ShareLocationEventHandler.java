@@ -23,14 +23,14 @@ import java.util.regex.Matcher;
 public class ShareLocationEventHandler {
 
     @SubscribeEvent
-    public boolean onClientChatReceive(ClientChatReceivedEvent e) {
+    public void onClientChatReceive(ClientChatReceivedEvent e) {
         UPlayer p = AbstractionLayer.getPlayer();
         Matcher shareLocationMatcher = PatternHandler.SHARE_LOCATION_PATTERN.matcher(e.getMessage().getUnformattedText());
 
-        if (!shareLocationMatcher.find()) return false;
+        if (!shareLocationMatcher.find()) return;
         if (!shareLocationMatcher.group(2).contains(p.getName())) {
             e.setCanceled(true);
-            return false;
+            return;
         }
         String senderName = shareLocationMatcher.group(1);
 
@@ -60,6 +60,5 @@ public class ShareLocationEventHandler {
                     .color(ColorCode.RED).advance()
                 .createComponent());
         e.setCanceled(true);
-        return false;
     }
 }

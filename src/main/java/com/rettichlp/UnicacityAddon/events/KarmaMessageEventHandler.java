@@ -29,11 +29,11 @@ public class KarmaMessageEventHandler {
     private int karma;
 
     @SubscribeEvent
-    public boolean onClientChatReceived(ClientChatReceivedEvent e) {
+    public void onClientChatReceived(ClientChatReceivedEvent e) {
         String msg = e.getMessage().getUnformattedText();
         UPlayer p = AbstractionLayer.getPlayer();
 
-        if (AccountEventHandler.isAfk) return false;
+        if (AccountEventHandler.isAfk) return;
 
         Matcher karmaChangedMatcher = PatternHandler.KARMA_CHANGED_PATTERN.matcher(msg);
         if (karmaChangedMatcher.find()) {
@@ -48,14 +48,14 @@ public class KarmaMessageEventHandler {
             // WORKAROUND END
             karma = Integer.parseInt(karmaChangedMatcher.group(1));
 
-            if (karma > 0 || karma < -7) return false; // Wenn das Karma unter 0 ist, und nicht tiefer als 7 geht dann gibt es einen Kill
+            if (karma > 0 || karma < -7) return; // Wenn das Karma unter 0 ist, und nicht tiefer als 7 geht dann gibt es einen Kill
 
             APIRequest.sendStatisticAddRequest(StatisticType.KILL);
-            return false;
+            return;
         }
 
         Matcher karmaMatcher = PatternHandler.KARMA_PATTERN.matcher(msg);
-        if (!karmaCheck || !karmaMatcher.find()) return false;
+        if (!karmaCheck || !karmaMatcher.find()) return;
 
         if (karma < 0 && ConfigElements.getEstimatedDespawnTime()) {
             Calendar cal = Calendar.getInstance();
@@ -91,6 +91,5 @@ public class KarmaMessageEventHandler {
                     .of(")").color(ColorCode.DARK_GRAY).advance().createComponent());
             karmaCheck = !karmaCheck;
         }
-        return false;
     }
 }

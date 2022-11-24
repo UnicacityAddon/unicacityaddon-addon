@@ -33,7 +33,7 @@ public class ReinforcementEventHandler {
     public static int activeReinforcement = -1;
 
     @SubscribeEvent
-    public boolean onClientChatReceive(ClientChatReceivedEvent e) {
+    public void onClientChatReceive(ClientChatReceivedEvent e) {
         UPlayer p = AbstractionLayer.getPlayer();
         Matcher reinforcementMatcher = PatternHandler.REINFORCEMENT_PATTERN.matcher(e.getMessage().getUnformattedText());
 
@@ -97,7 +97,7 @@ public class ReinforcementEventHandler {
                     .createComponent());
 
             e.setCanceled(true);
-            return false;
+            return;
         }
 
         Matcher onTheWayMatcher = PatternHandler.ON_THE_WAY_PATTERN.matcher(e.getMessage().getUnformattedText());
@@ -113,7 +113,7 @@ public class ReinforcementEventHandler {
                     .replace("%distance%", String.valueOf(distance)));
 
             e.setCanceled(true);
-            return false;
+            return;
         }
 
         for (ReinforcementCommand.Type type : ReinforcementCommand.Type.values()) {
@@ -127,10 +127,8 @@ public class ReinforcementEventHandler {
 
             lastReinforcement = new ReinforcementCommand.ReinforcementType(name, type);
             e.setCanceled(true);
-            return false;
+            return;
         }
-
-        return false;
     }
 
     @SubscribeEvent

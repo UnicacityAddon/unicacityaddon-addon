@@ -23,7 +23,7 @@ public class HouseBankEventHandler {
     public static long lastCheck = -1;
 
     @SubscribeEvent
-    public boolean onClientChatReceived(ClientChatReceivedEvent e) {
+    public void onClientChatReceived(ClientChatReceivedEvent e) {
         String msg = e.getMessage().getUnformattedText();
 
         Matcher houseBankHeaderMatcher = PatternHandler.HOUSE_BANK_HEADER_PATTERN.matcher(msg);
@@ -31,7 +31,7 @@ public class HouseBankEventHandler {
             lastCheckedHouseNumber = Integer.parseInt(houseBankHeaderMatcher.group(1));
 
             if (System.currentTimeMillis() - lastCheck < 500) e.setCanceled(true);
-            return false;
+            return;
         }
 
         Matcher houseBankValueMatcher = PatternHandler.HOUSE_BANK_VALUE_PATTERN.matcher(msg);
@@ -40,14 +40,14 @@ public class HouseBankEventHandler {
 
             if (!HouseBankEntry.houseNumbers.contains(lastCheckedHouseNumber)) {
                 houseBanks.add(new HouseBankEntry(lastCheckedHouseNumber, Integer.parseInt(houseBankValueMatcher.group(1))));
-                return false;
+                return;
             }
 
             for (HouseBankEntry houseBank : houseBanks)
                 if (houseBank.getHouseNumber() == lastCheckedHouseNumber)
                     houseBank.setValue(Integer.parseInt(houseBankValueMatcher.group(1)));
 
-            return false;
+            return;
         }
 
         Matcher houseBankRemoveMatcher = PatternHandler.HOUSE_BANK_WITHDRAW_PATTERN.matcher(msg);
@@ -60,7 +60,7 @@ public class HouseBankEventHandler {
                 }
             }, 1000);
 
-            return false;
+            return;
         }
 
         Matcher houseBankAddMatcher = PatternHandler.HOUSE_BANK_DEPOSIT_PATTERN.matcher(msg);
@@ -74,7 +74,5 @@ public class HouseBankEventHandler {
             }, 1000);
 
         }
-
-        return false;
     }
 }

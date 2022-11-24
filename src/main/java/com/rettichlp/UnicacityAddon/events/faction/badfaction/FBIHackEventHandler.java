@@ -15,12 +15,10 @@ import java.util.regex.Matcher;
 public class FBIHackEventHandler {
 
     @SubscribeEvent
-    public boolean onClientChatReceived(ClientChatReceivedEvent e) {
+    public void onClientChatReceived(ClientChatReceivedEvent e) {
         Matcher fbiHackStartedMatcher = PatternHandler.FBI_HACK_STARTED_PATTERN.matcher(e.getMessage().getUnformattedText());
 
-        if (!fbiHackStartedMatcher.find()) return false;
-
-        FBIHackModule.startCountdown(Integer.parseInt(fbiHackStartedMatcher.group(1)));
-        return false;
+        if (fbiHackStartedMatcher.find())
+            FBIHackModule.startCountdown(Integer.parseInt(fbiHackStartedMatcher.group(1)));
     }
 }

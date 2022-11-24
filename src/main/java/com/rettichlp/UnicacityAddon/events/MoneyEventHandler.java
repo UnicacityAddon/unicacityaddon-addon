@@ -23,7 +23,8 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 
 /**
- * @author Dimiikou, RettichLP
+ * @author Dimiikou
+ * @author RettichLP
  */
 @UCEvent
 public class MoneyEventHandler {
@@ -198,9 +199,8 @@ public class MoneyEventHandler {
     }
 
     @SubscribeEvent
-    public boolean onClientChat(ClientChatEvent e) {
+    public void onClientChat(ClientChatEvent e) {
         String msg = e.getMessage();
         isGRBankCommand = msg.startsWith("/grkasse get") || msg.startsWith("/grkasse drop");
-        return false;
     }
 }

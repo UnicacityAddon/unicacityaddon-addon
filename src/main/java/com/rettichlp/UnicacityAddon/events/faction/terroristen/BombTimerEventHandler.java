@@ -17,13 +17,13 @@ import java.util.regex.Matcher;
 public class BombTimerEventHandler {
 
     @SubscribeEvent
-    public boolean onClientChatReceived(ClientChatReceivedEvent e) {
+    public void onClientChatReceived(ClientChatReceivedEvent e) {
         String msg = e.getMessage().getUnformattedText();
 
         if (PatternHandler.BOMB_PLACED_PATTERN.matcher(msg).find()) {
             BombTimerModule.isBomb = true;
             BombTimerModule.timer = "00:00";
-            return false;
+            return;
         }
 
         Matcher m = PatternHandler.BOMB_REMOVED_PATTERN.matcher(msg);
@@ -41,6 +41,5 @@ public class BombTimerEventHandler {
                     .createComponent());
             BombTimerModule.stopBombTimer();
         }
-        return false;
     }
 }

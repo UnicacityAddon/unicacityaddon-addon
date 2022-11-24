@@ -13,8 +13,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import java.util.HashSet;
 import java.util.Set;
 
-import static com.rettichlp.UnicacityAddon.base.utils.DebugUtils.Debug;
-
 /**
  * @author Fuzzlemann
  */
@@ -58,7 +56,6 @@ public class FDoorEventHandler {
                 if (pos.equals(closePosition)) return fDoor;
             }
         }
-        Debug(FDoorEventHandler.class, "Faction door not found: " + pos.getX() + "/" + pos.getY() + "/" + pos.getZ());
         return null;
     }
 

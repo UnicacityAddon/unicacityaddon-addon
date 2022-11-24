@@ -31,7 +31,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * @author Fuzzlemann, RettichLP
+ * @author Fuzzlemann
+ * @author RettichLP
  */
 @UCCommand
 public class TSJoinCommand implements IClientCommand {

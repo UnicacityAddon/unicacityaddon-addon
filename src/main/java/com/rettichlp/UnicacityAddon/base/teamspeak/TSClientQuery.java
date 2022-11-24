@@ -20,7 +20,8 @@ import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
 /**
- * @author Fuzzlemann, RettichLP
+ * @author Fuzzlemann
+ * @author RettichLP
  */
 public class TSClientQuery implements Closeable {
 

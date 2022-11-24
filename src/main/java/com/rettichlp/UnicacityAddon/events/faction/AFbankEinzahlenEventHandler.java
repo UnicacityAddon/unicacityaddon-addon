@@ -19,8 +19,8 @@ import java.util.regex.Matcher;
 public class AFbankEinzahlenEventHandler {
 
     @SubscribeEvent
-    public boolean onClientChatReceived(ClientChatReceivedEvent e) {
-        if (!AFbankEinzahlenCommand.STARTED.get()) return false;
+    public void onClientChatReceived(ClientChatReceivedEvent e) {
+        if (!AFbankEinzahlenCommand.STARTED.get()) return;
 
         String msg = e.getMessage().getUnformattedText();
         Matcher taxesMatcher = PatternHandler.FBANK_TAXES.matcher(msg);
@@ -38,12 +38,10 @@ public class AFbankEinzahlenEventHandler {
                             .sendTo(AbstractionLayer.getPlayer().getPlayer());
                 }
             }, 200L);
-            return false;
         }
 
         if (msg.equals("[F-Bank] Du hast zu wenig Geld.") || msg.equals("Du befindest dich nicht in der Nähe eines Bankautomaten.")) {
             AFbankEinzahlenCommand.STARTED.set(false);
         }
-        return false;
     }
 }
