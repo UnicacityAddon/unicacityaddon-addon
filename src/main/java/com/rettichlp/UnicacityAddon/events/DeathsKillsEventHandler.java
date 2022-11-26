@@ -48,7 +48,7 @@ public class DeathsKillsEventHandler {
             return;
         }
 
-        if (PatternHandler.LAST_STATS_MESSAGE_PATTERN.matcher(msg).find()) {
+        if (PatternHandler.ACCOUNT_TREUEBONUS_PATTERN.matcher(msg).find()) {
             JsonObject response = APIRequest.sendStatisticRequest();
             if (response == null) return;
 

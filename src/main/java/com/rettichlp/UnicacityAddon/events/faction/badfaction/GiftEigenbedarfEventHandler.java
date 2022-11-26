@@ -18,27 +18,26 @@ import java.util.regex.Matcher;
 public class GiftEigenbedarfEventHandler {
 
     @SubscribeEvent
-    public boolean onClientChatReceived(ClientChatReceivedEvent e) {
+    public void onClientChatReceived(ClientChatReceivedEvent e) {
         UPlayer p = AbstractionLayer.getPlayer();
         String msg = e.getMessage().getUnformattedText();
 
-        if (!GiftEigenbedarfCommand.checkWeed && !GiftEigenbedarfCommand.checkMeth) return false;
+        if (!GiftEigenbedarfCommand.checkWeed && !GiftEigenbedarfCommand.checkMeth) return;
 
         Matcher drugDealEndedMatcher = PatternHandler.DRUGDEAL_ENDED.matcher(msg);
-        if (!drugDealEndedMatcher.find()) return false;
+        if (!drugDealEndedMatcher.find()) return;
 
         if (ConfigElements.getMarihuanaActivated() && GiftEigenbedarfCommand.checkWeed) {
             p.sendChatMessage("/selldrug " + drugDealEndedMatcher.group(1) + " Gras " + ConfigElements.getMarihuanaDrugPurity().getPurity() + " " + ConfigElements.getMarihuanaAmount() + " 0");
             GiftEigenbedarfCommand.checkWeed = false;
 
             if (ConfigElements.getMethActivated()) GiftEigenbedarfCommand.checkMeth = true;
-            return false;
+            return;
         }
 
         if (ConfigElements.getMethActivated() && GiftEigenbedarfCommand.checkMeth)
             p.sendChatMessage("/selldrug " + drugDealEndedMatcher.group(1) + " Meth " + ConfigElements.getMethDrugPurity().getPurity() + " " + ConfigElements.getMethAmount() + " 0");
 
         GiftEigenbedarfCommand.checkMeth = false;
-        return false;
     }
 }

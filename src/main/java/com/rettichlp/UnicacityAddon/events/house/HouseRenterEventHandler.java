@@ -1,4 +1,4 @@
-package com.rettichlp.UnicacityAddon.events;
+package com.rettichlp.UnicacityAddon.events.house;
 
 import com.google.common.collect.Maps;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
@@ -38,9 +38,9 @@ public class HouseRenterEventHandler {
     final Timer TIMER = new Timer();
 
     @SubscribeEvent
-    public boolean onClientChat(ClientChatEvent e) {
+    public void onClientChat(ClientChatEvent e) {
         String msg = e.getMessage();
-        if (!msg.equals("/mieters")) return false;
+        if (!msg.equals("/mieters")) return;
 
         TIMER.schedule(new TimerTask() {
             @Override
@@ -63,15 +63,13 @@ public class HouseRenterEventHandler {
                 });
             }
         }, 500);
-
-        return false;
     }
 
     @SubscribeEvent
     public void onChatReceived(ClientChatReceivedEvent e) {
         String msg = e.getMessage().getUnformattedText();
 
-        Matcher houseRenterMatcher = PatternHandler.HOUSE_RENTER_PATTERN.matcher(msg);
+        Matcher houseRenterMatcher = PatternHandler.HOUSE_RENTER_HEADER_PATTERN.matcher(msg);
         if (houseRenterMatcher.find()) {
             HOUSE_RENTER_MAP.put(lastHouseNumber, Maps.immutableEntry(lastRenterAmount, lastRenterOnlineAmount));
             lastHouseNumber = Integer.parseInt(houseRenterMatcher.group(1));
@@ -79,7 +77,7 @@ public class HouseRenterEventHandler {
             lastRenterOnlineAmount = 0;
         }
 
-        Matcher renterMatcher = PatternHandler.RENTER_PATTERN.matcher(msg);
+        Matcher renterMatcher = PatternHandler.HOUSE_RENTER_VALUE_PATTERN.matcher(msg);
         if (renterMatcher.find()) {
             lastRenterAmount++;
             boolean isOnline = renterMatcher.group(2).equals("Online");

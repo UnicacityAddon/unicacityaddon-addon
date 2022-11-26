@@ -20,7 +20,7 @@ import java.util.regex.Matcher;
 public class ServiceMessageEventHandler {
 
     @SubscribeEvent
-    public boolean onClientChatReceived(ClientChatReceivedEvent e) {
+    public void onClientChatReceived(ClientChatReceivedEvent e) {
         String msg = e.getMessage().getUnformattedText();
 
         Matcher m = PatternHandler.SERVICE_ARRIVED_PATTERN.matcher(msg);
@@ -50,7 +50,7 @@ public class ServiceMessageEventHandler {
                                 .clickEvent(ClickEvent.Action.RUN_COMMAND, "/acceptservice " + m.group(1).replace("[UC]", ""))
                                 .advance()
                         .createComponent());
-                return false;
+                return;
             }
 
             m = PatternHandler.SERVICE_REQUEUED_PATTERN.matcher(msg);
@@ -79,7 +79,7 @@ public class ServiceMessageEventHandler {
                                 .clickEvent(ClickEvent.Action.RUN_COMMAND, "/acceptservice " + m.group(2).replace("[UC]", ""))
                                 .advance().space() // Notruf sender
                         .createComponent());
-                return false;
+                return;
             }
 
             m = PatternHandler.SERVICE_LOCATION_PATTERN.matcher(msg);
@@ -88,7 +88,7 @@ public class ServiceMessageEventHandler {
                         .of("➥").color(ColorCode.GRAY).advance().space()
                         .of(m.group(1)).color(ColorCode.DARK_RED).advance()
                         .createComponent());
-                return false;
+                return;
             }
 
             m = PatternHandler.SERVICE_LOCATION_PATTERN_ONE_NEAREST.matcher(msg);
@@ -99,7 +99,7 @@ public class ServiceMessageEventHandler {
                         .of("-").color(ColorCode.GRAY).advance().space()
                         .of(m.group(2) + " (" + m.group(3) + ")").color(ColorCode.DARK_RED).advance()
                         .createComponent());
-                return false;
+                return;
             }
 
             m = PatternHandler.SERVICE_LOCATION_PATTERN_TWO_NEAREST.matcher(msg);
@@ -112,7 +112,7 @@ public class ServiceMessageEventHandler {
                         .of("|").color(ColorCode.GRAY).advance().space()
                         .of(m.group(5) + " (" + m.group(6) + ")").color(ColorCode.DARK_RED).advance()
                         .createComponent());
-                return false;
+                return;
             }
 
             m = PatternHandler.SERVICE_ACCEPTED_PATTERN.matcher(msg);
@@ -126,7 +126,7 @@ public class ServiceMessageEventHandler {
                         .of("-").color(ColorCode.GRAY).advance().space()
                         .of(m.group(3) + "m").color(ColorCode.DARK_RED).advance()
                         .createComponent());
-                return false;
+                return;
             }
 
             m = PatternHandler.SERVICE_DELETED_PATTERN.matcher(msg);
@@ -136,7 +136,7 @@ public class ServiceMessageEventHandler {
                         .of(m.group(2)).color(ColorCode.DARK_RED).advance().space() // Löscher
                         .of("-").color(ColorCode.GRAY).advance().space()
                         .of(m.group(1)).color(ColorCode.DARK_RED).advance().createComponent()); // Service sender
-                return false;
+                return;
             }
 
             m = PatternHandler.SERVICE_BLOCKED_PATTERN.matcher(msg);
@@ -146,7 +146,7 @@ public class ServiceMessageEventHandler {
                         .of(m.group(2)).color(ColorCode.DARK_RED).advance().space() // Blockierer
                         .of("-").color(ColorCode.GRAY).advance().space()
                         .of(m.group(1)).color(ColorCode.DARK_RED).advance().createComponent()); // Blockierter
-                return false;
+                return;
             }
 
             m = PatternHandler.SERVICE_UNBLOCKED_PATTERN.matcher(msg);
@@ -156,9 +156,7 @@ public class ServiceMessageEventHandler {
                         .of(m.group(2)).color(ColorCode.DARK_RED).advance().space() // Entblocker
                         .of("-").color(ColorCode.GRAY).advance().space()
                         .of(m.group(1)).color(ColorCode.DARK_RED).advance().createComponent()); // Blockierter
-                return false;
             }
         }
-        return false;
     }
 }

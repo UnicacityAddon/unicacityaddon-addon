@@ -23,7 +23,8 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * @author Fuzzlemann, RettichLP
+ * @author Fuzzlemann
+ * @author RettichLP
  */
 @UCCommand
 public class MoveHereCommand implements IClientCommand {

@@ -5,8 +5,8 @@ import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
 import com.rettichlp.UnicacityAddon.base.location.NavigationUtils;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCEvent;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
-import com.rettichlp.UnicacityAddon.events.job.DropTabakEventHandler;
 import com.rettichlp.UnicacityAddon.events.job.FishermanEventHandler;
+import com.rettichlp.UnicacityAddon.events.job.JobEventHandler;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -35,7 +35,7 @@ public class NavigationEventHandler {
                 FishermanEventHandler.dropFish = false;
             }
 
-            if (DropTabakEventHandler.isTabakJob) {
+            if (JobEventHandler.isTabakJob) {
                 p.sendChatMessage("/droptabak");
             }
         }

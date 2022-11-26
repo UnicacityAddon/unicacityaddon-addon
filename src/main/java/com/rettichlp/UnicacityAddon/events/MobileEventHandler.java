@@ -1,5 +1,6 @@
 package com.rettichlp.UnicacityAddon.events;
 
+import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCEvent;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
 import com.rettichlp.UnicacityAddon.commands.ACallCommand;
@@ -19,6 +20,7 @@ import java.util.regex.Matcher;
 public class MobileEventHandler {
 
     public static int lastCheckedNumber = 0;
+    public static boolean isActive = false;
     public static boolean hasCommunications = false;
     public static boolean activeCommunicationsCheck;
 
@@ -33,25 +35,31 @@ public class MobileEventHandler {
     public void onClientChatReceived(ClientChatReceivedEvent e) {
         String msg = e.getMessage().getUnformattedText();
 
-        Matcher communicationsRemoveMatcher = PatternHandler.COMMUNICATIONS_REMOVE_PATTERN.matcher(msg);
+        Matcher communicationsRemoveMatcher = PatternHandler.MOBILE_REMOVE_PATTERN.matcher(msg);
         if (communicationsRemoveMatcher.find()) {
             hasCommunications = false;
             return;
         }
 
-        Matcher communicationsGetMatcher = PatternHandler.COMMUNICATIONS_GET_PATTERN.matcher(msg);
+        Matcher communicationsGetMatcher = PatternHandler.MOBILE_GET_PATTERN.matcher(msg);
         if (communicationsGetMatcher.find()) {
             hasCommunications = true;
             return;
         }
 
-        Matcher numberMatcher = PatternHandler.NUMBER_PATTERN.matcher(msg);
+        Matcher numberMatcher = PatternHandler.MOBILE_NUMBER_PATTERN.matcher(msg);
         if (numberMatcher.find()) {
             lastCheckedNumber = Integer.parseInt(numberMatcher.group(1));
-            if (ACallCommand.isActive || ASMSCommand.isActive || SMSEventHandler.isActive) {
+            if (ACallCommand.isActive || ASMSCommand.isActive || isActive) {
                 e.setCanceled(true);
-                ACallCommand.isActive = ASMSCommand.isActive = SMSEventHandler.isActive = false;
+                ACallCommand.isActive = ASMSCommand.isActive = isActive = false;
             }
+        }
+
+        Matcher smsMatcher = PatternHandler.MOBILE_SMS_PATTERN.matcher(msg);
+        if (smsMatcher.find()) {
+            if (!AccountEventHandler.isAfk) AbstractionLayer.getPlayer().sendChatMessage("/nummer " + smsMatcher.group(1));
+            isActive = true;
         }
     }
 

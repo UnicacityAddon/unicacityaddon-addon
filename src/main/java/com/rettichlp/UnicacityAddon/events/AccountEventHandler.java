@@ -7,51 +7,70 @@ import com.rettichlp.UnicacityAddon.base.config.ConfigElements;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCEvent;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
 import com.rettichlp.UnicacityAddon.base.updater.Updater;
+import com.rettichlp.UnicacityAddon.modules.PayDayModule;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.regex.Matcher;
 
 /**
  * @author Dimiikou
  */
 @UCEvent
-public class JoinEventHandler {
+public class AccountEventHandler {
 
-    private static boolean accountLocked = false;
+    public static boolean isAfk = false;
 
     @SubscribeEvent
-    public boolean onClientChatReceived(ClientChatReceivedEvent e) {
+    public void onClientChatReceived(ClientChatReceivedEvent e) {
         String msg = e.getMessage().getUnformattedText();
-        if (!UnicacityAddon.isUnicacity()) return false;
+        if (!UnicacityAddon.isUnicacity()) return;
 
         if (PatternHandler.ACCOUNT_WELCOME_BACK_PATTERN.matcher(msg).find()) {
             MobileEventHandler.activeCommunicationsCheck = true;
-            PayDayEventHandler.isAfk = false;
-            handleJoin();
-            return false;
+            AccountEventHandler.isAfk = false;
+            return;
         }
 
-        if (PatternHandler.ACCOUNT_LOCKED_PATTERN.matcher(msg).find()) {
-            accountLocked = true;
+        if (PatternHandler.ACCOUNT_PASSWORD_UNPROTECTED_PATTERN.matcher(msg).find()) {
+            handleJoin();
+            return;
+        }
+
+        if (PatternHandler.ACCOUNT_PASSWORD_UNLOCKED_PATTERN.matcher(msg).find()) {
+            handleJoin();
+            return;
+        }
+
+        if (PatternHandler.ACCOUNT_PASSWORD_PROTECTED_PATTERN.matcher(msg).find()) {
             handleUnlockAccount();
+            return;
         }
 
-        if (PatternHandler.ACCOUNT_UNLOCKED_PATTERN.matcher(msg).find()) {
-            accountLocked = false;
-            handleJoin();
-        }
-
-        if (ConfigElements.getRemoveResourcePackMessage() && PatternHandler.RESOURCEPACK_PATTERN.matcher(msg).find())
+        if (PatternHandler.RESOURCEPACK_PATTERN.matcher(msg).find() && ConfigElements.getRemoveResourcePackMessage()) {
             e.setCanceled(true);
+            return;
+        }
 
-        return false;
+        if (PatternHandler.ACCOUNT_AFK_TRUE_PATTERN.matcher(msg).find()) {
+            isAfk = true;
+            return;
+        }
+
+        if (PatternHandler.ACCOUNT_AFK_FALSE_PATTERN.matcher(msg).find()) {
+            isAfk = false;
+            return;
+        }
+
+        Matcher accountPayDayMatcher = PatternHandler.ACCOUNT_PAYDAY_PATTERN.matcher(msg);
+        if (accountPayDayMatcher.find())
+            PayDayModule.setTime(Integer.parseInt(accountPayDayMatcher.group(1)));
     }
 
     private void handleUnlockAccount() {
-        if (!accountLocked) return;
-        if (ConfigElements.getPasswordAutomation() && (ConfigElements.getPassword() != null))
+        if (ConfigElements.getPasswordAutomation())
             AbstractionLayer.getPlayer().sendChatMessage("/passwort " + ConfigElements.getPassword());
     }
 
@@ -61,8 +80,6 @@ public class JoinEventHandler {
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
-                if (accountLocked) return;
-
                 // MOBILEEVENTHANDLER
                 p.sendChatMessage("/mobile");
 

@@ -149,7 +149,7 @@ public class TickEventHandler {
     }
 
     private void handlePayDay() {
-        if (PayDayEventHandler.isAfk || !UnicacityAddon.isUnicacity()) return;
+        if (AccountEventHandler.isAfk || !UnicacityAddon.isUnicacity()) return;
         PayDayModule.addTime(1);
     }
 }

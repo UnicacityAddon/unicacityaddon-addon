@@ -14,10 +14,9 @@ import net.minecraft.util.text.event.HoverEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-import static com.rettichlp.UnicacityAddon.base.utils.DebugUtils.Debug;
-
 /**
- * @author Fuzzlemann, RettichLP
+ * @author Fuzzlemann
+ * @author RettichLP
  */
 @UCEvent
 @Mod.EventBusSubscriber
@@ -81,7 +80,7 @@ public class WaitingRoomEventHandler {
                         .advance()
                     .createComponent());
 
-            Debug(WaitingRoomEventHandler.class, "Entered public channel: " + name);
+            UnicacityAddon.LOGGER.info("Client joined public channel: " + name);
         }).start();
     }
 }

@@ -31,7 +31,8 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 /**
- * @author Fuzzlemann, RettichLP
+ * @author Fuzzlemann
+ * @author RettichLP
  */
 @UCCommand
 public class ChannelActivityCommand implements IClientCommand {

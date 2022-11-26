@@ -13,11 +13,9 @@ public class GaggedEventHandler {
     private static boolean gagged = false;
 
     @SubscribeEvent
-    public boolean onClientChat(ClientChatEvent e) {
-        if (!gagged || e.getMessage().startsWith("/")) return false;
-
-        e.setMessage("/w " + e.getMessage());
-        return false;
+    public void onClientChat(ClientChatEvent e) {
+        if (gagged && !e.getMessage().startsWith("/"))
+            e.setMessage("/w " + e.getMessage());
     }
 
     public static boolean isGagged() {

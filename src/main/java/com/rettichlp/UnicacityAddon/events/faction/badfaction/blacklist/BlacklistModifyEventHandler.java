@@ -1,4 +1,4 @@
-package com.rettichlp.UnicacityAddon.events.faction.badfaction;
+package com.rettichlp.UnicacityAddon.events.faction.badfaction.blacklist;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
@@ -14,11 +14,11 @@ import java.util.regex.Matcher;
  * @author Dimiikou
  */
 @UCEvent
-public class ModifyBlacklistEventHandler {
+public class BlacklistModifyEventHandler {
 
     @SubscribeEvent
-    public boolean onClientChatReceived(ClientChatReceivedEvent e) {
-        if (System.currentTimeMillis() - ModifyBlacklistCommand.executedTime > 1000L) return false;
+    public void onClientChatReceived(ClientChatReceivedEvent e) {
+        if (System.currentTimeMillis() - ModifyBlacklistCommand.executedTime > 1000L) return;
         UPlayer p = AbstractionLayer.getPlayer();
 
         String msg = e.getMessage().getUnformattedText();
@@ -27,11 +27,11 @@ public class ModifyBlacklistEventHandler {
         Matcher startPattern = PatternHandler.BLACKLIST_START_PATTERN.matcher(msg);
         if (startPattern.find()) {
             e.setCanceled(true);
-            return false;
+            return;
         }
 
         Matcher listPattern = PatternHandler.BLACKLIST_LIST_PATTERN.matcher(msg);
-        if (!listPattern.find()) return false;
+        if (!listPattern.find()) return;
 
         // remove list message
         e.setCanceled(true);
@@ -43,12 +43,12 @@ public class ModifyBlacklistEventHandler {
         int kills = Integer.parseInt(listPattern.group(4));
         int price = Integer.parseInt(listPattern.group(5));
 
-        if (!name.equals(ModifyBlacklistCommand.target)) return false;
+        if (!name.equals(ModifyBlacklistCommand.target)) return;
 
         if (ModifyBlacklistCommand.type == ModifyBlacklistCommand.ModifyBlacklistType.OUTLAW) {
             if (reason.contains("[Vogelfrei]")) {
                 p.sendErrorMessage("Der Spieler ist bereits vogelfrei!");
-                return false;
+                return;
             }
 
             reason = removeModifiers(reason);
@@ -56,7 +56,7 @@ public class ModifyBlacklistEventHandler {
         } else {
             if (reason.contains(ModifyBlacklistCommand.addReason.getReason())) {
                 p.sendErrorMessage("Der Spieler besitzt diesen Blacklistgrund bereits!");
-                return false;
+                return;
             }
 
             kills = Math.min(kills + ModifyBlacklistCommand.addReason.getKills(), 100); // max 100 kills
@@ -73,8 +73,6 @@ public class ModifyBlacklistEventHandler {
         // delete from and re-add blacklist
         p.sendChatMessage("/bl del " + ModifyBlacklistCommand.target);
         p.sendChatMessage("/bl set " + ModifyBlacklistCommand.target + " " + kills + " " + price + " " + reason);
-
-        return false;
     }
 
     //Removes all known Modifiers

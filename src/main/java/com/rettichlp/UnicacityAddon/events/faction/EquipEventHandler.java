@@ -22,7 +22,7 @@ public class EquipEventHandler {
     public static List<EquipLogEntry> equipLogEntryList = new ArrayList<>();
 
     @SubscribeEvent
-    public boolean onClientChatReceived(ClientChatReceivedEvent e) {
+    public void onClientChatReceived(ClientChatReceivedEvent e) {
         String msg = e.getMessage().getUnformattedText();
 
         Matcher trackerMatcher = PatternHandler.TRACKER_PATTERN.matcher(msg);
@@ -40,7 +40,7 @@ public class EquipEventHandler {
         }
 
         Matcher equipMatcher = PatternHandler.EQUIP_PATTERN.matcher(msg);
-        if (!equipMatcher.find()) return false;
+        if (!equipMatcher.find()) return;
 
         Equip equip = null;
         boolean found = false;
@@ -50,7 +50,7 @@ public class EquipEventHandler {
 
         if (equip == null) {
             AbstractionLayer.getPlayer().sendErrorMessage("Equiptyp wurde nicht gefunden.");
-            return false;
+            return;
         }
 
         for (EquipLogEntry equipLogEntry : equipLogEntryList)
@@ -61,7 +61,5 @@ public class EquipEventHandler {
 
         if (!found) equipLogEntryList.add(new EquipLogEntry(equip, 1));
         FileManager.saveData();
-
-        return false;
     }
 }

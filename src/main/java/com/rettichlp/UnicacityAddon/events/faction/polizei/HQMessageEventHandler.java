@@ -17,7 +17,7 @@ import java.util.regex.Matcher;
 public class HQMessageEventHandler {
 
     @SubscribeEvent
-    public boolean onClientChatReceived(ClientChatReceivedEvent e) {
+    public void onClientChatReceived(ClientChatReceivedEvent e) {
         String msg = e.getMessage().getUnformattedText();
 
         Matcher m = PatternHandler.WANTED_REASON.matcher(msg);
@@ -27,7 +27,7 @@ public class HQMessageEventHandler {
                         .of(m.group(1)).color(ColorCode.BLUE).advance().space()
                         .of("-").color(ColorCode.GRAY).advance().space()
                         .of(m.group(2)).color(ColorCode.BLUE).advance().createComponent());
-                return false;
+                return;
             }
 
             m = PatternHandler.WANTED_KILL.matcher(msg);
@@ -37,7 +37,7 @@ public class HQMessageEventHandler {
                         .of(m.group(1)).color(ColorCode.BLUE).advance().space()
                         .of("-").color(ColorCode.GRAY).advance().space()
                         .of(m.group(2)).color(ColorCode.BLUE).advance().createComponent());
-                return false;
+                return;
             }
 
             m = PatternHandler.WANTED_DELETE.matcher(msg);
@@ -47,7 +47,7 @@ public class HQMessageEventHandler {
                         .of(m.group(1)).color(ColorCode.BLUE).advance().space()
                         .of("-").color(ColorCode.GRAY).advance().space()
                         .of(m.group(2)).color(ColorCode.BLUE).advance().createComponent());
-                return false;
+                return;
             }
 
             m = PatternHandler.WANTED_JAIL.matcher(msg);
@@ -57,7 +57,7 @@ public class HQMessageEventHandler {
                         .of(m.group(1)).color(ColorCode.BLUE).advance().space()
                         .of("-").color(ColorCode.GRAY).advance().space()
                         .of(m.group(2)).color(ColorCode.BLUE).advance().createComponent());
-                return false;
+                return;
             }
 
             m = PatternHandler.WANTED_GIVEN_REASON_PATTERN.matcher(msg);
@@ -67,7 +67,7 @@ public class HQMessageEventHandler {
                         .of(m.group(1)).color(ColorCode.BLUE).advance().space()
                         .of("-").color(ColorCode.GRAY).advance().space()
                         .of(m.group(2)).color(ColorCode.BLUE).advance().createComponent());
-                return false;
+                return;
             }
 
             m = PatternHandler.WANTED_GIVEN_POINTS_PATTERN.matcher(msg);
@@ -75,7 +75,7 @@ public class HQMessageEventHandler {
                 e.setMessage(Message.getBuilder().of("➥").color(ColorCode.DARK_GRAY).advance().space()
                         .of(m.group(2)).color(ColorCode.BLUE).advance().space()
                         .of("Wanteds").color(ColorCode.BLUE).advance().createComponent());
-                return false;
+                return;
             }
 
             m = PatternHandler.WANTEDS_TICKET_PATTERN.matcher(msg);
@@ -86,6 +86,5 @@ public class HQMessageEventHandler {
                         .of("-").color(ColorCode.GRAY).advance().space()
                         .of(m.group(2)).color(ColorCode.BLUE).advance().createComponent());
         }
-        return false;
     }
 }
