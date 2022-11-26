@@ -55,7 +55,7 @@ public class BlacklistEventHandler {
             BLACKLIST_MAP.put(name, reason.toLowerCase().contains("vogelfrei"));
 
             // BlacklistInfoCommand: hide all but one
-            if (!name.equalsIgnoreCase(BlacklistInfoCommand.target))
+            if (System.currentTimeMillis() - BlacklistInfoCommand.executedTime < 1000 && !name.equalsIgnoreCase(BlacklistInfoCommand.target))
                 e.setCanceled(true);
         }
     }
