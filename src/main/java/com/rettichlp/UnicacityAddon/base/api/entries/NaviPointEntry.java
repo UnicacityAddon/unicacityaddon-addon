@@ -9,12 +9,14 @@ public class NaviPointEntry {
     private final int x;
     private final int y;
     private final int z;
+    private final String article;
 
-    public NaviPointEntry(String name, int x, int y , int z) {
+    public NaviPointEntry(String name, int x, int y , int z, String article) {
         this.name = name;
         this.x = x;
         this.y = y;
         this.z = z;
+        this.article = article;
     }
 
     public String getName() {
@@ -35,6 +37,10 @@ public class NaviPointEntry {
 
     public int getZ() {
         return z;
+    }
+
+    public String getArticleFourthCase() {
+        return article.replace("der", "den");
     }
 
     public BlockPos getBlockPos() {

@@ -35,7 +35,7 @@ public class NaviPointCommand implements IClientCommand {
     @Override
     @Nonnull
     public String getUsage(@Nonnull ICommandSender sender) {
-        return "/navipoint [add|remove] [Name] (x) (y) (z)";
+        return "/navipoint [add|remove] [Name] (x) (y) (z) (Artikel)";
     }
 
     @Override
@@ -53,8 +53,8 @@ public class NaviPointCommand implements IClientCommand {
     public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args) {
         UPlayer p = AbstractionLayer.getPlayer();
 
-        if (args.length == 5 && args[0].equalsIgnoreCase("add")) {
-            JsonObject response = APIRequest.sendNaviPointAddRequest(args[1], args[2], args[3], args[4]);
+        if (args.length == 6 && args[0].equalsIgnoreCase("add")) {
+            JsonObject response = APIRequest.sendNaviPointAddRequest(args[1], args[2], args[3], args[4], args[5]);
             if (response == null) return;
             p.sendAPIMessage(response.get("info").getAsString(), true);
         } else if (args.length == 2 && args[0].equalsIgnoreCase("remove")) {
@@ -76,6 +76,7 @@ public class NaviPointCommand implements IClientCommand {
                 .addAtIndex(3, String.valueOf(targetPos.getX())) // x
                 .addAtIndex(4, String.valueOf(targetPos.getY())) // y
                 .addAtIndex(5, String.valueOf(targetPos.getZ())) // z
+                .addAtIndex(6, "der", "die", "das", "none")
                 .build();
     }
 
