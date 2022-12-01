@@ -12,11 +12,11 @@ import java.util.Map;
 
 public class APIRequest {
 
-    private static final boolean NON_PROD = true;
+    private static final boolean NON_PROD = false;
     private static final String ADD_SUB_PATH = "add";
     private static final String REMOVE_SUB_PATH = "remove";
-    private static final String QUEUE_SUB_PATH = "add";
-    private static final String SEND_SUB_PATH = "remove";
+    private static final String QUEUE_SUB_PATH = "queue";
+    private static final String SEND_SUB_PATH = "send";
     private static final String GROUPS_SUB_PATH = "groups";
     private static final String TOP_SUB_PATH = "top";
     private static final String CREATE_SUB_PATH = "create";
