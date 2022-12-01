@@ -72,6 +72,8 @@ public interface UPlayer {
 
     Faction getFaction();
 
+    int getRank();
+
     void sellMedication(String target, Medication medication);
 
     void acceptOffer();

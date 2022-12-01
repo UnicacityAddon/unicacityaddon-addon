@@ -177,6 +177,11 @@ public class UPlayerImpl implements UPlayer {
     }
 
     @Override
+    public int getRank() {
+        return Syncer.PLAYERRANKMAP.getOrDefault(getName(), -1);
+    }
+
+    @Override
     public void sellMedication(String target, Medication medication) {
         sendChatMessage("/rezept " + target + " " + medication.name());
     }
