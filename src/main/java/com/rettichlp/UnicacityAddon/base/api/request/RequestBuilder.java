@@ -28,8 +28,8 @@ public class RequestBuilder {
         private String subPath;
         private Map<String, String> parameter;
 
-        public Builder nonProd() {
-            this.nonProd = true;
+        public Builder nonProd(boolean nonProd) {
+            this.nonProd = nonProd;
             return this;
         }
 
@@ -55,7 +55,7 @@ public class RequestBuilder {
                 return new JsonParser().parse(response);
             } catch (APIResponseException e) {
                 e.sendInfoMessage();
-                throw new RuntimeException(e);
+                return null;
             }
         }
 

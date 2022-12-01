@@ -52,7 +52,7 @@ public class WebsiteUtils {
     }
 
     public static String createUrl(boolean nonProd, ApplicationPath applicationPath, String subPath, Map<String, String> parameter) {
-        return nonProd ? "http://localhost:8888/unicacityaddon/v1/" : "http://rettichlp.de:8888/unicacityaddon/v1/"
+        return (nonProd ? "http://localhost:8888/unicacityaddon/v1/" : "http://rettichlp.de:8888/unicacityaddon/v1/")
                 + TokenManager.API_TOKEN
                 + applicationPath.getApplicationPath()
                 + (subPath == null ? Strings.EMPTY : "/" + subPath)
