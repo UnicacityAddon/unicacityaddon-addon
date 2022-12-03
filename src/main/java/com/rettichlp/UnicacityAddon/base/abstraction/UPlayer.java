@@ -85,4 +85,6 @@ public interface UPlayer {
     void setNaviRoute(BlockPos blockPos);
 
     void copyToClipboard(String string);
+
+    boolean isSuperUser();
 }

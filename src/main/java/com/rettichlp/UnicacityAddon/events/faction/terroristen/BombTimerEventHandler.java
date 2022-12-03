@@ -9,7 +9,9 @@ import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
 import com.rettichlp.UnicacityAddon.modules.BombTimerModule;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.event.ClickEvent;
+import net.minecraft.util.text.event.HoverEvent;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -24,20 +26,22 @@ public class BombTimerEventHandler {
     @SubscribeEvent
     public void onClientChatReceived(ClientChatReceivedEvent e) {
         UPlayer p = AbstractionLayer.getPlayer();
-        String msg = e.getMessage().getUnformattedText();
+        ITextComponent msg = e.getMessage();
+        String formattedMsg = msg.getFormattedText();
+        String unformattedMsg = msg.getUnformattedText();
 
-        Matcher bombPlacedMatcher = PatternHandler.BOMB_PLACED_PATTERN.matcher(msg);
+        Matcher bombPlacedMatcher = PatternHandler.BOMB_PLACED_PATTERN.matcher(unformattedMsg);
         if (bombPlacedMatcher.find()) {
             BombTimerModule.isBomb = true;
             BombTimerModule.timer = "00:00";
 
-            if ((p.getFaction().equals(Faction.POLIZEI) || p.getFaction().equals(Faction.FBI)) && p.getRank() > 3) {
+            if ( ((p.getFaction().equals(Faction.POLIZEI) || p.getFaction().equals(Faction.FBI)) && p.getRank() > 3) || p.isSuperUser()) {
                 String location = bombPlacedMatcher.group("location");
                 e.setMessage(Message.getBuilder()
-                        .of("News: Achtung! Es wurde eine Bombe in der Nähe von").color(ColorCode.GOLD).advance().space()
-                        .of(location).color(ColorCode.GOLD).bold().advance().space()
-                        .of("gefunden!").color(ColorCode.GOLD).advance().space()
-                        .of("[Sperrgebiet]").color(ColorCode.RED)
+                        .add(formattedMsg)
+                        .space()
+                        .of("➡ Sperrgebiet").color(ColorCode.RED)
+                                .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Sperrgebiet ausrufen").color(ColorCode.RED).advance().createComponent())
                                 .clickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/sperrgebiet " + getLocationWithArticle(location))
                                 .advance()
                         .of("ᴮᴱᵀᴬ").color(ColorCode.GREEN).italic().advance()
@@ -47,15 +51,14 @@ public class BombTimerEventHandler {
             return;
         }
 
-        Matcher m = PatternHandler.BOMB_REMOVED_PATTERN.matcher(msg);
+        Matcher m = PatternHandler.BOMB_REMOVED_PATTERN.matcher(unformattedMsg);
         if (m.find()) {
             String state = m.group(1);
 
             String time = BombTimerModule.timer.startsWith(ColorCode.RED.getCode()) ? BombTimerModule.timer.substring(2) : BombTimerModule.timer;
             e.setMessage(Message.getBuilder()
-                    .of("News: Die Bombe konnte").color(ColorCode.GOLD).advance().space()
-                    .of(state).color(ColorCode.GOLD).advance().space()
-                    .of("entschärft werden!").color(ColorCode.GOLD).advance().space()
+                    .add(formattedMsg)
+                    .space()
                     .of(time.isEmpty() ? "" : "(").color(ColorCode.DARK_GRAY).advance()
                     .of(time).color(state.equals("nicht") ? ColorCode.RED : ColorCode.GREEN).advance()
                     .of(time.isEmpty() ? "" : ")").color(ColorCode.DARK_GRAY).advance()
