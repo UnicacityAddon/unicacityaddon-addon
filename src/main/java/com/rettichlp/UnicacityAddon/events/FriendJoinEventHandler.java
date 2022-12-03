@@ -38,7 +38,7 @@ public class FriendJoinEventHandler {
                             .clickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/asms " + name + " ")
                             .advance()
                     .space()
-                    .of("[✖]").color(ColorCode.RED)
+                    .of("[✕]").color(ColorCode.RED)
                             .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of(name + " aus der Freundesliste entfernen").color(ColorCode.RED).advance().createComponent())
                             .clickEvent(ClickEvent.Action.RUN_COMMAND, "/fl delete " + name)
                             .advance()
