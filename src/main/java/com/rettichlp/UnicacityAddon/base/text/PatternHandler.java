@@ -88,10 +88,10 @@ public class PatternHandler {
     public static final Pattern WANTED_GIVEN_REASON_PATTERN = Pattern.compile("^HQ: Gesuchter: (?:\\[UC])*(\\w+)\\. Grund: (.+)$");
     public static final Pattern WANTED_REASON = Pattern.compile("^HQ: Fahndungsgrund: (.+) \\| Fahndungszeit: (.+)\\.$");
     public static final Pattern WANTED_GIVEN_POINTS_PATTERN = Pattern.compile("^HQ: (?:\\[UC])*(\\w+)'s momentanes WantedLevel: (\\d+)$");
-    public static final Pattern WANTED_KILL = Pattern.compile("^HQ: (?:\\[UC])*([a-zA-Z0-9_]+) wurde von (?:\\[UC])*([a-zA-Z0-9_]+) get\u00f6tet\\.$");
-    public static final Pattern WANTED_DELETE = Pattern.compile("^HQ: .+ (?:\\[UC])*([a-zA-Z0-9_]+) hat (?:\\[UC])*([a-zA-Z0-9_]+)'s Akten gel\u00f6scht, over\\.$");
+    public static final Pattern WANTED_KILL = Pattern.compile("^HQ: (?:\\[UC])*([a-zA-Z0-9_]+) wurde von (?:\\[UC])*([a-zA-Z0-9_]+) getötet\\.$");
+    public static final Pattern WANTED_DELETE = Pattern.compile("^HQ: .+ (?:\\[UC])*([a-zA-Z0-9_]+) hat (?:\\[UC])*([a-zA-Z0-9_]+)'s Akten gelöscht, over\\.$");
     public static final Pattern WANTED_JAIL = Pattern.compile("^HQ: (?:\\[UC])*([a-zA-Z0-9_]+) wurde von (?:\\[UC])*([a-zA-Z0-9_]+) eingesperrt\\.$");
-    public static final Pattern WANTEDS_TICKET_PATTERN = Pattern.compile("^HQ: .+ (?:\\[UC])*([a-zA-Z0-9_]+) hat (?:\\[UC])*([a-zA-Z0-9_]+)(?:'s)*(?: seine| ihre)* Akten gel\u00f6scht, over\\.$");
+    public static final Pattern WANTEDS_TICKET_PATTERN = Pattern.compile("^HQ: .+ (?:\\[UC])*([a-zA-Z0-9_]+) hat (?:\\[UC])*([a-zA-Z0-9_]+)(?:'s)*(?: seine| ihre)* Akten gelöscht, over\\.$");
     public static final Pattern WANTED_DELETED_PATTERN = Pattern.compile("^HQ: (?:\\[UC])*(\\w+) wurde von (?:\\[UC])*\\w+ eingesperrt\\.$" +
             "|^HQ: (?:\\[UC])*(\\w+) wurde von (?:\\[UC])*\\w+ getötet\\.$" +
             "|^HQ: .+ (?:\\[UC])*\\w+ hat (?:\\[UC])*(\\w+)(?:'s)*(?: seine| ihre)* Akten gelöscht, over\\.$");
@@ -227,6 +227,7 @@ public class PatternHandler {
     public static final Pattern ACCOUNT_AFK_FALSE_PATTERN = Pattern.compile("^Du bist nun nicht mehr im AFK-Modus\\.$");
     public static final Pattern ACCOUNT_PAYDAY_PATTERN = Pattern.compile("^ {2}- Zeit seit PayDay: (\\d+)/60 Minuten$");
     public static final Pattern ACCOUNT_TREUEBONUS_PATTERN = Pattern.compile("^ {2}- Treuebonus: (\\d+) Punkte$");
+    public static final Pattern ACCOUNT_FRIEND_JOIN_PATTERN = Pattern.compile(" » Freundesliste: (?<name>\\w+) ist nun online\\.");
 
     /**
      * Pattern for uc and vc interaction
