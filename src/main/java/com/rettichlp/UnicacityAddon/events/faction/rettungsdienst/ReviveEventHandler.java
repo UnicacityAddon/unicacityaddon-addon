@@ -6,6 +6,7 @@ import com.rettichlp.UnicacityAddon.base.api.enums.StatisticType;
 import com.rettichlp.UnicacityAddon.base.api.request.APIRequest;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCEvent;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
+import com.rettichlp.UnicacityAddon.events.AccountEventHandler;
 import com.rettichlp.UnicacityAddon.events.MobileEventHandler;
 import com.rettichlp.UnicacityAddon.modules.BankMoneyModule;
 import com.rettichlp.UnicacityAddon.modules.CashMoneyModule;
@@ -41,7 +42,7 @@ public class ReviveEventHandler {
             } else {
                 BankMoneyModule.removeBalance(50); // successfully revived by medic = 50$
             }
-            if (MobileEventHandler.hasCommunications)
+            if (MobileEventHandler.hasCommunications && !AccountEventHandler.isAfk)
                 AbstractionLayer.getPlayer().sendChatMessage("/togglephone");
             return;
         }
