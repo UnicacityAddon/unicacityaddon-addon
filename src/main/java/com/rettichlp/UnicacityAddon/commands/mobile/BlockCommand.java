@@ -51,8 +51,13 @@ public class BlockCommand implements IClientCommand {
 
         if (args.length > 0) {
             String playerName = args[0];
-            MobileEventHandler.blockedPlayerList.add(playerName);
-            p.sendInfoMessage("Du hast " + playerName + " blockiert.");
+            if (MobileEventHandler.blockedPlayerList.contains(playerName)) {
+                MobileEventHandler.blockedPlayerList.remove(playerName);
+                p.sendInfoMessage("Du hast " + playerName + " wieder freigegeben.");
+            } else {
+                MobileEventHandler.blockedPlayerList.add(playerName);
+                p.sendInfoMessage("Du hast " + playerName + " blockiert.");
+            }
         } else
             p.sendSyntaxMessage(getUsage(sender));
     }

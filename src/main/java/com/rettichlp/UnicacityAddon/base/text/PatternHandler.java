@@ -152,6 +152,7 @@ public class PatternHandler {
      * @see com.rettichlp.UnicacityAddon.events.MobileEventHandler
      */
     public static final Pattern MOBILE_NUMBER_PATTERN = Pattern.compile("^Nummer von (?:\\[UC])*\\w+: (\\d+)$");
+    public static final Pattern MOBILE_CALL_PATTERN = Pattern.compile("^Dein Handy klingelt! Ein Anruf von (?:\\[UC])*(\\w+)$");
     public static final Pattern MOBILE_SMS_PATTERN = Pattern.compile("^Dein Handy klingelt! Eine Nachricht von (?:\\[UC])*(\\w+) \\((\\d+)\\)\\.$");
     public static final Pattern MOBILE_REMOVE_PATTERN = Pattern.compile("^((?:\\[UC])*\\w+) hat dir deine Kommunikationsgeräte abgenommen\\.$");
     public static final Pattern MOBILE_GET_PATTERN = Pattern.compile("^Du hast dein Handy genommen\\.$" +
