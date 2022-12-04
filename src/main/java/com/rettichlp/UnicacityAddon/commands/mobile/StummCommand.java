@@ -1,4 +1,4 @@
-package com.rettichlp.UnicacityAddon.commands;
+package com.rettichlp.UnicacityAddon.commands.mobile;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
@@ -13,36 +13,31 @@ import net.minecraftforge.client.IClientCommand;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * @author RettichLP
  */
 @UCCommand
-public class ACallCommand implements IClientCommand {
-
-    final Timer timer = new Timer();
-    public static boolean isActive;
+public class StummCommand implements IClientCommand {
 
     @Override
     @Nonnull
     public String getName() {
-        return "acall";
+        return "stumm";
     }
 
     @Override
     @Nonnull
     public String getUsage(@Nonnull ICommandSender sender) {
-        return "/acall [Spielername]";
+        return "/stumm";
     }
 
     @Override
     @Nonnull
     public List<String> getAliases() {
-        return Collections.emptyList();
+        return Arrays.asList("nichtstören", "donotdisturb");
     }
 
     @Override
@@ -53,26 +48,10 @@ public class ACallCommand implements IClientCommand {
     @Override
     public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
         UPlayer p = AbstractionLayer.getPlayer();
-        if (args.length < 1) {
-            p.sendSyntaxMessage(getUsage(sender));
-            return;
-        }
+        MobileEventHandler.muted = !MobileEventHandler.muted;
 
-        isActive = true;
-        p.sendChatMessage("/nummer " + args[0]);
-
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                int number = MobileEventHandler.lastCheckedNumber;
-                if (number == 0) {
-                    p.sendErrorMessage("Der Spieler wurde nicht gefunden!");
-                    return;
-                }
-
-                p.sendChatMessage("/call " + number);
-            }
-        }, 250L);
+        if (MobileEventHandler.muted) p.sendInfoMessage("Du hast den Handy auf stumm gestellt.");
+        else p.sendInfoMessage("Du hast dein Handy wieder laut gestellt.");
     }
 
     @Override
