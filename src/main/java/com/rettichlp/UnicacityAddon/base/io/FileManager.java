@@ -75,6 +75,15 @@ public class FileManager {
         return null;
     }
 
+    public static File getOptionsFile() {
+        File optionsFile = new File(getMinecraftDir().getAbsolutePath() + "/options.txt");
+        if (optionsFile.exists()) return optionsFile;
+
+        AbstractionLayer.getPlayer().sendErrorMessage("Datei 'options.txt' wurde nicht gefunden!");
+
+        return null;
+    }
+
     public static File getUnicacityAddonFile() {
         if (getLabyModAddonDir() == null) return null;
         return new File(getLabyModAddonDir().getAbsolutePath() + "/UnicacityAddon-" + UnicacityAddon.VERSION + ".jar");

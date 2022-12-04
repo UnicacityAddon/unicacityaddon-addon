@@ -2,9 +2,17 @@ package com.rettichlp.UnicacityAddon.base.registry;
 
 import com.google.gson.JsonObject;
 import com.rettichlp.UnicacityAddon.UnicacityAddon;
+import com.rettichlp.UnicacityAddon.base.io.FileManager;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
+import org.apache.commons.io.FileUtils;
 import org.lwjgl.input.Keyboard;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 /**
  * @author RettichLP
@@ -27,8 +35,9 @@ public class KeyBindRegistry {
     public static KeyBinding freinforcement;
     public static KeyBinding dreinforcement;
 
-
     public static void registerKeyBinds() {
+        fixOptionsFile();
+
         if (executed) return;
         JsonObject config = UnicacityAddon.ADDON.getConfig();
 
@@ -68,5 +77,26 @@ public class KeyBindRegistry {
         ClientRegistry.registerKeyBinding(freinforcement);
         ClientRegistry.registerKeyBinding(dreinforcement);
         executed = true;
+    }
+
+    private static void fixOptionsFile() {
+        File optionsFile = FileManager.getOptionsFile();
+        StringBuilder fixedOptionFileStringBuilder = new StringBuilder();
+
+        try {
+            assert optionsFile != null;
+            try (BufferedReader br = new BufferedReader(new FileReader(optionsFile))) {
+                String line;
+                while ((line = br.readLine()) != null) {
+                    if (!line.toLowerCase().contains("ä") && !line.toLowerCase().contains("ö") && !line.toLowerCase().contains("ü") && !line.toLowerCase().contains("ß")) {
+                        fixedOptionFileStringBuilder.append(line).append("\n");
+                    }
+                }
+
+                FileUtils.writeStringToFile(optionsFile, fixedOptionFileStringBuilder.toString(), StandardCharsets.UTF_8.toString());
+            }
+        } catch (IOException e) {
+            UnicacityAddon.LOGGER.catching(e);
+        }
     }
 }
