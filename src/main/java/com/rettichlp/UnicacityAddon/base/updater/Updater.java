@@ -3,6 +3,7 @@ package com.rettichlp.UnicacityAddon.base.updater;
 import com.rettichlp.UnicacityAddon.UnicacityAddon;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
+import com.rettichlp.UnicacityAddon.base.config.ConfigElements;
 import com.rettichlp.UnicacityAddon.base.text.ColorCode;
 import com.rettichlp.UnicacityAddon.base.text.Message;
 import net.labymod.main.LabyMod;
@@ -34,53 +35,48 @@ public class Updater {
         latestVersion = getLatestVersion();
         if (latestVersion.equals(UnicacityAddon.VERSION)) return;
 
-        LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Update verfügbar!", "Es ist Version " + ColorCode.DARK_AQUA.getCode() + "v" + latestVersion + ColorCode.WHITE.getCode() + " verfügbar.");
+        if (!ConfigElements.getAutomatedUpdate()) {
+            LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Update verfügbar!", "Es ist Version " + ColorCode.DARK_AQUA.getCode() + "v" + latestVersion + ColorCode.WHITE.getCode() + " verfügbar.");
 
-        AbstractionLayer.getPlayer().sendMessage(Message.getBuilder()
-                .info().space()
-                .of("Es ist").advance().space()
-                .of("v" + latestVersion).color(ColorCode.AQUA)
-                        .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Changelog").color(ColorCode.RED).advance().createComponent())
-                        .clickEvent(ClickEvent.Action.OPEN_URL, "https://github.com/rettichlp/UnicacityAddon-1.12.2/releases/latest")
-                        .advance().space()
-                .of("von").advance().space()
-                .of("UnicacityAddon").color(ColorCode.AQUA).advance().space()
-                .of("verfügbar!").advance().space()
-                .of("[").color(ColorCode.DARK_GRAY).advance()
-                .of("⬇").color(ColorCode.GREEN).underline()
-                        .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Aktualisieren").color(ColorCode.GREEN).advance().createComponent())
-                        .clickEvent(ClickEvent.Action.RUN_COMMAND, "/updateunicacityaddon")
-                        .advance()
-                .of("]").color(ColorCode.DARK_GRAY).advance()
-                .createComponent());
+            AbstractionLayer.getPlayer().sendMessage(Message.getBuilder()
+                    .info().space()
+                    .of("Es ist").advance().space()
+                    .of("v" + latestVersion).color(ColorCode.AQUA)
+                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Changelog").color(ColorCode.RED).advance().createComponent())
+                            .clickEvent(ClickEvent.Action.OPEN_URL, "https://github.com/rettichlp/UnicacityAddon-1.12.2/releases/latest")
+                            .advance().space()
+                    .of("von").advance().space()
+                    .of("UnicacityAddon").color(ColorCode.AQUA).advance().space()
+                    .of("verfügbar!").advance().space()
+                    .of("[").color(ColorCode.DARK_GRAY).advance()
+                    .of("⬇").color(ColorCode.GREEN).underline()
+                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Aktualisieren").color(ColorCode.GREEN).advance().createComponent())
+                            .clickEvent(ClickEvent.Action.RUN_COMMAND, "/updateunicacityaddon")
+                            .advance()
+                    .of("]").color(ColorCode.DARK_GRAY).advance()
+                    .createComponent());
+        } else update();
     }
 
     public static void update() {
         UPlayer p = AbstractionLayer.getPlayer();
-        if (!SystemUtils.IS_OS_WINDOWS && !SystemUtils.IS_OS_UNIX) {
-            p.sendErrorMessage("Dieser Befehl wird nur unter Windows unterstützt.");
-            return;
-        }
 
-        if (SystemUtils.IS_OS_WINDOWS) {
-            windowsUpdate();
-        } else {
-            unixUpdate();
+        try {
+            if (SystemUtils.IS_OS_WINDOWS) windowsUpdate();
+            else unixUpdate();
+        } catch (IOException e) {
+            UnicacityAddon.LOGGER.catching(e);
+            p.sendErrorMessage("Update konnte nicht heruntergeladen werden.");
+            LabyMod.getInstance().notifyMessageRaw(ColorCode.RED.getCode() + "Fehler!", "Update konnte nicht heruntergeladen werden.");
+            return;
         }
 
         p.sendInfoMessage("Die neuste Version wurde heruntergeladen. Starte dein Spiel neu um das Update abzuschließen!");
         LabyMod.getInstance().notifyMessageRaw(ColorCode.GREEN.getCode() + "Update heruntergeladen!", "Starte dein Spiel neu!");
     }
 
-    private static void windowsUpdate() {
-        try {
-            FileUtils.copyURLToFile(new URL("https://github.com/rettichlp/UnicacityAddon-1.12.2/releases/download/v" + Updater.latestVersion + "/UnicacityAddon-" + Updater.latestVersion + ".jar"), UPDATE_FILE, 10000, 10000);
-        } catch (IOException e) {
-            UnicacityAddon.LOGGER.catching(e);
-            AbstractionLayer.getPlayer().sendErrorMessage("Update konnte nicht heruntergeladen werden.");
-            LabyMod.getInstance().notifyMessageRaw(ColorCode.RED.getCode() + "Fehler!", "Update konnte nicht heruntergeladen werden.");
-            return;
-        }
+    private static void windowsUpdate() throws IOException {
+        FileUtils.copyURLToFile(new URL("https://github.com/rettichlp/UnicacityAddon-1.12.2/releases/download/v" + Updater.latestVersion + "/UnicacityAddon-" + Updater.latestVersion + ".jar"), UPDATE_FILE, 10000, 10000);
 
         replace = true;
 
@@ -96,15 +92,9 @@ public class Updater {
         }));
     }
 
-    private static void unixUpdate() {
+    private static void unixUpdate() throws IOException {
         // on unix, we can just overwrite the original file directly as there's no file locking in place
-        try {
-            FileUtils.copyURLToFile(new URL("https://github.com/rettichlp/UnicacityAddon-1.12.2/releases/download/v" + Updater.latestVersion + "/UnicacityAddon-" + Updater.latestVersion + ".jar"), modFile, 10000, 10000);
-        } catch (IOException e) {
-            UnicacityAddon.LOGGER.catching(e);
-            AbstractionLayer.getPlayer().sendErrorMessage("Update konnte nicht heruntergeladen werden.");
-            LabyMod.getInstance().notifyMessageRaw(ColorCode.RED.getCode() + "Update", "Update konnte nicht heruntergeladen werden.");
-        }
+        FileUtils.copyURLToFile(new URL("https://github.com/rettichlp/UnicacityAddon-1.12.2/releases/download/v" + Updater.latestVersion + "/UnicacityAddon-" + Updater.latestVersion + ".jar"), modFile, 10000, 10000);
     }
 
     private static void replaceJar() throws IOException {
