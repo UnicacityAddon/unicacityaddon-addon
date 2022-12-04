@@ -43,6 +43,20 @@ public class FriendJoinEventHandler {
                             .clickEvent(ClickEvent.Action.RUN_COMMAND, "/fl delete " + name)
                             .advance()
                     .createComponent());
+            return;
+        }
+
+        Matcher accountFriendLeaveMatcher = PatternHandler.ACCOUNT_FRIEND_LEAVE_PATTERN.matcher(msg.getUnformattedText());
+        if (accountFriendLeaveMatcher.find()) {
+            String name = accountFriendLeaveMatcher.group("name");
+            e.setMessage(Message.getBuilder()
+                    .add(msg.getFormattedText())
+                    .space()
+                    .of("[✕]").color(ColorCode.RED)
+                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of(name + " aus der Freundesliste entfernen").color(ColorCode.RED).advance().createComponent())
+                            .clickEvent(ClickEvent.Action.RUN_COMMAND, "/fl delete " + name)
+                            .advance()
+                    .createComponent());
         }
     }
 }

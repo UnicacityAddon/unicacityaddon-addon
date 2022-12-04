@@ -228,7 +228,8 @@ public class PatternHandler {
     public static final Pattern ACCOUNT_AFK_FALSE_PATTERN = Pattern.compile("^Du bist nun nicht mehr im AFK-Modus\\.$");
     public static final Pattern ACCOUNT_PAYDAY_PATTERN = Pattern.compile("^ {2}- Zeit seit PayDay: (\\d+)/60 Minuten$");
     public static final Pattern ACCOUNT_TREUEBONUS_PATTERN = Pattern.compile("^ {2}- Treuebonus: (\\d+) Punkte$");
-    public static final Pattern ACCOUNT_FRIEND_JOIN_PATTERN = Pattern.compile(" » Freundesliste: (?<name>\\w+) ist nun online\\.");
+    public static final Pattern ACCOUNT_FRIEND_JOIN_PATTERN = Pattern.compile(" » Freundesliste: (?:\\[UC])*(?<name>\\w+) ist nun online\\.");
+    public static final Pattern ACCOUNT_FRIEND_LEAVE_PATTERN = Pattern.compile(" » Freundesliste: (?:\\[UC])*(?<name>\\w+) ist nun offline\\.");
 
     /**
      * Pattern for uc and vc interaction
