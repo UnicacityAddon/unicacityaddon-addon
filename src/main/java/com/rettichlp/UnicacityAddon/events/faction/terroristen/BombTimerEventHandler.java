@@ -35,7 +35,7 @@ public class BombTimerEventHandler {
             BombTimerModule.isBomb = true;
             BombTimerModule.timer = "00:00";
 
-            if ( ((p.getFaction().equals(Faction.POLIZEI) || p.getFaction().equals(Faction.FBI)) && p.getRank() > 3) || p.isSuperUser()) {
+            if (((p.getFaction().equals(Faction.POLIZEI) || p.getFaction().equals(Faction.FBI)) && p.getRank() > 3) || p.isSuperUser()) {
                 String location = bombPlacedMatcher.group("location");
                 e.setMessage(Message.getBuilder()
                         .add(formattedMsg)
