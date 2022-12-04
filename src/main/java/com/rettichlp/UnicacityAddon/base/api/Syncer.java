@@ -202,8 +202,9 @@ public class Syncer {
             int x = o.get("x").getAsInt();
             int y = o.get("y").getAsInt();
             int z = o.get("z").getAsInt();
+            String article = o.get("article").getAsString();
 
-            naviPointEntryList.add(new NaviPointEntry(name, x, y, z));
+            naviPointEntryList.add(new NaviPointEntry(name, x, y, z, article));
         });
         return naviPointEntryList;
     }

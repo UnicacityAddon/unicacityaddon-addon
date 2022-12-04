@@ -138,7 +138,7 @@ public class APIRequest {
                 .getAsJsonArray();
     }
 
-    public static JsonObject sendNaviPointAddRequest(String name, String x, String y, String z) {
+    public static JsonObject sendNaviPointAddRequest(String name, String x, String y, String z, String article) {
         return RequestBuilder.getBuilder()
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.NAVIPOINT)
@@ -147,7 +147,8 @@ public class APIRequest {
                         "name", name,
                         "x", x,
                         "y", y,
-                        "z", z))
+                        "z", z,
+                        "article", article))
                 .getAsJsonObject();
     }
 
@@ -337,6 +338,16 @@ public class APIRequest {
         map.put(k2, v2);
         map.put(k3, v3);
         map.put(k4, v4);
+        return map;
+    }
+
+    private static Map<String, String> mapOf(String k1, String v1, String k2, String v2, String k3, String v3, String k4, String v4, String k5, String v5) {
+        Map<String, String> map = new HashMap<>();
+        map.put(k1, v1);
+        map.put(k2, v2);
+        map.put(k3, v3);
+        map.put(k4, v4);
+        map.put(k5, v5);
         return map;
     }
 }

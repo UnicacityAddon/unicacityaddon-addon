@@ -72,6 +72,8 @@ public interface UPlayer {
 
     Faction getFaction();
 
+    int getRank();
+
     void sellMedication(String target, Medication medication);
 
     void acceptOffer();
@@ -83,4 +85,6 @@ public interface UPlayer {
     void setNaviRoute(BlockPos blockPos);
 
     void copyToClipboard(String string);
+
+    boolean isSuperUser();
 }
