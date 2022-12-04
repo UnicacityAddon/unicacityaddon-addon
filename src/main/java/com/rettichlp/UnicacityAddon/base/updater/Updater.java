@@ -69,7 +69,7 @@ public class Updater {
         }
 
         p.sendInfoMessage("Die neuste Version wurde heruntergeladen. Starte dein Spiel neu um das Update abzuschließen!");
-        LabyMod.getInstance().notifyMessageRaw(ColorCode.GREEN.getCode() + "Update heruntergeladen!", "Starte dein Spiel neu um das Update abzuschließen.");
+        LabyMod.getInstance().notifyMessageRaw(ColorCode.GREEN.getCode() + "Update heruntergeladen!", "Starte dein Spiel neu!");
     }
 
     private static void windowsUpdate() {
@@ -78,7 +78,7 @@ public class Updater {
         } catch (IOException e) {
             UnicacityAddon.LOGGER.catching(e);
             AbstractionLayer.getPlayer().sendErrorMessage("Update konnte nicht heruntergeladen werden.");
-            LabyMod.getInstance().notifyMessageRaw(ColorCode.RED.getCode() + "Update nicht heruntergeladen!", "Update konnte nicht heruntergeladen werden.");
+            LabyMod.getInstance().notifyMessageRaw(ColorCode.RED.getCode() + "Fehler!", "Update konnte nicht heruntergeladen werden.");
             return;
         }
 
