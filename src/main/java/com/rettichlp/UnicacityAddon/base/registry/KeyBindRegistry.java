@@ -2,9 +2,16 @@ package com.rettichlp.UnicacityAddon.base.registry;
 
 import com.google.gson.JsonObject;
 import com.rettichlp.UnicacityAddon.UnicacityAddon;
+import com.rettichlp.UnicacityAddon.base.io.FileManager;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
+import org.apache.commons.io.FileUtils;
 import org.lwjgl.input.Keyboard;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.Scanner;
 
 /**
  * @author RettichLP
@@ -12,7 +19,7 @@ import org.lwjgl.input.Keyboard;
  */
 public class KeyBindRegistry {
 
-    private static boolean executed  = false; // execute once, to prevent multiple registration of same key
+    private static boolean executed = false; // execute once, to prevent multiple registration of same key
     private static final String KEY_CATEGORY = "UnicacityAddon";
 
     public static KeyBinding addonScreenshot;
@@ -27,8 +34,9 @@ public class KeyBindRegistry {
     public static KeyBinding freinforcement;
     public static KeyBinding dreinforcement;
 
-
     public static void registerKeyBinds() {
+        fixOptionsFile();
+
         if (executed) return;
         JsonObject config = UnicacityAddon.ADDON.getConfig();
 
@@ -68,5 +76,27 @@ public class KeyBindRegistry {
         ClientRegistry.registerKeyBinding(freinforcement);
         ClientRegistry.registerKeyBinding(dreinforcement);
         executed = true;
+    }
+
+    private static void fixOptionsFile() {
+        try {
+            File optionsFile = FileManager.getOptionsFile();
+            assert optionsFile != null;
+            String optionsFileString = FileUtils.readFileToString(optionsFile, StandardCharsets.UTF_8.toString());
+
+            StringBuilder stringBuilder = new StringBuilder();
+            Scanner scanner = new Scanner(optionsFileString);
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                String checkableString = line.toLowerCase();
+                if (checkableString.contains("ä") || checkableString.contains("ö") || checkableString.contains("ü") || checkableString.contains("ß")) continue;
+                stringBuilder.append(line).append(System.getProperty("line.separator"));
+            }
+
+            scanner.close();
+            FileUtils.writeStringToFile(optionsFile, stringBuilder.toString(), StandardCharsets.UTF_8.toString());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

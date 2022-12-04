@@ -64,7 +64,7 @@ public class HotkeyEventHandler {
     }
 
     private void handleHotkey() {
-        if (System.currentTimeMillis() - lastHotkeyUse < TimeUnit.SECONDS.toMillis(1)) return;
+        if (System.currentTimeMillis() - lastHotkeyUse < TimeUnit.SECONDS.toMillis(1) || Keyboard.isKeyDown(0)) return;
         UPlayer p = AbstractionLayer.getPlayer();
 
         if (Keyboard.isKeyDown(KeyBindRegistry.addonScreenshot.getKeyCode())) {
@@ -95,9 +95,11 @@ public class HotkeyEventHandler {
         } else if (Keyboard.isKeyDown(KeyBindRegistry.freinforcement.getKeyCode())) {
             BlockPos position = p.getPosition();
             p.sendChatMessage("/f Benötige Verstärkung! -> X: " + position.getX() + " | Y: " + position.getY() + " | Z: " + position.getZ());
+            lastHotkeyUse = System.currentTimeMillis();
         } else if (Keyboard.isKeyDown(KeyBindRegistry.dreinforcement.getKeyCode())) {
             BlockPos position = p.getPosition();
             p.sendChatMessage("/d Benötige Verstärkung! -> X: " + position.getX() + " | Y: " + position.getY() + " | Z: " + position.getZ());
+            lastHotkeyUse = System.currentTimeMillis();
         } else if (Keyboard.isKeyDown(KeyBindRegistry.publicChannelJoin.getKeyCode())) {
             handlePublicChannelJoin();
             lastHotkeyUse = System.currentTimeMillis();
