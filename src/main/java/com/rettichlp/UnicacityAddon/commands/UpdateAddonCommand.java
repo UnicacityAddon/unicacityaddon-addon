@@ -2,6 +2,7 @@ package com.rettichlp.UnicacityAddon.commands;
 
 import com.rettichlp.UnicacityAddon.UnicacityAddon;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
+import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
 import com.rettichlp.UnicacityAddon.base.api.request.TabCompletionBuilder;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import com.rettichlp.UnicacityAddon.base.updater.Updater;
@@ -10,6 +11,7 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.client.IClientCommand;
+import org.apache.commons.lang3.SystemUtils;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -58,8 +60,12 @@ public class UpdateAddonCommand implements IClientCommand {
 
     @Override
     public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
-        if (!Updater.latestVersion.equals(UnicacityAddon.VERSION)) Updater.update();
-        else AbstractionLayer.getPlayer().sendInfoMessage("Du spielst bereits mit der neusten Version.");
+        UPlayer p = AbstractionLayer.getPlayer();
+        if (!Updater.latestVersion.equals(UnicacityAddon.VERSION)) {
+            if (SystemUtils.IS_OS_WINDOWS || SystemUtils.IS_OS_UNIX) {
+                Updater.update();
+            } else p.sendErrorMessage("Dieser Befehl wird nur unter Windows unterstützt.");
+        } else p.sendInfoMessage("Du spielst bereits mit der neusten Version.");
     }
 
     @Override

@@ -579,4 +579,9 @@ public class ConfigElements {
         return !UnicacityAddon.ADDON.getConfig().has("REMOVE_RESOURCEPACK_MESSAGE_SETTINGS") || UnicacityAddon.ADDON.getConfig().get("REMOVE_RESOURCEPACK_MESSAGE_SETTINGS")
                 .getAsBoolean(); // default = true
     }
+
+    public static boolean getAutomatedUpdate() {
+        return !UnicacityAddon.ADDON.getConfig().has("AUTOMATED_UPDATE_SETTINGS") || UnicacityAddon.ADDON.getConfig().get("AUTOMATED_UPDATE_SETTINGS")
+                .getAsBoolean(); // default = true
+    }
 }

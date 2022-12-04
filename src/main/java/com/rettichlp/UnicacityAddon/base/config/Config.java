@@ -81,8 +81,11 @@ public class Config {
         BooleanElement carFindSettings = new BooleanElement("Route bei /car find", unicacityAddon, new ControlElement.IconData(Material.MINECART), "CAR_FIND_SETTINGS", ConfigElements.getEventCarFind());
         list.add(carFindSettings);
 
-        BooleanElement uploadAfterScreenCommand = new BooleanElement("Upload bei /screen", unicacityAddon, new ControlElement.IconData(Material.LEATHER), "AUTOMATED_SCREENSHOT_UPLOAD_SETTINGS", ConfigElements.getAutomatedScreenshotUpload());
-        list.add(uploadAfterScreenCommand);
+        BooleanElement automatedScreenshotUploadSettings = new BooleanElement("Upload bei /screen", unicacityAddon, new ControlElement.IconData(Material.LEATHER), "AUTOMATED_SCREENSHOT_UPLOAD_SETTINGS", ConfigElements.getAutomatedScreenshotUpload());
+        list.add(automatedScreenshotUploadSettings);
+
+        BooleanElement automatedUpdateSettings = new BooleanElement("Automatisches Update", unicacityAddon, new ControlElement.IconData(Material.FIREWORK), "AUTOMATED_UPDATE_SETTINGS", ConfigElements.getAutomatedUpdate());
+        list.add(automatedUpdateSettings);
 
         list.add(new HeaderElement(Message.getBuilder().of("Teamspeak").color(ColorCode.WHITE).advance().create()));
 
