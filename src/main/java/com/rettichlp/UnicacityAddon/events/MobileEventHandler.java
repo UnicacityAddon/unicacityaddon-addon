@@ -3,14 +3,16 @@ package com.rettichlp.UnicacityAddon.events;
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCEvent;
 import com.rettichlp.UnicacityAddon.base.text.PatternHandler;
-import com.rettichlp.UnicacityAddon.commands.ACallCommand;
-import com.rettichlp.UnicacityAddon.commands.ASMSCommand;
+import com.rettichlp.UnicacityAddon.commands.mobile.ACallCommand;
+import com.rettichlp.UnicacityAddon.commands.mobile.ASMSCommand;
 import net.minecraft.client.Minecraft;
 import net.minecraft.inventory.ContainerChest;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.client.event.GuiContainerEvent;
+import net.minecraftforge.client.event.sound.SoundEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+import java.util.List;
 import java.util.regex.Matcher;
 
 /**
@@ -22,7 +24,9 @@ public class MobileEventHandler {
     public static int lastCheckedNumber = 0;
     public static boolean isActive = false;
     public static boolean hasCommunications = false;
+    public static boolean muted = false;
     public static boolean activeCommunicationsCheck;
+    public static List<String> blockedPlayerList;
 
     /**
      * If the user has set a password for their account, <code>/mobile</code> cannot be listed until the account is unlocked.
@@ -58,8 +62,10 @@ public class MobileEventHandler {
 
         Matcher smsMatcher = PatternHandler.MOBILE_SMS_PATTERN.matcher(msg);
         if (smsMatcher.find()) {
-            if (!AccountEventHandler.isAfk) AbstractionLayer.getPlayer().sendChatMessage("/nummer " + smsMatcher.group(1));
+            String playerName = smsMatcher.group(1);
+            if (!AccountEventHandler.isAfk) AbstractionLayer.getPlayer().sendChatMessage("/nummer " + playerName);
             isActive = true;
+            if (blockedPlayerList.contains(playerName)) e.setCanceled(true);
         }
     }
 
@@ -82,5 +88,15 @@ public class MobileEventHandler {
             activeCommunicationsCheck = false;
             Minecraft.getMinecraft().player.closeScreen();
         }
+    }
+
+    @SubscribeEvent
+    public static void onSound(SoundEvent.SoundSourceEvent e) {
+        if (muted) return;
+
+        String name = e.getName();
+        if (!name.equals("record.cat") && !name.equals("record.stal") && !name.equals("entity.sheep.ambient")) return;
+
+        e.setCanceled(true);
     }
 }

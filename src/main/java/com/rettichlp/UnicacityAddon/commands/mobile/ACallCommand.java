@@ -1,10 +1,9 @@
-package com.rettichlp.UnicacityAddon.commands;
+package com.rettichlp.UnicacityAddon.commands.mobile;
 
 import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.abstraction.UPlayer;
 import com.rettichlp.UnicacityAddon.base.api.request.TabCompletionBuilder;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
-import com.rettichlp.UnicacityAddon.base.utils.TextUtils;
 import com.rettichlp.UnicacityAddon.events.MobileEventHandler;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
@@ -23,7 +22,7 @@ import java.util.TimerTask;
  * @author RettichLP
  */
 @UCCommand
-public class ASMSCommand implements IClientCommand {
+public class ACallCommand implements IClientCommand {
 
     final Timer timer = new Timer();
     public static boolean isActive;
@@ -31,13 +30,13 @@ public class ASMSCommand implements IClientCommand {
     @Override
     @Nonnull
     public String getName() {
-        return "asms";
+        return "acall";
     }
 
     @Override
     @Nonnull
     public String getUsage(@Nonnull ICommandSender sender) {
-        return "/asms [Spielername] [Nachricht]";
+        return "/acall [Spielername]";
     }
 
     @Override
@@ -54,8 +53,7 @@ public class ASMSCommand implements IClientCommand {
     @Override
     public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
         UPlayer p = AbstractionLayer.getPlayer();
-
-        if (args.length < 2) {
+        if (args.length < 1) {
             p.sendSyntaxMessage(getUsage(sender));
             return;
         }
@@ -72,8 +70,7 @@ public class ASMSCommand implements IClientCommand {
                     return;
                 }
 
-                String message = TextUtils.makeStringByArgs(args, " ").replace(args[0], "");
-                p.sendChatMessage("/sms " + number + message);
+                p.sendChatMessage("/call " + number);
             }
         }, 250L);
     }
