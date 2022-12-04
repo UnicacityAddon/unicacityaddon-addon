@@ -1,5 +1,7 @@
 package com.rettichlp.UnicacityAddon.commands;
 
+import com.rettichlp.UnicacityAddon.UnicacityAddon;
+import com.rettichlp.UnicacityAddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.UnicacityAddon.base.api.request.TabCompletionBuilder;
 import com.rettichlp.UnicacityAddon.base.registry.annotation.UCCommand;
 import com.rettichlp.UnicacityAddon.base.updater.Updater;
@@ -56,7 +58,8 @@ public class UpdateAddonCommand implements IClientCommand {
 
     @Override
     public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
-        Updater.updateChecker();
+        if (!Updater.latestVersion.equals(UnicacityAddon.VERSION)) Updater.update();
+        else AbstractionLayer.getPlayer().sendInfoMessage("Du spielst bereits mit der neusten Version.");
     }
 
     @Override

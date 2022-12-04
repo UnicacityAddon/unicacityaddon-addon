@@ -10,6 +10,7 @@ import com.rettichlp.UnicacityAddon.base.registry.EventRegistry;
 import com.rettichlp.UnicacityAddon.base.registry.KeyBindRegistry;
 import com.rettichlp.UnicacityAddon.base.registry.ModuleRegistry;
 import com.rettichlp.UnicacityAddon.base.teamspeak.TSClientQuery;
+import com.rettichlp.UnicacityAddon.base.updater.Updater;
 import com.rettichlp.UnicacityAddon.events.RenderTagEventHandler;
 import com.rettichlp.UnicacityAddon.events.TabListEventHandler;
 import com.rettichlp.UnicacityAddon.modules.BankMoneyModule;
@@ -50,6 +51,7 @@ public class UnicacityAddon extends LabyModAddon {
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent e) {
+        Updater.modFile = e.getSourceFile();
         ASMDataTable asmDataTable = e.getAsmData();
         CommandRegistry.register(asmDataTable);
         EventRegistry.register(asmDataTable);
