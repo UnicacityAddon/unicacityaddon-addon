@@ -64,34 +64,28 @@ public class HotkeyEventHandler {
     }
 
     private void handleHotkey() {
-        if (System.currentTimeMillis() - lastHotkeyUse < TimeUnit.SECONDS.toMillis(1)) return;
+        if (System.currentTimeMillis() - lastHotkeyUse < TimeUnit.SECONDS.toMillis(1) || Keyboard.isKeyDown(0)) return;
         UPlayer p = AbstractionLayer.getPlayer();
+        lastHotkeyUse = System.currentTimeMillis();
 
         if (Keyboard.isKeyDown(KeyBindRegistry.addonScreenshot.getKeyCode())) {
             handleScreenshot();
-            lastHotkeyUse = System.currentTimeMillis();
         }
 
         if (UnicacityAddon.MINECRAFT.currentScreen != null) return;
 
         if (Keyboard.isKeyDown(KeyBindRegistry.adFreigeben.getKeyCode())) {
             handleAd("freigeben");
-            lastHotkeyUse = System.currentTimeMillis();
         } else if (Keyboard.isKeyDown(KeyBindRegistry.adBlockieren.getKeyCode())) {
             handleAd("blockieren");
-            lastHotkeyUse = System.currentTimeMillis();
         } else if (Keyboard.isKeyDown(KeyBindRegistry.acceptReport.getKeyCode())) {
             p.sendChatMessage("/ar");
-            lastHotkeyUse = System.currentTimeMillis();
         } else if (Keyboard.isKeyDown(KeyBindRegistry.cancelReport.getKeyCode())) {
             handleCancelReport();
-            lastHotkeyUse = System.currentTimeMillis();
         } else if (Keyboard.isKeyDown(KeyBindRegistry.aDuty.getKeyCode())) {
             p.sendChatMessage("/aduty");
-            lastHotkeyUse = System.currentTimeMillis();
         } else if (Keyboard.isKeyDown(KeyBindRegistry.aDutySilent.getKeyCode())) {
             p.sendChatMessage("/aduty -s");
-            lastHotkeyUse = System.currentTimeMillis();
         } else if (Keyboard.isKeyDown(KeyBindRegistry.freinforcement.getKeyCode())) {
             BlockPos position = p.getPosition();
             p.sendChatMessage("/f Benötige Verstärkung! -> X: " + position.getX() + " | Y: " + position.getY() + " | Z: " + position.getZ());
@@ -100,7 +94,6 @@ public class HotkeyEventHandler {
             p.sendChatMessage("/d Benötige Verstärkung! -> X: " + position.getX() + " | Y: " + position.getY() + " | Z: " + position.getZ());
         } else if (Keyboard.isKeyDown(KeyBindRegistry.publicChannelJoin.getKeyCode())) {
             handlePublicChannelJoin();
-            lastHotkeyUse = System.currentTimeMillis();
         }
     }
 
