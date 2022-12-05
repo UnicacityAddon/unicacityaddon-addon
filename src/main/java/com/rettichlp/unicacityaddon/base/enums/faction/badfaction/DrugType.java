@@ -1,13 +1,13 @@
 package com.rettichlp.unicacityaddon.base.enums.faction.badfaction;
 
-public enum DrugTypes {
+public enum DrugType {
 
     COCAINE("Kokain", "Koks"), MARIJUANA("Marihuana", "Gras"), METH("Methamphetamin", "Meth"), LSD("LSD", "LSD");
 
     private final String drugName;
     private final String shortName;
 
-    DrugTypes(String drugName, String shortName) {
+    DrugType(String drugName, String shortName) {
         this.drugName = drugName;
         this.shortName = shortName;
     }
