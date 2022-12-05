@@ -72,7 +72,7 @@ public class PatternHandler {
     public static final Pattern SERVICE_NO_SERVICE_PATTERN = Pattern.compile("^Fehler: Es ist kein Service offen\\.$");
     public static final Pattern SERVICE_BLOCKED_PATTERN = Pattern.compile("^Notrufe von ((?:\\[UC])*\\w+) wurden von ((?:\\[UC])*\\w+) blockiert\\.$");
     public static final Pattern SERVICE_UNBLOCKED_PATTERN = Pattern.compile("^Notrufe von ((?:\\[UC])*\\w+) wurden von ((?:\\[UC])*\\w+) wieder zugelassen\\.$");
-    public static final Pattern SERVICE_CALL_BOX_PATTERN = Pattern.compile("^ {2}➡ (?:\\[UC])*([a-zA-Z0-9_]+) » (.+)$");
+    public static final Pattern SERVICE_CALL_BOX_PATTERN = Pattern.compile("^(?:HQ:)* {2}➡ (?:\\[UC])*(\\w+) » (.+)$");
 
     /**
      * Pattern for name tag providing
