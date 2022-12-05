@@ -1,5 +1,7 @@
 package com.rettichlp.unicacityaddon.base.enums.location;
 
+import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
+import com.rettichlp.unicacityaddon.events.faction.EmergencyServiceEventHandler;
 import net.minecraft.util.math.BlockPos;
 
 public enum ServiceCallBox {
@@ -59,6 +61,11 @@ public enum ServiceCallBox {
     }
 
     public String getNaviCommand() {
+        // only send message in faction chat, if messages is clicked and not during generation process
+        if (!EmergencyServiceEventHandler.messageCreationActive) {
+            EmergencyServiceEventHandler.messageCreationActive = true;
+            AbstractionLayer.getPlayer().sendChatMessage("/f ➡ Unterwegs zur Notrufsäule (" + locationName + ")");
+        }
         return "/navi " + x + "/" + y + "/" + z;
     }
 }
