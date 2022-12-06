@@ -312,29 +312,29 @@ public class APIRequest {
                 .getAsJsonObject();
     }
 
-    private static Map<String, String> mapOf(String k1, String v1) {
-        Map<String, String> map = new HashMap<>();
+    public static <K, V> Map<K, V> mapOf(K k1, V v1) {
+        Map<K, V> map = new HashMap<>();
         map.put(k1, v1);
         return map;
     }
 
-    private static Map<String, String> mapOf(String k1, String v1, String k2, String v2) {
-        Map<String, String> map = new HashMap<>();
+    public static <K, V> Map<K, V> mapOf(K k1, V v1, K k2, V v2) {
+        Map<K, V> map = new HashMap<>();
         map.put(k1, v1);
         map.put(k2, v2);
         return map;
     }
 
-    private static Map<String, String> mapOf(String k1, String v1, String k2, String v2, String k3, String v3) {
-        Map<String, String> map = new HashMap<>();
+    public static <K, V> Map<K, V> mapOf(K k1, V v1, K k2, V v2, K k3, V v3) {
+        Map<K, V> map = new HashMap<>();
         map.put(k1, v1);
         map.put(k2, v2);
         map.put(k3, v3);
         return map;
     }
 
-    private static Map<String, String> mapOf(String k1, String v1, String k2, String v2, String k3, String v3, String k4, String v4) {
-        Map<String, String> map = new HashMap<>();
+    public static <K, V> Map<K, V> mapOf(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4) {
+        Map<K, V> map = new HashMap<>();
         map.put(k1, v1);
         map.put(k2, v2);
         map.put(k3, v3);
@@ -342,8 +342,8 @@ public class APIRequest {
         return map;
     }
 
-    private static Map<String, String> mapOf(String k1, String v1, String k2, String v2, String k3, String v3, String k4, String v4, String k5, String v5) {
-        Map<String, String> map = new HashMap<>();
+    public static <K, V> Map<K, V> mapOf(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4, K k5, V v5) {
+        Map<K, V> map = new HashMap<>();
         map.put(k1, v1);
         map.put(k2, v2);
         map.put(k3, v3);
