@@ -35,7 +35,7 @@ public class EmergencyServiceEventHandler {
         String unformattedMsg = msg.getUnformattedText();
 
         if (PatternHandler.SERVICE_ARRIVED_PATTERN.matcher(unformattedMsg).find()) {
-            AbstractionLayer.getPlayer().playSound(SoundRegistry.SERVICE_SOUND, 1, 1);
+            p.playSound(SoundRegistry.SERVICE_SOUND, 1, 1);
             EmergencyServiceModule.currentCount++;
             return;
         }

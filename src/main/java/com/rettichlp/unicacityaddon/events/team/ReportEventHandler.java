@@ -1,6 +1,7 @@
 package com.rettichlp.unicacityaddon.events.team;
 
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
+import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.config.ConfigElements;
 import com.rettichlp.unicacityaddon.base.registry.SoundRegistry;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
@@ -26,6 +27,7 @@ public class ReportEventHandler {
 
     @SubscribeEvent
     public void onClientChatReceive(ClientChatReceivedEvent e) {
+        UPlayer p = AbstractionLayer.getPlayer();
         ITextComponent msg = e.getMessage();
         String formattedMsg = msg.getFormattedText();
         String unformattedMsg = msg.getUnformattedText();
@@ -38,7 +40,7 @@ public class ReportEventHandler {
                 @Override
                 public void run() {
                     if (System.currentTimeMillis() - lastExecution > 1000L) {
-                        AbstractionLayer.getPlayer().sendChatMessage(ConfigElements.getReportGreeting());
+                        p.sendChatMessage(ConfigElements.getReportGreeting());
                         lastExecution = System.currentTimeMillis();
                     }
                 }
@@ -59,7 +61,7 @@ public class ReportEventHandler {
         }
 
         if (PatternHandler.REPORT_PATTERN.matcher(unformattedMsg).find()) {
-            AbstractionLayer.getPlayer().playSound(SoundRegistry.REPORT_SOUND, 1, 1);
+            p.playSound(SoundRegistry.REPORT_SOUND, 1, 1);
         }
     }
 }

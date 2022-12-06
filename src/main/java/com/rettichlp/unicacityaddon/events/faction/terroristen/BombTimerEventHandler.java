@@ -35,7 +35,7 @@ public class BombTimerEventHandler {
         if (bombPlacedMatcher.find()) {
             BombTimerModule.isBomb = true;
             BombTimerModule.timer = "00:00";
-            AbstractionLayer.getPlayer().playSound(SoundRegistry.BOMB_SOUND, 1, 1);
+            p.playSound(SoundRegistry.BOMB_SOUND, 1, 1);
 
             if (((p.getFaction().equals(Faction.POLIZEI) || p.getFaction().equals(Faction.FBI)) && p.getRank() > 3) || p.isSuperUser()) {
                 String location = bombPlacedMatcher.group("location");
