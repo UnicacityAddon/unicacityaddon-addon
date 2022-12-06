@@ -1,5 +1,7 @@
 package com.rettichlp.unicacityaddon.events.faction;
 
+import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
+import com.rettichlp.unicacityaddon.base.registry.SoundRegistry;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.base.utils.ForgeUtils;
@@ -53,6 +55,7 @@ public class ContractEventHandler {
 
         Matcher matcher = PatternHandler.CONTRACT_SET_PATTERN.matcher(unformattedMessage);
         if (matcher.find()) {
+            AbstractionLayer.getPlayer().playSound(SoundRegistry.CONTRACT_SET_SOUND, 1, 1);
             String name = matcher.group(1);
             CONTRACT_LIST.add(name);
         }
@@ -75,6 +78,7 @@ public class ContractEventHandler {
             break;
         }
 
+        AbstractionLayer.getPlayer().playSound(SoundRegistry.CONTRACT_FULFILLED_SOUND, 1, 1);
         CONTRACT_LIST.remove(name);
     }
 }

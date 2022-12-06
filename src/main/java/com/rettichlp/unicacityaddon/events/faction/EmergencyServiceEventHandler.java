@@ -5,6 +5,7 @@ import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
 import com.rettichlp.unicacityaddon.base.enums.api.StatisticType;
 import com.rettichlp.unicacityaddon.base.enums.location.ServiceCallBox;
+import com.rettichlp.unicacityaddon.base.registry.SoundRegistry;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
@@ -34,6 +35,7 @@ public class EmergencyServiceEventHandler {
         String unformattedMsg = msg.getUnformattedText();
 
         if (PatternHandler.SERVICE_ARRIVED_PATTERN.matcher(unformattedMsg).find()) {
+            AbstractionLayer.getPlayer().playSound(SoundRegistry.SERVICE_SOUND, 1, 1);
             EmergencyServiceModule.currentCount++;
             return;
         }
