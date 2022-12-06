@@ -1,4 +1,4 @@
-package com.rettichlp.unicacityaddon.base.enums.faction.badfaction;
+package com.rettichlp.unicacityaddon.base.enums.faction;
 
 public enum DrugPurity {
 

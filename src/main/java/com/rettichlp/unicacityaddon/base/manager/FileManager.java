@@ -4,13 +4,11 @@ import com.google.gson.Gson;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.models.Data;
-import com.rettichlp.unicacityaddon.base.models.HouseBankEntry;
 import com.rettichlp.unicacityaddon.commands.CoordlistCommand;
 import com.rettichlp.unicacityaddon.commands.TodoListCommand;
 import com.rettichlp.unicacityaddon.commands.faction.ServiceCountCommand;
 import com.rettichlp.unicacityaddon.events.faction.EquipEventHandler;
 import com.rettichlp.unicacityaddon.events.faction.rettungsdienst.FirstAidEventHandler;
-import com.rettichlp.unicacityaddon.events.house.HouseBankEventHandler;
 import com.rettichlp.unicacityaddon.modules.BankMoneyModule;
 import com.rettichlp.unicacityaddon.modules.CarOpenModule;
 import com.rettichlp.unicacityaddon.modules.CashMoneyModule;
@@ -25,6 +23,7 @@ import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 
 /**
  * @author RettichLP
@@ -42,15 +41,6 @@ public class FileManager {
         if (unicacityAddonDir.exists() || unicacityAddonDir.mkdir()) return unicacityAddonDir;
 
         AbstractionLayer.getPlayer().sendErrorMessage("Ordner 'unicacityAddon' wurde nicht gefunden!");
-
-        return null;
-    }
-
-    public static File getLabyModAddonDir() {
-        File labyModAddonDir = new File(getMinecraftDir().getAbsolutePath() + "/LabyMod/addons-1.12/");
-        if (labyModAddonDir.exists() || labyModAddonDir.mkdirs()) return labyModAddonDir;
-
-        AbstractionLayer.getPlayer().sendErrorMessage("Ordner 'addons-1.12' wurde nicht gefunden!");
 
         return null;
     }
@@ -84,27 +74,12 @@ public class FileManager {
         return null;
     }
 
-    public static File getUnicacityAddonFile() {
-        if (getLabyModAddonDir() == null) return null;
-        return new File(getLabyModAddonDir().getAbsolutePath() + "/UnicacityAddon-" + UnicacityAddon.VERSION + ".jar");
-    }
-
     public static File getDataFile() throws IOException {
         if (getUnicacityAddonDir() == null) return null;
         File dataFile = new File(getUnicacityAddonDir().getAbsolutePath() + "/data.json");
         if (dataFile.exists() || dataFile.createNewFile()) return dataFile;
 
         AbstractionLayer.getPlayer().sendErrorMessage("Datei 'data.json' wurde nicht gefunden!");
-
-        return null;
-    }
-
-    public static File getSharesDataFile() throws IOException {
-        if (getUnicacityAddonDir() == null) return null;
-        File sharesDataFile = new File(getUnicacityAddonDir().getAbsolutePath() + "/sharesData.json");
-        if (sharesDataFile.exists() || sharesDataFile.createNewFile()) return sharesDataFile;
-
-        AbstractionLayer.getPlayer().sendErrorMessage("Datei 'sharesData.json' wurde nicht gefunden!");
 
         return null;
     }
@@ -156,7 +131,7 @@ public class FileManager {
                 FirstAidEventHandler.timeMilliesOnFirstAidReceipt = 0;
                 TodoListCommand.todolist = Collections.emptyList();
                 CoordlistCommand.coordlist = Collections.emptyList();
-                HouseBankEventHandler.houseBanks = Collections.emptyList();
+                HouseDataManager.HOUSE_DATA = new HashMap<>();
                 EquipEventHandler.equipLogEntryList = Collections.emptyList();
                 CarOpenModule.info = "";
                 return;
@@ -172,13 +147,9 @@ public class FileManager {
             FirstAidEventHandler.timeMilliesOnFirstAidReceipt = data.getFirstAidDate();
             TodoListCommand.todolist = data.getTodolist();
             CoordlistCommand.coordlist = data.getCoordlist();
-            HouseBankEventHandler.houseBanks = data.getHouseBanks();
+            HouseDataManager.HOUSE_DATA = data.getHouseData();
             EquipEventHandler.equipLogEntryList = data.getEquipList();
             CarOpenModule.info = data.getCarInfo() == null ? Strings.EMPTY : data.getCarInfo();
-
-            for (HouseBankEntry houseBankEntry : HouseBankEventHandler.houseBanks)
-                HouseBankEntry.houseNumbers.add(houseBankEntry.getHouseNumber());
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -201,7 +172,7 @@ public class FileManager {
             data.setFirstAidDate(FirstAidEventHandler.timeMilliesOnFirstAidReceipt);
             data.setTodolist(TodoListCommand.todolist);
             data.setCoordlist(CoordlistCommand.coordlist);
-            data.setHouseBanks(HouseBankEventHandler.houseBanks);
+            data.setHouseData(HouseDataManager.HOUSE_DATA);
             data.setEquipList(EquipEventHandler.equipLogEntryList);
             data.setCarInfo(CarOpenModule.info);
             data.setServiceCount(ServiceCountCommand.serviceCount);

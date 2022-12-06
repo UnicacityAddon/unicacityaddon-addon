@@ -1,14 +1,9 @@
-package com.rettichlp.unicacityaddon.commands;
+package com.rettichlp.unicacityaddon.commands.house;
 
-import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
-import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
-import com.rettichlp.unicacityaddon.base.models.HouseBankEntry;
+import com.rettichlp.unicacityaddon.base.manager.HouseDataManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
-import com.rettichlp.unicacityaddon.base.text.ColorCode;
-import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.utils.MathUtils;
-import com.rettichlp.unicacityaddon.events.house.HouseBankEventHandler;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
@@ -41,7 +36,7 @@ public class HouseBankCommand implements IClientCommand {
     @Override
     @Nonnull
     public List<String> getAliases() {
-        return Arrays.asList("hkasseninfo");
+        return Arrays.asList("hkasseninfo", "hkinfo");
     }
 
     @Override
@@ -64,32 +59,12 @@ public class HouseBankCommand implements IClientCommand {
 
     @Override
     public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
-        if (args.length > 1) {
-            if (args[0].equalsIgnoreCase("delete") && MathUtils.isInteger(args[1])) {
-                for (HouseBankEntry houseBankEntry : HouseBankEventHandler.houseBanks) {
-                    if (houseBankEntry.getHouseNumber() == Integer.parseInt(args[1])) {
-                        HouseBankEventHandler.houseBanks.remove(houseBankEntry);
-                        break;
-                    }
-                }
-                return;
-            }
+        if (args.length > 1 && args[0].equalsIgnoreCase("delete") && MathUtils.isInteger(args[1])) {
+            HouseDataManager.deleteHouseData(Integer.parseInt(args[1]));
+            return;
         }
 
-        houseBanks();
-    }
-
-    private void houseBanks() {
-        UPlayer p = AbstractionLayer.getPlayer();
-        p.sendEmptyMessage();
-        p.sendMessage(Message.getBuilder()
-                .of("Hauskassen:").color(ColorCode.DARK_AQUA).bold().advance()
-                .createComponent());
-        HouseBankEventHandler.houseBanks.forEach(houseBankEntry -> p.sendMessage(Message.getBuilder()
-                .of("» " + houseBankEntry.getHouseNumber() + ": ").color(ColorCode.GRAY).advance()
-                .of(houseBankEntry.getValue() + "$").color(ColorCode.AQUA).advance()
-                .createComponent()));
-        p.sendEmptyMessage();
+        HouseDataManager.sendAllHouseBankMessage();
     }
 
     @Override

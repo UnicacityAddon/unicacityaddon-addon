@@ -31,7 +31,7 @@ public class TimerEntry {
     }
 
     public String getTimeLeftString() {
-        long timeLeft = timeUnit.toMillis(duration)  - (System.currentTimeMillis() - id); // id = starttime
+        long timeLeft = timeUnit.toMillis(duration) - (System.currentTimeMillis() - id); // id = starttime
         long hh = TimeUnit.MILLISECONDS.toHours(timeLeft);
         long mm = TimeUnit.MILLISECONDS.toMinutes(timeLeft) % 60;
         long ss = TimeUnit.MILLISECONDS.toSeconds(timeLeft) % 60;

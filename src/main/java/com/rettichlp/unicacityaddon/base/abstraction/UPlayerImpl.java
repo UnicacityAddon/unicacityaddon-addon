@@ -2,21 +2,16 @@ package com.rettichlp.unicacityaddon.base.abstraction;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.api.Syncer;
+import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
-import com.rettichlp.unicacityaddon.base.enums.faction.rettungsdienst.Medication;
-import com.rettichlp.unicacityaddon.base.utils.NavigationUtils;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
+import com.rettichlp.unicacityaddon.base.utils.NavigationUtils;
 import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.client.network.NetHandlerPlayClient;
-import net.minecraft.client.network.NetworkPlayerInfo;
-import net.minecraft.entity.Entity;
 import net.minecraft.inventory.Container;
 import net.minecraft.scoreboard.Scoreboard;
-import net.minecraft.scoreboard.Team;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
@@ -116,21 +111,6 @@ public class UPlayerImpl implements UPlayer {
     }
 
     @Override
-    public double getDistanceToEntity(Entity entity) {
-        return getDistanceToCoords(entity.posX, entity.posY, entity.posZ);
-    }
-
-    @Override
-    public double getDistanceToCoords(double posX, double posY, double posZ) {
-        return getPosition().getDistance((int) posX, (int) posY, (int) posZ);
-    }
-
-    @Override
-    public Team getTeam() {
-        return getPlayer().getTeam();
-    }
-
-    @Override
     public Scoreboard getWorldScoreboard() {
         return getPlayer().getWorldScoreboard();
     }
@@ -161,7 +141,7 @@ public class UPlayerImpl implements UPlayer {
     }
 
     @Override
-    public void sellMedication(String target, Medication medication) {
+    public void sellMedication(String target, DrugType medication) {
         sendChatMessage("/rezept " + target + " " + medication.name());
     }
 

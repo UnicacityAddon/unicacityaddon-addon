@@ -1,12 +1,9 @@
-package com.rettichlp.unicacityaddon.commands.faction.rettungsdienst;
+package com.rettichlp.unicacityaddon.commands.house;
 
-import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
-import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
-import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
+import com.rettichlp.unicacityaddon.base.manager.HouseDataManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.utils.MathUtils;
-import com.rettichlp.unicacityaddon.events.faction.rettungsdienst.MedicationEventHandler;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
@@ -16,36 +13,30 @@ import net.minecraftforge.client.IClientCommand;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author RettichLP
  */
 @UCCommand
-public class ARezeptCommand implements IClientCommand {
-
-    public static String target;
-    public static DrugType medication;
-    public static int amount = 0;
+public class HouseStorageCommand implements IClientCommand {
 
     @Override
     @Nonnull
     public String getName() {
-        return "arezept";
+        return "drogenlagerinfo";
     }
 
     @Override
     @Nonnull
     public String getUsage(@Nonnull ICommandSender sender) {
-        return "/arezept [Spieler] [Rezept] [Anzahl]";
+        return "/drogenlagerinfo";
     }
 
     @Override
     @Nonnull
     public List<String> getAliases() {
-        return Collections.emptyList();
+        return Arrays.asList("dlagerinfo", "drugstorage");
     }
 
     @Override
@@ -54,34 +45,26 @@ public class ARezeptCommand implements IClientCommand {
     }
 
     @Override
-    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args) {
-        UPlayer p = AbstractionLayer.getPlayer();
-
-        if (args.length < 3) {
-            p.sendSyntaxMessage(getUsage(sender));
-            return;
-        }
-
-        target = args[0];
-        medication = DrugType.getDrugType(args[1]);
-        if (medication == null) return;
-
-        if (!MathUtils.isInteger(args[2])) return;
-        amount = Integer.parseInt(args[2]);
-        MedicationEventHandler.giveRecipe();
-    }
-
-    @Override
     @Nonnull
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
         return TabCompletionBuilder.getBuilder(args)
-                .addAtIndex(2, Arrays.stream(DrugType.values()).filter(DrugType::isLegal).map(DrugType::getDrugName).sorted().collect(Collectors.toList()))
+                .addAtIndex(1, "delete")
                 .build();
     }
 
     @Override
     public boolean isUsernameIndex(@Nonnull String[] args, int index) {
         return false;
+    }
+
+    @Override
+    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
+        if (args.length > 1 && args[0].equalsIgnoreCase("delete") && MathUtils.isInteger(args[1])) {
+            HouseDataManager.deleteHouseData(Integer.parseInt(args[1]));
+            return;
+        }
+
+        HouseDataManager.sendAllDrugStorageMessage();
     }
 
     @Override

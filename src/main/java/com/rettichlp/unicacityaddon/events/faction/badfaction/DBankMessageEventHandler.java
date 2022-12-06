@@ -1,8 +1,8 @@
 package com.rettichlp.unicacityaddon.events.faction.badfaction;
 
 import com.rettichlp.unicacityaddon.base.config.ConfigElements;
-import com.rettichlp.unicacityaddon.base.enums.faction.badfaction.DrugPurity;
-import com.rettichlp.unicacityaddon.base.enums.faction.badfaction.DrugTypes;
+import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
+import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
@@ -30,13 +30,13 @@ public class DBankMessageEventHandler {
         if (dropMatcher.find()) {
             NumberFormat numberFormat = NumberFormat.getNumberInstance(new Locale("da", "DK"));
             DrugPurity purity = null;
-            DrugTypes type = null;
+            DrugType type = null;
 
             for (DrugPurity drugPurity : DrugPurity.values())
                 if (drugPurity.getPurityString().equals(dropMatcher.group(4))) purity = drugPurity;
 
-            for (DrugTypes drugTypes : DrugTypes.values())
-                if (drugTypes.getDrugName().equals(dropMatcher.group(3))) type = drugTypes;
+            for (DrugType drugType : DrugType.values())
+                if (drugType.getDrugName().equals(dropMatcher.group(3))) type = drugType;
 
             assert purity != null;
             assert type != null;
@@ -59,13 +59,13 @@ public class DBankMessageEventHandler {
         if (getMatcher.find()) {
             NumberFormat numberFormat = NumberFormat.getNumberInstance(new Locale("da", "DK"));
             DrugPurity purity = null;
-            DrugTypes type = null;
+            DrugType type = null;
 
             for (DrugPurity drugPurity : DrugPurity.values())
                 if (drugPurity.getPurityString().equals(getMatcher.group(4))) purity = drugPurity;
 
-            for (DrugTypes drugTypes : DrugTypes.values())
-                if (drugTypes.getDrugName().equals(getMatcher.group(3))) type = drugTypes;
+            for (DrugType drugType : DrugType.values())
+                if (drugType.getDrugName().equals(getMatcher.group(3))) type = drugType;
 
             assert purity != null;
             assert type != null;

@@ -3,7 +3,7 @@ package com.rettichlp.unicacityaddon.base.config;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.enums.faction.Equip;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
-import com.rettichlp.unicacityaddon.base.enums.faction.badfaction.DrugPurity;
+import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import net.labymod.gui.elements.DropDownMenu;
 import net.labymod.main.LabyMod;
