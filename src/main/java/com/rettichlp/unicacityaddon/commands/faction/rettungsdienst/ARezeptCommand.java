@@ -3,7 +3,7 @@ package com.rettichlp.unicacityaddon.commands.faction.rettungsdienst;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
-import com.rettichlp.unicacityaddon.base.enums.faction.rettungsdienst.Medication;
+import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.utils.MathUtils;
 import com.rettichlp.unicacityaddon.events.faction.rettungsdienst.MedicationEventHandler;
@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 public class ARezeptCommand implements IClientCommand {
 
     public static String target;
-    public static Medication medication;
+    public static DrugType medication;
     public static int amount = 0;
 
     @Override
@@ -63,7 +63,7 @@ public class ARezeptCommand implements IClientCommand {
         }
 
         target = args[0];
-        medication = Medication.getMedication(args[1]);
+        medication = DrugType.getDrugType(args[1]);
         if (medication == null) return;
 
         if (!MathUtils.isInteger(args[2])) return;
@@ -75,7 +75,7 @@ public class ARezeptCommand implements IClientCommand {
     @Nonnull
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
         return TabCompletionBuilder.getBuilder(args)
-                .addAtIndex(2, Arrays.stream(Medication.values()).map(Medication::getDisplayName).sorted().collect(Collectors.toList()))
+                .addAtIndex(2, Arrays.stream(DrugType.values()).filter(DrugType::isLegal).map(DrugType::getDrugName).sorted().collect(Collectors.toList()))
                 .build();
     }
 

@@ -1,8 +1,8 @@
 package com.rettichlp.unicacityaddon.events.faction.badfaction;
 
 import com.rettichlp.unicacityaddon.base.config.ConfigElements;
-import com.rettichlp.unicacityaddon.base.enums.faction.badfaction.DrugPurity;
-import com.rettichlp.unicacityaddon.base.enums.faction.badfaction.DrugType;
+import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
+import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;

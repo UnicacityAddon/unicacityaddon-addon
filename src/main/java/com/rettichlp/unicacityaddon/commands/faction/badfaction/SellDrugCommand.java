@@ -3,8 +3,7 @@ package com.rettichlp.unicacityaddon.commands.faction.badfaction;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
-import com.rettichlp.unicacityaddon.base.enums.faction.badfaction.DrugType;
-import com.rettichlp.unicacityaddon.base.enums.faction.rettungsdienst.Medication;
+import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
@@ -53,7 +52,6 @@ public class SellDrugCommand implements IClientCommand {
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
         return TabCompletionBuilder.getBuilder(args)
                 .addAtIndex(2, Arrays.stream(DrugType.values()).map(DrugType::getDrugName).sorted().collect(Collectors.toList()))
-                .addAtIndex(2, Arrays.stream(Medication.values()).map(Medication::getDisplayName).sorted().collect(Collectors.toList()))
                 .addAtIndex(3, "0", "1", "2", "3")
                 .build();
     }

@@ -1,15 +1,10 @@
 package com.rettichlp.unicacityaddon.base.abstraction;
 
+import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
-import com.rettichlp.unicacityaddon.base.enums.faction.rettungsdienst.Medication;
 import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.client.network.NetHandlerPlayClient;
-import net.minecraft.client.network.NetworkPlayerInfo;
-import net.minecraft.entity.Entity;
 import net.minecraft.inventory.Container;
 import net.minecraft.scoreboard.Scoreboard;
-import net.minecraft.scoreboard.Team;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
@@ -48,12 +43,6 @@ public interface UPlayer {
 
     BlockPos getPosition();
 
-    double getDistanceToEntity(Entity entity);
-
-    double getDistanceToCoords(double posX, double posY, double posZ);
-
-    Team getTeam();
-
     Scoreboard getWorldScoreboard();
 
     World getWorld();
@@ -66,7 +55,7 @@ public interface UPlayer {
 
     int getRank();
 
-    void sellMedication(String target, Medication medication);
+    void sellMedication(String target, DrugType medication);
 
     void acceptOffer();
 
