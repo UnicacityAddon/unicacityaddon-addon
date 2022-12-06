@@ -244,7 +244,7 @@ public class PatternHandler {
     /**
      * Pattern for account interaction
      *
-     * @see com.rettichlp.unicacityaddon.events.house.HouseBankEventHandler
+     * @see com.rettichlp.unicacityaddon.events.house.HouseDataEventHandler
      * @see com.rettichlp.unicacityaddon.events.house.HouseRenterEventHandler
      */
     public static final Pattern HOUSE_BANK_HEADER_PATTERN = Pattern.compile("^=== Hauskasse Haus (\\d+) ===$");
@@ -253,6 +253,9 @@ public class PatternHandler {
     public static final Pattern HOUSE_BANK_WITHDRAW_PATTERN = Pattern.compile("^\\[Haus] Du hast (\\d+)\\$ aus der Hauskasse genommen\\.$");
     public static final Pattern HOUSE_RENTER_HEADER_PATTERN = Pattern.compile("^=== Mieter in Haus (\\d+) ===$");
     public static final Pattern HOUSE_RENTER_VALUE_PATTERN = Pattern.compile("^ {2}» (?:\\[UC])*(\\w+) \\((Online|Offline seit (\\d+)\\.(\\d+)\\.(\\d+) (\\d+):(\\d+):(\\d+))\\)$");
+    public static final Pattern HOUSE_STORAGE_SUCCESSFUL_INTERACTION = Pattern.compile("^\\[Haus] Du hast (\\d+)g (\\w+) (ins|aus dem) Drogenlager (gelegt|genommen)\\.$");
+    public static final Pattern HOUSE_STORAGE_ADD_COMMAND_PATTERN = Pattern.compile("^/drogenlager drop (\\w+) (\\d+) (\\d)$");
+    public static final Pattern HOUSE_STORAGE_REMOVE_COMMAND_PATTERN = Pattern.compile("^/drogenlager get (\\w+) (\\d+) (\\d)$");
 
     /**
      * Pattern for equip interaction

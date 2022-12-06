@@ -1,7 +1,9 @@
 package com.rettichlp.unicacityaddon.base.models;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Data {
 
@@ -14,7 +16,7 @@ public class Data {
     private long firstAidDate;
     private List<TodolistEntry> todolist;
     private List<CoordlistEntry> coordlist;
-    private List<HouseBankEntry> houseBanks;
+    private Map<Integer, HouseDataEntry> houseData;
     private List<EquipLogEntry> equipList;
     private String carInfo;
 
@@ -93,12 +95,12 @@ public class Data {
         this.coordlist = coordlist;
     }
 
-    public List<HouseBankEntry> getHouseBanks() {
-        return houseBanks == null ? new ArrayList<>() : houseBanks;
+    public Map<Integer, HouseDataEntry> getHouseData() {
+        return houseData == null ? new HashMap<>() : houseData;
     }
 
-    public void setHouseBanks(List<HouseBankEntry> houseBanks) {
-        this.houseBanks = houseBanks;
+    public void setHouseData(Map<Integer, HouseDataEntry> houseData) {
+        this.houseData = houseData;
     }
 
     public List<EquipLogEntry> getEquipList() {
