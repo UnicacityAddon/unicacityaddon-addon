@@ -5,6 +5,7 @@ import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.inventory.Container;
 import net.minecraft.scoreboard.Scoreboard;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
@@ -36,6 +37,8 @@ public interface UPlayer {
     void sendChatMessage(String message);
 
     void playSound(String soundIn);
+
+    void playSound(SoundEvent soundIn, int volume, int pitch);
 
     String getName();
 

@@ -4,6 +4,7 @@ import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.models.NaviPointEntry;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
+import com.rettichlp.unicacityaddon.base.registry.SoundRegistry;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
@@ -34,6 +35,7 @@ public class BombTimerEventHandler {
         if (bombPlacedMatcher.find()) {
             BombTimerModule.isBomb = true;
             BombTimerModule.timer = "00:00";
+            p.playSound(SoundRegistry.BOMB_SOUND, 1, 1);
 
             if (((p.getFaction().equals(Faction.POLIZEI) || p.getFaction().equals(Faction.FBI)) && p.getRank() > 3) || p.isSuperUser()) {
                 String location = bombPlacedMatcher.group("location");

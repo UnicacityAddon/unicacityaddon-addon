@@ -20,7 +20,6 @@ import net.minecraft.world.World;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
-import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -92,7 +91,12 @@ public class UPlayerImpl implements UPlayer {
     @Override
     public void playSound(String soundIn) {
         ResourceLocation resourcelocation = new ResourceLocation(soundIn);
-        getPlayer().playSound(Objects.requireNonNull(SoundEvent.REGISTRY.getObject(resourcelocation)), 1, 1);
+        playSound(SoundEvent.REGISTRY.getObject(resourcelocation), 1, 1);
+    }
+
+    @Override
+    public void playSound(SoundEvent soundIn, int volume, int pitch) {
+        getPlayer().playSound(soundIn, volume, pitch);
     }
 
     @Override

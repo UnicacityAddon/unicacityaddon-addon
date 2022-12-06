@@ -237,6 +237,8 @@ public class PatternHandler {
      * @see com.rettichlp.unicacityaddon.events.HotkeyEventHandler
      * @see com.rettichlp.unicacityaddon.events.team.ReportEventHandler
      */
+    public static final Pattern REPORT_PATTERN = Pattern.compile("^Es liegt ein neuer Report \\[\\d+] von (?:\\[UC])*(\\w+) vor! Thema: [a-zA-Z]+$|" +
+            "^Es liegt ein neuer Report von (?:\\[UC])*(\\w+) vor! Thema: [a-zA-Z]+$");
     public static final Pattern REPORT_ACCEPTED_PATTERN = Pattern.compile("^\\[Report] Du hast den Report von \\w+ \\[Level \\d+] angenommen! Thema: [a-zA-Z]+$");
     public static final Pattern REPORT_END_PATTERN = Pattern.compile("^\\[Report] Du hast den Report mit \\w+ beendet! \\(#\\d+\\)$");
     public static final Pattern AD_CONTROL_PATTERN = Pattern.compile("^\\[Werbung] (\\w+) hat eine Werbung geschalten: .+$");

@@ -1,11 +1,14 @@
 package com.rettichlp.unicacityaddon.events.team;
 
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
+import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.config.ConfigElements;
+import com.rettichlp.unicacityaddon.base.registry.SoundRegistry;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -24,10 +27,12 @@ public class ReportEventHandler {
 
     @SubscribeEvent
     public void onClientChatReceive(ClientChatReceivedEvent e) {
-        String msg = e.getMessage().getUnformattedText();
-        String formattedText = e.getMessage().getFormattedText();
+        UPlayer p = AbstractionLayer.getPlayer();
+        ITextComponent msg = e.getMessage();
+        String formattedMsg = msg.getFormattedText();
+        String unformattedMsg = msg.getUnformattedText();
 
-        if (PatternHandler.REPORT_ACCEPTED_PATTERN.matcher(msg).find()) {
+        if (PatternHandler.REPORT_ACCEPTED_PATTERN.matcher(unformattedMsg).find()) {
             isReport = true;
 
             if (!ConfigElements.getReportGreeting().isEmpty()) return;
@@ -35,7 +40,7 @@ public class ReportEventHandler {
                 @Override
                 public void run() {
                     if (System.currentTimeMillis() - lastExecution > 1000L) {
-                        AbstractionLayer.getPlayer().sendChatMessage(ConfigElements.getReportGreeting());
+                        p.sendChatMessage(ConfigElements.getReportGreeting());
                         lastExecution = System.currentTimeMillis();
                     }
                 }
@@ -43,16 +48,20 @@ public class ReportEventHandler {
             return;
         }
 
-        if (PatternHandler.REPORT_END_PATTERN.matcher(msg).find()) {
+        if (PatternHandler.REPORT_END_PATTERN.matcher(unformattedMsg).find()) {
             isReport = false;
             return;
         }
 
-        if (formattedText.startsWith(ColorCode.DARK_PURPLE.getCode()) && isReport) {
+        if (formattedMsg.startsWith(ColorCode.DARK_PURPLE.getCode()) && isReport) {
             e.setMessage(Message.getBuilder()
                     .add(ConfigElements.getReportPrefix())
-                    .add(formattedText)
+                    .add(formattedMsg)
                     .createComponent());
+        }
+
+        if (PatternHandler.REPORT_PATTERN.matcher(unformattedMsg).find()) {
+            p.playSound(SoundRegistry.REPORT_SOUND, 1, 1);
         }
     }
 }
