@@ -335,7 +335,7 @@ public class ConfigSubSettings {
         Settings settings = new Settings();
 
         DropDownMenu<ColorCode> nameTagFactionSpecificDropDownMenu = new DropDownMenu<ColorCode>("Farbe", 0, 0, 0, 0).fill(ColorCode.values());
-        nameTagFactionSpecificDropDownMenu.setSelected(ConfigElements.getNameTagAllianceColor());
+        nameTagFactionSpecificDropDownMenu.setSelected(ConfigElements.getNameTagFactionSpecificColor());
         nameTagFactionSpecificDropDownMenu.setEntryDrawer((object, x, y, string) ->  LabyMod.getInstance().getDrawUtils().drawString(ColorCode.valueOf(object.toString().toUpperCase()).toString(), x, y));
         DropDownElement<ColorCode> nameTagFactionSpecificDropDownElement = new DropDownElement<>("", nameTagFactionSpecificDropDownMenu);
         nameTagFactionSpecificDropDownElement.setChangeListener(ConfigElements::setNameTagFactionSpecificColor);

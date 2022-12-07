@@ -55,7 +55,7 @@ public class ReportEventHandler {
 
         if (formattedMsg.startsWith(ColorCode.DARK_PURPLE.getCode()) && isReport) {
             e.setMessage(Message.getBuilder()
-                    .add(ConfigElements.getReportPrefix())
+                    .add(ConfigElements.getReportPrefix().replaceAll("&", "§"))
                     .add(formattedMsg)
                     .createComponent());
         }

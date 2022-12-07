@@ -128,7 +128,7 @@ public class FileManager {
                 JobModule.setExperience(0);
                 PayDayModule.setTime(0);
                 ServiceCountCommand.serviceCount = 0;
-                FirstAidEventHandler.timeMilliesOnFirstAidReceipt = 0;
+                FirstAidEventHandler.firstAidIssuingTime = 0;
                 TodoListCommand.todolist = Collections.emptyList();
                 CoordlistCommand.coordlist = Collections.emptyList();
                 HouseDataManager.HOUSE_DATA = new HashMap<>();
@@ -144,7 +144,7 @@ public class FileManager {
             JobModule.jobExperience = data.getJobExperience();
             PayDayModule.currentTime = data.getPayDayTime();
             ServiceCountCommand.serviceCount = data.getServiceCount();
-            FirstAidEventHandler.timeMilliesOnFirstAidReceipt = data.getFirstAidDate();
+            FirstAidEventHandler.firstAidIssuingTime = data.getFirstAidDate();
             TodoListCommand.todolist = data.getTodolist();
             CoordlistCommand.coordlist = data.getCoordlist();
             HouseDataManager.HOUSE_DATA = data.getHouseData();
@@ -169,7 +169,7 @@ public class FileManager {
             data.setJobBalance(JobModule.jobBalance);
             data.setJobExperience(JobModule.jobExperience);
             data.setPayDayTime(PayDayModule.currentTime);
-            data.setFirstAidDate(FirstAidEventHandler.timeMilliesOnFirstAidReceipt);
+            data.setFirstAidDate(FirstAidEventHandler.firstAidIssuingTime);
             data.setTodolist(TodoListCommand.todolist);
             data.setCoordlist(CoordlistCommand.coordlist);
             data.setHouseData(HouseDataManager.HOUSE_DATA);
