@@ -31,7 +31,7 @@ public class MobileEventHandler {
     public static boolean hasCommunications = false;
     public static boolean muted = false;
     public static boolean activeCommunicationsCheck;
-    public static List<String> blockedPlayerList = new ArrayList<>();
+    public static final List<String> blockedPlayerList = new ArrayList<>();
     private boolean blockNextMessage = false;
     private boolean whitelistSound = false;
 

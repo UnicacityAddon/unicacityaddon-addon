@@ -12,7 +12,6 @@ import com.rettichlp.unicacityaddon.base.teamspeak.commands.ClientMoveCommand;
 import com.rettichlp.unicacityaddon.base.teamspeak.objects.Client;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
-import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
@@ -55,7 +54,7 @@ public class MoveToCommand implements IClientCommand {
     }
 
     @Override
-    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args) throws CommandException {
+    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args) {
         UPlayer p = AbstractionLayer.getPlayer();
 
         if (args.length < 1) {

@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author Fuzzlemann
  */
+@SuppressWarnings("UnstableApiUsage")
 public class KeepAliveThread extends Thread implements Closeable {
 
     private final TSClientQuery clientQuery;

@@ -23,6 +23,7 @@ import java.nio.charset.StandardCharsets;
  * @author Fuzzlemann
  * @author RettichLP
  */
+@SuppressWarnings("UnstableApiUsage")
 public class TSClientQuery implements Closeable {
 
     public static boolean clientQueryConnected = false;
@@ -85,7 +86,7 @@ public class TSClientQuery implements Closeable {
         socket.setSoTimeout(4000);
 
         writer = new ClientQueryWriter(this, new PrintWriter(socket.getOutputStream(), true));
-        reader = new ClientQueryReader(this, new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8)));
+        reader = new ClientQueryReader(new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8)));
 
         // welcome messages
         while (reader.getReader().ready()) {
@@ -119,14 +120,6 @@ public class TSClientQuery implements Closeable {
         for (String eventName : TSEventHandler.TEAMSPEAK_EVENTS.keySet()) {
             new ClientNotifyRegisterCommand(schandlerID, eventName).execute();
         }
-    }
-
-    public Socket getSocket() {
-        return socket;
-    }
-
-    public ClientQueryWriter getWriter() {
-        return writer;
     }
 
     public ClientQueryReader getReader() {

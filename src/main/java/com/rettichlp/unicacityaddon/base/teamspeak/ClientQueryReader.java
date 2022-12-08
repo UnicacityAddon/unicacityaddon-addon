@@ -19,15 +19,14 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author Fuzzlemann
  */
+@SuppressWarnings("UnstableApiUsage")
 public class ClientQueryReader extends Thread implements Closeable {
 
     private final BlockingQueue<BaseCommand<?>> queue = new LinkedBlockingQueue<>();
-    private final TSClientQuery query;
     private final BufferedReader reader;
     private volatile boolean closed;
 
-    ClientQueryReader(TSClientQuery query, BufferedReader reader) {
-        this.query = query;
+    ClientQueryReader(BufferedReader reader) {
         this.reader = reader;
 
         setName("UnicacityAddon-TSClientQuery-ClientQueryReader");
@@ -94,15 +93,7 @@ public class ClientQueryReader extends Thread implements Closeable {
         return queue;
     }
 
-    public TSClientQuery getQuery() {
-        return query;
-    }
-
     public BufferedReader getReader() {
         return reader;
-    }
-
-    public boolean isClosed() {
-        return closed;
     }
 }

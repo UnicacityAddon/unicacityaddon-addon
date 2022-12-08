@@ -16,7 +16,7 @@ import net.minecraft.util.text.event.HoverEvent;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -40,7 +40,7 @@ public class DiscordCommand extends CommandBase {
     @Override
     @Nonnull
     public List<String> getAliases() {
-        return Arrays.asList("socials");
+        return Collections.emptyList();
     }
 
     @Override

@@ -15,7 +15,7 @@ import java.util.Map;
 public abstract class TSEvent extends Event {
 
     private final String input;
-    protected Map<String, String> map;
+    protected final Map<String, String> map;
 
     TSEvent(String input) {
         super();

@@ -24,6 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * @author RettichLP
@@ -105,12 +106,12 @@ public class FileManager {
         String date = DATE_FORMAT.format(new Date());
         StringBuilder sb = new StringBuilder(date);
         int i = 1;
-        while (new File(getAddonActivityScreenDir(type).getAbsolutePath() + "/" + sb + "-" + type + ".jpg").exists()) {
+        while (new File(Objects.requireNonNull(getAddonActivityScreenDir(type)).getAbsolutePath() + "/" + sb + "-" + type + ".jpg").exists()) {
             if (i == 1) sb.append("_").append(i++);
             else sb.replace(sb.length() - 1, sb.length(), String.valueOf(i));
         }
 
-        File newImageFile = new File(getAddonActivityScreenDir(type).getAbsolutePath() + "/" + sb + "-" + type + ".jpg");
+        File newImageFile = new File(Objects.requireNonNull(getAddonActivityScreenDir(type)).getAbsolutePath() + "/" + sb + "-" + type + ".jpg");
         return newImageFile.createNewFile() ? newImageFile : null;
     }
 

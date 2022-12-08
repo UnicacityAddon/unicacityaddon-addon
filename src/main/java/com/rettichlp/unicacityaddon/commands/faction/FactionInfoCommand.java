@@ -1,6 +1,5 @@
 package com.rettichlp.unicacityaddon.commands.faction;
 
-import com.google.common.annotations.Beta;
 import com.google.common.util.concurrent.Uninterruptibles;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
@@ -33,6 +32,7 @@ import java.util.stream.Collectors;
  * @author RettichLP
  * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/commands/faction/CheckActiveMembersCommand.java">UCUtils by paulzhng</a>
  */
+@SuppressWarnings("UnstableApiUsage")
 @UCCommand
 public class FactionInfoCommand implements IClientCommand {
 

@@ -13,6 +13,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author Fuzzlemann
  */
+@SuppressWarnings("UnstableApiUsage")
 public class ClientQueryWriter extends Thread implements Closeable {
 
     private final BlockingQueue<BaseCommand<?>> queue = new LinkedBlockingQueue<>();
@@ -48,17 +49,5 @@ public class ClientQueryWriter extends Thread implements Closeable {
 
     public BlockingQueue<BaseCommand<?>> getQueue() {
         return queue;
-    }
-
-    public TSClientQuery getQuery() {
-        return query;
-    }
-
-    public PrintWriter getWriter() {
-        return writer;
-    }
-
-    public boolean isClosed() {
-        return closed;
     }
 }

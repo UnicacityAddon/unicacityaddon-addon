@@ -37,7 +37,7 @@ public class BlockCommand implements IClientCommand {
     @Override
     @Nonnull
     public List<String> getAliases() {
-        return Arrays.asList("block");
+        return Arrays.asList("block", "blocknumber");
     }
 
     @Override
