@@ -6,7 +6,7 @@ Im Folgenden findest Du eine Reihe von Richtlinien für Beiträge zu UnicacityAd
 
 [Code of Conduct](#code-of-conduct)
 
-[Ich möchte nicht alles lesen, ich habe nur eine Frage!!!](#ich-mchte-nicht-alles-lesen-ich-habe-nur-eine-frage)
+[Ich will nicht alles lesen, ich habe nur eine Frage!!!](#ich-will-nicht-alles-lesen-ich-habe-nur-eine-frage)
 
 [Wie kann ich beitragen?](#wie-kann-ich-beitragen)
 - [Bug und Feature](#bug-und-feature)
@@ -23,10 +23,10 @@ Im Folgenden findest Du eine Reihe von Richtlinien für Beiträge zu UnicacityAd
 
 Dieses Projekt und alle daran Beteiligten unterliegen dem [Verhaltenskodex](CODE_OF_CONDUCT.md). Durch die Teilnahme wird von Ihnen erwartet, dass Sie diesen Kodex einhalten. Bitte melden Sie inakzeptables Verhalten an [service@rettichlp.de](mailto:service@rettichlp.de).
 
-## Ich möchte nicht alles lesen, ich habe nur eine Frage!!!
+## Ich will nicht alles lesen, ich habe nur eine Frage
 
 Bitte erstellen Sie kein Issue für eine Frage. Wenn Sie eine Frage haben, ist es meistens schneller uns direkt zu kontaktieren über [Teamspeak](ts3server://unicacity.de?port=9987).
-Des Weiteren haben wir eine Webseite mit einem FAQ und ein Wiki.
+Des Weiteren haben wir eine Webseite mit FAQ und ein Wiki.
 
 ## Wie kann ich beitragen?
 
@@ -57,7 +57,7 @@ Wenn Du ein geschlossenes Issue findest, von dem Du denkst, dass es sich um das 
 
 ### Erster Code Beitrag
 
-Für einen leichteren Einstieg in das Projekt, gibt es `good first issue` und ` help wanted` Label:
+Für einen leichteren Einstieg in das Projekt gibt es `good first issue` und ` help wanted` Label:
 - [good first issue](https://github.com/rettichlp/UnicacityAddon-1.12.2/labels/good%20first%20issue) - Issues die nur ein paar Zeilen Code benötigen.
 - [help wanted](https://github.com/rettichlp/UnicacityAddon-1.12.2/labels/help%20wanted) - Issues die etwas anspruchsvoller als `good first issue`
 

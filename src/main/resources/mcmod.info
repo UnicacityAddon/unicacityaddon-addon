@@ -1,6 +1,6 @@
 [
   {
-    "modid": "UnicacityAddon",
+    "modid": "unicacityaddon",
     "name": "UnicacityAddon",
     "description": "This addon is a modification for UnicaCity providing specialized and nice-to-have features and utilities for everyday gameplay.",
     "version": "${version}",

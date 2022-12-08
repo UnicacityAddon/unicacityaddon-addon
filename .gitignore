@@ -24,6 +24,3 @@ run
 # Files from Forge MDK
 forge*changelog.txt
 /libs/
-
-# Secret
-/src/main/java/com/rettichlp/UnicacityAddon/base/location/NaviPoint.java
