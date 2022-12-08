@@ -7,6 +7,7 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
+import net.minecraft.util.text.event.ClickEvent;
 import net.minecraftforge.client.event.ClientChatEvent;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -109,7 +110,9 @@ public class HouseRenterEventHandler {
                     .of(renterMatcher.group(2)).color(isOnline ? ColorCode.GREEN : ColorCode.RED).advance()
                     .of(")").color(ColorCode.DARK_GRAY).advance().space()
                     .of(offlineForXDays.isEmpty() ? "" : "➡").color(ColorCode.GRAY).advance().space()
-                    .of(offlineForXDays).color(ColorCode.RED).advance()
+                    .of(offlineForXDays).color(ColorCode.RED).advance().space()
+                    .of("[✕]").color(ColorCode.RED)
+                            .clickEvent(ClickEvent.Action.RUN_COMMAND, "/unrent " + lastHouseNumber + " " + renterMatcher.group(1)).advance()
                     .createComponent()
             );
         }
