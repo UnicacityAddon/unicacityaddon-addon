@@ -35,7 +35,7 @@ public class ReportEventHandler {
         if (PatternHandler.REPORT_ACCEPTED_PATTERN.matcher(unformattedMsg).find()) {
             isReport = true;
 
-            if (!ConfigElements.getReportGreeting().isEmpty()) return;
+            if (ConfigElements.getReportGreeting().isEmpty()) return;
             t.schedule(new TimerTask() {
                 @Override
                 public void run() {

@@ -223,7 +223,7 @@ public class ConfigElements {
 
     // REPORT GREETING
     public static String getReportGreeting() {
-        return UnicacityAddon.ADDON.getConfig().has("REPORT_GREETING_SETTINGS") && !UnicacityAddon.ADDON.getConfig().get("REPORT_GREETING_SETTINGS").getAsString().isEmpty()
+        return UnicacityAddon.ADDON.getConfig().has("REPORT_GREETING_SETTINGS")
                 ? UnicacityAddon.ADDON.getConfig().get("REPORT_GREETING_SETTINGS").getAsString()
                 : Strings.EMPTY;
     }
