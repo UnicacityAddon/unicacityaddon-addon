@@ -30,7 +30,7 @@ public class AccountEventHandler {
 
         if (PatternHandler.ACCOUNT_WELCOME_BACK_PATTERN.matcher(msg).find()) {
             MobileEventHandler.activeCommunicationsCheck = true;
-            AccountEventHandler.isAfk = false;
+            isAfk = false;
             return;
         }
 
