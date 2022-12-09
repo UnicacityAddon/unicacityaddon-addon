@@ -1,0 +1,10 @@
+{
+  "unicacityaddon": {
+    "settings": {
+      "name": "UnicacityAddon",
+      "enabled": {
+        "name": "Enabled"
+      }
+    }
+  }
+}
