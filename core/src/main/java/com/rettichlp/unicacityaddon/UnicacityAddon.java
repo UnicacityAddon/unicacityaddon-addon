@@ -10,23 +10,16 @@ import com.rettichlp.unicacityaddon.base.registry.EventRegistry;
 import com.rettichlp.unicacityaddon.base.registry.KeyBindRegistry;
 import com.rettichlp.unicacityaddon.base.registry.ModuleRegistry;
 import com.rettichlp.unicacityaddon.base.teamspeak.TSClientQuery;
-import com.rettichlp.unicacityaddon.base.utils.UpdateUtils;
-import net.labymod.api.addon.LabyAddon;
-import net.labymod.api.client.Minecraft;
-import net.labymod.api.loader.LabyModLoader;
-import net.labymod.api.models.addon.annotation.AddonListener;
 import com.rettichlp.unicacityaddon.commands.ExamplePingCommand;
 import com.rettichlp.unicacityaddon.listener.ExampleGameTickListener;
-import net.labymod.api.models.version.Version;
+import net.labymod.api.addon.LabyAddon;
+import net.labymod.api.client.Minecraft;
+import net.labymod.api.client.network.server.ServerData;
+import net.labymod.api.models.addon.annotation.AddonListener;
 import net.labymod.api.util.logging.Logging;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Path;
-import java.util.List;
 
 @Singleton
 @AddonListener
-@Mod(name = "UnicacityAddon", modid = "unicacityaddon", version = UnicacityAddon.VERSION, clientSideOnly = true, acceptedMinecraftVersions = "[1.12,1.12.2]")
 public class UnicacityAddon extends LabyAddon<ExampleConfiguration> {
 
     public static final String VERSION = "2.0.0-dev";
@@ -41,12 +34,12 @@ public class UnicacityAddon extends LabyAddon<ExampleConfiguration> {
         LOGGER = this.logger();
 
 
-        UpdateUtils.modFile = e.getSourceFile();
-        asmDataTable = e.getAsmData();
+//        UpdateUtils.modFile = e.getSourceFile();
+//        asmDataTable = e.getAsmData();
         CommandRegistry.register();
         EventRegistry.register();
 
-        ModuleCategoryRegistry.loadCategory(ModuleRegistry.UNICACITY);
+//        ModuleCategoryRegistry.loadCategory(ModuleRegistry.UNICACITY);
         ModuleRegistry.register();
 
         this.registerListener(ExampleGameTickListener.class);
@@ -65,7 +58,6 @@ public class UnicacityAddon extends LabyAddon<ExampleConfiguration> {
         FileManager.loadData();
 
 
-
         LOGGER.info("Enabled the Addon");
     }
 
@@ -74,16 +66,14 @@ public class UnicacityAddon extends LabyAddon<ExampleConfiguration> {
         return ExampleConfiguration.class;
     }
 
-//    TODO: 08.12.2022 Verify unicacity server
-//    public static boolean isUnicacity() {
-//        if (MINECRAFT.clientWorld() == null) return false;
-//
-//        ServerData serverData = MINECRAFT.clientWorld().n   .getNetworkPlayerInfo("").getMinecraftInfo().   MINECRAFT. MINECRAFT.clientPacketListener().getNetworkPlayerInfo() .ip .getCurrentServerData();
-//        if (serverData == null) return false;
-//
-//        String ip = serverData.serverIP;
-//        if (ip.contains(":")) ip = ip.split(":")[0]; // strip unused port
-//
-//        return ip.toLowerCase().endsWith("unicacity.de");
-//    }
+    public static boolean isUnicacity() {
+        if (MINECRAFT.clientWorld() == null)
+            return false;
+
+        ServerData serverData = ADDON.labyAPI().serverController().getCurrentServerData();
+        if (serverData == null)
+            return false;
+
+        return serverData.address().matches("unicacity", 25565, true);
+    }
 }
