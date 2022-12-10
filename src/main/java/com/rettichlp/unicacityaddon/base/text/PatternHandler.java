@@ -283,4 +283,16 @@ public class PatternHandler {
      */
     public static final Pattern BUY_INTERRUPTED_PATTERN = Pattern.compile("^Verkäufer: (Tut (uns|mir) Leid|Verzeihung), unser Lager ist derzeit leer\\.$" +
             "|^Verkäufer: Dieses Produkt kostet \\d+\\$\\.$" + "|^Verkäufer: Du hast leider nicht genug Geld dabei\\.$");
+
+    /**
+     * Pattern for Duty Check
+     *
+     * @see com.rettichlp.unicacityaddon.events.faction.DutyEventHandler
+     */
+    public static final Pattern DUTY_JOIN_PATTERN = Pattern.compile("^Du bist nun als Arzt im Dienst!$" +
+            "|^Du bist nun im FBI Dienst!$" +
+            "|^Du bist nun im Polizei Dienst!$");
+    public static final Pattern DUTY_LEAVE_PATTERN = Pattern.compile("^Du bist nun nicht mehr als Arzt Dienst!$" +
+            "|^Du bist nun nicht mehr im FBI Dienst!$" +
+            "|^Du bist nun nicht mehr im Polizei Dienst!$");
 }
