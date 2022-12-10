@@ -4,6 +4,7 @@ import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.config.ConfigElements;
+import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ChatType;
 import com.rettichlp.unicacityaddon.base.text.Message;
@@ -67,10 +68,11 @@ public class ReinforcementCommand implements IClientCommand {
         ChatType chatType = firstType.getChatType();
 
         if ((args.length >= 5) && args[0].equalsIgnoreCase("ontheway")) {
-            if (!p.inDuty()) {
+            if ((p.getFaction() == Faction.FBI || p.getFaction() == Faction.RETTUNGSDIENST || p.getFaction() == Faction.POLIZEI) && !p.inDuty()) {
                 Message.getBuilder().error().of("Du bist nicht im Dienst.");
                 return;
             }
+
 
             String name = args[1];
 
