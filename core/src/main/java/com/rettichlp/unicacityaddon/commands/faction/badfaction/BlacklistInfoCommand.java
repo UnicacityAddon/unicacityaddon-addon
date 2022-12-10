@@ -1,85 +1,48 @@
 package com.rettichlp.unicacityaddon.commands.faction.badfaction;
 
+import com.google.inject.Inject;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
-import net.minecraft.command.ICommand;
-import net.minecraft.command.ICommandSender;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.client.IClientCommand;
+import net.labymod.api.client.chat.command.Command;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Collections;
 import java.util.List;
 
 /**
  * @author Dimiikou
  */
 @UCCommand
-public class BlacklistInfoCommand implements IClientCommand {
+public class BlacklistInfoCommand extends Command {
 
-    public static String target;
     public static long executedTime = -1;
+    public static String target;
 
-    @Override
-    @Nonnull
-    public String getName() {
-        return "blacklistinfo";
+    private static final String usage = "/blacklistinfo [Spieler]";
+
+    @Inject
+    private BlacklistInfoCommand() {
+        super("blacklistinfo", "blinfo");
     }
 
     @Override
-    @Nonnull
-    public String getUsage(@Nonnull ICommandSender sender) {
-        return "/blacklistinfo [Spieler]";
-    }
+    public boolean execute(String prefix, String[] arguments) {
+        UPlayer p = AbstractionLayer.getPlayer();
 
-    @Override
-    @Nonnull
-    public List<String> getAliases() {
-        return Collections.singletonList("blinfo");
-    }
+        if (arguments.length != 1) {
+            p.sendSyntaxMessage(usage);
+            return true;
+        }
 
-    @Override
-    public boolean checkPermission(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender) {
+        executedTime = System.currentTimeMillis();
+        target = arguments[0];
+
+        p.sendChatMessage("/bl");
         return true;
     }
 
     @Override
-    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
-        UPlayer p = AbstractionLayer.getPlayer();
-
-        if (args.length != 1) {
-            p.sendSyntaxMessage(getUsage(sender));
-            return;
-        }
-
-        executedTime = System.currentTimeMillis();
-        target = args[0];
-
-        p.sendChatMessage("/bl");
-    }
-
-    @Override
-    @Nonnull
-    public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
-        return TabCompletionBuilder.getBuilder(args).build();
-    }
-
-    @Override
-    public boolean isUsernameIndex(@Nonnull String[] args, int index) {
-        return false;
-    }
-
-    @Override
-    public boolean allowUsageWithoutPrefix(ICommandSender sender, String message) {
-        return false;
-    }
-
-    @Override
-    public int compareTo(@Nonnull ICommand o) {
-        return 0;
+    public List<String> complete(String[] arguments) {
+        return TabCompletionBuilder.getBuilder(arguments).build();
     }
 }

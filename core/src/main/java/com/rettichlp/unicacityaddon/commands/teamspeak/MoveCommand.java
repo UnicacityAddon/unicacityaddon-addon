@@ -1,5 +1,6 @@
 package com.rettichlp.unicacityaddon.commands.teamspeak;
 
+import com.google.inject.Inject;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
@@ -10,14 +11,8 @@ import com.rettichlp.unicacityaddon.base.teamspeak.TSClientQuery;
 import com.rettichlp.unicacityaddon.base.teamspeak.TSUtils;
 import com.rettichlp.unicacityaddon.base.teamspeak.commands.ClientMoveCommand;
 import com.rettichlp.unicacityaddon.base.teamspeak.objects.Client;
-import net.minecraft.command.ICommand;
-import net.minecraft.command.ICommandSender;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.client.IClientCommand;
+import net.labymod.api.client.chat.command.Command;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
 
@@ -26,90 +21,59 @@ import java.util.List;
  * @author RettichLP
  */
 @UCCommand
-public class MoveCommand implements IClientCommand {
+public class MoveCommand extends Command {
 
-    @Override
-    @Nonnull
-    public String getName() {
-        return "move";
+    private static final String usage = "/move [Spieler] [Ziel]";
+
+    @Inject
+    private MoveCommand() {
+        super("move");
     }
 
     @Override
-    @Nonnull
-    public String getUsage(@Nonnull ICommandSender sender) {
-        return "/move [Spieler] [Ziel]";
-    }
-
-    @Override
-    @Nonnull
-    public List<String> getAliases() {
-        return Collections.emptyList();
-    }
-
-    @Override
-    public boolean checkPermission(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender) {
-        return true;
-    }
-
-    @Override
-    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
+    public boolean execute(String prefix, String[] arguments) {
         UPlayer p = AbstractionLayer.getPlayer();
 
-        if (args.length < 2) {
-            p.sendSyntaxMessage(getUsage(sender));
-            return;
+        if (arguments.length < 2) {
+            p.sendSyntaxMessage(usage);
+            return true;
         }
 
         if (!ConfigElements.getTeamspeakAPIKey().matches("([A-Z0-9]{4}(-*)){6}")) {
             p.sendErrorMessage("Teamspeak API Key ist nicht gültig!");
-            return;
+            return true;
         }
 
         if (!TSClientQuery.clientQueryConnected) {
             p.sendErrorMessage("Keine Verbindung zur TeamSpeak ClientQuery!");
             TSClientQuery.reconnect();
-            return;
+            return true;
         }
 
-        String name = args[0];
-        String target = args[1];
+        String name = arguments[0];
+        String target = arguments[1];
 
         List<Client> clientsMoved = TSUtils.getClientsByName(Collections.singletonList(name));
         List<Client> clientsMoveTo = TSUtils.getClientsByName(Collections.singletonList(target));
 
         if (clientsMoved.isEmpty() || clientsMoveTo.isEmpty()) {
             p.sendErrorMessage("Einer der Spieler befindet sich nicht auf dem TeamSpeak.");
-            return;
+            return true;
         }
 
         Client moveToClient = clientsMoveTo.get(0);
         CommandResponse response = new ClientMoveCommand(moveToClient.getChannelID(), clientsMoved).getResponse();
         if (!response.succeeded()) {
             p.sendErrorMessage("Das Moven ist fehlgeschlagen.");
-            return;
+            return true;
         }
 
         p.sendInfoMessage("Du hast die Person gemoved.");
+        return true;
     }
 
     @Override
-    @Nonnull
-    public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
-        return TabCompletionBuilder.getBuilder(args).build();
-    }
-
-    @Override
-    public boolean isUsernameIndex(@Nonnull String[] args, int index) {
-        return false;
-    }
-
-    @Override
-    public boolean allowUsageWithoutPrefix(ICommandSender sender, String message) {
-        return false;
-    }
-
-    @Override
-    public int compareTo(@Nonnull ICommand o) {
-        return 0;
+    public List<String> complete(String[] arguments) {
+        return TabCompletionBuilder.getBuilder(arguments).build();
     }
 }

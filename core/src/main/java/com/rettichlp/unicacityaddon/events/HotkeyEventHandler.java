@@ -1,12 +1,9 @@
 package com.rettichlp.unicacityaddon.events;
 
-import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.config.ConfigElements;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
-import com.rettichlp.unicacityaddon.base.manager.FileManager;
-import com.rettichlp.unicacityaddon.base.registry.KeyBindRegistry;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.teamspeak.CommandResponse;
 import com.rettichlp.unicacityaddon.base.teamspeak.TSUtils;
@@ -16,21 +13,10 @@ import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.base.utils.ImageUploadUtils;
-import com.rettichlp.unicacityaddon.base.utils.ReflectionUtils;
-import net.labymod.main.LabyMod;
-import net.minecraft.client.shader.Framebuffer;
-import net.minecraft.util.ScreenShotHelper;
-import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.client.event.GuiScreenEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.InputEvent;
-import org.lwjgl.input.Keyboard;
+import net.labymod.api.event.Subscribe;
+import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 
@@ -45,112 +31,107 @@ public class HotkeyEventHandler {
     private long adTime;
     private static long lastHotkeyUse = -1;
 
-    @SubscribeEvent
-    public void onKeyInput(InputEvent.KeyInputEvent e) {
-        handleHotkey();
-    }
+//    @Subscribe
+//    public void onKey(KeyEvent e) {
+//        handleHotkey();
+//    }
 
-    @SubscribeEvent
-    public void onKeyboardInput(GuiScreenEvent.KeyboardInputEvent e) {
-        handleHotkey();
-    }
-
-    @SubscribeEvent
-    public void onClientChatReceive(ClientChatReceivedEvent e) {
-        Matcher matcher = PatternHandler.AD_CONTROL_PATTERN.matcher(e.getMessage().getUnformattedText());
+    @Subscribe
+    public void onChatReceive(ChatReceiveEvent e)  {
+        Matcher matcher = PatternHandler.AD_CONTROL_PATTERN.matcher(e.chatMessage().getPlainText());
         if (!matcher.find()) return;
         adIssuer = matcher.group(1);
         adTime = System.currentTimeMillis();
     }
 
-    private void handleHotkey() {
-        if (System.currentTimeMillis() - lastHotkeyUse < TimeUnit.SECONDS.toMillis(1) || Keyboard.isKeyDown(0)) return;
-        UPlayer p = AbstractionLayer.getPlayer();
+//    private void handleHotkey() {
+//        if (System.currentTimeMillis() - lastHotkeyUse < TimeUnit.SECONDS.toMillis(1) || Keyboard.isKeyDown(0)) return;
+//        UPlayer p = AbstractionLayer.getPlayer();
+//
+//        if (Keyboard.isKeyDown(KeyBindRegistry.addonScreenshot.getKeyCode())) {
+//            handleScreenshot();
+//            lastHotkeyUse = System.currentTimeMillis();
+//        }
+//
+//        if (UnicacityAddon.MINECRAFT.currentScreen != null) return;
+//
+//        if (Keyboard.isKeyDown(KeyBindRegistry.adFreigeben.getKeyCode())) {
+//            handleAd("freigeben");
+//            lastHotkeyUse = System.currentTimeMillis();
+//        } else if (Keyboard.isKeyDown(KeyBindRegistry.adBlockieren.getKeyCode())) {
+//            handleAd("blockieren");
+//            lastHotkeyUse = System.currentTimeMillis();
+//        } else if (Keyboard.isKeyDown(KeyBindRegistry.acceptReport.getKeyCode())) {
+//            p.sendChatMessage("/ar");
+//            lastHotkeyUse = System.currentTimeMillis();
+//        } else if (Keyboard.isKeyDown(KeyBindRegistry.cancelReport.getKeyCode())) {
+//            handleCancelReport();
+//            lastHotkeyUse = System.currentTimeMillis();
+//        } else if (Keyboard.isKeyDown(KeyBindRegistry.aDuty.getKeyCode())) {
+//            p.sendChatMessage("/aduty");
+//            lastHotkeyUse = System.currentTimeMillis();
+//        } else if (Keyboard.isKeyDown(KeyBindRegistry.aDutySilent.getKeyCode())) {
+//            p.sendChatMessage("/aduty -s");
+//            lastHotkeyUse = System.currentTimeMillis();
+//        } else if (Keyboard.isKeyDown(KeyBindRegistry.freinforcement.getKeyCode())) {
+//            BlockPos position = p.getPosition();
+//            p.sendChatMessage("/f FloatVector3erstärkung! -> X: " + position.getX() + " | Y: " + position.getY() + " | Z: " + position.getZ());
+//            lastHotkeyUse = System.currentTimeMillis();
+//        } else if (Keyboard.isKeyDown(KeyBindRegistry.dreinforcement.getKeyCode())) {
+//            BlockPos position = p.getPosition();
+//            p.sendChatMessage("/d Benötige Verstärkung! -> X: " + position.getX() + " | Y: " + position.getY() + " | Z: " + position.getZ());
+//            lastHotkeyUse = System.currentTimeMillis();
+//        } else if (Keyboard.isKeyDown(KeyBindRegistry.publicChannelJoin.getKeyCode())) {
+//            handlePublicChannelJoin();
+//            lastHotkeyUse = System.currentTimeMillis();
+//        } else if (Keyboard.isKeyDown(KeyBindRegistry.damageIndicator.getKeyCode())) {
+//            RenderTagEventHandler.showPlayerInfo = !RenderTagEventHandler.showPlayerInfo;
+//            NameTagEventHandler.refreshAllDisplayNames();
+//        }
+//    }
 
-        if (Keyboard.isKeyDown(KeyBindRegistry.addonScreenshot.getKeyCode())) {
-            handleScreenshot();
-            lastHotkeyUse = System.currentTimeMillis();
-        }
+//    private void handleScreenshot() {
+//        File file;
+//        try {
+//            file = FileManager.getNewImageFile();
+//            handleScreenshotWithUpload(file);
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
 
-        if (UnicacityAddon.MINECRAFT.currentScreen != null) return;
+//    public static File handleScreenshot(File file) {
+//        if (file != null) {
+//            try {
+//                Framebuffer framebuffer = ReflectionUtils.getValue(UnicacityAddon.MINECRAFT, Framebuffer.class);
+//                assert framebuffer != null;
+//                BufferedImage image = ScreenShotHelper.createScreenshot(UnicacityAddon.MINECRAFT.displayWidth, UnicacityAddon.MINECRAFT.displayHeight, framebuffer);
+//                ImageIO.write(image, "jpg", file);
+//                LabyMod.getInstance().notifyMessageRaw(ColorCode.GREEN.getCode() + "Screenshot erstellt!", "Wird gespeichert...");
+//                return file;
+//            } catch (IOException e) {
+//                throw new RuntimeException(e);
+//            }
+//        }
+//        LabyMod.getInstance().notifyMessageRaw(ColorCode.RED.getCode() + "Fehler!", "Screenshot konnte nicht erstellt werden.");
+//        return null;
+//    }
 
-        if (Keyboard.isKeyDown(KeyBindRegistry.adFreigeben.getKeyCode())) {
-            handleAd("freigeben");
-            lastHotkeyUse = System.currentTimeMillis();
-        } else if (Keyboard.isKeyDown(KeyBindRegistry.adBlockieren.getKeyCode())) {
-            handleAd("blockieren");
-            lastHotkeyUse = System.currentTimeMillis();
-        } else if (Keyboard.isKeyDown(KeyBindRegistry.acceptReport.getKeyCode())) {
-            p.sendChatMessage("/ar");
-            lastHotkeyUse = System.currentTimeMillis();
-        } else if (Keyboard.isKeyDown(KeyBindRegistry.cancelReport.getKeyCode())) {
-            handleCancelReport();
-            lastHotkeyUse = System.currentTimeMillis();
-        } else if (Keyboard.isKeyDown(KeyBindRegistry.aDuty.getKeyCode())) {
-            p.sendChatMessage("/aduty");
-            lastHotkeyUse = System.currentTimeMillis();
-        } else if (Keyboard.isKeyDown(KeyBindRegistry.aDutySilent.getKeyCode())) {
-            p.sendChatMessage("/aduty -s");
-            lastHotkeyUse = System.currentTimeMillis();
-        } else if (Keyboard.isKeyDown(KeyBindRegistry.freinforcement.getKeyCode())) {
-            BlockPos position = p.getPosition();
-            p.sendChatMessage("/f Benötige Verstärkung! -> X: " + position.getX() + " | Y: " + position.getY() + " | Z: " + position.getZ());
-            lastHotkeyUse = System.currentTimeMillis();
-        } else if (Keyboard.isKeyDown(KeyBindRegistry.dreinforcement.getKeyCode())) {
-            BlockPos position = p.getPosition();
-            p.sendChatMessage("/d Benötige Verstärkung! -> X: " + position.getX() + " | Y: " + position.getY() + " | Z: " + position.getZ());
-            lastHotkeyUse = System.currentTimeMillis();
-        } else if (Keyboard.isKeyDown(KeyBindRegistry.publicChannelJoin.getKeyCode())) {
-            handlePublicChannelJoin();
-            lastHotkeyUse = System.currentTimeMillis();
-        } else if (Keyboard.isKeyDown(KeyBindRegistry.damageIndicator.getKeyCode())) {
-            RenderTagEventHandler.showPlayerInfo = !RenderTagEventHandler.showPlayerInfo;
-            NameTagEventHandler.refreshAllDisplayNames();
-        }
-    }
+//    public static void handleScreenshotWithUpload(File file) {
+//        File screenFile = handleScreenshot(file);
+//        Thread thread = new Thread(() -> uploadScreenshot(screenFile));
+//        thread.start();
+//    }
 
-    private void handleScreenshot() {
-        File file;
-        try {
-            file = FileManager.getNewImageFile();
-            handleScreenshotWithUpload(file);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public static File handleScreenshot(File file) {
-        if (file != null) {
-            try {
-                Framebuffer framebuffer = ReflectionUtils.getValue(UnicacityAddon.MINECRAFT, Framebuffer.class);
-                assert framebuffer != null;
-                BufferedImage image = ScreenShotHelper.createScreenshot(UnicacityAddon.MINECRAFT.displayWidth, UnicacityAddon.MINECRAFT.displayHeight, framebuffer);
-                ImageIO.write(image, "jpg", file);
-                LabyMod.getInstance().notifyMessageRaw(ColorCode.GREEN.getCode() + "Screenshot erstellt!", "Wird gespeichert...");
-                return file;
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        LabyMod.getInstance().notifyMessageRaw(ColorCode.RED.getCode() + "Fehler!", "Screenshot konnte nicht erstellt werden.");
-        return null;
-    }
-
-    public static void handleScreenshotWithUpload(File file) {
-        File screenFile = handleScreenshot(file);
-        Thread thread = new Thread(() -> uploadScreenshot(screenFile));
-        thread.start();
-    }
-
-    public static void handleScreenshotWithoutUpload(File file) {
-        handleScreenshot(file);
-    }
+//    public static void handleScreenshotWithoutUpload(File file) {
+//        handleScreenshot(file);
+//    }
 
     private static void uploadScreenshot(File screenshotFile) {
         if (screenshotFile == null) return;
         String link = ImageUploadUtils.uploadToLink(screenshotFile);
         AbstractionLayer.getPlayer().copyToClipboard(link);
-        LabyMod.getInstance().notifyMessageRaw(ColorCode.GREEN.getCode() + "Screenshot hochgeladen!", "Link in Zwischenablage kopiert.");
+//        LabyMod.getInstance().notifyMessageRaw(ColorCode.GREEN.getCode() + "Screenshot hochgeladen!", "Link in Zwischenablage kopiert.");
     }
 
     private void handleAd(String type) {
@@ -182,11 +163,11 @@ public class HotkeyEventHandler {
             return;
         }
 
-        Message.getBuilder()
+        p.sendMessage(Message.getBuilder()
                 .prefix()
                 .of("Du bist in deinen").color(ColorCode.GRAY).advance().space()
                 .of("\"Öffentlich Channel\"").color(ColorCode.AQUA).advance()
                 .of(" gegangen.").color(ColorCode.GRAY).advance()
-                .sendTo(p.getPlayer());
+                .createComponent());
     }
 }

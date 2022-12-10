@@ -1,19 +1,13 @@
 package com.rettichlp.unicacityaddon.commands;
 
+import com.google.inject.Inject;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.modules.BankMoneyModule;
-import net.minecraft.command.ICommand;
-import net.minecraft.command.ICommandSender;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.client.IClientCommand;
+import net.labymod.api.client.chat.command.Command;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Collections;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -22,51 +16,25 @@ import java.util.TimerTask;
  * @author Dimiikou
  */
 @UCCommand
-public class ReichensteuerCommand implements IClientCommand {
+public class ReichensteuerCommand extends Command {
 
     public static int cashInATM = 0;
     public static boolean isActive = false;
 
-    @Override
-    @Nonnull
-    public String getName() {
-        return "reichensteuer";
+    private static final String usage = "/reichensteuer";
+
+    @Inject
+    private ReichensteuerCommand() {
+        super("reichensteuer");
     }
 
     @Override
-    @Nonnull
-    public String getUsage(@Nonnull ICommandSender sender) {
-        return "/reichensteuer";
-    }
-
-    @Override
-    @Nonnull
-    public List<String> getAliases() {
-        return Collections.emptyList();
-    }
-
-    @Override
-    public boolean checkPermission(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender) {
-        return true;
-    }
-
-    @Override
-    @Nonnull
-    public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
-        return TabCompletionBuilder.getBuilder(args).build();
-    }
-
-    @Override
-    public boolean isUsernameIndex(@Nonnull String[] args, int index) {
-        return false;
-    }
-
-    @Override
-    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
+    public boolean execute(String prefix, String[] arguments) {
         UPlayer p = AbstractionLayer.getPlayer();
 
         if (BankMoneyModule.bankBalance > 100000) {
-            if (isActive) return;
+            if (isActive)
+                return true;
 
             p.sendChatMessage("/atminfo");
             isActive = true;
@@ -89,15 +57,11 @@ public class ReichensteuerCommand implements IClientCommand {
         } else {
             p.sendErrorMessage("Dein Kontostand ist bereits unter 100.001$!");
         }
+        return true;
     }
 
     @Override
-    public boolean allowUsageWithoutPrefix(ICommandSender sender, String message) {
-        return false;
-    }
-
-    @Override
-    public int compareTo(@Nonnull ICommand o) {
-        return 0;
+    public List<String> complete(String[] arguments) {
+        return TabCompletionBuilder.getBuilder(arguments).build();
     }
 }

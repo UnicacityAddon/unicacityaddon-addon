@@ -1,5 +1,6 @@
 package com.rettichlp.unicacityaddon.commands.faction;
 
+import com.google.inject.Inject;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
@@ -7,16 +8,9 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.utils.MathUtils;
-import net.minecraft.command.ICommand;
-import net.minecraft.command.ICommandSender;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.client.IClientCommand;
+import net.labymod.api.client.chat.command.Command;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.text.SimpleDateFormat;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -29,53 +23,38 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * @author Dimiikou
  */
 @UCCommand
-public class AFbankEinzahlenCommand implements IClientCommand {
+public class AFbankEinzahlenCommand extends Command {
 
-    public static final AtomicBoolean STARTED = new AtomicBoolean();
-
-    public static final Timer timer = new Timer();
     public static int amount;
+    public static final AtomicBoolean STARTED = new AtomicBoolean();
+    public static final Timer timer = new Timer();
 
-    @Override
-    @Nonnull
-    public String getName() {
-        return "afbank";
+    private static final String usage = "/afbank [einzahlen/auszahlen] [Betrag]";
+
+    @Inject
+    private AFbankEinzahlenCommand() {
+        super("afbank");
     }
 
     @Override
-    @Nonnull
-    public String getUsage(@Nonnull ICommandSender sender) {
-        return "/afbank [einzahlen/auszahlen] [Betrag]";
-    }
-
-    @Override
-    @Nonnull
-    public List<String> getAliases() {
-        return Collections.emptyList();
-    }
-
-    @Override
-    public boolean checkPermission(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender) {
-        return true;
-    }
-
-    @Override
-    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
+    public boolean execute(String prefix, String[] arguments) {
         UPlayer p = AbstractionLayer.getPlayer();
-        if (args.length != 2 || !MathUtils.isInteger(args[1])) {
-            p.sendSyntaxMessage(getUsage(sender));
-            return;
+        if (arguments.length != 2 || !MathUtils.isInteger(arguments[1])) {
+            p.sendSyntaxMessage(usage);
+            return true;
         }
 
-        String interaction = args[0];
+        String interaction = arguments[0];
 
-        if (STARTED.get()) return;
+        if (STARTED.get())
+            return true;
 
-        if (!interaction.equalsIgnoreCase("einzahlen") && !interaction.equalsIgnoreCase("auszahlen")) return;
+        if (!interaction.equalsIgnoreCase("einzahlen") && !interaction.equalsIgnoreCase("auszahlen"))
+            return true;
 
         // check if there are taxes
         p.sendChatMessage("/fbank " + interaction + " 4");
-        amount = Integer.parseInt(args[1]) - 4; // we already paid 4$
+        amount = Integer.parseInt(arguments[1]) - 4; // we already paid 4$
 
         STARTED.set(true);
 
@@ -105,19 +84,14 @@ public class AFbankEinzahlenCommand implements IClientCommand {
                 }
             }
         }, TimeUnit.SECONDS.toMillis(1), TimeUnit.SECONDS.toMillis(1));
+        return true;
     }
 
     @Override
-    @Nonnull
-    public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
-        return TabCompletionBuilder.getBuilder(args)
+    public List<String> complete(String[] arguments) {
+        return TabCompletionBuilder.getBuilder(arguments)
                 .addAtIndex(1, "einzahlen", "auszahlen")
                 .build();
-    }
-
-    @Override
-    public boolean isUsernameIndex(@Nonnull String[] args, int index) {
-        return false;
     }
 
     public static void sendClockMessage() {
@@ -131,7 +105,7 @@ public class AFbankEinzahlenCommand implements IClientCommand {
         String dateString = dateFormat.format(date);
         String timeString = timeFormat.format(date);
 
-        Message.getBuilder()
+        AbstractionLayer.getPlayer().sendMessage(Message.getBuilder()
                 .prefix()
                 .of("Heute ist ").color(ColorCode.GRAY).advance()
                 .of(dayString).color(ColorCode.BLUE).advance()
@@ -140,16 +114,6 @@ public class AFbankEinzahlenCommand implements IClientCommand {
                 .of(" und wir haben ").color(ColorCode.GRAY).advance()
                 .of(timeString).color(ColorCode.BLUE).advance()
                 .of(".").color(ColorCode.GRAY).advance()
-                .sendTo(AbstractionLayer.getPlayer().getPlayer());
-    }
-
-    @Override
-    public boolean allowUsageWithoutPrefix(ICommandSender sender, String message) {
-        return false;
-    }
-
-    @Override
-    public int compareTo(@Nonnull ICommand o) {
-        return 0;
+                .createComponent());
     }
 }

@@ -4,11 +4,11 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.event.ClickEvent;
-import net.minecraft.util.text.event.HoverEvent;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.kyori.adventure.text.event.ClickEvent;
+import net.kyori.adventure.text.event.HoverEvent;
+import net.labymod.api.client.chat.ChatMessage;
+import net.labymod.api.event.Subscribe;
+import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
 import java.util.regex.Matcher;
 
@@ -18,15 +18,16 @@ import java.util.regex.Matcher;
 @UCEvent
 public class FriendJoinEventHandler {
 
-    @SubscribeEvent
-    public void onClientChatReceived(ClientChatReceivedEvent e) {
-        ITextComponent msg = e.getMessage();
+    @Subscribe
+    public void onChatReceive(ChatReceiveEvent e) {
+        ChatMessage chatMessage = e.chatMessage();
+        String formattedMsg = chatMessage.getFormattedText();
 
-        Matcher accountFriendJoinMatcher = PatternHandler.ACCOUNT_FRIEND_JOIN_PATTERN.matcher(msg.getUnformattedText());
+        Matcher accountFriendJoinMatcher = PatternHandler.ACCOUNT_FRIEND_JOIN_PATTERN.matcher(chatMessage.getPlainText());
         if (accountFriendJoinMatcher.find()) {
             String name = accountFriendJoinMatcher.group("name");
             e.setMessage(Message.getBuilder()
-                    .add(msg.getFormattedText())
+                    .add(formattedMsg)
                     .space()
                     .of("[☎]").color(ColorCode.DARK_GREEN)
                             .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of(name + " anrufen").color(ColorCode.DARK_GREEN).advance().createComponent())
@@ -46,11 +47,11 @@ public class FriendJoinEventHandler {
             return;
         }
 
-        Matcher accountFriendLeaveMatcher = PatternHandler.ACCOUNT_FRIEND_LEAVE_PATTERN.matcher(msg.getUnformattedText());
+        Matcher accountFriendLeaveMatcher = PatternHandler.ACCOUNT_FRIEND_LEAVE_PATTERN.matcher(chatMessage.getPlainText());
         if (accountFriendLeaveMatcher.find()) {
             String name = accountFriendLeaveMatcher.group("name");
             e.setMessage(Message.getBuilder()
-                    .add(msg.getFormattedText())
+                    .add(formattedMsg)
                     .space()
                     .of("[✕]").color(ColorCode.RED)
                             .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of(name + " aus der Freundesliste entfernen").color(ColorCode.RED).advance().createComponent())

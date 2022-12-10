@@ -7,8 +7,8 @@ import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.base.utils.NavigationUtils;
 import com.rettichlp.unicacityaddon.events.job.FishermanEventHandler;
 import com.rettichlp.unicacityaddon.events.job.JobEventHandler;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.labymod.api.event.Subscribe;
+import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
 import java.util.regex.Matcher;
 
@@ -18,14 +18,14 @@ import java.util.regex.Matcher;
 @UCEvent
 public class NavigationEventHandler {
 
-    @SubscribeEvent
-    public void onClientChatReceived(ClientChatReceivedEvent e) {
+    @Subscribe
+    public void onChatReceive(ChatReceiveEvent e) {
         UPlayer p = AbstractionLayer.getPlayer();
-        String msg = e.getMessage().getUnformattedText();
+        String msg = e.chatMessage().getPlainText();
 
         Matcher routeMatcher = PatternHandler.ROUTE_PATTERNS.matcher(msg);
         if (routeMatcher.find() && System.currentTimeMillis() - NavigationUtils.routeMessageClearExecuteTime < 500L) {
-            e.setCanceled(true);
+            e.setCancelled(true);
             return;
         }
 

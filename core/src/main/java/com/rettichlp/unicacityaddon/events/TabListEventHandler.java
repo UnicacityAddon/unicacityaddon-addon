@@ -1,18 +1,16 @@
 package com.rettichlp.unicacityaddon.events;
 
-import com.google.common.collect.Ordering;
-import com.rettichlp.unicacityaddon.base.config.ConfigElements;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.FormattingCode;
-import com.rettichlp.unicacityaddon.base.utils.ReflectionUtils;
 import com.rettichlp.unicacityaddon.base.utils.TextUtils;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import net.labymod.api.client.network.NetworkPlayerInfo;
 import net.labymod.api.event.client.scoreboard.TabListUpdateEvent;
+
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * @author RettichLP

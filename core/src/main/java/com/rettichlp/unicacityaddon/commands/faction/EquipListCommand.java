@@ -1,5 +1,6 @@
 package com.rettichlp.unicacityaddon.commands.faction;
 
+import com.google.inject.Inject;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
@@ -8,17 +9,10 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.events.faction.EquipEventHandler;
-import net.minecraft.command.ICommand;
-import net.minecraft.command.ICommandSender;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.client.IClientCommand;
+import net.labymod.api.client.chat.command.Command;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -26,55 +20,34 @@ import java.util.Locale;
  * @author Dimiikou
  */
 @UCCommand
-public class EquipListCommand implements IClientCommand {
+public class EquipListCommand extends Command {
+
+    private static final String usage = "/equiplist (reset)";
+
+    @Inject
+    private EquipListCommand() {
+        super("equiplist");
+    }
 
     /**
      * Quote: "This is a token for 1 free hug. Redeem at your nearest Mojangsta: [~~HUG~~]" - Minecraft Crash Report, 09.10.2022
      */
     @Override
-    @Nonnull
-    public String getName() {
-        return "equiplist";
-    }
-
-    @Override
-    @Nonnull
-    public String getUsage(@Nonnull ICommandSender sender) {
-        return "/equiplist (reset)";
-    }
-
-    @Override
-    @Nonnull
-    public List<String> getAliases() {
-        return Collections.emptyList();
-    }
-
-    @Override
-    public boolean checkPermission(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender) {
-        return true;
-    }
-
-    @Override
-    @Nonnull
-    public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
-        return TabCompletionBuilder.getBuilder(args)
-                .addAtIndex(1, "reset")
-                .build();
-    }
-
-    @Override
-    public boolean isUsernameIndex(@Nonnull String[] args, int index) {
-        return false;
-    }
-
-    @Override
-    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
+    public boolean execute(String prefix, String[] arguments) {
         UPlayer p = AbstractionLayer.getPlayer();
-        if (args.length == 1 && args[0].equalsIgnoreCase("reset")) {
+        if (arguments.length == 1 && arguments[0].equalsIgnoreCase("reset")) {
             EquipEventHandler.equipLogEntryList = new ArrayList<>();
             p.sendInfoMessage("Equipliste gelöscht.");
         } else
             equipList(p);
+        return true;
+    }
+
+    @Override
+    public List<String> complete(String[] arguments) {
+        return TabCompletionBuilder.getBuilder(arguments)
+                .addAtIndex(1, "reset")
+                .build();
     }
 
     private void equipList(UPlayer p) {
@@ -96,15 +69,5 @@ public class EquipListCommand implements IClientCommand {
                 .createComponent());
 
         p.sendEmptyMessage();
-    }
-
-    @Override
-    public boolean allowUsageWithoutPrefix(ICommandSender sender, String message) {
-        return false;
-    }
-
-    @Override
-    public int compareTo(@Nonnull ICommand o) {
-        return 0;
     }
 }

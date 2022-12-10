@@ -1,100 +1,64 @@
 package com.rettichlp.unicacityaddon.commands;
 
+import com.google.inject.Inject;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
-import com.rettichlp.unicacityaddon.base.config.ConfigElements;
 import com.rettichlp.unicacityaddon.base.enums.ScreenshotType;
 import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
-import com.rettichlp.unicacityaddon.events.HotkeyEventHandler;
+import net.labymod.api.client.chat.command.Command;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import net.minecraft.command.ICommand;
-import net.minecraft.command.ICommandSender;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.client.IClientCommand;
 
 /**
  * @author Dimiikou
  */
 @UCCommand
-public class ScreenCommand implements IClientCommand {
+public class ScreenCommand extends Command {
 
-    @Override
-    @Nonnull
-    public String getName() {
-        return "screen";
+    private static final String usage = "/screen [Typ]";
+
+    @Inject
+    private ScreenCommand() {
+        super("screen", "activitytest");
     }
 
     @Override
-    @Nonnull
-    public String getUsage(@Nonnull ICommandSender sender) {
-        return "/screen [Typ]";
-    }
+    public boolean execute(String prefix, String[] arguments) {
+        UPlayer p = AbstractionLayer.getPlayer();
 
-    @Override
-    @Nonnull
-    public List<String> getAliases() {
-        return Collections.singletonList("activitytest");
-    }
+        if (arguments.length < 1) {
+            p.sendSyntaxMessage(usage);
+            return true;
+        }
 
-    @Override
-    public boolean checkPermission(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender) {
+        ScreenshotType screenshotType = Arrays.stream(ScreenshotType.values()).filter(st -> st.getDisplayName().equals(arguments[0])).findFirst().orElse(null);
+        if (screenshotType == null) {
+            p.sendSyntaxMessage(usage);
+            return true;
+        }
+
+        try {
+            File file = FileManager.getNewActivityImageFile(arguments[0]);
+//            if (ConfigElements.getAutomatedScreenshotUpload())
+//                HotkeyEventHandler.handleScreenshotWithUpload(file);
+//            else
+//                HotkeyEventHandler.handleScreenshotWithoutUpload(file);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         return true;
     }
 
     @Override
-    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
-        UPlayer p = AbstractionLayer.getPlayer();
-
-        if (args.length < 1) {
-            p.sendSyntaxMessage(getUsage(sender));
-            return;
-        }
-
-        ScreenshotType screenshotType = Arrays.stream(ScreenshotType.values()).filter(st -> st.getDisplayName().equals(args[0])).findFirst().orElse(null);
-        if (screenshotType == null) {
-            p.sendSyntaxMessage(getUsage(sender));
-            return;
-        }
-
-        try {
-            File file = FileManager.getNewActivityImageFile(args[0]);
-            if (ConfigElements.getAutomatedScreenshotUpload()) HotkeyEventHandler.handleScreenshotWithUpload(file);
-            else HotkeyEventHandler.handleScreenshotWithoutUpload(file);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override
-    @Nonnull
-    public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
-        return TabCompletionBuilder.getBuilder(args)
+    public List<String> complete(String[] arguments) {
+        return TabCompletionBuilder.getBuilder(arguments)
                 .addAtIndex(1, Arrays.stream(ScreenshotType.values()).map(ScreenshotType::getDisplayName).collect(Collectors.toList()))
                 .build();
-    }
-
-    @Override
-    public boolean isUsernameIndex(@Nonnull String[] args, int index) {
-        return false;
-    }
-
-    @Override
-    public boolean allowUsageWithoutPrefix(ICommandSender sender, String message) {
-        return false;
-    }
-
-    @Override
-    public int compareTo(@Nonnull ICommand o) {
-        return 0;
     }
 }

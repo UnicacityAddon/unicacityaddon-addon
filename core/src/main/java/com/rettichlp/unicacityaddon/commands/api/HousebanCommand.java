@@ -1,6 +1,7 @@
 package com.rettichlp.unicacityaddon.commands.api;
 
 import com.google.gson.JsonObject;
+import com.google.inject.Inject;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.api.Syncer;
@@ -10,16 +11,9 @@ import com.rettichlp.unicacityaddon.base.models.HouseBanReasonEntry;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
-import net.minecraft.command.ICommand;
-import net.minecraft.command.ICommandSender;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.event.HoverEvent;
-import net.minecraftforge.client.IClientCommand;
+import net.kyori.adventure.text.event.HoverEvent;
+import net.labymod.api.client.chat.command.Command;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,36 +21,20 @@ import java.util.stream.Collectors;
  * @author RettichLP
  */
 @UCCommand
-public class HousebanCommand implements IClientCommand {
+public class HousebanCommand extends Command {
 
-    @Override
-    @Nonnull
-    public String getName() {
-        return "houseban";
+    private static final String usage = "/houseban (add|remove) (Spieler) (Grund)";
+
+    @Inject
+    private HousebanCommand() {
+        super("houseban");
     }
 
     @Override
-    @Nonnull
-    public String getUsage(@Nonnull ICommandSender sender) {
-        return "/houseban (add|remove) (Spieler) (Grund)";
-    }
-
-    @Override
-    @Nonnull
-    public List<String> getAliases() {
-        return Collections.emptyList();
-    }
-
-    @Override
-    public boolean checkPermission(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender) {
-        return true;
-    }
-
-    @Override
-    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args) {
+    public boolean execute(String prefix, String[] arguments) {
         UPlayer p = AbstractionLayer.getPlayer();
 
-        if (args.length < 1) {
+        if (arguments.length < 1) {
             p.sendEmptyMessage();
             p.sendMessage(Message.getBuilder()
                     .of("Hausverbote:").color(ColorCode.DARK_AQUA).bold().advance()
@@ -82,12 +60,18 @@ public class HousebanCommand implements IClientCommand {
                         .create();
 
                 ColorCode colorCode = ColorCode.AQUA;
-                if (days == 0) colorCode = ColorCode.DARK_GREEN;
-                else if (days > 0 && days <= 5) colorCode = ColorCode.GREEN;
-                else if (days > 5 && days <= 14) colorCode = ColorCode.YELLOW;
-                else if (days > 14 && days <= 25) colorCode = ColorCode.GOLD;
-                else if (days > 25 && days <= 50) colorCode = ColorCode.RED;
-                else if (days > 50) colorCode = ColorCode.DARK_RED;
+                if (days == 0)
+                    colorCode = ColorCode.DARK_GREEN;
+                else if (days > 0 && days <= 5)
+                    colorCode = ColorCode.GREEN;
+                else if (days > 5 && days <= 14)
+                    colorCode = ColorCode.YELLOW;
+                else if (days > 14 && days <= 25)
+                    colorCode = ColorCode.GOLD;
+                else if (days > 25 && days <= 50)
+                    colorCode = ColorCode.RED;
+                else if (days > 50)
+                    colorCode = ColorCode.DARK_RED;
 
                 Message.Builder builder = Message.getBuilder();
                 houseBanEntry.getHouseBanReasonList().forEach(houseBanReasonEntry -> builder
@@ -109,40 +93,27 @@ public class HousebanCommand implements IClientCommand {
 
             p.sendEmptyMessage();
 
-        } else if (args.length == 3 && args[0].equalsIgnoreCase("add")) {
-            JsonObject response = APIRequest.sendHouseBanAddRequest(args[1], args[2]);
-            if (response == null) return;
+        } else if (arguments.length == 3 && arguments[0].equalsIgnoreCase("add")) {
+            JsonObject response = APIRequest.sendHouseBanAddRequest(arguments[1], arguments[2]);
+            if (response == null)
+                return true;
             p.sendAPIMessage(response.get("info").getAsString(), true);
-        } else if (args.length == 3 && args[0].equalsIgnoreCase("remove")) {
-            JsonObject response = APIRequest.sendHouseBanRemoveRequest(args[1], args[2]);
-            if (response == null) return;
+        } else if (arguments.length == 3 && arguments[0].equalsIgnoreCase("remove")) {
+            JsonObject response = APIRequest.sendHouseBanRemoveRequest(arguments[1], arguments[2]);
+            if (response == null)
+                return true;
             p.sendAPIMessage(response.get("info").getAsString(), true);
         } else {
-            p.sendSyntaxMessage(getUsage(sender));
+            p.sendSyntaxMessage(usage);
         }
+        return true;
     }
 
     @Override
-    @Nonnull
-    public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
-        return TabCompletionBuilder.getBuilder(args)
+    public List<String> complete(String[] arguments) {
+        return TabCompletionBuilder.getBuilder(arguments)
                 .addAtIndex(1, "add", "remove")
                 .addAtIndex(3, Syncer.getHouseBanReasonEntryList().stream().map(HouseBanReasonEntry::getReason).sorted().collect(Collectors.toList()))
                 .build();
-    }
-
-    @Override
-    public boolean isUsernameIndex(@Nonnull String[] args, int index) {
-        return false;
-    }
-
-    @Override
-    public boolean allowUsageWithoutPrefix(ICommandSender sender, String message) {
-        return false;
-    }
-
-    @Override
-    public int compareTo(@Nonnull ICommand o) {
-        return 0;
     }
 }

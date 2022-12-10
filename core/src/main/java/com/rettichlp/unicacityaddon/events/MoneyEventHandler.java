@@ -14,9 +14,9 @@ import com.rettichlp.unicacityaddon.modules.BankMoneyModule;
 import com.rettichlp.unicacityaddon.modules.CashMoneyModule;
 import com.rettichlp.unicacityaddon.modules.JobModule;
 import com.rettichlp.unicacityaddon.modules.PayDayModule;
-import net.minecraftforge.client.event.ClientChatEvent;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.labymod.api.event.Subscribe;
+import net.labymod.api.event.client.chat.ChatMessageSendEvent;
+import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -31,9 +31,9 @@ public class MoneyEventHandler {
 
     private boolean isGRBankCommand;
 
-    @SubscribeEvent
-    public void onClientChatReceived(ClientChatReceivedEvent e) {
-        String msg = e.getMessage().getUnformattedText();
+    @Subscribe
+    public void onChatReceive(ChatReceiveEvent e) {
+        String msg = e.chatMessage().getPlainText();
         UPlayer p = AbstractionLayer.getPlayer();
 
         Matcher jobSalaryMatcher = PatternHandler.JOB_SALARY_PATTERN.matcher(msg);
@@ -172,7 +172,7 @@ public class MoneyEventHandler {
         Matcher atmInfoMatcher = PatternHandler.ATM_INFO_PATTERN.matcher(msg);
         if (atmInfoMatcher.find() && ReichensteuerCommand.isActive) {
             ReichensteuerCommand.cashInATM = Integer.parseInt(atmInfoMatcher.group(2));
-            e.setCanceled(true);
+            e.setCancelled(true);
         }
 
         Matcher bankStatementOtherMatcher = PatternHandler.BANK_STATEMENT_OTHER_PATTERN.matcher(msg);
@@ -198,8 +198,8 @@ public class MoneyEventHandler {
         }
     }
 
-    @SubscribeEvent
-    public void onClientChat(ClientChatEvent e) {
+    @Subscribe
+    public void onChatMessageSend(ChatMessageSendEvent e) {
         String msg = e.getMessage();
         isGRBankCommand = msg.startsWith("/grkasse get") || msg.startsWith("/grkasse drop");
     }

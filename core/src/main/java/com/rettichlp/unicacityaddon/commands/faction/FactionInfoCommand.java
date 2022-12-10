@@ -1,6 +1,6 @@
 package com.rettichlp.unicacityaddon.commands.faction;
 
-import com.google.common.util.concurrent.Uninterruptibles;
+import com.google.inject.Inject;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
@@ -9,23 +9,16 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.events.faction.FactionInfoEventHandler;
-import net.minecraft.command.ICommand;
-import net.minecraft.command.ICommandSender;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.event.ClickEvent;
-import net.minecraft.util.text.event.HoverEvent;
-import net.minecraftforge.client.IClientCommand;
+import net.kyori.adventure.text.event.ClickEvent;
+import net.kyori.adventure.text.event.HoverEvent;
+import net.labymod.api.client.chat.command.Command;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 /**
@@ -34,48 +27,35 @@ import java.util.stream.Collectors;
  */
 @SuppressWarnings("UnstableApiUsage")
 @UCCommand
-public class FactionInfoCommand implements IClientCommand {
+public class FactionInfoCommand extends Command {
 
-    @Override
-    @Nonnull
-    public String getName() {
-        return "checkactivemembers";
+    private static final String usage = "/checkactivemembers [Fraktion]";
+
+    @Inject
+    private FactionInfoCommand() {
+        super("checkactivemembers", "cam");
     }
 
     @Override
-    @Nonnull
-    public String getUsage(@Nonnull ICommandSender sender) {
-        return "/checkactivemembers [Fraktion]";
-    }
-
-    @Override
-    @Nonnull
-    public List<String> getAliases() {
-        return Collections.singletonList("cam");
-    }
-
-    @Override
-    public boolean checkPermission(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender) {
-        return true;
-    }
-
-    @Override
-    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
+    public boolean execute(String prefix, String[] arguments) {
         UPlayer p = AbstractionLayer.getPlayer();
         List<Faction> chosenFactions = new ArrayList<>();
 
-        for (String s : args) {
+        for (String s : arguments) {
             Faction faction = Faction.getFactionByFactionKey(s);
-            if (faction == null) continue;
+            if (faction == null)
+                continue;
             chosenFactions.add(faction);
         }
 
-        if (chosenFactions.isEmpty()) chosenFactions.addAll(Arrays.asList(Faction.values()));
+        if (chosenFactions.isEmpty())
+            chosenFactions.addAll(Arrays.asList(Faction.values()));
 
         p.sendMessage(Message.getBuilder().of("Aktive Spieler in den Fraktionen:").color(ColorCode.DARK_AQUA).bold().advance().createComponent());
 
         Thread thread = new Thread(() -> chosenFactions.forEach(faction -> {
-            if (faction.equals(Faction.NULL)) return;
+            if (faction.equals(Faction.NULL))
+                return;
             Map<Boolean, Integer> members = getMembers(faction);
             int activeMembers = members.get(true);
             int inactiveMembers = members.get(false);
@@ -95,41 +75,29 @@ public class FactionInfoCommand implements IClientCommand {
                     .createComponent());
         }));
         thread.start();
+        return true;
     }
 
     @Override
-    @Nonnull
-    public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
-        return TabCompletionBuilder.getBuilder(args)
+    public List<String> complete(String[] arguments) {
+        return TabCompletionBuilder.getBuilder(arguments)
                 .addToAllFromIndex(1, Arrays.stream(Faction.values()).map(Faction::getFactionKey).sorted().collect(Collectors.toList()))
                 .build();
-    }
-
-    @Override
-    public boolean isUsernameIndex(@Nonnull String[] args, int index) {
-        return false;
     }
 
     private Map<Boolean, Integer> getMembers(Faction faction) {
         FactionInfoEventHandler.future = new CompletableFuture<>();
         AbstractionLayer.getPlayer().sendChatMessage("/memberinfo " + faction.getFactionKey());
 
-        try {
-            return Uninterruptibles.getUninterruptibly(FactionInfoEventHandler.future);
-        } catch (ExecutionException e) {
-            throw new IllegalStateException(e);
-        } finally {
-            FactionInfoEventHandler.future = null;
-        }
-    }
+        return new HashMap<>();
 
-    @Override
-    public boolean allowUsageWithoutPrefix(ICommandSender sender, String message) {
-        return false;
-    }
-
-    @Override
-    public int compareTo(@Nonnull ICommand o) {
-        return 0;
+// TODO: 11.12.2022
+//        try {
+//            return Uninterruptibles.getUninterruptibly(FactionInfoEventHandler.future);
+//        } catch (ExecutionException e) {
+//            throw new IllegalStateException(e);
+//        } finally {
+//            FactionInfoEventHandler.future = null;
+//        }
     }
 }

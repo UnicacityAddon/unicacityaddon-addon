@@ -2,10 +2,8 @@ package com.rettichlp.unicacityaddon.events.faction.polizei;
 
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.labymod.api.event.Subscribe;
+import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,12 +19,11 @@ public class WantedEventHandler {
     public static final Map<String, Wanted> WANTED_MAP = new HashMap<>();
     private static long wantedsShown;
 
-    @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public void onWantedsGiven(ClientChatReceivedEvent e) {
-        ITextComponent message = e.getMessage();
-        String unformattedMessage = message.getUnformattedText();
+    @Subscribe
+    public void onChatReceive(ChatReceiveEvent e) {
+        String msg = e.chatMessage().getPlainText();
 
-        Matcher wantedsGivenReasonMatcher = PatternHandler.WANTED_GIVEN_REASON_PATTERN.matcher(unformattedMessage);
+        Matcher wantedsGivenReasonMatcher = PatternHandler.WANTED_GIVEN_REASON_PATTERN.matcher(msg);
         if (wantedsGivenReasonMatcher.find()) {
             String name = wantedsGivenReasonMatcher.group(1);
             String reason = wantedsGivenReasonMatcher.group(2);
@@ -35,7 +32,7 @@ public class WantedEventHandler {
             return;
         }
 
-        Matcher wantedsGivenPointsMatcher = PatternHandler.WANTED_GIVEN_POINTS_PATTERN.matcher(unformattedMessage);
+        Matcher wantedsGivenPointsMatcher = PatternHandler.WANTED_GIVEN_POINTS_PATTERN.matcher(msg);
         if (wantedsGivenPointsMatcher.find()) {
             String name = wantedsGivenPointsMatcher.group(1);
             int wantedPoints = Integer.parseInt(wantedsGivenPointsMatcher.group(2));
@@ -44,51 +41,38 @@ public class WantedEventHandler {
             if (wanted == null) return;
 
             wanted.setAmount(wantedPoints);
-        }
-    }
-
-    @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public void onWantedsDeleted(ClientChatReceivedEvent e) {
-        ITextComponent message = e.getMessage();
-        String unformattedMessage = message.getUnformattedText();
-
-        Matcher matcher = PatternHandler.WANTED_DELETED_PATTERN.matcher(unformattedMessage);
-        if (!matcher.find()) return;
-
-        String name = null;
-        for (int i = 1; i < matcher.groupCount() + 1; i++) {
-            String tempName = matcher.group(i);
-            if (tempName == null) continue;
-
-            name = tempName;
-            break;
-        }
-
-        WANTED_MAP.remove(name);
-    }
-
-    @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public void onWantedsShown(ClientChatReceivedEvent e) {
-        ITextComponent message = e.getMessage();
-        String unformattedMessage = message.getUnformattedText();
-
-        long currentTime = System.currentTimeMillis();
-
-        if (unformattedMessage.equals("Online Spieler mit WantedPunkten:")) {
-            WANTED_MAP.clear();
-            wantedsShown = currentTime;
-
             return;
         }
 
-        Matcher matcher = PatternHandler.WANTED_LIST_ENTRY_PATTERN.matcher(unformattedMessage);
-        if (currentTime - wantedsShown > 1000L || !matcher.find()) return;
+        Matcher wantedDeletedMatcher = PatternHandler.WANTED_DELETED_PATTERN.matcher(msg);
+        if (wantedDeletedMatcher.find()) {
+            String name = null;
+            for (int i = 1; i < wantedDeletedMatcher.groupCount() + 1; i++) {
+                String tempName = wantedDeletedMatcher.group(i);
+                if (tempName == null) continue;
 
-        String name = matcher.group(1);
-        int wantedPoints = Integer.parseInt(matcher.group(2));
-        String reason = matcher.group(3);
+                name = tempName;
+                break;
+            }
 
-        WANTED_MAP.put(name, new Wanted(reason, wantedPoints));
+            WANTED_MAP.remove(name);
+            return;
+        }
+
+        Matcher wantedListEntryMatcher = PatternHandler.WANTED_LIST_ENTRY_PATTERN.matcher(msg);
+        if (wantedListEntryMatcher.find() && System.currentTimeMillis() - wantedsShown < 1000L) {
+            String name = wantedListEntryMatcher.group(1);
+            int wantedPoints = Integer.parseInt(wantedListEntryMatcher.group(2));
+            String reason = wantedListEntryMatcher.group(3);
+
+            WANTED_MAP.put(name, new Wanted(reason, wantedPoints));
+            return;
+        }
+
+        if (msg.equals("Online Spieler mit WantedPunkten:")) {
+            WANTED_MAP.clear();
+            wantedsShown = System.currentTimeMillis();
+        }
     }
 
     public static class Wanted {

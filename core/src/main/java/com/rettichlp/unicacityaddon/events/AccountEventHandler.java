@@ -8,8 +8,8 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.base.utils.UpdateUtils;
 import com.rettichlp.unicacityaddon.modules.PayDayModule;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.labymod.api.event.Subscribe;
+import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -23,9 +23,9 @@ public class AccountEventHandler {
 
     public static boolean isAfk = false;
 
-    @SubscribeEvent
-    public void onClientChatReceived(ClientChatReceivedEvent e) {
-        String msg = e.getMessage().getUnformattedText();
+    @Subscribe
+    public void onChatReceive(ChatReceiveEvent e) {
+        String msg = e.chatMessage().getPlainText();
         if (!UnicacityAddon.isUnicacity()) return;
 
         if (PatternHandler.ACCOUNT_WELCOME_BACK_PATTERN.matcher(msg).find()) {
@@ -50,7 +50,7 @@ public class AccountEventHandler {
         }
 
         if (PatternHandler.RESOURCEPACK_PATTERN.matcher(msg).find() && ConfigElements.getRemoveResourcePackMessage()) {
-            e.setCanceled(true);
+            e.setCancelled(true);
             return;
         }
 
@@ -81,7 +81,7 @@ public class AccountEventHandler {
             @Override
             public void run() {
                 // MOBILEEVENTHANDLER
-                p.sendChatMessage("/mobile");
+                p.sendChatMessage("/togglephone");
 
                 // AUTOMATE_COMMAND_SETTINGS
                 if (ConfigElements.getCommandAutomation()) {

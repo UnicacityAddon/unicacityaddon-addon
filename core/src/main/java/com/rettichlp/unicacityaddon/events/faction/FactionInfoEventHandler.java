@@ -1,8 +1,8 @@
 package com.rettichlp.unicacityaddon.events.faction;
 
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.labymod.api.event.Subscribe;
+import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,15 +24,15 @@ public class FactionInfoEventHandler {
     private static long memberlistShown;
     public static CompletableFuture<Map<Boolean, Integer>> future;
 
-    @SubscribeEvent
-    public void onChatReceived(ClientChatReceivedEvent e) {
+    @Subscribe
+    public void onChatReceive(ChatReceiveEvent e) {
         if (future == null) return;
 
-        String message = e.getMessage().getUnformattedText();
+        String msg = e.chatMessage().getPlainText();
         long currentTime = System.currentTimeMillis();
 
-        if (FACTION_MEMBERS_PATTERN.matcher(message).find()) {
-            e.setCanceled(true);
+        if (FACTION_MEMBERS_PATTERN.matcher(msg).find()) {
+            e.setCancelled(true);
             memberlistShown = currentTime;
             MEMBER_MAP.put(false, 0);
             MEMBER_MAP.put(true, 0);
@@ -46,11 +46,11 @@ public class FactionInfoEventHandler {
             return;
         }
 
-        if (currentTime - memberlistShown > 200L || !message.startsWith(" » ")) return;
+        if (currentTime - memberlistShown > 200L || !msg.startsWith(" » ")) return;
 
-        boolean inactive = !message.endsWith("AFK") && !message.endsWith("Nicht im Dienst");
+        boolean inactive = !msg.endsWith("AFK") && !msg.endsWith("Nicht im Dienst");
         MEMBER_MAP.merge(inactive, 1, Integer::sum);
 
-        e.setCanceled(true);
+        e.setCancelled(true);
     }
 }

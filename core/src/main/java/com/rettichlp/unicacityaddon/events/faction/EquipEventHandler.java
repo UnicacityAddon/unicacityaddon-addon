@@ -6,8 +6,8 @@ import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.models.EquipLogEntry;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.labymod.api.event.Subscribe;
+import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,9 +21,9 @@ public class EquipEventHandler {
 
     public static List<EquipLogEntry> equipLogEntryList = new ArrayList<>();
 
-    @SubscribeEvent
-    public void onClientChatReceived(ClientChatReceivedEvent e) {
-        String msg = e.getMessage().getUnformattedText();
+    @Subscribe
+    public void onChatReceive(ChatReceiveEvent e) {
+        String msg = e.chatMessage().getPlainText();
 
         Matcher trackerMatcher = PatternHandler.TRACKER_PATTERN.matcher(msg);
         if (trackerMatcher.find()) {

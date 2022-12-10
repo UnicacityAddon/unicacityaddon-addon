@@ -7,8 +7,8 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.labymod.api.event.Subscribe;
+import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -20,9 +20,9 @@ import java.util.regex.Matcher;
 @UCEvent
 public class DBankMessageEventHandler {
 
-    @SubscribeEvent
-    public void onClientChatReceived(ClientChatReceivedEvent e) {
-        String msg = e.getMessage().getUnformattedText();
+    @Subscribe
+    public void onChatReceive(ChatReceiveEvent e) {
+        String msg = e.chatMessage().getPlainText();
 
         if (!ConfigElements.getDrugBankMessagesActivated()) return;
 

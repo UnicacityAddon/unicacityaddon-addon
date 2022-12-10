@@ -9,20 +9,18 @@ import com.rettichlp.unicacityaddon.base.teamspeak.commands.ClientVariableComman
 import com.rettichlp.unicacityaddon.base.teamspeak.events.ClientMovedEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
-import net.minecraft.util.text.event.ClickEvent;
-import net.minecraft.util.text.event.HoverEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.kyori.adventure.text.event.ClickEvent;
+import net.kyori.adventure.text.event.HoverEvent;
+import net.labymod.api.event.Subscribe;
 
 /**
  * @author Fuzzlemann
  * @author RettichLP
  */
 @UCEvent
-@Mod.EventBusSubscriber
 public class WaitingRoomEventHandler {
 
-    @SubscribeEvent
+    @Subscribe
     public static void onClientMoved(ClientMovedEvent e) {
         UPlayer p = AbstractionLayer.getPlayer();
 
@@ -33,10 +31,10 @@ public class WaitingRoomEventHandler {
 
         if (ConfigElements.getTeamspeakNotifyWaitingSupport() && targetChannelID == 41) {
             handleEnterSupportChannel(p, clientID);
-            p.playSound("block.note.pling");
+            // TODO: 09.12.2022 p.playSound("block.note.pling");
         } else if (ConfigElements.getTeamspeakNotifyWaitingPublic() && targetChannelID == p.getFaction().getPublicChannelId()) {
             handleEnterPublicChannel(p, clientID);
-            p.playSound("block.note.pling");
+            // TODO: 09.12.2022 p.playSound("block.note.pling");
         }
     }
 

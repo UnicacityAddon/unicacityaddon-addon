@@ -1,8 +1,8 @@
 package com.rettichlp.unicacityaddon.events.faction.badfaction;
 
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
-import net.minecraftforge.client.event.ClientChatEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.labymod.api.event.Subscribe;
+import net.labymod.api.event.client.chat.ChatMessageSendEvent;
 
 /**
  * @author Dimiikou
@@ -12,10 +12,10 @@ public class GaggedEventHandler {
 
     private static boolean gagged = false;
 
-    @SubscribeEvent
-    public void onClientChat(ClientChatEvent e) {
+    @Subscribe
+    public void onChatMessageSend(ChatMessageSendEvent e) {
         if (gagged && !e.getMessage().startsWith("/"))
-            e.setMessage("/w " + e.getMessage());
+            e.changeMessage("/w " + e.getMessage());
     }
 
     public static boolean isGagged() {

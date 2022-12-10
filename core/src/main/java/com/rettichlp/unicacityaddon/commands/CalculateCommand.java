@@ -1,5 +1,6 @@
 package com.rettichlp.unicacityaddon.commands;
 
+import com.google.inject.Inject;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
@@ -8,66 +9,32 @@ import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.utils.MathUtils;
 import com.rettichlp.unicacityaddon.base.utils.TextUtils;
-import net.minecraft.command.ICommand;
-import net.minecraft.command.ICommandSender;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.client.IClientCommand;
+import net.labymod.api.client.chat.command.Command;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Arrays;
 import java.util.List;
 
 /**
  * @author RettichLP
  */
 @UCCommand
-public class CalculateCommand implements IClientCommand {
+public class CalculateCommand extends Command {
 
-    @Override
-    @Nonnull
-    public String getName() {
-        return "calculate";
+    private static final String usage = "/calculate [mathematischer Ausdruck]";
+
+    @Inject
+    private CalculateCommand() {
+    super("calculate", "calc", "rechner");
     }
 
     @Override
-    @Nonnull
-    public String getUsage(@Nonnull ICommandSender sender) {
-        return "/calculate [mathematischer Ausdruck]";
-    }
-
-    @Override
-    @Nonnull
-    public List<String> getAliases() {
-        return Arrays.asList("calc", "rechner");
-    }
-
-    @Override
-    public boolean checkPermission(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender) {
-        return true;
-    }
-
-    @Override
-    @Nonnull
-    public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
-        return TabCompletionBuilder.getBuilder(args).build();
-    }
-
-    @Override
-    public boolean isUsernameIndex(@Nonnull String[] args, int index) {
-        return false;
-    }
-
-    @Override
-    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
+    public boolean execute(String prefix, String[] arguments) {
         UPlayer p = AbstractionLayer.getPlayer();
-        if (args.length < 1) {
-            p.sendSyntaxMessage(getUsage(sender));
-            return;
+        if (arguments.length < 1) {
+            p.sendSyntaxMessage(usage);
+            return true;
         }
 
-        String mathString = TextUtils.makeStringByArgs(args, " ");
+        String mathString = TextUtils.makeStringByArgs(arguments, " ");
         MathUtils mathUtils = new MathUtils(mathString);
         try {
             mathUtils.evaluate();
@@ -81,15 +48,11 @@ public class CalculateCommand implements IClientCommand {
                 .of("=").color(ColorCode.WHITE).advance().space()
                 .of(mathUtils.parse()).color(ColorCode.AQUA).advance()
                 .createComponent());
+        return true;
     }
 
     @Override
-    public boolean allowUsageWithoutPrefix(ICommandSender sender, String message) {
-        return false;
-    }
-
-    @Override
-    public int compareTo(@Nonnull ICommand o) {
-        return 0;
+    public List<String> complete(String[] arguments) {
+        return TabCompletionBuilder.getBuilder(arguments).build();
     }
 }

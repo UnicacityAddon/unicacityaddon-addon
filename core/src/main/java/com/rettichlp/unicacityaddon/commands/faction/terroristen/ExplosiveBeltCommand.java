@@ -1,85 +1,48 @@
 package com.rettichlp.unicacityaddon.commands.faction.terroristen;
 
+import com.google.inject.Inject;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.utils.MathUtils;
 import com.rettichlp.unicacityaddon.modules.ExplosiveBeltTimerModule;
-import net.minecraft.command.ICommand;
-import net.minecraft.command.ICommandSender;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.client.IClientCommand;
+import net.labymod.api.client.chat.command.Command;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Collections;
 import java.util.List;
 
 /**
  * @author Dimiikou
  */
 @UCCommand
-public class ExplosiveBeltCommand implements IClientCommand {
+public class ExplosiveBeltCommand extends Command {
 
-    @Override
-    @Nonnull
-    public String getName() {
-        return "sprenggürtel";
+    private static final String usage = "/sprenggürtel [Countdown]";
+
+    @Inject
+    private ExplosiveBeltCommand() {
+        super("sprenggürtel");
     }
 
     @Override
-    @Nonnull
-    public String getUsage(@Nonnull ICommandSender sender) {
-        return "/sprenggürtel [Countdown]";
-    }
+    public boolean execute(String prefix, String[] arguments) {
+        UPlayer p = AbstractionLayer.getPlayer();
 
-    @Override
-    @Nonnull
-    public List<String> getAliases() {
-        return Collections.emptyList();
-    }
+        if (!MathUtils.isInteger(arguments[0])) {
+            p.sendErrorMessage("Der Countdown muss eine Zahl sein");
+            return true;
+        }
 
-    @Override
-    public boolean checkPermission(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender) {
+        ExplosiveBeltTimerModule.currentCount = Integer.parseInt(arguments[0]);
+
+        ExplosiveBeltTimerModule.explosiveBeltStarted = true;
+        ExplosiveBeltTimerModule.timer = arguments[0];
+        p.sendChatMessage("/sprenggürtel " + arguments[0]);
         return true;
     }
 
     @Override
-    @Nonnull
-    public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
-        return TabCompletionBuilder.getBuilder(args).build();
-    }
-
-    @Override
-    public boolean isUsernameIndex(@Nonnull String[] args, int index) {
-        return false;
-    }
-
-    @Override
-    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args) {
-        UPlayer p = AbstractionLayer.getPlayer();
-
-        if (!MathUtils.isInteger(args[0])) {
-            p.sendErrorMessage("Der Countdown muss eine Zahl sein");
-            return;
-        }
-
-        ExplosiveBeltTimerModule.currentCount = Integer.parseInt(args[0]);
-
-        ExplosiveBeltTimerModule.explosiveBeltStarted = true;
-        ExplosiveBeltTimerModule.timer = args[0];
-        p.sendChatMessage("/sprenggürtel " + args[0]);
-    }
-
-    @Override
-    public boolean allowUsageWithoutPrefix(ICommandSender sender, String message) {
-        return false;
-    }
-
-    @Override
-    public int compareTo(@Nonnull ICommand o) {
-        return 0;
+    public List<String> complete(String[] arguments) {
+        return TabCompletionBuilder.getBuilder(arguments).build();
     }
 }

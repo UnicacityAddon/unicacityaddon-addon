@@ -5,18 +5,17 @@ import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
 import com.rettichlp.unicacityaddon.base.enums.api.StatisticType;
 import com.rettichlp.unicacityaddon.base.enums.location.ServiceCallBox;
-import com.rettichlp.unicacityaddon.base.registry.SoundRegistry;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.commands.faction.ServiceCountCommand;
 import com.rettichlp.unicacityaddon.modules.EmergencyServiceModule;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.event.ClickEvent;
-import net.minecraft.util.text.event.HoverEvent;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.kyori.adventure.text.event.ClickEvent;
+import net.kyori.adventure.text.event.HoverEvent;
+import net.labymod.api.client.chat.ChatMessage;
+import net.labymod.api.event.Subscribe;
+import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
 import java.util.regex.Matcher;
 
@@ -28,14 +27,14 @@ public class EmergencyServiceEventHandler {
 
     public static boolean messageCreationActive = false;
 
-    @SubscribeEvent
-    public void onClientChatReceived(ClientChatReceivedEvent e) {
+    @Subscribe
+    public void onChatReceive(ChatReceiveEvent e) {
         UPlayer p = AbstractionLayer.getPlayer();
-        ITextComponent msg = e.getMessage();
-        String unformattedMsg = msg.getUnformattedText();
+        ChatMessage chatMessage = e.chatMessage();
+        String unformattedMsg = chatMessage.getPlainText();
 
         if (PatternHandler.SERVICE_ARRIVED_PATTERN.matcher(unformattedMsg).find()) {
-            p.playSound(SoundRegistry.SERVICE_SOUND, 1, 1);
+            // TODO: 10.12.2022 p.playSound(SoundRegistry.SERVICE_SOUND, 1, 1);
             EmergencyServiceModule.currentCount++;
             return;
         }
@@ -77,7 +76,7 @@ public class EmergencyServiceEventHandler {
             if (serviceCallBox != null) {
                 messageCreationActive = true;
                 e.setMessage(Message.getBuilder()
-                        .add(msg.getFormattedText())
+                        .add(chatMessage.getFormattedText())
                         .space()
                         .of("[").color(ColorCode.DARK_GRAY).advance()
                         .of("Unterwegs - " + serviceCallBox.getDistance(p.getPosition()) + "m").color(ColorCode.RED)

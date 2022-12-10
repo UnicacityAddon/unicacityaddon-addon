@@ -2,11 +2,12 @@ package com.rettichlp.unicacityaddon.events.faction.badfaction.blacklist;
 
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
+import com.rettichlp.unicacityaddon.base.enums.faction.ModifyBlacklistType;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.commands.faction.badfaction.ModifyBlacklistCommand;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.labymod.api.event.Subscribe;
+import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
 import java.util.regex.Matcher;
 
@@ -16,17 +17,17 @@ import java.util.regex.Matcher;
 @UCEvent
 public class BlacklistModifyEventHandler {
 
-    @SubscribeEvent
-    public void onClientChatReceived(ClientChatReceivedEvent e) {
+    @Subscribe
+    public void onChatReceive(ChatReceiveEvent e) {
         if (System.currentTimeMillis() - ModifyBlacklistCommand.executedTime > 1000L) return;
         UPlayer p = AbstractionLayer.getPlayer();
 
-        String msg = e.getMessage().getUnformattedText();
+        String msg = e.chatMessage().getPlainText();
 
         // remove start message
         Matcher startPattern = PatternHandler.BLACKLIST_START_PATTERN.matcher(msg);
         if (startPattern.find()) {
-            e.setCanceled(true);
+            e.setCancelled(true);
             return;
         }
 
@@ -34,7 +35,7 @@ public class BlacklistModifyEventHandler {
         if (!listPattern.find()) return;
 
         // remove list message
-        e.setCanceled(true);
+        e.setCancelled(true);
 
         // extract variables
         String name = listPattern.group(1);
@@ -45,7 +46,7 @@ public class BlacklistModifyEventHandler {
 
         if (!name.equals(ModifyBlacklistCommand.target)) return;
 
-        if (ModifyBlacklistCommand.type == ModifyBlacklistCommand.ModifyBlacklistType.OUTLAW) {
+        if (ModifyBlacklistCommand.type == ModifyBlacklistType.OUTLAW) {
             if (reason.contains("[Vogelfrei]")) {
                 p.sendErrorMessage("Der Spieler ist bereits vogelfrei!");
                 return;

@@ -3,8 +3,8 @@ package com.rettichlp.unicacityaddon.events.faction.badfaction;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.modules.FBIHackModule;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.labymod.api.event.Subscribe;
+import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
 import java.util.regex.Matcher;
 
@@ -14,9 +14,9 @@ import java.util.regex.Matcher;
 @UCEvent
 public class FBIHackEventHandler {
 
-    @SubscribeEvent
-    public void onClientChatReceived(ClientChatReceivedEvent e) {
-        Matcher fbiHackStartedMatcher = PatternHandler.FBI_HACK_STARTED_PATTERN.matcher(e.getMessage().getUnformattedText());
+    @Subscribe
+    public void onChatReceive(ChatReceiveEvent e) {
+        Matcher fbiHackStartedMatcher = PatternHandler.FBI_HACK_STARTED_PATTERN.matcher(e.chatMessage().getPlainText());
 
         if (fbiHackStartedMatcher.find())
             FBIHackModule.startCountdown(Integer.parseInt(fbiHackStartedMatcher.group(1)));

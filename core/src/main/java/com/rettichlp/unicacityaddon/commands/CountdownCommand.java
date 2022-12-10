@@ -1,21 +1,15 @@
 package com.rettichlp.unicacityaddon.commands;
 
+import com.google.inject.Inject;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ChatType;
 import com.rettichlp.unicacityaddon.base.utils.MathUtils;
-import net.minecraft.command.ICommand;
-import net.minecraft.command.ICommandSender;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.client.IClientCommand;
+import net.labymod.api.client.chat.command.Command;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -25,64 +19,48 @@ import java.util.stream.Collectors;
  * @author RettichLP
  */
 @UCCommand
-public class CountdownCommand implements IClientCommand {
+public class CountdownCommand extends Command {
 
-    private static boolean active = false;
     public static int countdown;
 
-    @Override
-    @Nonnull
-    public String getName() {
-        return "countdown";
+    private static boolean active = false;
+    private static final String usage = "/countdown [Sekunden] [Chat]";
+
+    @Inject
+    private CountdownCommand() {
+        super("countdown");
     }
 
     @Override
-    @Nonnull
-    public String getUsage(@Nonnull ICommandSender sender) {
-        return "/countdown [Sekunden] [Chat]";
-    }
-
-    @Override
-    @Nonnull
-    public List<String> getAliases() {
-        return Collections.emptyList();
-    }
-
-    @Override
-    public boolean checkPermission(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender) {
-        return true;
-    }
-
-    @Override
-    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
+    public boolean execute(String prefix, String[] arguments) {
         UPlayer p = AbstractionLayer.getPlayer();
 
         if (active) {
             p.sendErrorMessage("Es ist gerade schon ein Countdown aktiv!");
-            return;
+            return true;
         }
 
-        if (args.length < 2) {
-            p.sendSyntaxMessage(getUsage(sender));
-            return;
+        if (arguments.length < 2) {
+            p.sendSyntaxMessage(usage);
+            return true;
         }
 
-        if (!MathUtils.isInteger(args[0])) {
-            p.sendSyntaxMessage(getUsage(sender));
-            return;
+        if (!MathUtils.isInteger(arguments[0])) {
+            p.sendSyntaxMessage(usage);
+            return true;
         }
 
-        countdown = Integer.parseInt(args[0]);
+        countdown = Integer.parseInt(arguments[0]);
 
         if (countdown < 1) {
             p.sendErrorMessage("Der Countdown darf nicht bei 0 starten!");
-            return;
+            return true;
         }
 
-        ChatType chatType = ChatType.getChatTypeByDisplayName(args[1]);
+        ChatType chatType = ChatType.getChatTypeByDisplayName(arguments[1]);
         if (chatType == null) {
-            p.sendSyntaxMessage(getUsage(sender));
-            return;
+            p.sendSyntaxMessage(usage);
+            return true;
         }
 
         active = true;
@@ -109,28 +87,13 @@ public class CountdownCommand implements IClientCommand {
                 countdown--;
             }
         }, delay, 1000);
+        return true;
     }
 
     @Override
-    @Nonnull
-    public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
-        return TabCompletionBuilder.getBuilder(args)
+    public List<String> complete(String[] arguments) {
+        return TabCompletionBuilder.getBuilder(arguments)
                 .addAtIndex(1, Arrays.stream(ChatType.values()).map(ChatType::getDisplayName).sorted().collect(Collectors.toList()))
                 .build();
-    }
-
-    @Override
-    public boolean isUsernameIndex(@Nonnull String[] args, int index) {
-        return false;
-    }
-
-    @Override
-    public boolean allowUsageWithoutPrefix(ICommandSender sender, String message) {
-        return false;
-    }
-
-    @Override
-    public int compareTo(@Nonnull ICommand o) {
-        return 0;
     }
 }

@@ -10,8 +10,8 @@ import com.rettichlp.unicacityaddon.events.AccountEventHandler;
 import com.rettichlp.unicacityaddon.events.MobileEventHandler;
 import com.rettichlp.unicacityaddon.modules.BankMoneyModule;
 import com.rettichlp.unicacityaddon.modules.CashMoneyModule;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.labymod.api.event.Subscribe;
+import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
@@ -25,9 +25,9 @@ public class ReviveEventHandler {
     private static long reviveByMedicStartTime = 0; // revive time if you are dead
     private static long reviveFromMedicStartTime = 0; // revive time if you are the medic
 
-    @SubscribeEvent
-    public void onReviveStart(ClientChatReceivedEvent e) {
-        String msg = e.getMessage().getUnformattedText();
+    @Subscribe
+    public void onReviveStart(ChatReceiveEvent e) {
+        String msg = e.chatMessage().getPlainText();
 
         Matcher reviveByMedicStartMatcher = PatternHandler.REVIVE_BY_MEDIC_START_PATTERN.matcher(msg);
         if (reviveByMedicStartMatcher.find()) {

@@ -6,8 +6,8 @@ import com.rettichlp.unicacityaddon.base.config.ConfigElements;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.commands.faction.badfaction.GiftEigenbedarfCommand;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.labymod.api.event.Subscribe;
+import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
 import java.util.regex.Matcher;
 
@@ -17,10 +17,10 @@ import java.util.regex.Matcher;
 @UCEvent
 public class GiftEigenbedarfEventHandler {
 
-    @SubscribeEvent
-    public void onClientChatReceived(ClientChatReceivedEvent e) {
+    @Subscribe
+    public void onChatReceive(ChatReceiveEvent e) {
         UPlayer p = AbstractionLayer.getPlayer();
-        String msg = e.getMessage().getUnformattedText();
+        String msg = e.chatMessage().getPlainText();
 
         if (!GiftEigenbedarfCommand.checkWeed && !GiftEigenbedarfCommand.checkMeth) return;
 

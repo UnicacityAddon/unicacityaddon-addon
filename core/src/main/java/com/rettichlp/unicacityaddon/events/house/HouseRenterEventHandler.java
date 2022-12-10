@@ -1,15 +1,15 @@
 package com.rettichlp.unicacityaddon.events.house;
 
-import com.google.common.collect.Maps;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
-import net.minecraftforge.client.event.ClientChatEvent;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.labymod.api.event.Subscribe;
+import net.labymod.api.event.client.chat.ChatMessageSendEvent;
+import net.labymod.api.event.client.chat.ChatReceiveEvent;
+import org.spongepowered.include.com.google.common.collect.Maps;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -37,8 +37,8 @@ public class HouseRenterEventHandler {
 
     final Timer TIMER = new Timer();
 
-    @SubscribeEvent
-    public void onClientChat(ClientChatEvent e) {
+    @Subscribe
+    public void onClientMessageSend(ChatMessageSendEvent e) {
         String msg = e.getMessage();
         if (!msg.equals("/mieters")) return;
 
@@ -65,9 +65,9 @@ public class HouseRenterEventHandler {
         }, 500);
     }
 
-    @SubscribeEvent
-    public void onChatReceived(ClientChatReceivedEvent e) {
-        String msg = e.getMessage().getUnformattedText();
+    @Subscribe
+    public void onChatReceive(ChatReceiveEvent e) {
+        String msg = e.chatMessage().getPlainText();
 
         Matcher houseRenterMatcher = PatternHandler.HOUSE_RENTER_HEADER_PATTERN.matcher(msg);
         if (houseRenterMatcher.find()) {

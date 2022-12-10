@@ -3,20 +3,22 @@ package com.rettichlp.unicacityaddon.events.faction;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.config.ConfigElements;
+import com.rettichlp.unicacityaddon.base.enums.faction.ReinforcementType;
 import com.rettichlp.unicacityaddon.base.models.NaviPointEntry;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.base.utils.NavigationUtils;
-import com.rettichlp.unicacityaddon.commands.faction.ReinforcementCommand;
 import com.rettichlp.unicacityaddon.events.TickEventHandler;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.event.ClickEvent;
-import net.minecraft.util.text.event.HoverEvent;
-import net.minecraftforge.client.event.ClientChatEvent;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.event.ClickEvent;
+import net.kyori.adventure.text.event.HoverEvent;
+import net.labymod.api.client.chat.ChatMessage;
+import net.labymod.api.event.Subscribe;
+import net.labymod.api.event.client.chat.ChatMessageSendEvent;
+import net.labymod.api.event.client.chat.ChatReceiveEvent;
+import net.labymod.api.util.math.vector.FloatVector3;
 
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -29,34 +31,36 @@ import java.util.regex.Pattern;
 @UCEvent
 public class ReinforcementEventHandler {
 
-    private static ReinforcementCommand.ReinforcementType lastReinforcement;
+    private static Reinforcement lastReinforcement;
     public static int activeReinforcement = -1;
 
-    @SubscribeEvent
-    public void onClientChatReceive(ClientChatReceivedEvent e) {
+    @Subscribe
+    public void onChatReceive(ChatReceiveEvent e)  {
         UPlayer p = AbstractionLayer.getPlayer();
-        Matcher reinforcementMatcher = PatternHandler.REINFORCEMENT_PATTERN.matcher(e.getMessage().getUnformattedText());
+        ChatMessage chatMessage = e.chatMessage();
+        String unformattedMsg = chatMessage.getPlainText();
 
+        Matcher reinforcementMatcher = PatternHandler.REINFORCEMENT_PATTERN.matcher(unformattedMsg);
         if (reinforcementMatcher.find()) {
             String fullName = reinforcementMatcher.group(1);
             String name = reinforcementMatcher.group(2);
-            String[] splitFormattedMsg = e.getMessage().getFormattedText().split(":");
+            String[] splitFormattedMsg = chatMessage.getFormattedText().split(":");
 
             int posX = Integer.parseInt(reinforcementMatcher.group(3));
             int posY = Integer.parseInt(reinforcementMatcher.group(4));
             int posZ = Integer.parseInt(reinforcementMatcher.group(5));
 
-            int distance = (int) p.getPosition().getDistance(posX, posY, posZ);
+            int distance = (int) p.getPosition().distance(new FloatVector3(posX, posY, posZ));
 
             boolean dChat = splitFormattedMsg[0].contains(ColorCode.RED.getCode())
                     && splitFormattedMsg[1].contains(ColorCode.RED.getCode());
 
             String type = "Reinforcement!";
-            if (lastReinforcement != null && name.equals(lastReinforcement.getIssuer()) && System.currentTimeMillis() - lastReinforcement.getTime() < 1000) {
+            if (lastReinforcement != null && name.equals(lastReinforcement.getIssuerName()) && System.currentTimeMillis() - lastReinforcement.getTime() < 1000) {
                 type = lastReinforcement.getType().getMessage();
             }
 
-            ITextComponent hoverMessage = Message.getBuilder().of("" + posX).color(ColorCode.AQUA).advance()
+            Component hoverMessage = Message.getBuilder().of("" + posX).color(ColorCode.AQUA).advance()
                     .of(" | ").color(ColorCode.GRAY).advance()
                     .of("" + posY).color(ColorCode.AQUA).advance()
                     .of(" | ").color(ColorCode.GRAY).advance()
@@ -86,21 +90,22 @@ public class ReinforcementEventHandler {
 
             p.sendMessage(Message.getBuilder()
                     .of("»").color(ColorCode.GRAY).advance().space()
-                    .of("Route Anzeigen")
-                    .clickEvent(ClickEvent.Action.RUN_COMMAND, "/navi " + posX + "/" + posY + "/" + posZ)
-                    .hoverEvent(HoverEvent.Action.SHOW_TEXT, hoverMessage)
-                    .color(ColorCode.RED).advance()
+                    .of("Route Anzeigen").color(ColorCode.RED)
+                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, hoverMessage)
+                            .clickEvent(ClickEvent.Action.RUN_COMMAND, "/navi " + posX + "/" + posY + "/" + posZ)
+                            .advance()
                     .of(" | ").color(ColorCode.GRAY).advance()
-                    .of("Unterwegs").hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Unterwegs Nachricht absenden").color(ColorCode.RED).advance().createComponent())
-                    .clickEvent(ClickEvent.Action.RUN_COMMAND, "/reinforcement ontheway " + name + " " + posX + " " + posY + " " + posZ + (dChat ? " -d" : ""))
-                    .color(ColorCode.RED).advance()
+                    .of("Unterwegs").color(ColorCode.RED)
+                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Unterwegs Nachricht absenden").color(ColorCode.RED).advance().createComponent())
+                            .clickEvent(ClickEvent.Action.RUN_COMMAND, "/reinforcement ontheway " + name + " " + posX + " " + posY + " " + posZ + (dChat ? " -d" : ""))
+                            .advance()
                     .createComponent());
 
-            e.setCanceled(true);
+            e.setCancelled(true);
             return;
         }
 
-        Matcher onTheWayMatcher = PatternHandler.ON_THE_WAY_PATTERN.matcher(e.getMessage().getUnformattedText());
+        Matcher onTheWayMatcher = PatternHandler.ON_THE_WAY_PATTERN.matcher(unformattedMsg);
         if (onTheWayMatcher.find()) {
             String senderFullName = onTheWayMatcher.group(1);
             String reinforcementSenderName = onTheWayMatcher.group(3);
@@ -112,28 +117,53 @@ public class ReinforcementEventHandler {
                     .replace("%target%", reinforcementSenderName)
                     .replace("%distance%", String.valueOf(distance)));
 
-            e.setCanceled(true);
+            e.setCancelled(true);
             return;
         }
 
-        for (ReinforcementCommand.Type type : ReinforcementCommand.Type.values()) {
+        for (ReinforcementType type : ReinforcementType.values()) {
             Pattern pattern = type.getPattern();
             if (pattern == null) continue;
 
-            Matcher matcher = pattern.matcher(e.getMessage().getUnformattedText());
+            Matcher matcher = pattern.matcher(unformattedMsg);
             if (!matcher.find()) continue;
 
             String name = matcher.group(1);
 
-            lastReinforcement = new ReinforcementCommand.ReinforcementType(name, type);
-            e.setCanceled(true);
+            lastReinforcement = new Reinforcement(name, type);
+            e.setCancelled(true);
             return;
         }
     }
 
-    @SubscribeEvent
-    public void onClientChat(ClientChatEvent e) {
+    @Subscribe
+    public void onClientMessageSend(ChatMessageSendEvent e) {
         if (ConfigElements.getReinforcementScreenshot() && e.getMessage().toLowerCase().startsWith("/reinforcement ontheway "))
             activeReinforcement = TickEventHandler.currentTick;
+    }
+
+    private class Reinforcement {
+
+        private final String issuerName;
+        private final ReinforcementType reinforcementType;
+        private final long time;
+
+        Reinforcement(String issuerName, ReinforcementType reinforcementType) {
+            this.issuerName = issuerName;
+            this.reinforcementType = reinforcementType;
+            this.time = System.currentTimeMillis();
+        }
+
+        public String getIssuerName() {
+            return issuerName;
+        }
+
+        public ReinforcementType getType() {
+            return reinforcementType;
+        }
+
+        public long getTime() {
+            return time;
+        }
     }
 }

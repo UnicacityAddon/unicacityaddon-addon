@@ -13,13 +13,9 @@ import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.events.faction.ContractEventHandler;
 import com.rettichlp.unicacityaddon.events.faction.badfaction.blacklist.BlacklistEventHandler;
 import com.rettichlp.unicacityaddon.events.faction.polizei.WantedEventHandler;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.scoreboard.ScorePlayerTeam;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.labymod.api.client.entity.player.Player;
 
 import java.util.List;
-import java.util.Objects;
 
 /**
  * @author RettichLP
@@ -31,23 +27,23 @@ public class NameTagEventHandler {
      * Quote: "Wenn ich gleich nicht mehr antworte, einfach laut meinen Namen sagen." - Lou, 02.10.2022
      * "Fällst du dann aus dem Bett?" - RettichLP und Ullrich, 02.10.2022
      */
-    @SubscribeEvent
-    public void onRenderNameTag(PlayerEvent.NameFormat e) {
-        if (!UnicacityAddon.isUnicacity()) return;
-        EntityPlayer entityPlayer = e.getEntityPlayer();
-        String playerUsername = e.getUsername();
-        String displayName = ScorePlayerTeam.formatPlayerName(entityPlayer.getTeam(), playerUsername);
-        if (displayName.contains(FormattingCode.OBFUSCATED.getCode())) return;
-
-        String houseBan = getHouseBan(playerUsername);
-        String outlaw = getOutlaw(playerUsername);
-        String prefix = getPrefix(playerUsername, false);
-        String factionInfo = getFactionInfo(playerUsername);
-        String duty = getDuty(playerUsername);
-
-        e.setDisplayname(houseBan + outlaw + prefix + playerUsername + factionInfo + duty);
-        entityPlayer.setGlowing(RenderTagEventHandler.showPlayerInfo && !AbstractionLayer.getPlayer().getPlayer().canEntityBeSeen(entityPlayer));
-    }
+//    @Subscribe
+//    public void onRenderNameTag(PlayerEvent.NameFormat e) {
+//        if (!UnicacityAddon.isUnicacity()) return;
+//        EntityPlayer entityPlayer = e.getEntityPlayer();
+//        String playerUsername = e.getUsername();
+//        String displayName = ScorePlayerTeam.formatPlayerName(entityPlayer.getTeam(), playerUsername);
+//        if (displayName.contains(FormattingCode.OBFUSCATED.getCode())) return;
+//
+//        String houseBan = getHouseBan(playerUsername);
+//        String outlaw = getOutlaw(playerUsername);
+//        String prefix = getPrefix(playerUsername, false);
+//        String factionInfo = getFactionInfo(playerUsername);
+//        String duty = getDuty(playerUsername);
+//
+//        e.setDisplayname(houseBan + outlaw + prefix + playerUsername + factionInfo + duty);
+//        entityPlayer.setGlowing(RenderTagEventHandler.showPlayerInfo && !AbstractionLayer.getPlayer().getPlayer().canEntityBeSeen(entityPlayer));
+//    }
 
     private String getHouseBan(String playerName) {
         StringBuilder houseBan = new StringBuilder();
@@ -162,8 +158,8 @@ public class NameTagEventHandler {
     }
 
     public static void refreshAllDisplayNames() {
-        if (UnicacityAddon.MINECRAFT.world == null) return;
-        List<EntityPlayer> items = UnicacityAddon.MINECRAFT.world.getPlayers(EntityPlayer.class, Objects::nonNull);
-        items.forEach(EntityPlayer::refreshDisplayName);
+        if (UnicacityAddon.MINECRAFT.clientWorld() == null) return;
+        List<Player> playerList = UnicacityAddon.MINECRAFT.clientWorld().getPlayers();
+        //playerList.forEach(player -> player::);
     }
 }

@@ -5,11 +5,11 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.event.ClickEvent;
-import net.minecraft.util.text.event.HoverEvent;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.event.ClickEvent;
+import net.kyori.adventure.text.event.HoverEvent;
+import net.labymod.api.event.Subscribe;
+import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
 import java.util.regex.Matcher;
 
@@ -19,14 +19,14 @@ import java.util.regex.Matcher;
 @UCEvent
 public class ServiceMessageEventHandler {
 
-    @SubscribeEvent
-    public void onClientChatReceived(ClientChatReceivedEvent e) {
-        String msg = e.getMessage().getUnformattedText();
+    @Subscribe
+    public void onChatReceive(ChatReceiveEvent e) {
+        String msg = e.chatMessage().getPlainText();
 
         Matcher m = PatternHandler.SERVICE_ARRIVED_PATTERN.matcher(msg);
         if (ConfigElements.getServiceMessagesActivated()) {
             if (m.find()) {
-                ITextComponent hoverMessage = Message.getBuilder().of("Annehmen").color(ColorCode.RED).advance().createComponent();
+                Component hoverMessage = Message.getBuilder().of("Annehmen").color(ColorCode.RED).advance().createComponent();
 
                 e.setMessage(Message.getBuilder()
                         .of("Neuer Notruf").color(ColorCode.RED).bold()
@@ -55,7 +55,7 @@ public class ServiceMessageEventHandler {
 
             m = PatternHandler.SERVICE_REQUEUED_PATTERN.matcher(msg);
             if (m.find()) {
-                ITextComponent hoverMessage = Message.getBuilder().of("Annehmen").color(ColorCode.RED).advance().createComponent();
+                Component hoverMessage = Message.getBuilder().of("Annehmen").color(ColorCode.RED).advance().createComponent();
 
                 e.setMessage(Message.getBuilder()
                         .of("Neu geöffnet").color(ColorCode.GOLD).bold()

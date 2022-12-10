@@ -11,8 +11,8 @@ import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.events.faction.rettungsdienst.ReviveEventHandler;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.labymod.api.event.Subscribe;
+import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -28,34 +28,38 @@ public class KarmaMessageEventHandler {
     private boolean karmaCheck = false;
     private int karma;
 
-    @SubscribeEvent
-    public void onClientChatReceived(ClientChatReceivedEvent e) {
-        String msg = e.getMessage().getUnformattedText();
+    @Subscribe
+    public void onChatReceive(ChatReceiveEvent e) {
+        String msg = e.chatMessage().getPlainText();
         UPlayer p = AbstractionLayer.getPlayer();
 
-        if (AccountEventHandler.isAfk) return;
+        if (AccountEventHandler.isAfk)
+            return;
 
         Matcher karmaChangedMatcher = PatternHandler.KARMA_CHANGED_PATTERN.matcher(msg);
         if (karmaChangedMatcher.find()) {
             ReviveEventHandler.handleRevive();
 
             // WORKAROUND START (for medics because ✨UCMDMOD✨) TODO: Remove later
-            if (!p.getFaction().equals(Faction.RETTUNGSDIENST)) {
+            if (!p.getFaction()
+                    .equals(Faction.RETTUNGSDIENST)) {
                 p.sendChatMessage("/karma");
                 karmaCheck = true;
-                e.setCanceled(true);
+                e.setCancelled(true);
             }
             // WORKAROUND END
             karma = Integer.parseInt(karmaChangedMatcher.group(1));
 
-            if (karma > 0 || karma < -7) return; // Wenn das Karma unter 0 ist, und nicht tiefer als 7 geht dann gibt es einen Kill
+            if (karma > 0 || karma < -7)
+                return; // Wenn das Karma unter 0 ist, und nicht tiefer als 7 geht dann gibt es einen Kill
 
             APIRequest.sendStatisticAddRequest(StatisticType.KILL);
             return;
         }
 
         Matcher karmaMatcher = PatternHandler.KARMA_PATTERN.matcher(msg);
-        if (!karmaCheck || !karmaMatcher.find()) return;
+        if (!karmaCheck || !karmaMatcher.find())
+            return;
 
         if (karma < 0 && ConfigElements.getEstimatedDespawnTime()) {
             Calendar cal = Calendar.getInstance();

@@ -1,77 +1,42 @@
 package com.rettichlp.unicacityaddon.commands.mobile;
 
+import com.google.inject.Inject;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.events.MobileEventHandler;
-import net.minecraft.command.ICommand;
-import net.minecraft.command.ICommandSender;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.client.IClientCommand;
+import net.labymod.api.client.chat.command.Command;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Arrays;
 import java.util.List;
 
 /**
  * @author RettichLP
  */
 @UCCommand
-public class StummCommand implements IClientCommand {
+public class StummCommand extends Command {
 
-    @Override
-    @Nonnull
-    public String getName() {
-        return "stumm";
+    private static final String usage = "/stumm";
+
+    @Inject
+    private StummCommand() {
+        super("stumm", "nichtstören", "donotdisturb");
     }
 
     @Override
-    @Nonnull
-    public String getUsage(@Nonnull ICommandSender sender) {
-        return "/stumm";
-    }
+    public boolean execute(String prefix, String[] arguments) {
+        UPlayer p = AbstractionLayer.getPlayer();
+        MobileEventHandler.muted = !MobileEventHandler.muted;
 
-    @Override
-    @Nonnull
-    public List<String> getAliases() {
-        return Arrays.asList("nichtstören", "donotdisturb");
-    }
-
-    @Override
-    public boolean checkPermission(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender) {
+        if (MobileEventHandler.muted)
+            p.sendInfoMessage("Du hast den Handy auf stumm gestellt.");
+        else
+            p.sendInfoMessage("Du hast dein Handy wieder laut gestellt.");
         return true;
     }
 
     @Override
-    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
-        UPlayer p = AbstractionLayer.getPlayer();
-        MobileEventHandler.muted = !MobileEventHandler.muted;
-
-        if (MobileEventHandler.muted) p.sendInfoMessage("Du hast den Handy auf stumm gestellt.");
-        else p.sendInfoMessage("Du hast dein Handy wieder laut gestellt.");
-    }
-
-    @Override
-    @Nonnull
-    public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
-        return TabCompletionBuilder.getBuilder(args).build();
-    }
-
-    @Override
-    public boolean isUsernameIndex(@Nonnull String[] args, int index) {
-        return false;
-    }
-
-    @Override
-    public boolean allowUsageWithoutPrefix(ICommandSender sender, String message) {
-        return false;
-    }
-
-    @Override
-    public int compareTo(@Nonnull ICommand o) {
-        return 0;
+    public List<String> complete(String[] arguments) {
+        return TabCompletionBuilder.getBuilder(arguments).build();
     }
 }

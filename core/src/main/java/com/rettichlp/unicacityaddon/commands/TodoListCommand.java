@@ -1,5 +1,6 @@
 package com.rettichlp.unicacityaddon.commands;
 
+import com.google.inject.Inject;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
@@ -10,72 +11,38 @@ import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.utils.MathUtils;
 import com.rettichlp.unicacityaddon.base.utils.TextUtils;
-import java.util.Collections;
+import net.kyori.adventure.text.event.ClickEvent;
+import net.labymod.api.client.chat.command.Command;
+
 import java.util.List;
 import java.util.Optional;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import net.minecraft.command.ICommand;
-import net.minecraft.command.ICommandSender;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.event.ClickEvent;
-import net.minecraftforge.client.IClientCommand;
 
 /**
  * @author RettichLP
  */
 @UCCommand
-public class TodoListCommand implements IClientCommand {
+public class TodoListCommand extends Command {
 
     public static List<TodolistEntry> todolist;
+    private static final String usage = "/todo [add|done|delete] [Todo]";
 
-    @Override
-    @Nonnull
-    public String getName() {
-        return "todo";
+    @Inject
+    private TodoListCommand() {
+        super("todo");
     }
 
     @Override
-    @Nonnull
-    public String getUsage(@Nonnull ICommandSender sender) {
-        return "/todo [add|done|delete] [Todo]";
-    }
-
-    @Override
-    @Nonnull
-    public List<String> getAliases() {
-        return Collections.emptyList();
-    }
-
-    @Override
-    public boolean checkPermission(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender) {
-        return true;
-    }
-
-    @Override
-    @Nonnull
-    public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
-        return TabCompletionBuilder.getBuilder(args).build();
-    }
-
-    @Override
-    public boolean isUsernameIndex(@Nonnull String[] args, int index) {
-        return false;
-    }
-
-    @Override
-    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
+    public boolean execute(String prefix, String[] arguments) {
         UPlayer p = AbstractionLayer.getPlayer();
 
-        if (args.length == 0) {
+        if (arguments.length == 0) {
             todoList();
-        } else if (args.length > 1 && args[0].equalsIgnoreCase("done")) {
-            String todo = TextUtils.makeStringByArgs(args, " ").replace("done ", "");
+        } else if (arguments.length > 1 && arguments[0].equalsIgnoreCase("done")) {
+            String todo = TextUtils.makeStringByArgs(arguments, " ").replace("done ", "");
             Optional<TodolistEntry> todolistEntryOptional = todolist.stream().filter(todolistEntry -> todolistEntry.getTodo().equals(todo)).findFirst();
             if (!todolistEntryOptional.isPresent()) {
                 p.sendErrorMessage("Keinen Eintrag gefunden.");
-                return;
+                return true;
             }
             int index = todolist.indexOf(todolistEntryOptional.get());
             TodolistEntry todolistEntry = todolistEntryOptional.get();
@@ -83,37 +50,43 @@ public class TodoListCommand implements IClientCommand {
             todolist.set(index, todolistEntry);
             FileManager.saveData();
             p.sendInfoMessage("Aufgabe als erledigt markiert.");
-        } else if (args.length > 1 && args[0].equalsIgnoreCase("delete")) {
-            String todo = TextUtils.makeStringByArgs(args, " ").replace("delete ", "");
+        } else if (arguments.length > 1 && arguments[0].equalsIgnoreCase("delete")) {
+            String todo = TextUtils.makeStringByArgs(arguments, " ").replace("delete ", "");
             boolean success = todolist.removeIf(todolistEntry -> todolistEntry.getTodo().equals(todo));
             if (!success) {
                 p.sendErrorMessage("Keinen Eintrag mit dieser ID gefunden.");
-                return;
+                return true;
             }
             FileManager.saveData();
             p.sendInfoMessage("Aufgabe aus Todoliste gelöscht.");
-        } else if (args.length > 2 && args[0].equalsIgnoreCase("edit") && MathUtils.isInteger(args[1])) {
-            int index = Integer.parseInt(args[1]) - 1;
+        } else if (arguments.length > 2 && arguments[0].equalsIgnoreCase("edit") && MathUtils.isInteger(arguments[1])) {
+            int index = Integer.parseInt(arguments[1]) - 1;
             if (index > todolist.size() - 1) {
                 p.sendErrorMessage("Keinen Eintrag mit dieser ID gefunden.");
-                return;
+                return true;
             }
-            String todo = TextUtils.makeStringByArgs(args, " ").replaceAll("(?i)edit " + args[1] + " ", "");
+            String todo = TextUtils.makeStringByArgs(arguments, " ").replaceAll("(?i)edit " + arguments[1] + " ", "");
             TodolistEntry todolistEntry = new TodolistEntry(todo);
             todolist.set(index, todolistEntry);
             FileManager.saveData();
             p.sendInfoMessage("Aufgabe editiert.");
         } else {
-            String todo = TextUtils.makeStringByArgs(args, " ");
+            String todo = TextUtils.makeStringByArgs(arguments, " ");
             TodolistEntry todolistEntry = new TodolistEntry(todo);
             if (todolist.stream().anyMatch(te -> te.getTodo().equals(todo))) {
                 p.sendErrorMessage("Dieses Todo gibt es bereits!");
-                return;
+                return true;
             }
             todolist.add(todolistEntry);
             FileManager.saveData();
             p.sendInfoMessage("Aufgabe zur Todoliste hinzugefügt.");
         }
+        return true;
+    }
+
+    @Override
+    public List<String> complete(String[] arguments) {
+        return TabCompletionBuilder.getBuilder(arguments).build();
     }
 
     private void todoList() {
@@ -124,40 +97,32 @@ public class TodoListCommand implements IClientCommand {
                 .createComponent());
         todolist.forEach(todolistEntry -> {
             int id = todolist.indexOf(todolistEntry) + 1;
-            if (todolistEntry.isDone()) p.sendMessage(Message.getBuilder()
-                    .of("» " + id + ". ").color(ColorCode.GRAY).advance()
-                    .of(todolistEntry.getTodo()).color(ColorCode.AQUA).strikethrough().advance().space()
-                    .of("[✐]").color(ColorCode.GOLD)
-                            .clickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/todo edit " + id + " " + todolistEntry.getTodo())
-                            .advance().space()
-                    .of("[✕]").color(ColorCode.RED)
-                            .clickEvent(ClickEvent.Action.RUN_COMMAND, "/todo delete " + todolistEntry.getTodo())
-                            .advance()
-                    .createComponent());
-            else p.sendMessage(Message.getBuilder()
-                    .of("» " + id + ". ").color(ColorCode.GRAY).advance()
-                    .of(todolistEntry.getTodo()).color(ColorCode.AQUA).advance().space()
-                    .of("[✔]").color(ColorCode.GREEN)
-                            .clickEvent(ClickEvent.Action.RUN_COMMAND, "/todo done " + todolistEntry.getTodo())
-                            .advance().space()
-                    .of("[✐]").color(ColorCode.GOLD)
-                            .clickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/todo edit " + id + " " + todolistEntry.getTodo())
-                            .advance().space()
-                    .of("[✕]").color(ColorCode.RED)
-                            .clickEvent(ClickEvent.Action.RUN_COMMAND, "/todo delete " + todolistEntry.getTodo())
-                            .advance()
-                    .createComponent());
+            if (todolistEntry.isDone())
+                p.sendMessage(Message.getBuilder()
+                        .of("» " + id + ". ").color(ColorCode.GRAY).advance()
+                        .of(todolistEntry.getTodo()).color(ColorCode.AQUA).strikethrough().advance().space()
+                        .of("[✐]").color(ColorCode.GOLD)
+                                .clickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/todo edit " + id + " " + todolistEntry.getTodo())
+                                .advance().space()
+                        .of("[✕]").color(ColorCode.RED)
+                        .clickEvent(ClickEvent.Action.RUN_COMMAND, "/todo delete " + todolistEntry.getTodo())
+                        .advance()
+                        .createComponent());
+            else
+                p.sendMessage(Message.getBuilder()
+                        .of("» " + id + ". ").color(ColorCode.GRAY).advance()
+                        .of(todolistEntry.getTodo()).color(ColorCode.AQUA).advance().space()
+                        .of("[✔]").color(ColorCode.GREEN)
+                                .clickEvent(ClickEvent.Action.RUN_COMMAND, "/todo done " + todolistEntry.getTodo())
+                                .advance().space()
+                        .of("[✐]").color(ColorCode.GOLD)
+                                .clickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/todo edit " + id + " " + todolistEntry.getTodo())
+                                .advance().space()
+                        .of("[✕]").color(ColorCode.RED)
+                                .clickEvent(ClickEvent.Action.RUN_COMMAND, "/todo delete " + todolistEntry.getTodo())
+                                .advance()
+                        .createComponent());
         });
         p.sendEmptyMessage();
-    }
-
-    @Override
-    public boolean allowUsageWithoutPrefix(ICommandSender sender, String message) {
-        return false;
-    }
-
-    @Override
-    public int compareTo(@Nonnull ICommand o) {
-        return 0;
     }
 }

@@ -1,6 +1,7 @@
 package com.rettichlp.unicacityaddon.commands.api;
 
 import com.google.gson.JsonObject;
+import com.google.inject.Inject;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.api.TokenManager;
@@ -9,54 +10,30 @@ import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
-import net.labymod.main.LabyMod;
-import net.minecraft.command.ICommand;
-import net.minecraft.command.ICommandSender;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.event.ClickEvent;
-import net.minecraft.util.text.event.HoverEvent;
-import net.minecraftforge.client.IClientCommand;
+import net.kyori.adventure.text.event.ClickEvent;
+import net.kyori.adventure.text.event.HoverEvent;
+import net.labymod.api.client.chat.command.Command;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Collections;
 import java.util.List;
 
 /**
  * @author RettichLP
  */
 @UCCommand
-public class TokenCommand implements IClientCommand {
+public class TokenCommand extends Command {
 
-    @Override
-    @Nonnull
-    public String getName() {
-        return "token";
+    private static final String usage = "/token (create|revoke)";
+
+    @Inject
+    private TokenCommand() {
+        super("token");
     }
 
     @Override
-    @Nonnull
-    public String getUsage(@Nonnull ICommandSender sender) {
-        return "/token (create|revoke)";
-    }
-
-    @Override
-    @Nonnull
-    public List<String> getAliases() {
-        return Collections.emptyList();
-    }
-
-    @Override
-    public boolean checkPermission(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender) {
-        return true;
-    }
-
-    @Override
-    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args) {
+    public boolean execute(String prefix, String[] arguments) {
         UPlayer p = AbstractionLayer.getPlayer();
 
-        if (args.length == 0) {
+        if (arguments.length == 0) {
             p.sendMessage(Message.getBuilder()
                     .prefix()
                     .of("Mit diesem").color(ColorCode.GRAY).advance().space()
@@ -66,42 +43,29 @@ public class TokenCommand implements IClientCommand {
                             .advance().space()
                     .of("kann jeder in deinem Namen Anfragen an die API senden.").color(ColorCode.GRAY).advance()
                     .createComponent());
-        } else if (args.length == 1 && args[0].equalsIgnoreCase("create")) {
+        } else if (arguments.length == 1 && arguments[0].equalsIgnoreCase("create")) {
             JsonObject response = APIRequest.sendTokenCreateRequest();
-            if (response == null) return;
+            if (response == null)
+                return true;
             p.sendAPIMessage(response.get("info").getAsString(), true);
-        } else if (args.length == 1 && args[0].equalsIgnoreCase("copy")) {
+        } else if (arguments.length == 1 && arguments[0].equalsIgnoreCase("copy")) {
             p.copyToClipboard(TokenManager.API_TOKEN);
-            LabyMod.getInstance().notifyMessageRaw(ColorCode.GREEN.getCode() + "Kopiert!", "Token in Zwischenablage kopiert.");
-        } else if (args.length == 1 && args[0].equalsIgnoreCase("revoke")) {
+            // TODO: 10.12.2022 LabyMod.getInstance().notifyMessageRaw(ColorCode.GREEN.getCode() + "Kopiert!", "Token in Zwischenablage kopiert.");
+        } else if (arguments.length == 1 && arguments[0].equalsIgnoreCase("revoke")) {
             JsonObject response = APIRequest.sendTokenRevokeRequest();
-            if (response == null) return;
+            if (response == null)
+                return true;
             p.sendAPIMessage(response.get("info").getAsString(), true);
         } else {
-            p.sendSyntaxMessage(getUsage(sender));
+            p.sendSyntaxMessage(usage);
         }
+        return true;
     }
 
     @Override
-    @Nonnull
-    public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
-        return TabCompletionBuilder.getBuilder(args)
+    public List<String> complete(String[] arguments) {
+        return TabCompletionBuilder.getBuilder(arguments)
                 .addAtIndex(1, "create", "revoke")
                 .build();
-    }
-
-    @Override
-    public boolean isUsernameIndex(@Nonnull String[] args, int index) {
-        return false;
-    }
-
-    @Override
-    public boolean allowUsageWithoutPrefix(ICommandSender sender, String message) {
-        return false;
-    }
-
-    @Override
-    public int compareTo(@Nonnull ICommand o) {
-        return 0;
     }
 }

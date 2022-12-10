@@ -1,25 +1,16 @@
 package com.rettichlp.unicacityaddon.events.job;
 
-import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
-import com.rettichlp.unicacityaddon.base.enums.DropPosition;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntitySign;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.World;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.labymod.api.event.Subscribe;
+import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author RettichLP
@@ -35,31 +26,31 @@ public class JobEventHandler {
     private long lastUse = -1;
     private final Timer timer = new Timer();
 
-    @SubscribeEvent
-    public void onPlayerInteract(PlayerInteractEvent e) {
-        if (!(e instanceof PlayerInteractEvent.RightClickBlock) || !UnicacityAddon.isUnicacity()) return;
+//    @Subscribe
+//    public void onPlayerInteract(PlayerInteractEvent e) {
+//        if (!(e instanceof PlayerInteractEvent.RightClickBlock) || !UnicacityAddon.isUnicacity()) return;
+//        UPlayer p = AbstractionLayer.getPlayer();
+//
+//        World world = e.getWorld();
+//        BlockPos blockPos = e.getPos();
+//
+//        if (isDropState && System.currentTimeMillis() - lastUse > 1000 && onDump(floatVector3)) {
+//            lastUse = System.currentTimeMillis();
+//            p.sendChatMessage("/dropwaste");
+//            return;
+//        }
+//
+//        TileEntity tileEntity = world.getTileEntity(floatVector3);
+//        if (!(tileEntity instanceof TileEntitySign)) return;
+//        ITextComponent[] lines = ((TileEntitySign) tileEntity).signText;
+//        Matcher matcher = Pattern.compile("^== (\\d+) ==$").matcher(lines[1].getUnformattedText());
+//        if (matcher.find()) drop();
+//    }
+
+    @Subscribe
+    public void onChatReceive(ChatReceiveEvent e) {
         UPlayer p = AbstractionLayer.getPlayer();
-
-        World world = e.getWorld();
-        BlockPos blockPos = e.getPos();
-
-        if (isDropState && System.currentTimeMillis() - lastUse > 1000 && onDump(blockPos)) {
-            lastUse = System.currentTimeMillis();
-            p.sendChatMessage("/dropwaste");
-            return;
-        }
-
-        TileEntity tileEntity = world.getTileEntity(blockPos);
-        if (!(tileEntity instanceof TileEntitySign)) return;
-        ITextComponent[] lines = ((TileEntitySign) tileEntity).signText;
-        Matcher matcher = Pattern.compile("^== (\\d+) ==$").matcher(lines[1].getUnformattedText());
-        if (matcher.find()) drop();
-    }
-
-    @SubscribeEvent
-    public void onChatReceived(ClientChatReceivedEvent e) {
-        UPlayer p = AbstractionLayer.getPlayer();
-        String msg = e.getMessage().getUnformattedText();
+        String msg = e.chatMessage().getPlainText();
 
         if (PatternHandler.WASTE_JOB_START_PATTERN.matcher(msg).find()) {
             isWasteJob = true;
@@ -140,12 +131,12 @@ public class JobEventHandler {
             }, TimeUnit.SECONDS.toMillis(3));
     }
 
-    private boolean onDump(BlockPos blockPos) {
-        return blockPos.getDistance(DropPosition.GLAS.getX(), DropPosition.GLAS.getY(), DropPosition.GLAS.getZ()) < 3 ||
-                blockPos.getDistance(DropPosition.WASTE.getX(), DropPosition.WASTE.getY(), DropPosition.WASTE.getZ()) < 3 ||
-                blockPos.getDistance(DropPosition.METAL.getX(), DropPosition.METAL.getY(), DropPosition.METAL.getZ()) < 3 ||
-                blockPos.getDistance(DropPosition.WOOD.getX(), DropPosition.WOOD.getY(), DropPosition.WOOD.getZ()) < 3;
-    }
+//    private boolean onDump(FloatVector3 blockPos) {
+//        return blockPos.getDistance(DropPosition.GLAS.getX(), DropPosition.GLAS.getY(), DropPosition.GLAS.getZ()) < 3 ||
+//                blockPos.getDistance(DropPosition.WASTE.getX(), DropPosition.WASTE.getY(), DropPosition.WASTE.getZ()) < 3 ||
+//                blockPos.getDistance(DropPosition.METAL.getX(), DropPosition.METAL.getY(), DropPosition.METAL.getZ()) < 3 ||
+//                blockPos.getDistance(DropPosition.WOOD.getX(), DropPosition.WOOD.getY(), DropPosition.WOOD.getZ()) < 3;
+//    }
 
     private void drop() {
         UPlayer p = AbstractionLayer.getPlayer();

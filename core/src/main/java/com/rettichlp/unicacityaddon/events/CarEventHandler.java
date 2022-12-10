@@ -8,14 +8,16 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.modules.CarOpenModule;
-import net.minecraft.scoreboard.Score;
-import net.minecraft.scoreboard.Scoreboard;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
+
+import net.labymod.api.client.scoreboard.DisplaySlot;
+import net.labymod.api.client.scoreboard.Scoreboard;
+import net.labymod.api.client.scoreboard.ScoreboardScore;
+import net.labymod.api.event.Subscribe;
+import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
 /**
  * @author RettichLP
@@ -25,10 +27,10 @@ public class CarEventHandler {
 
     private static final List<Integer> sentTankWarnings = new ArrayList<>();
 
-    @SubscribeEvent
-    public void onClientChatReceived(ClientChatReceivedEvent e) {
+    @Subscribe
+    public void onChatReceive(ChatReceiveEvent e) {
         UPlayer p = AbstractionLayer.getPlayer();
-        String msg = e.getMessage().getUnformattedText();
+        String msg = e.chatMessage().getPlainText();
 
         if (PatternHandler.CAR_OPEN_PATTERN.matcher(msg).find()) {
             CarOpenModule.info = ColorCode.GREEN.getCode() + "offen";
@@ -51,21 +53,25 @@ public class CarEventHandler {
         Matcher checkKFZMatcher = PatternHandler.CAR_CHECK_KFZ_PATTERN.matcher(msg);
         if (checkKFZMatcher.find()) {
             String name = checkKFZMatcher.group(1);
-            if (name == null) name = checkKFZMatcher.group(2);
+            if (name == null)
+                name = checkKFZMatcher.group(2);
             p.sendChatMessage("/memberinfo " + name);
         }
     }
 
-    public static void checkTank(Scoreboard scoreboard) {
+    public static void checkTank() {
         UPlayer p = AbstractionLayer.getPlayer();
-        Score tankScore = scoreboard.getScores().stream()
-                .filter(score -> score.getPlayerName().equals(ColorCode.GREEN.getCode() + "Tank" + ColorCode.DARK_GRAY.getCode() + ":"))
+        Scoreboard scoreboard = p.getWorldScoreboard();
+        ScoreboardScore scoreboardScore = scoreboard.getScores(scoreboard.objective(DisplaySlot.SIDEBAR))
+                .stream()
+                .filter(score -> score.getName().equals(ColorCode.GREEN.getCode() + "Tank" + ColorCode.DARK_GRAY.getCode() + ":"))
                 .findFirst()
                 .orElse(null);
 
-        if (tankScore == null) return;
+        if (scoreboardScore == null)
+            return;
 
-        int tank = tankScore.getScorePoints();
+        int tank = scoreboardScore.getValue();
         switch (tank) {
             case 100:
                 sentTankWarnings.clear();
@@ -75,7 +81,8 @@ public class CarEventHandler {
             case 5:
                 if (!sentTankWarnings.contains(tank)) {
                     p.sendInfoMessage("Dein Tank hat noch " + tank + " Liter.");
-                    p.playSound("block.note.harp");
+                    // TODO: 09.12.2022 Implement sounds
+                    // p.playSound("block.note.harp");
                     sentTankWarnings.add(tank);
                 }
                 break;

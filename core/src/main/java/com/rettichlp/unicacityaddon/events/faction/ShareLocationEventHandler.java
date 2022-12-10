@@ -7,11 +7,11 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.event.ClickEvent;
-import net.minecraft.util.text.event.HoverEvent;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.event.ClickEvent;
+import net.kyori.adventure.text.event.HoverEvent;
+import net.labymod.api.event.Subscribe;
+import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
 import java.util.regex.Matcher;
 
@@ -22,14 +22,14 @@ import java.util.regex.Matcher;
 @UCEvent
 public class ShareLocationEventHandler {
 
-    @SubscribeEvent
-    public void onClientChatReceive(ClientChatReceivedEvent e) {
+    @Subscribe
+    public void onChatReceive(ChatReceiveEvent e)  {
         UPlayer p = AbstractionLayer.getPlayer();
-        Matcher shareLocationMatcher = PatternHandler.SHARE_LOCATION_PATTERN.matcher(e.getMessage().getUnformattedText());
+        Matcher shareLocationMatcher = PatternHandler.SHARE_LOCATION_PATTERN.matcher(e.chatMessage ().getPlainText());
 
         if (!shareLocationMatcher.find()) return;
         if (!shareLocationMatcher.group(2).contains(p.getName())) {
-            e.setCanceled(true);
+            e.setCancelled(true);
             return;
         }
         String senderName = shareLocationMatcher.group(1);
@@ -38,7 +38,7 @@ public class ShareLocationEventHandler {
         int posY = Integer.parseInt(shareLocationMatcher.group(4));
         int posZ = Integer.parseInt(shareLocationMatcher.group(5));
 
-        ITextComponent hoverMessage = Message.getBuilder().of("" + posX).color(ColorCode.AQUA).advance()
+        Component hoverMessage = Message.getBuilder().of("" + posX).color(ColorCode.AQUA).advance()
                 .of(" | ").color(ColorCode.GRAY).advance()
                 .of("" + posY).color(ColorCode.AQUA).advance()
                 .of(" | ").color(ColorCode.GRAY).advance()
@@ -54,11 +54,11 @@ public class ShareLocationEventHandler {
 
         p.sendMessage(Message.getBuilder()
                 .of("»").color(ColorCode.GRAY).advance().space()
-                .of("Route Anzeigen")
-                    .clickEvent(ClickEvent.Action.RUN_COMMAND, "/navi " + posX + "/" + posY + "/" + posZ)
-                    .hoverEvent(HoverEvent.Action.SHOW_TEXT, hoverMessage)
-                    .color(ColorCode.RED).advance()
+                .of("Route Anzeigen").color(ColorCode.RED)
+                        .hoverEvent(HoverEvent.Action.SHOW_TEXT, hoverMessage)
+                        .clickEvent(ClickEvent.Action.RUN_COMMAND, "/navi " + posX + "/" + posY + "/" + posZ)
+                        .advance()
                 .createComponent());
-        e.setCanceled(true);
+        e.setCancelled(true);
     }
 }

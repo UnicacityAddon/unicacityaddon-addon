@@ -1,5 +1,6 @@
 package com.rettichlp.unicacityaddon.commands;
 
+import com.google.inject.Inject;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
@@ -7,78 +8,45 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.events.ShutDownEventHandler;
-import java.util.Collections;
+import net.labymod.api.client.chat.command.Command;
+
 import java.util.List;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import net.minecraft.command.ICommand;
-import net.minecraft.command.ICommandSender;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.client.IClientCommand;
 
 /**
  * @author Dimiikou
  */
 @UCCommand
-public class ShutdownFriedhofCommand implements IClientCommand {
+public class ShutdownFriedhofCommand extends Command {
 
-    @Override
-    @Nonnull
-    public String getName() {
-        return "shutdownfriedhof";
+    private static final String usage = "/shutdownfriedhof";
+
+    @Inject
+    private ShutdownFriedhofCommand() {
+        super("shutdownfriedhof");
     }
 
     @Override
-    @Nonnull
-    public String getUsage(@Nonnull ICommandSender sender) {
-        return "/shutdownfriedhof";
-    }
-
-    @Override
-    @Nonnull
-    public List<String> getAliases() {
-        return Collections.emptyList();
-    }
-
-    @Override
-    public boolean checkPermission(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender) {
-        return true;
-    }
-
-    @Override
-    @Nonnull
-    public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
-        return TabCompletionBuilder.getBuilder(args).build();
-    }
-
-    @Override
-    public boolean isUsernameIndex(@Nonnull String[] args, int index) {
-        return false;
-    }
-
-    @Override
-    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
+    public boolean execute(String prefix, String[] arguments) {
         UPlayer p = AbstractionLayer.getPlayer();
         ShutDownEventHandler.shutdownFriedhof = !ShutDownEventHandler.shutdownFriedhof;
 
         if (ShutDownEventHandler.shutdownFriedhof)
-            Message.getBuilder().prefix().of("Dein Computer fährt nun herunter sobald du wieder lebst.").color(ColorCode.GRAY)
-                    .advance().sendTo(p.getPlayer());
+            p.sendMessage(Message.getBuilder()
+                    .prefix()
+                    .of("Dein Computer fährt nun herunter sobald du wieder lebst.").color(ColorCode.GRAY).advance()
+                    .createComponent());
         else
-            Message.getBuilder().prefix().of("Dein Computer fährt nun").color(ColorCode.GRAY).advance().space()
+            p.sendMessage(Message.getBuilder()
+                    .prefix()
+                    .of("Dein Computer fährt nun").color(ColorCode.GRAY).advance().space()
                     .of("nichtmehr").color(ColorCode.RED).advance().space()
-                    .of("herunter sobald du wieder lebst.").color(ColorCode.GRAY)
-                    .advance().sendTo(p.getPlayer());
+                    .of("herunter sobald du wieder lebst.").color(ColorCode.GRAY).advance()
+                    .createComponent());
+        return true;
     }
 
     @Override
-    public boolean allowUsageWithoutPrefix(ICommandSender sender, String message) {
-        return false;
-    }
-
-    @Override
-    public int compareTo(@Nonnull ICommand o) {
-        return 0;
+    public List<String> complete(String[] arguments) {
+        return TabCompletionBuilder.getBuilder(arguments).build();
     }
 }

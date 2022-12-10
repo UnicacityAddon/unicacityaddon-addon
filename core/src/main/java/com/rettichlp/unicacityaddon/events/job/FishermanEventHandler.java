@@ -4,9 +4,9 @@ import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
-import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.labymod.api.event.Subscribe;
+import net.labymod.api.event.client.chat.ChatReceiveEvent;
+import net.labymod.api.util.math.vector.FloatVector3;
 
 import java.util.Arrays;
 import java.util.List;
@@ -23,17 +23,18 @@ public class FishermanEventHandler {
     private boolean canCatchFish = false;
     private boolean fisherManJob = false;
     private int count = 0;
-    private final List<BlockPos> FISHER_POSITION_LIST = Arrays.asList(
-            new BlockPos(-570, 63, 160),
-            new BlockPos(-555, 63, 106),
-            new BlockPos(-521, 63, 78),
-            new BlockPos(-569, 63, 50),
-            new BlockPos(-522, 63, 10)
+    private final FloatVector3 FISHER_START_POSITION = new FloatVector3(-504, 63, 197);
+    private final List<FloatVector3> FISHER_POSITION_LIST = Arrays.asList(
+            new FloatVector3(-570, 63, 160),
+            new FloatVector3(-555, 63, 106),
+            new FloatVector3(-521, 63, 78),
+            new FloatVector3(-569, 63, 50),
+            new FloatVector3(-522, 63, 10)
     );
 
-    @SubscribeEvent
-    public void onClientChatReceive(ClientChatReceivedEvent e) {
-        String msg = e.getMessage().getUnformattedText();
+    @Subscribe
+    public void onChatReceive(ChatReceiveEvent e)  {
+        String msg = e.chatMessage().getPlainText();
         UPlayer p = AbstractionLayer.getPlayer();
 
         if (PatternHandler.FISHER_START.matcher(msg).find()) {
@@ -73,7 +74,7 @@ public class FishermanEventHandler {
         if (PatternHandler.FISHER_END.matcher(msg).find()) {
             count = 0;
             fisherManJob = onTargetLocation = canCatchFish = false;
-            if (p.getPosition().getDistance(-504, 63, 197) < 2) {
+            if (p.getPosition().distance(FISHER_START_POSITION) < 2) {
                 p.sendChatMessage("/dropfish");
                 return;
             }
@@ -81,8 +82,8 @@ public class FishermanEventHandler {
         }
     }
 
-    private BlockPos getFisherPosition(int i) {
-        return i > FISHER_POSITION_LIST.size() ? new BlockPos(-504, 63, 197) /* Steg */ : FISHER_POSITION_LIST.get(i - 1);
+    private FloatVector3 getFisherPosition(int i) {
+        return i > FISHER_POSITION_LIST.size() ? FISHER_START_POSITION : FISHER_POSITION_LIST.get(i - 1);
     }
 
     private void catchFish() {

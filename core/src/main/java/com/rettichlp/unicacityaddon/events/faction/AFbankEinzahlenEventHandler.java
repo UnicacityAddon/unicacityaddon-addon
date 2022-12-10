@@ -6,8 +6,8 @@ import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.commands.faction.AFbankEinzahlenCommand;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.labymod.api.event.Subscribe;
+import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
 import java.util.TimerTask;
 import java.util.regex.Matcher;
@@ -18,11 +18,11 @@ import java.util.regex.Matcher;
 @UCEvent
 public class AFbankEinzahlenEventHandler {
 
-    @SubscribeEvent
-    public void onClientChatReceived(ClientChatReceivedEvent e) {
+    @Subscribe
+    public void onChatReceive(ChatReceiveEvent e) {
         if (!AFbankEinzahlenCommand.STARTED.get()) return;
 
-        String msg = e.getMessage().getUnformattedText();
+        String msg = e.chatMessage().getPlainText();
         Matcher taxesMatcher = PatternHandler.FBANK_TAXES.matcher(msg);
         if (taxesMatcher.find()) {
             AFbankEinzahlenCommand.STARTED.set(false);
@@ -30,12 +30,12 @@ public class AFbankEinzahlenEventHandler {
             AFbankEinzahlenCommand.timer.schedule(new TimerTask() {
                 public void run() {
                     AFbankEinzahlenCommand.sendClockMessage();
-                    Message.getBuilder()
+                    AbstractionLayer.getPlayer().sendMessage(Message.getBuilder()
                             .prefix()
                             .of("Nicht eingezahlt wurden: ").color(ColorCode.GRAY).advance()
                             .of(AFbankEinzahlenCommand.amount + "$").color(ColorCode.BLUE).advance()
                             .of(".").color(ColorCode.GRAY).advance()
-                            .sendTo(AbstractionLayer.getPlayer().getPlayer());
+                            .createComponent());
                 }
             }, 200L);
         }

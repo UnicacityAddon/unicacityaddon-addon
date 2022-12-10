@@ -1,5 +1,6 @@
 package com.rettichlp.unicacityaddon.commands.teamspeak;
 
+import com.google.inject.Inject;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
@@ -10,14 +11,8 @@ import com.rettichlp.unicacityaddon.base.teamspeak.TSClientQuery;
 import com.rettichlp.unicacityaddon.base.teamspeak.TSUtils;
 import com.rettichlp.unicacityaddon.base.teamspeak.commands.ClientMoveCommand;
 import com.rettichlp.unicacityaddon.base.teamspeak.objects.Client;
-import net.minecraft.command.ICommand;
-import net.minecraft.command.ICommandSender;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.client.IClientCommand;
+import net.labymod.api.client.chat.command.Command;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
 
@@ -26,88 +21,57 @@ import java.util.List;
  * @author RettichLP
  */
 @UCCommand
-public class MoveHereCommand implements IClientCommand {
+public class MoveHereCommand extends Command {
 
-    @Override
-    @Nonnull
-    public String getName() {
-        return "movehere";
+    private static final String usage = "/movehere [Spieler]";
+
+    @Inject
+    private MoveHereCommand() {
+        super("movehere");
     }
 
     @Override
-    @Nonnull
-    public String getUsage(@Nonnull ICommandSender sender) {
-        return "/movehere [Spieler]";
-    }
-
-    @Override
-    @Nonnull
-    public List<String> getAliases() {
-        return Collections.emptyList();
-    }
-
-    @Override
-    public boolean checkPermission(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender) {
-        return true;
-    }
-
-    @Override
-    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args) {
+    public boolean execute(String prefix, String[] arguments) {
         UPlayer p = AbstractionLayer.getPlayer();
 
-        if (args.length < 1) {
-            p.sendSyntaxMessage(getUsage(sender));
-            return;
+        if (arguments.length < 1) {
+            p.sendSyntaxMessage(usage);
+            return true;
         }
 
         if (!ConfigElements.getTeamspeakAPIKey().matches("([A-Z0-9]{4}(-*)){6}")) {
             p.sendErrorMessage("Teamspeak API Key ist nicht gültig!");
-            return;
+            return true;
         }
 
         if (!TSClientQuery.clientQueryConnected) {
             p.sendErrorMessage("Keine Verbindung zur TeamSpeak ClientQuery!");
             TSClientQuery.reconnect();
-            return;
+            return true;
         }
 
-        String name = args[0];
+        String name = arguments[0];
 
         int channelID = TSUtils.getMyChannelID();
 
         List<Client> clients = TSUtils.getClientsByName(Collections.singletonList(name));
         if (clients.isEmpty()) {
             p.sendErrorMessage("Es wurde kein Spieler auf dem TeamSpeak mit diesem Namen gefunden.");
-            return;
+            return true;
         }
 
         CommandResponse response = new ClientMoveCommand(channelID, clients).getResponse();
         if (!response.succeeded()) {
             p.sendErrorMessage("Das Moven ist fehlgeschlagen.");
-            return;
+            return true;
         }
 
         p.sendInfoMessage("Du hast die Person zu dir gemoved.");
+        return true;
     }
 
     @Override
-    @Nonnull
-    public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
-        return TabCompletionBuilder.getBuilder(args).build();
-    }
-
-    @Override
-    public boolean isUsernameIndex(@Nonnull String[] args, int index) {
-        return false;
-    }
-
-    @Override
-    public boolean allowUsageWithoutPrefix(ICommandSender sender, String message) {
-        return false;
-    }
-
-    @Override
-    public int compareTo(@Nonnull ICommand o) {
-        return 0;
+    public List<String> complete(String[] arguments) {
+        return TabCompletionBuilder.getBuilder(arguments).build();
     }
 }

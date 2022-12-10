@@ -3,9 +3,8 @@ package com.rettichlp.unicacityaddon.events.faction.badfaction.blacklist;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.commands.faction.badfaction.BlacklistInfoCommand;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.labymod.api.event.Subscribe;
+import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,9 +22,9 @@ public class BlacklistEventHandler {
 
     private static long blacklistShown;
 
-    @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public void onBlacklistShown(ClientChatReceivedEvent e) {
-        String msg = e.getMessage().getUnformattedText();
+    @Subscribe
+    public void onChatReceive(ChatReceiveEvent e) {
+        String msg = e.chatMessage().getPlainText();
 
         Matcher blacklistAddedMatcher = PatternHandler.BLACKLIST_ADDED_PATTERN.matcher(msg);
         if (blacklistAddedMatcher.find()) {
@@ -56,7 +55,7 @@ public class BlacklistEventHandler {
 
             // BlacklistInfoCommand: hide all but one
             if (System.currentTimeMillis() - BlacklistInfoCommand.executedTime < 1000 && !name.equalsIgnoreCase(BlacklistInfoCommand.target))
-                e.setCanceled(true);
+                e.setCancelled(true);
         }
     }
 }

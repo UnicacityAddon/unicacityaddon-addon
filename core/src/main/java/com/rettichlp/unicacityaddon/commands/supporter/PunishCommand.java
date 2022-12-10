@@ -1,20 +1,14 @@
 package com.rettichlp.unicacityaddon.commands.supporter;
 
+import com.google.inject.Inject;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.enums.Punishment;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
-import net.minecraft.command.ICommand;
-import net.minecraft.command.ICommandSender;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.client.IClientCommand;
+import net.labymod.api.client.chat.command.Command;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,80 +16,62 @@ import java.util.stream.Collectors;
  * @author Dimiikou
  */
 @UCCommand
-public class PunishCommand implements IClientCommand {
+public class PunishCommand extends Command {
 
-    @Override
-    @Nonnull
-    public String getName() {
-        return "punish";
+    private static final String usage = "/punish [Spielername] [Grund]";
+
+    @Inject
+    private PunishCommand() {
+        super("punish");
     }
 
     @Override
-    @Nonnull
-    public String getUsage(@Nonnull ICommandSender sender) {
-        return "/punish [Spielername] [Grund]";
-    }
-
-    @Override
-    @Nonnull
-    public List<String> getAliases() {
-        return Collections.emptyList();
-    }
-
-    @Override
-    public boolean checkPermission(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender) {
-        return true;
-    }
-
-    @Override
-    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
+    public boolean execute(String prefix, String[] arguments) {
         UPlayer p = AbstractionLayer.getPlayer();
 
-        if (args.length < 2) {
-            p.sendSyntaxMessage(getUsage(sender));
-            return;
+        if (arguments.length < 2) {
+            p.sendSyntaxMessage(usage);
+            return true;
         }
 
-        Punishment punishment = getPunishmentByName(args[1]);
+        Punishment punishment = getPunishmentByName(arguments[1]);
         if (punishment == null) {
             p.sendErrorMessage("Dieser Bangrund existiert nicht");
-            return;
+            return true;
         }
 
         String reason = punishment.getReason();
         int banDuration = punishment.getBanDuration();
 
         if (punishment.getCheckpoints() > 0)
-            p.sendChatMessage("/checkpoints " + args[0] + " " + punishment.getCheckpoints() + " " + reason);
+            p.sendChatMessage("/checkpoints " + arguments[0] + " " + punishment.getCheckpoints() + " " + reason);
         if (punishment.getBanDuration() > 0)
-            p.sendChatMessage("/tban " + args[0] + " 0 0 " + banDuration + " " + reason);
-        if (punishment.getBanDuration() == -1) p.sendChatMessage("/ban " + args[0] + " " + reason);
-        if (punishment.isLoyalityPointReset()) p.sendChatMessage("/resettreuebonus " + args[0]);
+            p.sendChatMessage("/tban " + arguments[0] + " 0 0 " + banDuration + " " + reason);
+        if (punishment.getBanDuration() == -1)
+            p.sendChatMessage("/ban " + arguments[0] + " " + reason);
+        if (punishment.isLoyalityPointReset())
+            p.sendChatMessage("/resettreuebonus " + arguments[0]);
         if (punishment.getWeaponLock() > 0)
-            p.sendChatMessage("/waffensperre " + args[0] + " 0 0 " + punishment.getWeaponLock() * 24 * 60 + " " + reason);
+            p.sendChatMessage("/waffensperre " + arguments[0] + " 0 0 " + punishment.getWeaponLock() * 24 * 60 + " " + reason);
         if (punishment.getFactionLock() > 0)
-            p.sendChatMessage("/fraksperre " + args[0] + " " + punishment.getFactionLock() + " " + reason);
+            p.sendChatMessage("/fraksperre " + arguments[0] + " " + punishment.getFactionLock() + " " + reason);
         if (punishment.getAdLock() > 0)
-            p.sendChatMessage("/adsperre " + args[0] + " " + punishment.getAdLock() + " " + reason);
-        if (punishment.isKick()) p.sendChatMessage("/kick " + args[0] + " " + reason);
+            p.sendChatMessage("/adsperre " + arguments[0] + " " + punishment.getAdLock() + " " + reason);
+        if (punishment.isKick())
+            p.sendChatMessage("/kick " + arguments[0] + " " + reason);
         if (punishment.getWarnAmmount() > 0)
             for (int i = 0; i < punishment.getWarnAmmount(); i++) {
-                p.sendChatMessage("/warn " + args[0] + " " + reason);
+                p.sendChatMessage("/warn " + arguments[0] + " " + reason);
             }
 
+        return true;
     }
 
     @Override
-    @Nonnull
-    public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
-        return TabCompletionBuilder.getBuilder(args)
+    public List<String> complete(String[] arguments) {
+        return TabCompletionBuilder.getBuilder(arguments)
                 .addAtIndex(2, Arrays.stream(Punishment.values()).map(Punishment::getTabReason).sorted().collect(Collectors.toList()))
                 .build();
-    }
-
-    @Override
-    public boolean isUsernameIndex(@Nonnull String[] args, int index) {
-        return false;
     }
 
     private String getBanDurationString(int banDuration) {
@@ -110,18 +86,9 @@ public class PunishCommand implements IClientCommand {
 
     private Punishment getPunishmentByName(String s) {
         for (Punishment punishment : Punishment.values()) {
-            if (punishment.getTabReason().equals(s)) return punishment;
+            if (punishment.getTabReason().equals(s))
+                return punishment;
         }
         return null;
-    }
-
-    @Override
-    public boolean allowUsageWithoutPrefix(ICommandSender sender, String message) {
-        return false;
-    }
-
-    @Override
-    public int compareTo(@Nonnull ICommand o) {
-        return 0;
     }
 }

@@ -2,8 +2,8 @@ package com.rettichlp.unicacityaddon.events;
 
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.utils.ForgeUtils;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.labymod.api.event.Subscribe;
+import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
 /**
  * @author Dimiikou
@@ -14,9 +14,9 @@ public class ShutDownEventHandler {
     public static boolean shutdownJail = false;
     public static boolean shutdownFriedhof = false;
 
-    @SubscribeEvent
-    public void onClientChatReceived(ClientChatReceivedEvent e) {
-        String msg = e.getMessage().getUnformattedText();
+    @Subscribe
+    public void onChatReceive(ChatReceiveEvent e) {
+        String msg = e.chatMessage().getPlainText();
         if (shutdownFriedhof && msg.equals("Du lebst nun wieder.")) ForgeUtils.shutdownPC();
         if (shutdownJail && msg.equals("[Gefängnis] Du bist wieder frei!")) ForgeUtils.shutdownPC();
     }

@@ -1,70 +1,34 @@
 package com.rettichlp.unicacityaddon.commands;
 
+import com.google.inject.Inject;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.commands.faction.AFbankEinzahlenCommand;
-import java.util.Arrays;
+import net.labymod.api.client.chat.command.Command;
+
 import java.util.List;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import net.minecraft.command.ICommand;
-import net.minecraft.command.ICommandSender;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.client.IClientCommand;
 
 /**
  * @author Dimiikou
  */
 @UCCommand
-public class ClockCommand implements IClientCommand {
+public class ClockCommand extends Command {
 
-    @Override
-    @Nonnull
-    public String getName() {
-        return "clock";
+    private static final String usage = "/clock";
+
+    @Inject
+    private ClockCommand() {
+        super("clock", "uhrzeit", "uhr");
     }
 
     @Override
-    @Nonnull
-    public String getUsage(@Nonnull ICommandSender sender) {
-        return "/clock";
-    }
-
-    @Override
-    @Nonnull
-    public List<String> getAliases() {
-        return Arrays.asList("uhrzeit", "uhr");
-    }
-
-    @Override
-    public boolean checkPermission(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender) {
+    public boolean execute(String prefix, String[] arguments) {
+        AFbankEinzahlenCommand.sendClockMessage();
         return true;
     }
 
     @Override
-    @Nonnull
-    public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
-        return TabCompletionBuilder.getBuilder(args).build();
-    }
-
-    @Override
-    public boolean isUsernameIndex(@Nonnull String[] args, int index) {
-        return false;
-    }
-
-    @Override
-    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
-        AFbankEinzahlenCommand.sendClockMessage();
-    }
-
-    @Override
-    public boolean allowUsageWithoutPrefix(ICommandSender sender, String message) {
-        return false;
-    }
-
-    @Override
-    public int compareTo(@Nonnull ICommand o) {
-        return 0;
+    public List<String> complete(String[] arguments) {
+        return TabCompletionBuilder.getBuilder(arguments).build();
     }
 }

@@ -1,5 +1,6 @@
 package com.rettichlp.unicacityaddon.commands.teamspeak;
 
+import com.google.inject.Inject;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.api.Syncer;
@@ -12,16 +13,10 @@ import com.rettichlp.unicacityaddon.base.teamspeak.commands.ClientVariableComman
 import com.rettichlp.unicacityaddon.base.teamspeak.objects.Client;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
-import net.minecraft.command.ICommand;
-import net.minecraft.command.ICommandSender;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.event.ClickEvent;
-import net.minecraft.util.text.event.HoverEvent;
-import net.minecraftforge.client.IClientCommand;
+import net.kyori.adventure.text.event.ClickEvent;
+import net.kyori.adventure.text.event.HoverEvent;
+import net.labymod.api.client.chat.command.Command;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -35,33 +30,17 @@ import java.util.stream.IntStream;
  * @author RettichLP
  */
 @UCCommand
-public class ChannelActivityCommand implements IClientCommand {
+public class ChannelActivityCommand extends Command {
 
-    @Override
-    @Nonnull
-    public String getName() {
-        return "channelactivity";
+    private static final String usage = "/channelactivity";
+
+    @Inject
+    private ChannelActivityCommand() {
+        super("channelactivity");
     }
 
     @Override
-    @Nonnull
-    public String getUsage(@Nonnull ICommandSender sender) {
-        return "/channelactivity";
-    }
-
-    @Override
-    @Nonnull
-    public List<String> getAliases() {
-        return Collections.emptyList();
-    }
-
-    @Override
-    public boolean checkPermission(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender) {
-        return true;
-    }
-
-    @Override
-    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
+    public boolean execute(String prefix, String[] arguments) {
         new Thread(() -> {
             UPlayer p = AbstractionLayer.getPlayer();
 
@@ -88,7 +67,7 @@ public class ChannelActivityCommand implements IClientCommand {
 
             factionPlayers.removeAll(playersInChannel);
 
-            if (args.length > 0 && args[0].equalsIgnoreCase("copy")) {
+            if (arguments.length > 0 && arguments[0].equalsIgnoreCase("copy")) {
                 StringJoiner stringJoiner = new StringJoiner("\n");
                 stringJoiner.add("Nicht anwesende Spieler:");
                 factionPlayers.forEach(stringJoiner::add);
@@ -108,51 +87,38 @@ public class ChannelActivityCommand implements IClientCommand {
                     .of("»").color(ColorCode.GRAY).advance().space()
                     .of(playerName).color(isOnline ? ColorCode.GREEN : ColorCode.RED).advance().space()
                     .of(isOnline ? "[¡]" : "").color(ColorCode.BLUE)
-                    .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Finde " + playerName + " auf dem TS").color(ColorCode.RED).advance().createComponent())
-                    .clickEvent(ClickEvent.Action.RUN_COMMAND, "/tsfind " + playerName)
-                    .advance().space()
+                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Finde " + playerName + " auf dem TS").color(ColorCode.RED).advance().createComponent())
+                            .clickEvent(ClickEvent.Action.RUN_COMMAND, "/tsfind " + playerName)
+                            .advance().space()
                     .of(isOnline ? "[↓]" : "").color(ColorCode.BLUE)
-                    .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Move " + playerName + " zu dir").color(ColorCode.RED).advance().createComponent())
-                    .clickEvent(ClickEvent.Action.RUN_COMMAND, "/movehere " + playerName)
-                    .advance()
+                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Move " + playerName + " zu dir").color(ColorCode.RED).advance().createComponent())
+                            .clickEvent(ClickEvent.Action.RUN_COMMAND, "/movehere " + playerName)
+                            .advance()
                     .createComponent()));
 
             p.sendMessage(Message.getBuilder()
                     .of("➡").color(ColorCode.GRAY).advance().space()
                     .of("Nicht anwesende Spieler kopieren").color(ColorCode.GREEN)
-                    .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Nicht anwesende Spieler kopieren").color(ColorCode.RED).advance().createComponent())
-                    .clickEvent(ClickEvent.Action.RUN_COMMAND, "/channelactivity copy")
-                    .advance()
+                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Nicht anwesende Spieler kopieren").color(ColorCode.RED).advance().createComponent())
+                            .clickEvent(ClickEvent.Action.RUN_COMMAND, "/channelactivity copy")
+                            .advance()
                     .createComponent());
 
             p.sendEmptyMessage();
         }).start();
+        return true;
     }
 
     @Override
-    @Nonnull
-    public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
-        return TabCompletionBuilder.getBuilder(args).build();
+    public List<String> complete(String[] arguments) {
+        return TabCompletionBuilder.getBuilder(arguments).build();
     }
 
-    @Override
-    public boolean isUsernameIndex(@Nonnull String[] args, int index) {
-        return false;
-    }
-
-    @Override
-    public boolean allowUsageWithoutPrefix(ICommandSender sender, String message) {
-        return false;
-    }
-
-    @Override
-    public int compareTo(@Nonnull ICommand o) {
-        return 0;
-    }
 
     public List<String> getPlayersInChannel() {
         ChannelClientListCommand.Response channelClientListCommandResponse = new ChannelClientListCommand(TSUtils.getMyChannelID()).getResponse();
-        if (!channelClientListCommandResponse.succeeded()) return Collections.emptyList();
+        if (!channelClientListCommandResponse.succeeded())
+            return Collections.emptyList();
 
         List<Client> clients = channelClientListCommandResponse.getClients();
         List<String> descriptions = new ArrayList<>();
@@ -160,7 +126,8 @@ public class ChannelActivityCommand implements IClientCommand {
             ClientVariableCommand.Response clientVariableCommandResponse = new ClientVariableCommand(client).getResponse();
             String minecraftName = clientVariableCommandResponse.getMinecraftName();
 
-            if (minecraftName == null) continue;
+            if (minecraftName == null)
+                continue;
             descriptions.add(minecraftName);
         }
 

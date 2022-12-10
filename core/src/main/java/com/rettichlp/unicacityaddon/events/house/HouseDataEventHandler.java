@@ -8,10 +8,10 @@ import com.rettichlp.unicacityaddon.base.manager.HouseDataManager;
 import com.rettichlp.unicacityaddon.base.models.HouseDataEntry;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
-import joptsimple.internal.Strings;
-import net.minecraftforge.client.event.ClientChatEvent;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import jdk.internal.joptsimple.internal.Strings;
+import net.labymod.api.event.Subscribe;
+import net.labymod.api.event.client.chat.ChatMessageSendEvent;
+import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -28,20 +28,20 @@ public class HouseDataEventHandler {
     private static long lastCheck = -1;
     private static String waitingCommand = Strings.EMPTY;
 
-    @SubscribeEvent
-    public void onClientChatReceived(ClientChatReceivedEvent e) {
-        String msg = e.getMessage().getUnformattedText();
+    @Subscribe
+    public void onChatReceive(ChatReceiveEvent e) {
+        String msg = e.chatMessage().getPlainText();
 
         Matcher houseBankHeaderMatcher = PatternHandler.HOUSE_BANK_HEADER_PATTERN.matcher(msg);
         if (houseBankHeaderMatcher.find()) {
-            if (System.currentTimeMillis() - lastCheck < 500) e.setCanceled(true);
+            if (System.currentTimeMillis() - lastCheck < 500) e.setCancelled(true);
             lastCheckedHouseNumber = Integer.parseInt(houseBankHeaderMatcher.group(1));
             return;
         }
 
         Matcher houseBankValueMatcher = PatternHandler.HOUSE_BANK_VALUE_PATTERN.matcher(msg);
         if (houseBankValueMatcher.find()) {
-            if (System.currentTimeMillis() - lastCheck < 500) e.setCanceled(true);
+            if (System.currentTimeMillis() - lastCheck < 500) e.setCancelled(true);
             HouseDataEntry houseDataEntry = HouseDataManager.getHouseData(lastCheckedHouseNumber).setHouseBank(Integer.parseInt(houseBankValueMatcher.group(1)));
             HouseDataManager.saveHouseData(lastCheckedHouseNumber, houseDataEntry);
             return;
@@ -88,8 +88,8 @@ public class HouseDataEventHandler {
         }
     }
 
-    @SubscribeEvent
-    public void onClientChat(ClientChatEvent e) {
+    @Subscribe
+    public void onClientMessageSend(ChatMessageSendEvent e) {
         String msg = e.getMessage();
         if (msg.startsWith("/drogenlager ")) {
             lastCheck = System.currentTimeMillis();
