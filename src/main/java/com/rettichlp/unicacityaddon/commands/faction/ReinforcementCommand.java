@@ -73,7 +73,6 @@ public class ReinforcementCommand implements IClientCommand {
                 return;
             }
 
-
             String name = args[1];
 
             if (!MathUtils.isInteger(args[2]) || !MathUtils.isInteger(args[3]) || !MathUtils.isInteger(args[4])) return;
