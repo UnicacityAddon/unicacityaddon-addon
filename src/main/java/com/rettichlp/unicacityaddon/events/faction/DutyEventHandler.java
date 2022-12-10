@@ -20,5 +20,4 @@ public class DutyEventHandler {
         if (PatternHandler.DUTY_JOIN_PATTERN.matcher(msg).find()) inDuty = true;
         if (PatternHandler.DUTY_LEAVE_PATTERN.matcher(msg).find()) inDuty = false;
     }
-    
 }
