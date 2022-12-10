@@ -19,8 +19,6 @@ package com.rettichlp.unicacityaddon.base.utils;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
-import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.io.FileUtils;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -31,8 +29,6 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 
 /**
  * Derived from <a href="https://github.com/DV8FromTheWorld/Imgur-Uploader-Java/blob/master/src/net/dv8tion/Uploader.java">DV8FromTheWorld</a>
@@ -80,8 +76,9 @@ public class ImageUploadUtils {
      * @return The file as a Base64 String.
      */
     private static String toBase64(File file) throws IOException {
-        byte[] encoded = Base64.encodeBase64(FileUtils.readFileToByteArray(file));
-        return URLEncoder.encode(new String(encoded, StandardCharsets.US_ASCII), StandardCharsets.UTF_8.toString());
+        // TODO: 10.12.2022 byte[] encoded = Base64.getEncoder().encode(FileUtils.readFileToByteArray(file));
+        // TODO: 10.12.2022 return URLEncoder.encode(new String(encoded, StandardCharsets.US_ASCII), StandardCharsets.UTF_8.toString());
+        return null;
     }
 
     /**

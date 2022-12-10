@@ -1,4 +1,4 @@
-rootProject.name = "labymod4-addon-template"
+rootProject.name = "unicacityaddon"
 
 include(":api")
 include(":core")

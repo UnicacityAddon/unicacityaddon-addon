@@ -6,18 +6,15 @@ import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.config.ConfigElements;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
-import net.labymod.main.LabyMod;
-import net.minecraft.util.text.event.ClickEvent;
-import net.minecraft.util.text.event.HoverEvent;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.SystemUtils;
+import net.kyori.adventure.text.event.ClickEvent;
+import net.kyori.adventure.text.event.HoverEvent;
+import net.labymod.api.notification.Notification;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
-import java.nio.charset.Charset;
 
 /**
  * @author RettichLP
@@ -36,7 +33,7 @@ public class UpdateUtils {
         if (latestVersion.equals(UnicacityAddon.VERSION)) return;
 
         if (!ConfigElements.getAutomatedUpdate()) {
-            LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Update verfügbar!", "Es ist Version " + ColorCode.DARK_AQUA.getCode() + "v" + latestVersion + ColorCode.WHITE.getCode() + " verfügbar.");
+            // TODO: 10.12.2022 LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Update verfügbar!", "Es ist Version " + ColorCode.DARK_AQUA.getCode() + "v" + latestVersion + ColorCode.WHITE.getCode() + " verfügbar.");
 
             AbstractionLayer.getPlayer().sendMessage(Message.getBuilder()
                     .info().space()
@@ -62,21 +59,28 @@ public class UpdateUtils {
         UPlayer p = AbstractionLayer.getPlayer();
 
         try {
-            if (SystemUtils.IS_OS_WINDOWS) windowsUpdate();
-            else unixUpdate();
+            windowsUpdate();
+            // TODO: 10.12.2022 if (SystemUtils.IS_OS_WINDOWS) windowsUpdate();
+            // TODO: 10.12.2022 else unixUpdate();
         } catch (IOException e) {
-            UnicacityAddon.LOGGER.catching(e);
+            UnicacityAddon.LOGGER.warn(e.getMessage());
             p.sendErrorMessage("Update konnte nicht heruntergeladen werden.");
-            LabyMod.getInstance().notifyMessageRaw(ColorCode.RED.getCode() + "Fehler!", "Update konnte nicht heruntergeladen werden.");
+            // TODO: 10.12.2022 LabyMod.getInstance().notifyMessageRaw(ColorCode.RED.getCode() + "Fehler!", "Update konnte nicht heruntergeladen werden.");
             return;
         }
 
+        // TODO: 10.12.2022 TEST
+        UnicacityAddon.ADDON.labyAPI().notificationController().pop(Notification.builder()
+                .title(Message.getBuilder().of("test").color(ColorCode.RED).advance().createComponent())
+                .text(Message.getBuilder().of("test2").color(ColorCode.RED).advance().createComponent())
+                .type(Notification.Type.SYSTEM)
+                .build());
         p.sendInfoMessage("Die neuste Version wurde heruntergeladen. Starte dein Spiel neu um das Update abzuschließen!");
-        LabyMod.getInstance().notifyMessageRaw(ColorCode.GREEN.getCode() + "Update heruntergeladen!", "Starte dein Spiel neu!");
+        // TODO: 10.12.2022 LabyMod.getInstance().notifyMessageRaw(ColorCode.GREEN.getCode() + "Update heruntergeladen!", "Starte dein Spiel neu!");
     }
 
     private static void windowsUpdate() throws IOException {
-        FileUtils.copyURLToFile(new URL("https://github.com/rettichlp/UnicacityAddon-1.12.2/releases/download/v" + UpdateUtils.latestVersion + "/UnicacityAddon-" + UpdateUtils.latestVersion + ".jar"), UPDATE_FILE, 10000, 10000);
+        // TODO: 10.12.2022 FileUtils.copyURLToFile(new URL("https://github.com/rettichlp/UnicacityAddon-1.12.2/releases/download/v" + UpdateUtils.latestVersion + "/UnicacityAddon-" + UpdateUtils.latestVersion + ".jar"), UPDATE_FILE, 10000, 10000);
 
         replace = true;
 
@@ -87,14 +91,14 @@ public class UpdateUtils {
             try {
                 replaceJar();
             } catch (IOException e) {
-                UnicacityAddon.LOGGER.catching(e);
+                UnicacityAddon.LOGGER.warn(e.getMessage());
             }
         }));
     }
 
     private static void unixUpdate() throws IOException {
         // on unix, we can just overwrite the original file directly as there's no file locking in place
-        FileUtils.copyURLToFile(new URL("https://github.com/rettichlp/UnicacityAddon-1.12.2/releases/download/v" + UpdateUtils.latestVersion + "/UnicacityAddon-" + UpdateUtils.latestVersion + ".jar"), modFile, 10000, 10000);
+        // TODO: 10.12.2022 FileUtils.copyURLToFile(new URL("https://github.com/rettichlp/UnicacityAddon-1.12.2/releases/download/v" + UpdateUtils.latestVersion + "/UnicacityAddon-" + UpdateUtils.latestVersion + ".jar"), modFile, 10000, 10000);
     }
 
     private static void replaceJar() throws IOException {
@@ -133,14 +137,14 @@ public class UpdateUtils {
                 "\t)";
 
         File batFile = new File(System.getProperty("java.io.tmpdir"), "UnicacityAddon-update.bat");
-        FileUtils.write(batFile, batContent, Charset.defaultCharset());
+        // TODO: 10.12.2022 FileUtils.write(batFile, batContent, Charset.defaultCharset());
 
         Process proc = Runtime.getRuntime().exec("cmd /c start \"\" " + batFile.getAbsolutePath());
         try {
             proc.waitFor();
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
-            UnicacityAddon.LOGGER.catching(e);
+            UnicacityAddon.LOGGER.warn(e.getMessage());
         }
     }
 

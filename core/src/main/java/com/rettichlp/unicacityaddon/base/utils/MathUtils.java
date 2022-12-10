@@ -1,7 +1,5 @@
 package com.rettichlp.unicacityaddon.base.utils;
 
-import org.apache.commons.lang3.StringUtils;
-
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
@@ -14,9 +12,7 @@ public class MathUtils {
     public static final DecimalFormat HEART_DECIMAL_FORMAT = new DecimalFormat("###.#");
     public static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("###.##");
     private static final DecimalFormat CALCULATOR_DECIMAL_FORMAT = new DecimalFormat("###,###.###", DecimalFormatSymbols.getInstance(Locale.GERMAN));
-    private static final String[] TO_REPLACE = new String[]{"PI", "E", "ANS"};
-    private static final String[] REPLACER = new String[]{String.valueOf(Math.PI), String.valueOf(Math.E), "0"};
-    private static double lastResult;
+    private static double lastResult = 0;
 
     static {
         CALCULATOR_DECIMAL_FORMAT.setMaximumFractionDigits(5);
@@ -53,8 +49,9 @@ public class MathUtils {
     }
 
     private void replaceVariables() {
-        REPLACER[2] = String.valueOf(lastResult);
-        expression = StringUtils.replaceEach(expression, TO_REPLACE, REPLACER);
+        expression = expression.replaceAll("PI", String.valueOf(Math.PI));
+        expression = expression.replaceAll("E", String.valueOf(Math.E));
+        expression = expression.replaceAll("ANS", String.valueOf(lastResult));
     }
 
     private double parseExpression() throws ExpressionException {

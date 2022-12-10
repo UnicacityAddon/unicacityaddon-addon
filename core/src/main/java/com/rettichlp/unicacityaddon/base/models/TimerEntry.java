@@ -48,7 +48,7 @@ public class TimerEntry {
             @Override
             public void run() {
                 UPlayer p = AbstractionLayer.getPlayer();
-                p.playSound("ui.toast.challenge_complete");
+                // TODO: 10.12.2022 p.playSound("ui.toast.challenge_complete");
                 p.sendEmptyMessage();
                 p.sendMessage(Message.getBuilder()
                         .of("Timer").color(ColorCode.AQUA).advance().space()

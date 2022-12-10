@@ -3,11 +3,11 @@ package com.rettichlp.unicacityaddon.base.models;
 public class CoordlistEntry {
 
     private String name;
-    private int x;
-    private int y;
-    private int z;
+    private float x;
+    private float y;
+    private float z;
 
-    public CoordlistEntry(String name, int x, int y, int z) {
+    public CoordlistEntry(String name, float x, float y, float z) {
         this.name = name;
         this.x = x;
         this.y = y;
@@ -22,7 +22,7 @@ public class CoordlistEntry {
         this.name = name;
     }
 
-    public int getX() {
+    public float getX() {
         return x;
     }
 
@@ -30,7 +30,7 @@ public class CoordlistEntry {
         this.x = x;
     }
 
-    public int getY() {
+    public float getY() {
         return y;
     }
 
@@ -38,7 +38,7 @@ public class CoordlistEntry {
         this.y = y;
     }
 
-    public int getZ() {
+    public float getZ() {
         return z;
     }
 

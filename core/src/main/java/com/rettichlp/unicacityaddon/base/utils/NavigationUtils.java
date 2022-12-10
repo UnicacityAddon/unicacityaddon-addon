@@ -1,13 +1,13 @@
 package com.rettichlp.unicacityaddon.base.utils;
 
-import com.google.common.collect.Maps;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.api.Syncer;
 import com.rettichlp.unicacityaddon.base.enums.location.ATM;
 import com.rettichlp.unicacityaddon.base.enums.location.Job;
 import com.rettichlp.unicacityaddon.base.models.NaviPointEntry;
-import net.minecraft.util.math.BlockPos;
+import net.labymod.api.util.math.vector.FloatVector3;
+import org.spongepowered.include.com.google.common.collect.Maps;
 
 import java.util.Map;
 
@@ -24,7 +24,7 @@ public class NavigationUtils {
         double nearestDistance = Double.MAX_VALUE;
 
         for (ATM atm : ATM.values()) {
-            double distance = AbstractionLayer.getPlayer().getPosition().getDistance(atm.getX(), atm.getY(), atm.getZ());
+            double distance = AbstractionLayer.getPlayer().getPosition().distance(new FloatVector3(atm.getX(), atm.getY(), atm.getZ()));
             if (distance < nearestDistance) {
                 nearestDistance = distance;
                 nearestATM = atm;
@@ -39,7 +39,7 @@ public class NavigationUtils {
         double nearestDistance = Double.MAX_VALUE;
 
         for (Job job : Job.values()) {
-            double distance = AbstractionLayer.getPlayer().getPosition().getDistance(job.getX(), job.getY(), job.getZ());
+            double distance = AbstractionLayer.getPlayer().getPosition().distance(new FloatVector3(job.getX(), job.getY(), job.getZ()));
             if (distance < nearestDistance) {
                 nearestDistance = distance;
                 nearestJob = job;
@@ -50,19 +50,19 @@ public class NavigationUtils {
     }
 
     public static Map.Entry<Double, NaviPointEntry> getNearestNaviPoint(int x, int y, int z) {
-        return getNearestNaviPoint(new BlockPos(x, y, z));
+        return getNearestNaviPoint(new FloatVector3(x, y, z));
     }
 
     public static Map.Entry<Double, NaviPointEntry> getNearestNaviPoint(UPlayer p) {
         return getNearestNaviPoint(p.getPosition());
     }
 
-    public static Map.Entry<Double, NaviPointEntry> getNearestNaviPoint(BlockPos blockPos) {
+    public static Map.Entry<Double, NaviPointEntry> getNearestNaviPoint(FloatVector3 blockPos) {
         NaviPointEntry nearestNaviPoint = null;
         double nearestDistance = Double.MAX_VALUE;
 
         for (NaviPointEntry naviPointEntry : Syncer.NAVIPOINTLIST) {
-            double distance = blockPos.getDistance(naviPointEntry.getX(), naviPointEntry.getY(), naviPointEntry.getZ());
+            double distance = blockPos.distance(new FloatVector3(naviPointEntry.getX(), naviPointEntry.getY(), naviPointEntry.getZ()));
             if (distance < nearestDistance) {
                 nearestDistance = distance;
                 nearestNaviPoint = naviPointEntry;

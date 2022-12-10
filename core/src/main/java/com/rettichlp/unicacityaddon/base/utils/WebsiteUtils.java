@@ -4,7 +4,7 @@ import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.api.TokenManager;
 import com.rettichlp.unicacityaddon.base.api.exception.APIResponseException;
 import com.rettichlp.unicacityaddon.base.enums.api.ApplicationPath;
-import joptsimple.internal.Strings;
+import jdk.internal.joptsimple.internal.Strings;
 
 import java.io.IOException;
 import java.io.InputStreamReader;

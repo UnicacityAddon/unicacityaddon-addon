@@ -1,7 +1,7 @@
 package com.rettichlp.unicacityaddon.base.models;
 
 import com.rettichlp.unicacityaddon.base.api.Syncer;
-import net.minecraft.util.math.BlockPos;
+import net.labymod.api.util.math.vector.FloatVector3;
 
 public class NaviPointEntry {
 
@@ -43,8 +43,8 @@ public class NaviPointEntry {
         return article.replace("der", "den");
     }
 
-    public BlockPos getBlockPos() {
-        return new BlockPos(x, y, z);
+    public FloatVector3  getFloatVector3() {
+        return new FloatVector3(x, y, z);
     }
 
     public static NaviPointEntry getNaviPointEntryByTabName(String tabName) {

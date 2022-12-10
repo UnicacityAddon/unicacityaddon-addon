@@ -17,18 +17,18 @@ public class TabCompletionBuilder {
     private TabCompletionBuilder() {
     }
 
-    public static Builder getBuilder(String[] args) {
-        return new Builder(args);
+    public static Builder getBuilder(String[] arguments) {
+        return new Builder(arguments);
     }
 
     public static class Builder {
 
-        private final String[] args;
+        private final String[] arguments;
         private final Map<Integer, List<String>> tabCompletionMap;
         private final Map<Integer, List<String>> tabCompletionFromIndexMap;
 
-        public Builder(String[] args) {
-            this.args = args;
+        public Builder(String[] arguments) {
+            this.arguments = arguments;
             this.tabCompletionMap = new HashMap<>();
             this.tabCompletionFromIndexMap = new HashMap<>();
         }
@@ -56,7 +56,7 @@ public class TabCompletionBuilder {
         }
 
         public List<String> build() {
-            int length = this.args.length;
+            int length = this.arguments.length;
             List<String> tabCompletionList = this.tabCompletionMap.getOrDefault(length, ForgeUtils.getOnlinePlayers());
 
             // add tabCompletionFromIndexMap entry to tab completion
@@ -64,7 +64,7 @@ public class TabCompletionBuilder {
                     .filter(integerListEntry -> integerListEntry.getKey() <= length)
                     .forEach(integerListEntry -> tabCompletionList.addAll(integerListEntry.getValue()));
 
-            String input = args[args.length - 1].toLowerCase();
+            String input = arguments[arguments.length - 1].toLowerCase();
             tabCompletionList.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
             return tabCompletionList;
         }
