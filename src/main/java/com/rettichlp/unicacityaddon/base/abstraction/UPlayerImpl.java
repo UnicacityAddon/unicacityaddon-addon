@@ -7,6 +7,7 @@ import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.utils.NavigationUtils;
+import com.rettichlp.unicacityaddon.events.faction.DutyEventHandler;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.inventory.Container;
 import net.minecraft.scoreboard.Scoreboard;
@@ -138,6 +139,9 @@ public class UPlayerImpl implements UPlayer {
     public Faction getFaction() {
         return Syncer.PLAYERFACTIONMAP.getOrDefault(getName(), Faction.NULL);
     }
+
+    @Override
+    public boolean inDuty() {return DutyEventHandler.inDuty;}
 
     @Override
     public int getRank() {
