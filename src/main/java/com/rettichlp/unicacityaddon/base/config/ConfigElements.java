@@ -585,8 +585,28 @@ public class ConfigElements {
                 .getAsBoolean(); // default = true
     }
 
-    public static boolean getCustomSounds() {
-        return !UnicacityAddon.ADDON.getConfig().has("CUSTOM_SOUNDS_SETTINGS") || UnicacityAddon.ADDON.getConfig().get("CUSTOM_SOUNDS_SETTINGS")
+    public static boolean getBombSound() {
+        return !UnicacityAddon.ADDON.getConfig().has("SOUND_BOMB_SETTINGS") || UnicacityAddon.ADDON.getConfig().get("SOUND_BOMB_SETTINGS")
+                .getAsBoolean(); // default = true
+    }
+
+    public static boolean getContractSetSound() {
+        return !UnicacityAddon.ADDON.getConfig().has("SOUND_CONTRACT_SET_SETTINGS") || UnicacityAddon.ADDON.getConfig().get("SOUND_CONTRACT_SET_SETTINGS")
+                .getAsBoolean(); // default = true
+    }
+
+    public static boolean getContractFulfilledSound() {
+        return !UnicacityAddon.ADDON.getConfig().has("SOUND_CONTRACT_FULFILLED_SETTINGS") || UnicacityAddon.ADDON.getConfig().get("SOUND_CONTRACT_FULFILLED_SETTINGS")
+                .getAsBoolean(); // default = true
+    }
+
+    public static boolean getReportSound() {
+        return !UnicacityAddon.ADDON.getConfig().has("SOUND_REPORT_SETTINGS") || UnicacityAddon.ADDON.getConfig().get("SOUND_REPORT_SETTINGS")
+                .getAsBoolean(); // default = true
+    }
+
+    public static boolean getServiceSound() {
+        return !UnicacityAddon.ADDON.getConfig().has("SOUND_SERVICE_SETTINGS") || UnicacityAddon.ADDON.getConfig().get("SOUND_SERVICE_SETTINGS")
                 .getAsBoolean(); // default = true
     }
 }
