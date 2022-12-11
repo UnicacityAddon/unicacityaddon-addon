@@ -1,9 +1,9 @@
 package com.rettichlp.unicacityaddon.base.config;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
 import com.rettichlp.unicacityaddon.base.enums.faction.Equip;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
-import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import net.labymod.gui.elements.DropDownMenu;
 import net.labymod.main.LabyMod;
@@ -282,7 +282,7 @@ public class ConfigSubSettings {
 
         DropDownMenu<ColorCode> nameTagAllianceDropDownMenu0 = new DropDownMenu<ColorCode>("Farbe", 0, 0, 0, 0).fill(ColorCode.values());
         nameTagAllianceDropDownMenu0.setSelected(ConfigElements.getNameTagAllianceColor());
-        nameTagAllianceDropDownMenu0.setEntryDrawer((object, x, y, string) ->  LabyMod.getInstance().getDrawUtils().drawString(ColorCode.valueOf(object.toString().toUpperCase()).toString(), x, y));
+        nameTagAllianceDropDownMenu0.setEntryDrawer((object, x, y, string) -> LabyMod.getInstance().getDrawUtils().drawString(ColorCode.valueOf(object.toString().toUpperCase()).toString(), x, y));
         DropDownElement<ColorCode> nameTagAllianceDropDownElement0 = new DropDownElement<>("", nameTagAllianceDropDownMenu0);
         nameTagAllianceDropDownElement0.setChangeListener(ConfigElements::setNameTagAllianceColor);
         settings.add(nameTagAllianceDropDownElement0);
@@ -336,7 +336,7 @@ public class ConfigSubSettings {
 
         DropDownMenu<ColorCode> nameTagFactionSpecificDropDownMenu = new DropDownMenu<ColorCode>("Farbe", 0, 0, 0, 0).fill(ColorCode.values());
         nameTagFactionSpecificDropDownMenu.setSelected(ConfigElements.getNameTagFactionSpecificColor());
-        nameTagFactionSpecificDropDownMenu.setEntryDrawer((object, x, y, string) ->  LabyMod.getInstance().getDrawUtils().drawString(ColorCode.valueOf(object.toString().toUpperCase()).toString(), x, y));
+        nameTagFactionSpecificDropDownMenu.setEntryDrawer((object, x, y, string) -> LabyMod.getInstance().getDrawUtils().drawString(ColorCode.valueOf(object.toString().toUpperCase()).toString(), x, y));
         DropDownElement<ColorCode> nameTagFactionSpecificDropDownElement = new DropDownElement<>("", nameTagFactionSpecificDropDownMenu);
         nameTagFactionSpecificDropDownElement.setChangeListener(ConfigElements::setNameTagFactionSpecificColor);
         settings.add(nameTagFactionSpecificDropDownElement);

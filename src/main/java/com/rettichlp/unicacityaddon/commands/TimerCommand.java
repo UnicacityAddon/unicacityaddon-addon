@@ -2,8 +2,8 @@ package com.rettichlp.unicacityaddon.commands;
 
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
-import com.rettichlp.unicacityaddon.base.models.TimerEntry;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
+import com.rettichlp.unicacityaddon.base.models.TimerEntry;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
@@ -67,7 +67,8 @@ public class TimerCommand implements IClientCommand {
     @Override
     public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
         UPlayer p = AbstractionLayer.getPlayer();
-        if (TimerEntry.ACTIVE_TIMERS == null) TimerEntry.ACTIVE_TIMERS = new HashMap<>();
+        if (TimerEntry.ACTIVE_TIMERS == null)
+            TimerEntry.ACTIVE_TIMERS = new HashMap<>();
 
         if (args.length == 0) {
             p.sendEmptyMessage();
@@ -95,7 +96,7 @@ public class TimerCommand implements IClientCommand {
         } else if (args.length == 2 && args[0].equalsIgnoreCase("stop") && MathUtils.isInteger(args[1])) {
             TimerEntry.ACTIVE_TIMERS.get(Long.parseLong(args[1])).stop();
             p.sendInfoMessage("Timer gestoppt.");
-       } else {
+        } else {
             p.sendSyntaxMessage(getUsage(sender));
         }
     }

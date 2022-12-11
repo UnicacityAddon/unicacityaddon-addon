@@ -17,7 +17,9 @@ public class ShutDownEventHandler {
     @SubscribeEvent
     public void onClientChatReceived(ClientChatReceivedEvent e) {
         String msg = e.getMessage().getUnformattedText();
-        if (shutdownFriedhof && msg.equals("Du lebst nun wieder.")) ForgeUtils.shutdownPC();
-        if (shutdownJail && msg.equals("[Gefängnis] Du bist wieder frei!")) ForgeUtils.shutdownPC();
+        if (shutdownFriedhof && msg.equals("Du lebst nun wieder."))
+            ForgeUtils.shutdownPC();
+        if (shutdownJail && msg.equals("[Gefängnis] Du bist wieder frei!"))
+            ForgeUtils.shutdownPC();
     }
 }

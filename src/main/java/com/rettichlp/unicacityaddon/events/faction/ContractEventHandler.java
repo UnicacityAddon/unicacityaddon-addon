@@ -39,8 +39,10 @@ public class ContractEventHandler {
         }
 
         // TODO TRANSFORM TO REGEX
-        if (currentTime - hitlistShown > 5000L || !unformattedMessage.startsWith(" - ")) return;
-        if (!unformattedMessage.contains("$")) return;
+        if (currentTime - hitlistShown > 5000L || !unformattedMessage.startsWith(" - "))
+            return;
+        if (!unformattedMessage.contains("$"))
+            return;
 
         String[] splittedMessage = StringUtils.split(unformattedMessage, " ");
         String name = ForgeUtils.stripPrefix(splittedMessage[1]);
@@ -67,12 +69,14 @@ public class ContractEventHandler {
         String unformattedMessage = message.getUnformattedText();
 
         Matcher matcher = PatternHandler.CONTRACT_REMOVED_PATTERN.matcher(unformattedMessage);
-        if (!matcher.find()) return;
+        if (!matcher.find())
+            return;
 
         String name = null;
         for (int i = 1; i < matcher.groupCount() + 1; i++) {
             String tempName = matcher.group(i);
-            if (tempName == null) continue;
+            if (tempName == null)
+                continue;
 
             name = tempName;
             break;

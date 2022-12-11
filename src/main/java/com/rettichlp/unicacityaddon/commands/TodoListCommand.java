@@ -125,29 +125,31 @@ public class TodoListCommand implements IClientCommand {
                 .createComponent());
         todolist.forEach(todolistEntry -> {
             int id = todolist.indexOf(todolistEntry) + 1;
-            if (todolistEntry.isDone()) p.sendMessage(Message.getBuilder()
-                    .of("» " + id + ". ").color(ColorCode.GRAY).advance()
-                    .of(todolistEntry.getTodo()).color(ColorCode.AQUA).strikethrough().advance().space()
-                    .of("[✐]").color(ColorCode.GOLD)
-                            .clickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/todo edit " + id + " " + todolistEntry.getTodo())
-                            .advance().space()
-                    .of("[✕]").color(ColorCode.RED)
-                            .clickEvent(ClickEvent.Action.RUN_COMMAND, "/todo delete " + todolistEntry.getTodo())
-                            .advance()
-                    .createComponent());
-            else p.sendMessage(Message.getBuilder()
-                    .of("» " + id + ". ").color(ColorCode.GRAY).advance()
-                    .of(todolistEntry.getTodo()).color(ColorCode.AQUA).advance().space()
-                    .of("[✔]").color(ColorCode.GREEN)
-                            .clickEvent(ClickEvent.Action.RUN_COMMAND, "/todo done " + todolistEntry.getTodo())
-                            .advance().space()
-                    .of("[✐]").color(ColorCode.GOLD)
-                            .clickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/todo edit " + id + " " + todolistEntry.getTodo())
-                            .advance().space()
-                    .of("[✕]").color(ColorCode.RED)
-                            .clickEvent(ClickEvent.Action.RUN_COMMAND, "/todo delete " + todolistEntry.getTodo())
-                            .advance()
-                    .createComponent());
+            if (todolistEntry.isDone())
+                p.sendMessage(Message.getBuilder()
+                        .of("» " + id + ". ").color(ColorCode.GRAY).advance()
+                        .of(todolistEntry.getTodo()).color(ColorCode.AQUA).strikethrough().advance().space()
+                        .of("[✐]").color(ColorCode.GOLD)
+                                .clickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/todo edit " + id + " " + todolistEntry.getTodo())
+                                .advance().space()
+                        .of("[✕]").color(ColorCode.RED)
+                                .clickEvent(ClickEvent.Action.RUN_COMMAND, "/todo delete " + todolistEntry.getTodo())
+                                .advance()
+                        .createComponent());
+            else
+                p.sendMessage(Message.getBuilder()
+                        .of("» " + id + ". ").color(ColorCode.GRAY).advance()
+                        .of(todolistEntry.getTodo()).color(ColorCode.AQUA).advance().space()
+                        .of("[✔]").color(ColorCode.GREEN)
+                                .clickEvent(ClickEvent.Action.RUN_COMMAND, "/todo done " + todolistEntry.getTodo())
+                                .advance().space()
+                        .of("[✐]").color(ColorCode.GOLD)
+                                .clickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/todo edit " + id + " " + todolistEntry.getTodo())
+                                .advance().space()
+                        .of("[✕]").color(ColorCode.RED)
+                                .clickEvent(ClickEvent.Action.RUN_COMMAND, "/todo delete " + todolistEntry.getTodo())
+                                .advance()
+                        .createComponent());
         });
         p.sendEmptyMessage();
     }

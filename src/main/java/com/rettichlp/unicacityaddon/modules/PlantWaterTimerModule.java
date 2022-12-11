@@ -17,45 +17,58 @@ public class PlantWaterTimerModule extends SimpleModule {
     public static final int timeNeeded = 3000;
     public static String timer = "";
 
-    @Override public String getControlName() {
+    @Override
+    public String getControlName() {
         return "Plantage Wässern";
     }
 
-    @Override public String getSettingName() {
+    @Override
+    public String getSettingName() {
         return null;
     }
 
-    @Override public String getDisplayName() {
+    @Override
+    public String getDisplayName() {
         return "Wässern";
     }
 
-    @Override public String getDisplayValue() {
+    @Override
+    public String getDisplayValue() {
         return timer;
     }
 
-    @Override public String getDefaultValue() {
+    @Override
+    public String getDefaultValue() {
         return "00:00";
     }
 
-    @Override public String getDescription() {
+    @Override
+    public String getDescription() {
         return "Zeigt einen Timer an, welcher die Zeit zum nächsten Wässern beschreibt.";
     }
 
-    @Override public ControlElement.IconData getIconData() { return new ControlElement.IconData(Material.WATER_BUCKET); }
+    @Override
+    public ControlElement.IconData getIconData() {
+        return new ControlElement.IconData(Material.WATER_BUCKET);
+    }
 
-    @Override public ModuleCategory getCategory() {
+    @Override
+    public ModuleCategory getCategory() {
         return ModuleRegistry.UNICACITY;
     }
 
-    @Override public boolean isShown() {
+    @Override
+    public boolean isShown() {
         return PlantFertilizeTimerModule.plantRunning;
     }
 
-    @Override public int getSortingId() {
+    @Override
+    public int getSortingId() {
         return 0;
     }
 
-    @Override public void loadSettings() {
+    @Override
+    public void loadSettings() {
     }
 
     public static void stopPlant() {

@@ -16,7 +16,12 @@ import net.minecraftforge.client.IClientCommand;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -64,9 +69,11 @@ public class AFbankEinzahlenCommand implements IClientCommand {
 
         String interaction = args[0];
 
-        if (STARTED.get()) return;
+        if (STARTED.get())
+            return;
 
-        if (!interaction.equalsIgnoreCase("einzahlen") && !interaction.equalsIgnoreCase("auszahlen")) return;
+        if (!interaction.equalsIgnoreCase("einzahlen") && !interaction.equalsIgnoreCase("auszahlen"))
+            return;
 
         // check if there are taxes
         p.sendChatMessage("/fbank " + interaction + " 4");

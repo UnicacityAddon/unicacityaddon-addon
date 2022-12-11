@@ -43,7 +43,8 @@ public class FishermanEventHandler {
             return;
         }
 
-        if (!fisherManJob) return;
+        if (!fisherManJob)
+            return;
 
         if (PatternHandler.FISHER_CATCH_SUCCESS.matcher(msg).find()
                 || PatternHandler.FISHER_CATCH_FAILURE.matcher(msg).find()) {

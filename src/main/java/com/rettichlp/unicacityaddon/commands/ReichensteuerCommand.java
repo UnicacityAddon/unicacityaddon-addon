@@ -66,7 +66,8 @@ public class ReichensteuerCommand implements IClientCommand {
         UPlayer p = AbstractionLayer.getPlayer();
 
         if (BankMoneyModule.bankBalance > 100000) {
-            if (isActive) return;
+            if (isActive)
+                return;
 
             p.sendChatMessage("/atminfo");
             isActive = true;

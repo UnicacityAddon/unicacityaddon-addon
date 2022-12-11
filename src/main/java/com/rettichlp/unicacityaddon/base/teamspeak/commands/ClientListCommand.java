@@ -17,6 +17,7 @@ public class ClientListCommand extends BaseCommand<ClientListCommand.Response> {
     }
 
     public static class Response extends CommandResponse {
+
         private final List<Client> clientList = new ArrayList<>();
 
         public Response(String rawResponse) {

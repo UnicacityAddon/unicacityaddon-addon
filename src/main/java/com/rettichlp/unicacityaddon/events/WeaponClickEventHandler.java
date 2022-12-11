@@ -33,7 +33,8 @@ public class WeaponClickEventHandler {
             return;
 
         ItemStack is = e.getItemStack();
-        if (!isWeapon(is)) return;
+        if (!isWeapon(is))
+            return;
 
         tazerLoaded = false;
         handleMunitionDisplay(is);
@@ -41,23 +42,27 @@ public class WeaponClickEventHandler {
 
     private static void handleMunitionDisplay(ItemStack is) {
         String text = getText(is);
-        if (text == null) return;
+        if (text == null)
+            return;
 
         UnicacityAddon.MINECRAFT.ingameGUI.setOverlayMessage(text, true);
     }
 
     private static String getText(ItemStack is) {
         NBTTagCompound nbt = is.getTagCompound();
-        if (nbt == null) return null;
+        if (nbt == null)
+            return null;
 
         NBTTagCompound display = nbt.getCompoundTag("display");
 
         String lore = display.getTagList("Lore", Constants.NBT.TAG_STRING).getStringTagAt(0);
         String[] splittedLore = lore.split("/");
-        if (splittedLore.length != 2) return null;
+        if (splittedLore.length != 2)
+            return null;
 
         String munitionString = splittedLore[0];
-        if (munitionString.length() < 2) return null;
+        if (munitionString.length() < 2)
+            return null;
 
         int munition = Integer.parseInt(munitionString.substring(2));
 
@@ -65,7 +70,8 @@ public class WeaponClickEventHandler {
     }
 
     private boolean isWeapon(ItemStack is) {
-        if (is == null) return false;
+        if (is == null)
+            return false;
 
         return WEAPONS.contains(is.getDisplayName());
     }
@@ -82,11 +88,13 @@ public class WeaponClickEventHandler {
 
     @SubscribeEvent
     public void onWeaponInteract(PlayerInteractEvent e) {
-        if (!tazerLoaded) return;
+        if (!tazerLoaded)
+            return;
         if (!(e instanceof PlayerInteractEvent.LeftClickBlock || e instanceof PlayerInteractEvent.EntityInteractSpecific || e instanceof PlayerInteractEvent.LeftClickEmpty))
             return;
 
-        if (System.currentTimeMillis() - tazerLastWarningSend < TimeUnit.SECONDS.toMillis(5)) return;
+        if (System.currentTimeMillis() - tazerLastWarningSend < TimeUnit.SECONDS.toMillis(5))
+            return;
 
         AbstractionLayer.getPlayer().sendInfoMessage("Achtung! Dein Tazer ist geladen!");
         tazerLastWarningSend = System.currentTimeMillis();

@@ -17,6 +17,7 @@ public class ChannelClientListCommand extends BaseCommand<ChannelClientListComma
     }
 
     public static class Response extends CommandResponse {
+
         private final List<Client> clients = new ArrayList<>();
 
         public Response(String rawResponse) {

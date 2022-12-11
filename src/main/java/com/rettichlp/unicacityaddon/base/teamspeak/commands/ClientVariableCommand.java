@@ -37,6 +37,7 @@ public class ClientVariableCommand extends BaseCommand<ClientVariableCommand.Res
     }
 
     public static class Response extends CommandResponse {
+
         private final int id;
         private final int clientID;
         private final int clientDatabaseID;
@@ -144,7 +145,8 @@ public class ClientVariableCommand extends BaseCommand<ClientVariableCommand.Res
         }
 
         public String getMinecraftName() {
-            if (description == null) return null;
+            if (description == null)
+                return null;
 
             return ForgeUtils.stripPrefix(description);
         }

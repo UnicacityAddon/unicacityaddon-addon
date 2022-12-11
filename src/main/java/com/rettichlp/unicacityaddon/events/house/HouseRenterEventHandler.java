@@ -40,7 +40,8 @@ public class HouseRenterEventHandler {
     @SubscribeEvent
     public void onClientChat(ClientChatEvent e) {
         String msg = e.getMessage();
-        if (!msg.equals("/mieters")) return;
+        if (!msg.equals("/mieters"))
+            return;
 
         TIMER.schedule(new TimerTask() {
             @Override
@@ -51,15 +52,16 @@ public class HouseRenterEventHandler {
                 HOUSE_RENTER_MAP.put(lastHouseNumber, Maps.immutableEntry(lastRenterAmount, lastRenterOnlineAmount));
                 lastHouseNumber = lastRenterAmount = lastRenterOnlineAmount = 0;
                 HOUSE_RENTER_MAP.forEach((houseNumber, mapEntry) -> {
-                    if (houseNumber > 0) p.sendMessage(Message.getBuilder().space().space()
-                            .of("➡").color(ColorCode.GRAY).advance().space()
-                            .of("Haus").color(ColorCode.GOLD).advance().space()
-                            .of(String.valueOf(houseNumber)).color(ColorCode.YELLOW).advance()
-                            .of(":").color(ColorCode.GOLD).advance().space()
-                            .of(String.valueOf(mapEntry.getValue())).color(ColorCode.GREEN).advance()
-                            .of("/").color(ColorCode.GRAY).advance()
-                            .of(String.valueOf(mapEntry.getKey())).color(ColorCode.YELLOW).advance()
-                            .createComponent());
+                    if (houseNumber > 0)
+                        p.sendMessage(Message.getBuilder().space().space()
+                                .of("➡").color(ColorCode.GRAY).advance().space()
+                                .of("Haus").color(ColorCode.GOLD).advance().space()
+                                .of(String.valueOf(houseNumber)).color(ColorCode.YELLOW).advance()
+                                .of(":").color(ColorCode.GOLD).advance().space()
+                                .of(String.valueOf(mapEntry.getValue())).color(ColorCode.GREEN).advance()
+                                .of("/").color(ColorCode.GRAY).advance()
+                                .of(String.valueOf(mapEntry.getKey())).color(ColorCode.YELLOW).advance()
+                                .createComponent());
                 });
             }
         }, 500);
@@ -95,7 +97,8 @@ public class HouseRenterEventHandler {
                     throw new RuntimeException(ex);
                 }
 
-                if (date == null) return;
+                if (date == null)
+                    return;
 
                 long diffInMillies = Math.abs(new Date().getTime() - date.getTime());
                 long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);

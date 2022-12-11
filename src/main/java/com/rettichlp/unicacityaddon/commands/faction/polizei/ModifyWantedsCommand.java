@@ -53,7 +53,8 @@ public class ModifyWantedsCommand implements IClientCommand {
     public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args) {
         UPlayer p = AbstractionLayer.getPlayer();
 
-        if (args.length < 2) return;
+        if (args.length < 2)
+            return;
 
         String target = args[0];
 
@@ -69,7 +70,8 @@ public class ModifyWantedsCommand implements IClientCommand {
         for (String arg : args) {
             Type type = Type.getType(arg);
 
-            if (type == null || wantedReason.contains(type.reason)) continue;
+            if (type == null || wantedReason.contains(type.reason))
+                continue;
 
             if (arg.equals(Type.VERY_BAD_CONDUCT.flagArgument)) {
                 if (wantedReason.contains(Type.BAD_CONDUCT.reason)) {
@@ -162,7 +164,8 @@ public class ModifyWantedsCommand implements IClientCommand {
 
         static Type getType(String string) {
             for (Type type : Type.values()) {
-                if (type.flagArgument.equalsIgnoreCase(string)) return type;
+                if (type.flagArgument.equalsIgnoreCase(string))
+                    return type;
             }
 
             return null;

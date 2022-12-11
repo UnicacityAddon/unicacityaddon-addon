@@ -15,46 +15,57 @@ public class CarOpenModule extends SimpleModule {
 
     public static String info = "";
 
-    @Override public String getControlName() {
+    @Override
+    public String getControlName() {
         return "Auto-Info";
     }
 
-    @Override public String getSettingName() {
+    @Override
+    public String getSettingName() {
         return null;
     }
 
-    @Override public String getDisplayName() {
+    @Override
+    public String getDisplayName() {
         return "Auto";
     }
 
-    @Override public String getDisplayValue() {
+    @Override
+    public String getDisplayValue() {
         return info;
     }
 
-    @Override public String getDefaultValue() {
+    @Override
+    public String getDefaultValue() {
         return "";
     }
 
-    @Override public String getDescription() {
+    @Override
+    public String getDescription() {
         return "Zeigt an, ob dein Auto offen oder abgeschlossen ist.";
     }
 
-    @Override public ControlElement.IconData getIconData() {
+    @Override
+    public ControlElement.IconData getIconData() {
         return new ControlElement.IconData(Material.MINECART);
     }
 
-    @Override public ModuleCategory getCategory() {
+    @Override
+    public ModuleCategory getCategory() {
         return ModuleRegistry.UNICACITY;
     }
 
-    @Override public boolean isShown() {
+    @Override
+    public boolean isShown() {
         return !info.isEmpty();
     }
 
-    @Override public int getSortingId() {
+    @Override
+    public int getSortingId() {
         return 0;
     }
 
-    @Override public void loadSettings() {
+    @Override
+    public void loadSettings() {
     }
 }

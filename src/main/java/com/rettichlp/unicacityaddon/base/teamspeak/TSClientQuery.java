@@ -105,7 +105,8 @@ public class TSClientQuery implements Closeable {
         authCommand.execute(this);
 
         CommandResponse response = authCommand.getResponse();
-        if (!response.succeeded()) throw new ClientQueryAuthenticationException("API Key was not entered correctly");
+        if (!response.succeeded())
+            throw new ClientQueryAuthenticationException("API Key was not entered correctly");
 
         authenticated = true;
     }

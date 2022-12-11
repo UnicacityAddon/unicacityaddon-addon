@@ -9,6 +9,7 @@ import com.rettichlp.unicacityaddon.base.teamspeak.objects.TargetMode;
  * @author Fuzzlemann
  */
 public class SendTextMessageCommand extends BaseCommand<CommandResponse> {
+
     public SendTextMessageCommand(Client target, String message) {
         this(target.getClientID(), message);
     }

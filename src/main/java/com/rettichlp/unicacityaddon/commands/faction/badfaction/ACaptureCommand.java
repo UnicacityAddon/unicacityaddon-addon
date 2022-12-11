@@ -61,7 +61,8 @@ public class ACaptureCommand implements IClientCommand {
 
     @Override
     public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
-        if (isActive) return;
+        if (isActive)
+            return;
 
         AbstractionLayer.getPlayer().sendChatMessage("/capture");
         isActive = true;

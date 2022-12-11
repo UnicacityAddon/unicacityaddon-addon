@@ -75,9 +75,12 @@ public class PayDayModule extends SimpleModule {
     public static void addTime(int time) {
         UPlayer p = AbstractionLayer.getPlayer();
         currentTime = currentTime + time;
-        if (currentTime == 55) p.sendInfoMessage("Du hast in 5 Minuten deinen PayDay.");
-        if (currentTime == 57) p.sendInfoMessage("Du hast in 3 Minuten deinen PayDay.");
-        if (currentTime == 59) p.sendInfoMessage("Du hast in 1 Minute deinen PayDay.");
+        if (currentTime == 55)
+            p.sendInfoMessage("Du hast in 5 Minuten deinen PayDay.");
+        if (currentTime == 57)
+            p.sendInfoMessage("Du hast in 3 Minuten deinen PayDay.");
+        if (currentTime == 59)
+            p.sendInfoMessage("Du hast in 1 Minute deinen PayDay.");
         FileManager.saveData();
     }
 

@@ -65,7 +65,8 @@ public class BroadcastCommand implements IClientCommand {
 
         if (args.length == 1 && args[0].equalsIgnoreCase("queue")) {
             JsonArray response = APIRequest.sendBroadcastQueueRequest();
-            if (response == null) return;
+            if (response == null)
+                return;
 
             p.sendEmptyMessage();
             p.sendMessage(Message.getBuilder()
@@ -100,7 +101,8 @@ public class BroadcastCommand implements IClientCommand {
             long sendTime = localDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
 
             JsonObject response = APIRequest.sendBroadcastSendRequest(message, String.valueOf(sendTime));
-            if (response == null) return;
+            if (response == null)
+                return;
             p.sendAPIMessage(response.get("info").getAsString(), true);
         } else {
             p.sendSyntaxMessage(getUsage(sender));

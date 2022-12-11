@@ -24,7 +24,8 @@ public class KeepAliveThread extends Thread implements Closeable {
     @Override
     public void run() {
         while (!closed) {
-            if (!clientQuery.isAuthenticated()) continue;
+            if (!clientQuery.isAuthenticated())
+                continue;
 
             new WhoAmICommand().execute(clientQuery);
 

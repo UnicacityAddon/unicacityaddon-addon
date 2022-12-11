@@ -22,16 +22,19 @@ public class GiftEigenbedarfEventHandler {
         UPlayer p = AbstractionLayer.getPlayer();
         String msg = e.getMessage().getUnformattedText();
 
-        if (!GiftEigenbedarfCommand.checkWeed && !GiftEigenbedarfCommand.checkMeth) return;
+        if (!GiftEigenbedarfCommand.checkWeed && !GiftEigenbedarfCommand.checkMeth)
+            return;
 
         Matcher drugDealEndedMatcher = PatternHandler.DRUGDEAL_ENDED.matcher(msg);
-        if (!drugDealEndedMatcher.find()) return;
+        if (!drugDealEndedMatcher.find())
+            return;
 
         if (ConfigElements.getMarihuanaActivated() && GiftEigenbedarfCommand.checkWeed) {
             p.sendChatMessage("/selldrug " + drugDealEndedMatcher.group(1) + " Gras " + ConfigElements.getMarihuanaDrugPurity().getPurity() + " " + ConfigElements.getMarihuanaAmount() + " 0");
             GiftEigenbedarfCommand.checkWeed = false;
 
-            if (ConfigElements.getMethActivated()) GiftEigenbedarfCommand.checkMeth = true;
+            if (ConfigElements.getMethActivated())
+                GiftEigenbedarfCommand.checkMeth = true;
             return;
         }
 

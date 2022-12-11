@@ -62,7 +62,8 @@ public class TopListCommand implements IClientCommand {
 
         new Thread(() -> {
             JsonObject response = APIRequest.sendStatisticTopRequest();
-            if (response == null) return;
+            if (response == null)
+                return;
             JsonArray kdJsonArray = response.getAsJsonArray("kd");
 
             p.sendEmptyMessage();
@@ -76,7 +77,8 @@ public class TopListCommand implements IClientCommand {
                 String kd = DECIMAL_FORMAT.format(jsonElement.getAsJsonObject().get("value").getAsFloat());
 
                 JsonObject statisticResponse = APIRequest.sendStatisticRequest(name);
-                if (statisticResponse == null) return;
+                if (statisticResponse == null)
+                    return;
 
                 JsonObject gameplayJsonObject = statisticResponse.getAsJsonObject("gameplay");
                 int deaths = gameplayJsonObject.get("deaths").getAsInt();

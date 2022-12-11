@@ -66,16 +66,19 @@ public class FactionInfoCommand implements IClientCommand {
 
         for (String s : args) {
             Faction faction = Faction.getFactionByFactionKey(s);
-            if (faction == null) continue;
+            if (faction == null)
+                continue;
             chosenFactions.add(faction);
         }
 
-        if (chosenFactions.isEmpty()) chosenFactions.addAll(Arrays.asList(Faction.values()));
+        if (chosenFactions.isEmpty())
+            chosenFactions.addAll(Arrays.asList(Faction.values()));
 
         p.sendMessage(Message.getBuilder().of("Aktive Spieler in den Fraktionen:").color(ColorCode.DARK_AQUA).bold().advance().createComponent());
 
         Thread thread = new Thread(() -> chosenFactions.forEach(faction -> {
-            if (faction.equals(Faction.NULL)) return;
+            if (faction.equals(Faction.NULL))
+                return;
             Map<Boolean, Integer> members = getMembers(faction);
             int activeMembers = members.get(true);
             int inactiveMembers = members.get(false);

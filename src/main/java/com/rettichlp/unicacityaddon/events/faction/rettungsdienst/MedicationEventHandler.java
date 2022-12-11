@@ -22,15 +22,18 @@ public class MedicationEventHandler {
 
     @SubscribeEvent
     public void onRecipeAcceptFeedback(ClientChatReceivedEvent e) {
-        if (ARezeptAnnehmenCommand.amount < 1) return; //checks if there is an active recipe-accept-process
+        if (ARezeptAnnehmenCommand.amount < 1)
+            return; //checks if there is an active recipe-accept-process
 
         String msg = e.getMessage().getUnformattedText();
-        if (!PatternHandler.RECIPE_ACCEPT_PATTERN.matcher(msg).find()) return;
+        if (!PatternHandler.RECIPE_ACCEPT_PATTERN.matcher(msg).find())
+            return;
 
         long timeSinceLastExecution = System.currentTimeMillis() - lastExecution;
         long delay = 0;
 
-        if (timeSinceLastExecution < 1000) delay = 1000 - timeSinceLastExecution;
+        if (timeSinceLastExecution < 1000)
+            delay = 1000 - timeSinceLastExecution;
 
         TIMER.schedule(new TimerTask() {
             @Override
@@ -58,7 +61,8 @@ public class MedicationEventHandler {
         long timeSinceLastExecution = System.currentTimeMillis() - lastExecution;
         long delay = 0;
 
-        if (timeSinceLastExecution < 1000) delay = 1000 - timeSinceLastExecution;
+        if (timeSinceLastExecution < 1000)
+            delay = 1000 - timeSinceLastExecution;
 
         TIMER.schedule(new TimerTask() {
             @Override

@@ -91,8 +91,10 @@ public class TSJoinCommand implements IClientCommand {
         Map<String, Channel> channelMaps = new HashMap<>();
         for (Channel channel : channelListResponse.getChannels()) {
             String name = channel.getName();
-            if (name.startsWith("[cspacer")) continue;
-            if (name.startsWith("[spacer")) continue;
+            if (name.startsWith("[cspacer"))
+                continue;
+            if (name.startsWith("[spacer"))
+                continue;
 
             name = modifyChannelName(name);
 

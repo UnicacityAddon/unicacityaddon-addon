@@ -39,7 +39,7 @@ public class MobileEventHandler {
      * If the user has set a password for their account, <code>/mobile</code> cannot be listed until the account is unlocked.
      * As a result, <code>hasCommunications</code> remains false. To avoid this, the check is carried out again when the message
      * came that the account was unlocked.<br><br>
-     *
+     * <p>
      * Quote: "Du hast richtig gedacht aber es einfach falsch verstanden." - Dimiikou, 04.10.2022
      */
     @SubscribeEvent
@@ -89,7 +89,8 @@ public class MobileEventHandler {
         Matcher mobileSmsMatcher = PatternHandler.MOBILE_SMS_PATTERN.matcher(msg);
         if (mobileSmsMatcher.find()) {
             String playerName = mobileSmsMatcher.group(1);
-            if (!AccountEventHandler.isAfk) AbstractionLayer.getPlayer().sendChatMessage("/nummer " + playerName);
+            if (!AccountEventHandler.isAfk)
+                AbstractionLayer.getPlayer().sendChatMessage("/nummer " + playerName);
             isActive = true;
             if (blockedPlayerList.contains(playerName)) {
                 blockNextMessage = true;
@@ -111,10 +112,12 @@ public class MobileEventHandler {
      */
     @SubscribeEvent
     public void onGuiOpen(GuiContainerEvent.DrawForeground e) {
-        if (!(e.getGuiContainer().inventorySlots instanceof ContainerChest)) return;
+        if (!(e.getGuiContainer().inventorySlots instanceof ContainerChest))
+            return;
         ContainerChest containerChest = (ContainerChest) e.getGuiContainer().inventorySlots;
 
-        if (!containerChest.getLowerChestInventory().getDisplayName().getUnformattedText().equals("§6Telefon")) return;
+        if (!containerChest.getLowerChestInventory().getDisplayName().getUnformattedText().equals("§6Telefon"))
+            return;
 
         hasCommunications = true;
 
@@ -137,7 +140,8 @@ public class MobileEventHandler {
                 e.setResult(null);
                 e.setResultSound(null);
                 UnicacityAddon.LOGGER.info("Sound event cancelled: " + name);
-            } else whitelistSound = false;
+            } else
+                whitelistSound = false;
         }
     }
 }

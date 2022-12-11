@@ -24,7 +24,8 @@ public class ForgeUtils {
         Minecraft minecraft = UnicacityAddon.MINECRAFT;
         NetHandlerPlayClient connection = minecraft.getConnection();
 
-        if (connection == null) return Collections.emptyList();
+        if (connection == null)
+            return Collections.emptyList();
 
         Collection<NetworkPlayerInfo> playerInfoList = connection.getPlayerInfoMap();
 
@@ -51,7 +52,8 @@ public class ForgeUtils {
         T found = null;
         for (T t : list) {
             String string = toStringFunction.apply(t).toLowerCase();
-            if (!string.startsWith(input)) continue;
+            if (!string.startsWith(input))
+                continue;
 
             int curDelta = Math.abs(string.length() - input.length());
             if (curDelta < delta) {
@@ -59,7 +61,8 @@ public class ForgeUtils {
                 delta = curDelta;
             }
 
-            if (curDelta == 0) break;
+            if (curDelta == 0)
+                break;
         }
 
         return found;

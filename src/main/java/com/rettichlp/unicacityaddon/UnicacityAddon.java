@@ -75,13 +75,16 @@ public class UnicacityAddon extends LabyModAddon {
     }
 
     public static boolean isUnicacity() {
-        if (MINECRAFT.world == null) return false;
+        if (MINECRAFT.world == null)
+            return false;
 
         ServerData serverData = MINECRAFT.getCurrentServerData();
-        if (serverData == null) return false;
+        if (serverData == null)
+            return false;
 
         String ip = serverData.serverIP;
-        if (ip.contains(":")) ip = ip.split(":")[0]; // strip unused port
+        if (ip.contains(":"))
+            ip = ip.split(":")[0]; // strip unused port
 
         return ip.toLowerCase().endsWith("unicacity.de");
     }

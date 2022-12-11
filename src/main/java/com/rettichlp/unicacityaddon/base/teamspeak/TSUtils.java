@@ -33,7 +33,8 @@ public class TSUtils {
     }
 
     public static List<Client> getClientsByName(List<String> minecraftNames) {
-        if (minecraftNames.isEmpty()) return Collections.emptyList();
+        if (minecraftNames.isEmpty())
+            return Collections.emptyList();
 
         List<Client> clients = new ArrayList<>();
         Map<Client, CommandFuture<ClientVariableCommand.Response>> futures = new HashMap<>();
@@ -51,7 +52,8 @@ public class TSUtils {
             ClientVariableCommand.Response response = future.get();
             String minecraftName = response.getMinecraftName();
 
-            if (!minecraftNames.contains(minecraftName)) continue;
+            if (!minecraftNames.contains(minecraftName))
+                continue;
             clients.add(client);
         }
 

@@ -1,8 +1,8 @@
 package com.rettichlp.unicacityaddon.base.config;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
+import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import joptsimple.internal.Strings;
@@ -582,6 +582,11 @@ public class ConfigElements {
 
     public static boolean getAutomatedUpdate() {
         return !UnicacityAddon.ADDON.getConfig().has("AUTOMATED_UPDATE_SETTINGS") || UnicacityAddon.ADDON.getConfig().get("AUTOMATED_UPDATE_SETTINGS")
+                .getAsBoolean(); // default = true
+    }
+
+    public static boolean getCustomSounds() {
+        return !UnicacityAddon.ADDON.getConfig().has("CUSTOM_SOUNDS_SETTINGS") || UnicacityAddon.ADDON.getConfig().get("CUSTOM_SOUNDS_SETTINGS")
                 .getAsBoolean(); // default = true
     }
 }

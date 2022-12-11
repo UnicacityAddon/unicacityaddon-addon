@@ -2,8 +2,8 @@ package com.rettichlp.unicacityaddon.base.utils;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.api.TokenManager;
-import com.rettichlp.unicacityaddon.base.enums.api.ApplicationPath;
 import com.rettichlp.unicacityaddon.base.api.exception.APIResponseException;
+import com.rettichlp.unicacityaddon.base.enums.api.ApplicationPath;
 import joptsimple.internal.Strings;
 
 import java.io.IOException;
@@ -41,7 +41,8 @@ public class WebsiteUtils {
         try {
             StringBuilder websiteSource = new StringBuilder();
             Scanner scanner = new Scanner(new InputStreamReader(httpURLConnection.getInputStream(), StandardCharsets.UTF_8));
-            while (scanner.hasNextLine()) websiteSource.append(scanner.nextLine()).append("\n\r");
+            while (scanner.hasNextLine())
+                websiteSource.append(scanner.nextLine()).append("\n\r");
             UnicacityAddon.LOGGER.info("APIResponse - " + httpURLConnection.getResponseCode() + " [" + urlString.replace(TokenManager.API_TOKEN, "TOKEN") + "]");
             return websiteSource.toString();
         } catch (IOException e) {
