@@ -2,8 +2,10 @@ package com.rettichlp.unicacityaddon.base.abstraction;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.api.Syncer;
+import com.rettichlp.unicacityaddon.base.config.ConfigElements;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
+import com.rettichlp.unicacityaddon.base.registry.SoundRegistry;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.utils.NavigationUtils;
@@ -96,7 +98,22 @@ public class UPlayerImpl implements UPlayer {
 
     @Override
     public void playSound(SoundEvent soundIn, int volume, int pitch) {
-        getPlayer().playSound(soundIn, volume, pitch);
+        boolean execute = !soundIn.getSoundName().getResourceDomain().contains("unicacityaddon");
+
+        if (soundIn.equals(SoundRegistry.BOMB_SOUND)) {
+            execute = ConfigElements.getBombSound();
+        } else if (soundIn.equals(SoundRegistry.CONTRACT_SET_SOUND)) {
+            execute = ConfigElements.getContractSetSound();
+        } else if (soundIn.equals(SoundRegistry.CONTRACT_FULFILLED_SOUND)) {
+            execute = ConfigElements.getContractFulfilledSound();
+        } else if (soundIn.equals(SoundRegistry.REPORT_SOUND)) {
+            execute = ConfigElements.getReportSound();
+        } else if (soundIn.equals(SoundRegistry.SERVICE_SOUND)) {
+            execute = ConfigElements.getServiceSound();
+        }
+
+        if (execute)
+            getPlayer().playSound(soundIn, volume, pitch);
     }
 
     @Override
