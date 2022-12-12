@@ -609,4 +609,9 @@ public class ConfigElements {
         return !UnicacityAddon.ADDON.getConfig().has("SOUND_SERVICE_SETTINGS") || UnicacityAddon.ADDON.getConfig().get("SOUND_SERVICE_SETTINGS")
                 .getAsBoolean(); // default = true
     }
+
+    public static boolean getRenderAddonGroupTag() {
+        return !UnicacityAddon.ADDON.getConfig().has("RENDER_ADDON_GROUP_TAG_SETTINGS") || UnicacityAddon.ADDON.getConfig().get("RENDER_ADDON_GROUP_TAG_SETTINGS")
+                .getAsBoolean(); // default = true
+    }
 }
