@@ -61,8 +61,10 @@ public class GaggedCommand implements IClientCommand {
         UPlayer p = AbstractionLayer.getPlayer();
         GaggedEventHandler.toggleGagged();
 
-        if (GaggedEventHandler.isGagged()) p.sendInfoMessage("Ab sofort kannst du nur noch flüstern.");
-        else p.sendInfoMessage("Ab sofort kannst du wieder normal reden.");
+        if (GaggedEventHandler.isGagged())
+            p.sendInfoMessage("Ab sofort kannst du nur noch flüstern.");
+        else
+            p.sendInfoMessage("Ab sofort kannst du wieder normal reden.");
     }
 
     @Override

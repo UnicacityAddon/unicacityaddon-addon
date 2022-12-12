@@ -25,11 +25,13 @@ public class Message {
     public List<MessagePart> getMessageParts() {
         return messageParts;
     }
+
     public static Builder getBuilder() {
         return new Builder();
     }
 
     public static class Builder {
+
         private final List<MessagePart> messageParts = new ArrayList<>();
 
         public MessagePart.Builder of(String message) {
@@ -87,8 +89,10 @@ public class Message {
             message.getMessageParts().forEach(part -> {
                 StringBuilder partStringBuilder = new StringBuilder();
                 partStringBuilder.append(FormattingCode.RESET.getCode());
-                if (part.getColorCode() != null) partStringBuilder.append(part.getColorCode().getCode());
-                if (!part.getFormattingCodes().isEmpty()) part.getFormattingCodes().forEach(formattingCode -> partStringBuilder.append(formattingCode.getCode()));
+                if (part.getColorCode() != null)
+                    partStringBuilder.append(part.getColorCode().getCode());
+                if (!part.getFormattingCodes().isEmpty())
+                    part.getFormattingCodes().forEach(formattingCode -> partStringBuilder.append(formattingCode.getCode()));
                 partStringBuilder.append(part.getMessage());
                 stringBuilder.append(partStringBuilder);
             });
@@ -110,7 +114,8 @@ public class Message {
                 style.setUnderlined(part.getFormattingCodes().contains(FormattingCode.UNDERLINE));
                 style.setClickEvent(part.getClickEvent());
                 style.setHoverEvent(part.getHoverEvent());
-                if (part.getColorCode() != null) style.setColor(TextFormatting.valueOf(String.valueOf(part.getColorCode())));
+                if (part.getColorCode() != null)
+                    style.setColor(TextFormatting.valueOf(String.valueOf(part.getColorCode())));
                 overall.getSiblings().add(componentPart);
             });
 

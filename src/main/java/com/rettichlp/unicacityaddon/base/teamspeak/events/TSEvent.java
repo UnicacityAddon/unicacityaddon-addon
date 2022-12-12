@@ -30,6 +30,7 @@ public abstract class TSEvent extends Event {
     @Retention(RetentionPolicy.RUNTIME)
     @Target(ElementType.TYPE)
     public @interface Name {
+
         String value();
     }
 }

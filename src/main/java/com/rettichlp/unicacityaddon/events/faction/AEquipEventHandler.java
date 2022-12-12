@@ -39,23 +39,29 @@ public class AEquipEventHandler {
     @SubscribeEvent
     public void onKeyboardClickEvent(GuiScreenEvent.KeyboardInputEvent.Post e) {
         int amount = AEquipCommand.amount;
-        if (amount == 0) return;
+        if (amount == 0)
+            return;
 
-        if (!Keyboard.isKeyDown(KeyBindRegistry.aBuy.getKeyCode())) return;
+        if (!Keyboard.isKeyDown(KeyBindRegistry.aBuy.getKeyCode()))
+            return;
 
-        if (!(e.getGui() instanceof GuiContainer)) return;
+        if (!(e.getGui() instanceof GuiContainer))
+            return;
         GuiContainer inv = (GuiContainer) e.getGui();
 
         Slot slot = inv.getSlotUnderMouse();
-        if (slot == null) return;
+        if (slot == null)
+            return;
 
         ItemStack is = slot.inventory.getStackInSlot(slot.getSlotIndex());
         NBTTagCompound nbt = is.getTagCompound();
-        if (nbt == null) return;
+        if (nbt == null)
+            return;
 
         NBTTagCompound display = nbt.getCompoundTag("display");
         String lore = display.getTagList("Lore", Constants.NBT.TAG_STRING).getStringTagAt(0);
-        if (lore.startsWith("§c") && lore.endsWith("$")) return;
+        if (lore.startsWith("§c") && lore.endsWith("$"))
+            return;
 
         slotIndex = slot.getSlotIndex();
         amountLeft = amount;
@@ -65,8 +71,10 @@ public class AEquipEventHandler {
 
     @SubscribeEvent
     public void onGuiOpen(GuiOpenEvent e) {
-        if (amountLeft == 0) return;
-        if (!(e.getGui() instanceof GuiContainer)) return;
+        if (amountLeft == 0)
+            return;
+        if (!(e.getGui() instanceof GuiContainer))
+            return;
 
         TIMER.schedule(new TimerTask() {
             @Override
@@ -87,10 +95,12 @@ public class AEquipEventHandler {
 
     @SubscribeEvent
     public void onChatReceived(ClientChatReceivedEvent e) {
-        if (amountLeft == 0) return;
+        if (amountLeft == 0)
+            return;
 
         String message = e.getMessage().getUnformattedText();
-        if (!PatternHandler.EQUIP_INTERRUPTED_PATTERN.matcher(message).find()) return;
+        if (!PatternHandler.EQUIP_INTERRUPTED_PATTERN.matcher(message).find())
+            return;
 
         amountLeft = 0;
         slotIndex = 0;
@@ -108,6 +118,7 @@ public class AEquipEventHandler {
         container.detectAndSendChanges();
         p.getInventoryContainer().detectAndSendChanges();
 
-        if (amountLeft > 0) p.sendChatMessage("/equip");
+        if (amountLeft > 0)
+            p.sendChatMessage("/equip");
     }
 }

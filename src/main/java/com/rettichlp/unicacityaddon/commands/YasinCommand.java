@@ -70,15 +70,18 @@ public class YasinCommand implements IClientCommand {
                 yasinList(p);
             } else if (args.length == 2 && args[0].equalsIgnoreCase("add")) {
                 JsonObject response = APIRequest.sendYasinAddRequest(args[1]);
-                if (response == null) return;
+                if (response == null)
+                    return;
                 p.sendAPIMessage(response.get("info").getAsString(), true);
             } else if (args.length == 2 && args[0].equalsIgnoreCase("remove")) {
                 JsonObject response = APIRequest.sendYasinRemoveRequest(args[1]);
-                if (response == null) return;
+                if (response == null)
+                    return;
                 p.sendAPIMessage(response.get("info").getAsString(), true);
             } else if (args.length > 1 && args[0].equalsIgnoreCase("done")) {
                 JsonObject response = APIRequest.sendYasinDoneRequest(args[1]);
-                if (response == null) return;
+                if (response == null)
+                    return;
                 p.sendAPIMessage(response.get("info").getAsString(), true);
             }
         }).start();
@@ -91,30 +94,33 @@ public class YasinCommand implements IClientCommand {
                 .createComponent());
 
         JsonArray response = APIRequest.sendYasinRequest();
-        if (response == null) return;
+        if (response == null)
+            return;
 
         response.getAsJsonArray().forEach(jsonElement -> {
             JsonObject jsonObject = jsonElement.getAsJsonObject();
             String name = jsonObject.get("name").getAsString();
             boolean done = jsonObject.get("done").getAsBoolean();
 
-            if (done) p.sendMessage(Message.getBuilder()
-                    .of("»").color(ColorCode.GRAY).advance().space()
-                    .of(name).color(ColorCode.AQUA).strikethrough().advance().space()
-                    .of("[✕]").color(ColorCode.RED)
-                            .clickEvent(ClickEvent.Action.RUN_COMMAND, "/yasin remove " + name)
-                            .advance()
-                    .createComponent());
-            else p.sendMessage(Message.getBuilder()
-                    .of("»").color(ColorCode.GRAY).advance().space()
-                    .of(name).color(ColorCode.AQUA).advance().space()
-                    .of("[✔]").color(ColorCode.GREEN)
-                            .clickEvent(ClickEvent.Action.RUN_COMMAND, "/yasin done " + name)
-                            .advance().space()
-                    .of("[✕]").color(ColorCode.RED)
-                            .clickEvent(ClickEvent.Action.RUN_COMMAND, "/yasin remove " + name)
-                            .advance()
-                    .createComponent());
+            if (done)
+                p.sendMessage(Message.getBuilder()
+                        .of("»").color(ColorCode.GRAY).advance().space()
+                        .of(name).color(ColorCode.AQUA).strikethrough().advance().space()
+                        .of("[✕]").color(ColorCode.RED)
+                                .clickEvent(ClickEvent.Action.RUN_COMMAND, "/yasin remove " + name)
+                                .advance()
+                        .createComponent());
+            else
+                p.sendMessage(Message.getBuilder()
+                        .of("»").color(ColorCode.GRAY).advance().space()
+                        .of(name).color(ColorCode.AQUA).advance().space()
+                        .of("[✔]").color(ColorCode.GREEN)
+                                .clickEvent(ClickEvent.Action.RUN_COMMAND, "/yasin done " + name)
+                                .advance().space()
+                        .of("[✕]").color(ColorCode.RED)
+                                .clickEvent(ClickEvent.Action.RUN_COMMAND, "/yasin remove " + name)
+                                .advance()
+                        .createComponent());
         });
 
         p.sendEmptyMessage();

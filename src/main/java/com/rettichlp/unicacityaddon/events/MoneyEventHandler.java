@@ -2,9 +2,9 @@ package com.rettichlp.unicacityaddon.events;
 
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
-import com.rettichlp.unicacityaddon.base.enums.api.StatisticType;
 import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
 import com.rettichlp.unicacityaddon.base.config.ConfigElements;
+import com.rettichlp.unicacityaddon.base.enums.api.StatisticType;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
@@ -146,7 +146,8 @@ public class MoneyEventHandler {
 
         Matcher cashFromBankMatcher = PatternHandler.CASH_FROM_BANK_PATTERN.matcher(msg);
         if (cashFromBankMatcher.find()) {
-            if (isGRBankCommand) return;
+            if (isGRBankCommand)
+                return;
             CashMoneyModule.addBalance(Integer.parseInt(cashFromBankMatcher.group(1)));
             return;
         }

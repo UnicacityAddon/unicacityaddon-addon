@@ -69,11 +69,13 @@ public class PlayerGroupCommand implements IClientCommand {
 
         } else if (args.length == 3 && args[0].equalsIgnoreCase("add")) {
             JsonObject response = APIRequest.sendPlayerAddRequest(args[2], args[1]);
-            if (response == null) return;
+            if (response == null)
+                return;
             p.sendAPIMessage(response.get("info").getAsString(), true);
         } else if (args.length == 3 && args[0].equalsIgnoreCase("remove")) {
             JsonObject response = APIRequest.sendPlayerRemoveRequest(args[2], args[1]);
-            if (response == null) return;
+            if (response == null)
+                return;
             p.sendAPIMessage(response.get("info").getAsString(), true);
         } else {
             p.sendSyntaxMessage(getUsage(sender));

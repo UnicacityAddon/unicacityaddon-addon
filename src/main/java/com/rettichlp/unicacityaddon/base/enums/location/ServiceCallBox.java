@@ -55,7 +55,8 @@ public enum ServiceCallBox {
 
     public static ServiceCallBox getServiceCallBoxByLocationName(String s) {
         for (ServiceCallBox serviceCallBox : ServiceCallBox.values()) {
-            if (serviceCallBox.getLocationName().equals(s)) return serviceCallBox;
+            if (serviceCallBox.getLocationName().equals(s))
+                return serviceCallBox;
         }
         return null;
     }

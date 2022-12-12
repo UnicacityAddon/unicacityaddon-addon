@@ -68,7 +68,8 @@ public class ShareLocationCommand implements IClientCommand {
                 allianceChat = true;
                 break;
             }
-            if (ForgeUtils.getOnlinePlayers().contains(arg)) playerNames.add(arg);
+            if (ForgeUtils.getOnlinePlayers().contains(arg))
+                playerNames.add(arg);
         }
 
         if (playerNames.isEmpty()) {

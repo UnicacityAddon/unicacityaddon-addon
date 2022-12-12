@@ -18,46 +18,57 @@ import static com.rettichlp.unicacityaddon.base.utils.MathUtils.HEART_DECIMAL_FO
 @UCModule
 public class HearthAmountModule extends SimpleModule {
 
-    @Override public String getControlName() {
+    @Override
+    public String getControlName() {
         return "Herzen";
     }
 
-    @Override public String getSettingName() {
+    @Override
+    public String getSettingName() {
         return null;
     }
 
-    @Override public String getDisplayName() {
+    @Override
+    public String getDisplayName() {
         return "Herzen";
     }
 
-    @Override public String getDisplayValue() {
+    @Override
+    public String getDisplayValue() {
         return HEART_DECIMAL_FORMAT.format(AbstractionLayer.getPlayer().getPlayer().getHealth() / 2) + ColorCode.RED.getCode() + "❤";
     }
 
-    @Override public String getDefaultValue() {
+    @Override
+    public String getDefaultValue() {
         return "0";
     }
 
-    @Override public String getDescription() {
+    @Override
+    public String getDescription() {
         return "Zeigt an wie viele Herzen du hast";
     }
 
-    @Override public ControlElement.IconData getIconData() {
+    @Override
+    public ControlElement.IconData getIconData() {
         return new ControlElement.IconData(Material.RED_ROSE);
     }
 
-    @Override public ModuleCategory getCategory() {
+    @Override
+    public ModuleCategory getCategory() {
         return ModuleRegistry.UNICACITY;
     }
 
-    @Override public boolean isShown() {
+    @Override
+    public boolean isShown() {
         return UnicacityAddon.isUnicacity();
     }
 
-    @Override public int getSortingId() {
+    @Override
+    public int getSortingId() {
         return 0;
     }
 
-    @Override public void loadSettings() {
+    @Override
+    public void loadSettings() {
     }
 }

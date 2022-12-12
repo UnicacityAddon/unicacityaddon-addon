@@ -11,7 +11,7 @@ public class NaviPointEntry {
     private final int z;
     private final String article;
 
-    public NaviPointEntry(String name, int x, int y , int z, String article) {
+    public NaviPointEntry(String name, int x, int y, int z, String article) {
         this.name = name;
         this.x = x;
         this.y = y;

@@ -12,6 +12,7 @@ public class CurrentSchandlerIDCommand extends BaseCommand<CurrentSchandlerIDCom
     }
 
     public static class Response extends CommandResponse {
+
         private final int schandlerID;
 
         public Response(String rawResponse) {

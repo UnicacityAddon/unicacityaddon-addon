@@ -15,46 +15,57 @@ public class EmergencyServiceModule extends SimpleModule {
 
     public static int currentCount = 0;
 
-    @Override public String getControlName() {
+    @Override
+    public String getControlName() {
         return "Service-Count";
     }
 
-    @Override public String getSettingName() {
+    @Override
+    public String getSettingName() {
         return null;
     }
 
-    @Override public String getDisplayName() {
+    @Override
+    public String getDisplayName() {
         return "Notrufe";
     }
 
-    @Override public String getDisplayValue() {
+    @Override
+    public String getDisplayValue() {
         return String.valueOf(currentCount);
     }
 
-    @Override public String getDefaultValue() {
+    @Override
+    public String getDefaultValue() {
         return "0";
     }
 
-    @Override public String getDescription() {
+    @Override
+    public String getDescription() {
         return "Zeigt an, wie viele Notrufe offen sind.";
     }
 
-    @Override public ControlElement.IconData getIconData() {
+    @Override
+    public ControlElement.IconData getIconData() {
         return new ControlElement.IconData(Material.REDSTONE_LAMP_ON);
     }
 
-    @Override public ModuleCategory getCategory() {
+    @Override
+    public ModuleCategory getCategory() {
         return ModuleRegistry.UNICACITY;
     }
 
-    @Override public boolean isShown() {
+    @Override
+    public boolean isShown() {
         return !String.valueOf(currentCount).isEmpty();
     }
 
-    @Override public int getSortingId() {
+    @Override
+    public int getSortingId() {
         return 0;
     }
 
-    @Override public void loadSettings() {
+    @Override
+    public void loadSettings() {
     }
 }

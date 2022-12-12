@@ -4,9 +4,9 @@ import com.google.gson.JsonObject;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.api.Syncer;
-import com.rettichlp.unicacityaddon.base.models.BlacklistReasonEntry;
 import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
+import com.rettichlp.unicacityaddon.base.models.BlacklistReasonEntry;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
@@ -78,11 +78,13 @@ public class BlacklistReasonCommand implements IClientCommand {
 
         } else if (args.length == 4 && args[0].equalsIgnoreCase("add")) {
             JsonObject response = APIRequest.sendBlacklistReasonAddRequest(args[1], args[2], args[3]);
-            if (response == null) return;
+            if (response == null)
+                return;
             p.sendAPIMessage(response.get("info").getAsString(), true);
         } else if (args.length == 2 && args[0].equalsIgnoreCase("remove")) {
             JsonObject response = APIRequest.sendBlacklistReasonRemoveRequest(args[1]);
-            if (response == null) return;
+            if (response == null)
+                return;
             p.sendAPIMessage(response.get("info").getAsString(), true);
         } else {
             p.sendSyntaxMessage(getUsage(sender));

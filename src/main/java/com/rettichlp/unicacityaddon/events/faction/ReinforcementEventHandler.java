@@ -2,13 +2,13 @@ package com.rettichlp.unicacityaddon.events.faction;
 
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
-import com.rettichlp.unicacityaddon.base.models.NaviPointEntry;
 import com.rettichlp.unicacityaddon.base.config.ConfigElements;
-import com.rettichlp.unicacityaddon.base.utils.NavigationUtils;
+import com.rettichlp.unicacityaddon.base.models.NaviPointEntry;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
+import com.rettichlp.unicacityaddon.base.utils.NavigationUtils;
 import com.rettichlp.unicacityaddon.commands.faction.ReinforcementCommand;
 import com.rettichlp.unicacityaddon.events.TickEventHandler;
 import net.minecraft.util.text.ITextComponent;
@@ -118,10 +118,12 @@ public class ReinforcementEventHandler {
 
         for (ReinforcementCommand.Type type : ReinforcementCommand.Type.values()) {
             Pattern pattern = type.getPattern();
-            if (pattern == null) continue;
+            if (pattern == null)
+                continue;
 
             Matcher matcher = pattern.matcher(e.getMessage().getUnformattedText());
-            if (!matcher.find()) continue;
+            if (!matcher.find())
+                continue;
 
             String name = matcher.group(1);
 

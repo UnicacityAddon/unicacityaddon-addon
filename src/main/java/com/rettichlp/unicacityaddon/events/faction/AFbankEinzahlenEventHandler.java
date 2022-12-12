@@ -20,7 +20,8 @@ public class AFbankEinzahlenEventHandler {
 
     @SubscribeEvent
     public void onClientChatReceived(ClientChatReceivedEvent e) {
-        if (!AFbankEinzahlenCommand.STARTED.get()) return;
+        if (!AFbankEinzahlenCommand.STARTED.get())
+            return;
 
         String msg = e.getMessage().getUnformattedText();
         Matcher taxesMatcher = PatternHandler.FBANK_TAXES.matcher(msg);

@@ -37,7 +37,8 @@ public class JobEventHandler {
 
     @SubscribeEvent
     public void onPlayerInteract(PlayerInteractEvent e) {
-        if (!(e instanceof PlayerInteractEvent.RightClickBlock) || !UnicacityAddon.isUnicacity()) return;
+        if (!(e instanceof PlayerInteractEvent.RightClickBlock) || !UnicacityAddon.isUnicacity())
+            return;
         UPlayer p = AbstractionLayer.getPlayer();
 
         World world = e.getWorld();
@@ -50,10 +51,12 @@ public class JobEventHandler {
         }
 
         TileEntity tileEntity = world.getTileEntity(blockPos);
-        if (!(tileEntity instanceof TileEntitySign)) return;
+        if (!(tileEntity instanceof TileEntitySign))
+            return;
         ITextComponent[] lines = ((TileEntitySign) tileEntity).signText;
         Matcher matcher = Pattern.compile("^== (\\d+) ==$").matcher(lines[1].getUnformattedText());
-        if (matcher.find()) drop();
+        if (matcher.find())
+            drop();
     }
 
     @SubscribeEvent

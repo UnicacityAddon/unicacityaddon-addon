@@ -69,7 +69,8 @@ public class ImageUploadUtils {
         } catch (IOException e) {
             throw new RuntimeException(e);
         } finally {
-            if (conn != null) conn.disconnect();
+            if (conn != null)
+                conn.disconnect();
         }
     }
 

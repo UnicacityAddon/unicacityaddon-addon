@@ -3,8 +3,8 @@ package com.rettichlp.unicacityaddon.commands.faction.polizei;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.api.Syncer;
-import com.rettichlp.unicacityaddon.base.models.WantedReasonEntry;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
+import com.rettichlp.unicacityaddon.base.models.WantedReasonEntry;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.utils.ForgeUtils;
 import com.rettichlp.unicacityaddon.base.utils.MathUtils;
@@ -171,7 +171,8 @@ public class ASUCommand implements IClientCommand {
 
         static Flag getFlag(String string) {
             for (Flag flag : Flag.values()) {
-                if (flag.flagArgument.equalsIgnoreCase(string)) return flag;
+                if (flag.flagArgument.equalsIgnoreCase(string))
+                    return flag;
             }
 
             return null;

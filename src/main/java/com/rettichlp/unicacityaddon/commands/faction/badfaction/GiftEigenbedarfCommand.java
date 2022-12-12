@@ -60,15 +60,18 @@ public class GiftEigenbedarfCommand implements IClientCommand {
         if (ConfigElements.getCocainActivated()) {
             p.sendChatMessage("/selldrug " + args[0] + " Kokain " + ConfigElements.getCocainDrugPurity().getPurity() + " " + ConfigElements.getCocaineAmount() + " 0");
 
-            if (ConfigElements.getMarihuanaActivated()) checkWeed = true;
-            if (ConfigElements.getMethActivated()) checkMeth = true;
+            if (ConfigElements.getMarihuanaActivated())
+                checkWeed = true;
+            if (ConfigElements.getMethActivated())
+                checkMeth = true;
             return;
         }
 
         if (ConfigElements.getMarihuanaActivated()) {
             p.sendChatMessage("/selldrug " + args[0] + " Gras " + ConfigElements.getMarihuanaDrugPurity().getPurity() + " " + ConfigElements.getMarihuanaAmount() + " 0");
 
-            if (ConfigElements.getMethActivated()) checkMeth = true;
+            if (ConfigElements.getMethActivated())
+                checkMeth = true;
             return;
         }
 

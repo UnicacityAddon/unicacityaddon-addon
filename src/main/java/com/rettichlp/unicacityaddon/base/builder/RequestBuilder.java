@@ -4,8 +4,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.rettichlp.unicacityaddon.base.enums.api.ApplicationPath;
 import com.rettichlp.unicacityaddon.base.api.exception.APIResponseException;
+import com.rettichlp.unicacityaddon.base.enums.api.ApplicationPath;
 import com.rettichlp.unicacityaddon.base.utils.WebsiteUtils;
 
 import java.util.Map;
@@ -23,6 +23,7 @@ public class RequestBuilder {
     }
 
     public static class Builder {
+
         private boolean nonProd;
         private ApplicationPath applicationPath;
         private String subPath;

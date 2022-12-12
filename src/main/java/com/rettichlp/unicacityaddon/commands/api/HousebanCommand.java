@@ -4,9 +4,9 @@ import com.google.gson.JsonObject;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.api.Syncer;
-import com.rettichlp.unicacityaddon.base.models.HouseBanReasonEntry;
 import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
+import com.rettichlp.unicacityaddon.base.models.HouseBanReasonEntry;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
@@ -82,12 +82,18 @@ public class HousebanCommand implements IClientCommand {
                         .create();
 
                 ColorCode colorCode = ColorCode.AQUA;
-                if (days == 0) colorCode = ColorCode.DARK_GREEN;
-                else if (days > 0 && days <= 5) colorCode = ColorCode.GREEN;
-                else if (days > 5 && days <= 14) colorCode = ColorCode.YELLOW;
-                else if (days > 14 && days <= 25) colorCode = ColorCode.GOLD;
-                else if (days > 25 && days <= 50) colorCode = ColorCode.RED;
-                else if (days > 50) colorCode = ColorCode.DARK_RED;
+                if (days == 0)
+                    colorCode = ColorCode.DARK_GREEN;
+                else if (days > 0 && days <= 5)
+                    colorCode = ColorCode.GREEN;
+                else if (days > 5 && days <= 14)
+                    colorCode = ColorCode.YELLOW;
+                else if (days > 14 && days <= 25)
+                    colorCode = ColorCode.GOLD;
+                else if (days > 25 && days <= 50)
+                    colorCode = ColorCode.RED;
+                else if (days > 50)
+                    colorCode = ColorCode.DARK_RED;
 
                 Message.Builder builder = Message.getBuilder();
                 houseBanEntry.getHouseBanReasonList().forEach(houseBanReasonEntry -> builder
@@ -102,8 +108,8 @@ public class HousebanCommand implements IClientCommand {
                         .of(houseBanEntry.getName()).color(colorCode).advance().space()
                         .of("-").color(ColorCode.GRAY).advance().space()
                         .of(duration).color(ColorCode.AQUA)
-                                .hoverEvent(HoverEvent.Action.SHOW_TEXT, builder.createComponent())
-                                .advance()
+                        .hoverEvent(HoverEvent.Action.SHOW_TEXT, builder.createComponent())
+                        .advance()
                         .createComponent());
             });
 
@@ -111,11 +117,13 @@ public class HousebanCommand implements IClientCommand {
 
         } else if (args.length == 3 && args[0].equalsIgnoreCase("add")) {
             JsonObject response = APIRequest.sendHouseBanAddRequest(args[1], args[2]);
-            if (response == null) return;
+            if (response == null)
+                return;
             p.sendAPIMessage(response.get("info").getAsString(), true);
         } else if (args.length == 3 && args[0].equalsIgnoreCase("remove")) {
             JsonObject response = APIRequest.sendHouseBanRemoveRequest(args[1], args[2]);
-            if (response == null) return;
+            if (response == null)
+                return;
             p.sendAPIMessage(response.get("info").getAsString(), true);
         } else {
             p.sendSyntaxMessage(getUsage(sender));

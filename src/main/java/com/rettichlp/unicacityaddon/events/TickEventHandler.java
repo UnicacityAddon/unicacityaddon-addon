@@ -33,7 +33,8 @@ public class TickEventHandler {
 
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
-        if (event.phase != TickEvent.Phase.END) return;
+        if (event.phase != TickEvent.Phase.END)
+            return;
 
         currentTick++;
 
@@ -62,12 +63,15 @@ public class TickEventHandler {
         // CUSTOM SECONDS
         String intervalString = ConfigElements.getRefreshDisplayNamesInterval();
         int interval = 5 * 20; // every 5 seconds
-        if (MathUtils.isInteger(intervalString)) interval = Integer.parseInt(intervalString) * 20;
-        if (currentTick % interval == 0) handleNameTagSyncDisplayName();
+        if (MathUtils.isInteger(intervalString))
+            interval = Integer.parseInt(intervalString) * 20;
+        if (currentTick % interval == 0)
+            handleNameTagSyncDisplayName();
     }
 
     private void handleReinforcementScreenshot() {
-        if (ReinforcementEventHandler.activeReinforcement < 0 || ReinforcementEventHandler.activeReinforcement + 15 != currentTick) return;
+        if (ReinforcementEventHandler.activeReinforcement < 0 || ReinforcementEventHandler.activeReinforcement + 15 != currentTick)
+            return;
 
         try {
             File file = FileManager.getNewActivityImageFile("reinforcement");
@@ -78,15 +82,18 @@ public class TickEventHandler {
     }
 
     private void handleNameTag() {
-        if (UnicacityAddon.MINECRAFT.world == null) return;
+        if (UnicacityAddon.MINECRAFT.world == null)
+            return;
 
         List<EntityItem> items = UnicacityAddon.MINECRAFT.world.getEntities(EntityItem.class, (ent) -> ent != null && ent.hasCustomName() && ent.getItem().getItem() instanceof ItemSkull);
         items.forEach(entityItem -> {
             String name = entityItem.getCustomNameTag();
             String playerName = name.substring(3);
 
-            if (!Syncer.PLAYERFACTIONMAP.containsKey(name.substring(3))) return;
-            if (name.contains("◤")) return; // already edited
+            if (!Syncer.PLAYERFACTIONMAP.containsKey(name.substring(3)))
+                return;
+            if (name.contains("◤"))
+                return; // already edited
 
             String prefix = NameTagEventHandler.getPrefix(playerName, true);
             String factionInfo = NameTagEventHandler.getFactionInfo(playerName);
@@ -101,35 +108,45 @@ public class TickEventHandler {
     }
 
     private void handleNameTagSyncDisplayName() {
-        if (UnicacityAddon.MINECRAFT.world == null) return;
+        if (UnicacityAddon.MINECRAFT.world == null)
+            return;
         NameTagEventHandler.refreshAllDisplayNames();
     }
 
     private void handleBombTimer() {
-        if (!BombTimerModule.isBomb) return;
+        if (!BombTimerModule.isBomb)
+            return;
         if (BombTimerModule.currentCount++ >= 780)
             BombTimerModule.timer = ColorCode.RED.getCode() + ModUtils.parseTimer(BombTimerModule.currentCount);
-        else BombTimerModule.timer = ModUtils.parseTimer(BombTimerModule.currentCount);
-        if (BombTimerModule.currentCount > 1200) BombTimerModule.stopBombTimer();
+        else
+            BombTimerModule.timer = ModUtils.parseTimer(BombTimerModule.currentCount);
+        if (BombTimerModule.currentCount > 1200)
+            BombTimerModule.stopBombTimer();
     }
 
     private void handleExplosiveBeltTimer() {
-        if (!ExplosiveBeltTimerModule.explosiveBeltStarted) return;
+        if (!ExplosiveBeltTimerModule.explosiveBeltStarted)
+            return;
         ExplosiveBeltTimerModule.currentCount--;
         ExplosiveBeltTimerModule.timer = String.valueOf(ExplosiveBeltTimerModule.currentCount);
-        if (ExplosiveBeltTimerModule.currentCount <= 0) ExplosiveBeltTimerModule.stopBombTimer();
+        if (ExplosiveBeltTimerModule.currentCount <= 0)
+            ExplosiveBeltTimerModule.stopBombTimer();
     }
 
     private void handleFBIHack() {
-        if (!FBIHackModule.fbiHackStarted) return;
+        if (!FBIHackModule.fbiHackStarted)
+            return;
         if (FBIHackModule.currentCount-- <= 30)
             FBIHackModule.timer = ColorCode.RED.getCode() + ModUtils.parseTimer(FBIHackModule.currentCount);
-        else FBIHackModule.timer = ModUtils.parseTimer(FBIHackModule.currentCount);
-        if (FBIHackModule.currentCount <= 0) FBIHackModule.stopCountdown();
+        else
+            FBIHackModule.timer = ModUtils.parseTimer(FBIHackModule.currentCount);
+        if (FBIHackModule.currentCount <= 0)
+            FBIHackModule.stopCountdown();
     }
 
     private void handlePlantTimer() {
-        if (!PlantFertilizeTimerModule.plantRunning) return;
+        if (!PlantFertilizeTimerModule.plantRunning)
+            return;
 
         if (!PlantFertilizeTimerModule.timer.isEmpty() && MathUtils.isInteger(PlantFertilizeTimerModule.timer.replace(":", "")))
             PlantFertilizeTimerModule.timer = PlantFertilizeTimerModule.calcTimer(--PlantFertilizeTimerModule.currentCount);
@@ -137,19 +154,23 @@ public class TickEventHandler {
         if (!PlantWaterTimerModule.timer.isEmpty() && MathUtils.isInteger(PlantWaterTimerModule.timer.replace(":", "")))
             PlantWaterTimerModule.timer = ModUtils.parseTimer(--PlantWaterTimerModule.currentCount);
 
-        if (PlantFertilizeTimerModule.currentCount <= 0) PlantFertilizeTimerModule.timer = ColorCode.RED.getCode() + "Jetzt";
-        if (PlantWaterTimerModule.currentCount <= 0) PlantWaterTimerModule.timer = ColorCode.RED.getCode() + "Jetzt";
+        if (PlantFertilizeTimerModule.currentCount <= 0)
+            PlantFertilizeTimerModule.timer = ColorCode.RED.getCode() + "Jetzt";
+        if (PlantWaterTimerModule.currentCount <= 0)
+            PlantWaterTimerModule.timer = ColorCode.RED.getCode() + "Jetzt";
     }
 
 
     private void handleScoreboardCheck() {
-        if (!UnicacityAddon.isUnicacity()) return;
+        if (!UnicacityAddon.isUnicacity())
+            return;
         Scoreboard scoreboard = AbstractionLayer.getPlayer().getWorldScoreboard();
         CarEventHandler.checkTank(scoreboard);
     }
 
     private void handlePayDay() {
-        if (AccountEventHandler.isAfk || !UnicacityAddon.isUnicacity()) return;
+        if (AccountEventHandler.isAfk || !UnicacityAddon.isUnicacity())
+            return;
         PayDayModule.addTime(1);
     }
 }

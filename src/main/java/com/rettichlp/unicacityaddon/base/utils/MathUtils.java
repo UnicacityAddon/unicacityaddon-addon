@@ -33,7 +33,8 @@ public class MathUtils {
     }
 
     public String parse() {
-        if (Double.isNaN(result)) evaluate();
+        if (Double.isNaN(result))
+            evaluate();
 
         return CALCULATOR_DECIMAL_FORMAT.format(result);
     }
@@ -60,24 +61,32 @@ public class MathUtils {
     private double parseExpression() throws ExpressionException {
         double x = parseTerm();
         while (true) {
-            if (eat('+')) x += parseTerm();
-            else if (eat('-')) x -= parseTerm();
-            else return x;
+            if (eat('+'))
+                x += parseTerm();
+            else if (eat('-'))
+                x -= parseTerm();
+            else
+                return x;
         }
     }
 
     private double parseTerm() throws ExpressionException {
         double x = parseFactor();
         while (true) {
-            if (eat('*')) x *= parseFactor();
-            else if (eat('/')) x /= parseFactor();
-            else return x;
+            if (eat('*'))
+                x *= parseFactor();
+            else if (eat('/'))
+                x /= parseFactor();
+            else
+                return x;
         }
     }
 
     private double parseFactor() throws ExpressionException {
-        if (eat('+')) return parseFactor();
-        if (eat('-')) return -parseFactor();
+        if (eat('+'))
+            return parseFactor();
+        if (eat('-'))
+            return -parseFactor();
 
         double x;
         int startPos = this.pos;
@@ -85,10 +94,12 @@ public class MathUtils {
             x = parseExpression();
             eat(')');
         } else if ((ch >= '0' && ch <= '9') || ch == '.') {
-            while ((ch >= '0' && ch <= '9') || ch == '.') nextChar();
+            while ((ch >= '0' && ch <= '9') || ch == '.')
+                nextChar();
             x = Double.parseDouble(expression.substring(startPos, this.pos));
         } else if (ch >= 'a' && ch <= 'z') {
-            while (ch >= 'a' && ch <= 'z') nextChar();
+            while (ch >= 'a' && ch <= 'z')
+                nextChar();
             String func = expression.substring(startPos, this.pos);
             x = parseFactor();
             switch (func) {
@@ -119,7 +130,8 @@ public class MathUtils {
             throw new ExpressionException("Unexpected character: " + wrongChar);
         }
 
-        if (eat('^')) x = Math.pow(x, parseFactor());
+        if (eat('^'))
+            x = Math.pow(x, parseFactor());
 
         return x;
     }
@@ -129,7 +141,8 @@ public class MathUtils {
     }
 
     private boolean eat(int charToEat) {
-        while (ch == ' ') nextChar();
+        while (ch == ' ')
+            nextChar();
         if (ch == charToEat) {
             nextChar();
             return true;
@@ -138,19 +151,24 @@ public class MathUtils {
     }
 
     public static class ExpressionException extends ArithmeticException {
+
         ExpressionException(String message) {
             super(message);
         }
     }
 
     public static boolean isInteger(String s) {
-        if(s.isEmpty()) return false;
-        for(int i = 0; i < s.length(); i++) {
-            if(i == 0 && s.charAt(i) == '-') {
-                if(s.length() == 1) return false;
-                else continue;
+        if (s.isEmpty())
+            return false;
+        for (int i = 0; i < s.length(); i++) {
+            if (i == 0 && s.charAt(i) == '-') {
+                if (s.length() == 1)
+                    return false;
+                else
+                    continue;
             }
-            if(Character.digit(s.charAt(i), 10) < 0) return false;
+            if (Character.digit(s.charAt(i), 10) < 0)
+                return false;
         }
         return true;
     }

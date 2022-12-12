@@ -32,7 +32,7 @@ import java.util.List;
 @Mod(name = "UnicacityAddon", modid = "unicacityaddon", version = UnicacityAddon.VERSION, clientSideOnly = true, acceptedMinecraftVersions = "[1.12,1.12.2]")
 public class UnicacityAddon extends LabyModAddon {
 
-    public static final String VERSION = "1.7.0";
+    public static final String VERSION = "1.7.1";
     public static final Minecraft MINECRAFT = Minecraft.getMinecraft();
     public static UnicacityAddon ADDON;
     public static final Logger LOGGER = LogManager.getLogger();
@@ -75,13 +75,16 @@ public class UnicacityAddon extends LabyModAddon {
     }
 
     public static boolean isUnicacity() {
-        if (MINECRAFT.world == null) return false;
+        if (MINECRAFT.world == null)
+            return false;
 
         ServerData serverData = MINECRAFT.getCurrentServerData();
-        if (serverData == null) return false;
+        if (serverData == null)
+            return false;
 
         String ip = serverData.serverIP;
-        if (ip.contains(":")) ip = ip.split(":")[0]; // strip unused port
+        if (ip.contains(":"))
+            ip = ip.split(":")[0]; // strip unused port
 
         return ip.toLowerCase().endsWith("unicacity.de");
     }

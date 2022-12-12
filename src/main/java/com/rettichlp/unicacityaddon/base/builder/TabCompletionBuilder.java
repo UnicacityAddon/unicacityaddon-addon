@@ -22,6 +22,7 @@ public class TabCompletionBuilder {
     }
 
     public static class Builder {
+
         private final String[] args;
         private final Map<Integer, List<String>> tabCompletionMap;
         private final Map<Integer, List<String>> tabCompletionFromIndexMap;

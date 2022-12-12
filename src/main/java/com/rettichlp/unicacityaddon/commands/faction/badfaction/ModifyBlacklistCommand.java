@@ -3,8 +3,8 @@ package com.rettichlp.unicacityaddon.commands.faction.badfaction;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.api.Syncer;
-import com.rettichlp.unicacityaddon.base.models.BlacklistReasonEntry;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
+import com.rettichlp.unicacityaddon.base.models.BlacklistReasonEntry;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
@@ -86,8 +86,8 @@ public class ModifyBlacklistCommand implements IClientCommand {
     @Nonnull
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
         return TabCompletionBuilder.getBuilder(args)
-                .addAtIndex(1, Syncer.getBlacklistReasonEntryList().stream().map(BlacklistReasonEntry::getReason).sorted().collect(Collectors.toList()))
-                .addAtIndex(1, "-v")
+                .addAtIndex(2, Syncer.getBlacklistReasonEntryList().stream().map(BlacklistReasonEntry::getReason).sorted().collect(Collectors.toList()))
+                .addAtIndex(2, "-v")
                 .build();
     }
 

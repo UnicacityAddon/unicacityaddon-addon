@@ -88,7 +88,8 @@ public class TSFindCommand implements IClientCommand {
             ChannelListCommand.Response channelListResponse = new ChannelListCommand().getResponse();
             Channel channel = channelListResponse.getChannels().stream().filter(channelIter -> client.getChannelID() == channelIter.getChannelID()).findFirst().orElse(null);
 
-            if (channel == null) throw new IllegalStateException();
+            if (channel == null)
+                throw new IllegalStateException();
 
             Message.getBuilder()
                     .prefix()
@@ -139,6 +140,7 @@ public class TSFindCommand implements IClientCommand {
                 .orElse(null);
     }
 
+    // TODO: 11.12.2022 Move to enums
     private enum TSChannelCategory {
         UNICACITY_TEAM("UnicaCity Team", 2),
         SERVER_TEAM("Serverteams", 15),

@@ -68,7 +68,8 @@ public class ARezeptAnnehmenCommand implements IClientCommand {
             return;
         }
 
-        if (!MathUtils.isInteger(args[0])) return;
+        if (!MathUtils.isInteger(args[0]))
+            return;
         amount = Integer.parseInt(args[0]);
         MedicationEventHandler.acceptRecipe();
     }

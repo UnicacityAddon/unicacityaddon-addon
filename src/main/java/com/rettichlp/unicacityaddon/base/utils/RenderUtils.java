@@ -7,7 +7,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderManager;
 import org.lwjgl.opengl.GL11;
 
-import java.awt.*;
+import java.awt.Color;
 
 /**
  * @author RettichLP
@@ -45,13 +45,13 @@ public class RenderUtils {
         GlStateManager.enableBlend();
         GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
         GlStateManager.enableTexture2D();
-        fontRenderer.drawString(hiddenBehindBlocks ? "" : tag, -fontRenderer.getStringWidth(tag) / 2.0F, 0, color.getRGB(), true);
+        fontRenderer.drawString(hiddenBehindBlocks ? "" : tag, -fontRenderer.getStringWidth(tag) / 2, 0, color.getRGB());
         GlStateManager.enableDepth();
         GlStateManager.depthMask(true);
-        fontRenderer.drawString(tag, -fontRenderer.getStringWidth(tag) / 2.0F, 0, color.getRGB(), true);
+        fontRenderer.drawString(tag, -fontRenderer.getStringWidth(tag) / 2, 0, color.getRGB());
         GlStateManager.enableLighting();
         GlStateManager.disableBlend();
-        GlStateManager.color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
+        GlStateManager.color(1, 1, 1, 1);
         GlStateManager.popMatrix();
     }
 }
