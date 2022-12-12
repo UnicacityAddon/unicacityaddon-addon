@@ -2,9 +2,9 @@ package com.rettichlp.unicacityaddon.events;
 
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
-import com.rettichlp.unicacityaddon.base.enums.api.StatisticType;
 import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
 import com.rettichlp.unicacityaddon.base.config.ConfigElements;
+import com.rettichlp.unicacityaddon.base.enums.api.StatisticType;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
@@ -33,7 +33,8 @@ public class KarmaMessageEventHandler {
         String msg = e.getMessage().getUnformattedText();
         UPlayer p = AbstractionLayer.getPlayer();
 
-        if (AccountEventHandler.isAfk) return;
+        if (AccountEventHandler.isAfk)
+            return;
 
         Matcher karmaChangedMatcher = PatternHandler.KARMA_CHANGED_PATTERN.matcher(msg);
         if (karmaChangedMatcher.find()) {
@@ -48,14 +49,16 @@ public class KarmaMessageEventHandler {
             // WORKAROUND END
             karma = Integer.parseInt(karmaChangedMatcher.group(1));
 
-            if (karma > 0 || karma < -7) return; // Wenn das Karma unter 0 ist, und nicht tiefer als 7 geht dann gibt es einen Kill
+            if (karma > 0 || karma < -7)
+                return; // Wenn das Karma unter 0 ist, und nicht tiefer als 7 geht dann gibt es einen Kill
 
             APIRequest.sendStatisticAddRequest(StatisticType.KILL);
             return;
         }
 
         Matcher karmaMatcher = PatternHandler.KARMA_PATTERN.matcher(msg);
-        if (!karmaCheck || !karmaMatcher.find()) return;
+        if (!karmaCheck || !karmaMatcher.find())
+            return;
 
         if (karma < 0 && ConfigElements.getEstimatedDespawnTime()) {
             Calendar cal = Calendar.getInstance();

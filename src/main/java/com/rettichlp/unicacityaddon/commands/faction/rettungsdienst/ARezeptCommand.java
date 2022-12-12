@@ -64,9 +64,11 @@ public class ARezeptCommand implements IClientCommand {
 
         target = args[0];
         medication = DrugType.getDrugType(args[1]);
-        if (medication == null) return;
+        if (medication == null)
+            return;
 
-        if (!MathUtils.isInteger(args[2])) return;
+        if (!MathUtils.isInteger(args[2]))
+            return;
         amount = Integer.parseInt(args[2]);
         MedicationEventHandler.giveRecipe();
     }

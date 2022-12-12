@@ -2,9 +2,9 @@ package com.rettichlp.unicacityaddon.events;
 
 import com.google.common.collect.Ordering;
 import com.rettichlp.unicacityaddon.base.config.ConfigElements;
-import com.rettichlp.unicacityaddon.base.utils.ReflectionUtils;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.FormattingCode;
+import com.rettichlp.unicacityaddon.base.utils.ReflectionUtils;
 import net.labymod.api.events.TabListEvent;
 import net.labymod.core_implementation.mc112.gui.ModPlayerTabOverlay;
 import net.minecraft.client.network.NetworkPlayerInfo;
@@ -38,15 +38,18 @@ public class TabListEventHandler implements Comparator<NetworkPlayerInfo>, TabLi
             return sgn != 0 ? sgn : stringOne.compareTo(stringTwo);
         }
 
-        if (stringOneStartsWith != null) return -1;
-        if (stringTwoStartsWith != null) return 1;
+        if (stringOneStartsWith != null)
+            return -1;
+        if (stringTwoStartsWith != null)
+            return 1;
 
         return stringOne.compareTo(stringTwo);
     }
 
     @Override
     public void onUpdate(Type type, String s, String s1) {
-        if (!ConfigElements.getEventTabList()) return;
+        if (!ConfigElements.getEventTabList())
+            return;
         ReflectionUtils.setValue(ModPlayerTabOverlay.class, Ordering.class, Ordering.from(new TabListEventHandler()));
     }
 
@@ -57,7 +60,8 @@ public class TabListEventHandler implements Comparator<NetworkPlayerInfo>, TabLi
         if (siblings.size() > 0) {
             siblings.forEach(sibling -> {
                 TextFormatting color = sibling.getStyle().getColor();
-                if (color == null) return;
+                if (color == null)
+                    return;
                 formattedDisplayName.append(ColorCode.valueOf(color.name().toUpperCase()).getCode()).append(sibling.getUnformattedText());
             });
         }

@@ -6,7 +6,6 @@ import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.config.ConfigElements;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.manager.FileManager;
-import com.rettichlp.unicacityaddon.base.utils.ReflectionUtils;
 import com.rettichlp.unicacityaddon.base.registry.KeyBindRegistry;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.teamspeak.CommandResponse;
@@ -17,6 +16,7 @@ import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.base.utils.ImageUploadUtils;
+import com.rettichlp.unicacityaddon.base.utils.ReflectionUtils;
 import net.labymod.main.LabyMod;
 import net.minecraft.client.shader.Framebuffer;
 import net.minecraft.util.ScreenShotHelper;
@@ -58,13 +58,15 @@ public class HotkeyEventHandler {
     @SubscribeEvent
     public void onClientChatReceive(ClientChatReceivedEvent e) {
         Matcher matcher = PatternHandler.AD_CONTROL_PATTERN.matcher(e.getMessage().getUnformattedText());
-        if (!matcher.find()) return;
+        if (!matcher.find())
+            return;
         adIssuer = matcher.group(1);
         adTime = System.currentTimeMillis();
     }
 
     private void handleHotkey() {
-        if (System.currentTimeMillis() - lastHotkeyUse < TimeUnit.SECONDS.toMillis(1) || Keyboard.isKeyDown(0)) return;
+        if (System.currentTimeMillis() - lastHotkeyUse < TimeUnit.SECONDS.toMillis(1) || Keyboard.isKeyDown(0))
+            return;
         UPlayer p = AbstractionLayer.getPlayer();
 
         if (Keyboard.isKeyDown(KeyBindRegistry.addonScreenshot.getKeyCode())) {
@@ -72,7 +74,8 @@ public class HotkeyEventHandler {
             lastHotkeyUse = System.currentTimeMillis();
         }
 
-        if (UnicacityAddon.MINECRAFT.currentScreen != null) return;
+        if (UnicacityAddon.MINECRAFT.currentScreen != null)
+            return;
 
         if (Keyboard.isKeyDown(KeyBindRegistry.adFreigeben.getKeyCode())) {
             handleAd("freigeben");
@@ -144,22 +147,25 @@ public class HotkeyEventHandler {
     }
 
     private static void uploadScreenshot(File screenshotFile) {
-        if (screenshotFile == null) return;
+        if (screenshotFile == null)
+            return;
         String link = ImageUploadUtils.uploadToLink(screenshotFile);
         AbstractionLayer.getPlayer().copyToClipboard(link);
         LabyMod.getInstance().notifyMessageRaw(ColorCode.GREEN.getCode() + "Screenshot hochgeladen!", "Link in Zwischenablage kopiert.");
     }
 
     private void handleAd(String type) {
-        if (adIssuer == null || System.currentTimeMillis() - adTime > TimeUnit.SECONDS.toMillis(20)) return;
+        if (adIssuer == null || System.currentTimeMillis() - adTime > TimeUnit.SECONDS.toMillis(20))
+            return;
         AbstractionLayer.getPlayer().sendChatMessage("/adcontrol " + adIssuer + " " + type);
         adIssuer = null;
     }
 
     private void handleCancelReport() {
         UPlayer p = AbstractionLayer.getPlayer();
-        String farewell =  ConfigElements.getReportFarewell();
-        if (!farewell.isEmpty()) p.sendChatMessage(farewell);
+        String farewell = ConfigElements.getReportFarewell();
+        if (!farewell.isEmpty())
+            p.sendChatMessage(farewell);
         p.sendChatMessage("/cr");
     }
 

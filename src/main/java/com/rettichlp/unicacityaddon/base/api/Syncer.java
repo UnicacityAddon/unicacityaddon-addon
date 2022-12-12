@@ -4,7 +4,9 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
+import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
 import com.rettichlp.unicacityaddon.base.enums.api.AddonGroup;
+import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.models.BlacklistReasonEntry;
 import com.rettichlp.unicacityaddon.base.models.BroadcastEntry;
 import com.rettichlp.unicacityaddon.base.models.HouseBanEntry;
@@ -12,8 +14,6 @@ import com.rettichlp.unicacityaddon.base.models.HouseBanReasonEntry;
 import com.rettichlp.unicacityaddon.base.models.NaviPointEntry;
 import com.rettichlp.unicacityaddon.base.models.PlayerGroupEntry;
 import com.rettichlp.unicacityaddon.base.models.WantedReasonEntry;
-import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
-import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.base.utils.ListUtils;
@@ -110,7 +110,8 @@ public class Syncer {
 
     public static List<BlacklistReasonEntry> getBlacklistReasonEntryList() {
         JsonArray response = APIRequest.sendBlacklistReasonRequest();
-        if (response == null) return new ArrayList<>();
+        if (response == null)
+            return new ArrayList<>();
         List<BlacklistReasonEntry> blacklistReasonEntryList = new ArrayList<>();
         response.forEach(jsonElement -> {
             JsonObject o = jsonElement.getAsJsonObject();
@@ -128,7 +129,8 @@ public class Syncer {
 
     public static List<BroadcastEntry> getBroadcastEntryList() {
         JsonArray response = APIRequest.sendBroadcastQueueRequest();
-        if (response == null) return new ArrayList<>();
+        if (response == null)
+            return new ArrayList<>();
         List<BroadcastEntry> broadcastEntryList = new ArrayList<>();
         response.forEach(jsonElement -> {
             JsonObject o = jsonElement.getAsJsonObject();
@@ -147,7 +149,8 @@ public class Syncer {
 
     public static List<HouseBanEntry> getHouseBanEntryList() {
         JsonArray response = APIRequest.sendHouseBanRequest(AbstractionLayer.getPlayer().getFaction().equals(Faction.RETTUNGSDIENST));
-        if (response == null) return new ArrayList<>();
+        if (response == null)
+            return new ArrayList<>();
         List<HouseBanEntry> houseBanEntryList = new ArrayList<>();
         response.forEach(jsonElement -> {
             JsonObject o = jsonElement.getAsJsonObject();
@@ -177,7 +180,8 @@ public class Syncer {
 
     public static List<HouseBanReasonEntry> getHouseBanReasonEntryList() {
         JsonArray response = APIRequest.sendHouseBanReasonRequest();
-        if (response == null) return new ArrayList<>();
+        if (response == null)
+            return new ArrayList<>();
         List<HouseBanReasonEntry> houseBanReasonEntryList = new ArrayList<>();
         response.forEach(jsonElement -> {
             JsonObject o = jsonElement.getAsJsonObject();
@@ -194,7 +198,8 @@ public class Syncer {
 
     public static List<NaviPointEntry> getNaviPointEntryList() {
         JsonArray response = APIRequest.sendNaviPointRequest();
-        if (response == null) return new ArrayList<>();
+        if (response == null)
+            return new ArrayList<>();
         List<NaviPointEntry> naviPointEntryList = new ArrayList<>();
         response.forEach(jsonElement -> {
             JsonObject o = jsonElement.getAsJsonObject();
@@ -221,7 +226,8 @@ public class Syncer {
 
     public static List<PlayerGroupEntry> getPlayerGroupEntryList(String group) {
         JsonObject response = APIRequest.sendPlayerRequest();
-        if (response == null || !response.has(group)) return new ArrayList<>();
+        if (response == null || !response.has(group))
+            return new ArrayList<>();
         List<PlayerGroupEntry> playerGroupEntryList = new ArrayList<>();
         response.get(group).getAsJsonArray().forEach(jsonElement -> {
             JsonObject o = jsonElement.getAsJsonObject();
@@ -236,7 +242,8 @@ public class Syncer {
 
     public static List<WantedReasonEntry> getWantedReasonEntryList() {
         JsonArray response = APIRequest.sendWantedReasonRequest();
-        if (response == null) return new ArrayList<>();
+        if (response == null)
+            return new ArrayList<>();
         List<WantedReasonEntry> wantedReasonEntryList = new ArrayList<>();
         response.forEach(jsonElement -> {
             JsonObject o = jsonElement.getAsJsonObject();

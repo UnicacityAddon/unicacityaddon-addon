@@ -152,7 +152,8 @@ public class ChannelActivityCommand implements IClientCommand {
 
     public List<String> getPlayersInChannel() {
         ChannelClientListCommand.Response channelClientListCommandResponse = new ChannelClientListCommand(TSUtils.getMyChannelID()).getResponse();
-        if (!channelClientListCommandResponse.succeeded()) return Collections.emptyList();
+        if (!channelClientListCommandResponse.succeeded())
+            return Collections.emptyList();
 
         List<Client> clients = channelClientListCommandResponse.getClients();
         List<String> descriptions = new ArrayList<>();
@@ -160,7 +161,8 @@ public class ChannelActivityCommand implements IClientCommand {
             ClientVariableCommand.Response clientVariableCommandResponse = new ClientVariableCommand(client).getResponse();
             String minecraftName = clientVariableCommandResponse.getMinecraftName();
 
-            if (minecraftName == null) continue;
+            if (minecraftName == null)
+                continue;
             descriptions.add(minecraftName);
         }
 

@@ -2,7 +2,7 @@ package com.rettichlp.unicacityaddon.base.text;
 
 import net.minecraft.util.text.TextFormatting;
 
-import java.awt.*;
+import java.awt.Color;
 
 /**
  * @author RettichLP

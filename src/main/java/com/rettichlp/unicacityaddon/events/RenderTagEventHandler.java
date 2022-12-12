@@ -1,6 +1,7 @@
 package com.rettichlp.unicacityaddon.events;
 
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
+import com.rettichlp.unicacityaddon.base.config.ConfigElements;
 import com.rettichlp.unicacityaddon.base.enums.api.AddonGroup;
 import com.rettichlp.unicacityaddon.base.utils.RenderUtils;
 import net.labymod.addon.AddonLoader;
@@ -27,7 +28,8 @@ public class RenderTagEventHandler implements RenderEntityEvent {
             EntityPlayerSP entityPlayerSP = AbstractionLayer.getPlayer().getPlayer();
             if (entityPlayer.isSneaking()
                     || !entityPlayer.canEntityBeSeen(entityPlayerSP)
-                    || (entityPlayer.equals(entityPlayerSP) && entityPlayer.isRiding()))
+                    || (entityPlayer.equals(entityPlayerSP) && entityPlayer.isRiding())
+                    || !ConfigElements.getRenderAddonGroupTag())
                 return;
 
             if (AddonGroup.CEO.getMemberList().contains(entityPlayerName)) {

@@ -4,7 +4,7 @@ import com.rettichlp.unicacityaddon.base.config.ConfigElements;
 
 public enum Equip {
 
-    BASI("Baseballschläger","Baseballschläger", ConfigElements.getBaseballBatPrice()),
+    BASI("Baseballschläger", "Baseballschläger", ConfigElements.getBaseballBatPrice()),
     DONUT("Donut", "Donuts", ConfigElements.getDonutPrice()),
     KEVLAR("Leichte Kevlar", "Kevlar", ConfigElements.getLightKevlarPrice()),
     HEAVYKEVLAR("Schwere Kevlar", "schwere Kevlar", ConfigElements.getHeavyKevlarPrice()),

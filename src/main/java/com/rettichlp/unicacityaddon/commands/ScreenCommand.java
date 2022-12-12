@@ -4,8 +4,8 @@ import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.config.ConfigElements;
-import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.enums.ScreenshotType;
+import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.events.HotkeyEventHandler;
 import net.minecraft.command.ICommand;
@@ -69,8 +69,10 @@ public class ScreenCommand implements IClientCommand {
 
         try {
             File file = FileManager.getNewActivityImageFile(args[0]);
-            if (ConfigElements.getAutomatedScreenshotUpload()) HotkeyEventHandler.handleScreenshotWithUpload(file);
-            else HotkeyEventHandler.handleScreenshotWithoutUpload(file);
+            if (ConfigElements.getAutomatedScreenshotUpload())
+                HotkeyEventHandler.handleScreenshotWithUpload(file);
+            else
+                HotkeyEventHandler.handleScreenshotWithoutUpload(file);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

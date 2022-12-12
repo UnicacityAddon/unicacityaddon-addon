@@ -206,4 +206,25 @@ public class ConfigSettings {
 
         return settings;
     }
+
+    public static Settings getSoundSettings(UnicacityAddon unicacityAddon) {
+        Settings settings = new Settings();
+
+        BooleanElement soundBombSettings = new BooleanElement("Bombe", unicacityAddon, new ControlElement.IconData(Material.NOTE_BLOCK), "SOUND_BOMB_SETTINGS", ConfigElements.getBombSound());
+        settings.add(soundBombSettings);
+
+        BooleanElement soundContractSetSettings = new BooleanElement("Contract gesetzt", unicacityAddon, new ControlElement.IconData(Material.NOTE_BLOCK), "SOUND_CONTRACT_SET_SETTINGS", ConfigElements.getContractSetSound());
+        settings.add(soundContractSetSettings);
+
+        BooleanElement soundContractFulfilledSettings = new BooleanElement("Contract erledigt", unicacityAddon, new ControlElement.IconData(Material.NOTE_BLOCK), "SOUND_CONTRACT_FULFILLED_SETTINGS", ConfigElements.getContractFulfilledSound());
+        settings.add(soundContractFulfilledSettings);
+
+        BooleanElement soundReportSettings = new BooleanElement("Report", unicacityAddon, new ControlElement.IconData(Material.NOTE_BLOCK), "SOUND_REPORT_SETTINGS", ConfigElements.getReportSound());
+        settings.add(soundReportSettings);
+
+        BooleanElement soundServiceSettings = new BooleanElement("Service", unicacityAddon, new ControlElement.IconData(Material.NOTE_BLOCK), "SOUND_SERVICE_SETTINGS", ConfigElements.getServiceSound());
+        settings.add(soundServiceSettings);
+
+        return settings;
+    }
 }

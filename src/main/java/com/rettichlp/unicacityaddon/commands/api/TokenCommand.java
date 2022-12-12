@@ -68,14 +68,16 @@ public class TokenCommand implements IClientCommand {
                     .createComponent());
         } else if (args.length == 1 && args[0].equalsIgnoreCase("create")) {
             JsonObject response = APIRequest.sendTokenCreateRequest();
-            if (response == null) return;
+            if (response == null)
+                return;
             p.sendAPIMessage(response.get("info").getAsString(), true);
         } else if (args.length == 1 && args[0].equalsIgnoreCase("copy")) {
             p.copyToClipboard(TokenManager.API_TOKEN);
             LabyMod.getInstance().notifyMessageRaw(ColorCode.GREEN.getCode() + "Kopiert!", "Token in Zwischenablage kopiert.");
         } else if (args.length == 1 && args[0].equalsIgnoreCase("revoke")) {
             JsonObject response = APIRequest.sendTokenRevokeRequest();
-            if (response == null) return;
+            if (response == null)
+                return;
             p.sendAPIMessage(response.get("info").getAsString(), true);
         } else {
             p.sendSyntaxMessage(getUsage(sender));

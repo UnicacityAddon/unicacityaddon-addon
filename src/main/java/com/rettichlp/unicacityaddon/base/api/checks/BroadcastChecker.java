@@ -30,8 +30,10 @@ public class BroadcastChecker {
 
     private static void checkForBroadcast() {
         for (BroadcastEntry broadcastEntry : Syncer.getBroadcastEntryList()) {
-            if (broadcastEntry.getSendTime() < System.currentTimeMillis()) continue;
-            if (receivedBroadcasts.contains(broadcastEntry.getId())) continue;
+            if (broadcastEntry.getSendTime() < System.currentTimeMillis())
+                continue;
+            if (receivedBroadcasts.contains(broadcastEntry.getId()))
+                continue;
             receivedBroadcasts.add(broadcastEntry.getId());
 
             UPlayer p = AbstractionLayer.getPlayer();

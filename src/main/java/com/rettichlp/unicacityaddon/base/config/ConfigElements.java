@@ -1,8 +1,8 @@
 package com.rettichlp.unicacityaddon.base.config;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
+import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import joptsimple.internal.Strings;
@@ -582,6 +582,36 @@ public class ConfigElements {
 
     public static boolean getAutomatedUpdate() {
         return !UnicacityAddon.ADDON.getConfig().has("AUTOMATED_UPDATE_SETTINGS") || UnicacityAddon.ADDON.getConfig().get("AUTOMATED_UPDATE_SETTINGS")
+                .getAsBoolean(); // default = true
+    }
+
+    public static boolean getBombSound() {
+        return !UnicacityAddon.ADDON.getConfig().has("SOUND_BOMB_SETTINGS") || UnicacityAddon.ADDON.getConfig().get("SOUND_BOMB_SETTINGS")
+                .getAsBoolean(); // default = true
+    }
+
+    public static boolean getContractSetSound() {
+        return !UnicacityAddon.ADDON.getConfig().has("SOUND_CONTRACT_SET_SETTINGS") || UnicacityAddon.ADDON.getConfig().get("SOUND_CONTRACT_SET_SETTINGS")
+                .getAsBoolean(); // default = true
+    }
+
+    public static boolean getContractFulfilledSound() {
+        return !UnicacityAddon.ADDON.getConfig().has("SOUND_CONTRACT_FULFILLED_SETTINGS") || UnicacityAddon.ADDON.getConfig().get("SOUND_CONTRACT_FULFILLED_SETTINGS")
+                .getAsBoolean(); // default = true
+    }
+
+    public static boolean getReportSound() {
+        return !UnicacityAddon.ADDON.getConfig().has("SOUND_REPORT_SETTINGS") || UnicacityAddon.ADDON.getConfig().get("SOUND_REPORT_SETTINGS")
+                .getAsBoolean(); // default = true
+    }
+
+    public static boolean getServiceSound() {
+        return !UnicacityAddon.ADDON.getConfig().has("SOUND_SERVICE_SETTINGS") || UnicacityAddon.ADDON.getConfig().get("SOUND_SERVICE_SETTINGS")
+                .getAsBoolean(); // default = true
+    }
+
+    public static boolean getRenderAddonGroupTag() {
+        return !UnicacityAddon.ADDON.getConfig().has("RENDER_ADDON_GROUP_TAG_SETTINGS") || UnicacityAddon.ADDON.getConfig().get("RENDER_ADDON_GROUP_TAG_SETTINGS")
                 .getAsBoolean(); // default = true
     }
 }

@@ -37,7 +37,8 @@ public class KeyBindRegistry {
     public static void registerKeyBinds() {
         fixOptionsFile();
 
-        if (executed) return;
+        if (executed)
+            return;
         JsonObject config = UnicacityAddon.ADDON.getConfig();
 
         int hotkeyAddonScreenshot = config.has("HOTKEY_SCREENSHOT") ? config.get("HOTKEY_SCREENSHOT").getAsInt() : Keyboard.KEY_NONE;
@@ -89,7 +90,8 @@ public class KeyBindRegistry {
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
                 String checkableString = line.toLowerCase();
-                if (checkableString.contains("ä") || checkableString.contains("ö") || checkableString.contains("ü") || checkableString.contains("ß")) continue;
+                if (checkableString.contains("ä") || checkableString.contains("ö") || checkableString.contains("ü") || checkableString.contains("ß"))
+                    continue;
                 stringBuilder.append(line).append(System.getProperty("line.separator"));
             }
 

@@ -3,8 +3,8 @@ package com.rettichlp.unicacityaddon.events;
 import com.google.gson.JsonObject;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
-import com.rettichlp.unicacityaddon.base.enums.api.StatisticType;
 import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
+import com.rettichlp.unicacityaddon.base.enums.api.StatisticType;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
@@ -50,7 +50,8 @@ public class DeathsKillsEventHandler {
 
         if (PatternHandler.ACCOUNT_TREUEBONUS_PATTERN.matcher(msg).find()) {
             JsonObject response = APIRequest.sendStatisticRequest();
-            if (response == null) return;
+            if (response == null)
+                return;
 
             JsonObject gameplayJsonObject = response.getAsJsonObject("gameplay");
             int deaths = gameplayJsonObject.get("deaths").getAsInt();

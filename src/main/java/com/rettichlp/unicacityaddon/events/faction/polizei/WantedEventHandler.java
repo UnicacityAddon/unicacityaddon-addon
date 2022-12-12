@@ -41,7 +41,8 @@ public class WantedEventHandler {
             int wantedPoints = Integer.parseInt(wantedsGivenPointsMatcher.group(2));
 
             Wanted wanted = WANTED_MAP.get(name);
-            if (wanted == null) return;
+            if (wanted == null)
+                return;
 
             wanted.setAmount(wantedPoints);
         }
@@ -53,12 +54,14 @@ public class WantedEventHandler {
         String unformattedMessage = message.getUnformattedText();
 
         Matcher matcher = PatternHandler.WANTED_DELETED_PATTERN.matcher(unformattedMessage);
-        if (!matcher.find()) return;
+        if (!matcher.find())
+            return;
 
         String name = null;
         for (int i = 1; i < matcher.groupCount() + 1; i++) {
             String tempName = matcher.group(i);
-            if (tempName == null) continue;
+            if (tempName == null)
+                continue;
 
             name = tempName;
             break;
@@ -82,7 +85,8 @@ public class WantedEventHandler {
         }
 
         Matcher matcher = PatternHandler.WANTED_LIST_ENTRY_PATTERN.matcher(unformattedMessage);
-        if (currentTime - wantedsShown > 1000L || !matcher.find()) return;
+        if (currentTime - wantedsShown > 1000L || !matcher.find())
+            return;
 
         String name = matcher.group(1);
         int wantedPoints = Integer.parseInt(matcher.group(2));

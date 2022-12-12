@@ -18,7 +18,8 @@ public class BlacklistModifyEventHandler {
 
     @SubscribeEvent
     public void onClientChatReceived(ClientChatReceivedEvent e) {
-        if (System.currentTimeMillis() - ModifyBlacklistCommand.executedTime > 1000L) return;
+        if (System.currentTimeMillis() - ModifyBlacklistCommand.executedTime > 1000L)
+            return;
         UPlayer p = AbstractionLayer.getPlayer();
 
         String msg = e.getMessage().getUnformattedText();
@@ -31,7 +32,8 @@ public class BlacklistModifyEventHandler {
         }
 
         Matcher listPattern = PatternHandler.BLACKLIST_LIST_PATTERN.matcher(msg);
-        if (!listPattern.find()) return;
+        if (!listPattern.find())
+            return;
 
         // remove list message
         e.setCanceled(true);
@@ -43,7 +45,8 @@ public class BlacklistModifyEventHandler {
         int kills = Integer.parseInt(listPattern.group(4));
         int price = Integer.parseInt(listPattern.group(5));
 
-        if (!name.equals(ModifyBlacklistCommand.target)) return;
+        if (!name.equals(ModifyBlacklistCommand.target))
+            return;
 
         if (ModifyBlacklistCommand.type == ModifyBlacklistCommand.ModifyBlacklistType.OUTLAW) {
             if (reason.contains("[Vogelfrei]")) {

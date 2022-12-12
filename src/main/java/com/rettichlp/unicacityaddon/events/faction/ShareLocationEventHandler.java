@@ -27,7 +27,8 @@ public class ShareLocationEventHandler {
         UPlayer p = AbstractionLayer.getPlayer();
         Matcher shareLocationMatcher = PatternHandler.SHARE_LOCATION_PATTERN.matcher(e.getMessage().getUnformattedText());
 
-        if (!shareLocationMatcher.find()) return;
+        if (!shareLocationMatcher.find())
+            return;
         if (!shareLocationMatcher.group(2).contains(p.getName())) {
             e.setCanceled(true);
             return;
@@ -54,10 +55,10 @@ public class ShareLocationEventHandler {
 
         p.sendMessage(Message.getBuilder()
                 .of("»").color(ColorCode.GRAY).advance().space()
-                .of("Route Anzeigen")
-                    .clickEvent(ClickEvent.Action.RUN_COMMAND, "/navi " + posX + "/" + posY + "/" + posZ)
-                    .hoverEvent(HoverEvent.Action.SHOW_TEXT, hoverMessage)
-                    .color(ColorCode.RED).advance()
+                .of("Route Anzeigen").color(ColorCode.RED)
+                        .hoverEvent(HoverEvent.Action.SHOW_TEXT, hoverMessage)
+                        .clickEvent(ClickEvent.Action.RUN_COMMAND, "/navi " + posX + "/" + posY + "/" + posZ)
+                        .advance()
                 .createComponent());
         e.setCanceled(true);
     }

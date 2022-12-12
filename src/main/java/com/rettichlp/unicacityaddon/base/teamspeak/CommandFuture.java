@@ -8,6 +8,7 @@ import java.util.concurrent.CompletableFuture;
  * @author Fuzzlemann
  */
 public class CommandFuture<T> extends CompletableFuture<T> {
+
     @Override
     public T get() {
         try {

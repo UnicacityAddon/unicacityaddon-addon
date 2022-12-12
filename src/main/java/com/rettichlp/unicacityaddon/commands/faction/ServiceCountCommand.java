@@ -52,7 +52,8 @@ public class ServiceCountCommand implements IClientCommand {
     public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
         UPlayer p = AbstractionLayer.getPlayer();
         if (args.length > 0) {
-            if (!args[0].equalsIgnoreCase("reset")) return;
+            if (!args[0].equalsIgnoreCase("reset"))
+                return;
             serviceCount = 0;
             p.sendInfoMessage("Servicecount wurde zurückgesetzt.");
             return;

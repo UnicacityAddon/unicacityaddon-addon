@@ -34,13 +34,17 @@ public class FDoorEventHandler {
         if (p.getPosition().getDistance(-167, 69, 204) > 15
                 && p.getPosition().getDistance(878, 62, -89) > 15
                 && p.getPosition().getDistance(273, 69, -273) > 15
-                || p.getPosition().getDistance(pos.getX(), pos.getY(), pos.getZ()) > 4) return;
+                || p.getPosition().getDistance(pos.getX(), pos.getY(), pos.getZ()) > 4)
+            return;
 
         FDoor fDoor = checkForFDoor(e.getPos());
-        if (fDoor == null) return;
+        if (fDoor == null)
+            return;
 
-        if (System.currentTimeMillis() - lastClick < 1000) return;
-        if (!fDoor.canBeToggled()) return;
+        if (System.currentTimeMillis() - lastClick < 1000)
+            return;
+        if (!fDoor.canBeToggled())
+            return;
 
         lastClick = System.currentTimeMillis();
         p.sendChatMessage("/fdoor");
@@ -49,17 +53,20 @@ public class FDoorEventHandler {
     private FDoor checkForFDoor(BlockPos pos) {
         for (FDoor fDoor : F_DOORS) {
             for (BlockPos openPosition : fDoor.getOpenPositions()) {
-                if (pos.equals(openPosition)) return fDoor;
+                if (pos.equals(openPosition))
+                    return fDoor;
             }
 
             for (BlockPos closePosition : fDoor.getClosePositions()) {
-                if (pos.equals(closePosition)) return fDoor;
+                if (pos.equals(closePosition))
+                    return fDoor;
             }
         }
         return null;
     }
 
     private static class FDoor {
+
         private final Set<BlockPos> openPositions = new HashSet<>();
         private final Set<BlockPos> closePositions = new HashSet<>();
 
@@ -103,7 +110,8 @@ public class FDoorEventHandler {
                     open = air;
                     set = true;
                 } else {
-                    if (air != open) return false;
+                    if (air != open)
+                        return false;
                 }
             }
             return true;

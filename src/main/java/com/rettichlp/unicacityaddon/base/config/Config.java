@@ -116,6 +116,13 @@ public class Config {
         BooleanElement despawnTimeAfterKarma = new BooleanElement("Despawn Zeitpunkt", unicacityAddon, new ControlElement.IconData(Material.SKULL_ITEM), "ESTIMATED_DESPAWN_TIME_SETTINGS", ConfigElements.getEstimatedDespawnTime());
         list.add(despawnTimeAfterKarma);
 
+        ListContainerElement soundSettings = new ListContainerElement("Sounds", new ControlElement.IconData(Material.NOTE_BLOCK));
+        soundSettings.setSubSettings(ConfigSettings.getSoundSettings(unicacityAddon));
+        list.add(soundSettings);
+
+        BooleanElement rederAddonGroupTagSettings = new BooleanElement("Addon Tag", unicacityAddon, new ControlElement.IconData(Material.NAME_TAG), "RENDER_ADDON_GROUP_TAG_SETTINGS", ConfigElements.getRenderAddonGroupTag());
+        list.add(rederAddonGroupTagSettings);
+
         // Certain LabyMod themes cover the lower settings. To counteract this, empty lines are appended.
         list.add(emptyLine);
         list.add(emptyLine);

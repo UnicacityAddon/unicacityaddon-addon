@@ -26,11 +26,12 @@ public class AccountEventHandler {
     @SubscribeEvent
     public void onClientChatReceived(ClientChatReceivedEvent e) {
         String msg = e.getMessage().getUnformattedText();
-        if (!UnicacityAddon.isUnicacity()) return;
+        if (!UnicacityAddon.isUnicacity())
+            return;
 
         if (PatternHandler.ACCOUNT_WELCOME_BACK_PATTERN.matcher(msg).find()) {
             MobileEventHandler.activeCommunicationsCheck = true;
-            AccountEventHandler.isAfk = false;
+            isAfk = false;
             return;
         }
 

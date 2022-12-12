@@ -33,7 +33,8 @@ public class UpdateUtils {
 
     public static void updateChecker() {
         latestVersion = getLatestVersion();
-        if (latestVersion.equals(UnicacityAddon.VERSION)) return;
+        if (latestVersion.equals(UnicacityAddon.VERSION))
+            return;
 
         if (!ConfigElements.getAutomatedUpdate()) {
             LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Update verfügbar!", "Es ist Version " + ColorCode.DARK_AQUA.getCode() + "v" + latestVersion + ColorCode.WHITE.getCode() + " verfügbar.");
@@ -55,15 +56,18 @@ public class UpdateUtils {
                             .advance()
                     .of("]").color(ColorCode.DARK_GRAY).advance()
                     .createComponent());
-        } else update();
+        } else
+            update();
     }
 
     public static void update() {
         UPlayer p = AbstractionLayer.getPlayer();
 
         try {
-            if (SystemUtils.IS_OS_WINDOWS) windowsUpdate();
-            else unixUpdate();
+            if (SystemUtils.IS_OS_WINDOWS)
+                windowsUpdate();
+            else
+                unixUpdate();
         } catch (IOException e) {
             UnicacityAddon.LOGGER.catching(e);
             p.sendErrorMessage("Update konnte nicht heruntergeladen werden.");
@@ -81,7 +85,8 @@ public class UpdateUtils {
         replace = true;
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            if (!replace) return;
+            if (!replace)
+                return;
             replace = false;
 
             try {

@@ -39,7 +39,8 @@ public class TSEventHandler {
                 for (Method declaredMethod : declaredMethods) {
                     if (declaredMethod.isAnnotationPresent(EventHandler.class)) {
                         Class<?> parameterType = declaredMethod.getParameterTypes()[0];
-                        if (parameterType != event.getClass()) continue;
+                        if (parameterType != event.getClass())
+                            continue;
 
                         declaredMethod.invoke(listener, parameterType.cast(event));
                     }
@@ -54,12 +55,14 @@ public class TSEventHandler {
         int splitIndex = input.indexOf(" ");
         String eventName = input.substring(0, splitIndex);
         Class<? extends TSEvent> clazz = TEAMSPEAK_EVENTS.get(eventName);
-        if (clazz == null) return null;
+        if (clazz == null)
+            return null;
 
         String content = input.substring(splitIndex);
         try {
             return clazz.getConstructor(String.class).newInstance(content);
-        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
+                 NoSuchMethodException e) {
             throw new IllegalStateException(e);
         }
     }

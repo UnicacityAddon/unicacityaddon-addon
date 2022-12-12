@@ -2,9 +2,9 @@ package com.rettichlp.unicacityaddon.events;
 
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
-import com.rettichlp.unicacityaddon.base.utils.NavigationUtils;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
+import com.rettichlp.unicacityaddon.base.utils.NavigationUtils;
 import com.rettichlp.unicacityaddon.events.job.FishermanEventHandler;
 import com.rettichlp.unicacityaddon.events.job.JobEventHandler;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;

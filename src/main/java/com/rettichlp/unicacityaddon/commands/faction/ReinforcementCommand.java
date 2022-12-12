@@ -63,7 +63,8 @@ public class ReinforcementCommand implements IClientCommand {
         }
 
         Type firstType = Type.DEFAULT;
-        if (args.length == 1 || args.length == 6) firstType = Type.getByArgument(args[args.length - 1]);
+        if (args.length == 1 || args.length == 6)
+            firstType = Type.getByArgument(args[args.length - 1]);
 
         ChatType chatType = firstType.getChatType();
 
@@ -75,7 +76,8 @@ public class ReinforcementCommand implements IClientCommand {
 
             String name = args[1];
 
-            if (!MathUtils.isInteger(args[2]) || !MathUtils.isInteger(args[3]) || !MathUtils.isInteger(args[4])) return;
+            if (!MathUtils.isInteger(args[2]) || !MathUtils.isInteger(args[3]) || !MathUtils.isInteger(args[4]))
+                return;
             int x = Integer.parseInt(args[2]);
             int y = Integer.parseInt(args[3]);
             int z = Integer.parseInt(args[4]);
@@ -161,7 +163,8 @@ public class ReinforcementCommand implements IClientCommand {
 
         public static Type getByArgument(String s) {
             for (Type t : Type.values()) {
-                if (t.getArgument().equalsIgnoreCase(s)) return t;
+                if (t.getArgument().equalsIgnoreCase(s))
+                    return t;
             }
             return Type.DEFAULT;
         }
@@ -176,6 +179,7 @@ public class ReinforcementCommand implements IClientCommand {
     }
 
     public static class ReinforcementType {
+
         private final String issuer;
         private final Type type;
         private final long time;

@@ -50,7 +50,8 @@ public class DiscordCommand extends CommandBase {
 
     @Override
     public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
-        if (!UnicacityAddon.isUnicacity()) return;
+        if (!UnicacityAddon.isUnicacity())
+            return;
         UPlayer p = AbstractionLayer.getPlayer();
 
         p.sendEmptyMessage();

@@ -10,4 +10,6 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-public @interface UCCommand {}
+public @interface UCCommand {
+
+}

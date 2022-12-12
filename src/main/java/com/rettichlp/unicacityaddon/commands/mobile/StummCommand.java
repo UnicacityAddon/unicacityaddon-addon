@@ -50,8 +50,10 @@ public class StummCommand implements IClientCommand {
         UPlayer p = AbstractionLayer.getPlayer();
         MobileEventHandler.muted = !MobileEventHandler.muted;
 
-        if (MobileEventHandler.muted) p.sendInfoMessage("Du hast den Handy auf stumm gestellt.");
-        else p.sendInfoMessage("Du hast dein Handy wieder laut gestellt.");
+        if (MobileEventHandler.muted)
+            p.sendInfoMessage("Du hast dein Handy auf stumm gestellt.");
+        else
+            p.sendInfoMessage("Du hast dein Handy wieder laut gestellt.");
     }
 
     @Override

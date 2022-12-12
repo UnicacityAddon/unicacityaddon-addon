@@ -18,6 +18,7 @@ public class ChannelListCommand extends BaseCommand<ChannelListCommand.Response>
     }
 
     public static class Response extends CommandResponse {
+
         private final List<Channel> channels = new ArrayList<>();
 
         public Response(String rawResponse) {

@@ -51,7 +51,8 @@ public class CarEventHandler {
         Matcher checkKFZMatcher = PatternHandler.CAR_CHECK_KFZ_PATTERN.matcher(msg);
         if (checkKFZMatcher.find()) {
             String name = checkKFZMatcher.group(1);
-            if (name == null) name = checkKFZMatcher.group(2);
+            if (name == null)
+                name = checkKFZMatcher.group(2);
             p.sendChatMessage("/memberinfo " + name);
         }
     }
@@ -63,7 +64,8 @@ public class CarEventHandler {
                 .findFirst()
                 .orElse(null);
 
-        if (tankScore == null) return;
+        if (tankScore == null)
+            return;
 
         int tank = tankScore.getScorePoints();
         switch (tank) {

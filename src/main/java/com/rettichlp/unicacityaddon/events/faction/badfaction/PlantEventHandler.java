@@ -28,7 +28,8 @@ public class PlantEventHandler {
 
     @SubscribeEvent
     public void onPlayerInteract(PlayerInteractEvent e) {
-        if (!(e instanceof PlayerInteractEvent.RightClickBlock) || e.getHand().equals(EnumHand.OFF_HAND) || !UnicacityAddon.isUnicacity()) return;
+        if (!(e instanceof PlayerInteractEvent.RightClickBlock) || e.getHand().equals(EnumHand.OFF_HAND) || !UnicacityAddon.isUnicacity())
+            return;
 
         World world = e.getWorld();
         BlockPos clickedBlockPos = e.getPos();
@@ -37,7 +38,8 @@ public class PlantEventHandler {
         boolean clickedBlockIsFern = world.getBlockState(clickedBlockPos).equals(Blocks.TALLGRASS.getDefaultState().withProperty(BlockTallGrass.TYPE, BlockTallGrass.EnumType.FERN));
         boolean bottomBlockIsPodzol = world.getBlockState(bottomBlockPos).equals(Blocks.DIRT.getDefaultState().withProperty(BlockDirt.VARIANT, BlockDirt.DirtType.PODZOL));
 
-        if (!clickedBlockIsFern || !bottomBlockIsPodzol) return;
+        if (!clickedBlockIsFern || !bottomBlockIsPodzol)
+            return;
 
         AbstractionLayer.getPlayer().sendChatMessage("/plant");
     }
@@ -54,7 +56,8 @@ public class PlantEventHandler {
 
         Matcher plantUseMatcher = PatternHandler.PLANT_USE_PATTERN.matcher(msg);
         if (plantUseMatcher.find()) {
-            if (!PlantFertilizeTimerModule.plantRunning) PlantFertilizeTimerModule.plantRunning = true;
+            if (!PlantFertilizeTimerModule.plantRunning)
+                PlantFertilizeTimerModule.plantRunning = true;
 
             if (plantUseMatcher.group(2).equals("gewässert")) {
                 if (PlantWaterTimerModule.currentCount < (PlantWaterTimerModule.timeNeeded - 600)) {

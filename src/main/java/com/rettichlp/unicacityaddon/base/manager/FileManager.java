@@ -39,7 +39,8 @@ public class FileManager {
 
     public static File getUnicacityAddonDir() {
         File unicacityAddonDir = new File(getMinecraftDir().getAbsolutePath() + "/unicacityAddon/");
-        if (unicacityAddonDir.exists() || unicacityAddonDir.mkdir()) return unicacityAddonDir;
+        if (unicacityAddonDir.exists() || unicacityAddonDir.mkdir())
+            return unicacityAddonDir;
 
         AbstractionLayer.getPlayer().sendErrorMessage("Ordner 'unicacityAddon' wurde nicht gefunden!");
 
@@ -47,9 +48,11 @@ public class FileManager {
     }
 
     public static File getAddonScreenshotDir() {
-        if (getUnicacityAddonDir() == null) return null;
+        if (getUnicacityAddonDir() == null)
+            return null;
         File addonScreenshotDir = new File(getUnicacityAddonDir().getAbsolutePath() + "/screenshots/");
-        if (addonScreenshotDir.exists() || addonScreenshotDir.mkdir()) return addonScreenshotDir;
+        if (addonScreenshotDir.exists() || addonScreenshotDir.mkdir())
+            return addonScreenshotDir;
 
         AbstractionLayer.getPlayer().sendErrorMessage("Ordner 'screenshots' wurde nicht gefunden!");
 
@@ -57,9 +60,11 @@ public class FileManager {
     }
 
     public static File getAddonActivityScreenDir(String type) {
-        if (getAddonScreenshotDir() == null) return null;
+        if (getAddonScreenshotDir() == null)
+            return null;
         File addonScreenshotDir = new File(getAddonScreenshotDir().getAbsolutePath() + "/" + type);
-        if (addonScreenshotDir.exists() || addonScreenshotDir.mkdir()) return addonScreenshotDir;
+        if (addonScreenshotDir.exists() || addonScreenshotDir.mkdir())
+            return addonScreenshotDir;
 
         AbstractionLayer.getPlayer().sendErrorMessage("Ordner 'screenshots/" + type + "' wurde nicht gefunden!");
 
@@ -68,7 +73,8 @@ public class FileManager {
 
     public static File getOptionsFile() {
         File optionsFile = new File(getMinecraftDir().getAbsolutePath() + "/options.txt");
-        if (optionsFile.exists()) return optionsFile;
+        if (optionsFile.exists())
+            return optionsFile;
 
         AbstractionLayer.getPlayer().sendErrorMessage("Datei 'options.txt' wurde nicht gefunden!");
 
@@ -76,9 +82,11 @@ public class FileManager {
     }
 
     public static File getDataFile() throws IOException {
-        if (getUnicacityAddonDir() == null) return null;
+        if (getUnicacityAddonDir() == null)
+            return null;
         File dataFile = new File(getUnicacityAddonDir().getAbsolutePath() + "/data.json");
-        if (dataFile.exists() || dataFile.createNewFile()) return dataFile;
+        if (dataFile.exists() || dataFile.createNewFile())
+            return dataFile;
 
         AbstractionLayer.getPlayer().sendErrorMessage("Datei 'data.json' wurde nicht gefunden!");
 
@@ -86,14 +94,17 @@ public class FileManager {
     }
 
     public static File getNewImageFile() throws IOException {
-        if (getAddonScreenshotDir() == null) return null;
+        if (getAddonScreenshotDir() == null)
+            return null;
 
         String date = DATE_FORMAT.format(new Date());
         StringBuilder sb = new StringBuilder(date);
         int i = 1;
         while (new File(getAddonScreenshotDir().getAbsolutePath() + "/" + sb + ".jpg").exists()) {
-            if (i == 1) sb.append("_").append(i++);
-            else sb.replace(sb.length() - 1, sb.length(), String.valueOf(i));
+            if (i == 1)
+                sb.append("_").append(i++);
+            else
+                sb.replace(sb.length() - 1, sb.length(), String.valueOf(i));
         }
 
         File newImageFile = new File(getAddonScreenshotDir().getAbsolutePath() + "/" + sb + ".jpg");
@@ -101,14 +112,17 @@ public class FileManager {
     }
 
     public static File getNewActivityImageFile(String type) throws IOException {
-        if (getAddonActivityScreenDir(type) == null) return null;
+        if (getAddonActivityScreenDir(type) == null)
+            return null;
 
         String date = DATE_FORMAT.format(new Date());
         StringBuilder sb = new StringBuilder(date);
         int i = 1;
         while (new File(Objects.requireNonNull(getAddonActivityScreenDir(type)).getAbsolutePath() + "/" + sb + "-" + type + ".jpg").exists()) {
-            if (i == 1) sb.append("_").append(i++);
-            else sb.replace(sb.length() - 1, sb.length(), String.valueOf(i));
+            if (i == 1)
+                sb.append("_").append(i++);
+            else
+                sb.replace(sb.length() - 1, sb.length(), String.valueOf(i));
         }
 
         File newImageFile = new File(Objects.requireNonNull(getAddonActivityScreenDir(type)).getAbsolutePath() + "/" + sb + "-" + type + ".jpg");
@@ -118,7 +132,8 @@ public class FileManager {
     public static void loadData() {
         try {
             File dataFile = FileManager.getDataFile();
-            if (dataFile == null) return;
+            if (dataFile == null)
+                return;
             Gson g = new Gson();
             String jsonData = FileUtils.readFileToString(dataFile, StandardCharsets.UTF_8.toString());
 
@@ -162,7 +177,8 @@ public class FileManager {
     public static void saveData() {
         try {
             File dataFile = FileManager.getDataFile();
-            if (dataFile == null) return;
+            if (dataFile == null)
+                return;
             Gson g = new Gson();
             Data data = new Data();
             data.setBankBalance(BankMoneyModule.bankBalance);

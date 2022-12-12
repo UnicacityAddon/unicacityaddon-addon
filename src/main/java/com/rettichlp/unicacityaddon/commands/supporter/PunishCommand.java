@@ -69,15 +69,18 @@ public class PunishCommand implements IClientCommand {
             p.sendChatMessage("/checkpoints " + args[0] + " " + punishment.getCheckpoints() + " " + reason);
         if (punishment.getBanDuration() > 0)
             p.sendChatMessage("/tban " + args[0] + " 0 0 " + banDuration + " " + reason);
-        if (punishment.getBanDuration() == -1) p.sendChatMessage("/ban " + args[0] + " " + reason);
-        if (punishment.isLoyalityPointReset()) p.sendChatMessage("/resettreuebonus " + args[0]);
+        if (punishment.getBanDuration() == -1)
+            p.sendChatMessage("/ban " + args[0] + " " + reason);
+        if (punishment.isLoyalityPointReset())
+            p.sendChatMessage("/resettreuebonus " + args[0]);
         if (punishment.getWeaponLock() > 0)
             p.sendChatMessage("/waffensperre " + args[0] + " 0 0 " + punishment.getWeaponLock() * 24 * 60 + " " + reason);
         if (punishment.getFactionLock() > 0)
             p.sendChatMessage("/fraksperre " + args[0] + " " + punishment.getFactionLock() + " " + reason);
         if (punishment.getAdLock() > 0)
             p.sendChatMessage("/adsperre " + args[0] + " " + punishment.getAdLock() + " " + reason);
-        if (punishment.isKick()) p.sendChatMessage("/kick " + args[0] + " " + reason);
+        if (punishment.isKick())
+            p.sendChatMessage("/kick " + args[0] + " " + reason);
         if (punishment.getWarnAmmount() > 0)
             for (int i = 0; i < punishment.getWarnAmmount(); i++) {
                 p.sendChatMessage("/warn " + args[0] + " " + reason);
@@ -110,7 +113,8 @@ public class PunishCommand implements IClientCommand {
 
     private Punishment getPunishmentByName(String s) {
         for (Punishment punishment : Punishment.values()) {
-            if (punishment.getTabReason().equals(s)) return punishment;
+            if (punishment.getTabReason().equals(s))
+                return punishment;
         }
         return null;
     }
