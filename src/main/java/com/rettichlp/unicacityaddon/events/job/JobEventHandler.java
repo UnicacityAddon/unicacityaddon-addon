@@ -70,6 +70,12 @@ public class JobEventHandler {
         }
 
         if (PatternHandler.WASTE_JOB_COLLECT_END_PATTERN.matcher(msg).find()) {
+            isDropState = true;
+            return;
+        }
+
+        if (PatternHandler.WASTE_JOB_END_PATTERN.matcher(msg).find()) {
+            isDropState = false;
             isWasteJob = false;
             return;
         }
@@ -97,16 +103,6 @@ public class JobEventHandler {
 
         if (PatternHandler.TABAK_FINISH_PATTERN.matcher(msg).find()) {
             isTabakJob = false;
-            return;
-        }
-
-        if (PatternHandler.WASTE_JOB_COLLECT_END_PATTERN.matcher(msg).find()) {
-            isDropState = true;
-            return;
-        }
-
-        if (PatternHandler.WASTE_JOB_END_PATTERN.matcher(msg).find()) {
-            isDropState = false;
             return;
         }
 
