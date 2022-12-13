@@ -13,9 +13,7 @@ import net.labymod.utils.Material;
 @UCModule
 public class ExplosiveBeltTimerModule extends SimpleModule {
 
-    public static int currentCount = 0;
-    public static boolean explosiveBeltStarted = false;
-    public static String timer = "0";
+    public static int timer = 0;
 
     @Override
     public String getControlName() {
@@ -34,7 +32,7 @@ public class ExplosiveBeltTimerModule extends SimpleModule {
 
     @Override
     public String getDisplayValue() {
-        return timer;
+        return String.valueOf(timer);
     }
 
     @Override
@@ -59,7 +57,7 @@ public class ExplosiveBeltTimerModule extends SimpleModule {
 
     @Override
     public boolean isShown() {
-        return explosiveBeltStarted;
+        return timer > 0;
     }
 
     @Override
@@ -69,11 +67,5 @@ public class ExplosiveBeltTimerModule extends SimpleModule {
 
     @Override
     public void loadSettings() {
-    }
-
-    public static void stopBombTimer() {
-        explosiveBeltStarted = false;
-        currentCount = 0;
-        timer = "";
     }
 }
