@@ -15,9 +15,13 @@ import com.rettichlp.unicacityaddon.modules.EmergencyServiceModule;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.event.ClickEvent;
 import net.minecraft.util.text.event.HoverEvent;
+import net.minecraftforge.client.event.ClientChatEvent;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.regex.Matcher;
 
 /**
@@ -26,7 +30,7 @@ import java.util.regex.Matcher;
 @UCEvent
 public class EmergencyServiceEventHandler {
 
-    public static boolean messageCreationActive = false;
+    private static final List<ServiceCallBox> activeEmergencyCallBoxList = new ArrayList<>();
 
     @SubscribeEvent
     public void onClientChatReceived(ClientChatReceivedEvent e) {
@@ -75,7 +79,7 @@ public class EmergencyServiceEventHandler {
         if (serviceCallBoxMatcher.find()) {
             ServiceCallBox serviceCallBox = ServiceCallBox.getServiceCallBoxByLocationName(serviceCallBoxMatcher.group(2));
             if (serviceCallBox != null) {
-                messageCreationActive = true;
+                activeEmergencyCallBoxList.add(serviceCallBox);
                 e.setMessage(Message.getBuilder()
                         .add(msg.getFormattedText())
                         .space()
@@ -87,6 +91,19 @@ public class EmergencyServiceEventHandler {
                         .of("]").color(ColorCode.DARK_GRAY).advance()
                         .createComponent());
             }
+        }
+    }
+
+    @SubscribeEvent
+    public void onClientChat(ClientChatEvent e) {
+        Optional<ServiceCallBox> serviceCallBoxOptional = activeEmergencyCallBoxList.stream()
+                .filter(serviceCallBox -> serviceCallBox.getNaviCommand().equals(e.getMessage()))
+                .findAny();
+
+        if (serviceCallBoxOptional.isPresent()) {
+            ServiceCallBox serviceCallBox = serviceCallBoxOptional.get();
+            AbstractionLayer.getPlayer().sendChatMessage("/f ➡ Unterwegs zur Notrufsäule (" + serviceCallBox.getLocationName() + ")");
+            activeEmergencyCallBoxList.remove(serviceCallBox);
         }
     }
 }
