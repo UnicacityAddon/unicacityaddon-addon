@@ -9,6 +9,7 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.utils.MathUtils;
 import com.rettichlp.unicacityaddon.events.faction.ReinforcementEventHandler;
+import com.rettichlp.unicacityaddon.events.house.HouseInteractionEventHandler;
 import com.rettichlp.unicacityaddon.modules.BombTimerModule;
 import com.rettichlp.unicacityaddon.modules.ExplosiveBeltTimerModule;
 import com.rettichlp.unicacityaddon.modules.FBIHackModule;
@@ -50,9 +51,15 @@ public class TickEventHandler {
             handlePlantTimer();
         }
 
+        // 3 SECONDS
+        if (currentTick % 60 == 0) {
+            HouseInteractionEventHandler.increaseProgress(1);
+        }
+
         // 5 SECONDS
         if (currentTick % 100 == 0) {
             handleScoreboardCheck();
+            HouseInteractionEventHandler.increaseProgress(0);
         }
 
         // 60 SECONDS
