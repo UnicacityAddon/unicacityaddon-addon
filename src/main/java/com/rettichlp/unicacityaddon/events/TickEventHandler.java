@@ -132,12 +132,8 @@ public class TickEventHandler {
     }
 
     private void handleExplosiveBeltTimer() {
-        if (!ExplosiveBeltTimerModule.explosiveBeltStarted)
-            return;
-        ExplosiveBeltTimerModule.currentCount--;
-        ExplosiveBeltTimerModule.timer = String.valueOf(ExplosiveBeltTimerModule.currentCount);
-        if (ExplosiveBeltTimerModule.currentCount <= 0)
-            ExplosiveBeltTimerModule.stopBombTimer();
+        if (ExplosiveBeltTimerModule.timer > 0)
+            ExplosiveBeltTimerModule.timer--;
     }
 
     private void handleFBIHack() {
