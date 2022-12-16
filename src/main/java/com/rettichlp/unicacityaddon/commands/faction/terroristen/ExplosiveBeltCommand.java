@@ -66,10 +66,7 @@ public class ExplosiveBeltCommand implements IClientCommand {
             return;
         }
 
-        ExplosiveBeltTimerModule.currentCount = Integer.parseInt(args[0]);
-
-        ExplosiveBeltTimerModule.explosiveBeltStarted = true;
-        ExplosiveBeltTimerModule.timer = args[0];
+        ExplosiveBeltTimerModule.timer = Integer.parseInt(args[0]);
         p.sendChatMessage("/sprenggürtel " + args[0]);
     }
 
