@@ -25,7 +25,7 @@ public class FileManager {
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
 
     public static File getMinecraftDir() {
-        return UnicacityAddon.MINECRAFT.mcDataDir;
+        return new File(System.getenv("APPDATA") + "/.minecraft");
     }
 
     public static File getUnicacityAddonDir() {

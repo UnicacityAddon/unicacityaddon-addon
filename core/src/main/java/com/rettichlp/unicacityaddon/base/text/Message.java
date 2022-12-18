@@ -108,7 +108,7 @@ public class Message {
             Component component = Component.text("");
 
             message.getMessageParts().forEach(messagePart -> component.append(Component.text(messagePart.getMessage())
-                    .style(Style.style(messagePart.getColorCode().getTextColor()).toBuilder()
+                    .style(Style.style(messagePart.getColorCode() == null ? null : messagePart.getColorCode().getTextColor()).toBuilder()
                             .decoration(TextDecoration.BOLD, messagePart.getFormattingCodes().contains(FormattingCode.BOLD))
                             .decoration(TextDecoration.ITALIC, messagePart.getFormattingCodes().contains(FormattingCode.ITALIC))
                             .decoration(TextDecoration.OBFUSCATED, messagePart.getFormattingCodes().contains(FormattingCode.OBFUSCATED))

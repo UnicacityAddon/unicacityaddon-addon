@@ -1,15 +1,13 @@
 package com.rettichlp.unicacityaddon.base.teamspeak;
 
-import com.google.common.util.concurrent.Uninterruptibles;
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
-import com.rettichlp.unicacityaddon.base.config.ConfigElements;
 import com.rettichlp.unicacityaddon.base.teamspeak.commands.AuthCommand;
 import com.rettichlp.unicacityaddon.base.teamspeak.commands.BaseCommand;
 import com.rettichlp.unicacityaddon.base.teamspeak.commands.ClientNotifyRegisterCommand;
 import com.rettichlp.unicacityaddon.base.teamspeak.commands.CurrentSchandlerIDCommand;
 import com.rettichlp.unicacityaddon.base.teamspeak.exceptions.ClientQueryAuthenticationException;
 import com.rettichlp.unicacityaddon.base.teamspeak.exceptions.ClientQueryConnectionException;
-import org.apache.commons.io.IOUtils;
 
 import java.io.BufferedReader;
 import java.io.Closeable;
@@ -67,7 +65,7 @@ public class TSClientQuery implements Closeable {
     }
 
     public void executeCommand(BaseCommand<?> command) {
-        Uninterruptibles.putUninterruptibly(writer.getQueue(), command);
+//        Uninterruptibles.putUninterruptibly(writer.getQueue(), command);
     }
 
     private void connect() throws IOException {
@@ -101,7 +99,7 @@ public class TSClientQuery implements Closeable {
     }
 
     private void authenticate() {
-        AuthCommand authCommand = new AuthCommand(ConfigElements.getTeamspeakAPIKey());
+        AuthCommand authCommand = new AuthCommand(UnicacityAddon.configuration.tsApiKey().get());
         authCommand.execute(this);
 
         CommandResponse response = authCommand.getResponse();
@@ -136,7 +134,7 @@ public class TSClientQuery implements Closeable {
 
     @Override
     public void close() {
-        IOUtils.closeQuietly(socket, writer, reader, keepAliveThread);
+//        IOUtils.closeQuietly(socket, writer, reader, keepAliveThread);
         TSClientQuery.instance = null;
     }
 }

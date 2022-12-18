@@ -1,12 +1,7 @@
 package com.rettichlp.unicacityaddon.events;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.text.ColorCode;
-import com.rettichlp.unicacityaddon.base.text.FormattingCode;
-import com.rettichlp.unicacityaddon.base.text.Message;
-import com.rettichlp.unicacityaddon.base.utils.MathUtils;
 import net.labymod.api.client.entity.player.ClientPlayer;
-import net.minecraft.entity.player.EntityPlayer;
 
 import java.util.Objects;
 
@@ -93,16 +88,16 @@ public class RenderTagEventHandler {
                 .anyMatch(friend -> friend.getUniqueId().equals(player.getUniqueId())) ? 0.2 : 0;
     }
 
-    private String getHealth(EntityPlayer entityPlayer) {
-        StringBuilder health = new StringBuilder();
-        float baseValue = entityPlayer.getHealth();
-        float absorptionValue = entityPlayer.getAbsorptionAmount();
-        float healthValue = baseValue + absorptionValue;
-        ColorCode colorCode = healthValue > baseValue ? ColorCode.GOLD : ColorCode.GREEN;
-
-        return health.append(FormattingCode.RESET.getCode()).append(Message.getBuilder()
-                .of(MathUtils.HEART_DECIMAL_FORMAT.format(healthValue / 2)).color(colorCode).advance()
-                .create())
-                .toString();
-    }
+//    private String getHealth(EntityPlayer entityPlayer) {
+//        StringBuilder health = new StringBuilder();
+//        float baseValue = entityPlayer.getHealth();
+//        float absorptionValue = entityPlayer.getAbsorptionAmount();
+//        float healthValue = baseValue + absorptionValue;
+//        ColorCode colorCode = healthValue > baseValue ? ColorCode.GOLD : ColorCode.GREEN;
+//
+//        return health.append(FormattingCode.RESET.getCode()).append(Message.getBuilder()
+//                .of(MathUtils.HEART_DECIMAL_FORMAT.format(healthValue / 2)).color(colorCode).advance()
+//                .create())
+//                .toString();
+//    }
 }
