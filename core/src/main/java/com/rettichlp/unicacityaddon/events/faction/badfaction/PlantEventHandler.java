@@ -2,14 +2,8 @@ package com.rettichlp.unicacityaddon.events.faction.badfaction;
 
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
-import com.rettichlp.unicacityaddon.base.utils.TextUtils;
-import com.rettichlp.unicacityaddon.modules.PlantFertilizeTimerModule;
-import com.rettichlp.unicacityaddon.modules.PlantWaterTimerModule;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
-
-import java.util.concurrent.TimeUnit;
-import java.util.regex.Matcher;
 
 /**
  * @author RettichLP
@@ -39,27 +33,27 @@ public class PlantEventHandler {
         String msg = e.chatMessage().getPlainText();
 
         if (PatternHandler.PLANT_HARVEST_PATTERN.matcher(msg).find()) {
-            PlantFertilizeTimerModule.stopPlant();
-            PlantWaterTimerModule.stopPlant();
+//            PlantFertilizeTimerModule.stopPlant();
+//            PlantWaterTimerModule.stopPlant();
             return;
         }
 
-        Matcher plantUseMatcher = PatternHandler.PLANT_USE_PATTERN.matcher(msg);
-        if (plantUseMatcher.find()) {
-            if (!PlantFertilizeTimerModule.plantRunning) PlantFertilizeTimerModule.plantRunning = true;
-
-            if (plantUseMatcher.group(2).equals("gewässert")) {
-                if (PlantWaterTimerModule.currentCount < (PlantWaterTimerModule.timeNeeded - 600)) {
-                    PlantWaterTimerModule.currentCount = PlantWaterTimerModule.timeNeeded;
-                    PlantWaterTimerModule.timer = TextUtils.parseTime(TimeUnit.SECONDS, PlantWaterTimerModule.currentCount);
-                }
-                return;
-            }
-
-            if (PlantFertilizeTimerModule.currentCount < (PlantFertilizeTimerModule.timeNeeded - 600)) {
-                PlantFertilizeTimerModule.currentCount = PlantFertilizeTimerModule.timeNeeded;
-                PlantFertilizeTimerModule.timer = PlantFertilizeTimerModule.calcTimer(PlantFertilizeTimerModule.currentCount);
-            }
-        }
+//        Matcher plantUseMatcher = PatternHandler.PLANT_USE_PATTERN.matcher(msg);
+//        if (plantUseMatcher.find()) {
+//            if (!PlantFertilizeTimerModule.plantRunning) PlantFertilizeTimerModule.plantRunning = true;
+//
+//            if (plantUseMatcher.group(2).equals("gewässert")) {
+//                if (PlantWaterTimerModule.currentCount < (PlantWaterTimerModule.timeNeeded - 600)) {
+//                    PlantWaterTimerModule.currentCount = PlantWaterTimerModule.timeNeeded;
+//                    PlantWaterTimerModule.timer = TextUtils.parseTime(TimeUnit.SECONDS, PlantWaterTimerModule.currentCount);
+//                }
+//                return;
+//            }
+//
+//            if (PlantFertilizeTimerModule.currentCount < (PlantFertilizeTimerModule.timeNeeded - 600)) {
+//                PlantFertilizeTimerModule.currentCount = PlantFertilizeTimerModule.timeNeeded;
+//                PlantFertilizeTimerModule.timer = PlantFertilizeTimerModule.calcTimer(PlantFertilizeTimerModule.currentCount);
+//            }
+//        }
     }
 }

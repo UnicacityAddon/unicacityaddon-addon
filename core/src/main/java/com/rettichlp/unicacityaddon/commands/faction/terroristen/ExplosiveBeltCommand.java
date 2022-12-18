@@ -6,7 +6,6 @@ import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.utils.MathUtils;
-import com.rettichlp.unicacityaddon.modules.ExplosiveBeltTimerModule;
 import net.labymod.api.client.chat.command.Command;
 
 import java.util.List;
@@ -33,10 +32,7 @@ public class ExplosiveBeltCommand extends Command {
             return true;
         }
 
-        ExplosiveBeltTimerModule.currentCount = Integer.parseInt(arguments[0]);
-
-        ExplosiveBeltTimerModule.explosiveBeltStarted = true;
-        ExplosiveBeltTimerModule.timer = arguments[0];
+//        ExplosiveBeltTimerHudWidget.timer = Integer.parseInt(arguments[0]);
         p.sendChatMessage("/sprenggürtel " + arguments[0]);
         return true;
     }

@@ -5,7 +5,6 @@ import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
-import com.rettichlp.unicacityaddon.modules.CashMoneyModule;
 import net.labymod.api.client.chat.command.Command;
 
 import java.util.List;
@@ -27,10 +26,10 @@ public class EinzahlenCommand extends Command {
     public boolean execute(String prefix, String[] arguments) {
         UPlayer p = AbstractionLayer.getPlayer();
 
-        if (CashMoneyModule.cashBalance > 0)
-            p.sendChatMessage("/bank einzahlen " + CashMoneyModule.cashBalance);
-        else
-            p.sendErrorMessage("Du hast kein Geld auf der Hand!");
+//        if (MoneyHudWidget.cashBalance > 0)
+//            p.sendChatMessage("/bank einzahlen " + MoneyHudWidget.cashBalance);
+//        else
+//            p.sendErrorMessage("Du hast kein Geld auf der Hand!");
         return true;
     }
 

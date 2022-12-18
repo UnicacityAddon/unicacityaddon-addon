@@ -8,8 +8,6 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.events.AccountEventHandler;
 import com.rettichlp.unicacityaddon.events.MobileEventHandler;
-import com.rettichlp.unicacityaddon.modules.BankMoneyModule;
-import com.rettichlp.unicacityaddon.modules.CashMoneyModule;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
@@ -37,11 +35,11 @@ public class ReviveEventHandler {
 
         Matcher reviveByMedicFinishMatcher = PatternHandler.REVIVE_BY_MEDIC_FINISH_PATTERN.matcher(msg);
         if (reviveByMedicFinishMatcher.find()) {
-            if (System.currentTimeMillis() - reviveByMedicStartTime > TimeUnit.SECONDS.toMillis(10)) {
-                CashMoneyModule.setBalance(0);
-            } else {
-                BankMoneyModule.removeBalance(50); // successfully revived by medic = 50$
-            }
+//            if (System.currentTimeMillis() - reviveByMedicStartTime > TimeUnit.SECONDS.toMillis(10)) {
+//                CashMoneyModule.setBalance(0);
+//            } else {
+//                BankMoneyModule.removeBalance(50); // successfully revived by medic = 50$
+//            }
             if (MobileEventHandler.hasCommunications && !AccountEventHandler.isAfk)
                 AbstractionLayer.getPlayer().sendChatMessage("/togglephone");
             return;

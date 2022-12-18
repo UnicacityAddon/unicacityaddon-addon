@@ -10,10 +10,6 @@ import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.commands.ReichensteuerCommand;
-import com.rettichlp.unicacityaddon.modules.BankMoneyModule;
-import com.rettichlp.unicacityaddon.modules.CashMoneyModule;
-import com.rettichlp.unicacityaddon.modules.JobModule;
-import com.rettichlp.unicacityaddon.modules.PayDayModule;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatMessageSendEvent;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
@@ -38,26 +34,24 @@ public class MoneyEventHandler {
 
         Matcher jobSalaryMatcher = PatternHandler.JOB_SALARY_PATTERN.matcher(msg);
         if (jobSalaryMatcher.find()) {
-            JobModule.addBalance(Integer.parseInt(jobSalaryMatcher.group(1)));
+//            JobModule.addBalance(Integer.parseInt(jobSalaryMatcher.group(1)));
             return;
         }
 
         Matcher jobExperienceMatcher = PatternHandler.JOB_EXPERIENCE_PATTERN.matcher(msg);
         if (jobExperienceMatcher.find()) {
             int experience = Integer.parseInt(jobExperienceMatcher.group(1));
+            int multiplier = 1;
 
-            if (jobExperienceMatcher.group(3) != null) {
-                int multiplier = Integer.parseInt(jobExperienceMatcher.group(3));
-                JobModule.addExperience(experience * multiplier);
-                return;
-            }
+            if (jobExperienceMatcher.group(3) != null)
+                multiplier = Integer.parseInt(jobExperienceMatcher.group(3));
 
-            JobModule.addExperience(experience);
+//            JobModule.addExperience(experience);
         }
 
         Matcher kontoauszugMatcher = PatternHandler.BANK_STATEMENT_PATTERN.matcher(msg);
         if (kontoauszugMatcher.find()) {
-            BankMoneyModule.setBalance(Integer.parseInt(kontoauszugMatcher.group(1)));
+//            BankMoneyModule.setBalance(Integer.parseInt(kontoauszugMatcher.group(1)));
 
             if (ConfigElements.getEventATM()) {
                 if (ConfigElements.getEventATMFBank()) {
@@ -79,10 +73,10 @@ public class MoneyEventHandler {
         Matcher bankPayDayMatcher = PatternHandler.BANK_STATS_PATTERN.matcher(msg);
         if (bankPayDayMatcher.find()) {
             APIRequest.sendStatisticAddRequest(StatisticType.PLAYTIME);
-            BankMoneyModule.setBalance(Integer.parseInt(bankPayDayMatcher.group(1)));
-            JobModule.setBalance(0);
-            JobModule.setExperience(0);
-            PayDayModule.setTime(0);
+//            BankMoneyModule.setBalance(Integer.parseInt(bankPayDayMatcher.group(1)));
+//            JobModule.setBalance(0);
+//            JobModule.setExperience(0);
+//            PayDayModule.setTime(0);
             return;
         }
 
@@ -92,80 +86,80 @@ public class MoneyEventHandler {
                 isGRBankCommand = false;
                 return;
             }
-            BankMoneyModule.setBalance(Integer.parseInt(bankNewBalanceMatcher.group(1)));
+//            BankMoneyModule.setBalance(Integer.parseInt(bankNewBalanceMatcher.group(1)));
             return;
         }
 
         Matcher bankTransferToMatcher = PatternHandler.BANK_TRANSFER_TO_PATTERN.matcher(msg);
         if (bankTransferToMatcher.find()) {
-            BankMoneyModule.removeBalance(Integer.parseInt(bankTransferToMatcher.group(2)));
+//            BankMoneyModule.removeBalance(Integer.parseInt(bankTransferToMatcher.group(2)));
             return;
         }
 
         Matcher bankTransferGetMatcher = PatternHandler.BANK_TRANSFER_GET_PATTERN.matcher(msg);
         if (bankTransferGetMatcher.find()) {
-            BankMoneyModule.addBalance(Integer.parseInt(bankTransferGetMatcher.group(2)));
+//            BankMoneyModule.addBalance(Integer.parseInt(bankTransferGetMatcher.group(2)));
             return;
         }
 
         Matcher lottoWinMatcher = PatternHandler.LOTTO_WIN.matcher(msg);
         if (lottoWinMatcher.find()) {
-            BankMoneyModule.addBalance(Integer.parseInt(lottoWinMatcher.group(1)));
+//            BankMoneyModule.addBalance(Integer.parseInt(lottoWinMatcher.group(1)));
             return;
         }
 
         Matcher cashGiveMatcher = PatternHandler.CASH_GIVE_PATTERN.matcher(msg);
         if (cashGiveMatcher.find()) {
-            CashMoneyModule.removeBalance(Integer.parseInt(cashGiveMatcher.group(2)));
+//            CashMoneyModule.removeBalance(Integer.parseInt(cashGiveMatcher.group(2)));
             return;
         }
 
         Matcher cashTakeMatcher = PatternHandler.CASH_TAKE_PATTERN.matcher(msg);
         if (cashTakeMatcher.find()) {
-            CashMoneyModule.addBalance(Integer.parseInt(cashTakeMatcher.group(2)));
+//            CashMoneyModule.addBalance(Integer.parseInt(cashTakeMatcher.group(2)));
             return;
         }
 
         Matcher cashToFBankMatcher = PatternHandler.CASH_TO_FBANK_PATTERN.matcher(msg);
         if (cashToFBankMatcher.find()) {
-            CashMoneyModule.removeBalance(Integer.parseInt(cashToFBankMatcher.group(1)));
+//            CashMoneyModule.removeBalance(Integer.parseInt(cashToFBankMatcher.group(1)));
             return;
         }
 
         Matcher cashFromFBankMatcher = PatternHandler.CASH_FROM_FBANK_PATTERN.matcher(msg);
         if (cashFromFBankMatcher.find()) {
-            CashMoneyModule.addBalance(Integer.parseInt(cashFromFBankMatcher.group(1)));
+//            CashMoneyModule.addBalance(Integer.parseInt(cashFromFBankMatcher.group(1)));
             return;
         }
 
         Matcher cashToBankMatcher = PatternHandler.CASH_TO_BANK_PATTERN.matcher(msg);
         if (cashToBankMatcher.find()) {
-            CashMoneyModule.removeBalance(Integer.parseInt(cashToBankMatcher.group(1)));
+//            CashMoneyModule.removeBalance(Integer.parseInt(cashToBankMatcher.group(1)));
             return;
         }
 
         Matcher cashFromBankMatcher = PatternHandler.CASH_FROM_BANK_PATTERN.matcher(msg);
         if (cashFromBankMatcher.find()) {
             if (isGRBankCommand) return;
-            CashMoneyModule.addBalance(Integer.parseInt(cashFromBankMatcher.group(1)));
+//            CashMoneyModule.addBalance(Integer.parseInt(cashFromBankMatcher.group(1)));
             return;
         }
 
         Matcher cashGetMatcher = PatternHandler.CASH_GET_PATTERN.matcher(msg);
         if (cashGetMatcher.find()) {
-            CashMoneyModule.addBalance(Integer.parseInt(cashGetMatcher.group(1)));
+//            CashMoneyModule.addBalance(Integer.parseInt(cashGetMatcher.group(1)));
             return;
         }
 
         Matcher cashRemoveMatcher = PatternHandler.CASH_REMOVE_PATTERN.matcher(msg);
         if (cashRemoveMatcher.find()) {
-            CashMoneyModule.removeBalance(Integer.parseInt(cashRemoveMatcher.group(1)));
+//            CashMoneyModule.removeBalance(Integer.parseInt(cashRemoveMatcher.group(1)));
             return;
         }
 
         Matcher cashStatsMatcher = PatternHandler.CASH_STATS_PATTERN.matcher(msg);
         if (cashStatsMatcher.find()) {
-            CashMoneyModule.setBalance(Integer.parseInt(cashStatsMatcher.group(1)));
+//            CashMoneyModule.setBalance(Integer.parseInt(cashStatsMatcher.group(1)));
             return;
         }
 

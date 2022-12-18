@@ -2,7 +2,6 @@ package com.rettichlp.unicacityaddon.events;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
-import com.rettichlp.unicacityaddon.modules.ExplosiveBeltTimerModule;
 
 @UCEvent
 public class TickEventHandler {
@@ -91,12 +90,10 @@ public class TickEventHandler {
 //        if (BombTimerModule.currentCount > 1200) BombTimerModule.stopBombTimer();
 //    }
 
-    private void handleExplosiveBeltTimer() {
-        if (!ExplosiveBeltTimerModule.explosiveBeltStarted) return;
-        ExplosiveBeltTimerModule.currentCount--;
-        ExplosiveBeltTimerModule.timer = String.valueOf(ExplosiveBeltTimerModule.currentCount);
-        if (ExplosiveBeltTimerModule.currentCount <= 0) ExplosiveBeltTimerModule.stopBombTimer();
-    }
+//    private void handleExplosiveBeltTimer() {
+//        if (ExplosiveBeltTimerHudWidget.timer > 0)
+//            ExplosiveBeltTimerHudWidget.timer--;
+//    }
 
 //    private void handleFBIHack() {
 //        if (!FBIHackModule.fbiHackStarted) return;

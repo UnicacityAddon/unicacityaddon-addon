@@ -8,7 +8,6 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
-import com.rettichlp.unicacityaddon.modules.BombTimerModule;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.event.HoverEvent;
 import net.labymod.api.client.chat.ChatMessage;
@@ -32,8 +31,8 @@ public class BombTimerEventHandler {
 
         Matcher bombPlacedMatcher = PatternHandler.BOMB_PLACED_PATTERN.matcher(unformattedMsg);
         if (bombPlacedMatcher.find()) {
-            BombTimerModule.isBomb = true;
-            BombTimerModule.timer = "00:00";
+//            BombTimerModule.isBomb = true;
+//            BombTimerModule.timer = "00:00";
             // TODO: 10.12.2022 p.playSound(SoundRegistry.BOMB_SOUND, 1, 1);
 
             if (((p.getFaction().equals(Faction.POLIZEI) || p.getFaction().equals(Faction.FBI)) && p.getRank() > 3) || p.isSuperUser()) {
@@ -56,15 +55,15 @@ public class BombTimerEventHandler {
         if (m.find()) {
             String state = m.group(1);
 
-            String time = BombTimerModule.timer.startsWith(ColorCode.RED.getCode()) ? BombTimerModule.timer.substring(2) : BombTimerModule.timer;
-            e.setMessage(Message.getBuilder()
-                    .add(formattedMsg)
-                    .space()
-                    .of(time.isEmpty() ? "" : "(").color(ColorCode.DARK_GRAY).advance()
-                    .of(time).color(state.equals("nicht") ? ColorCode.RED : ColorCode.GREEN).advance()
-                    .of(time.isEmpty() ? "" : ")").color(ColorCode.DARK_GRAY).advance()
-                    .createComponent());
-            BombTimerModule.stopBombTimer();
+//            String time = BombTimerModule.timer.startsWith(ColorCode.RED.getCode()) ? BombTimerModule.timer.substring(2) : BombTimerModule.timer;
+//            e.setMessage(Message.getBuilder()
+//                    .add(formattedMsg)
+//                    .space()
+//                    .of(time.isEmpty() ? "" : "(").color(ColorCode.DARK_GRAY).advance()
+//                    .of(time).color(state.equals("nicht") ? ColorCode.RED : ColorCode.GREEN).advance()
+//                    .of(time.isEmpty() ? "" : ")").color(ColorCode.DARK_GRAY).advance()
+//                    .createComponent());
+//            BombTimerModule.stopBombTimer();
         }
     }
 

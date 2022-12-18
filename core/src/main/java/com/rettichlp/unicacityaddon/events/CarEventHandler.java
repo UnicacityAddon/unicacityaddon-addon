@@ -7,7 +7,7 @@ import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
-import com.rettichlp.unicacityaddon.modules.CarOpenModule;
+//import com.rettichlp.unicacityaddon.modules.CarOpenModule;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,13 +33,13 @@ public class CarEventHandler {
         String msg = e.chatMessage().getPlainText();
 
         if (PatternHandler.CAR_OPEN_PATTERN.matcher(msg).find()) {
-            CarOpenModule.info = ColorCode.GREEN.getCode() + "offen";
+//            CarOpenModule.info = ColorCode.GREEN.getCode() + "offen";
             FileManager.saveData();
             return;
         }
 
         if (PatternHandler.CAR_CLOSE_PATTERN.matcher(msg).find()) {
-            CarOpenModule.info = ColorCode.RED.getCode() + "zu";
+//            CarOpenModule.info = ColorCode.RED.getCode() + "zu";
             FileManager.saveData();
             return;
         }

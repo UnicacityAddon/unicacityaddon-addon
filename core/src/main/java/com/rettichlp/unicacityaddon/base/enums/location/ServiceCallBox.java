@@ -3,7 +3,6 @@ package com.rettichlp.unicacityaddon.base.enums.location;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.events.faction.EmergencyServiceEventHandler;
 import net.labymod.api.util.math.vector.FloatVector3;
-import net.minecraft.util.math.BlockPos;
 
 public enum ServiceCallBox {
 

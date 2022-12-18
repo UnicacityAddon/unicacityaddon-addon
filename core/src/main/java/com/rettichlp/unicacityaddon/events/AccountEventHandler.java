@@ -7,7 +7,6 @@ import com.rettichlp.unicacityaddon.base.config.ConfigElements;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.base.utils.UpdateUtils;
-import com.rettichlp.unicacityaddon.modules.PayDayModule;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
@@ -65,8 +64,8 @@ public class AccountEventHandler {
         }
 
         Matcher accountPayDayMatcher = PatternHandler.ACCOUNT_PAYDAY_PATTERN.matcher(msg);
-        if (accountPayDayMatcher.find())
-            PayDayModule.setTime(Integer.parseInt(accountPayDayMatcher.group(1)));
+//        if (accountPayDayMatcher.find())
+//            PayDayModule.setTime(Integer.parseInt(accountPayDayMatcher.group(1)));
     }
 
     private void handleUnlockAccount() {
