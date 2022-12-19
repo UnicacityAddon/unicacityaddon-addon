@@ -22,12 +22,11 @@ import com.rettichlp.unicacityaddon.base.config.reinforcement.ReinforcementSetti
 import com.rettichlp.unicacityaddon.base.config.sloc.SlocSetting;
 import net.labymod.api.addon.AddonConfig;
 import net.labymod.api.client.gui.screen.widget.widgets.input.SwitchWidget.SwitchSetting;
-import net.labymod.api.client.gui.screen.widget.widgets.input.TextFieldWidget;
+import net.labymod.api.client.gui.screen.widget.widgets.input.TextFieldWidget.TextFieldSetting;
 import net.labymod.api.configuration.loader.annotation.ConfigName;
 import net.labymod.api.configuration.loader.property.ConfigProperty;
 import net.labymod.api.configuration.settings.annotation.SettingSection;
 
-@SuppressWarnings("FieldMayBeFinal")
 @ConfigName("settings")
 public class DefaultUnicacityAddonConfiguration extends AddonConfig implements UnicacityAddonConfiguration {
 
@@ -68,7 +67,7 @@ public class DefaultUnicacityAddonConfiguration extends AddonConfig implements U
     private final ConfigProperty<Boolean> update = new ConfigProperty<>(true);
 
     @SettingSection("teamspeak")
-    @TextFieldWidget.TextFieldSetting
+    @TextFieldSetting
     private final ConfigProperty<String> tsApiKey = new ConfigProperty<>("");
 
     @SwitchSetting

@@ -10,25 +10,25 @@ import net.labymod.api.configuration.loader.property.ConfigProperty;
 
 public interface EquipSetting {
 
-    ConfigProperty<Integer> water();
+    ConfigProperty<String> water();
 
-    ConfigProperty<Integer> bread();
+    ConfigProperty<String> bread();
 
-    ConfigProperty<Integer> donut();
+    ConfigProperty<String> donut();
 
-    ConfigProperty<Integer> mask();
+    ConfigProperty<String> mask();
 
-    ConfigProperty<Integer> lkev();
+    ConfigProperty<String> lkev();
 
-    ConfigProperty<Integer> skev();
+    ConfigProperty<String> skev();
 
-    ConfigProperty<Integer> pepperSpray();
+    ConfigProperty<String> pepperSpray();
 
-    ConfigProperty<Integer> pistol();
+    ConfigProperty<String> pistol();
 
-    ConfigProperty<Integer> mp5();
+    ConfigProperty<String> mp5();
 
-    ConfigProperty<Integer> sniper();
+    ConfigProperty<String> sniper();
 
     StateSetting stateSetting();
 

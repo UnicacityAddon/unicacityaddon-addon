@@ -125,6 +125,7 @@ import com.rettichlp.unicacityaddon.events.job.JobEventHandler;
 import com.rettichlp.unicacityaddon.events.team.ReportEventHandler;
 import com.rettichlp.unicacityaddon.events.teamspeak.WaitingRoomEventHandler;
 import com.rettichlp.unicacityaddon.listener.ExampleGameTickListener;
+import net.labymod.api.Laby;
 import net.labymod.api.addon.LabyAddon;
 import net.labymod.api.client.Minecraft;
 import net.labymod.api.client.network.server.ServerData;
@@ -144,9 +145,9 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
     @Override
     protected void enable() {
         MINECRAFT = labyAPI().minecraft();
-        ADDON = this;
-        configuration = ADDON.configuration();
         LOGGER = this.logger();
+        ADDON = this;
+        configuration = this.configuration();
 
         // TODO: 16.12.2022 NOT FOR PROD
         this.registerCommand(MoveToCommand.class);
@@ -306,7 +307,7 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
         if (MINECRAFT.clientWorld() == null)
             return false;
 
-        ServerData serverData = ADDON.labyAPI().serverController().getCurrentServerData();
+        ServerData serverData = Laby.labyAPI().serverController().getCurrentServerData();
         if (serverData == null)
             return false;
 

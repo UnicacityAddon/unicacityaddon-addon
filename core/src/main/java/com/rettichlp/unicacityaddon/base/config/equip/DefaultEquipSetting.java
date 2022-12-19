@@ -21,34 +21,34 @@ public class DefaultEquipSetting extends Config implements EquipSetting {
 
     @SettingSection("global")
     @TextFieldSetting
-    private final ConfigProperty<Integer> water = new ConfigProperty<>(0);
+    private final ConfigProperty<String> water = new ConfigProperty<>("0");
 
     @TextFieldSetting
-    private final ConfigProperty<Integer> bread = new ConfigProperty<>(40);
+    private final ConfigProperty<String> bread = new ConfigProperty<>("40");
 
     @TextFieldSetting
-    private final ConfigProperty<Integer> donut = new ConfigProperty<>(30);
+    private final ConfigProperty<String> donut = new ConfigProperty<>("30");
 
     @TextFieldSetting
-    private final ConfigProperty<Integer> mask = new ConfigProperty<>(800);
+    private final ConfigProperty<String> mask = new ConfigProperty<>("800");
 
     @TextFieldSetting
-    private final ConfigProperty<Integer> lkev = new ConfigProperty<>(1450);
+    private final ConfigProperty<String> lkev = new ConfigProperty<>("1450");
 
     @TextFieldSetting
-    private final ConfigProperty<Integer> skev = new ConfigProperty<>(2200);
+    private final ConfigProperty<String> skev = new ConfigProperty<>("2200");
 
     @TextFieldSetting
-    private final ConfigProperty<Integer> pepperSpray = new ConfigProperty<>(400);
+    private final ConfigProperty<String> pepperSpray = new ConfigProperty<>("400");
 
     @TextFieldSetting
-    private final ConfigProperty<Integer> pistol = new ConfigProperty<>(350);
+    private final ConfigProperty<String> pistol = new ConfigProperty<>("350");
 
     @TextFieldSetting
-    private final ConfigProperty<Integer> mp5 = new ConfigProperty<>(550);
+    private final ConfigProperty<String> mp5 = new ConfigProperty<>("550");
 
     @TextFieldSetting
-    private final ConfigProperty<Integer> sniper = new ConfigProperty<>(2700);
+    private final ConfigProperty<String> sniper = new ConfigProperty<>("2700");
 
     @SettingSection("specific")
     private final DefaultStateSetting stateSetting = new DefaultStateSetting();
@@ -64,52 +64,52 @@ public class DefaultEquipSetting extends Config implements EquipSetting {
     private final DefaultTerrorSetting terrorSetting = new DefaultTerrorSetting();
 
     @Override
-    public ConfigProperty<Integer> water() {
+    public ConfigProperty<String> water() {
         return this.water;
     }
 
     @Override
-    public ConfigProperty<Integer> bread() {
+    public ConfigProperty<String> bread() {
         return this.bread;
     }
 
     @Override
-    public ConfigProperty<Integer> donut() {
+    public ConfigProperty<String> donut() {
         return this.donut;
     }
 
     @Override
-    public ConfigProperty<Integer> mask() {
+    public ConfigProperty<String> mask() {
         return this.mask;
     }
 
     @Override
-    public ConfigProperty<Integer> lkev() {
+    public ConfigProperty<String> lkev() {
         return this.lkev;
     }
 
     @Override
-    public ConfigProperty<Integer> skev() {
+    public ConfigProperty<String> skev() {
         return this.skev;
     }
 
     @Override
-    public ConfigProperty<Integer> pepperSpray() {
+    public ConfigProperty<String> pepperSpray() {
         return this.pepperSpray;
     }
 
     @Override
-    public ConfigProperty<Integer> pistol() {
+    public ConfigProperty<String> pistol() {
         return this.pistol;
     }
 
     @Override
-    public ConfigProperty<Integer> mp5() {
+    public ConfigProperty<String> mp5() {
         return this.mp5;
     }
 
     @Override
-    public ConfigProperty<Integer> sniper() {
+    public ConfigProperty<String> sniper() {
         return this.sniper;
     }
 

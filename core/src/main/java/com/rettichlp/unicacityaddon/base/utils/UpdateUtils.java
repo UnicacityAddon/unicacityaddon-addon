@@ -7,6 +7,7 @@ import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.event.HoverEvent;
+import net.labymod.api.Laby;
 import net.labymod.api.notification.Notification;
 
 import java.io.File;
@@ -71,7 +72,7 @@ public class UpdateUtils {
         }
 
         // TODO: 10.12.2022 TEST
-        UnicacityAddon.ADDON.labyAPI().notificationController().pop(Notification.builder()
+        Laby.labyAPI().notificationController().pop(Notification.builder()
                 .title(Message.getBuilder().of("test").color(ColorCode.RED).advance().createComponent())
                 .text(Message.getBuilder().of("test2").color(ColorCode.RED).advance().createComponent())
                 .type(Notification.Type.SYSTEM)

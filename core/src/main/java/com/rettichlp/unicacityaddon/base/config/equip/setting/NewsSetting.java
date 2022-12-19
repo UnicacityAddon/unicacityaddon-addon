@@ -4,5 +4,5 @@ import net.labymod.api.configuration.loader.property.ConfigProperty;
 
 public interface NewsSetting {
 
-    ConfigProperty<Integer> notepad();
+    ConfigProperty<String> notepad();
 }

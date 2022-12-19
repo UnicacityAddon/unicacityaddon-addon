@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import net.labymod.api.Laby;
 import net.labymod.api.notification.Notification;
 
 public class Syncer {
@@ -68,10 +69,10 @@ public class Syncer {
                     }
                 }
             }
-            UnicacityAddon.ADDON.labyAPI().notificationController().push(Notification.builder()
-                    .title(Component.text("Synchronisierung", NamedTextColor.AQUA))
-                    .text(Component.text("Addon Gruppen aktualisiert."))
-                    .build());
+//            Laby.labyAPI().minecraft().executeOnRenderThread(() -> UnicacityAddon.ADDON.labyAPI().notificationController().push(Notification.builder()
+//                    .title(Component.text("Synchronisierung", NamedTextColor.AQUA))
+//                    .text(Component.text("Addon Gruppen aktualisiert."))
+//                    .build()));
         });
     }
 
@@ -94,30 +95,30 @@ public class Syncer {
 
             getPlayerGroupEntryList("LEMILIEU").forEach(playerGroupEntry -> PLAYERFACTIONMAP.put(playerGroupEntry.getName(), Faction.LEMILIEU));
 
-            UnicacityAddon.ADDON.labyAPI().notificationController().push(Notification.builder()
-                    .title(Component.text("Synchronisierung", NamedTextColor.AQUA))
-                    .text(Component.text("Fraktionen aktualisiert."))
-                    .build());
+//            Laby.labyAPI().notificationController().push(Notification.builder()
+//                    .title(Component.text("Synchronisierung", NamedTextColor.AQUA))
+//                    .text(Component.text("Fraktionen aktualisiert."))
+//                    .build());
         });
     }
 
     public static Thread syncHousebanEntryList() {
         return new Thread(() -> {
             HOUSEBANENTRYLIST = getHouseBanEntryList();
-            UnicacityAddon.ADDON.labyAPI().notificationController().push(Notification.builder()
-                    .title(Component.text("Synchronisierung", NamedTextColor.AQUA))
-                    .text(Component.text("Hausverbote aktualisiert."))
-                    .build());
+//            Laby.labyAPI().notificationController().push(Notification.builder()
+//                    .title(Component.text("Synchronisierung", NamedTextColor.AQUA))
+//                    .text(Component.text("Hausverbote aktualisiert."))
+//                    .build());
         });
     }
 
     public static Thread syncNaviPointEntryList() {
         return new Thread(() -> {
             NAVIPOINTLIST = getNaviPointEntryList();
-            UnicacityAddon.ADDON.labyAPI().notificationController().push(Notification.builder()
-                    .title(Component.text("Synchronisierung", NamedTextColor.AQUA))
-                    .text(Component.text("Navipunkte aktualisiert."))
-                    .build());
+//            Laby.labyAPI().notificationController().push(Notification.builder()
+//                    .title(Component.text("Synchronisierung", NamedTextColor.AQUA))
+//                    .text(Component.text("Navipunkte aktualisiert."))
+//                    .build());
         });
     }
 

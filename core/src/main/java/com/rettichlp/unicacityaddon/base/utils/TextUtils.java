@@ -1,5 +1,6 @@
 package com.rettichlp.unicacityaddon.base.utils;
 
+import com.sun.tools.javac.comp.Todo;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
@@ -29,6 +30,8 @@ public class TextUtils {
      */
     public static String plain(Component component) {
         return PlainTextComponentSerializer.plainText().serialize(component);
+
+        // TODO: 19.12.2022 Laby.labyAPI().renderPipeline().componentRenderer().plainSerializer() ?
     }
 
     /**

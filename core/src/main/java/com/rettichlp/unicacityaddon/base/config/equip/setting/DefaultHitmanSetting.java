@@ -7,18 +7,18 @@ import net.labymod.api.configuration.loader.property.ConfigProperty;
 public class DefaultHitmanSetting extends Config implements HitmanSetting {
 
     @TextFieldSetting
-    private final ConfigProperty<Integer> glassCutter = new ConfigProperty<>(2200);
+    private final ConfigProperty<String> glassCutter = new ConfigProperty<>("2200");
 
     @TextFieldSetting
-    private final ConfigProperty<Integer> lockPick = new ConfigProperty<>(2200);
+    private final ConfigProperty<String> lockPick = new ConfigProperty<>("2200");
 
     @Override
-    public ConfigProperty<Integer> glassCutter() {
+    public ConfigProperty<String> glassCutter() {
         return this.glassCutter;
     }
 
     @Override
-    public ConfigProperty<Integer> lockPick() {
+    public ConfigProperty<String> lockPick() {
         return this.lockPick;
     }
 }

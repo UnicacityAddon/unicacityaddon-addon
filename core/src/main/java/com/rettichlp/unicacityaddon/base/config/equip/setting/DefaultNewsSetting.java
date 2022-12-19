@@ -7,10 +7,10 @@ import net.labymod.api.configuration.loader.property.ConfigProperty;
 public class DefaultNewsSetting extends Config implements NewsSetting {
 
     @TextFieldSetting
-    private final ConfigProperty<Integer> notepad = new ConfigProperty<>(4500);
+    private final ConfigProperty<String> notepad = new ConfigProperty<>("4500");
 
     @Override
-    public ConfigProperty<Integer> notepad() {
+    public ConfigProperty<String> notepad() {
         return this.notepad;
     }
 }

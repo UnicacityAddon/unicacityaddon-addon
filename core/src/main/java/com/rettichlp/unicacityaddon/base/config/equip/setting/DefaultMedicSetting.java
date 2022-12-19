@@ -7,50 +7,50 @@ import net.labymod.api.configuration.loader.property.ConfigProperty;
 public class DefaultMedicSetting extends Config implements MedicSetting {
 
     @TextFieldSetting
-    private final ConfigProperty<Integer> axe = new ConfigProperty<>(50);
+    private final ConfigProperty<String> axe = new ConfigProperty<>("50");
 
     @TextFieldSetting
-    private final ConfigProperty<Integer> bandage = new ConfigProperty<>(80);
+    private final ConfigProperty<String> bandage = new ConfigProperty<>("80");
 
     @TextFieldSetting
-    private final ConfigProperty<Integer> extinguisher = new ConfigProperty<>(400);
+    private final ConfigProperty<String> extinguisher = new ConfigProperty<>("400");
 
     @TextFieldSetting
-    private final ConfigProperty<Integer> helmet = new ConfigProperty<>(250);
+    private final ConfigProperty<String> helmet = new ConfigProperty<>("250");
 
     @TextFieldSetting
-    private final ConfigProperty<Integer> pills = new ConfigProperty<>(80);
+    private final ConfigProperty<String> pills = new ConfigProperty<>("80");
 
     @TextFieldSetting
-    private final ConfigProperty<Integer> syringe = new ConfigProperty<>(120);
+    private final ConfigProperty<String> syringe = new ConfigProperty<>("120");
 
     @Override
-    public ConfigProperty<Integer> axe() {
+    public ConfigProperty<String> axe() {
         return this.axe;
     }
 
     @Override
-    public ConfigProperty<Integer> bandage() {
+    public ConfigProperty<String> bandage() {
         return this.bandage;
     }
 
     @Override
-    public ConfigProperty<Integer> extinguisher() {
+    public ConfigProperty<String> extinguisher() {
         return this.extinguisher;
     }
 
     @Override
-    public ConfigProperty<Integer> helmet() {
+    public ConfigProperty<String> helmet() {
         return this.helmet;
     }
 
     @Override
-    public ConfigProperty<Integer> pills() {
+    public ConfigProperty<String> pills() {
         return this.pills;
     }
 
     @Override
-    public ConfigProperty<Integer> syringe() {
+    public ConfigProperty<String> syringe() {
         return this.syringe;
     }
 }

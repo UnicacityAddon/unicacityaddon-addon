@@ -4,19 +4,19 @@ import net.labymod.api.configuration.loader.property.ConfigProperty;
 
 public interface StateSetting {
 
-    ConfigProperty<Integer> cuff();
+    ConfigProperty<String> cuff();
 
-    ConfigProperty<Integer> defuseKit();
+    ConfigProperty<String> defuseKit();
 
-    ConfigProperty<Integer> elytra();
+    ConfigProperty<String> elytra();
 
-    ConfigProperty<Integer> grenade();
+    ConfigProperty<String> grenade();
 
-    ConfigProperty<Integer> shield();
+    ConfigProperty<String> shield();
 
-    ConfigProperty<Integer> smoke();
+    ConfigProperty<String> smoke();
 
-    ConfigProperty<Integer> taser();
+    ConfigProperty<String> taser();
 
-    ConfigProperty<Integer> tracker();
+    ConfigProperty<String> tracker();
 }

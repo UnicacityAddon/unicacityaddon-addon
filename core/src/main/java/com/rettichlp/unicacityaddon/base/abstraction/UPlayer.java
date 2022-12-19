@@ -6,6 +6,7 @@ import net.kyori.adventure.text.Component;
 import net.labymod.api.client.entity.player.ClientPlayer;
 import net.labymod.api.client.entity.player.Inventory;
 import net.labymod.api.client.scoreboard.Scoreboard;
+import net.labymod.api.client.session.Session;
 import net.labymod.api.client.world.ClientWorld;
 
 import java.util.UUID;
@@ -19,7 +20,7 @@ import net.labymod.api.util.math.vector.FloatVector3;
  */
 public interface UPlayer {
 
-    ClientPlayer getPlayer();
+    Session getSession();
 
     void sendMessage(Component component);
 

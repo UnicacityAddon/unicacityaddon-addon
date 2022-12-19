@@ -4,7 +4,7 @@ import net.labymod.api.configuration.loader.property.ConfigProperty;
 
 public interface TerrorSetting {
 
-    ConfigProperty<Integer> explosiveBelt();
+    ConfigProperty<String> explosiveBelt();
 
-    ConfigProperty<Integer> rpg7();
+    ConfigProperty<String> rpg7();
 }

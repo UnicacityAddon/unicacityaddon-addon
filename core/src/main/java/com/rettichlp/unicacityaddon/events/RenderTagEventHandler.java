@@ -1,6 +1,7 @@
 package com.rettichlp.unicacityaddon.events;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
+import net.labymod.api.Laby;
 import net.labymod.api.client.entity.player.ClientPlayer;
 
 import java.util.Objects;
@@ -68,7 +69,7 @@ public class RenderTagEventHandler {
 //    }
 
     private static double getDamageIndicatorValue() {
-        return UnicacityAddon.ADDON.labyAPI().addonService().getLoadedAddons().stream()
+        return Laby.labyAPI().addonService().getLoadedAddons().stream()
                 .filter(Objects::nonNull)
                 .filter(loadedAddon -> loadedAddon.info() != null)
                 .filter(loadedAddon -> loadedAddon.info().getDisplayName() != null)
@@ -78,13 +79,13 @@ public class RenderTagEventHandler {
     }
 
     private static double getFriendTagValue(ClientPlayer player) {
-        return UnicacityAddon.ADDON.labyAPI().addonService().getLoadedAddons().stream()
+        return Laby.labyAPI().addonService().getLoadedAddons().stream()
                 .filter(Objects::nonNull)
                 .filter(loadedAddon -> loadedAddon.info() != null)
                 .filter(loadedAddon -> loadedAddon.info().getDisplayName() != null)
                 .filter(loadedAddon -> loadedAddon.info().getDisplayName().equals("FriendTags"))
                 .iterator()
-                .hasNext() && UnicacityAddon.ADDON.labyAPI().labyConnect().getSession().getFriends().stream()
+                .hasNext() && Laby.labyAPI().labyConnect().getSession().getFriends().stream()
                 .anyMatch(friend -> friend.getUniqueId().equals(player.getUniqueId())) ? 0.2 : 0;
     }
 

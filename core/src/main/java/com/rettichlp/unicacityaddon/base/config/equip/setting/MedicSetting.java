@@ -4,15 +4,15 @@ import net.labymod.api.configuration.loader.property.ConfigProperty;
 
 public interface MedicSetting {
 
-    ConfigProperty<Integer> axe();
+    ConfigProperty<String> axe();
 
-    ConfigProperty<Integer> bandage();
+    ConfigProperty<String> bandage();
 
-    ConfigProperty<Integer> extinguisher();
+    ConfigProperty<String> extinguisher();
 
-    ConfigProperty<Integer> helmet();
+    ConfigProperty<String> helmet();
 
-    ConfigProperty<Integer> pills();
+    ConfigProperty<String> pills();
 
-    ConfigProperty<Integer> syringe();
+    ConfigProperty<String> syringe();
 }

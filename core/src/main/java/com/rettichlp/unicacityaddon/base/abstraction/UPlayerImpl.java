@@ -9,9 +9,9 @@ import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.utils.NavigationUtils;
 import net.kyori.adventure.text.Component;
-import net.labymod.api.client.entity.player.ClientPlayer;
 import net.labymod.api.client.entity.player.Inventory;
 import net.labymod.api.client.scoreboard.Scoreboard;
+import net.labymod.api.client.session.Session;
 import net.labymod.api.client.world.ClientWorld;
 import net.labymod.api.util.math.vector.FloatVector3;
 
@@ -29,8 +29,8 @@ import java.util.UUID;
 public class UPlayerImpl implements UPlayer {
 
     @Override
-    public ClientPlayer getPlayer() {
-        return UnicacityAddon.MINECRAFT.clientPlayer();
+    public Session getSession() {
+        return UnicacityAddon.MINECRAFT.sessionAccessor().session();
     }
 
     @Override
@@ -111,16 +111,16 @@ public class UPlayerImpl implements UPlayer {
 
     @Override
     public String getName() {
-        return getPlayer().getName();
+        return getSession().getUsername();
     }
 
     @Override
     public UUID getUniqueID() {
-        return getPlayer().getUniqueId();
+        return getSession().getUniqueId();
     }
 
     public FloatVector3 getPosition() {
-        return getPlayer().getPosition();
+        return UnicacityAddon.MINECRAFT.clientPlayer().getPosition();
     }
 
     @Override
@@ -135,7 +135,7 @@ public class UPlayerImpl implements UPlayer {
 
     @Override
     public Inventory getInventoryContainer() {
-        return getPlayer().inventory();
+        return UnicacityAddon.MINECRAFT.clientPlayer().inventory();
     }
 
     @Override

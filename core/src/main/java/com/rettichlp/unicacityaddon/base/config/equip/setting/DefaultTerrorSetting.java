@@ -7,18 +7,18 @@ import net.labymod.api.configuration.loader.property.ConfigProperty;
 public class DefaultTerrorSetting extends Config implements TerrorSetting {
 
     @TextFieldSetting
-    private final ConfigProperty<Integer> explosiveBelt = new ConfigProperty<>(4000);
+    private final ConfigProperty<String> explosiveBelt = new ConfigProperty<>("4000");
 
     @TextFieldSetting
-    private final ConfigProperty<Integer> rpg7 = new ConfigProperty<>(13000);
+    private final ConfigProperty<String> rpg7 = new ConfigProperty<>("13000");
 
     @Override
-    public ConfigProperty<Integer> explosiveBelt() {
+    public ConfigProperty<String> explosiveBelt() {
         return this.explosiveBelt;
     }
 
     @Override
-    public ConfigProperty<Integer> rpg7() {
+    public ConfigProperty<String> rpg7() {
         return this.rpg7;
     }
 }
