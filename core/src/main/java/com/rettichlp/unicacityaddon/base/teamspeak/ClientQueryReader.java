@@ -1,9 +1,7 @@
 package com.rettichlp.unicacityaddon.base.teamspeak;
 
-import com.google.common.util.concurrent.Uninterruptibles;
 import com.rettichlp.unicacityaddon.base.teamspeak.commands.BaseCommand;
 import com.rettichlp.unicacityaddon.base.teamspeak.events.TSEvent;
-import org.apache.commons.io.IOUtils;
 
 import java.io.BufferedReader;
 import java.io.Closeable;
@@ -14,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author Fuzzlemann
@@ -81,14 +78,14 @@ public class ClientQueryReader extends Thread implements Closeable {
                 // TODO Logger.LOGGER.catching(e);
             }
 
-            Uninterruptibles.sleepUninterruptibly(100, TimeUnit.MILLISECONDS);
+//            Uninterruptibles.sleepUninterruptibly(100, TimeUnit.MILLISECONDS);
         }
     }
 
     @Override
     public void close() {
         closed = true;
-        IOUtils.closeQuietly(reader);
+//        IOUtils.closeQuietly(reader);
     }
 
     public BlockingQueue<BaseCommand<?>> getQueue() {

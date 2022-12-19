@@ -6,6 +6,7 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
+import net.kyori.adventure.text.event.ClickEvent;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatMessageSendEvent;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
@@ -114,7 +115,8 @@ public class HouseRenterEventHandler {
                     .of(offlineForXDays.isEmpty() ? "" : "➡").color(ColorCode.GRAY).advance().space()
                     .of(offlineForXDays).color(ColorCode.RED).advance().space()
                     .of("[✕]").color(ColorCode.RED)
-                            .clickEvent(ClickEvent.Action.RUN_COMMAND, "/unrent " + lastHouseNumber + " " + renterMatcher.group(1)).advance()
+                            .clickEvent(ClickEvent.Action.RUN_COMMAND, "/unrent " + lastHouseNumber + " " + renterMatcher.group(1))
+                            .advance()
                     .createComponent()
             );
         }

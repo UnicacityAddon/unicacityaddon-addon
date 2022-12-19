@@ -126,7 +126,7 @@ public class FileManager {
             if (dataFile == null)
                 return;
             Gson g = new Gson();
-            String jsonData = FileUtils.readFileToString(dataFile, StandardCharsets.UTF_8.toString());
+            String jsonData = ""; // FileUtils.readFileToString(dataFile, StandardCharsets.UTF_8.toString());
 
             if (jsonData.isEmpty()) {
 //                MoneyHudWidget.bankBalance = 0;
@@ -184,7 +184,7 @@ public class FileManager {
             data.setEquipList(EquipEventHandler.equipLogEntryList);
 //            data.setCarInfo(CarOpenModule.info);
             data.setServiceCount(ServiceCountCommand.serviceCount);
-            FileUtils.writeStringToFile(dataFile, g.toJson(data), StandardCharsets.UTF_8.toString());
+//            FileUtils.writeStringToFile(dataFile, g.toJson(data), StandardCharsets.UTF_8.toString());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

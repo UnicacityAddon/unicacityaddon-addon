@@ -4,7 +4,6 @@ import com.rettichlp.unicacityaddon.base.teamspeak.events.ClientMessageReceivedE
 import com.rettichlp.unicacityaddon.base.teamspeak.events.ClientMovedEvent;
 import com.rettichlp.unicacityaddon.base.teamspeak.events.TSEvent;
 import com.rettichlp.unicacityaddon.base.teamspeak.exceptions.ClientQueryListenerDeclarationException;
-import net.minecraftforge.common.MinecraftForge;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -31,7 +30,7 @@ public class TSEventHandler {
     }
 
     static void fireEvent(TSEvent event) {
-        MinecraftForge.EVENT_BUS.post(event);
+//        MinecraftForge.EVENT_BUS.post(event);
 
         try {
             for (TSListener listener : EVENT_LISTENERS) {

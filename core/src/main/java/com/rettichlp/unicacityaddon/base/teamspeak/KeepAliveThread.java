@@ -1,10 +1,8 @@
 package com.rettichlp.unicacityaddon.base.teamspeak;
 
-import com.google.common.util.concurrent.Uninterruptibles;
 import com.rettichlp.unicacityaddon.base.teamspeak.commands.WhoAmICommand;
 
 import java.io.Closeable;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author Fuzzlemann
@@ -29,7 +27,7 @@ public class KeepAliveThread extends Thread implements Closeable {
 
             new WhoAmICommand().execute(clientQuery);
 
-            Uninterruptibles.sleepUninterruptibly(1, TimeUnit.MINUTES);
+//            Uninterruptibles.sleepUninterruptibly(1, TimeUnit.MINUTES);
         }
     }
 

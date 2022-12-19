@@ -1,7 +1,7 @@
 package com.rettichlp.unicacityaddon.base.teamspeak.events;
 
 import com.rettichlp.unicacityaddon.base.teamspeak.TSParser;
-import net.minecraftforge.fml.common.eventhandler.Event;
+import net.labymod.api.event.Event;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -12,7 +12,7 @@ import java.util.Map;
 /**
  * @author Fuzzlemann
  */
-public abstract class TSEvent extends Event {
+public abstract class TSEvent implements Event {
 
     private final String input;
     protected final Map<String, String> map;

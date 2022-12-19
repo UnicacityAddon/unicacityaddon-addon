@@ -49,11 +49,6 @@ public class AFbankEinzahlenCommand extends Command {
         if (STARTED.get())
             return true;
 
-        String interaction = args[0];
-
-        if (STARTED.get())
-            return true;
-
         if (!interaction.equalsIgnoreCase("einzahlen") && !interaction.equalsIgnoreCase("auszahlen"))
             return true;
 

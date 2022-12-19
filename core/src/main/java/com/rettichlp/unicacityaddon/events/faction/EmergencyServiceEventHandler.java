@@ -14,6 +14,7 @@ import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.event.HoverEvent;
 import net.labymod.api.client.chat.ChatMessage;
 import net.labymod.api.event.Subscribe;
+import net.labymod.api.event.client.chat.ChatMessageSendEvent;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
 import java.util.ArrayList;
@@ -91,8 +92,8 @@ public class EmergencyServiceEventHandler {
         }
     }
 
-    @SubscribeEvent
-    public void onClientChat(ClientChatEvent e) {
+    @Subscribe
+    public void onChatMessageSend(ChatMessageSendEvent e) {
         Optional<ServiceCallBox> serviceCallBoxOptional = activeEmergencyCallBoxList.stream()
                 .filter(serviceCallBox -> serviceCallBox.getNaviCommand().equals(e.getMessage()))
                 .findAny();
