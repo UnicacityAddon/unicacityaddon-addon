@@ -1,8 +1,9 @@
 package com.rettichlp.unicacityaddon.events.faction;
 
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
-import com.rettichlp.unicacityaddon.base.config.ConfigElements;
+import com.rettichlp.unicacityaddon.base.config.sloc.DefaultSlocSetting;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
@@ -45,7 +46,7 @@ public class ShareLocationEventHandler {
                 .of("" + posZ).color(ColorCode.AQUA).advance()
                 .createComponent();
 
-        p.sendMessageAsString(ConfigElements.getPatternSloc()
+        p.sendMessageAsString(UnicacityAddon.configuration.slocSetting().sloc().getOrDefault(DefaultSlocSetting.SLOC)
                 .replace("&", "§")
                 .replace("%sender%", senderName)
                 .replace("%x%", String.valueOf(posX))

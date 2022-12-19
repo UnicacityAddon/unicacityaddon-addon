@@ -1,9 +1,9 @@
 package com.rettichlp.unicacityaddon.events;
 
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
-import com.rettichlp.unicacityaddon.base.config.ConfigElements;
 import com.rettichlp.unicacityaddon.base.enums.api.StatisticType;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
@@ -61,7 +61,7 @@ public class KarmaMessageEventHandler {
         if (!karmaCheck || !karmaMatcher.find())
             return;
 
-        if (karma < 0 && ConfigElements.getEstimatedDespawnTime()) {
+        if (karma < 0 && UnicacityAddon.configuration.despawnTime().get()) {
             Calendar cal = Calendar.getInstance();
             cal.add(Calendar.MINUTE, 5);
             Date date = cal.getTime();

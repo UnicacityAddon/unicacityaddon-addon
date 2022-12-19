@@ -1,6 +1,6 @@
 package com.rettichlp.unicacityaddon.events.faction.rettungsdienst;
 
-import com.rettichlp.unicacityaddon.base.config.ConfigElements;
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
@@ -24,7 +24,7 @@ public class ServiceMessageEventHandler {
         String msg = e.chatMessage().getPlainText();
 
         Matcher m = PatternHandler.SERVICE_ARRIVED_PATTERN.matcher(msg);
-        if (ConfigElements.getServiceMessagesActivated()) {
+        if (UnicacityAddon.configuration.factionMessageSetting().service().get()) {
             if (m.find()) {
                 Component hoverMessage = Message.getBuilder().of("Annehmen").color(ColorCode.RED).advance().createComponent();
 

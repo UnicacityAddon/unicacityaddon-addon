@@ -3,7 +3,6 @@ package com.rettichlp.unicacityaddon.events.teamspeak;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
-import com.rettichlp.unicacityaddon.base.config.ConfigElements;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.teamspeak.commands.ClientVariableCommand;
 import com.rettichlp.unicacityaddon.base.teamspeak.events.ClientMovedEvent;
@@ -29,10 +28,10 @@ public class WaitingRoomEventHandler {
         int clientID = e.getClientID();
         int targetChannelID = e.getTargetChannelID();
 
-        if (ConfigElements.getTeamspeakNotifyWaitingSupport() && targetChannelID == 41) {
+        if (UnicacityAddon.configuration.tsNotificationSupport().get() && targetChannelID == 41) {
             handleEnterSupportChannel(p, clientID);
             // TODO: 09.12.2022 p.playSound("block.note.pling");
-        } else if (ConfigElements.getTeamspeakNotifyWaitingPublic() && targetChannelID == p.getFaction().getPublicChannelId()) {
+        } else if (UnicacityAddon.configuration.tsNotificationPublic().get() && targetChannelID == p.getFaction().getPublicChannelId()) {
             handleEnterPublicChannel(p, clientID);
             // TODO: 09.12.2022 p.playSound("block.note.pling");
         }

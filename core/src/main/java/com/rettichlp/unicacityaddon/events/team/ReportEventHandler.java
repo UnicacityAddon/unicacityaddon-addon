@@ -1,12 +1,14 @@
 package com.rettichlp.unicacityaddon.events.team;
 
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
-import com.rettichlp.unicacityaddon.base.config.ConfigElements;
+import com.rettichlp.unicacityaddon.base.config.message.ReportMessageSetting;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
+import jdk.internal.joptsimple.internal.Strings;
 import net.labymod.api.client.chat.ChatMessage;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
@@ -30,16 +32,17 @@ public class ReportEventHandler {
         ChatMessage chatMessage = e.chatMessage();
         String formattedMsg = chatMessage.getFormattedText();
         String unformattedMsg = chatMessage.getPlainText();
+        ReportMessageSetting reportMessageSetting = UnicacityAddon.configuration.reportMessageSetting();
 
         if (PatternHandler.REPORT_ACCEPTED_PATTERN.matcher(unformattedMsg).find()) {
             isReport = true;
 
-            if (ConfigElements.getReportGreeting().isEmpty()) return;
+            if (reportMessageSetting.greeting().getOrDefault(Strings.EMPTY).isEmpty()) return;
             t.schedule(new TimerTask() {
                 @Override
                 public void run() {
                     if (System.currentTimeMillis() - lastExecution > 1000L) {
-                        p.sendChatMessage(ConfigElements.getReportGreeting());
+                        p.sendChatMessage(reportMessageSetting.greeting().get());
                         lastExecution = System.currentTimeMillis();
                     }
                 }
@@ -54,7 +57,7 @@ public class ReportEventHandler {
 
         if (formattedMsg.startsWith(ColorCode.DARK_PURPLE.getCode()) && isReport) {
             e.setMessage(Message.getBuilder()
-                    .add(ConfigElements.getReportPrefix().replaceAll("&", "§"))
+                    .add(reportMessageSetting.prefix().getOrDefault(Strings.EMPTY).replaceAll("&", "§"))
                     .add(formattedMsg)
                     .createComponent());
         }

@@ -3,7 +3,6 @@ package com.rettichlp.unicacityaddon.base.utils;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
-import com.rettichlp.unicacityaddon.base.config.ConfigElements;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import net.kyori.adventure.text.event.ClickEvent;
@@ -32,7 +31,7 @@ public class UpdateUtils {
         latestVersion = getLatestVersion();
         if (latestVersion.equals(UnicacityAddon.VERSION)) return;
 
-        if (!ConfigElements.getAutomatedUpdate()) {
+        if (!UnicacityAddon.configuration.update().get()) {
             // TODO: 10.12.2022 LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Update verfügbar!", "Es ist Version " + ColorCode.DARK_AQUA.getCode() + "v" + latestVersion + ColorCode.WHITE.getCode() + " verfügbar.");
 
             AbstractionLayer.getPlayer().sendMessage(Message.getBuilder()

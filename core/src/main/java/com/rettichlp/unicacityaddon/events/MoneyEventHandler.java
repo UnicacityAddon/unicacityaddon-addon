@@ -1,9 +1,10 @@
 package com.rettichlp.unicacityaddon.events;
 
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
-import com.rettichlp.unicacityaddon.base.config.ConfigElements;
+import com.rettichlp.unicacityaddon.base.config.atm.ATMSetting;
 import com.rettichlp.unicacityaddon.base.enums.api.StatisticType;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
@@ -53,16 +54,17 @@ public class MoneyEventHandler {
         if (kontoauszugMatcher.find()) {
 //            BankMoneyModule.setBalance(Integer.parseInt(kontoauszugMatcher.group(1)));
 
-            if (ConfigElements.getEventATM()) {
-                if (ConfigElements.getEventATMFBank()) {
+            ATMSetting atmSetting = UnicacityAddon.configuration.atmSetting();
+            if (atmSetting.enabled().get()) {
+                if (atmSetting.fBank().get()) {
                     p.sendChatMessage("/fbank");
                 }
 
-                if (ConfigElements.getEventATMGRKasse()) {
+                if (atmSetting.grBank().get()) {
                     p.sendChatMessage("/grkasse info");
                 }
 
-                if (ConfigElements.getEventATMInfo()) {
+                if (atmSetting.atmInfo().get()) {
                     p.sendChatMessage("/atminfo");
                 }
             }

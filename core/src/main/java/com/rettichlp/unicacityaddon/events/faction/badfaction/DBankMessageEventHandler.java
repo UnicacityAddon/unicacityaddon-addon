@@ -1,6 +1,6 @@
 package com.rettichlp.unicacityaddon.events.faction.badfaction;
 
-import com.rettichlp.unicacityaddon.base.config.ConfigElements;
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
@@ -24,7 +24,7 @@ public class DBankMessageEventHandler {
     public void onChatReceive(ChatReceiveEvent e) {
         String msg = e.chatMessage().getPlainText();
 
-        if (!ConfigElements.getDrugBankMessagesActivated()) return;
+        if (!UnicacityAddon.configuration.factionMessageSetting().dBank().get()) return;
 
         Matcher dropMatcher = PatternHandler.DBANK_DROP_PATTERN.matcher(msg);
         if (dropMatcher.find()) {

@@ -62,8 +62,8 @@ public class UnicacityAddon extends LabyAddon<ExampleConfiguration> {
     }
 
     @Override
-    protected Class<ExampleConfiguration> configurationClass() {
-        return ExampleConfiguration.class;
+    protected Class<DefaultUnicacityAddonConfiguration> configurationClass() {
+        return DefaultUnicacityAddonConfiguration.class;
     }
 
     public static boolean isUnicacity() {

@@ -1,8 +1,9 @@
 package com.rettichlp.unicacityaddon.events.faction;
 
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
-import com.rettichlp.unicacityaddon.base.config.ConfigElements;
+import com.rettichlp.unicacityaddon.base.config.reinforcement.DefaultReinforcementSetting;
 import com.rettichlp.unicacityaddon.base.enums.faction.ReinforcementType;
 import com.rettichlp.unicacityaddon.base.models.NaviPointEntry;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
@@ -78,7 +79,7 @@ public class ReinforcementEventHandler {
                 navipointString = navipoint.getName().replace("-", " ");
             }
 
-            p.sendMessageAsString(ConfigElements.getPatternReinforcement()
+            p.sendMessageAsString(UnicacityAddon.configuration.reinforcementSetting().reinforcement().getOrDefault(DefaultReinforcementSetting.REINFORCEMENT)
                     .replace("&", "§")
                     .replace("%type%", type)
                     .replace("%sender%", fullName)
@@ -111,7 +112,7 @@ public class ReinforcementEventHandler {
             String reinforcementSenderName = onTheWayMatcher.group(3);
             String distance = onTheWayMatcher.group(4);
 
-            p.sendMessageAsString(ConfigElements.getPatternReinforcementReply()
+            p.sendMessageAsString(UnicacityAddon.configuration.reinforcementSetting().answer().getOrDefault(DefaultReinforcementSetting.ANSWER)
                     .replace("&", "§")
                     .replace("%sender%", senderFullName)
                     .replace("%target%", reinforcementSenderName)
@@ -138,7 +139,7 @@ public class ReinforcementEventHandler {
 
     @Subscribe
     public void onClientMessageSend(ChatMessageSendEvent e) {
-        if (ConfigElements.getReinforcementScreenshot() && e.getMessage().toLowerCase().startsWith("/reinforcement ontheway "))
+        if (UnicacityAddon.configuration.reinforcementSetting().screen().get() && e.getMessage().toLowerCase().startsWith("/reinforcement ontheway "))
             activeReinforcement = TickEventHandler.currentTick;
     }
 

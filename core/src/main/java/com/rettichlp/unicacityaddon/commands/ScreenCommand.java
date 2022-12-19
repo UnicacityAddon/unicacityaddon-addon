@@ -45,7 +45,7 @@ public class ScreenCommand extends Command {
 
         try {
             File file = FileManager.getNewActivityImageFile(arguments[0]);
-//            if (ConfigElements.getAutomatedScreenshotUpload())
+//            if (UnicacityAddon.configuration.screenUpload().get())
 //                HotkeyEventHandler.handleScreenshotWithUpload(file);
 //            else
 //                HotkeyEventHandler.handleScreenshotWithoutUpload(file);

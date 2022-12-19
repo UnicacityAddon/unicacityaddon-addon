@@ -1,8 +1,8 @@
 package com.rettichlp.unicacityaddon.events;
 
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
-import com.rettichlp.unicacityaddon.base.config.ConfigElements;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.teamspeak.CommandResponse;
@@ -13,6 +13,7 @@ import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.base.utils.ImageUploadUtils;
+import jdk.internal.joptsimple.internal.Strings;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
@@ -142,7 +143,7 @@ public class HotkeyEventHandler {
 
     private void handleCancelReport() {
         UPlayer p = AbstractionLayer.getPlayer();
-        String farewell =  ConfigElements.getReportFarewell();
+        String farewell = UnicacityAddon.configuration.reportMessageSetting().farewell().getOrDefault(Strings.EMPTY);
         if (!farewell.isEmpty()) p.sendChatMessage(farewell);
         p.sendChatMessage("/cr");
     }

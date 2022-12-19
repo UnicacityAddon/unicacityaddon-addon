@@ -1,23 +1,29 @@
 package com.rettichlp.unicacityaddon.commands.faction.badfaction;
 
 import com.google.inject.Inject;
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
-import com.rettichlp.unicacityaddon.base.config.ConfigElements;
+import com.rettichlp.unicacityaddon.base.config.ownUse.setting.KokainSetting;
+import com.rettichlp.unicacityaddon.base.config.ownUse.setting.MarihuanaSetting;
+import com.rettichlp.unicacityaddon.base.config.ownUse.setting.MethamphetaminSetting;
+import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
+import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import net.labymod.api.client.chat.command.Command;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Dimiikou
+ * @author RettichLP
  */
 @UCCommand
 public class GiftEigenbedarfCommand extends Command {
 
-    public static boolean checkWeed = false;
-    public static boolean checkMeth = false;
+    public static List<String> scheduledTasks = new ArrayList<>();
 
     private static final String usage = "/gifteigenbedarf [Spieler]";
 
@@ -35,26 +41,26 @@ public class GiftEigenbedarfCommand extends Command {
             return true;
         }
 
-        if (ConfigElements.getCocainActivated()) {
-            p.sendChatMessage("/selldrug " + arguments[0] + " Kokain " + ConfigElements.getCocainDrugPurity().getPurity() + " " + ConfigElements.getCocaineAmount() + " 0");
+        KokainSetting kokainSetting = UnicacityAddon.configuration.ownUseSetting().kokainSetting();
+        MarihuanaSetting marihuanaSetting = UnicacityAddon.configuration.ownUseSetting().marihuanaSetting();
+        MethamphetaminSetting methamphetaminSetting = UnicacityAddon.configuration.ownUseSetting().methamphetaminSetting();
 
-            if (ConfigElements.getMarihuanaActivated())
-                checkWeed = true;
-            if (ConfigElements.getMethActivated())
-                checkMeth = true;
-            return true;
+        if (kokainSetting.enabled().get()) {
+            DrugPurity drugPurity = kokainSetting.purity().getOrDefault(DrugPurity.BEST);
+            int amount = kokainSetting.amount().getOrDefault(25);
+            scheduledTasks.add("/selldrug " + arguments[0] + " " + DrugType.COCAINE.getDrugName() + " " + amount + " " + drugPurity.getPurity());
         }
 
-        if (ConfigElements.getMarihuanaActivated()) {
-            p.sendChatMessage("/selldrug " + arguments[0] + " Gras " + ConfigElements.getMarihuanaDrugPurity().getPurity() + " " + ConfigElements.getMarihuanaAmount() + " 0");
-
-            if (ConfigElements.getMethActivated())
-                checkMeth = true;
-            return true;
+        if (marihuanaSetting.enabled().get()) {
+            DrugPurity drugPurity = marihuanaSetting.purity().getOrDefault(DrugPurity.GOOD);
+            int amount = marihuanaSetting.amount().getOrDefault(25);
+            scheduledTasks.add("/selldrug " + arguments[0] + " " + DrugType.MARIJUANA.getDrugName() + " " + amount + " " + drugPurity.getPurity());
         }
 
-        if (ConfigElements.getMethActivated()) {
-            p.sendChatMessage("/selldrug " + arguments[0] + " Meth " + ConfigElements.getMethDrugPurity().getPurity() + " " + ConfigElements.getMethAmount() + " 0");
+        if (methamphetaminSetting.enabled().get()) {
+            DrugPurity drugPurity = methamphetaminSetting.purity().getOrDefault(DrugPurity.BEST);
+            int amount = methamphetaminSetting.amount().getOrDefault(5);
+            scheduledTasks.add("/selldrug " + arguments[0] + " " + DrugType.METH.getDrugName() + " " + amount + " " + drugPurity.getPurity());
         }
         return true;
     }

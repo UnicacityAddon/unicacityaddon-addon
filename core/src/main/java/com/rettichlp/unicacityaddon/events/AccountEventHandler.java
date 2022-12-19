@@ -3,10 +3,12 @@ package com.rettichlp.unicacityaddon.events;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
-import com.rettichlp.unicacityaddon.base.config.ConfigElements;
+import com.rettichlp.unicacityaddon.base.config.join.CommandSetting;
+import com.rettichlp.unicacityaddon.base.config.join.PasswordSetting;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.base.utils.UpdateUtils;
+import jdk.internal.joptsimple.internal.Strings;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
@@ -48,7 +50,7 @@ public class AccountEventHandler {
             return;
         }
 
-        if (PatternHandler.RESOURCEPACK_PATTERN.matcher(msg).find() && ConfigElements.getRemoveResourcePackMessage()) {
+        if (PatternHandler.RESOURCEPACK_PATTERN.matcher(msg).find() && UnicacityAddon.configuration.texturePack().get()) {
             e.setCancelled(true);
             return;
         }
@@ -69,8 +71,9 @@ public class AccountEventHandler {
     }
 
     private void handleUnlockAccount() {
-        if (ConfigElements.getPasswordAutomation())
-            AbstractionLayer.getPlayer().sendChatMessage("/passwort " + ConfigElements.getPassword());
+        PasswordSetting passwordSetting = UnicacityAddon.configuration.passwordSetting();
+        if (passwordSetting.enabled().get())
+            AbstractionLayer.getPlayer().sendChatMessage("/passwort " + passwordSetting.password().getOrDefault(Strings.EMPTY));
     }
 
     private void handleJoin() {
@@ -83,13 +86,14 @@ public class AccountEventHandler {
                 p.sendChatMessage("/togglephone");
 
                 // AUTOMATE_COMMAND_SETTINGS
-                if (ConfigElements.getCommandAutomation()) {
+                CommandSetting commandSetting = UnicacityAddon.configuration.commandSetting();
+                if (commandSetting.enabled().get()) {
                     // AUTOMATE_COMMAND_FIRST_SETTINGS
                     new Timer().schedule(new TimerTask() {
                         @Override
                         public void run() {
-                            if (!ConfigElements.getFirstCommand().isEmpty())
-                                p.sendChatMessage(ConfigElements.getFirstCommand());
+                            if (!commandSetting.first().getOrDefault(Strings.EMPTY).isEmpty())
+                                p.sendChatMessage(commandSetting.first().get());
                         }
                     }, 500);
 
@@ -97,8 +101,8 @@ public class AccountEventHandler {
                     new Timer().schedule(new TimerTask() {
                         @Override
                         public void run() {
-                            if (!ConfigElements.getSecondCommand().isEmpty())
-                                p.sendChatMessage(ConfigElements.getSecondCommand());
+                            if (!commandSetting.second().getOrDefault(Strings.EMPTY).isEmpty())
+                                p.sendChatMessage(commandSetting.second().get());
                         }
                     }, 1000);
 
@@ -106,8 +110,8 @@ public class AccountEventHandler {
                     new Timer().schedule(new TimerTask() {
                         @Override
                         public void run() {
-                            if (!ConfigElements.getThirdCommand().isEmpty())
-                                p.sendChatMessage(ConfigElements.getThirdCommand());
+                            if (!commandSetting.third().getOrDefault(Strings.EMPTY).isEmpty())
+                                p.sendChatMessage(commandSetting.third().get());
                         }
                     }, 1500);
                 }

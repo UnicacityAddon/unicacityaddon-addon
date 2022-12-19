@@ -1,6 +1,6 @@
 package com.rettichlp.unicacityaddon.base.enums.faction;
 
-import com.rettichlp.unicacityaddon.base.config.ConfigElements;
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.text.ChatType;
 
 import java.util.regex.Pattern;
@@ -40,7 +40,7 @@ public enum ReinforcementType {
     }
 
     public ChatType getChatType() {
-        return ConfigElements.getNameTagAlliance() ? chatType : ChatType.FCHAT;
+        return UnicacityAddon.configuration.nameTagSetting().allianceFactionNameTagSetting().enabled().get() ? chatType : ChatType.FCHAT;
     }
 
     public String getMessage() {
