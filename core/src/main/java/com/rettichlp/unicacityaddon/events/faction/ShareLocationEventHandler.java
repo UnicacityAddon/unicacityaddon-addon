@@ -28,7 +28,8 @@ public class ShareLocationEventHandler {
         UPlayer p = AbstractionLayer.getPlayer();
         Matcher shareLocationMatcher = PatternHandler.SHARE_LOCATION_PATTERN.matcher(e.chatMessage ().getPlainText());
 
-        if (!shareLocationMatcher.find()) return;
+        if (!shareLocationMatcher.find())
+            return;
         if (!shareLocationMatcher.group(2).contains(p.getName())) {
             e.setCancelled(true);
             return;

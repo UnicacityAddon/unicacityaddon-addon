@@ -34,7 +34,8 @@ public enum ChatType {
 
     public static ChatType getChatTypeByDisplayName(String s) {
         for (ChatType chatType : ChatType.values()) {
-            if (chatType.getDisplayName().equals(s)) return chatType;
+            if (chatType.getDisplayName().equals(s))
+                return chatType;
         }
         return null;
     }

@@ -38,7 +38,8 @@ public class ClientQueryReader extends Thread implements Closeable {
             try {
                 while (reader.ready()) {
                     String line = reader.readLine();
-                    if (line.isEmpty()) continue;
+                    if (line.isEmpty())
+                        continue;
 
                     if (line.startsWith("notify")) {
                         TSEvent event = TSEventHandler.getEvent(line);
@@ -57,7 +58,8 @@ public class ClientQueryReader extends Thread implements Closeable {
                             String statusLine;
                             while ((statusLine = reader.readLine()) != null) {
                                 statusLine = statusLine.trim();
-                                if (statusLine.isEmpty()) continue;
+                                if (statusLine.isEmpty())
+                                    continue;
 
                                 lines.add(statusLine);
                                 break;

@@ -24,7 +24,8 @@ public class DBankMessageEventHandler {
     public void onChatReceive(ChatReceiveEvent e) {
         String msg = e.chatMessage().getPlainText();
 
-        if (!UnicacityAddon.configuration.factionMessageSetting().dBank().get()) return;
+        if (!UnicacityAddon.configuration.factionMessageSetting().dBank().get())
+            return;
 
         Matcher dropMatcher = PatternHandler.DBANK_DROP_PATTERN.matcher(msg);
         if (dropMatcher.find()) {
@@ -33,10 +34,12 @@ public class DBankMessageEventHandler {
             DrugType type = null;
 
             for (DrugPurity drugPurity : DrugPurity.values())
-                if (drugPurity.getPurityString().equals(dropMatcher.group(4))) purity = drugPurity;
+                if (drugPurity.getPurityString().equals(dropMatcher.group(4)))
+                    purity = drugPurity;
 
             for (DrugType drugType : DrugType.values())
-                if (drugType.getDrugName().equals(dropMatcher.group(3))) type = drugType;
+                if (drugType.getDrugName().equals(dropMatcher.group(3)))
+                    type = drugType;
 
             assert purity != null;
             assert type != null;
@@ -62,10 +65,12 @@ public class DBankMessageEventHandler {
             DrugType type = null;
 
             for (DrugPurity drugPurity : DrugPurity.values())
-                if (drugPurity.getPurityString().equals(getMatcher.group(4))) purity = drugPurity;
+                if (drugPurity.getPurityString().equals(getMatcher.group(4)))
+                    purity = drugPurity;
 
             for (DrugType drugType : DrugType.values())
-                if (drugType.getDrugName().equals(getMatcher.group(3))) type = drugType;
+                if (drugType.getDrugName().equals(getMatcher.group(3)))
+                    type = drugType;
 
             assert purity != null;
             assert type != null;

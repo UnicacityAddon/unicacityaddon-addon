@@ -29,7 +29,8 @@ public class DiscordCommand extends Command {
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        if (!UnicacityAddon.isUnicacity()) return true;
+        if (!UnicacityAddon.isUnicacity())
+            return true;
         UPlayer p = AbstractionLayer.getPlayer();
 
         p.sendEmptyMessage();

@@ -17,15 +17,18 @@ public class TSAPIKeyLoader {
     private final List<File> possibleConfigDirectories = new ArrayList<>();
 
     public void load() throws IOException {
-        if (!UnicacityAddon.configuration.tsApiKey().getOrDefault(Strings.EMPTY).isEmpty()) return;
+        if (!UnicacityAddon.configuration.tsApiKey().getOrDefault(Strings.EMPTY).isEmpty())
+            return;
 
         loadPossibleConfigDirectories();
         for (File possibleConfigDirectory : possibleConfigDirectories) {
             File clientQueryIni = new File(possibleConfigDirectory, "clientquery.ini");
-            if (!clientQueryIni.exists()) continue;
+            if (!clientQueryIni.exists())
+                continue;
 
             String apiKey = loadAPIKey(clientQueryIni);
-            if (apiKey == null) continue;
+            if (apiKey == null)
+                continue;
 
 //            ConfigElements.setTeamspeakAPIKey(apiKey);
             return;
@@ -34,10 +37,12 @@ public class TSAPIKeyLoader {
 
     private String loadAPIKey(File clientQueryIni) throws IOException {
 //        for (String line : FileUtils.readLines(clientQueryIni, StandardCharsets.UTF_8)) {
-//            if (!line.startsWith("api_key")) continue;
+//            if (!line.startsWith("api_key"))
+//                continue;
 //
 //            String apiKey = line.split("=")[1];
-//            if (apiKey.length() != 29) continue;
+//            if (apiKey.length() != 29)
+//                continue;
 //
 //            return apiKey;
 //        }

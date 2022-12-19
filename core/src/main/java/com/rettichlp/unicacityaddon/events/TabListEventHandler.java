@@ -33,15 +33,18 @@ public class TabListEventHandler extends TabListUpdateEvent implements Comparato
             return sgn != 0 ? sgn : stringOne.compareTo(stringTwo);
         }
 
-        if (stringOneStartsWith != null) return -1;
-        if (stringTwoStartsWith != null) return 1;
+        if (stringOneStartsWith != null)
+            return -1;
+        if (stringTwoStartsWith != null)
+            return 1;
 
         return stringOne.compareTo(stringTwo);
     }
 
 //    @Override
 //    public void onUpdate(Type type, String s, String s1) {
-//        if (!ConfigElements.getEventTabList()) return;
+//        if (!ConfigElements.getEventTabList())
+//            return;
 //        ReflectionUtils.setValue(ModPlayerTabOverlay.class, Ordering.class, Ordering.from(new TabListEventHandler()));
 //    }
 
@@ -52,7 +55,8 @@ public class TabListEventHandler extends TabListUpdateEvent implements Comparato
         if (children.size() > 0) {
             children.forEach(child -> {
                 TextColor color = child.color();
-                if (color == null) return;
+                if (color == null)
+                    return;
                 formattedDisplayName.append(ColorCode.getColorCodeByTextColor(color).getCode()).append(TextUtils.plain(child));
             });
         }

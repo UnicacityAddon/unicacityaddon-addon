@@ -245,9 +245,10 @@ public class PatternHandler {
     public static final Pattern AD_CONTROL_PATTERN = Pattern.compile("^\\[Werbung] (\\w+) hat eine Werbung geschalten: .+$");
 
     /**
-     * Pattern for account interaction
+     * Pattern for house interaction
      *
      * @see com.rettichlp.unicacityaddon.events.house.HouseDataEventHandler
+     * @see com.rettichlp.unicacityaddon.events.house.HouseInteractionEventHandler
      * @see com.rettichlp.unicacityaddon.events.house.HouseRenterEventHandler
      */
     public static final Pattern HOUSE_BANK_HEADER_PATTERN = Pattern.compile("^=== Hauskasse Haus (\\d+) ===$");
@@ -259,6 +260,8 @@ public class PatternHandler {
     public static final Pattern HOUSE_STORAGE_SUCCESSFUL_INTERACTION = Pattern.compile("^\\[Haus] Du hast (\\d+)g (\\w+) (ins|aus dem) Drogenlager (gelegt|genommen)\\.$");
     public static final Pattern HOUSE_STORAGE_ADD_COMMAND_PATTERN = Pattern.compile("^/drogenlager drop (\\w+) (\\d+) (\\d)$");
     public static final Pattern HOUSE_STORAGE_REMOVE_COMMAND_PATTERN = Pattern.compile("^/drogenlager get (\\w+) (\\d+) (\\d)$");
+    public static final Pattern HOUSE_AKKU_PATTERN = Pattern.compile("^Du hast begonnen deinen Akku aufzuladen\\.\\.\\.$");
+    public static final Pattern HOUSE_HEAL_PATTERN = Pattern.compile("^Du hast begonnen dich zu heilen\\.\\.\\.$");
 
     /**
      * Pattern for equip interaction
@@ -284,4 +287,16 @@ public class PatternHandler {
      */
     public static final Pattern BUY_INTERRUPTED_PATTERN = Pattern.compile("^Verkäufer: (Tut (uns|mir) Leid|Verzeihung), unser Lager ist derzeit leer\\.$" +
             "|^Verkäufer: Dieses Produkt kostet \\d+\\$\\.$" + "|^Verkäufer: Du hast leider nicht genug Geld dabei\\.$");
+
+    /**
+     * Pattern for Duty Check
+     *
+     * @see com.rettichlp.unicacityaddon.events.faction.DutyEventHandler
+     */
+    public static final Pattern DUTY_JOIN_PATTERN = Pattern.compile("^Du bist nun als Arzt im Dienst!$" +
+            "|^Du bist nun im FBI Dienst!$" +
+            "|^Du bist nun im Polizei Dienst!$");
+    public static final Pattern DUTY_LEAVE_PATTERN = Pattern.compile("^Du bist nun nicht mehr als Arzt Dienst!$" +
+            "|^Du bist nun nicht mehr im FBI Dienst!$" +
+            "|^Du bist nun nicht mehr im Polizei Dienst!$");
 }

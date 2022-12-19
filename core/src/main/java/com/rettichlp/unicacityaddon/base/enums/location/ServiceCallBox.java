@@ -55,17 +55,13 @@ public enum ServiceCallBox {
 
     public static ServiceCallBox getServiceCallBoxByLocationName(String s) {
         for (ServiceCallBox serviceCallBox : ServiceCallBox.values()) {
-            if (serviceCallBox.getLocationName().equals(s)) return serviceCallBox;
+            if (serviceCallBox.getLocationName().equals(s))
+                return serviceCallBox;
         }
         return null;
     }
 
     public String getNaviCommand() {
-        // only send message in faction chat, if messages is clicked and not during generation process
-        if (!EmergencyServiceEventHandler.messageCreationActive) {
-            EmergencyServiceEventHandler.messageCreationActive = true;
-            AbstractionLayer.getPlayer().sendChatMessage("/f ➡ Unterwegs zur Notrufsäule (" + locationName + ")");
-        }
         return "/navi " + x + "/" + y + "/" + z;
     }
 }

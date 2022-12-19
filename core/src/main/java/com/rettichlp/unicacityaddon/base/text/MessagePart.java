@@ -29,20 +29,29 @@ public class MessagePart {
     public String getMessage() {
         return message;
     }
+
     public ColorCode getColorCode() {
         return colorCode;
     }
+
     public List<FormattingCode> getFormattingCodes() {
         return formattingCodes;
     }
-    public ClickEvent getClickEvent() {return clickEvent;}
-    public HoverEvent<?> getHoverEvent() {return hoverEvent;}
+
+    public ClickEvent getClickEvent() {
+        return clickEvent;
+    }
+
+    public HoverEvent<?> getHoverEvent() {
+        return hoverEvent;
+    }
 
     public static Builder getBuilder() {
         return new Builder();
     }
 
     public static class Builder {
+
         private String message;
         private ColorCode colorCode;
         private final List<FormattingCode> formattingCodes = new ArrayList<>();

@@ -29,7 +29,8 @@ public class UpdateUtils {
 
     public static void updateChecker() {
         latestVersion = getLatestVersion();
-        if (latestVersion.equals(UnicacityAddon.VERSION)) return;
+        if (latestVersion.equals(UnicacityAddon.VERSION))
+            return;
 
         if (!UnicacityAddon.configuration.update().get()) {
             // TODO: 10.12.2022 LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Update verfügbar!", "Es ist Version " + ColorCode.DARK_AQUA.getCode() + "v" + latestVersion + ColorCode.WHITE.getCode() + " verfügbar.");
@@ -51,7 +52,8 @@ public class UpdateUtils {
                             .advance()
                     .of("]").color(ColorCode.DARK_GRAY).advance()
                     .createComponent());
-        } else update();
+        } else
+            update();
     }
 
     public static void update() {
@@ -84,7 +86,8 @@ public class UpdateUtils {
         replace = true;
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            if (!replace) return;
+            if (!replace)
+                return;
             replace = false;
 
             try {

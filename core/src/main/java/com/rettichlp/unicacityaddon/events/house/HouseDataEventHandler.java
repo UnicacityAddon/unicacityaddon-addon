@@ -34,14 +34,16 @@ public class HouseDataEventHandler {
 
         Matcher houseBankHeaderMatcher = PatternHandler.HOUSE_BANK_HEADER_PATTERN.matcher(msg);
         if (houseBankHeaderMatcher.find()) {
-            if (System.currentTimeMillis() - lastCheck < 500) e.setCancelled(true);
+            if (System.currentTimeMillis() - lastCheck < 500)
+                e.setCancelled(true);
             lastCheckedHouseNumber = Integer.parseInt(houseBankHeaderMatcher.group(1));
             return;
         }
 
         Matcher houseBankValueMatcher = PatternHandler.HOUSE_BANK_VALUE_PATTERN.matcher(msg);
         if (houseBankValueMatcher.find()) {
-            if (System.currentTimeMillis() - lastCheck < 500) e.setCancelled(true);
+            if (System.currentTimeMillis() - lastCheck < 500)
+                e.setCancelled(true);
             HouseDataEntry houseDataEntry = HouseDataManager.getHouseData(lastCheckedHouseNumber).setHouseBank(Integer.parseInt(houseBankValueMatcher.group(1)));
             HouseDataManager.saveHouseData(lastCheckedHouseNumber, houseDataEntry);
             return;

@@ -124,10 +124,12 @@ public class ReinforcementEventHandler {
 
         for (ReinforcementType type : ReinforcementType.values()) {
             Pattern pattern = type.getPattern();
-            if (pattern == null) continue;
+            if (pattern == null)
+                continue;
 
             Matcher matcher = pattern.matcher(unformattedMsg);
-            if (!matcher.find()) continue;
+            if (!matcher.find())
+                continue;
 
             String name = matcher.group(1);
 

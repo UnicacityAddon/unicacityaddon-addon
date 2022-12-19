@@ -98,7 +98,8 @@ public enum Faction {
     }
 
     public String getWebsiteUrl() {
-        if (this.equals(Faction.NULL)) return null;
+        if (this.equals(Faction.NULL))
+            return null;
         return "https://unicacity.de/fraktionen/" + getApiName();
     }
 
@@ -112,7 +113,8 @@ public enum Faction {
 
     public static Faction getFactionByFactionKey(String s) {
         for (Faction faction : Faction.values()) {
-            if (faction.getFactionKey().equalsIgnoreCase(s)) return faction;
+            if (faction.getFactionKey().equalsIgnoreCase(s))
+                return faction;
         }
         return null;
     }

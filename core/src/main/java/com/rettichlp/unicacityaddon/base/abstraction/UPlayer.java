@@ -54,6 +54,7 @@ public interface UPlayer {
     Inventory getInventoryContainer();
 
     Faction getFaction();
+    boolean inDuty();
 
     int getRank();
 

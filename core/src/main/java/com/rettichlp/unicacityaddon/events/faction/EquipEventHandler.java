@@ -35,18 +35,21 @@ public class EquipEventHandler {
                     found = !found;
                 }
 
-            if (!found) equipLogEntryList.add(new EquipLogEntry(Equip.TRACKER, 1));
+            if (!found)
+                equipLogEntryList.add(new EquipLogEntry(Equip.TRACKER, 1));
             FileManager.saveData();
         }
 
         Matcher equipMatcher = PatternHandler.EQUIP_PATTERN.matcher(msg);
-        if (!equipMatcher.find()) return;
+        if (!equipMatcher.find())
+            return;
 
         Equip equip = null;
         boolean found = false;
 
         for (Equip equipEntry : Equip.values())
-            if (msg.contains(equipEntry.getMessageName())) equip = equipEntry;
+            if (msg.contains(equipEntry.getMessageName()))
+                equip = equipEntry;
 
         if (equip == null) {
             AbstractionLayer.getPlayer().sendErrorMessage("Equiptyp wurde nicht gefunden.");
@@ -59,7 +62,8 @@ public class EquipEventHandler {
                 found = !found;
             }
 
-        if (!found) equipLogEntryList.add(new EquipLogEntry(equip, 1));
+        if (!found)
+            equipLogEntryList.add(new EquipLogEntry(equip, 1));
         FileManager.saveData();
     }
 }

@@ -27,7 +27,8 @@ public class AccountEventHandler {
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {
         String msg = e.chatMessage().getPlainText();
-        if (!UnicacityAddon.isUnicacity()) return;
+        if (!UnicacityAddon.isUnicacity())
+            return;
 
         if (PatternHandler.ACCOUNT_WELCOME_BACK_PATTERN.matcher(msg).find()) {
             MobileEventHandler.activeCommunicationsCheck = true;

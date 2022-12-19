@@ -13,7 +13,8 @@ import java.util.stream.Collectors;
 public class FactionManager {
 
     public static boolean checkPlayerDuty(String playerName) {
-        if (UnicacityAddon.MINECRAFT.isSingleplayer()) return false;
+        if (UnicacityAddon.MINECRAFT.isSingleplayer())
+            return false;
         return UnicacityAddon.MINECRAFT.clientPacketListener().getNetworkPlayerInfos().stream()
                 .map(TabListEventHandler::getTablistName)
                 .filter(s -> s.startsWith("§1[UC]") || s.startsWith("§1") || s.startsWith("§9[UC]") || s.startsWith("§9") || s.startsWith("§4[UC]") || s.startsWith("§4") || s.startsWith("§6[UC]") || s.startsWith("§6"))

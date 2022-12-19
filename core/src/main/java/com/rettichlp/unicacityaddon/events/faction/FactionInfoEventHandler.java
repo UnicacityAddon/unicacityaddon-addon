@@ -26,7 +26,8 @@ public class FactionInfoEventHandler {
 
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {
-        if (future == null) return;
+        if (future == null)
+            return;
 
         String msg = e.chatMessage().getPlainText();
         long currentTime = System.currentTimeMillis();
@@ -46,7 +47,8 @@ public class FactionInfoEventHandler {
             return;
         }
 
-        if (currentTime - memberlistShown > 200L || !msg.startsWith(" » ")) return;
+        if (currentTime - memberlistShown > 200L || !msg.startsWith(" » "))
+            return;
 
         boolean inactive = !msg.endsWith("AFK") && !msg.endsWith("Nicht im Dienst");
         MEMBER_MAP.merge(inactive, 1, Integer::sum);

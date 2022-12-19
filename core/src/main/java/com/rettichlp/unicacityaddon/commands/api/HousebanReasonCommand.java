@@ -58,11 +58,13 @@ public class HousebanReasonCommand extends Command {
 
         } else if (arguments.length == 3 && arguments[0].equalsIgnoreCase("add") && MathUtils.isInteger(arguments[2])) {
             JsonObject response = APIRequest.sendHouseBanReasonAddRequest(arguments[1], arguments[2]);
-            if (response == null) return true;
+            if (response == null)
+                return true;
             p.sendAPIMessage(response.get("info").getAsString(), true);
         } else if (arguments.length == 2 && arguments[0].equalsIgnoreCase("remove")) {
             JsonObject response = APIRequest.sendHouseBanReasonRemoveRequest(arguments[1]);
-            if (response == null) return true;
+            if (response == null)
+                return true;
             p.sendAPIMessage(response.get("info").getAsString(), true);
         } else {
             p.sendSyntaxMessage(usage);

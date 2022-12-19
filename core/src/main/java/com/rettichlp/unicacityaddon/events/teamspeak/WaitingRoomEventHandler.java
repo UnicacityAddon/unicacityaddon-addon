@@ -23,7 +23,8 @@ public class WaitingRoomEventHandler {
     public static void onClientMoved(ClientMovedEvent e) {
         UPlayer p = AbstractionLayer.getPlayer();
 
-        if (!UnicacityAddon.isUnicacity()) return;
+        if (!UnicacityAddon.isUnicacity())
+            return;
 
         int clientID = e.getClientID();
         int targetChannelID = e.getTargetChannelID();
@@ -49,9 +50,9 @@ public class WaitingRoomEventHandler {
                     .of("Wartezimmer").color(ColorCode.AQUA).advance().space()
                     .of("betreten.").color(ColorCode.GRAY).advance().space()
                     .of("[↓]").color(ColorCode.BLUE)
-                        .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Move " + name + " zu dir").color(ColorCode.RED).advance().createComponent())
-                        .clickEvent(ClickEvent.Action.RUN_COMMAND, "/movehere " + name)
-                        .advance()
+                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Move " + name + " zu dir").color(ColorCode.RED).advance().createComponent())
+                            .clickEvent(ClickEvent.Action.RUN_COMMAND, "/movehere " + name)
+                            .advance()
                     .createComponent());
         }).start();
     }
@@ -68,13 +69,13 @@ public class WaitingRoomEventHandler {
                     .of("Öffentlich-Channel").color(ColorCode.AQUA).advance().space()
                     .of("betreten.").color(ColorCode.GRAY).advance().space()
                     .of("[↑]").color(ColorCode.BLUE)
-                        .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Betritt den Öffentlich-Channel").color(ColorCode.RED).advance().createComponent())
-                        .clickEvent(ClickEvent.Action.RUN_COMMAND, "/tsjoin Öffentlich")
-                        .advance().space()
+                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Betritt den Öffentlich-Channel").color(ColorCode.RED).advance().createComponent())
+                            .clickEvent(ClickEvent.Action.RUN_COMMAND, "/tsjoin Öffentlich")
+                            .advance().space()
                     .of("[↓]").color(ColorCode.BLUE)
-                        .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Move " + name + " zu dir").color(ColorCode.RED).advance().createComponent())
-                        .clickEvent(ClickEvent.Action.RUN_COMMAND, "/movehere " + name)
-                        .advance()
+                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Move " + name + " zu dir").color(ColorCode.RED).advance().createComponent())
+                            .clickEvent(ClickEvent.Action.RUN_COMMAND, "/movehere " + name)
+                            .advance()
                     .createComponent());
 
             UnicacityAddon.LOGGER.info("Client joined public channel: " + name);

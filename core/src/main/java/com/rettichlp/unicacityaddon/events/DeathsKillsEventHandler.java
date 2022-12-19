@@ -50,7 +50,8 @@ public class DeathsKillsEventHandler {
 
         if (PatternHandler.ACCOUNT_TREUEBONUS_PATTERN.matcher(msg).find()) {
             JsonObject response = APIRequest.sendStatisticRequest();
-            if (response == null) return;
+            if (response == null)
+                return;
 
             JsonObject gameplayJsonObject = response.getAsJsonObject("gameplay");
             int deaths = gameplayJsonObject.get("deaths").getAsInt();

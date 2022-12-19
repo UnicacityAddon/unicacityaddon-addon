@@ -17,7 +17,8 @@ public enum TargetMode {
 
     public static TargetMode byID(int id) {
         for (TargetMode targetMode : TargetMode.values()) {
-            if (targetMode.getID() == id) return targetMode;
+            if (targetMode.getID() == id)
+                return targetMode;
         }
 
         return null;

@@ -24,7 +24,8 @@ public class ReflectionUtils {
     public static List<Method> getMethodsAnnotatedWith(Class<?> annotationClass, String subPackage) {
         List<Method> methods = new ArrayList<>();
         getClassesInPackage(subPackage).forEach(clazz -> Arrays.stream(clazz.getMethods()).forEach(method -> {
-            if (method.isAnnotationPresent((Class<? extends Annotation>) annotationClass)) methods.add(method);
+            if (method.isAnnotationPresent((Class<? extends Annotation>) annotationClass))
+                methods.add(method);
         }));
         return methods;
     }
@@ -36,7 +37,8 @@ public class ReflectionUtils {
 
     private static Set<Class<?>> getClassesInPackage(String packageName) {
         InputStream stream = ClassLoader.getSystemClassLoader().getResourceAsStream(packageName.replaceAll("[.]", "/"));
-        if (stream == null) return new HashSet<>();
+        if (stream == null)
+            return new HashSet<>();
         BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
         return reader.lines().filter(line -> line.endsWith(".class")).map(line -> getClass(line, packageName)).collect(Collectors.toSet());
     }
@@ -54,7 +56,8 @@ public class ReflectionUtils {
     public static <T, V> T getValue(V object, Class<T> type) {
         try {
             Field field = getField(object.getClass(), type);
-            if (field == null) return null;
+            if (field == null)
+                return null;
 
             return (T) field.get(object);
         } catch (IllegalAccessException e) {
@@ -67,7 +70,8 @@ public class ReflectionUtils {
     public static void setValue(Class<?> clazz, Class<?> type, Object value) {
         try {
             Field field = getField(clazz, type);
-            if (field == null) return;
+            if (field == null)
+                return;
 
             field.set(null, value);
         } catch (IllegalAccessException e) {

@@ -41,7 +41,8 @@ public class WebsiteUtils {
         try {
             StringBuilder websiteSource = new StringBuilder();
             Scanner scanner = new Scanner(new InputStreamReader(httpURLConnection.getInputStream(), StandardCharsets.UTF_8));
-            while (scanner.hasNextLine()) websiteSource.append(scanner.nextLine()).append("\n\r");
+            while (scanner.hasNextLine())
+                websiteSource.append(scanner.nextLine()).append("\n\r");
             UnicacityAddon.LOGGER.info("APIResponse - " + httpURLConnection.getResponseCode() + " [" + urlString.replace(TokenManager.API_TOKEN, "TOKEN") + "]");
             return websiteSource.toString();
         } catch (IOException e) {

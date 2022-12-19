@@ -18,7 +18,8 @@ public class CommandResponse {
     }
 
     public static int parseInt(String str) {
-        if (str == null) return 0;
+        if (str == null)
+            return 0;
 
         try {
             return Integer.parseInt(str);
@@ -28,7 +29,8 @@ public class CommandResponse {
     }
 
     public static double parseDouble(String str) {
-        if (str == null) return 0;
+        if (str == null)
+            return 0;
 
         try {
             return Double.parseDouble(str);
@@ -38,7 +40,8 @@ public class CommandResponse {
     }
 
     public static long parseLong(String str) {
-        if (str == null) return 0;
+        if (str == null)
+            return 0;
 
         try {
             return Long.parseLong(str);
@@ -53,7 +56,8 @@ public class CommandResponse {
 
     public boolean succeeded() {
         String msg = getResponse().get("msg");
-        if (msg == null) return false;
+        if (msg == null)
+            return false;
 
         return msg.equals("ok");
     }

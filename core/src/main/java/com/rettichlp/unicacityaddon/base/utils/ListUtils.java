@@ -13,7 +13,8 @@ public class ListUtils {
     public static List<String> getAllMatchesFromString(Pattern pattern, String content) {
         List<String> list = new ArrayList<>();
         Matcher matcher = pattern.matcher(content);
-        while (matcher.find()) list.add(matcher.group());
+        while (matcher.find())
+            list.add(matcher.group());
         return list;
     }
 }

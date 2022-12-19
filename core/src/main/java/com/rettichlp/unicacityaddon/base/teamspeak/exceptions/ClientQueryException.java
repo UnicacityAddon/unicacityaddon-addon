@@ -4,6 +4,7 @@ package com.rettichlp.unicacityaddon.base.teamspeak.exceptions;
  * @author Fuzzlemann
  */
 public abstract class ClientQueryException extends RuntimeException {
+
     public ClientQueryException() {
         super();
     }

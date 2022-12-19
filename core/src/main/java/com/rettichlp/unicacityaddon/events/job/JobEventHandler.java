@@ -28,7 +28,8 @@ public class JobEventHandler {
 
 //    @Subscribe
 //    public void onPlayerInteract(PlayerInteractEvent e) {
-//        if (!(e instanceof PlayerInteractEvent.RightClickBlock) || !UnicacityAddon.isUnicacity()) return;
+//        if (!(e instanceof PlayerInteractEvent.RightClickBlock) || !UnicacityAddon.isUnicacity())
+//            return;
 //        UPlayer p = AbstractionLayer.getPlayer();
 //
 //        World world = e.getWorld();
@@ -41,10 +42,12 @@ public class JobEventHandler {
 //        }
 //
 //        TileEntity tileEntity = world.getTileEntity(floatVector3);
-//        if (!(tileEntity instanceof TileEntitySign)) return;
+//        if (!(tileEntity instanceof TileEntitySign))
+//            return;
 //        ITextComponent[] lines = ((TileEntitySign) tileEntity).signText;
 //        Matcher matcher = Pattern.compile("^== (\\d+) ==$").matcher(lines[1].getUnformattedText());
-//        if (matcher.find()) drop();
+//        if (matcher.find())
+//            drop();
 //    }
 
     @Subscribe
@@ -58,6 +61,12 @@ public class JobEventHandler {
         }
 
         if (PatternHandler.WASTE_JOB_COLLECT_END_PATTERN.matcher(msg).find()) {
+            isDropState = true;
+            return;
+        }
+
+        if (PatternHandler.WASTE_JOB_END_PATTERN.matcher(msg).find()) {
+            isDropState = false;
             isWasteJob = false;
             return;
         }
@@ -85,16 +94,6 @@ public class JobEventHandler {
 
         if (PatternHandler.TABAK_FINISH_PATTERN.matcher(msg).find()) {
             isTabakJob = false;
-            return;
-        }
-
-        if (PatternHandler.WASTE_JOB_COLLECT_END_PATTERN.matcher(msg).find()) {
-            isDropState = true;
-            return;
-        }
-
-        if (PatternHandler.WASTE_JOB_END_PATTERN.matcher(msg).find()) {
-            isDropState = false;
             return;
         }
 

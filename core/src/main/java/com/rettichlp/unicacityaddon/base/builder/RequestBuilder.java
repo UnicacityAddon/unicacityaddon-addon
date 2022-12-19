@@ -23,6 +23,7 @@ public class RequestBuilder {
     }
 
     public static class Builder {
+
         private boolean nonProd;
         private ApplicationPath applicationPath;
         private String subPath;
