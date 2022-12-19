@@ -1,56 +1,59 @@
 {
   "unicacityaddon": {
-    "hudWidget": {
-      "money_bank": {
-        "name": "Bank"
-      },
-      "bomb_timer": {
-        "name": "Bomb"
-      },
-      "car": {
-        "name": "Car"
-      },
-      "money_cash": {
-        "name": "Cash"
-      },
-      "emergency_service": {
-        "name": "Services"
-      },
-      "explosive_belt": {
-        "name": "Explosion"
-      },
-      "fbi_hack": {
-        "name": "Hacking"
-      },
-      "hearth_amount": {
-        "name": "Hearth"
-      },
-      "job_earnings": {
-        "name": "Job"
-      },
-      "payday": {
-        "name": "PayDay"
-      },
-      "plant_fertilize": {
-        "name": "Fertilize"
-      },
-      "plant_water": {
-        "name": "Water"
-      }
-    },
     "settings": {
       "name": "UnicacityAddon",
       "enabled": {
-        "name": "Enabled"
+        "name": "Enabled",
+        "description": "Aktiviert und deaktiviert das Addon"
       },
       "nameTagSetting": {
-        "name": "test1"
-      },
-      "reinforcementSetting": {
-        "name": "test2"
-      },
-      "slocSetting":{
-        "name": "test3"
+        "name": "NameTags",
+        "updateInterval": {
+          "name": "Update-Interval",
+          "description": "Zeit in Sekunden nach der ein NameTag neu gerendert wird"
+        },
+        "factionInfo": {
+          "name": "Fraktionsinfo",
+          "description": "Zeigt die Fraktion hinter dem Namen an"
+        },
+        "factionNameTagSetting": {
+          "name": "Fraktion",
+          "color": {
+            "name": "Farbe",
+            "description": "Farbe in der Fraktionsmitglieder angezeigt werden"
+          }
+        },
+        "allianceFactionNameTagSetting": {
+          "name": "Bündnis",
+          "color": {
+            "name": "Farbe",
+            "description": "Farbe in der Bündnismitglieder angezeigt werden"
+          },
+          "faction1": {
+            "name": "Bündnisfraktion",
+            "description": "Hinweis: muss angegeben werden um D-Chat Reinforcements senden zu können"
+          },
+          "faction2": {
+            "name": "Bündnisfraktion (optional)"
+          }
+        },
+        "streetwarNameTagSetting": {
+          "name": "Streetwar",
+          "color": {
+            "name": "Farbe",
+            "description": "Farbe in der Streetwar-Gegner angezeigt werden"
+          },
+          "faction1": {
+            "name": "Streetwarfraktion"
+          },
+          "faction2": {
+            "name": "Streetwarfraktion (optional)"
+          }
+        },
+        "houseBan": {
+          "name": "Hausverbot",
+          "description": "Zeigt Spieler mit Hausverbot im Krankenhaus an"
+        }
       }
     }
   }
