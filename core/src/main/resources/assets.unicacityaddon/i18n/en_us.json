@@ -1,0 +1,57 @@
+{
+  "unicacityaddon": {
+    "hudWidget": {
+      "money_bank": {
+        "name": "Bank"
+      },
+      "bomb_timer": {
+        "name": "Bomb"
+      },
+      "car": {
+        "name": "Car"
+      },
+      "money_cash": {
+        "name": "Cash"
+      },
+      "emergency_service": {
+        "name": "Services"
+      },
+      "explosive_belt": {
+        "name": "Explosion"
+      },
+      "fbi_hack": {
+        "name": "Hacking"
+      },
+      "hearth_amount": {
+        "name": "Hearth"
+      },
+      "job_earnings": {
+        "name": "Job"
+      },
+      "payday": {
+        "name": "PayDay"
+      },
+      "plant_fertilize": {
+        "name": "Fertilize"
+      },
+      "plant_water": {
+        "name": "Water"
+      }
+    },
+    "settings": {
+      "name": "UnicacityAddon",
+      "enabled": {
+        "name": "Enabled"
+      },
+      "nameTagSetting": {
+        "name": "test1"
+      },
+      "reinforcementSetting": {
+        "name": "test2"
+      },
+      "slocSetting":{
+        "name": "test3"
+      }
+    }
+  }
+}
