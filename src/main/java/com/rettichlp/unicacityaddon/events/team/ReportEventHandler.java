@@ -10,6 +10,7 @@ import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
+import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.Timer;
@@ -55,10 +56,11 @@ public class ReportEventHandler {
         }
 
         if (formattedMsg.startsWith(ColorCode.DARK_PURPLE.getCode()) && isReport) {
-            e.setMessage(Message.getBuilder()
+            ITextComponent iTextComponent = ForgeHooks.newChatWithLinks(Message.getBuilder()
                     .add(ConfigElements.getReportPrefix().replaceAll("&", "§"))
                     .add(formattedMsg)
-                    .createComponent());
+                    .create());
+            e.setMessage(iTextComponent);
         }
 
         if (PatternHandler.REPORT_PATTERN.matcher(unformattedMsg).find()) {
