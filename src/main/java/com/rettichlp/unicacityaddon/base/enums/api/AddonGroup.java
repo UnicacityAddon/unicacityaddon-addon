@@ -10,7 +10,6 @@ public enum AddonGroup {
     CEO("CEO", "UCAddon CEO", new Color(228, 59, 59, 1), new ArrayList<>()),
     DEV("DEV", "UCAddon Developer", new Color(96, 159, 238, 1), new ArrayList<>()),
     DYAVOL("DYAVOL", "", null, new ArrayList<>()),
-    LEMILIEU("LEMILIEU", "", null, new ArrayList<>()),
     MOD("MOD", "UCAddon Moderator", new Color(96, 159, 238, 1), new ArrayList<>()),
     SUP("SUP", "UCAddon Supporter", new Color(228, 110, 59, 1), new ArrayList<>()),
     VIP("VIP", "UCAddon VIP", new Color(227, 228, 59, 1), new ArrayList<>());
