@@ -37,7 +37,7 @@ public enum Faction {
             .of("◤").color(ColorCode.DARK_GRAY).advance()
             .of("⚜").color(ColorCode.DARK_AQUA).advance()
             .of("◢").color(ColorCode.DARK_GRAY).advance().create()),
-    LEMILIEU("", "Le Milieu", "France", 179, Message.getBuilder() // TODO: 02.10.2022 Add Le Milieu website
+    LEMILIEU("le_milieu", "Le Milieu", "France", 179, Message.getBuilder()
             .of("◤").color(ColorCode.DARK_GRAY).advance()
             .of("Ⓜ").color(ColorCode.DARK_AQUA).advance()
             .of("◢").color(ColorCode.DARK_GRAY).advance().create()),
