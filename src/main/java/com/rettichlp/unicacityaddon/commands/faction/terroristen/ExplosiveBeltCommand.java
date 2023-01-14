@@ -61,8 +61,8 @@ public class ExplosiveBeltCommand implements IClientCommand {
     public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args) {
         UPlayer p = AbstractionLayer.getPlayer();
 
-        if (!MathUtils.isInteger(args[0])) {
-            p.sendErrorMessage("Der Countdown muss eine Zahl sein");
+        if (args.length < 1 || !MathUtils.isInteger(args[0])) {
+            p.sendSyntaxMessage(getUsage(sender));
             return;
         }
 
