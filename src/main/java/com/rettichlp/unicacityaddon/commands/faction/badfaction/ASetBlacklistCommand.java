@@ -4,7 +4,7 @@ import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.api.Syncer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
-import com.rettichlp.unicacityaddon.base.models.BlacklistReasonEntry;
+import com.rettichlp.unicacityaddon.base.models.BlacklistReason;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.utils.ForgeUtils;
 import net.minecraft.command.ICommand;
@@ -56,14 +56,14 @@ public class ASetBlacklistCommand implements IClientCommand {
             return;
         }
 
-        BlacklistReasonEntry blacklistReasonEntry = BlacklistReasonEntry.getBlacklistReasonEntryByReason(args[args.length - 1]);
-        if (blacklistReasonEntry == null) {
+        BlacklistReason blacklistReason = BlacklistReason.getBlacklistReasonEntryByReason(args[args.length - 1]);
+        if (blacklistReason == null) {
             p.sendErrorMessage("Der Blacklistgrund wurde nicht gefunden!");
             return;
         }
 
         for (int i = 0; i < args.length - 1; i++) {
-            p.sendChatMessage("/bl set " + args[i] + " " + blacklistReasonEntry.getKills() + " " + blacklistReasonEntry.getPrice() + " " + blacklistReasonEntry.getReason().replace("-", " "));
+            p.sendChatMessage("/bl set " + args[i] + " " + blacklistReason.getKills() + " " + blacklistReason.getPrice() + " " + blacklistReason.getReason().replace("-", " "));
         }
     }
 
@@ -72,7 +72,7 @@ public class ASetBlacklistCommand implements IClientCommand {
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
         return TabCompletionBuilder.getBuilder(args)
                 .addToAllFromIndex(2, ForgeUtils.getOnlinePlayers())
-                .addToAllFromIndex(2, Syncer.getBlacklistReasonEntryList().stream().map(BlacklistReasonEntry::getReason).sorted().collect(Collectors.toList()))
+                .addToAllFromIndex(2, Syncer.getBlacklistReasonEntryList().stream().map(BlacklistReason::getReason).sorted().collect(Collectors.toList()))
                 .build();
     }
 

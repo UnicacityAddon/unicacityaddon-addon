@@ -100,13 +100,13 @@ public class TodoListCommand implements IClientCommand {
                 return;
             }
             String todo = TextUtils.makeStringByArgs(args, " ").replaceAll("(?i)edit " + args[1] + " ", "");
-            TodolistEntry todolistEntry = new TodolistEntry(todo);
+            TodolistEntry todolistEntry = new TodolistEntry(todo, false);
             todolist.set(index, todolistEntry);
             FileManager.saveData();
             p.sendInfoMessage("Aufgabe editiert.");
         } else {
             String todo = TextUtils.makeStringByArgs(args, " ");
-            TodolistEntry todolistEntry = new TodolistEntry(todo);
+            TodolistEntry todolistEntry = new TodolistEntry(todo, false);
             if (todolist.stream().anyMatch(te -> te.getTodo().equals(todo))) {
                 p.sendErrorMessage("Dieses Todo gibt es bereits!");
                 return;

@@ -84,7 +84,7 @@ public class EquipListCommand implements IClientCommand {
                 .of("Equip:").color(ColorCode.DARK_AQUA).bold().advance()
                 .createComponent());
         EquipEventHandler.equipLogEntryList.forEach(equipLogEntry -> p.sendMessage(Message.getBuilder()
-                .of("» " + equipLogEntry.getAmount() + "x " + equipLogEntry.getEquip().getName() + ": ").color(ColorCode.GRAY).advance()
+                .of("» " + equipLogEntry.getAmount() + "x " + equipLogEntry.getType().getName() + ": ").color(ColorCode.GRAY).advance()
                 .of(numberFormat.format(equipLogEntry.getPrice()) + "$").color(ColorCode.AQUA).advance()
                 .createComponent()));
 

@@ -6,7 +6,7 @@ import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.api.Syncer;
 import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
-import com.rettichlp.unicacityaddon.base.models.HouseBanReasonEntry;
+import com.rettichlp.unicacityaddon.base.models.HouseBanReason;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
@@ -96,11 +96,11 @@ public class HousebanCommand implements IClientCommand {
                     colorCode = ColorCode.DARK_RED;
 
                 Message.Builder builder = Message.getBuilder();
-                houseBanEntry.getHouseBanReasonList().forEach(houseBanReasonEntry -> builder
-                        .of(houseBanReasonEntry.getReason()).color(ColorCode.RED).advance().space()
-                        .of(houseBanReasonEntry.getCreatorName() != null ? "(" : "").color(ColorCode.GRAY).advance()
-                        .of(houseBanReasonEntry.getCreatorName() != null ? houseBanReasonEntry.getCreatorName() : "").color(ColorCode.GRAY).advance()
-                        .of(houseBanReasonEntry.getCreatorName() != null ? ")" : "").color(ColorCode.GRAY).advance().space()
+                houseBanEntry.getHouseBanReasonList().forEach(houseBanReason -> builder
+                        .of(houseBanReason.getReason()).color(ColorCode.RED).advance().space()
+                        .of(houseBanReason.getCreatorName() != null ? "(" : "").color(ColorCode.GRAY).advance()
+                        .of(houseBanReason.getCreatorName() != null ? houseBanReason.getCreatorName() : "").color(ColorCode.GRAY).advance()
+                        .of(houseBanReason.getCreatorName() != null ? ")" : "").color(ColorCode.GRAY).advance().space()
                         .newline());
 
                 p.sendMessage(Message.getBuilder()
@@ -135,7 +135,7 @@ public class HousebanCommand implements IClientCommand {
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
         return TabCompletionBuilder.getBuilder(args)
                 .addAtIndex(1, "add", "remove")
-                .addAtIndex(3, Syncer.getHouseBanReasonEntryList().stream().map(HouseBanReasonEntry::getReason).sorted().collect(Collectors.toList()))
+                .addAtIndex(3, Syncer.getHouseBanReasonEntryList().stream().map(HouseBanReason::getReason).sorted().collect(Collectors.toList()))
                 .build();
     }
 

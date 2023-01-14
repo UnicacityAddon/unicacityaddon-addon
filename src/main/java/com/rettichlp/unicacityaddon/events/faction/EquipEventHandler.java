@@ -30,7 +30,7 @@ public class EquipEventHandler {
             boolean found = false;
 
             for (EquipLogEntry equipLogEntry : equipLogEntryList)
-                if (equipLogEntry.getEquip() == Equip.TRACKER) {
+                if (equipLogEntry.getType() == Equip.TRACKER) {
                     equipLogEntry.addEquip();
                     found = !found;
                 }
@@ -57,7 +57,7 @@ public class EquipEventHandler {
         }
 
         for (EquipLogEntry equipLogEntry : equipLogEntryList)
-            if (equipLogEntry.getEquip() == equip) {
+            if (equipLogEntry.getType() == equip) {
                 equipLogEntry.addEquip();
                 found = !found;
             }
