@@ -1,30 +1,21 @@
 package com.rettichlp.unicacityaddon.base.models;
 
 import com.rettichlp.unicacityaddon.base.enums.faction.Equip;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 /**
  * @author Dimiikou
  */
+@AllArgsConstructor
+@Getter
 public class EquipLogEntry {
 
-    private final String type;
+    private final Equip type;
     private int amount;
 
-    public EquipLogEntry(Equip equip, int amount) {
-        this.type = equip.toString();
-        this.amount = amount;
-    }
-
-    public Equip getEquip() {
-        return Equip.valueOf(type);
-    }
-
-    public int getAmount() {
-        return amount;
-    }
-
     public int getPrice() {
-        return getEquip().getPrice() * amount;
+        return type.getPrice() * amount;
     }
 
     public void addEquip() {

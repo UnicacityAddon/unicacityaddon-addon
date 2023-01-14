@@ -5,7 +5,7 @@ import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
 import com.rettichlp.unicacityaddon.base.manager.HouseDataManager;
-import com.rettichlp.unicacityaddon.base.models.HouseDataEntry;
+import com.rettichlp.unicacityaddon.base.models.HouseData;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import joptsimple.internal.Strings;
@@ -44,8 +44,8 @@ public class HouseDataEventHandler {
         if (houseBankValueMatcher.find()) {
             if (System.currentTimeMillis() - lastCheck < 500)
                 e.setCanceled(true);
-            HouseDataEntry houseDataEntry = HouseDataManager.getHouseData(lastCheckedHouseNumber).setHouseBank(Integer.parseInt(houseBankValueMatcher.group(1)));
-            HouseDataManager.saveHouseData(lastCheckedHouseNumber, houseDataEntry);
+            HouseData houseData = HouseDataManager.getHouseData(lastCheckedHouseNumber).setHouseBank(Integer.parseInt(houseBankValueMatcher.group(1)));
+            HouseDataManager.saveHouseData(lastCheckedHouseNumber, houseData);
             return;
         }
 
@@ -72,8 +72,8 @@ public class HouseDataEventHandler {
                 DrugPurity drugPurity = DrugPurity.values()[Integer.parseInt(splittetMsg[4])];
                 int amount = Integer.parseInt(splittetMsg[3]);
 
-                HouseDataEntry houseDataEntry = HouseDataManager.getHouseData(lastCheckedHouseNumber).addToStorage(drugType, drugPurity, amount);
-                HouseDataManager.saveHouseData(lastCheckedHouseNumber, houseDataEntry);
+                HouseData houseData = HouseDataManager.getHouseData(lastCheckedHouseNumber).addToStorage(drugType, drugPurity, amount);
+                HouseDataManager.saveHouseData(lastCheckedHouseNumber, houseData);
             }
 
             Matcher drugStorageRemoveCommandMatcher = PatternHandler.HOUSE_STORAGE_REMOVE_COMMAND_PATTERN.matcher(waitingCommand);
@@ -84,8 +84,8 @@ public class HouseDataEventHandler {
                 DrugPurity drugPurity = DrugPurity.values()[Integer.parseInt(splittetMsg[4])];
                 int amount = Integer.parseInt(splittetMsg[3]);
 
-                HouseDataEntry houseDataEntry = HouseDataManager.getHouseData(lastCheckedHouseNumber).removeFromStorage(drugType, drugPurity, amount);
-                HouseDataManager.saveHouseData(lastCheckedHouseNumber, houseDataEntry);
+                HouseData houseData = HouseDataManager.getHouseData(lastCheckedHouseNumber).removeFromStorage(drugType, drugPurity, amount);
+                HouseDataManager.saveHouseData(lastCheckedHouseNumber, houseData);
             }
         }
     }

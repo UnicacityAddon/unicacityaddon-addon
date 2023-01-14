@@ -4,7 +4,7 @@ import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.api.Syncer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
-import com.rettichlp.unicacityaddon.base.models.BlacklistReasonEntry;
+import com.rettichlp.unicacityaddon.base.models.BlacklistReason;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
@@ -26,7 +26,7 @@ public class ModifyBlacklistCommand implements IClientCommand {
 
     public static String target;
     public static ModifyBlacklistType type;
-    public static BlacklistReasonEntry addReason;
+    public static BlacklistReason addReason;
     public static long executedTime = -1;
 
     @Override
@@ -63,15 +63,15 @@ public class ModifyBlacklistCommand implements IClientCommand {
 
         String reason = args[1];
 
-        BlacklistReasonEntry blacklistReasonEntry = BlacklistReasonEntry.getBlacklistReasonEntryByReason(reason);
-        if (!reason.equalsIgnoreCase("-v") && blacklistReasonEntry == null) {
+        BlacklistReason blacklistReason = BlacklistReason.getBlacklistReasonEntryByReason(reason);
+        if (!reason.equalsIgnoreCase("-v") && blacklistReason == null) {
             p.sendErrorMessage("Blacklistgrund wurde nicht gefunden!");
             return;
         }
 
         target = args[0];
-        if (blacklistReasonEntry != null) {
-            addReason = blacklistReasonEntry;
+        if (blacklistReason != null) {
+            addReason = blacklistReason;
             type = ModifyBlacklistType.MODIFY_REASON;
         } else {
             type = ModifyBlacklistType.OUTLAW;
@@ -86,7 +86,7 @@ public class ModifyBlacklistCommand implements IClientCommand {
     @Nonnull
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
         return TabCompletionBuilder.getBuilder(args)
-                .addAtIndex(2, Syncer.getBlacklistReasonEntryList().stream().map(BlacklistReasonEntry::getReason).sorted().collect(Collectors.toList()))
+                .addAtIndex(2, Syncer.getBlacklistReasonEntryList().stream().map(BlacklistReason::getReason).sorted().collect(Collectors.toList()))
                 .addAtIndex(2, "-v")
                 .build();
     }

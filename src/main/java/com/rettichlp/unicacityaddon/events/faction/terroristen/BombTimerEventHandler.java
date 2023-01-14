@@ -3,7 +3,7 @@ package com.rettichlp.unicacityaddon.events.faction.terroristen;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
-import com.rettichlp.unicacityaddon.base.models.NaviPointEntry;
+import com.rettichlp.unicacityaddon.base.models.NaviPoint;
 import com.rettichlp.unicacityaddon.base.registry.SoundRegistry;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
@@ -70,10 +70,10 @@ public class BombTimerEventHandler {
     }
 
     private String getLocationWithArticle(String location) {
-        NaviPointEntry naviPointEntry = NaviPointEntry.getNaviPointEntryByTabName(location.replace(" ", "-"));
+        NaviPoint naviPoint = NaviPoint.getNaviPointEntryByTabName(location.replace(" ", "-"));
         String article = "der/die/das";
-        if (naviPointEntry != null)
-            article = naviPointEntry.getArticleFourthCase().replace("none", "");
+        if (naviPoint != null)
+            article = naviPoint.getArticleFourthCase().replace("none", "");
         return location.startsWith("Haus ") ? location : article + (article.isEmpty() ? "" : " ") + location;
     }
 }

@@ -2,7 +2,7 @@ package com.rettichlp.unicacityaddon.base.manager;
 
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
-import com.rettichlp.unicacityaddon.base.models.HouseDataEntry;
+import com.rettichlp.unicacityaddon.base.models.HouseData;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 
@@ -13,18 +13,18 @@ import java.util.Map;
  */
 public class HouseDataManager {
 
-    public static Map<Integer, HouseDataEntry> HOUSE_DATA;
+    public static Map<Integer, HouseData> HOUSE_DATA;
 
-    public static HouseDataEntry getHouseData(int houseNumber) {
+    public static HouseData getHouseData(int houseNumber) {
         if (!HOUSE_DATA.containsKey(houseNumber)) {
-            HOUSE_DATA.put(houseNumber, new HouseDataEntry(houseNumber));
+            HOUSE_DATA.put(houseNumber, new HouseData(houseNumber));
             FileManager.saveData();
         }
         return HOUSE_DATA.get(houseNumber);
     }
 
-    public static void saveHouseData(int houseNumber, HouseDataEntry houseDataEntry) {
-        HOUSE_DATA.put(houseNumber, houseDataEntry);
+    public static void saveHouseData(int houseNumber, HouseData houseData) {
+        HOUSE_DATA.put(houseNumber, houseData);
         FileManager.saveData();
     }
 
@@ -40,7 +40,7 @@ public class HouseDataManager {
         p.sendMessage(Message.getBuilder()
                 .of("Hauskassen:").color(ColorCode.DARK_AQUA).bold().advance()
                 .createComponent());
-        HOUSE_DATA.values().forEach(houseDataEntry -> p.sendMessage(houseDataEntry.getBankITextComponent()));
+        HOUSE_DATA.values().forEach(houseData -> p.sendMessage(houseData.getBankITextComponent()));
         p.sendEmptyMessage();
     }
 
@@ -51,7 +51,7 @@ public class HouseDataManager {
         p.sendMessage(Message.getBuilder()
                 .of("Drogenlager:").color(ColorCode.DARK_AQUA).bold().advance()
                 .createComponent());
-        HOUSE_DATA.values().forEach(houseDataEntry -> p.sendMessage(houseDataEntry.getStorageITextComponent()));
+        HOUSE_DATA.values().forEach(houseData -> p.sendMessage(houseData.getStorageITextComponent()));
         p.sendEmptyMessage();
     }
 }

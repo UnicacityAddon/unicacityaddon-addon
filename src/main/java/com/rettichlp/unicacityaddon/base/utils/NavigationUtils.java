@@ -2,11 +2,10 @@ package com.rettichlp.unicacityaddon.base.utils;
 
 import com.google.common.collect.Maps;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
-import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.api.Syncer;
 import com.rettichlp.unicacityaddon.base.enums.location.ATM;
 import com.rettichlp.unicacityaddon.base.enums.location.Job;
-import com.rettichlp.unicacityaddon.base.models.NaviPointEntry;
+import com.rettichlp.unicacityaddon.base.models.NaviPoint;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.Map;
@@ -49,23 +48,19 @@ public class NavigationUtils {
         return Maps.immutableEntry(nearestDistance, nearestJob);
     }
 
-    public static Map.Entry<Double, NaviPointEntry> getNearestNaviPoint(int x, int y, int z) {
+    public static Map.Entry<Double, NaviPoint> getNearestNaviPoint(int x, int y, int z) {
         return getNearestNaviPoint(new BlockPos(x, y, z));
     }
 
-    public static Map.Entry<Double, NaviPointEntry> getNearestNaviPoint(UPlayer p) {
-        return getNearestNaviPoint(p.getPosition());
-    }
-
-    public static Map.Entry<Double, NaviPointEntry> getNearestNaviPoint(BlockPos blockPos) {
-        NaviPointEntry nearestNaviPoint = null;
+    public static Map.Entry<Double, NaviPoint> getNearestNaviPoint(BlockPos blockPos) {
+        NaviPoint nearestNaviPoint = null;
         double nearestDistance = Double.MAX_VALUE;
 
-        for (NaviPointEntry naviPointEntry : Syncer.NAVIPOINTLIST) {
-            double distance = blockPos.getDistance(naviPointEntry.getX(), naviPointEntry.getY(), naviPointEntry.getZ());
+        for (NaviPoint naviPoint : Syncer.NAVIPOINTLIST) {
+            double distance = blockPos.getDistance(naviPoint.getX(), naviPoint.getY(), naviPoint.getZ());
             if (distance < nearestDistance) {
                 nearestDistance = distance;
-                nearestNaviPoint = naviPointEntry;
+                nearestNaviPoint = naviPoint;
             }
         }
 
