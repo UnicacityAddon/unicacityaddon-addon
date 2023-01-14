@@ -49,13 +49,21 @@ public class ShareLocationEventHandler {
                 .of("" + posZ).color(ColorCode.AQUA).advance()
                 .createComponent();
 
-        Map.Entry<Double, NaviPoint> naviPointEntry = NavigationUtils.getNearestNaviPoint(posX, posY, posZ);
+        Map.Entry<Double, NaviPoint> doubleNaviPointEntry = NavigationUtils.getNearestNaviPoint(posX, posY, posZ);
+
+        String navipointString;
+        if (doubleNaviPointEntry.getValue() == null) {
+            navipointString = "unbekannter Ort";
+            p.sendErrorMessage("Navipunkte wurden nicht geladen. Versuche /syncdata um diese neu zu laden!");
+        } else {
+            navipointString = doubleNaviPointEntry.getValue().getName().replace("-", " ");
+        }
 
         p.sendMessageAsString(ConfigElements.getPatternSloc()
                 .replace("&", "§")
                 .replace("%sender%", senderName)
-                .replace("%navipoint%", naviPointEntry.getValue().getName())
-                .replace("%distance%", String.valueOf(naviPointEntry.getKey())));
+                .replace("%navipoint%", navipointString)
+                .replace("%distance%", String.valueOf(doubleNaviPointEntry.getKey().intValue())));
 
         p.sendMessage(Message.getBuilder()
                 .of("»").color(ColorCode.GRAY).advance().space()
