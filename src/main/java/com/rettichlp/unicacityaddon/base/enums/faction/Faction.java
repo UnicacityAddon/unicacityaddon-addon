@@ -12,7 +12,7 @@ import joptsimple.internal.Strings;
 public enum Faction {
 
     NULL("", "Keine Auswahl", "", -1, ""),
-    FBI("fbi", "F.B.I", "FBI", 106, Message.getBuilder()
+    FBI("fbi", "FBI", "FBI", 106, Message.getBuilder()
             .of("◤").color(ColorCode.DARK_GRAY).advance()
             .of("✯").color(ColorCode.DARK_BLUE).advance()
             .of("◢").color(ColorCode.DARK_GRAY).advance().create()),
@@ -25,7 +25,7 @@ public enum Faction {
             .of("✚").color(ColorCode.DARK_RED).advance()
             .of("◢").color(ColorCode.DARK_GRAY).advance().create()),
 
-    CALDERON("calderon", "Calderon Kartell", "Kartell", 154, Message.getBuilder()
+    CALDERON("calderon", "Calderón Kartell", "Kartell", 154, Message.getBuilder()
             .of("◤").color(ColorCode.DARK_GRAY).advance()
             .of("☀").color(ColorCode.GOLD).advance()
             .of("◢").color(ColorCode.DARK_GRAY).advance().create()),
@@ -41,7 +41,7 @@ public enum Faction {
             .of("◤").color(ColorCode.DARK_GRAY).advance()
             .of("Ⓜ").color(ColorCode.DARK_AQUA).advance()
             .of("◢").color(ColorCode.DARK_GRAY).advance().create()),
-    OBRIEN("obrien", "O'brien", "Obrien", 191, Message.getBuilder()
+    OBRIEN("obrien", "O'brien Familie", "Obrien", 191, Message.getBuilder()
             .of("◤").color(ColorCode.DARK_GRAY).advance()
             .of("☘").color(ColorCode.DARK_GREEN).advance()
             .of("◢").color(ColorCode.DARK_GRAY).advance().create()),
@@ -58,7 +58,7 @@ public enum Faction {
             .of("◤").color(ColorCode.DARK_GRAY).advance()
             .of("†").color(ColorCode.LIGHT_PURPLE).advance()
             .of("◢").color(ColorCode.DARK_GRAY).advance().create()),
-    NEWS("news", "News", "News", 239, Message.getBuilder()
+    NEWS("news", "News Agency", "News", 239, Message.getBuilder()
             .of("◤").color(ColorCode.DARK_GRAY).advance()
             .of("✉").color(ColorCode.YELLOW).advance()
             .of("◢").color(ColorCode.DARK_GRAY).advance().create()),
@@ -109,6 +109,14 @@ public enum Faction {
         } catch (APIResponseException e) {
             return Strings.EMPTY;
         }
+    }
+
+    public static Faction getFactionByDisplayName(String s) {
+        for (Faction faction : Faction.values()) {
+            if (faction.getDisplayName().equalsIgnoreCase(s))
+                return faction;
+        }
+        return null;
     }
 
     public static Faction getFactionByFactionKey(String s) {
