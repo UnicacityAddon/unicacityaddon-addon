@@ -52,12 +52,8 @@ public class MemberInfoCommand implements IClientCommand {
     public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
         UPlayer p = AbstractionLayer.getPlayer();
 
-        if (args.length < 1) {
-            p.sendSyntaxMessage(getUsage(sender));
-            return;
-        }
-
-        p.sendChatMessage("/memberinfo " + args[0]);
+        String faction = args.length < 1 ? p.getFaction().getFactionKey() : args[0];
+        p.sendChatMessage("/memberinfo " + faction);
     }
 
     @Override
