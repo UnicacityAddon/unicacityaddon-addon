@@ -23,7 +23,7 @@ import java.util.List;
  */
 public class TabListEventHandler implements Comparator<NetworkPlayerInfo>, TabListEvent {
 
-    private static final List<String> ORDERED_ENTRIES = Arrays.asList("§1[UC]", "§1", "§9[UC]", "§9", "§4[UC]", "§4", "§6[UC]", "§6", "§8[§9UC§8]§c", "§8[§6R§8]", "[UC]");
+    private static final List<String> ORDERED_ENTRIES = Arrays.asList("§1[UC]", "§1", "§9[UC]", "§9", "§4[UC]", "§4", "§6[UC]", "§6", "§8[§9UC§8]§c", "§8[§eB§8]", "§8[§6R§8]", "[UC]");
 
     @Override
     public int compare(NetworkPlayerInfo o1, NetworkPlayerInfo o2) {
@@ -66,10 +66,19 @@ public class TabListEventHandler implements Comparator<NetworkPlayerInfo>, TabLi
             });
         }
 
+        if (formattedDisplayName.toString().isEmpty()) {
+            System.out.println(formattedDisplayName);
+        }
+
+        if (formattedDisplayName.toString().isEmpty() || formattedDisplayName.toString().contains("§8[§eB§8]"))
+            formattedDisplayName.append(displayName.getUnformattedText());
+
         if (formattedDisplayName.toString().isEmpty() || formattedDisplayName.toString().contains("§8[§6R§8]"))
             formattedDisplayName.append(displayName.getUnformattedText());
 
-        return formattedDisplayName.toString().replace("[R]", FormattingCode.RESET.getCode());
+        return formattedDisplayName.toString()
+                .replace("[B]", FormattingCode.RESET.getCode())
+                .replace("[R]", FormattingCode.RESET.getCode());
     }
 
     public static String getTablistName(NetworkPlayerInfo networkPlayerInfo) {
