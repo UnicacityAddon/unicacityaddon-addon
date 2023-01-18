@@ -1,5 +1,6 @@
 package com.rettichlp.unicacityaddon.events;
 
+import com.google.common.collect.Maps;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.api.Syncer;
@@ -26,11 +27,14 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @UCEvent
 public class TickEventHandler {
 
     public static int currentTick = 0;
+
+    public static Map.Entry<Long, Float> lastTickDamage = Maps.immutableEntry(0L, 0F);
 
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
@@ -41,6 +45,7 @@ public class TickEventHandler {
 
         // EVERY TICK
         handleReinforcementScreenshot();
+        handleDamageTracker();
 
         // 1 SECOND
         if (currentTick % 20 == 0) {
@@ -85,6 +90,16 @@ public class TickEventHandler {
             HotkeyEventHandler.handleScreenshot(file);
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    private void handleDamageTracker() {
+        if (UnicacityAddon.MINECRAFT.world == null) return;
+        float currentHeal = AbstractionLayer.getPlayer().getPlayer().getHealth();
+        if (lastTickDamage.getValue() > currentHeal) {
+            lastTickDamage = Maps.immutableEntry(System.currentTimeMillis(), currentHeal);
+        } else if (lastTickDamage.getValue() < currentHeal) {
+            lastTickDamage = Maps.immutableEntry(System.currentTimeMillis(), currentHeal);
         }
     }
 
@@ -162,7 +177,6 @@ public class TickEventHandler {
         if (PlantWaterTimerModule.currentCount <= 0)
             PlantWaterTimerModule.timer = ColorCode.RED.getCode() + "Jetzt";
     }
-
 
     private void handleScoreboardCheck() {
         if (!UnicacityAddon.isUnicacity())
