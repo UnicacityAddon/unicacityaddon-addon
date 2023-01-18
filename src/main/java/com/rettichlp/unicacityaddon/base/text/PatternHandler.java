@@ -41,7 +41,7 @@ public class PatternHandler {
     public static final Pattern CAR_OPEN_PATTERN = Pattern.compile("^\\[Car] Du hast deinen .+ aufgeschlossen\\.$");
     public static final Pattern CAR_CLOSE_PATTERN = Pattern.compile("^\\[Car] Du hast deinen .+ abgeschlossen\\.$");
     public static final Pattern CAR_POSITION_PATTERN = Pattern.compile("^\\[Car] Das Fahrzeug befindet sich bei . X: (-?\\d+) \\| Y: (-?\\d+) \\| Z: (-?\\d+)$");
-    public static final Pattern CAR_TICKET_PATTERN = Pattern.compile("^\\[Car] Dein Fahrzeug hat ein Strafzettel \\[Falschparken|(\\d+)\\$]$");
+    public static final Pattern CAR_TICKET_PATTERN = Pattern.compile("^\\[Car] Dein Fahrzeug hat ein Strafzettel \\[(.*) \\| (\\d+)\\$]\\.$");
     public static final Pattern CAR_CHECK_KFZ_PATTERN = Pattern.compile("^HQ: Das Fahrzeug mit dem Kennzeichen (?:null|.+) ist auf den Spieler (?:\\[UC])*([a-zA-Z0-9_]+) registriert, over.$" +
             "|^Kennzeichen: (?:null|.+) \\| Type: [a-zA-Z]+ \\| Besitzer: (?:\\[UC])*([a-zA-Z0-9_]+)$");
 

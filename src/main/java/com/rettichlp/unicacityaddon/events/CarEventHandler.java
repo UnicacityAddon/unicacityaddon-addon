@@ -54,7 +54,7 @@ public class CarEventHandler {
 
         Matcher carTicketMatcher = PatternHandler.CAR_TICKET_PATTERN.matcher(msg);
         if (carTicketMatcher.find()) {
-            int fine = Integer.parseInt(carTicketMatcher.group(1));
+            int fine = Integer.parseInt(carTicketMatcher.group(2));
 
             if (CashMoneyModule.cashBalance >= fine) {
                 e.setMessage(Message.getBuilder()
@@ -63,14 +63,16 @@ public class CarEventHandler {
                         .of("]").color(ColorCode.DARK_GRAY).advance().space()
                         .of("Dein Fahrzeug hat ein Strafzettel").color(ColorCode.GRAY).advance().space()
                         .of("[").color(ColorCode.DARK_GRAY).advance()
-                        .of("Falschparken").color(ColorCode.GOLD).advance().space()
+                        .of(carTicketMatcher.group(1)).color(ColorCode.GOLD).advance().space()
                         .of("|").color(ColorCode.GRAY).advance().space()
                         .of(String.valueOf(fine)).color(ColorCode.GOLD).advance()
                         .of("]").color(ColorCode.DARK_GRAY).advance().space()
-                        .of("[Bezahlen]").color(ColorCode.GREEN)
+                        .of("[").color(ColorCode.DARK_GRAY).advance()
+                        .of("Bezahlen").color(ColorCode.GREEN)
                                 .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of(fine + "$ bezahlen").color(ColorCode.RED).advance().createComponent())
                                 .clickEvent(ClickEvent.Action.RUN_COMMAND, "/payticket " + fine)
                                 .advance()
+                        .of("]").color(ColorCode.DARK_GRAY).advance()
                         .createComponent());
             }
 
