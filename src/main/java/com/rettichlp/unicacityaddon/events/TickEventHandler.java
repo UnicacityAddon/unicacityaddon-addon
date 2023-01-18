@@ -94,9 +94,11 @@ public class TickEventHandler {
     }
 
     private void handleDamageTracker() {
+        if (UnicacityAddon.MINECRAFT.world == null) return;
         float currentHeal = AbstractionLayer.getPlayer().getPlayer().getHealth();
-
         if (lastTickDamage.getValue() > currentHeal) {
+            lastTickDamage = Maps.immutableEntry(System.currentTimeMillis(), currentHeal);
+        } else if (lastTickDamage.getValue() < currentHeal) {
             lastTickDamage = Maps.immutableEntry(System.currentTimeMillis(), currentHeal);
         }
     }
@@ -175,7 +177,6 @@ public class TickEventHandler {
         if (PlantWaterTimerModule.currentCount <= 0)
             PlantWaterTimerModule.timer = ColorCode.RED.getCode() + "Jetzt";
     }
-
 
     private void handleScoreboardCheck() {
         if (!UnicacityAddon.isUnicacity())
