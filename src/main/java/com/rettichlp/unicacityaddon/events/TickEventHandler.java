@@ -12,11 +12,10 @@ import com.rettichlp.unicacityaddon.base.utils.MathUtils;
 import com.rettichlp.unicacityaddon.events.faction.ReinforcementEventHandler;
 import com.rettichlp.unicacityaddon.events.house.HouseInteractionEventHandler;
 import com.rettichlp.unicacityaddon.modules.BombTimerModule;
-import com.rettichlp.unicacityaddon.modules.ExplosiveBeltTimerModule;
-import com.rettichlp.unicacityaddon.modules.FBIHackModule;
 import com.rettichlp.unicacityaddon.modules.PayDayModule;
 import com.rettichlp.unicacityaddon.modules.PlantFertilizeTimerModule;
 import com.rettichlp.unicacityaddon.modules.PlantWaterTimerModule;
+import com.rettichlp.unicacityaddon.modules.TimerModule;
 import net.labymod.utils.ModUtils;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemSkull;
@@ -51,8 +50,7 @@ public class TickEventHandler {
         if (currentTick % 20 == 0) {
             handleNameTag();
             handleBombTimer();
-            handleExplosiveBeltTimer();
-            handleFBIHack();
+            handleTimer();
             handlePlantTimer();
         }
 
@@ -146,20 +144,16 @@ public class TickEventHandler {
             BombTimerModule.stopBombTimer();
     }
 
-    private void handleExplosiveBeltTimer() {
-        if (ExplosiveBeltTimerModule.timer > 0)
-            ExplosiveBeltTimerModule.timer--;
-    }
-
-    private void handleFBIHack() {
-        if (!FBIHackModule.fbiHackStarted)
-            return;
-        if (FBIHackModule.currentCount-- <= 30)
-            FBIHackModule.timer = ColorCode.RED.getCode() + ModUtils.parseTimer(FBIHackModule.currentCount);
-        else
-            FBIHackModule.timer = ModUtils.parseTimer(FBIHackModule.currentCount);
-        if (FBIHackModule.currentCount <= 0)
-            FBIHackModule.stopCountdown();
+    private void handleTimer() {
+        if (TimerModule.active) {
+            if (TimerModule.countdown) {
+                if (TimerModule.seconds-- <= 0) {
+                    TimerModule.stopTimer();
+                }
+            } else {
+                TimerModule.seconds++;
+            }
+        }
     }
 
     private void handlePlantTimer() {

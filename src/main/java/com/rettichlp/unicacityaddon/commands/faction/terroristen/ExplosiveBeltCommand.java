@@ -5,7 +5,7 @@ import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.utils.MathUtils;
-import com.rettichlp.unicacityaddon.modules.ExplosiveBeltTimerModule;
+import com.rettichlp.unicacityaddon.modules.TimerModule;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
@@ -66,7 +66,7 @@ public class ExplosiveBeltCommand implements IClientCommand {
             return;
         }
 
-        ExplosiveBeltTimerModule.timer = Integer.parseInt(args[0]);
+        TimerModule.startTimer(Integer.parseInt(args[0]), true);
         p.sendChatMessage("/sprenggürtel " + args[0]);
     }
 
