@@ -3,8 +3,8 @@ package com.rettichlp.unicacityaddon.commands;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
+import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
-import com.rettichlp.unicacityaddon.modules.CashMoneyModule;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
@@ -60,8 +60,8 @@ public class EinzahlenCommand implements IClientCommand {
     public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
         UPlayer p = AbstractionLayer.getPlayer();
 
-        if (CashMoneyModule.cashBalance > 0)
-            p.sendChatMessage("/bank einzahlen " + CashMoneyModule.cashBalance);
+        if (FileManager.DATA.getCashBalance() > 0)
+            p.sendChatMessage("/bank einzahlen " + FileManager.DATA.getCashBalance());
         else
             p.sendErrorMessage("Du hast kein Geld auf der Hand!");
     }
