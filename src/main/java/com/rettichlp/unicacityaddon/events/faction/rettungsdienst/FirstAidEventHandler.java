@@ -18,20 +18,17 @@ import java.util.concurrent.TimeUnit;
 @UCEvent
 public class FirstAidEventHandler {
 
-    public static long firstAidIssuingTime;
-
     @SubscribeEvent
     public void onFirstAidReceipt(ClientChatReceivedEvent e) {
         String msg = e.getMessage().getUnformattedText();
 
         if (PatternHandler.FIRST_AID_RECEIVE_PATTERN.matcher(msg).find()) {
-            firstAidIssuingTime = System.currentTimeMillis();
-            FileManager.saveData();
+            FileManager.DATA.setFirstAidDate(System.currentTimeMillis());
             return;
         }
 
         if (PatternHandler.FIRST_AID_LICENCE_PATTERN.matcher(msg).find()) {
-            long expirationTime = firstAidIssuingTime + TimeUnit.DAYS.toMillis(14); // Erhaltsdatum + 14 Tage = Auslaufdatum
+            long expirationTime = FileManager.DATA.getFirstAidDate() + TimeUnit.DAYS.toMillis(14); // Erhaltsdatum + 14 Tage = Auslaufdatum
             long timeLeft = expirationTime - System.currentTimeMillis(); // Auslaufdatum - aktuelle Datum = Dauer des Scheins
             e.setMessage(Message.getBuilder()
                     .space().space()
