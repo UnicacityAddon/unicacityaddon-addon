@@ -5,7 +5,7 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
-import net.minecraft.util.text.ITextComponent;
+import com.rettichlp.unicacityaddon.base.utils.TextUtils;
 import net.minecraft.util.text.event.HoverEvent;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -36,27 +36,9 @@ public class FirstAidEventHandler {
                     .of("Erste-Hilfe-Schein").color(ColorCode.BLUE).advance()
                     .of(":").color(ColorCode.DARK_GRAY).advance().space()
                     .of("Vorhanden").color(ColorCode.AQUA)
-                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, getDurationMessage(timeLeft))
+                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of(TextUtils.parseTimerWithTimeUnit(timeLeft)).color(ColorCode.RED).advance().createComponent())
                             .advance()
                     .createComponent());
         }
-    }
-
-    private ITextComponent getDurationMessage(long timeLeft) {
-        long dd = TimeUnit.MILLISECONDS.toDays(timeLeft);
-        long hh = TimeUnit.MILLISECONDS.toHours(timeLeft) % 24;
-        long mm = TimeUnit.MILLISECONDS.toMinutes(timeLeft) % 60;
-        long ss = TimeUnit.MILLISECONDS.toSeconds(timeLeft) % 60;
-
-        return Message.getBuilder()
-                .of(String.valueOf(dd)).color(ColorCode.AQUA).advance().space()
-                .of("d").color(ColorCode.GRAY).advance().space()
-                .of(String.valueOf(hh)).color(ColorCode.AQUA).advance().space()
-                .of("h").color(ColorCode.GRAY).advance().space()
-                .of(String.valueOf(mm)).color(ColorCode.AQUA).advance().space()
-                .of("m").color(ColorCode.GRAY).advance().space()
-                .of(String.valueOf(ss)).color(ColorCode.AQUA).advance().space()
-                .of("s").color(ColorCode.GRAY).advance()
-                .createComponent();
     }
 }
