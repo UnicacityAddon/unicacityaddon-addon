@@ -4,6 +4,7 @@ import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.manager.FileManager;
+import com.rettichlp.unicacityaddon.base.models.CoordlistEntry;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
@@ -20,6 +21,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author RettichLP
@@ -53,7 +55,11 @@ public class CoordlistCommand implements IClientCommand {
     @Override
     @Nonnull
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
-        return TabCompletionBuilder.getBuilder(args).build();
+        return TabCompletionBuilder.getBuilder(args)
+                .addAtIndex(1, "add")
+                .addAtIndex(1, "remove")
+                .addAtIndex(2, FileManager.DATA.getCoordlist().stream().map(CoordlistEntry::getName).collect(Collectors.toList()))
+                .build();
     }
 
     @Override
