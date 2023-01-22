@@ -126,6 +126,8 @@ public class FileManager {
                 String jsonData = FileUtils.readFileToString(dataFile, StandardCharsets.UTF_8.toString());
                 DATA = g.fromJson(jsonData, Data.class);
             }
+
+            Runtime.getRuntime().addShutdownHook(new Thread(FileManager::saveData));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
