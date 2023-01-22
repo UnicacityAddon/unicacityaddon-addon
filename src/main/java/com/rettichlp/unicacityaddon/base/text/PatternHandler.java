@@ -142,8 +142,9 @@ public class PatternHandler {
     public static final Pattern RECIPE_ACCEPT_PATTERN = Pattern.compile("^((?:\\[UC])*\\w+) möchte dir ein Rezept für 200\\$ verkaufen\\.$");
     public static final Pattern RECIPE_GIVE_PATTERN = Pattern.compile("^Du hast ((?:\\[UC])*\\w+) ein Rezept für (Antibiotika|Hustensaft|Schmerzmittel) ausgestellt\\.$");
     public static final Pattern REVIVE_BY_MEDIC_START_PATTERN = Pattern.compile("^Du wirst von (?:\\[UC])*(\\w+) wiederbelebt\\.$");
-    public static final Pattern REVIVE_BY_MEDIC_FINISH_PATTERN = Pattern.compile("^Du lebst nun wieder\\.$");
+    // TODO: 22.01.2023 public static final Pattern REVIVE_BY_MEDIC_FINISH_PATTERN = Pattern.compile("^Du lebst nun wieder\\.$");
     public static final Pattern REVIVE_START_PATTERN = Pattern.compile("^Du beginnst mit der Wiederbelebung von ((?:\\[UC])*\\w+)\\.");
+    public static final Pattern REVIVE_FAILURE_PATTERN = Pattern.compile("^Verdammt\\.\\. mein Kopf dröhnt so\\.\\.\\.$");
     public static final Pattern FIRST_AID_RECEIVE_PATTERN = Pattern.compile("^\\[Erste-Hilfe] Notarzt (?:\\[UC])*(\\w+) hat dir einen Erste-Hilfe-Schein für 14 Tage ausgestellt\\.$");
     public static final Pattern FIRST_AID_LICENCE_PATTERN = Pattern.compile("^ {2}- Erste-Hilfe-Schein: Vorhanden$");
 
