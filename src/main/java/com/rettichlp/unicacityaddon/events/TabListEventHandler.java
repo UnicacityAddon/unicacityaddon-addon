@@ -66,10 +66,6 @@ public class TabListEventHandler implements Comparator<NetworkPlayerInfo>, TabLi
             });
         }
 
-        if (formattedDisplayName.toString().isEmpty()) {
-            System.out.println(formattedDisplayName);
-        }
-
         if (formattedDisplayName.toString().isEmpty() || formattedDisplayName.toString().contains("§8[§eB§8]"))
             formattedDisplayName.append(displayName.getUnformattedText());
 
