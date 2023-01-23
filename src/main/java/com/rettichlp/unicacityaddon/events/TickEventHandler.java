@@ -38,47 +38,46 @@ public class TickEventHandler {
 
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
-        if (event.phase != TickEvent.Phase.END)
-            return;
+        if (event.phase == TickEvent.Phase.END && UnicacityAddon.isUnicacity()) {
+            currentTick++;
 
-        currentTick++;
+            // EVERY TICK
+            handleReinforcementScreenshot();
+            handleDamageTracker();
 
-        // EVERY TICK
-        handleReinforcementScreenshot();
-        handleDamageTracker();
+            // 1 SECOND
+            if (currentTick % 20 == 0) {
+                handleNameTag();
+                handleBombTimer();
+                handleExplosiveBeltTimer();
+                handleFBIHack();
+                handlePlantTimer();
+            }
 
-        // 1 SECOND
-        if (currentTick % 20 == 0) {
-            handleNameTag();
-            handleBombTimer();
-            handleExplosiveBeltTimer();
-            handleFBIHack();
-            handlePlantTimer();
+            // 3 SECONDS
+            if (currentTick % 60 == 0) {
+                HouseInteractionEventHandler.increaseProgress(1);
+            }
+
+            // 5 SECONDS
+            if (currentTick % 100 == 0) {
+                handleScoreboardCheck();
+                HouseInteractionEventHandler.increaseProgress(0);
+            }
+
+            // 60 SECONDS
+            if (currentTick % 1200 == 0) {
+                handlePayDay();
+            }
+
+            // CUSTOM SECONDS
+            String intervalString = ConfigElements.getRefreshDisplayNamesInterval();
+            int interval = 5 * 20; // every 5 seconds
+            if (MathUtils.isInteger(intervalString))
+                interval = Integer.parseInt(intervalString) * 20;
+            if (currentTick % interval == 0)
+                handleNameTagSyncDisplayName();
         }
-
-        // 3 SECONDS
-        if (currentTick % 60 == 0) {
-            HouseInteractionEventHandler.increaseProgress(1);
-        }
-
-        // 5 SECONDS
-        if (currentTick % 100 == 0) {
-            handleScoreboardCheck();
-            HouseInteractionEventHandler.increaseProgress(0);
-        }
-
-        // 60 SECONDS
-        if (currentTick % 1200 == 0) {
-            handlePayDay();
-        }
-
-        // CUSTOM SECONDS
-        String intervalString = ConfigElements.getRefreshDisplayNamesInterval();
-        int interval = 5 * 20; // every 5 seconds
-        if (MathUtils.isInteger(intervalString))
-            interval = Integer.parseInt(intervalString) * 20;
-        if (currentTick % interval == 0)
-            handleNameTagSyncDisplayName();
     }
 
     private void handleReinforcementScreenshot() {
