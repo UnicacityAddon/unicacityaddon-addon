@@ -238,7 +238,8 @@ public class PatternHandler {
      */
     public static final Pattern TIMER_FBI_HACK_START_PATTERN = Pattern.compile("^\\[Polizeicomputer] Du hast einen Hackversuch gestartet\\. Geschätzte Dauer: (\\d+) Sekunden\\.$");
     public static final Pattern TIMER_GRAVEYARD_START_PATTERN = Pattern.compile("^Du bist nun für (20|8|5) Minuten auf dem Friedhof\\.$");
-    public static final Pattern TIMER_JAIL_START_PATTERN = Pattern.compile("\\[Gefängnis] Du bist nun für (\\d+) Minuten im Gefängnis\\.$");
+    public static final Pattern TIMER_JAIL_START_PATTERN = Pattern.compile("^\\[Gefängnis] Du bist nun für (\\d+) Minuten im Gefängnis\\.$");
+    public static final Pattern TIMER_JAIL_FINISH_PATTERN = Pattern.compile("^\\[Gefängnis] Du bist wieder frei!$");
 
     /**
      * Pattern for uc and vc interaction
