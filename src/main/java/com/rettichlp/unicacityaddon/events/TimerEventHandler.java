@@ -1,10 +1,10 @@
 package com.rettichlp.unicacityaddon.events;
 
+import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.base.utils.ForgeUtils;
 import com.rettichlp.unicacityaddon.commands.ShutdownJailCommand;
-import com.rettichlp.unicacityaddon.modules.TimerModule;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -25,14 +25,14 @@ public class TimerEventHandler {
 
         Matcher fbiHackStartedMatcher = PatternHandler.TIMER_FBI_HACK_START_PATTERN.matcher(msg);
         if (fbiHackStartedMatcher.find()) {
-            TimerModule.startTimer(Integer.parseInt(fbiHackStartedMatcher.group(1)), true);
+            FileManager.DATA.setTimer(Integer.parseInt(fbiHackStartedMatcher.group(1)));
             return;
         }
 
         Matcher timerGraveyardStartMatcher = PatternHandler.TIMER_GRAVEYARD_START_PATTERN.matcher(msg);
         if (timerGraveyardStartMatcher.find() && !isJail) {
             int seconds = (int) TimeUnit.MINUTES.toSeconds(Integer.parseInt(timerGraveyardStartMatcher.group(1)));
-            TimerModule.startTimer(seconds, true);
+            FileManager.DATA.setTimer(seconds);
             return;
         }
 
@@ -40,14 +40,14 @@ public class TimerEventHandler {
         if (timerJailStartMatcher.find()) {
             isJail = true;
             int seconds = (int) TimeUnit.MINUTES.toSeconds(Integer.parseInt(timerJailStartMatcher.group(1)));
-            TimerModule.startTimer(seconds, true);
+            FileManager.DATA.setTimer(seconds);
             return;
         }
 
         Matcher jailFinishMatcher = PatternHandler.TIMER_JAIL_FINISH_PATTERN.matcher(msg);
         if (jailFinishMatcher.find()) {
             isJail = false;
-            TimerModule.stopTimer();
+            FileManager.DATA.setTimer(0);
 
             if (ShutdownJailCommand.shutdownJail)
                 ForgeUtils.shutdownPC();

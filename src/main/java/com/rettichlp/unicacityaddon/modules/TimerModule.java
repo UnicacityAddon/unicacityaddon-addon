@@ -1,5 +1,6 @@
 package com.rettichlp.unicacityaddon.modules;
 
+import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.ModuleRegistry;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCModule;
 import com.rettichlp.unicacityaddon.base.utils.TextUtils;
@@ -22,12 +23,6 @@ import net.labymod.utils.Material;
 @UCModule
 public class TimerModule extends SimpleModule {
 
-    public static int seconds = 0;
-    public static boolean countdown = false;
-    public static boolean active = false;
-
-    private static String timerString = "00:00";
-
     @Override
     public String getControlName() {
         return "Timer";
@@ -45,7 +40,7 @@ public class TimerModule extends SimpleModule {
 
     @Override
     public String getDisplayValue() {
-        return timerString;
+        return TextUtils.parseTimer(FileManager.DATA.getTimer());
     }
 
     @Override
@@ -60,7 +55,7 @@ public class TimerModule extends SimpleModule {
 
     @Override
     public ControlElement.IconData getIconData() {
-        return new ControlElement.IconData(Material.BOOK);
+        return new ControlElement.IconData(Material.WATCH);
     }
 
     @Override
@@ -70,7 +65,7 @@ public class TimerModule extends SimpleModule {
 
     @Override
     public boolean isShown() {
-        return active;
+        return FileManager.DATA.getTimer() > 0;
     }
 
     @Override
@@ -80,18 +75,5 @@ public class TimerModule extends SimpleModule {
 
     @Override
     public void loadSettings() {
-    }
-
-    public static void startTimer(int secondsIn, boolean countdownIn) {
-        seconds = secondsIn;
-        countdown = countdownIn;
-        active = true;
-        timerString = ModUtils.parseTimer(secondsIn);
-    }
-
-    public static void stopTimer() {
-        seconds = 0;
-        countdown = false;
-        active = false;
     }
 }

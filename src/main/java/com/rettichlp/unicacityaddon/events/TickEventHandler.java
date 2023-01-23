@@ -13,7 +13,6 @@ import com.rettichlp.unicacityaddon.base.utils.TextUtils;
 import com.rettichlp.unicacityaddon.events.faction.ReinforcementEventHandler;
 import com.rettichlp.unicacityaddon.events.house.HouseInteractionEventHandler;
 import com.rettichlp.unicacityaddon.modules.BombTimerModule;
-import com.rettichlp.unicacityaddon.modules.TimerModule;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemSkull;
 import net.minecraft.scoreboard.Scoreboard;
@@ -46,7 +45,6 @@ public class TickEventHandler {
                 handleNameTag();
                 handleBombTimer();
                 handleTimer();
-                handlePlantTimer();
             }
 
             // 3 SECONDS
@@ -88,7 +86,8 @@ public class TickEventHandler {
     }
 
     private void handleDamageTracker() {
-        if (UnicacityAddon.MINECRAFT.world == null) return;
+        if (UnicacityAddon.MINECRAFT.world == null)
+            return;
         float currentHeal = AbstractionLayer.getPlayer().getPlayer().getHealth();
         if (lastTickDamage.getValue() > currentHeal) {
             lastTickDamage = Maps.immutableEntry(System.currentTimeMillis(), currentHeal);
@@ -141,14 +140,10 @@ public class TickEventHandler {
     }
 
     private void handleTimer() {
-        if (TimerModule.active) {
-            if (TimerModule.countdown) {
-                if (TimerModule.seconds-- <= 0) {
-                    TimerModule.stopTimer();
-                }
-            } else {
-                TimerModule.seconds++;
-            }
+        if (FileManager.DATA.getTimer() > 0) {
+            FileManager.DATA.setTimer(FileManager.DATA.getTimer() - 1);
+        } else {
+            FileManager.DATA.setTimer(0);
         }
     }
 

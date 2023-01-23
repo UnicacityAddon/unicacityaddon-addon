@@ -9,7 +9,6 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.events.AccountEventHandler;
 import com.rettichlp.unicacityaddon.events.MobileEventHandler;
-import com.rettichlp.unicacityaddon.modules.TimerModule;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -51,7 +50,7 @@ public class ReviveEventHandler {
 
         Matcher reviveFailureMatcher = PatternHandler.REVIVE_FAILURE_PATTERN.matcher(msg);
         if (reviveFailureMatcher.find()) {
-            TimerModule.stopTimer();
+            FileManager.DATA.setTimer(0);
             FileManager.DATA.setCashBalance(0);
 
             if (MobileEventHandler.hasCommunications && !AccountEventHandler.isAfk)
