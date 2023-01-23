@@ -14,7 +14,7 @@ import java.util.Map;
 
 public class APIRequest {
 
-    private static final boolean NON_PROD = true;
+    private static final boolean NON_PROD = false;
     private static final String ADD_SUB_PATH = "add";
     private static final String REMOVE_SUB_PATH = "remove";
     private static final String QUEUE_SUB_PATH = "queue";
