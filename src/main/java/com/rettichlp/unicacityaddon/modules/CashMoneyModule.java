@@ -17,8 +17,6 @@ import java.util.Locale;
 @UCModule
 public class CashMoneyModule extends SimpleModule {
 
-    public static int cashBalance;
-
     @Override
     public String getControlName() {
         return "Geld auf der Hand";
@@ -37,7 +35,7 @@ public class CashMoneyModule extends SimpleModule {
     @Override
     public String getDisplayValue() {
         NumberFormat numberFormat = NumberFormat.getNumberInstance(new Locale("da", "DK"));
-        return numberFormat.format(cashBalance) + "$";
+        return numberFormat.format(FileManager.DATA.getCashBalance()) + "$";
     }
 
     @Override
@@ -72,20 +70,5 @@ public class CashMoneyModule extends SimpleModule {
 
     @Override
     public void loadSettings() {
-    }
-
-    public static void addBalance(int balance) {
-        cashBalance = cashBalance + balance;
-        FileManager.saveData();
-    }
-
-    public static void removeBalance(int balance) {
-        cashBalance = cashBalance - balance;
-        FileManager.saveData();
-    }
-
-    public static void setBalance(int balance) {
-        cashBalance = balance;
-        FileManager.saveData();
     }
 }

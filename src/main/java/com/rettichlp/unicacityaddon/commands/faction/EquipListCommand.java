@@ -3,11 +3,10 @@ package com.rettichlp.unicacityaddon.commands.faction;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
-import com.rettichlp.unicacityaddon.base.models.EquipLogEntry;
+import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
-import com.rettichlp.unicacityaddon.events.faction.EquipEventHandler;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
@@ -17,8 +16,8 @@ import net.minecraftforge.client.IClientCommand;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.text.NumberFormat;
-import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -71,7 +70,7 @@ public class EquipListCommand implements IClientCommand {
     public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
         UPlayer p = AbstractionLayer.getPlayer();
         if (args.length == 1 && args[0].equalsIgnoreCase("reset")) {
-            EquipEventHandler.equipLogEntryList = new ArrayList<>();
+            FileManager.DATA.setEquipMap(new HashMap<>());
             p.sendInfoMessage("Equipliste gelöscht.");
         } else
             equipList(p);
@@ -83,12 +82,14 @@ public class EquipListCommand implements IClientCommand {
         p.sendMessage(Message.getBuilder()
                 .of("Equip:").color(ColorCode.DARK_AQUA).bold().advance()
                 .createComponent());
-        EquipEventHandler.equipLogEntryList.forEach(equipLogEntry -> p.sendMessage(Message.getBuilder()
-                .of("» " + equipLogEntry.getAmount() + "x " + equipLogEntry.getType().getName() + ": ").color(ColorCode.GRAY).advance()
-                .of(numberFormat.format(equipLogEntry.getPrice()) + "$").color(ColorCode.AQUA).advance()
+        FileManager.DATA.getEquipMap().forEach((equip, integer) -> p.sendMessage(Message.getBuilder()
+                .of("» " + integer + "x " + equip.getName() + ": ").color(ColorCode.GRAY).advance()
+                .of(numberFormat.format(equip.getPrice()) + "$").color(ColorCode.AQUA).advance()
                 .createComponent()));
 
-        int totalAmount = EquipEventHandler.equipLogEntryList.stream().map(EquipLogEntry::getPrice).reduce(0, Integer::sum);
+        int totalAmount = FileManager.DATA.getEquipMap().entrySet().stream()
+                .map(equipIntegerEntry -> equipIntegerEntry.getKey().getPrice() * equipIntegerEntry.getValue())
+                .reduce(0, Integer::sum);
 
         p.sendMessage(Message.getBuilder()
                 .of("» ").color(ColorCode.GRAY).advance()

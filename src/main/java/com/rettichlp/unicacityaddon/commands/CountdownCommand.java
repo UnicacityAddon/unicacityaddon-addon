@@ -62,12 +62,7 @@ public class CountdownCommand implements IClientCommand {
             return;
         }
 
-        if (args.length < 2) {
-            p.sendSyntaxMessage(getUsage(sender));
-            return;
-        }
-
-        if (!MathUtils.isInteger(args[0])) {
+        if (args.length < 1 || !MathUtils.isInteger(args[0])) {
             p.sendSyntaxMessage(getUsage(sender));
             return;
         }
@@ -79,7 +74,7 @@ public class CountdownCommand implements IClientCommand {
             return;
         }
 
-        ChatType chatType = ChatType.getChatTypeByDisplayName(args[1]);
+        ChatType chatType = args.length == 1 ? ChatType.CHAT : ChatType.getChatTypeByDisplayName(args[1]);
         if (chatType == null) {
             p.sendSyntaxMessage(getUsage(sender));
             return;
@@ -115,7 +110,7 @@ public class CountdownCommand implements IClientCommand {
     @Nonnull
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
         return TabCompletionBuilder.getBuilder(args)
-                .addAtIndex(1, Arrays.stream(ChatType.values()).map(ChatType::getDisplayName).sorted().collect(Collectors.toList()))
+                .addAtIndex(2, Arrays.stream(ChatType.values()).map(ChatType::getDisplayName).sorted().collect(Collectors.toList()))
                 .build();
     }
 
