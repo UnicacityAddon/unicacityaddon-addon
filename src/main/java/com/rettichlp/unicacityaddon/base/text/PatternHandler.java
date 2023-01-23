@@ -175,6 +175,7 @@ public class PatternHandler {
             "|^\\[Deal] (?:\\[UC])*(\\w+) hat das Angebot abgelehnt\\.$");
     public static final Pattern DBANK_DROP_PATTERN = Pattern.compile("^(?:\\[UC])*(\\w+) hat (\\d+)g (Kokain|Marihuana|Methamphetamin|LSD) \\((Höchste|Gute|Mittlere|Schlechte) Reinheit\\) \\((\\d+)g\\) eingelagert\\.$");
     public static final Pattern DBANK_GET_PATTERN = Pattern.compile("^(?:\\[UC])*(\\w+) hat (\\d+)g (Kokain|Marihuana|Methamphetamin|LSD) \\((Höchste|Gute|Mittlere|Schlechte) Reinheit\\) \\((\\d+)g\\) aus der Drogenbank genommen\\.$");
+    public static final Pattern BANNER_SPRAYED_PATTERN = Pattern.compile("^\\[Graffiti] Du hast das Graffiti mit deiner Fraktionsflagge übersprayt\\.$");
 
     /**
      * Pattern for money interaction

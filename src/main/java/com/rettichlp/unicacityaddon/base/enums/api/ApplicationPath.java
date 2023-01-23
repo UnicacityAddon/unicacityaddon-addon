@@ -2,6 +2,7 @@ package com.rettichlp.unicacityaddon.base.enums.api;
 
 public enum ApplicationPath {
 
+    BANNER("/banner"),
     BLACKLISTREASON("/blacklistreason"),
     BROADCAST("/broadcast"),
     HOUSEBAN("/houseban"),
