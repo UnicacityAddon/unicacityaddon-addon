@@ -7,6 +7,7 @@ import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.builder.RequestBuilder;
 import com.rettichlp.unicacityaddon.base.enums.api.ApplicationPath;
 import com.rettichlp.unicacityaddon.base.enums.api.StatisticType;
+import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,6 +24,20 @@ public class APIRequest {
     private static final String CREATE_SUB_PATH = "create";
     private static final String REVOKE_SUB_PATH = "revoke";
     private static final String DONE_SUB_PATH = "done";
+
+    public static void sendBannerAddRequest(Faction faction, int x, int y, int z, String navipoint) {
+        RequestBuilder.getBuilder()
+                .nonProd(NON_PROD)
+                .applicationPath(ApplicationPath.BANNER)
+                .subPath(ADD_SUB_PATH)
+                .parameter(mapOf(
+                        "faction", faction.toString(),
+                        "x", String.valueOf(x),
+                        "y", String.valueOf(y),
+                        "z", String.valueOf(z),
+                        "navipoint", navipoint))
+                .sendAsync();
+    }
 
     public static JsonArray sendBlacklistReasonRequest() {
         return RequestBuilder.getBuilder()
