@@ -24,6 +24,8 @@ import java.util.regex.Matcher;
 @UCEvent
 public class BombTimerEventHandler {
 
+    private static String location;
+
     @SubscribeEvent
     public void onClientChatReceived(ClientChatReceivedEvent e) {
         UPlayer p = AbstractionLayer.getPlayer();
@@ -38,7 +40,7 @@ public class BombTimerEventHandler {
             p.playSound(SoundRegistry.BOMB_SOUND, 1, 1);
 
             if (((p.getFaction().equals(Faction.POLIZEI) || p.getFaction().equals(Faction.FBI)) && p.getRank() > 3) || p.isSuperUser()) {
-                String location = bombPlacedMatcher.group("location");
+                location = bombPlacedMatcher.group("location");
                 e.setMessage(Message.getBuilder()
                         .add(formattedMsg)
                         .space()
@@ -63,11 +65,11 @@ public class BombTimerEventHandler {
                     .of(time.isEmpty() ? "" : "(").color(ColorCode.DARK_GRAY).advance()
                     .of(time).color(state.equals("nicht") ? ColorCode.RED : ColorCode.GREEN).advance()
                     .of(time.isEmpty() ? "" : ")").color(ColorCode.DARK_GRAY).advance()
-                    /*.space()
+                    .space()
                     .of("[Sperrgebiet aufheben]").color(ColorCode.RED)
                             .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Sperrgebiet ausrufen").color(ColorCode.RED).advance().createComponent())
-                            .clickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/sperrgebiet " + getLocationWithArticle(location))
-                            .advance()*/
+                            .clickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/removesperrgebiet " + getLocationWithArticle(location))
+                            .advance()
                     .createComponent());
             BombTimerModule.stopBombTimer();
         }
