@@ -17,9 +17,6 @@ import java.util.Locale;
 @UCModule
 public class JobModule extends SimpleModule {
 
-    public static int jobBalance;
-    public static int jobExperience;
-
     @Override
     public String getControlName() {
         return "Job Belohnungen";
@@ -38,7 +35,7 @@ public class JobModule extends SimpleModule {
     @Override
     public String getDisplayValue() {
         NumberFormat numberFormat = NumberFormat.getNumberInstance(new Locale("da", "DK"));
-        return numberFormat.format(jobBalance) + "$ | " + numberFormat.format(jobExperience) + " EXP";
+        return numberFormat.format(FileManager.DATA.getJobBalance()) + "$ | " + numberFormat.format(FileManager.DATA.getJobExperience()) + " EXP";
     }
 
     @Override
@@ -73,25 +70,5 @@ public class JobModule extends SimpleModule {
 
     @Override
     public void loadSettings() {
-    }
-
-    public static void addBalance(int balance) {
-        jobBalance = jobBalance + balance;
-        FileManager.saveData();
-    }
-
-    public static void addExperience(int experience) {
-        jobExperience = jobExperience + experience;
-        FileManager.saveData();
-    }
-
-    public static void setBalance(int balance) {
-        jobBalance = balance;
-        FileManager.saveData();
-    }
-
-    public static void setExperience(int experience) {
-        jobExperience = experience;
-        FileManager.saveData();
     }
 }

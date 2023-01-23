@@ -2,11 +2,11 @@ package com.rettichlp.unicacityaddon.modules;
 
 import com.rettichlp.unicacityaddon.base.registry.ModuleRegistry;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCModule;
+import com.rettichlp.unicacityaddon.base.utils.TextUtils;
 import net.labymod.ingamegui.ModuleCategory;
 import net.labymod.ingamegui.moduletypes.SimpleModule;
 import net.labymod.settings.elements.ControlElement;
 import net.labymod.utils.Material;
-import net.labymod.utils.ModUtils;
 
 /**
  * @author Dimiikou
@@ -75,7 +75,7 @@ public class FBIHackModule extends SimpleModule {
     public static void startCountdown(int seconds) {
         fbiHackStarted = true;
         currentCount = seconds;
-        timer = ModUtils.parseTimer(currentCount);
+        timer = TextUtils.parseTimer(currentCount);
     }
 
     public static void stopCountdown() {

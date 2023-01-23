@@ -9,15 +9,12 @@ import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.utils.MathUtils;
+import com.rettichlp.unicacityaddon.base.utils.TextUtils;
 import com.rettichlp.unicacityaddon.events.faction.ReinforcementEventHandler;
 import com.rettichlp.unicacityaddon.events.house.HouseInteractionEventHandler;
 import com.rettichlp.unicacityaddon.modules.BombTimerModule;
 import com.rettichlp.unicacityaddon.modules.ExplosiveBeltTimerModule;
 import com.rettichlp.unicacityaddon.modules.FBIHackModule;
-import com.rettichlp.unicacityaddon.modules.PayDayModule;
-import com.rettichlp.unicacityaddon.modules.PlantFertilizeTimerModule;
-import com.rettichlp.unicacityaddon.modules.PlantWaterTimerModule;
-import net.labymod.utils.ModUtils;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemSkull;
 import net.minecraft.scoreboard.Scoreboard;
@@ -51,7 +48,6 @@ public class TickEventHandler {
                 handleBombTimer();
                 handleExplosiveBeltTimer();
                 handleFBIHack();
-                handlePlantTimer();
             }
 
             // 3 SECONDS
@@ -138,9 +134,9 @@ public class TickEventHandler {
         if (!BombTimerModule.isBomb)
             return;
         if (BombTimerModule.currentCount++ >= 780)
-            BombTimerModule.timer = ColorCode.RED.getCode() + ModUtils.parseTimer(BombTimerModule.currentCount);
+            BombTimerModule.timer = ColorCode.RED.getCode() + TextUtils.parseTimer(BombTimerModule.currentCount);
         else
-            BombTimerModule.timer = ModUtils.parseTimer(BombTimerModule.currentCount);
+            BombTimerModule.timer = TextUtils.parseTimer(BombTimerModule.currentCount);
         if (BombTimerModule.currentCount > 1200)
             BombTimerModule.stopBombTimer();
     }
@@ -154,27 +150,11 @@ public class TickEventHandler {
         if (!FBIHackModule.fbiHackStarted)
             return;
         if (FBIHackModule.currentCount-- <= 30)
-            FBIHackModule.timer = ColorCode.RED.getCode() + ModUtils.parseTimer(FBIHackModule.currentCount);
+            FBIHackModule.timer = ColorCode.RED.getCode() + TextUtils.parseTimer(FBIHackModule.currentCount);
         else
-            FBIHackModule.timer = ModUtils.parseTimer(FBIHackModule.currentCount);
+            FBIHackModule.timer = TextUtils.parseTimer(FBIHackModule.currentCount);
         if (FBIHackModule.currentCount <= 0)
             FBIHackModule.stopCountdown();
-    }
-
-    private void handlePlantTimer() {
-        if (!PlantFertilizeTimerModule.plantRunning)
-            return;
-
-        if (!PlantFertilizeTimerModule.timer.isEmpty() && MathUtils.isInteger(PlantFertilizeTimerModule.timer.replace(":", "")))
-            PlantFertilizeTimerModule.timer = PlantFertilizeTimerModule.calcTimer(--PlantFertilizeTimerModule.currentCount);
-
-        if (!PlantWaterTimerModule.timer.isEmpty() && MathUtils.isInteger(PlantWaterTimerModule.timer.replace(":", "")))
-            PlantWaterTimerModule.timer = ModUtils.parseTimer(--PlantWaterTimerModule.currentCount);
-
-        if (PlantFertilizeTimerModule.currentCount <= 0)
-            PlantFertilizeTimerModule.timer = ColorCode.RED.getCode() + "Jetzt";
-        if (PlantWaterTimerModule.currentCount <= 0)
-            PlantWaterTimerModule.timer = ColorCode.RED.getCode() + "Jetzt";
     }
 
     private void handleScoreboardCheck() {
@@ -187,6 +167,6 @@ public class TickEventHandler {
     private void handlePayDay() {
         if (AccountEventHandler.isAfk || !UnicacityAddon.isUnicacity())
             return;
-        PayDayModule.addTime(1);
+        FileManager.DATA.addPayDayTime(1);
     }
 }

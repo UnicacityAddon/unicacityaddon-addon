@@ -1,7 +1,5 @@
 package com.rettichlp.unicacityaddon.modules;
 
-import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
-import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.ModuleRegistry;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCModule;
@@ -15,8 +13,6 @@ import net.labymod.utils.Material;
  */
 @UCModule
 public class PayDayModule extends SimpleModule {
-
-    public static int currentTime;
 
     @Override
     public String getControlName() {
@@ -35,7 +31,7 @@ public class PayDayModule extends SimpleModule {
 
     @Override
     public String getDisplayValue() {
-        return currentTime + "/60 Minuten";
+        return FileManager.DATA.getPayDayTime() + "/60 Minuten";
     }
 
     @Override
@@ -70,22 +66,5 @@ public class PayDayModule extends SimpleModule {
 
     @Override
     public void loadSettings() {
-    }
-
-    public static void addTime(int time) {
-        UPlayer p = AbstractionLayer.getPlayer();
-        currentTime = currentTime + time;
-        if (currentTime == 55)
-            p.sendInfoMessage("Du hast in 5 Minuten deinen PayDay.");
-        if (currentTime == 57)
-            p.sendInfoMessage("Du hast in 3 Minuten deinen PayDay.");
-        if (currentTime == 59)
-            p.sendInfoMessage("Du hast in 1 Minute deinen PayDay.");
-        FileManager.saveData();
-    }
-
-    public static void setTime(int time) {
-        currentTime = time;
-        FileManager.saveData();
     }
 }
