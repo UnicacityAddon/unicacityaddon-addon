@@ -8,8 +8,6 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
-import com.rettichlp.unicacityaddon.modules.CarOpenModule;
-import com.rettichlp.unicacityaddon.modules.CashMoneyModule;
 import net.minecraft.scoreboard.Score;
 import net.minecraft.scoreboard.Scoreboard;
 import net.minecraft.util.text.event.ClickEvent;
@@ -35,14 +33,12 @@ public class CarEventHandler {
         String msg = e.getMessage().getUnformattedText();
 
         if (PatternHandler.CAR_OPEN_PATTERN.matcher(msg).find()) {
-            CarOpenModule.info = ColorCode.GREEN.getCode() + "offen";
-            FileManager.saveData();
+            FileManager.DATA.setCarInfo(ColorCode.GREEN.getCode() + "offen");
             return;
         }
 
         if (PatternHandler.CAR_CLOSE_PATTERN.matcher(msg).find()) {
-            CarOpenModule.info = ColorCode.RED.getCode() + "zu";
-            FileManager.saveData();
+            FileManager.DATA.setCarInfo(ColorCode.RED.getCode() + "zu");
             return;
         }
 
@@ -56,7 +52,7 @@ public class CarEventHandler {
         if (carTicketMatcher.find()) {
             int fine = Integer.parseInt(carTicketMatcher.group(2));
 
-            if (CashMoneyModule.cashBalance >= fine) {
+            if (FileManager.DATA.getCashBalance() >= fine) {
                 e.setMessage(Message.getBuilder()
                         .of("[").color(ColorCode.DARK_GRAY).advance()
                         .of("Car").color(ColorCode.GOLD).advance()

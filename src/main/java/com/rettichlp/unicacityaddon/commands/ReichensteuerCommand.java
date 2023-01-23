@@ -3,8 +3,8 @@ package com.rettichlp.unicacityaddon.commands;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
+import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
-import com.rettichlp.unicacityaddon.modules.BankMoneyModule;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
@@ -65,13 +65,13 @@ public class ReichensteuerCommand implements IClientCommand {
     public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
         UPlayer p = AbstractionLayer.getPlayer();
 
-        if (BankMoneyModule.bankBalance > 100000) {
+        if (FileManager.DATA.getBankBalance() > 100000) {
             if (isActive)
                 return;
 
             p.sendChatMessage("/atminfo");
             isActive = true;
-            int removeMoneyAmount = BankMoneyModule.bankBalance - 100000;
+            int removeMoneyAmount = FileManager.DATA.getBankBalance() - 100000;
 
             (new Timer()).schedule(new TimerTask() {
                 @Override

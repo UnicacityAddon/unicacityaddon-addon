@@ -45,7 +45,7 @@ public class HouseDataEventHandler {
             if (System.currentTimeMillis() - lastCheck < 500)
                 e.setCanceled(true);
             HouseData houseData = HouseDataManager.getHouseData(lastCheckedHouseNumber).setHouseBank(Integer.parseInt(houseBankValueMatcher.group(1)));
-            HouseDataManager.saveHouseData(lastCheckedHouseNumber, houseData);
+            HouseDataManager.updateHouseData(lastCheckedHouseNumber, houseData);
             return;
         }
 
@@ -73,7 +73,7 @@ public class HouseDataEventHandler {
                 int amount = Integer.parseInt(splittetMsg[3]);
 
                 HouseData houseData = HouseDataManager.getHouseData(lastCheckedHouseNumber).addToStorage(drugType, drugPurity, amount);
-                HouseDataManager.saveHouseData(lastCheckedHouseNumber, houseData);
+                HouseDataManager.updateHouseData(lastCheckedHouseNumber, houseData);
             }
 
             Matcher drugStorageRemoveCommandMatcher = PatternHandler.HOUSE_STORAGE_REMOVE_COMMAND_PATTERN.matcher(waitingCommand);
@@ -85,7 +85,7 @@ public class HouseDataEventHandler {
                 int amount = Integer.parseInt(splittetMsg[3]);
 
                 HouseData houseData = HouseDataManager.getHouseData(lastCheckedHouseNumber).removeFromStorage(drugType, drugPurity, amount);
-                HouseDataManager.saveHouseData(lastCheckedHouseNumber, houseData);
+                HouseDataManager.updateHouseData(lastCheckedHouseNumber, houseData);
             }
         }
     }

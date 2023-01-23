@@ -9,15 +9,10 @@ import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.utils.MathUtils;
+import com.rettichlp.unicacityaddon.base.utils.TextUtils;
 import com.rettichlp.unicacityaddon.events.faction.ReinforcementEventHandler;
 import com.rettichlp.unicacityaddon.events.house.HouseInteractionEventHandler;
 import com.rettichlp.unicacityaddon.modules.BombTimerModule;
-import com.rettichlp.unicacityaddon.modules.ExplosiveBeltTimerModule;
-import com.rettichlp.unicacityaddon.modules.FBIHackModule;
-import com.rettichlp.unicacityaddon.modules.PayDayModule;
-import com.rettichlp.unicacityaddon.modules.PlantFertilizeTimerModule;
-import com.rettichlp.unicacityaddon.modules.PlantWaterTimerModule;
-import net.labymod.utils.ModUtils;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemSkull;
 import net.minecraft.scoreboard.Scoreboard;
@@ -38,47 +33,44 @@ public class TickEventHandler {
 
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
-        if (event.phase != TickEvent.Phase.END)
-            return;
+        if (event.phase == TickEvent.Phase.END && UnicacityAddon.isUnicacity()) {
+            currentTick++;
 
-        currentTick++;
+            // EVERY TICK
+            handleReinforcementScreenshot();
+            handleDamageTracker();
 
-        // EVERY TICK
-        handleReinforcementScreenshot();
-        handleDamageTracker();
+            // 1 SECOND
+            if (currentTick % 20 == 0) {
+                handleNameTag();
+                handleBombTimer();
+                handleTimer();
+            }
 
-        // 1 SECOND
-        if (currentTick % 20 == 0) {
-            handleNameTag();
-            handleBombTimer();
-            handleExplosiveBeltTimer();
-            handleFBIHack();
-            handlePlantTimer();
+            // 3 SECONDS
+            if (currentTick % 60 == 0) {
+                HouseInteractionEventHandler.increaseProgress(1);
+            }
+
+            // 5 SECONDS
+            if (currentTick % 100 == 0) {
+                handleScoreboardCheck();
+                HouseInteractionEventHandler.increaseProgress(0);
+            }
+
+            // 60 SECONDS
+            if (currentTick % 1200 == 0) {
+                handlePayDay();
+            }
+
+            // CUSTOM SECONDS
+            String intervalString = ConfigElements.getRefreshDisplayNamesInterval();
+            int interval = 5 * 20; // every 5 seconds
+            if (MathUtils.isInteger(intervalString))
+                interval = Integer.parseInt(intervalString) * 20;
+            if (currentTick % interval == 0)
+                handleNameTagSyncDisplayName();
         }
-
-        // 3 SECONDS
-        if (currentTick % 60 == 0) {
-            HouseInteractionEventHandler.increaseProgress(1);
-        }
-
-        // 5 SECONDS
-        if (currentTick % 100 == 0) {
-            handleScoreboardCheck();
-            HouseInteractionEventHandler.increaseProgress(0);
-        }
-
-        // 60 SECONDS
-        if (currentTick % 1200 == 0) {
-            handlePayDay();
-        }
-
-        // CUSTOM SECONDS
-        String intervalString = ConfigElements.getRefreshDisplayNamesInterval();
-        int interval = 5 * 20; // every 5 seconds
-        if (MathUtils.isInteger(intervalString))
-            interval = Integer.parseInt(intervalString) * 20;
-        if (currentTick % interval == 0)
-            handleNameTagSyncDisplayName();
     }
 
     private void handleReinforcementScreenshot() {
@@ -94,7 +86,8 @@ public class TickEventHandler {
     }
 
     private void handleDamageTracker() {
-        if (UnicacityAddon.MINECRAFT.world == null) return;
+        if (UnicacityAddon.MINECRAFT.world == null)
+            return;
         float currentHeal = AbstractionLayer.getPlayer().getPlayer().getHealth();
         if (lastTickDamage.getValue() > currentHeal) {
             lastTickDamage = Maps.immutableEntry(System.currentTimeMillis(), currentHeal);
@@ -139,43 +132,19 @@ public class TickEventHandler {
         if (!BombTimerModule.isBomb)
             return;
         if (BombTimerModule.currentCount++ >= 780)
-            BombTimerModule.timer = ColorCode.RED.getCode() + ModUtils.parseTimer(BombTimerModule.currentCount);
+            BombTimerModule.timer = ColorCode.RED.getCode() + TextUtils.parseTimer(BombTimerModule.currentCount);
         else
-            BombTimerModule.timer = ModUtils.parseTimer(BombTimerModule.currentCount);
+            BombTimerModule.timer = TextUtils.parseTimer(BombTimerModule.currentCount);
         if (BombTimerModule.currentCount > 1200)
             BombTimerModule.stopBombTimer();
     }
 
-    private void handleExplosiveBeltTimer() {
-        if (ExplosiveBeltTimerModule.timer > 0)
-            ExplosiveBeltTimerModule.timer--;
-    }
-
-    private void handleFBIHack() {
-        if (!FBIHackModule.fbiHackStarted)
-            return;
-        if (FBIHackModule.currentCount-- <= 30)
-            FBIHackModule.timer = ColorCode.RED.getCode() + ModUtils.parseTimer(FBIHackModule.currentCount);
-        else
-            FBIHackModule.timer = ModUtils.parseTimer(FBIHackModule.currentCount);
-        if (FBIHackModule.currentCount <= 0)
-            FBIHackModule.stopCountdown();
-    }
-
-    private void handlePlantTimer() {
-        if (!PlantFertilizeTimerModule.plantRunning)
-            return;
-
-        if (!PlantFertilizeTimerModule.timer.isEmpty() && MathUtils.isInteger(PlantFertilizeTimerModule.timer.replace(":", "")))
-            PlantFertilizeTimerModule.timer = PlantFertilizeTimerModule.calcTimer(--PlantFertilizeTimerModule.currentCount);
-
-        if (!PlantWaterTimerModule.timer.isEmpty() && MathUtils.isInteger(PlantWaterTimerModule.timer.replace(":", "")))
-            PlantWaterTimerModule.timer = ModUtils.parseTimer(--PlantWaterTimerModule.currentCount);
-
-        if (PlantFertilizeTimerModule.currentCount <= 0)
-            PlantFertilizeTimerModule.timer = ColorCode.RED.getCode() + "Jetzt";
-        if (PlantWaterTimerModule.currentCount <= 0)
-            PlantWaterTimerModule.timer = ColorCode.RED.getCode() + "Jetzt";
+    private void handleTimer() {
+        if (FileManager.DATA.getTimer() > 0) {
+            FileManager.DATA.setTimer(FileManager.DATA.getTimer() - 1);
+        } else {
+            FileManager.DATA.setTimer(0);
+        }
     }
 
     private void handleScoreboardCheck() {
@@ -188,6 +157,6 @@ public class TickEventHandler {
     private void handlePayDay() {
         if (AccountEventHandler.isAfk || !UnicacityAddon.isUnicacity())
             return;
-        PayDayModule.addTime(1);
+        FileManager.DATA.addPayDayTime(1);
     }
 }

@@ -5,13 +5,13 @@ import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
 import com.rettichlp.unicacityaddon.base.enums.api.StatisticType;
 import com.rettichlp.unicacityaddon.base.enums.location.ServiceCallBox;
+import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.SoundRegistry;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.commands.faction.ServiceCountCommand;
-import com.rettichlp.unicacityaddon.modules.EmergencyServiceModule;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.event.ClickEvent;
 import net.minecraft.util.text.event.HoverEvent;
@@ -40,27 +40,27 @@ public class EmergencyServiceEventHandler {
 
         if (PatternHandler.SERVICE_ARRIVED_PATTERN.matcher(unformattedMsg).find()) {
             p.playSound(SoundRegistry.SERVICE_SOUND, 1, 1);
-            EmergencyServiceModule.currentCount++;
+            FileManager.DATA.addServiceCount(1);
             return;
         }
 
         if (PatternHandler.SERVICE_REQUEUED_PATTERN.matcher(unformattedMsg).find()) {
-            EmergencyServiceModule.currentCount++;
+            FileManager.DATA.addServiceCount(1);
             return;
         }
 
-        if (PatternHandler.SERVICE_ACCEPTED_PATTERN.matcher(unformattedMsg).find() && EmergencyServiceModule.currentCount > 0) {
-            EmergencyServiceModule.currentCount--;
+        if (PatternHandler.SERVICE_ACCEPTED_PATTERN.matcher(unformattedMsg).find()) {
+            FileManager.DATA.removeServiceCount(1);
             return;
         }
 
-        if (PatternHandler.SERVICE_DELETED_PATTERN.matcher(unformattedMsg).find() && EmergencyServiceModule.currentCount > 0) {
-            EmergencyServiceModule.currentCount--;
+        if (PatternHandler.SERVICE_DELETED_PATTERN.matcher(unformattedMsg).find()) {
+            FileManager.DATA.removeServiceCount(1);
             return;
         }
 
         if (PatternHandler.SERVICE_NO_SERVICE_PATTERN.matcher(unformattedMsg).find()) {
-            EmergencyServiceModule.currentCount = 0;
+            FileManager.DATA.setServiceCount(0);
             return;
         }
 
@@ -72,7 +72,7 @@ public class EmergencyServiceEventHandler {
         Matcher serviceOverviewMatcher = PatternHandler.SERVICE_OVERVIEW_PATTERN.matcher(unformattedMsg);
         if (serviceOverviewMatcher.find()) {
             String openServices = serviceOverviewMatcher.group(1);
-            EmergencyServiceModule.currentCount = Integer.parseInt(openServices);
+            FileManager.DATA.setServiceCount(Integer.parseInt(openServices));
         }
 
         Matcher serviceCallBoxMatcher = PatternHandler.SERVICE_CALL_BOX_PATTERN.matcher(unformattedMsg);
