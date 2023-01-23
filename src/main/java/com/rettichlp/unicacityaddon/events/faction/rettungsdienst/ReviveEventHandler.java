@@ -35,6 +35,7 @@ public class ReviveEventHandler {
         }
 
 //        TODO: 22.01.2023 Add permission for minecraft gui -> actionMessage -> read message -> add event
+//        TODO: 23.01.2023 stopTimer
 //        Matcher reviveByMedicFinishMatcher = PatternHandler.REVIVE_BY_MEDIC_FINISH_PATTERN.matcher(msg);
 //        if (reviveByMedicFinishMatcher.find()) {
 //            if (System.currentTimeMillis() - reviveByMedicStartTime > TimeUnit.SECONDS.toMillis(10)) {
@@ -49,6 +50,7 @@ public class ReviveEventHandler {
 
         Matcher reviveFailureMatcher = PatternHandler.REVIVE_FAILURE_PATTERN.matcher(msg);
         if (reviveFailureMatcher.find()) {
+            FileManager.DATA.setTimer(0);
             FileManager.DATA.setCashBalance(0);
 
             if (MobileEventHandler.hasCommunications && !AccountEventHandler.isAfk)

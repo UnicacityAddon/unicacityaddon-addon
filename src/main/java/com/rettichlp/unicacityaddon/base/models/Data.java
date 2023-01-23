@@ -63,6 +63,9 @@ public class Data {
     private int serviceCount = 0;
 
     @Builder.Default
+    private int timer = 0;
+
+    @Builder.Default
     private List<TodolistEntry> todolist = Collections.emptyList();
 
     /**

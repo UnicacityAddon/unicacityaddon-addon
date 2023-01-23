@@ -13,8 +13,6 @@ import com.rettichlp.unicacityaddon.base.utils.TextUtils;
 import com.rettichlp.unicacityaddon.events.faction.ReinforcementEventHandler;
 import com.rettichlp.unicacityaddon.events.house.HouseInteractionEventHandler;
 import com.rettichlp.unicacityaddon.modules.BombTimerModule;
-import com.rettichlp.unicacityaddon.modules.ExplosiveBeltTimerModule;
-import com.rettichlp.unicacityaddon.modules.FBIHackModule;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemSkull;
 import net.minecraft.scoreboard.Scoreboard;
@@ -46,8 +44,7 @@ public class TickEventHandler {
             if (currentTick % 20 == 0) {
                 handleNameTag();
                 handleBombTimer();
-                handleExplosiveBeltTimer();
-                handleFBIHack();
+                handleTimer();
             }
 
             // 3 SECONDS
@@ -89,7 +86,8 @@ public class TickEventHandler {
     }
 
     private void handleDamageTracker() {
-        if (UnicacityAddon.MINECRAFT.world == null) return;
+        if (UnicacityAddon.MINECRAFT.world == null)
+            return;
         float currentHeal = AbstractionLayer.getPlayer().getPlayer().getHealth();
         if (lastTickDamage.getValue() > currentHeal) {
             lastTickDamage = Maps.immutableEntry(System.currentTimeMillis(), currentHeal);
@@ -141,20 +139,12 @@ public class TickEventHandler {
             BombTimerModule.stopBombTimer();
     }
 
-    private void handleExplosiveBeltTimer() {
-        if (ExplosiveBeltTimerModule.timer > 0)
-            ExplosiveBeltTimerModule.timer--;
-    }
-
-    private void handleFBIHack() {
-        if (!FBIHackModule.fbiHackStarted)
-            return;
-        if (FBIHackModule.currentCount-- <= 30)
-            FBIHackModule.timer = ColorCode.RED.getCode() + TextUtils.parseTimer(FBIHackModule.currentCount);
-        else
-            FBIHackModule.timer = TextUtils.parseTimer(FBIHackModule.currentCount);
-        if (FBIHackModule.currentCount <= 0)
-            FBIHackModule.stopCountdown();
+    private void handleTimer() {
+        if (FileManager.DATA.getTimer() > 0) {
+            FileManager.DATA.setTimer(FileManager.DATA.getTimer() - 1);
+        } else {
+            FileManager.DATA.setTimer(0);
+        }
     }
 
     private void handleScoreboardCheck() {
