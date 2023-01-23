@@ -147,6 +147,7 @@ public class PatternHandler {
     public static final Pattern REVIVE_FAILURE_PATTERN = Pattern.compile("^Verdammt\\.\\. mein Kopf dröhnt so\\.\\.\\.$");
     public static final Pattern FIRST_AID_RECEIVE_PATTERN = Pattern.compile("^\\[Erste-Hilfe] Notarzt (?:\\[UC])*(\\w+) hat dir einen Erste-Hilfe-Schein für 14 Tage ausgestellt\\.$");
     public static final Pattern FIRST_AID_LICENCE_PATTERN = Pattern.compile("^ {2}- Erste-Hilfe-Schein: Vorhanden$");
+    public static final Pattern FIRST_AID_USE_PATTERN = Pattern.compile("^ {2}Info: Du bist nun eine Minute länger auf dem Friedhof\\.$");
 
     /**
      * Pattern for communication interaction
@@ -205,12 +206,10 @@ public class PatternHandler {
             "|^\\[F-Bank] (?:\\[UC])*([a-zA-Z0-9_]+) hat (\\d+)\\$ \\(\\+(\\d+)\\$\\) aus der F-Bank genommen\\.$");
 
     /**
-     * Pattern for kill and death interaction
+     * Pattern karma interaction
      *
-     * @see com.rettichlp.unicacityaddon.events.DeathsKillsEventHandler
      * @see com.rettichlp.unicacityaddon.events.KarmaMessageEventHandler
      */
-    public static final Pattern DEATH_PATTERN = Pattern.compile("^Du bist nun für (\\d+) Minuten auf dem Friedhof\\.$");
     public static final Pattern KARMA_CHANGED_PATTERN = Pattern.compile("^\\[Karma] ([+-]\\d+) Karma\\.$");
     public static final Pattern KARMA_PATTERN = Pattern.compile("^\\[Karma] Du hast ein Karma von ([+-]\\d+)\\.$");
 
@@ -243,6 +242,7 @@ public class PatternHandler {
     public static final Pattern TIMER_GRAVEYARD_START_PATTERN = Pattern.compile("^Du bist nun für (20|8|5) Minuten auf dem Friedhof\\.$");
     public static final Pattern TIMER_JAIL_START_PATTERN = Pattern.compile("^\\[Gefängnis] Du bist nun für (\\d+) Minuten im Gefängnis\\.$");
     public static final Pattern TIMER_JAIL_FINISH_PATTERN = Pattern.compile("^\\[Gefängnis] Du bist wieder frei!$");
+    public static final Pattern TIMER_JAIL_MODIFY_PATTERN = Pattern.compile("^\\[PI] Gute Arbeit\\. Du darfst nun (\\d)min früher gehen\\.$");
 
     /**
      * Pattern for uc and vc interaction

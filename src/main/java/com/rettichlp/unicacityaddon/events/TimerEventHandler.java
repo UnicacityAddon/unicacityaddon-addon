@@ -1,10 +1,13 @@
 package com.rettichlp.unicacityaddon.events;
 
+import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
+import com.rettichlp.unicacityaddon.base.enums.api.StatisticType;
 import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.base.utils.ForgeUtils;
 import com.rettichlp.unicacityaddon.commands.ShutdownJailCommand;
+import com.rettichlp.unicacityaddon.events.faction.rettungsdienst.ReviveEventHandler;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -30,9 +33,15 @@ public class TimerEventHandler {
         }
 
         Matcher timerGraveyardStartMatcher = PatternHandler.TIMER_GRAVEYARD_START_PATTERN.matcher(msg);
-        if (timerGraveyardStartMatcher.find() && !isJail) {
-            int seconds = (int) TimeUnit.MINUTES.toSeconds(Integer.parseInt(timerGraveyardStartMatcher.group(1)));
-            FileManager.DATA.setTimer(seconds);
+        if (timerGraveyardStartMatcher.find()) {
+            ReviveEventHandler.isDead = true;
+            APIRequest.sendStatisticAddRequest(StatisticType.DEATH);
+
+            if (!isJail) {
+                int seconds = (int) TimeUnit.MINUTES.toSeconds(Integer.parseInt(timerGraveyardStartMatcher.group(1)));
+                FileManager.DATA.setTimer(seconds);
+            }
+
             return;
         }
 
@@ -41,6 +50,12 @@ public class TimerEventHandler {
             isJail = true;
             int seconds = (int) TimeUnit.MINUTES.toSeconds(Integer.parseInt(timerJailStartMatcher.group(1)));
             FileManager.DATA.setTimer(seconds);
+            return;
+        }
+
+        Matcher jailModifyMatcher = PatternHandler.TIMER_JAIL_MODIFY_PATTERN.matcher(msg);
+        if (jailModifyMatcher.find()) {
+            FileManager.DATA.setTimer(FileManager.DATA.getTimer() - Integer.parseInt(jailModifyMatcher.group(1)) * 60);
             return;
         }
 
