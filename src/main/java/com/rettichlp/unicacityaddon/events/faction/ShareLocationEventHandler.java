@@ -63,7 +63,7 @@ public class ShareLocationEventHandler {
                 .replace("&", "§")
                 .replace("%sender%", senderName)
                 .replace("%navipoint%", navipointString)
-                .replace("%distance%", String.valueOf(doubleNaviPointEntry.getKey().intValue())));
+                .replace("%distance%", String.valueOf((int) p.getPosition().getDistance(posX, posY, posZ))));
 
         p.sendMessage(Message.getBuilder()
                 .of("»").color(ColorCode.GRAY).advance().space()
