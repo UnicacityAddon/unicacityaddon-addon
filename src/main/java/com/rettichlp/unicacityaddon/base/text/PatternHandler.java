@@ -180,6 +180,8 @@ public class PatternHandler {
     public static final Pattern DRUG_GET_PATTERN = Pattern.compile("^\\[Deal] (?:\\[UC])*(\\w+) bietet dir (?<amount>\\d+)g (?<drugType>.+) \\(Reinheit (?<drugPurity>\\d)\\) für (\\d+)\\$ an\\.$");
     public static final Pattern DRUG_USE_PATTERN = Pattern.compile("^(?:\\[UC])*(\\w+) hat (?<drugType>.+) genommen\\.$");
     public static final Pattern DRUG_USE_COMMAND_PATTERN = Pattern.compile("^/use (?<drugType>.+) (?<drugPurity>\\d)$");
+    public static final Pattern TRUNK_GET_COMMAND_PATTERN = Pattern.compile("^/trunk get (?<drugType>.+) (?<drugPurity>\\d) (?<amount>\\d+)$");
+    public static final Pattern TRUNK_GIVE_COMMAND_PATTERN = Pattern.compile("^/trunk drop (?<drugType>.+) (?<drugPurity>\\d) (?<amount>\\d+)$");
     public static final Pattern BANNER_SPRAYED_PATTERN = Pattern.compile("^\\[Graffiti] Du hast das Graffiti mit deiner Fraktionsflagge übersprayt\\.$");
 
     /**

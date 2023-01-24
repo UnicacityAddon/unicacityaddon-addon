@@ -50,7 +50,8 @@ public class DrugInteractionEventHandler {
         }
 
         Matcher dbankGetMatcher = PatternHandler.DBANK_GET_PATTERN.matcher(msg);
-        if (dbankGetMatcher.find()) {
+        Matcher trunkGetMatcher = PatternHandler.TRUNK_GET_COMMAND_PATTERN.matcher(msg);
+        if (dbankGetMatcher.find() || trunkGetMatcher.find()) {
             int amount = Integer.parseInt(dbankGetMatcher.group("amount"));
             DrugType drugType = DrugType.getDrugType(dbankGetMatcher.group("drugType"));
             DrugPurity drugPurity = DrugPurity.getDrugPurity(dbankGetMatcher.group("drugPurity"));
@@ -59,7 +60,8 @@ public class DrugInteractionEventHandler {
         }
 
         Matcher dbankGiveMatcher = PatternHandler.DBANK_GIVE_PATTERN.matcher(msg);
-        if (dbankGiveMatcher.find()) {
+        Matcher trunkGiveMatcher = PatternHandler.TRUNK_GIVE_COMMAND_PATTERN.matcher(msg);
+        if (dbankGiveMatcher.find() || trunkGiveMatcher.find()) {
             int amount = Integer.parseInt(dbankGiveMatcher.group("amount"));
             DrugType drugType = DrugType.getDrugType(dbankGiveMatcher.group("drugType"));
             DrugPurity drugPurity = DrugPurity.getDrugPurity(dbankGiveMatcher.group("drugPurity"));
@@ -95,8 +97,6 @@ public class DrugInteractionEventHandler {
                 FileManager.DATA.removeDrugFromInventory(lastDrugType, lastDrugPurity, amount);
             }
         }
-
-        // TODO: 24.01.2023 Plant support
     }
 
     @SubscribeEvent
