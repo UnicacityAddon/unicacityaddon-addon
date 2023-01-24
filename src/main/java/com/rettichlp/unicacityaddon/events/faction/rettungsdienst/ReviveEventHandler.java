@@ -45,8 +45,6 @@ public class ReviveEventHandler {
             FileManager.DATA.setTimer(0);
             FileManager.DATA.setCashBalance(0);
 
-            System.out.println("==================== DETECTED: DESPAWN ====================");
-
             if (MobileEventHandler.hasCommunications && !AccountEventHandler.isAfk)
                 AbstractionLayer.getPlayer().sendChatMessage("/togglephone");
             return;
@@ -64,15 +62,11 @@ public class ReviveEventHandler {
 
     @SubscribeEvent
     public void onSuccessfulRevive(PotionEvent.PotionAddedEvent e) {
-        System.out.println("==================== DETECTED: POTIONADDEVENT ====================");
-
         if (isDead && e.getPotionEffect().getPotion().equals(Potion.getPotionById(15))) {
             isDead = false;
-
-            System.out.println("==================== DETECTED: REVIVE ====================");
+            FileManager.DATA.setTimer(0);
 
             if (System.currentTimeMillis() - reviveByMedicStartTime < TimeUnit.SECONDS.toMillis(10)) {
-                System.out.println("==================== DETECTED: REVIVE BY MEDIC ====================");
                 FileManager.DATA.removeBankBalance(50); // successfully revived by medic = 50$
             }
 
