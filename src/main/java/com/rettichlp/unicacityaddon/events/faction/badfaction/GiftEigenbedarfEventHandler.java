@@ -25,7 +25,7 @@ public class GiftEigenbedarfEventHandler {
         if (!GiftEigenbedarfCommand.checkWeed && !GiftEigenbedarfCommand.checkMeth)
             return;
 
-        Matcher drugDealEndedMatcher = PatternHandler.DRUGDEAL_ENDED.matcher(msg);
+        Matcher drugDealEndedMatcher = PatternHandler.DRUG_DEAL_ENDED.matcher(msg);
         if (!drugDealEndedMatcher.find())
             return;
 
