@@ -4,7 +4,7 @@ import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.api.Syncer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
-import com.rettichlp.unicacityaddon.base.models.WantedReasonEntry;
+import com.rettichlp.unicacityaddon.base.models.WantedReason;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.utils.ForgeUtils;
 import com.rettichlp.unicacityaddon.base.utils.MathUtils;
@@ -70,14 +70,14 @@ public class ASUCommand implements IClientCommand {
         int reasonIndex = args.length - flags.size() - 1;
         List<String> players = Arrays.asList(args).subList(0, reasonIndex);
 
-        WantedReasonEntry wantedReasonEntry = WantedReasonEntry.getWantedReasonEntryByReason(args[reasonIndex]);
-        if (wantedReasonEntry == null) {
+        WantedReason wantedReason = WantedReason.getWantedReasonEntryByReason(args[reasonIndex]);
+        if (wantedReason == null) {
             p.sendErrorMessage("Der Wantedgrund wurde nicht gefunden!");
             return;
         }
 
-        String wantedReasonString = wantedReasonEntry.getReason().replace("-", " ");
-        int wantedReasonAmount = wantedReasonEntry.getPoints();
+        String wantedReasonString = wantedReason.getReason().replace("-", " ");
+        int wantedReasonAmount = wantedReason.getPoints();
 
         for (Flag flag : flags) {
             wantedReasonString = flag.modifyWantedReasonString(wantedReasonString);
@@ -117,7 +117,7 @@ public class ASUCommand implements IClientCommand {
     @Nonnull
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
         return TabCompletionBuilder.getBuilder(args)
-                .addToAllFromIndex(2, Syncer.getWantedReasonEntryList().stream().map(WantedReasonEntry::getReason).sorted().collect(Collectors.toList()))
+                .addToAllFromIndex(2, Syncer.getWantedReasonEntryList().stream().map(WantedReason::getReason).sorted().collect(Collectors.toList()))
                 .addToAllFromIndex(2, ForgeUtils.getOnlinePlayers())
                 .addToAllFromIndex(3, Arrays.stream(Flag.values()).map(Flag::getFlagArgument).sorted().collect(Collectors.toList()))
                 .build();

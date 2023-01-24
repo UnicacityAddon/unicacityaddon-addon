@@ -3,7 +3,7 @@ package com.rettichlp.unicacityaddon.events.faction.terroristen;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
-import com.rettichlp.unicacityaddon.base.models.NaviPointEntry;
+import com.rettichlp.unicacityaddon.base.models.NaviPoint;
 import com.rettichlp.unicacityaddon.base.registry.SoundRegistry;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
@@ -24,6 +24,8 @@ import java.util.regex.Matcher;
 @UCEvent
 public class BombTimerEventHandler {
 
+    private static String location;
+
     @SubscribeEvent
     public void onClientChatReceived(ClientChatReceivedEvent e) {
         UPlayer p = AbstractionLayer.getPlayer();
@@ -38,15 +40,14 @@ public class BombTimerEventHandler {
             p.playSound(SoundRegistry.BOMB_SOUND, 1, 1);
 
             if (((p.getFaction().equals(Faction.POLIZEI) || p.getFaction().equals(Faction.FBI)) && p.getRank() > 3) || p.isSuperUser()) {
-                String location = bombPlacedMatcher.group("location");
+                location = bombPlacedMatcher.group("location");
                 e.setMessage(Message.getBuilder()
                         .add(formattedMsg)
                         .space()
-                        .of("➡ Sperrgebiet").color(ColorCode.RED)
+                        .of("[Sperrgebiet ausrufen]").color(ColorCode.RED)
                                 .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Sperrgebiet ausrufen").color(ColorCode.RED).advance().createComponent())
                                 .clickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/sperrgebiet " + getLocationWithArticle(location))
                                 .advance()
-                        .of("ᴮᴱᵀᴬ").color(ColorCode.GREEN).italic().advance()
                         .createComponent());
             }
 
@@ -64,16 +65,21 @@ public class BombTimerEventHandler {
                     .of(time.isEmpty() ? "" : "(").color(ColorCode.DARK_GRAY).advance()
                     .of(time).color(state.equals("nicht") ? ColorCode.RED : ColorCode.GREEN).advance()
                     .of(time.isEmpty() ? "" : ")").color(ColorCode.DARK_GRAY).advance()
+                    .space()
+                    .of(location != null ? "[Sperrgebiet aufheben]" : "").color(ColorCode.RED)
+                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Sperrgebiet ausrufen").color(ColorCode.RED).advance().createComponent())
+                            .clickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/removesperrgebiet " + getLocationWithArticle(location))
+                            .advance()
                     .createComponent());
             BombTimerModule.stopBombTimer();
         }
     }
 
     private String getLocationWithArticle(String location) {
-        NaviPointEntry naviPointEntry = NaviPointEntry.getNaviPointEntryByTabName(location.replace(" ", "-"));
+        NaviPoint naviPoint = NaviPoint.getNaviPointEntryByTabName(location.replace(" ", "-"));
         String article = "der/die/das";
-        if (naviPointEntry != null)
-            article = naviPointEntry.getArticleFourthCase().replace("none", "");
+        if (naviPoint != null)
+            article = naviPoint.getArticleFourthCase().replace("none", "");
         return location.startsWith("Haus ") ? location : article + (article.isEmpty() ? "" : " ") + location;
     }
 }

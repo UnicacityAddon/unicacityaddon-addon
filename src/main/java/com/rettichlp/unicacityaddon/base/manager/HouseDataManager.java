@@ -2,35 +2,27 @@ package com.rettichlp.unicacityaddon.base.manager;
 
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
-import com.rettichlp.unicacityaddon.base.models.HouseDataEntry;
+import com.rettichlp.unicacityaddon.base.models.HouseData;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
-
-import java.util.Map;
 
 /**
  * @author RettichLP
  */
 public class HouseDataManager {
 
-    public static Map<Integer, HouseDataEntry> HOUSE_DATA;
-
-    public static HouseDataEntry getHouseData(int houseNumber) {
-        if (!HOUSE_DATA.containsKey(houseNumber)) {
-            HOUSE_DATA.put(houseNumber, new HouseDataEntry(houseNumber));
-            FileManager.saveData();
-        }
-        return HOUSE_DATA.get(houseNumber);
+    public static HouseData getHouseData(int houseNumber) {
+        HouseData houseData = FileManager.DATA.getHouseDataMap().getOrDefault(houseNumber, new HouseData(houseNumber));
+        FileManager.DATA.getHouseDataMap().put(houseNumber, houseData);
+        return houseData;
     }
 
-    public static void saveHouseData(int houseNumber, HouseDataEntry houseDataEntry) {
-        HOUSE_DATA.put(houseNumber, houseDataEntry);
-        FileManager.saveData();
+    public static void updateHouseData(int houseNumber, HouseData houseData) {
+        FileManager.DATA.getHouseDataMap().put(houseNumber, houseData);
     }
 
     public static void deleteHouseData(int houseNumber) {
-        HOUSE_DATA.remove(houseNumber);
-        FileManager.saveData();
+        FileManager.DATA.getHouseDataMap().remove(houseNumber);
     }
 
     public static void sendAllHouseBankMessage() {
@@ -40,7 +32,7 @@ public class HouseDataManager {
         p.sendMessage(Message.getBuilder()
                 .of("Hauskassen:").color(ColorCode.DARK_AQUA).bold().advance()
                 .createComponent());
-        HOUSE_DATA.values().forEach(houseDataEntry -> p.sendMessage(houseDataEntry.getBankITextComponent()));
+        FileManager.DATA.getHouseDataMap().values().forEach(houseData -> p.sendMessage(houseData.getBankITextComponent()));
         p.sendEmptyMessage();
     }
 
@@ -51,7 +43,7 @@ public class HouseDataManager {
         p.sendMessage(Message.getBuilder()
                 .of("Drogenlager:").color(ColorCode.DARK_AQUA).bold().advance()
                 .createComponent());
-        HOUSE_DATA.values().forEach(houseDataEntry -> p.sendMessage(houseDataEntry.getStorageITextComponent()));
+        FileManager.DATA.getHouseDataMap().values().forEach(houseData -> p.sendMessage(houseData.getStorageITextComponent()));
         p.sendEmptyMessage();
     }
 }

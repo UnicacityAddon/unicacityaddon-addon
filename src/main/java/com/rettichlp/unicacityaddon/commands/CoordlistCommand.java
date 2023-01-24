@@ -21,14 +21,13 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author RettichLP
  */
 @UCCommand
 public class CoordlistCommand implements IClientCommand {
-
-    public static List<CoordlistEntry> coordlist;
 
     @Override
     @Nonnull
@@ -56,7 +55,11 @@ public class CoordlistCommand implements IClientCommand {
     @Override
     @Nonnull
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
-        return TabCompletionBuilder.getBuilder(args).build();
+        return TabCompletionBuilder.getBuilder(args)
+                .addAtIndex(1, "add")
+                .addAtIndex(1, "remove")
+                .addAtIndex(2, FileManager.DATA.getCoordlist().stream().map(CoordlistEntry::getName).collect(Collectors.toList()))
+                .build();
     }
 
     @Override
@@ -71,9 +74,15 @@ public class CoordlistCommand implements IClientCommand {
         if (args.length == 0) {
             listCoords(p);
         } else if (args.length > 1 && args[0].equalsIgnoreCase("add")) {
-            addCoord(p, TextUtils.makeStringByArgs(args, "-").replace("add-", ""));
+            String name = TextUtils.makeStringByArgs(args, "-").replace("add-", "");
+            if (FileManager.DATA.addCoordToCoordlist(name, p.getPosition())) {
+                p.sendInfoMessage("Koordinaten gespeichert.");
+            }
         } else if (args.length > 1 && args[0].equalsIgnoreCase("remove")) {
-            removeCoord(p, TextUtils.makeStringByArgs(args, "-").replace("remove-", ""));
+            String name = TextUtils.makeStringByArgs(args, "-").replace("remove-", "");
+            if (FileManager.DATA.removeCoordFromCoordlist(name)) {
+                p.sendInfoMessage("Koordinaten gelöscht.");
+            }
         } else {
             p.sendSyntaxMessage(getUsage(sender));
         }
@@ -85,7 +94,7 @@ public class CoordlistCommand implements IClientCommand {
                 .of("Koordinaten:").color(ColorCode.DARK_AQUA).bold().advance()
                 .createComponent());
 
-        coordlist.forEach(coordlistEntry -> p.sendMessage(Message.getBuilder()
+        FileManager.DATA.getCoordlist().forEach(coordlistEntry -> p.sendMessage(Message.getBuilder()
                 .of("»").color(ColorCode.GRAY).advance().space()
                 .of(coordlistEntry.getName().replace("-", " ")).color(ColorCode.AQUA).advance().space()
                 .of("-").color(ColorCode.GRAY).advance().space()
@@ -100,19 +109,6 @@ public class CoordlistCommand implements IClientCommand {
                 .createComponent()));
 
         p.sendEmptyMessage();
-    }
-
-    private void addCoord(UPlayer p, String name) {
-        BlockPos blockPos = p.getPosition();
-        coordlist.add(new CoordlistEntry(name, blockPos.getX(), blockPos.getY(), blockPos.getZ()));
-        FileManager.saveData();
-        p.sendInfoMessage("Koordinaten gespeichert.");
-    }
-
-    private void removeCoord(UPlayer p, String name) {
-        coordlist.removeIf(coordlistEntry -> coordlistEntry.getName().equalsIgnoreCase(name));
-        FileManager.saveData();
-        p.sendInfoMessage("Koordinaten gelöscht.");
     }
 
     @Override

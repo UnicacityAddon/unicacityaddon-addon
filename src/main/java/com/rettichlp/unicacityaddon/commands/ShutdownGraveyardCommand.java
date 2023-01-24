@@ -6,7 +6,6 @@ import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
-import com.rettichlp.unicacityaddon.events.ShutDownEventHandler;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
@@ -22,7 +21,9 @@ import java.util.List;
  * @author Dimiikou
  */
 @UCCommand
-public class ShutdownFriedhofCommand implements IClientCommand {
+public class ShutdownGraveyardCommand implements IClientCommand {
+
+    public static boolean shutdownGraveyard = false;
 
     @Override
     @Nonnull
@@ -61,9 +62,9 @@ public class ShutdownFriedhofCommand implements IClientCommand {
     @Override
     public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
         UPlayer p = AbstractionLayer.getPlayer();
-        ShutDownEventHandler.shutdownFriedhof = !ShutDownEventHandler.shutdownFriedhof;
+        shutdownGraveyard = !shutdownGraveyard;
 
-        if (ShutDownEventHandler.shutdownFriedhof)
+        if (shutdownGraveyard)
             Message.getBuilder().prefix().of("Dein Computer fährt nun herunter sobald du wieder lebst.").color(ColorCode.GRAY)
                     .advance().sendTo(p.getPlayer());
         else

@@ -4,7 +4,7 @@ import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.api.Syncer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
-import com.rettichlp.unicacityaddon.base.models.NaviPointEntry;
+import com.rettichlp.unicacityaddon.base.models.NaviPoint;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.utils.MathUtils;
 import com.rettichlp.unicacityaddon.base.utils.TextUtils;
@@ -62,20 +62,20 @@ public class NaviCommand implements IClientCommand {
             return;
         }
 
-        NaviPointEntry naviPointEntry = NaviPointEntry.getNaviPointEntryByTabName(args[0].trim());
-        if (naviPointEntry == null) {
+        NaviPoint naviPoint = NaviPoint.getNaviPointEntryByTabName(args[0].trim());
+        if (naviPoint == null) {
             p.sendChatMessage("/navi " + TextUtils.makeStringByArgs(args, " "));
             return;
         }
 
-        p.setNaviRoute(naviPointEntry.getBlockPos());
+        p.setNaviRoute(naviPoint.getBlockPos());
     }
 
     @Override
     @Nonnull
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
         return TabCompletionBuilder.getBuilder(args)
-                .addAtIndex(1, Syncer.NAVIPOINTLIST.stream().map(NaviPointEntry::getName).sorted().collect(Collectors.toList()))
+                .addAtIndex(1, Syncer.NAVIPOINTLIST.stream().map(NaviPoint::getName).sorted().collect(Collectors.toList()))
                 .build();
     }
 

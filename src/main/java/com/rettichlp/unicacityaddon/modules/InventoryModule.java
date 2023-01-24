@@ -1,26 +1,21 @@
 package com.rettichlp.unicacityaddon.modules;
 
+import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.ModuleRegistry;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCModule;
 import net.labymod.ingamegui.ModuleCategory;
 import net.labymod.ingamegui.moduletypes.SimpleModule;
 import net.labymod.settings.elements.ControlElement;
 import net.labymod.utils.Material;
-import net.labymod.utils.ModUtils;
 
-/**
- * @author Dimiikou
- */
+import java.util.Map;
+
 @UCModule
-public class FBIHackModule extends SimpleModule {
-
-    public static int currentCount = 0;
-    public static boolean fbiHackStarted = false;
-    public static String timer = "0";
+public class InventoryModule extends SimpleModule {
 
     @Override
     public String getControlName() {
-        return "FBI Hack Countdown";
+        return "Inventar";
     }
 
     @Override
@@ -30,27 +25,30 @@ public class FBIHackModule extends SimpleModule {
 
     @Override
     public String getDisplayName() {
-        return "WP-Clear";
+        return "Inventar";
     }
 
     @Override
     public String getDisplayValue() {
-        return timer;
+        return String.valueOf(FileManager.DATA.getDrugInventoryMap().values().stream()
+                .map(Map::values)
+                .map(integers -> integers.stream().reduce(0, Integer::sum))
+                .reduce(0, Integer::sum));
     }
 
     @Override
     public String getDefaultValue() {
-        return "00:00";
+        return "0";
     }
 
     @Override
     public String getDescription() {
-        return "Zeigt einen Countdown an, welcher die Zeit bis zum WP Clear im FBI HQ beschreibt.";
+        return "Zeigt den Inventar-Platz an.";
     }
 
     @Override
     public ControlElement.IconData getIconData() {
-        return new ControlElement.IconData(Material.BOOK);
+        return new ControlElement.IconData(Material.CHEST);
     }
 
     @Override
@@ -60,7 +58,7 @@ public class FBIHackModule extends SimpleModule {
 
     @Override
     public boolean isShown() {
-        return fbiHackStarted;
+        return true;
     }
 
     @Override
@@ -70,15 +68,5 @@ public class FBIHackModule extends SimpleModule {
 
     @Override
     public void loadSettings() {
-    }
-
-    public static void startCountdown(int seconds) {
-        fbiHackStarted = true;
-        currentCount = seconds;
-        timer = ModUtils.parseTimer(currentCount);
-    }
-
-    public static void stopCountdown() {
-        fbiHackStarted = false;
     }
 }

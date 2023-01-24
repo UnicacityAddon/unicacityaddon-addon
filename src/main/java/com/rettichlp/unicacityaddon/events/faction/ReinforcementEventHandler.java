@@ -3,7 +3,7 @@ package com.rettichlp.unicacityaddon.events.faction;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.config.ConfigElements;
-import com.rettichlp.unicacityaddon.base.models.NaviPointEntry;
+import com.rettichlp.unicacityaddon.base.models.NaviPoint;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
@@ -63,8 +63,8 @@ public class ReinforcementEventHandler {
                     .of("" + posZ).color(ColorCode.AQUA).advance()
                     .createComponent();
 
-            Map.Entry<Double, NaviPointEntry> nearestNaviPoint = NavigationUtils.getNearestNaviPoint(posX, posY, posZ);
-            NaviPointEntry navipoint = nearestNaviPoint.getValue();
+            Map.Entry<Double, NaviPoint> nearestNaviPoint = NavigationUtils.getNearestNaviPoint(posX, posY, posZ);
+            NaviPoint navipoint = nearestNaviPoint.getValue();
 
             String navipointString;
             if (navipoint == null) {

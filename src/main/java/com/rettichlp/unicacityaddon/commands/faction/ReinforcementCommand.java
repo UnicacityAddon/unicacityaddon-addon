@@ -137,7 +137,8 @@ public class ReinforcementCommand implements IClientCommand {
         BOMB("-b", ChatType.DCHAT, "Bombe!"),
         HOSTAGE_TAKING("-gn", ChatType.DCHAT, "Geiselnahme!"),
         TRAINING("-t", ChatType.FCHAT, "Training!"),
-        TRAINING_D("-td", ChatType.DCHAT, "Training!");
+        TRAINING_D("-td", ChatType.DCHAT, "Training!"),
+        TEST("-test", ChatType.FCHAT, "Test!"),;
 
         private final String argument;
         private final ChatType chatType;

@@ -1,5 +1,6 @@
 package com.rettichlp.unicacityaddon.modules;
 
+import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.ModuleRegistry;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCModule;
 import net.labymod.ingamegui.ModuleCategory;
@@ -12,8 +13,6 @@ import net.labymod.utils.Material;
  */
 @UCModule
 public class EmergencyServiceModule extends SimpleModule {
-
-    public static int currentCount = 0;
 
     @Override
     public String getControlName() {
@@ -32,7 +31,7 @@ public class EmergencyServiceModule extends SimpleModule {
 
     @Override
     public String getDisplayValue() {
-        return String.valueOf(currentCount);
+        return String.valueOf(FileManager.DATA.getServiceCount());
     }
 
     @Override
@@ -57,7 +56,7 @@ public class EmergencyServiceModule extends SimpleModule {
 
     @Override
     public boolean isShown() {
-        return !String.valueOf(currentCount).isEmpty();
+        return !String.valueOf(FileManager.DATA.getServiceCount()).isEmpty();
     }
 
     @Override
