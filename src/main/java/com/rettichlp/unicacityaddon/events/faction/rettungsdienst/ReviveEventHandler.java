@@ -7,6 +7,8 @@ import com.rettichlp.unicacityaddon.base.enums.api.StatisticType;
 import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
+import com.rettichlp.unicacityaddon.base.utils.ForgeUtils;
+import com.rettichlp.unicacityaddon.commands.ShutdownGraveyardCommand;
 import com.rettichlp.unicacityaddon.events.AccountEventHandler;
 import com.rettichlp.unicacityaddon.events.MobileEventHandler;
 import net.minecraft.potion.Potion;
@@ -47,6 +49,9 @@ public class ReviveEventHandler {
 
             if (MobileEventHandler.hasCommunications && !AccountEventHandler.isAfk)
                 AbstractionLayer.getPlayer().sendChatMessage("/togglephone");
+
+            if (ShutdownGraveyardCommand.shutdownGraveyard)
+                ForgeUtils.shutdownPC();
             return;
         }
 
