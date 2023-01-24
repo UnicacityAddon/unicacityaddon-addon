@@ -4,6 +4,7 @@ import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
+import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.manager.HouseDataManager;
 import com.rettichlp.unicacityaddon.base.models.HouseData;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
@@ -74,6 +75,8 @@ public class HouseDataEventHandler {
 
                 HouseData houseData = HouseDataManager.getHouseData(lastCheckedHouseNumber).addToStorage(drugType, drugPurity, amount);
                 HouseDataManager.updateHouseData(lastCheckedHouseNumber, houseData);
+
+                FileManager.DATA.removeDrugFromInventory(drugType, drugPurity, amount);
             }
 
             Matcher drugStorageRemoveCommandMatcher = PatternHandler.HOUSE_STORAGE_REMOVE_COMMAND_PATTERN.matcher(waitingCommand);
@@ -86,6 +89,8 @@ public class HouseDataEventHandler {
 
                 HouseData houseData = HouseDataManager.getHouseData(lastCheckedHouseNumber).removeFromStorage(drugType, drugPurity, amount);
                 HouseDataManager.updateHouseData(lastCheckedHouseNumber, houseData);
+
+                FileManager.DATA.addDrugToInventory(drugType, drugPurity, amount);
             }
         }
     }

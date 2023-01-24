@@ -2,6 +2,8 @@ package com.rettichlp.unicacityaddon.base.models;
 
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
+import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
+import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
 import com.rettichlp.unicacityaddon.base.enums.faction.Equip;
 import joptsimple.internal.Strings;
 import lombok.AllArgsConstructor;
@@ -31,6 +33,9 @@ public class Data {
 
     @Builder.Default
     private int cashBalance = 0;
+
+    @Builder.Default
+    private Map<DrugType, Map<DrugPurity, Integer>> drugInventoryMap = new HashMap<>();
 
     @Builder.Default
     private List<CoordlistEntry> coordlist = Collections.emptyList();
@@ -123,6 +128,38 @@ public class Data {
      */
     public boolean removeCoordFromCoordlist(String name) {
         return coordlist.removeIf(coordlistEntry -> coordlistEntry.getName().equalsIgnoreCase(name));
+    }
+
+    /**
+     * Adds the given <code>amount</code> of {@link DrugType} with its {@link DrugPurity} to the <code>drugInventoryMap</code>
+     *
+     * @param drugType   {@link DrugType} to be added to the <code>drugInventoryMap</code>
+     * @param drugPurity {@link DrugPurity} of the {@link DrugType}
+     * @param amount     Amount of the {@link DrugType}
+     * @see DrugType
+     * @see DrugPurity
+     */
+    public void addDrugToInventory(DrugType drugType, DrugPurity drugPurity, int amount) {
+        Map<DrugPurity, Integer> drugPurityIntegerMap = drugInventoryMap.getOrDefault(drugType, new HashMap<>());
+        int oldAmount = drugPurityIntegerMap.getOrDefault(drugPurity, 0);
+        drugPurityIntegerMap.put(drugPurity, oldAmount + amount);
+        drugInventoryMap.put(drugType, drugPurityIntegerMap);
+    }
+
+    /**
+     * Removes the given <code>amount</code> of {@link DrugType} with its {@link DrugPurity} from the <code>drugInventoryMap</code>
+     *
+     * @param drugType   {@link DrugType} to be removed from the <code>drugInventoryMap</code>
+     * @param drugPurity {@link DrugPurity} of the {@link DrugType}
+     * @param amount     Amount of the {@link DrugType}
+     * @see DrugType
+     * @see DrugPurity
+     */
+    public void removeDrugFromInventory(DrugType drugType, DrugPurity drugPurity, int amount) {
+        Map<DrugPurity, Integer> drugPurityIntegerMap = drugInventoryMap.getOrDefault(drugType, new HashMap<>());
+        int oldAmount = drugPurityIntegerMap.getOrDefault(drugPurity, 0);
+        drugPurityIntegerMap.put(drugPurity, Math.max(oldAmount - amount, 0));
+        drugInventoryMap.put(drugType, drugPurityIntegerMap);
     }
 
     /**

@@ -171,10 +171,17 @@ public class PatternHandler {
      */
     public static final Pattern PLANT_HARVEST_PATTERN = Pattern.compile("^\\[Plantage] Eine .+-Plantage wurde von (?:\\[UC])*(\\w+) geerntet\\. \\[\\d+g]$");
     public static final Pattern PLANT_USE_PATTERN = Pattern.compile("^\\[Plantage] Eine .+-Plantage wurde von (?:\\[UC])*(" + playerName + ") (gewässert|gedüngt)\\.$");
-    public static final Pattern DRUGDEAL_ENDED = Pattern.compile("^\\[Deal] (?:\\[UC])*(\\w+) hat den Deal angenommen\\.$" +
+    public static final Pattern DBANK_GIVE_PATTERN = Pattern.compile("^(?:\\[UC])*(\\w+) hat (?<amount>\\d+)g (?<drugType>.+) \\((?<drugPurity>Höchste|Gute|Mittlere|Schlechte) Reinheit\\) \\((\\d+)g\\) eingelagert\\.$");
+    public static final Pattern DBANK_GET_PATTERN = Pattern.compile("^(?:\\[UC])*(\\w+) hat (?<amount>\\d+)g (?<drugType>.+) \\((?<drugPurity>Höchste|Gute|Mittlere|Schlechte) Reinheit\\) \\((\\d+)g\\) aus der Drogenbank genommen\\.$");
+    public static final Pattern DRUG_DEAL_ACCEPTED = Pattern.compile("^\\[Deal] (?:\\[UC])*(\\w+) hat den Deal angenommen\\.$");
+    public static final Pattern DRUG_DEAL_ENDED = Pattern.compile("^\\[Deal] (?:\\[UC])*(\\w+) hat den Deal angenommen\\.$" +
             "|^\\[Deal] (?:\\[UC])*(\\w+) hat das Angebot abgelehnt\\.$");
-    public static final Pattern DBANK_DROP_PATTERN = Pattern.compile("^(?:\\[UC])*(\\w+) hat (\\d+)g (Kokain|Marihuana|Methamphetamin|LSD) \\((Höchste|Gute|Mittlere|Schlechte) Reinheit\\) \\((\\d+)g\\) eingelagert\\.$");
-    public static final Pattern DBANK_GET_PATTERN = Pattern.compile("^(?:\\[UC])*(\\w+) hat (\\d+)g (Kokain|Marihuana|Methamphetamin|LSD) \\((Höchste|Gute|Mittlere|Schlechte) Reinheit\\) \\((\\d+)g\\) aus der Drogenbank genommen\\.$");
+    public static final Pattern DRUG_GIVE_PATTERN = Pattern.compile("^\\[Deal] Du hast (?:\\[UC])*(\\w+) (?<amount>\\d+)g (?<drugType>.+) \\(Reinheit (?<drugPurity>\\d)\\) für (\\d+)\\$ angeboten\\.$");
+    public static final Pattern DRUG_GET_PATTERN = Pattern.compile("^\\[Deal] (?:\\[UC])*(\\w+) bietet dir (?<amount>\\d+)g (?<drugType>.+) \\(Reinheit (?<drugPurity>\\d)\\) für (\\d+)\\$ an\\.$");
+    public static final Pattern DRUG_USE_PATTERN = Pattern.compile("^(?:\\[UC])*(\\w+) hat (?<drugType>.+) genommen\\.$");
+    public static final Pattern DRUG_USE_COMMAND_PATTERN = Pattern.compile("^/use (?<drugType>.+) (?<drugPurity>\\d)$");
+    public static final Pattern TRUNK_GET_COMMAND_PATTERN = Pattern.compile("^/trunk get (?<drugType>.+) (?<drugPurity>\\d) (?<amount>\\d+)$");
+    public static final Pattern TRUNK_GIVE_COMMAND_PATTERN = Pattern.compile("^/trunk drop (?<drugType>.+) (?<drugPurity>\\d) (?<amount>\\d+)$");
     public static final Pattern BANNER_SPRAYED_PATTERN = Pattern.compile("^\\[Graffiti] Du hast das Graffiti mit deiner Fraktionsflagge übersprayt\\.$");
 
     /**

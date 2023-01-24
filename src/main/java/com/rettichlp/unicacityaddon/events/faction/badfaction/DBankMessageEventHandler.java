@@ -27,7 +27,7 @@ public class DBankMessageEventHandler {
         if (!ConfigElements.getDrugBankMessagesActivated())
             return;
 
-        Matcher dropMatcher = PatternHandler.DBANK_DROP_PATTERN.matcher(msg);
+        Matcher dropMatcher = PatternHandler.DBANK_GIVE_PATTERN.matcher(msg);
         if (dropMatcher.find()) {
             NumberFormat numberFormat = NumberFormat.getNumberInstance(new Locale("da", "DK"));
             DrugPurity purity = null;
