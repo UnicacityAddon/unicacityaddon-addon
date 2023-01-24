@@ -15,6 +15,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -55,11 +56,19 @@ public class DBankDropAllCommand implements IClientCommand {
     public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
         UPlayer p = AbstractionLayer.getPlayer();
 
-        List<String> commandQueue = new ArrayList<>();
+        // reset drug inventory tracker
+        if (args.length > 0 && args[0].equalsIgnoreCase("reset")) {
+            FileManager.DATA.setDrugInventoryMap(new HashMap<>());
+            return;
+        }
 
+        List<String> commandQueue = new ArrayList<>();
         FileManager.DATA.getDrugInventoryMap()
                 .forEach((drugType, drugPurityIntegerMap) -> drugPurityIntegerMap
-                        .forEach((drugPurity, integer) -> commandQueue.add("/dbank drop " + drugType.getShortName() + " " + integer + " " + drugPurity.getPurity())));
+                        .forEach((drugPurity, integer) -> {
+                            if (integer > 0)
+                                commandQueue.add("/dbank drop " + drugType.getShortName() + " " + integer + " " + drugPurity.getPurity());
+                        }));
 
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
