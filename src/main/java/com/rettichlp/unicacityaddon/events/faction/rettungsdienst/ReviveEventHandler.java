@@ -2,6 +2,7 @@ package com.rettichlp.unicacityaddon.events.faction.rettungsdienst;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
+import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
 import com.rettichlp.unicacityaddon.base.enums.api.StatisticType;
 import com.rettichlp.unicacityaddon.base.manager.FileManager;
@@ -16,6 +17,8 @@ import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.event.entity.living.PotionEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 
@@ -67,16 +70,26 @@ public class ReviveEventHandler {
 
     @SubscribeEvent
     public void onSuccessfulRevive(PotionEvent.PotionAddedEvent e) {
+        UPlayer p = AbstractionLayer.getPlayer();
+
         if (isDead && e.getPotionEffect().getPotion().equals(Potion.getPotionById(15))) {
             isDead = false;
             FileManager.DATA.setTimer(0);
 
             if (System.currentTimeMillis() - reviveByMedicStartTime < TimeUnit.SECONDS.toMillis(10)) {
                 FileManager.DATA.removeBankBalance(50); // successfully revived by medic = 50$
+
+                // message to remember how long you are not allowed to shoot after revive
+                new Timer().schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        p.sendInfoMessage("Du darfst wieder schießen.");
+                    }
+                }, 0, TimeUnit.MINUTES.toMillis(2));
             }
 
             if (MobileEventHandler.hasCommunications && !AccountEventHandler.isAfk)
-                AbstractionLayer.getPlayer().sendChatMessage("/togglephone");
+                p.sendChatMessage("/togglephone");
         }
     }
 
