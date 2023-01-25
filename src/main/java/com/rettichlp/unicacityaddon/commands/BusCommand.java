@@ -1,5 +1,6 @@
 package com.rettichlp.unicacityaddon.commands;
 
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.api.Syncer;
@@ -7,17 +8,24 @@ import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.enums.location.Bus;
 import com.rettichlp.unicacityaddon.base.models.NaviPoint;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
+import com.rettichlp.unicacityaddon.base.text.ColorCode;
+import com.rettichlp.unicacityaddon.base.utils.ForgeUtils;
 import com.rettichlp.unicacityaddon.base.utils.NavigationUtils;
-import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiHopper;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
+import net.minecraft.inventory.ClickType;
+import net.minecraft.inventory.Container;
+import net.minecraft.inventory.ContainerHopper;
+import net.minecraft.inventory.Slot;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.client.IClientCommand;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +37,10 @@ import java.util.stream.Collectors;
 @UCCommand
 public class BusCommand implements IClientCommand {
 
-    public static List<Bus> busRoute;
+    public static Bus START;
+    public static Bus DESTINATION;
+
+    private static int lastWindowId = 0;
 
     @Override
     @Nonnull
@@ -82,13 +93,10 @@ public class BusCommand implements IClientCommand {
             return;
         }
 
-        Bus start = NavigationUtils.getNearestBus().getValue();
-        Bus destination = NavigationUtils.getNearestBus(naviPoint.getBlockPos()).getValue();
+        START = NavigationUtils.getNearestBus().getValue();
+        DESTINATION = NavigationUtils.getNearestBus(naviPoint.getBlockPos()).getValue();
 
-        busRoute = getBusRoute(start, destination);
         p.sendChatMessage("/bus");
-
-        System.out.println("INGAMEGUI: " + Minecraft.getMinecraft().ingameGUI);
     }
 
     @Override
@@ -101,28 +109,39 @@ public class BusCommand implements IClientCommand {
         return 0;
     }
 
-    private static List<Bus> getBusRoute(Bus start, Bus destination) {
-        List<Bus> busRoute = new ArrayList<>();
-        busRoute.add(start);
+    public static void process() {
+        GuiScreen guiScreen = UnicacityAddon.MINECRAFT.currentScreen;
+        if (guiScreen instanceof GuiHopper) {
+            GuiHopper guiHopper = (GuiHopper) guiScreen;
 
-        System.out.println("START: " + start);
-        System.out.println("ZIEL: " + destination);
+            Container container = guiHopper.inventorySlots;
+            if (container.windowId != lastWindowId && container instanceof ContainerHopper) {
+                lastWindowId = container.windowId;
 
-        while (!busRoute.get(busRoute.size() - 1).equals(destination)) {
-            busRoute.add(getNearestBusToDestination(destination, busRoute.get(busRoute.size() - 1).getNeighbors()).get(0));
-            System.out.println(busRoute.get(busRoute.size() - 1) + " - " + getNearestBusToDestination(destination, busRoute.get(busRoute.size() - 1).getNeighbors()));
+                Map<Bus, Slot> busSlotMap = container.inventorySlots.stream()
+                        .filter(slot -> slot.getStack().getDisplayName().startsWith(ColorCode.GOLD.getCode()))
+                        .collect(Collectors.toMap(slot -> Bus.getBus(ForgeUtils.stripColor(slot.getStack().getDisplayName())), slot -> slot));
+
+                Bus nearestBusToDestination = getNearestBusToDestination(busSlotMap.keySet());
+                Slot slot = busSlotMap.get(nearestBusToDestination);
+
+                if (nearestBusToDestination.equals(DESTINATION)) {
+                    UnicacityAddon.MINECRAFT.playerController.windowClick(container.windowId, slot.slotNumber, 0, ClickType.PICKUP, UnicacityAddon.MINECRAFT.player);
+                } else {
+                    UnicacityAddon.MINECRAFT.playerController.windowClick(container.windowId, slot.slotNumber, 1, ClickType.PICKUP, UnicacityAddon.MINECRAFT.player);
+                }
+            }
         }
-
-        return busRoute;
     }
 
-    private static List<Bus> getNearestBusToDestination(Bus destination, List<Bus> busList) {
+    private static Bus getNearestBusToDestination(Collection<Bus> busList) {
         return busList.stream()
-                .collect(Collectors.toMap(bus -> bus, bus -> bus.getBlockPos().getDistance(destination.getX(), destination.getY(), destination.getZ())))
+                .collect(Collectors.toMap(bus -> bus, bus -> bus.getBlockPos().getDistance(DESTINATION.getX(), DESTINATION.getY(), DESTINATION.getZ())))
                 .entrySet()
                 .stream()
                 .sorted(Map.Entry.comparingByValue())
                 .map(Map.Entry::getKey)
-                .collect(Collectors.toList());
+                .findFirst()
+                .orElseThrow(() -> new NullPointerException("Bus not found"));
     }
 }

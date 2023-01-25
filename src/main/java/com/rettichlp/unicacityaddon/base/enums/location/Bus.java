@@ -3,9 +3,6 @@ package com.rettichlp.unicacityaddon.base.enums.location;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public enum Bus {
     ALTSTADT("Altstadt", 263, 70, 596),
@@ -84,23 +81,9 @@ public enum Bus {
         return new BlockPos(x, y, z);
     }
 
-    public List<Bus> getNeighbors() {
-        List<Bus> neighbors =  Arrays.stream(values())
-                .filter(bus -> !bus.equals(this))
-                .collect(Collectors.toMap(bus -> bus, bus -> bus.getBlockPos().getDistance(x, y, z)))
-                .entrySet()
-                .stream()
-                .sorted(Map.Entry.comparingByValue())
-                .map(Map.Entry::getKey)
-                .collect(Collectors.toList())
-                .subList(0, 5);
-
-        if (this.equals(KRANKENHAUS) && neighbors.contains(UNICACITY_OST)) {
-            // UNICACITY_OST is nearer to KRANKENHAUS but isn't a valid next bus stop, so there is this workaround
-            // to replace UNICACITY_OST with MAKLER, because MAKLER has UNICACITY_OST as next possible bus stop
-            neighbors.set(neighbors.indexOf(UNICACITY_OST), MAKLER);
-        }
-
-        return neighbors;
+    public static Bus getBus(String s) {
+        return Arrays.stream(Bus.values())
+                .filter(bus -> s.equalsIgnoreCase(bus.name))
+                .findFirst().orElseThrow(() -> new NullPointerException("Bus does not exist"));
     }
 }
