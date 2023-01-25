@@ -37,7 +37,7 @@ public class PlantWaterTimerModule extends SimpleModule {
     public String getDisplayValue() {
         long timeSinceLastInteraction = System.currentTimeMillis() - FileManager.DATA.getPlantWaterTime();
         long timeLeft = TimeUnit.MINUTES.toMillis(50) - timeSinceLastInteraction;
-        return timeLeft > 0 ? TextUtils.parseTimer((int) TimeUnit.MILLISECONDS.toSeconds(timeLeft)) : ColorCode.RED.getCode() + "Jetzt";
+        return timeLeft >= 0 ? TextUtils.parseTimer((int) TimeUnit.MILLISECONDS.toSeconds(timeLeft)) : ColorCode.RED.getCode() + "-" + TextUtils.parseTimer((int) TimeUnit.MILLISECONDS.toSeconds(-timeLeft));
     }
 
     @Override
@@ -62,7 +62,7 @@ public class PlantWaterTimerModule extends SimpleModule {
 
     @Override
     public boolean isShown() {
-        return FileManager.DATA.getPlantWaterTime() > -1;
+        return System.currentTimeMillis() - FileManager.DATA.getPlantWaterTime() < TimeUnit.MINUTES.toMillis(20);
     }
 
     @Override

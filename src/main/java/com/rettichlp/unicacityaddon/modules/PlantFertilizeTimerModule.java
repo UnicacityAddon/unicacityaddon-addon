@@ -37,7 +37,7 @@ public class PlantFertilizeTimerModule extends SimpleModule {
     public String getDisplayValue() {
         long timeSinceLastInteraction = System.currentTimeMillis() - FileManager.DATA.getPlantFertilizeTime();
         long timeLeft = TimeUnit.MINUTES.toMillis(70) - timeSinceLastInteraction;
-        return timeLeft > 0 ? TextUtils.parseTimer((int) TimeUnit.MILLISECONDS.toSeconds(timeLeft)) : ColorCode.RED.getCode() + "Jetzt";
+        return timeLeft >= 0 ? TextUtils.parseTimer((int) TimeUnit.MILLISECONDS.toSeconds(timeLeft)) : ColorCode.RED.getCode() + "-" + TextUtils.parseTimer((int) TimeUnit.MILLISECONDS.toSeconds(-timeLeft));
     }
 
     @Override
@@ -62,7 +62,7 @@ public class PlantFertilizeTimerModule extends SimpleModule {
 
     @Override
     public boolean isShown() {
-        return FileManager.DATA.getPlantFertilizeTime() > -1;
+        return System.currentTimeMillis() - FileManager.DATA.getPlantFertilizeTime() < TimeUnit.MINUTES.toMillis(20);
     }
 
     @Override

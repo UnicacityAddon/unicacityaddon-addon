@@ -48,8 +48,8 @@ public class PlantEventHandler {
         String msg = e.getMessage().getUnformattedText();
 
         if (PatternHandler.PLANT_HARVEST_PATTERN.matcher(msg).find()) {
-            FileManager.DATA.setPlantFertilizeTime(-1);
-            FileManager.DATA.setPlantWaterTime(-1);
+            FileManager.DATA.setPlantFertilizeTime(-TimeUnit.MINUTES.toMillis(20));
+            FileManager.DATA.setPlantWaterTime(-TimeUnit.MINUTES.toMillis(20));
             return;
         }
 
