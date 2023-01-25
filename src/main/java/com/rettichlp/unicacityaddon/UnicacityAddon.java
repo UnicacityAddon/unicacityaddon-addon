@@ -11,6 +11,8 @@ import com.rettichlp.unicacityaddon.base.registry.KeyBindRegistry;
 import com.rettichlp.unicacityaddon.base.registry.ModuleRegistry;
 import com.rettichlp.unicacityaddon.base.teamspeak.TSClientQuery;
 import com.rettichlp.unicacityaddon.base.utils.UpdateUtils;
+import com.rettichlp.unicacityaddon.events.chatlog.ChatLogReceiveChatEventHandler;
+import com.rettichlp.unicacityaddon.events.chatlog.ChatLogSendChatEventHandler;
 import com.rettichlp.unicacityaddon.events.RenderTagEventHandler;
 import com.rettichlp.unicacityaddon.events.TabListEventHandler;
 import net.labymod.api.LabyModAddon;
@@ -55,6 +57,8 @@ public class UnicacityAddon extends LabyModAddon {
         // LabyModEvents -> https://docs.labymod.net/pages/create-addons/labymod_events/
         ADDON.getApi().getEventManager().register(new TabListEventHandler());
         ADDON.getApi().getEventManager().register(new RenderTagEventHandler());
+        ADDON.getApi().getEventManager().register(new ChatLogSendChatEventHandler());
+        ADDON.getApi().getEventManager().register(new ChatLogReceiveChatEventHandler());
 
         BroadcastChecker.start();
         TokenManager.createToken();
