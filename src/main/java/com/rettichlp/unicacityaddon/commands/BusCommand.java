@@ -40,6 +40,7 @@ public class BusCommand implements IClientCommand {
     public static Bus START;
     public static Bus DESTINATION;
 
+    private static boolean active = false;
     private static int lastWindowId = 0;
 
     @Override
@@ -97,6 +98,7 @@ public class BusCommand implements IClientCommand {
         DESTINATION = NavigationUtils.getNearestBus(naviPoint.getBlockPos()).getValue();
 
         p.sendChatMessage("/bus");
+        active = true;
     }
 
     @Override
@@ -111,7 +113,7 @@ public class BusCommand implements IClientCommand {
 
     public static void process() {
         GuiScreen guiScreen = UnicacityAddon.MINECRAFT.currentScreen;
-        if (guiScreen instanceof GuiHopper) {
+        if (guiScreen instanceof GuiHopper && active) {
             GuiHopper guiHopper = (GuiHopper) guiScreen;
 
             Container container = guiHopper.inventorySlots;
@@ -127,6 +129,7 @@ public class BusCommand implements IClientCommand {
 
                 if (nearestBusToDestination.equals(DESTINATION)) {
                     UnicacityAddon.MINECRAFT.playerController.windowClick(container.windowId, slot.slotNumber, 0, ClickType.PICKUP, UnicacityAddon.MINECRAFT.player);
+                    active = false;
                 } else {
                     UnicacityAddon.MINECRAFT.playerController.windowClick(container.windowId, slot.slotNumber, 1, ClickType.PICKUP, UnicacityAddon.MINECRAFT.player);
                 }
