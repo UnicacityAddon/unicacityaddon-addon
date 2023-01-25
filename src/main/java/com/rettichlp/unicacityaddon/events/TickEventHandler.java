@@ -10,6 +10,7 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.utils.MathUtils;
 import com.rettichlp.unicacityaddon.base.utils.TextUtils;
+import com.rettichlp.unicacityaddon.commands.BusCommand;
 import com.rettichlp.unicacityaddon.events.faction.ReinforcementEventHandler;
 import com.rettichlp.unicacityaddon.events.house.HouseInteractionEventHandler;
 import com.rettichlp.unicacityaddon.modules.BombTimerModule;
@@ -33,12 +34,13 @@ public class TickEventHandler {
 
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
-        if (event.phase == TickEvent.Phase.END && UnicacityAddon.isUnicacity()) {
+        if (event.phase == TickEvent.Phase.END && UnicacityAddon.MINECRAFT.world != null) {
             currentTick++;
 
             // EVERY TICK
             handleReinforcementScreenshot();
             handleDamageTracker();
+            handleBusTracker();
 
             // 1 SECOND
             if (currentTick % 20 == 0) {
@@ -86,8 +88,6 @@ public class TickEventHandler {
     }
 
     private void handleDamageTracker() {
-        if (UnicacityAddon.MINECRAFT.world == null)
-            return;
         float currentHeal = AbstractionLayer.getPlayer().getPlayer().getHealth();
         if (lastTickDamage.getValue() > currentHeal) {
             lastTickDamage = Maps.immutableEntry(System.currentTimeMillis(), currentHeal);
@@ -96,10 +96,11 @@ public class TickEventHandler {
         }
     }
 
-    private void handleNameTag() {
-        if (UnicacityAddon.MINECRAFT.world == null)
-            return;
+    private void handleBusTracker() {
+        BusCommand.process();
+    }
 
+    private void handleNameTag() {
         List<EntityItem> items = UnicacityAddon.MINECRAFT.world.getEntities(EntityItem.class, (ent) -> ent != null && ent.hasCustomName() && ent.getItem().getItem() instanceof ItemSkull);
         items.forEach(entityItem -> {
             String name = entityItem.getCustomNameTag();
@@ -123,8 +124,6 @@ public class TickEventHandler {
     }
 
     private void handleNameTagSyncDisplayName() {
-        if (UnicacityAddon.MINECRAFT.world == null)
-            return;
         NameTagEventHandler.refreshAllDisplayNames();
     }
 
@@ -148,15 +147,14 @@ public class TickEventHandler {
     }
 
     private void handleScoreboardCheck() {
-        if (!UnicacityAddon.isUnicacity())
-            return;
         Scoreboard scoreboard = AbstractionLayer.getPlayer().getWorldScoreboard();
         CarEventHandler.checkTank(scoreboard);
     }
 
     private void handlePayDay() {
-        if (AccountEventHandler.isAfk || !UnicacityAddon.isUnicacity())
-            return;
-        FileManager.DATA.addPayDayTime(1);
+        FileManager.saveData();
+        if (!AccountEventHandler.isAfk) {
+            FileManager.DATA.addPayDayTime(1);
+        }
     }
 }
