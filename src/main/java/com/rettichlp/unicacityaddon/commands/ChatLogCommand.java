@@ -7,13 +7,16 @@ import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
-import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
+import com.rettichlp.unicacityaddon.base.text.ColorCode;
+import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.utils.MathUtils;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.event.ClickEvent;
+import net.minecraft.util.text.event.HoverEvent;
 import net.minecraftforge.client.IClientCommand;
 
 import javax.annotation.Nonnull;
@@ -27,18 +30,16 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
 /**
  * @author RettichLP
- * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/commands/faction/CheckActiveMembersCommand.java">UCUtils by paulzhng</a>
  */
 @UCCommand
 public class ChatLogCommand implements IClientCommand {
@@ -81,16 +82,28 @@ public class ChatLogCommand implements IClientCommand {
             chatlog = createChatLog(-1);
         }
 
-        String response = upload(chatlog);
-        p.sendInfoMessage("Chatlog gespeichert unter: " + response);
+        new Thread(() -> {
+            String response = upload(chatlog);
+            if (response != null) {
+                p.sendMessage(Message.getBuilder()
+                        .info().space()
+                        .of("Chatlog gespeichert unter:").color(ColorCode.WHITE).advance().space()
+                        .of(response).color(ColorCode.BLUE)
+                                .underline()
+                                .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Link öffnen").color(ColorCode.RED).advance().createComponent())
+                                .clickEvent(ClickEvent.Action.OPEN_URL, response)
+                                .advance()
+                        .createComponent());
+            } else {
+                p.sendErrorMessage("Chatlog konnte nicht erstellt werden.");
+            }
+        }).start();
     }
 
     @Override
     @Nonnull
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
-        return TabCompletionBuilder.getBuilder(args)
-                .addAtIndex(1, Arrays.stream(Faction.values()).map(Faction::getFactionKey).sorted().collect(Collectors.toList()))
-                .build();
+        return TabCompletionBuilder.getBuilder(args).build();
     }
 
     @Override
@@ -112,7 +125,9 @@ public class ChatLogCommand implements IClientCommand {
         StringBuilder chatLogStringBuilder = new StringBuilder();
         chatLogMap.keySet().stream()
                 .filter(time -> i < 0 || time > (System.currentTimeMillis() - TimeUnit.MINUTES.toMillis(i)))
-                .sorted()
+                .sorted(Comparator.reverseOrder()) // revers for limit (last n items)
+                .limit(1000) // get last n items
+                .sorted() // revers for origin order
                 .forEach(time -> {
                     String formattedTime = DATE_FORMAT.format(new Date(time));
                     String message = chatLogMap.get(time);

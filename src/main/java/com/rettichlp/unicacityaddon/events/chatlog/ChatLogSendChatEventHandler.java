@@ -13,7 +13,7 @@ public class ChatLogSendChatEventHandler implements MessageSendEvent {
 
     @Override
     public boolean onSend(String s) {
-        if (UnicacityAddon.isUnicacity())
+        if (UnicacityAddon.isUnicacity() && !s.equalsIgnoreCase("/chatlog"))
             ChatLogCommand.chatLogMap.put(System.currentTimeMillis(), "[SELF] " + s);
         return false;
     }
