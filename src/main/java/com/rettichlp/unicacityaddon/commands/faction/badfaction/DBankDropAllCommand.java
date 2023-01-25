@@ -27,8 +27,6 @@ import java.util.concurrent.TimeUnit;
 @UCCommand
 public class DBankDropAllCommand implements IClientCommand {
 
-    private final Timer timer = new Timer();
-
     @Override
     @Nonnull
     public String getName() {
@@ -70,6 +68,7 @@ public class DBankDropAllCommand implements IClientCommand {
                                 commandQueue.add("/dbank drop " + drugType.getShortName() + " " + integer + " " + drugPurity.getPurity());
                         }));
 
+        Timer timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
@@ -86,7 +85,9 @@ public class DBankDropAllCommand implements IClientCommand {
     @Override
     @Nonnull
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
-        return TabCompletionBuilder.getBuilder(args).build();
+        return TabCompletionBuilder.getBuilder(args)
+                .addAtIndex(1, "reset")
+                .build();
     }
 
     @Override
