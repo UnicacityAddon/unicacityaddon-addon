@@ -50,9 +50,6 @@ public class ReviveEventHandler {
             FileManager.DATA.setTimer(0);
             FileManager.DATA.setCashBalance(0);
 
-            if (MobileEventHandler.hasCommunications && !AccountEventHandler.isAfk)
-                AbstractionLayer.getPlayer().sendChatMessage("/togglephone");
-
             if (ShutdownGraveyardCommand.shutdownGraveyard)
                 ForgeUtils.shutdownPC();
             return;

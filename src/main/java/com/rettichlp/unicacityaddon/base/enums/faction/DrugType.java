@@ -10,7 +10,7 @@ public enum DrugType {
     LSD("LSD", "LSD", false),
     ANTIBIOTIKA("Antibiotika", null, true),
     HUSTENSAFT("Hustensaft", null, true),
-    SCHMERZMITTEL("Schmerzmittel", null, true);
+    SCHMERZMITTEL("Schmerzmittel", "Schmerzpillen", true);
 
     private final String drugName;
     private final String shortName;

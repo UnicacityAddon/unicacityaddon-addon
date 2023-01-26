@@ -64,6 +64,14 @@ public class DrugInteractionEventHandler {
             return;
         }
 
+        Matcher medicationGetMatcher = PatternHandler.MEDICATION_GET_PATTERN.matcher(msg);
+        if (medicationGetMatcher.find()) {
+            int amount = Integer.parseInt(dbankGiveMatcher.group("amount"));
+            DrugType drugType = DrugType.getDrugType(dbankGiveMatcher.group("drugType"));
+            FileManager.DATA.addDrugToInventory(drugType, DrugPurity.BEST, amount);
+            return;
+        }
+
         Matcher drugUseMatcher = PatternHandler.DRUG_USE_PATTERN.matcher(msg);
         if (drugUseMatcher.find()) {
             DrugType drugType = DrugType.getDrugType(drugUseMatcher.group("drugType"));
