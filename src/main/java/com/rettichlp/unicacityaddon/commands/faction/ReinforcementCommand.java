@@ -39,7 +39,7 @@ public class ReinforcementCommand implements IClientCommand {
     @Override
     @Nonnull
     public String getUsage(@Nonnull ICommandSender sender) {
-        return "/reinforcement (-d/-r/-rd/-e/-ed/-m/-lb/-da/-ct/-p/-b/-gn/-t)";
+        return "/reinforcement (-d/-r/-rd/-e/-ed/-m/-lb/-da/-ct/-p/-b/-gn/-gnd/-t/-td/-test)";
     }
 
     @Override
@@ -135,7 +135,8 @@ public class ReinforcementCommand implements IClientCommand {
         CONTRACT("-ct", ChatType.FCHAT, "Contract!"),
         PLANT("-p", ChatType.DCHAT, "Plant!"),
         BOMB("-b", ChatType.DCHAT, "Bombe!"),
-        HOSTAGE_TAKING("-gn", ChatType.DCHAT, "Geiselnahme!"),
+        HOSTAGE_TAKING("-gn", ChatType.FCHAT, "Geiselnahme!"),
+        HOSTAGE_TAKING_D("-gnd", ChatType.DCHAT, "Geiselnahme!"),
         TRAINING("-t", ChatType.FCHAT, "Training!"),
         TRAINING_D("-td", ChatType.DCHAT, "Training!"),
         TEST("-test", ChatType.FCHAT, "Test!"),;
