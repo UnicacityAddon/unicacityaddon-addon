@@ -35,6 +35,6 @@ public enum DrugPurity {
     }
 
     public static DrugPurity getDrugPurityByInteger(int drugPurity) {
-        return values()[drugPurity];
+        return drugPurity > 4 ? DrugPurity.BEST : values()[drugPurity];
     }
 }

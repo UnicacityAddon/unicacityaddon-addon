@@ -67,11 +67,9 @@ public class HouseDataEventHandler {
 
             Matcher drugStorageAddCommandMatcher = PatternHandler.HOUSE_STORAGE_ADD_COMMAND_PATTERN.matcher(waitingCommand);
             if (drugStorageAddCommandMatcher.find()) {
-                String[] splittetMsg = waitingCommand.split(" ");
-
-                DrugType drugType = DrugType.getDrugType(splittetMsg[2]);
-                DrugPurity drugPurity = DrugPurity.values()[Integer.parseInt(splittetMsg[4])];
-                int amount = Integer.parseInt(splittetMsg[3]);
+                int amount = Integer.parseInt(drugStorageAddCommandMatcher.group("amount"));
+                DrugType drugType = DrugType.getDrugType(drugStorageAddCommandMatcher.group("drugType"));
+                DrugPurity drugPurity = DrugPurity.getDrugPurity(drugStorageAddCommandMatcher.group("drugPurity"));
 
                 HouseData houseData = HouseDataManager.getHouseData(lastCheckedHouseNumber).addToStorage(drugType, drugPurity, amount);
                 HouseDataManager.updateHouseData(lastCheckedHouseNumber, houseData);
@@ -81,11 +79,9 @@ public class HouseDataEventHandler {
 
             Matcher drugStorageRemoveCommandMatcher = PatternHandler.HOUSE_STORAGE_REMOVE_COMMAND_PATTERN.matcher(waitingCommand);
             if (drugStorageRemoveCommandMatcher.find()) {
-                String[] splittetMsg = waitingCommand.split(" ");
-
-                DrugType drugType = DrugType.getDrugType(splittetMsg[2]);
-                DrugPurity drugPurity = DrugPurity.values()[Integer.parseInt(splittetMsg[4])];
-                int amount = Integer.parseInt(splittetMsg[3]);
+                int amount = Integer.parseInt(drugStorageAddCommandMatcher.group("amount"));
+                DrugType drugType = DrugType.getDrugType(drugStorageAddCommandMatcher.group("drugType"));
+                DrugPurity drugPurity = DrugPurity.getDrugPurity(drugStorageAddCommandMatcher.group("drugPurity"));
 
                 HouseData houseData = HouseDataManager.getHouseData(lastCheckedHouseNumber).removeFromStorage(drugType, drugPurity, amount);
                 HouseDataManager.updateHouseData(lastCheckedHouseNumber, houseData);

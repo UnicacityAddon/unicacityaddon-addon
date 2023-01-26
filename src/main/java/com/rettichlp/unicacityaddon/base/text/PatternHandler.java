@@ -182,6 +182,7 @@ public class PatternHandler {
     public static final Pattern DRUG_USE_COMMAND_PATTERN = Pattern.compile("^/use (?<drugType>.+) (?<drugPurity>\\d)$");
     public static final Pattern TRUNK_GET_COMMAND_PATTERN = Pattern.compile("^/trunk get (?<drugType>.+) (?<drugPurity>\\d) (?<amount>\\d+)$");
     public static final Pattern TRUNK_GIVE_COMMAND_PATTERN = Pattern.compile("^/trunk drop (?<drugType>.+) (?<drugPurity>\\d) (?<amount>\\d+)$");
+    public static final Pattern TRUNK_INTERACTION_ACCEPTED_PATTERN = Pattern.compile("^\\[Car] Du hast (?<amount>\\d+)g (?<drugType>.+) (aus dem|in den) Kofferraum (genommen|verstaut)\\.$");
     public static final Pattern BANNER_SPRAYED_PATTERN = Pattern.compile("^\\[Graffiti] Du hast das Graffiti mit deiner Fraktionsflagge übersprayt\\.$");
 
     /**
@@ -277,8 +278,8 @@ public class PatternHandler {
     public static final Pattern HOUSE_RENTER_HEADER_PATTERN = Pattern.compile("^=== Mieter in Haus (\\d+) ===$");
     public static final Pattern HOUSE_RENTER_VALUE_PATTERN = Pattern.compile("^ {2}» (?:\\[UC])*(\\w+) \\((Online|Offline seit (\\d+)\\.(\\d+)\\.(\\d+) (\\d+):(\\d+):(\\d+))\\)$");
     public static final Pattern HOUSE_STORAGE_SUCCESSFUL_INTERACTION = Pattern.compile("^\\[Haus] Du hast (\\d+)g (\\w+) (ins|aus dem) Drogenlager (gelegt|genommen)\\.$");
-    public static final Pattern HOUSE_STORAGE_ADD_COMMAND_PATTERN = Pattern.compile("^/drogenlager drop (\\w+) (\\d+) (\\d)$");
-    public static final Pattern HOUSE_STORAGE_REMOVE_COMMAND_PATTERN = Pattern.compile("^/drogenlager get (\\w+) (\\d+) (\\d)$");
+    public static final Pattern HOUSE_STORAGE_ADD_COMMAND_PATTERN = Pattern.compile("^/drogenlager drop (?<drugType>.+) (?<amount>\\d+) (?<drugPurity>\\d)$");
+    public static final Pattern HOUSE_STORAGE_REMOVE_COMMAND_PATTERN = Pattern.compile("^/drogenlager get (?<drugType>.+) (?<amount>\\d+) (?<drugPurity>\\d)$");
     public static final Pattern HOUSE_AKKU_PATTERN = Pattern.compile("^Du hast begonnen deinen Akku aufzuladen\\.\\.\\.$");
     public static final Pattern HOUSE_HEAL_PATTERN = Pattern.compile("^Du hast begonnen dich zu heilen\\.\\.\\.$");
 

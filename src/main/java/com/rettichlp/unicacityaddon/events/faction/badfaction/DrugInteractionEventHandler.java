@@ -1,5 +1,7 @@
 package com.rettichlp.unicacityaddon.events.faction.badfaction;
 
+import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
+import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.config.ConfigElements;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
@@ -27,31 +29,25 @@ public class DrugInteractionEventHandler {
 
     @SubscribeEvent
     public void onClientChatReceived(ClientChatReceivedEvent e) {
+        UPlayer p = AbstractionLayer.getPlayer();
         String msg = e.getMessage().getUnformattedText();
 
         Matcher drugGetMatcher = PatternHandler.DRUG_GET_PATTERN.matcher(msg);
         if (drugGetMatcher.find()) {
-            amount = Integer.parseInt(drugGetMatcher.group("amount"));
-            lastDrugType = DrugType.getDrugType(drugGetMatcher.group("drugType"));
-            lastDrugPurity = DrugPurity.getDrugPurity(drugGetMatcher.group("drugPurity"));
-            time = System.currentTimeMillis();
+            extractDrugData(drugGetMatcher);
             type = "ADD";
             return;
         }
 
         Matcher drugGiveMatcher = PatternHandler.DRUG_GIVE_PATTERN.matcher(msg);
         if (drugGiveMatcher.find()) {
-            amount = Integer.parseInt(drugGiveMatcher.group("amount"));
-            lastDrugType = DrugType.getDrugType(drugGiveMatcher.group("drugType"));
-            lastDrugPurity = DrugPurity.getDrugPurity(drugGiveMatcher.group("drugPurity"));
-            time = System.currentTimeMillis();
+            extractDrugData(drugGiveMatcher);
             type = "REMOVE";
             return;
         }
 
         Matcher dbankGetMatcher = PatternHandler.DBANK_GET_PATTERN.matcher(msg);
-        Matcher trunkGetMatcher = PatternHandler.TRUNK_GET_COMMAND_PATTERN.matcher(msg);
-        if (dbankGetMatcher.find() || trunkGetMatcher.find()) {
+        if (dbankGetMatcher.find() && msg.contains(p.getName())) {
             int amount = Integer.parseInt(dbankGetMatcher.group("amount"));
             DrugType drugType = DrugType.getDrugType(dbankGetMatcher.group("drugType"));
             DrugPurity drugPurity = DrugPurity.getDrugPurity(dbankGetMatcher.group("drugPurity"));
@@ -60,8 +56,7 @@ public class DrugInteractionEventHandler {
         }
 
         Matcher dbankGiveMatcher = PatternHandler.DBANK_GIVE_PATTERN.matcher(msg);
-        Matcher trunkGiveMatcher = PatternHandler.TRUNK_GIVE_COMMAND_PATTERN.matcher(msg);
-        if (dbankGiveMatcher.find() || trunkGiveMatcher.find()) {
+        if (dbankGiveMatcher.find() && msg.contains(p.getName())) {
             int amount = Integer.parseInt(dbankGiveMatcher.group("amount"));
             DrugType drugType = DrugType.getDrugType(dbankGiveMatcher.group("drugType"));
             DrugPurity drugPurity = DrugPurity.getDrugPurity(dbankGiveMatcher.group("drugPurity"));
@@ -89,8 +84,9 @@ public class DrugInteractionEventHandler {
             FileManager.DATA.removeDrugFromInventory(drugType, drugPurity, 1);
         }
 
-        Matcher drugDealAccepted = PatternHandler.DRUG_DEAL_ACCEPTED.matcher(msg);
-        if (drugDealAccepted.find() && System.currentTimeMillis() - time < TimeUnit.MINUTES.toMillis(3)) {
+        Matcher drugDealAcceptedMatcher = PatternHandler.DRUG_DEAL_ACCEPTED.matcher(msg);
+        Matcher trunkInteractionAcceptedMatcher = PatternHandler.TRUNK_INTERACTION_ACCEPTED_PATTERN.matcher(msg);
+        if ((drugDealAcceptedMatcher.find() || trunkInteractionAcceptedMatcher.find()) && System.currentTimeMillis() - time < TimeUnit.MINUTES.toMillis(3)) {
             if (type.equals("ADD")) {
                 FileManager.DATA.addDrugToInventory(lastDrugType, lastDrugPurity, amount);
             } else if (type.equals("REMOVE")) {
@@ -101,11 +97,34 @@ public class DrugInteractionEventHandler {
 
     @SubscribeEvent
     public void onClientChat(ClientChatEvent e) {
+        String msg = e.getMessage();
+
+        Matcher trunkGetMatcher = PatternHandler.TRUNK_GET_COMMAND_PATTERN.matcher(msg);
+        if (trunkGetMatcher.find()) {
+            extractDrugData(trunkGetMatcher);
+            type = "ADD";
+            return;
+        }
+
+        Matcher trunkGiveMatcher = PatternHandler.TRUNK_GIVE_COMMAND_PATTERN.matcher(msg);
+        if (trunkGiveMatcher.find()) {
+            extractDrugData(trunkGiveMatcher);
+            type = "REMOVE";
+            return;
+        }
+
         Matcher drugUseMatcher = PatternHandler.DRUG_USE_COMMAND_PATTERN.matcher(e.getMessage());
         if (drugUseMatcher.find()) {
             DrugType drugType = DrugType.getDrugType(drugUseMatcher.group("drugType"));
             DrugPurity drugPurity = DrugPurity.getDrugPurity(drugUseMatcher.group("drugPurity"));
             FileManager.DATA.removeDrugFromInventory(drugType, drugPurity, 1);
         }
+    }
+
+    private void extractDrugData(Matcher matcher) {
+        amount = Integer.parseInt(matcher.group("amount"));
+        lastDrugType = DrugType.getDrugType(matcher.group("drugType"));
+        lastDrugPurity = DrugPurity.getDrugPurity(matcher.group("drugPurity"));
+        time = System.currentTimeMillis();
     }
 }
