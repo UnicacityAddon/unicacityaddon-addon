@@ -32,6 +32,7 @@ public class ReviveEventHandler {
 
     private static long reviveByMedicStartTime = 0; // revive time if you are dead
     private static long reviveFromMedicStartTime = 0; // revive time if you are the medic
+    private static final Timer timer = new Timer();
 
     @SubscribeEvent
     public void onReviveStart(ClientChatReceivedEvent e) {
@@ -77,12 +78,12 @@ public class ReviveEventHandler {
                 FileManager.DATA.removeBankBalance(50); // successfully revived by medic = 50$
 
                 // message to remember how long you are not allowed to shoot after revive
-                new Timer().schedule(new TimerTask() {
+                timer.schedule(new TimerTask() {
                     @Override
                     public void run() {
                         p.sendInfoMessage("Du darfst wieder schießen.");
                     }
-                }, 0, TimeUnit.MINUTES.toMillis(2));
+                }, TimeUnit.MINUTES.toMillis(2));
             }
 
             if (MobileEventHandler.hasCommunications && !AccountEventHandler.isAfk)
