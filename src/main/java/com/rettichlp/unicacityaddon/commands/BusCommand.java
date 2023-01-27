@@ -41,6 +41,7 @@ public class BusCommand implements IClientCommand {
     public static Bus DESTINATION;
 
     private static boolean active = false;
+    private static int limiter = 0;
     private static int lastWindowId = 0;
 
     @Override
@@ -97,6 +98,7 @@ public class BusCommand implements IClientCommand {
         START = NavigationUtils.getNearestBus().getValue();
         DESTINATION = NavigationUtils.getNearestBus(naviPoint.getBlockPos()).getValue();
 
+        limiter = 0;
         p.sendChatMessage("/bus");
         active = true;
     }
@@ -130,8 +132,12 @@ public class BusCommand implements IClientCommand {
                 if (nearestBusToDestination.equals(DESTINATION)) {
                     UnicacityAddon.MINECRAFT.playerController.windowClick(container.windowId, slot.slotNumber, 0, ClickType.PICKUP, UnicacityAddon.MINECRAFT.player);
                     active = false;
-                } else {
+                } else if (limiter < 15) {
                     UnicacityAddon.MINECRAFT.playerController.windowClick(container.windowId, slot.slotNumber, 1, ClickType.PICKUP, UnicacityAddon.MINECRAFT.player);
+                    limiter++;
+                } else {
+                    AbstractionLayer.getPlayer().sendErrorMessage("Es konnte keine Route gefunden werden.");
+                    active = false;
                 }
             }
         }
