@@ -84,6 +84,7 @@ public enum Bus {
     public static Bus getBus(String s) {
         return Arrays.stream(Bus.values())
                 .filter(bus -> s.equalsIgnoreCase(bus.name))
-                .findFirst().orElseThrow(() -> new NullPointerException("Bus does not exist"));
+                .findFirst()
+                .orElse(null);
     }
 }

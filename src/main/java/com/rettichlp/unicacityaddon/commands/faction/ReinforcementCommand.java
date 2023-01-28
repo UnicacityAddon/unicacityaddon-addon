@@ -7,7 +7,6 @@ import com.rettichlp.unicacityaddon.base.config.ConfigElements;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ChatType;
-import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.utils.MathUtils;
 import com.rettichlp.unicacityaddon.events.MobileEventHandler;
 import net.minecraft.command.ICommand;
@@ -70,7 +69,7 @@ public class ReinforcementCommand implements IClientCommand {
 
         if ((args.length >= 5) && args[0].equalsIgnoreCase("ontheway")) {
             if ((p.getFaction() == Faction.FBI || p.getFaction() == Faction.RETTUNGSDIENST || p.getFaction() == Faction.POLIZEI) && !p.inDuty()) {
-                Message.getBuilder().error().of("Du bist nicht im Dienst.");
+                p.sendErrorMessage("Du bist nicht im Dienst.");
                 return;
             }
 

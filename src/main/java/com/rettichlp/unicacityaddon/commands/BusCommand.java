@@ -120,13 +120,21 @@ public class BusCommand implements IClientCommand {
 
             Container container = guiHopper.inventorySlots;
             if (container.windowId != lastWindowId && container instanceof ContainerHopper) {
+                UPlayer p = AbstractionLayer.getPlayer();
                 lastWindowId = container.windowId;
 
                 Map<Bus, Slot> busSlotMap = container.inventorySlots.stream()
                         .filter(slot -> slot.getStack().getDisplayName().startsWith(ColorCode.GOLD.getCode()))
+                        .filter(slot -> Bus.getBus(ForgeUtils.stripColor(slot.getStack().getDisplayName())) != null)
                         .collect(Collectors.toMap(slot -> Bus.getBus(ForgeUtils.stripColor(slot.getStack().getDisplayName())), slot -> slot));
 
                 Bus nearestBusToDestination = getNearestBusToDestination(busSlotMap.keySet());
+                if (nearestBusToDestination == null) {
+                    p.sendErrorMessage("Es konnte keine Route gefunden werden.");
+                    active = false;
+                    return;
+                }
+
                 Slot slot = busSlotMap.get(nearestBusToDestination);
 
                 if (nearestBusToDestination.equals(DESTINATION)) {
@@ -136,7 +144,7 @@ public class BusCommand implements IClientCommand {
                     UnicacityAddon.MINECRAFT.playerController.windowClick(container.windowId, slot.slotNumber, 1, ClickType.PICKUP, UnicacityAddon.MINECRAFT.player);
                     limiter++;
                 } else {
-                    AbstractionLayer.getPlayer().sendErrorMessage("Es konnte keine Route gefunden werden.");
+                    p.sendErrorMessage("Es konnte keine Route gefunden werden.");
                     active = false;
                 }
             }
@@ -151,6 +159,6 @@ public class BusCommand implements IClientCommand {
                 .sorted(Map.Entry.comparingByValue())
                 .map(Map.Entry::getKey)
                 .findFirst()
-                .orElseThrow(() -> new NullPointerException("Bus not found"));
+                .orElse(null);
     }
 }

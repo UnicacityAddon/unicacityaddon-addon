@@ -5,11 +5,11 @@ import com.rettichlp.unicacityaddon.base.api.Syncer;
 import com.rettichlp.unicacityaddon.base.config.ConfigElements;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
+import com.rettichlp.unicacityaddon.base.manager.FactionManager;
 import com.rettichlp.unicacityaddon.base.registry.SoundRegistry;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.utils.NavigationUtils;
-import com.rettichlp.unicacityaddon.events.faction.DutyEventHandler;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.inventory.Container;
 import net.minecraft.scoreboard.Scoreboard;
@@ -158,7 +158,7 @@ public class UPlayerImpl implements UPlayer {
     }
 
     @Override
-    public boolean inDuty() {return DutyEventHandler.inDuty;}
+    public boolean inDuty() {return FactionManager.checkPlayerDuty(getName());}
 
     @Override
     public int getRank() {
