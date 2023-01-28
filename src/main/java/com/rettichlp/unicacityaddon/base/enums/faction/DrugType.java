@@ -8,6 +8,9 @@ public enum DrugType {
     MARIJUANA("Marihuana", "Gras", false),
     METH("Methamphetamin", "Meth", false),
     LSD("LSD", "LSD", false),
+    IRON("Eisen", null, false),
+    MASK("Maske", null, false),
+    GUNPOWDER("Schwarzpulver", null, false),
     ANTIBIOTIKA("Antibiotika", null, true),
     HUSTENSAFT("Hustensaft", null, true),
     SCHMERZMITTEL("Schmerzmittel", "Schmerzpillen", true);
