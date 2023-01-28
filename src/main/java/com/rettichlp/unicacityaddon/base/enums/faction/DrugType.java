@@ -40,6 +40,7 @@ public enum DrugType {
     public static DrugType getDrugType(String s) {
         return Arrays.stream(DrugType.values())
                 .filter(drugType -> s.equalsIgnoreCase(drugType.drugName) || s.equalsIgnoreCase(drugType.shortName))
-                .findFirst().orElseThrow(() -> new RuntimeException("DrugType does not exist"));
+                .findFirst()
+                .orElse(null);
     }
 }

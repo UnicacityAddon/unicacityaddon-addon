@@ -140,10 +140,12 @@ public class Data {
      * @see DrugPurity
      */
     public void addDrugToInventory(DrugType drugType, DrugPurity drugPurity, int amount) {
-        Map<DrugPurity, Integer> drugPurityIntegerMap = drugInventoryMap.getOrDefault(drugType, new HashMap<>());
-        int oldAmount = drugPurityIntegerMap.getOrDefault(drugPurity, 0);
-        drugPurityIntegerMap.put(drugPurity, oldAmount + amount);
-        drugInventoryMap.put(drugType, drugPurityIntegerMap);
+        if (drugType != null) {
+            Map<DrugPurity, Integer> drugPurityIntegerMap = drugInventoryMap.getOrDefault(drugType, new HashMap<>());
+            int oldAmount = drugPurityIntegerMap.getOrDefault(drugPurity, 0);
+            drugPurityIntegerMap.put(drugPurity, oldAmount + amount);
+            drugInventoryMap.put(drugType, drugPurityIntegerMap);
+        }
     }
 
     /**
@@ -156,10 +158,12 @@ public class Data {
      * @see DrugPurity
      */
     public void removeDrugFromInventory(DrugType drugType, DrugPurity drugPurity, int amount) {
-        Map<DrugPurity, Integer> drugPurityIntegerMap = drugInventoryMap.getOrDefault(drugType, new HashMap<>());
-        int oldAmount = drugPurityIntegerMap.getOrDefault(drugPurity, 0);
-        drugPurityIntegerMap.put(drugPurity, Math.max(oldAmount - amount, 0));
-        drugInventoryMap.put(drugType, drugPurityIntegerMap);
+        if (drugType != null) {
+            Map<DrugPurity, Integer> drugPurityIntegerMap = drugInventoryMap.getOrDefault(drugType, new HashMap<>());
+            int oldAmount = drugPurityIntegerMap.getOrDefault(drugPurity, 0);
+            drugPurityIntegerMap.put(drugPurity, Math.max(oldAmount - amount, 0));
+            drugInventoryMap.put(drugType, drugPurityIntegerMap);
+        }
     }
 
     /**
