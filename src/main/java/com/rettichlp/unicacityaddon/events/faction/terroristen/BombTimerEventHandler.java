@@ -68,7 +68,7 @@ public class BombTimerEventHandler {
                     .space()
                     .of(location != null ? "[Sperrgebiet aufheben]" : "").color(ColorCode.RED)
                             .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Sperrgebiet ausrufen").color(ColorCode.RED).advance().createComponent())
-                            .clickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/removesperrgebiet " + getLocationWithArticle(location))
+                            .clickEvent(ClickEvent.Action.SUGGEST_COMMAND, location != null ? "/removesperrgebiet " + getLocationWithArticle(location) : "")
                             .advance()
                     .createComponent());
             BombTimerModule.stopBombTimer();
