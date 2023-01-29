@@ -3,16 +3,19 @@ package com.rettichlp.unicacityaddon.events.faction;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.config.ConfigElements;
+import com.rettichlp.unicacityaddon.base.models.NaviPoint;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
+import com.rettichlp.unicacityaddon.base.utils.NavigationUtils;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.event.ClickEvent;
 import net.minecraft.util.text.event.HoverEvent;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+import java.util.Map;
 import java.util.regex.Matcher;
 
 /**
@@ -46,12 +49,21 @@ public class ShareLocationEventHandler {
                 .of("" + posZ).color(ColorCode.AQUA).advance()
                 .createComponent();
 
+        Map.Entry<Double, NaviPoint> doubleNaviPointEntry = NavigationUtils.getNearestNaviPoint(posX, posY, posZ);
+
+        String navipointString;
+        if (doubleNaviPointEntry.getValue() == null) {
+            navipointString = "unbekannter Ort";
+            p.sendErrorMessage("Navipunkte wurden nicht geladen. Versuche /syncdata um diese neu zu laden!");
+        } else {
+            navipointString = doubleNaviPointEntry.getValue().getName().replace("-", " ");
+        }
+
         p.sendMessageAsString(ConfigElements.getPatternSloc()
                 .replace("&", "§")
                 .replace("%sender%", senderName)
-                .replace("%x%", String.valueOf(posX))
-                .replace("%y%", String.valueOf(posY))
-                .replace("%z%", String.valueOf(posZ)));
+                .replace("%navipoint%", navipointString)
+                .replace("%distance%", String.valueOf((int) p.getPosition().getDistance(posX, posY, posZ))));
 
         p.sendMessage(Message.getBuilder()
                 .of("»").color(ColorCode.GRAY).advance().space()

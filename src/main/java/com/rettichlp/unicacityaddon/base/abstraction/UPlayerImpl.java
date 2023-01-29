@@ -5,6 +5,7 @@ import com.rettichlp.unicacityaddon.base.api.Syncer;
 import com.rettichlp.unicacityaddon.base.config.ConfigElements;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
+import com.rettichlp.unicacityaddon.base.manager.FactionManager;
 import com.rettichlp.unicacityaddon.base.registry.SoundRegistry;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
@@ -155,6 +156,9 @@ public class UPlayerImpl implements UPlayer {
     public Faction getFaction() {
         return Syncer.PLAYERFACTIONMAP.getOrDefault(getName(), Faction.NULL);
     }
+
+    @Override
+    public boolean inDuty() {return FactionManager.checkPlayerDuty(getName());}
 
     @Override
     public int getRank() {

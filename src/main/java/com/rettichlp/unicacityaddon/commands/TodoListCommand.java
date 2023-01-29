@@ -29,8 +29,6 @@ import java.util.Optional;
 @UCCommand
 public class TodoListCommand implements IClientCommand {
 
-    public static List<TodolistEntry> todolist;
-
     @Override
     @Nonnull
     public String getName() {
@@ -73,46 +71,42 @@ public class TodoListCommand implements IClientCommand {
             todoList();
         } else if (args.length > 1 && args[0].equalsIgnoreCase("done")) {
             String todo = TextUtils.makeStringByArgs(args, " ").replace("done ", "");
-            Optional<TodolistEntry> todolistEntryOptional = todolist.stream().filter(todolistEntry -> todolistEntry.getTodo().equals(todo)).findFirst();
+            Optional<TodolistEntry> todolistEntryOptional = FileManager.DATA.getTodolist().stream().filter(todolistEntry -> todolistEntry.getTodo().equals(todo)).findFirst();
             if (!todolistEntryOptional.isPresent()) {
                 p.sendErrorMessage("Keinen Eintrag gefunden.");
                 return;
             }
-            int index = todolist.indexOf(todolistEntryOptional.get());
+            int index = FileManager.DATA.getTodolist().indexOf(todolistEntryOptional.get());
             TodolistEntry todolistEntry = todolistEntryOptional.get();
             todolistEntry.setDone(true);
-            todolist.set(index, todolistEntry);
-            FileManager.saveData();
+            FileManager.DATA.getTodolist().set(index, todolistEntry);
             p.sendInfoMessage("Aufgabe als erledigt markiert.");
         } else if (args.length > 1 && args[0].equalsIgnoreCase("delete")) {
             String todo = TextUtils.makeStringByArgs(args, " ").replace("delete ", "");
-            boolean success = todolist.removeIf(todolistEntry -> todolistEntry.getTodo().equals(todo));
+            boolean success = FileManager.DATA.getTodolist().removeIf(todolistEntry -> todolistEntry.getTodo().equals(todo));
             if (!success) {
                 p.sendErrorMessage("Keinen Eintrag mit dieser ID gefunden.");
                 return;
             }
-            FileManager.saveData();
             p.sendInfoMessage("Aufgabe aus Todoliste gelöscht.");
         } else if (args.length > 2 && args[0].equalsIgnoreCase("edit") && MathUtils.isInteger(args[1])) {
             int index = Integer.parseInt(args[1]) - 1;
-            if (index > todolist.size() - 1) {
+            if (index > FileManager.DATA.getTodolist().size() - 1) {
                 p.sendErrorMessage("Keinen Eintrag mit dieser ID gefunden.");
                 return;
             }
             String todo = TextUtils.makeStringByArgs(args, " ").replaceAll("(?i)edit " + args[1] + " ", "");
-            TodolistEntry todolistEntry = new TodolistEntry(todo);
-            todolist.set(index, todolistEntry);
-            FileManager.saveData();
+            TodolistEntry todolistEntry = new TodolistEntry(todo, false);
+            FileManager.DATA.getTodolist().set(index, todolistEntry);
             p.sendInfoMessage("Aufgabe editiert.");
         } else {
             String todo = TextUtils.makeStringByArgs(args, " ");
-            TodolistEntry todolistEntry = new TodolistEntry(todo);
-            if (todolist.stream().anyMatch(te -> te.getTodo().equals(todo))) {
+            TodolistEntry todolistEntry = new TodolistEntry(todo, false);
+            if (FileManager.DATA.getTodolist().stream().anyMatch(te -> te.getTodo().equals(todo))) {
                 p.sendErrorMessage("Dieses Todo gibt es bereits!");
                 return;
             }
-            todolist.add(todolistEntry);
-            FileManager.saveData();
+            FileManager.DATA.getTodolist().add(todolistEntry);
             p.sendInfoMessage("Aufgabe zur Todoliste hinzugefügt.");
         }
     }
@@ -123,8 +117,8 @@ public class TodoListCommand implements IClientCommand {
         p.sendMessage(Message.getBuilder()
                 .of("Todoliste:").color(ColorCode.DARK_AQUA).bold().advance()
                 .createComponent());
-        todolist.forEach(todolistEntry -> {
-            int id = todolist.indexOf(todolistEntry) + 1;
+        FileManager.DATA.getTodolist().forEach(todolistEntry -> {
+            int id = FileManager.DATA.getTodolist().indexOf(todolistEntry) + 1;
             if (todolistEntry.isDone())
                 p.sendMessage(Message.getBuilder()
                         .of("» " + id + ". ").color(ColorCode.GRAY).advance()

@@ -56,6 +56,8 @@ public interface UPlayer {
 
     Faction getFaction();
 
+    boolean inDuty();
+
     int getRank();
 
     void sellMedication(String target, DrugType medication);

@@ -2,11 +2,9 @@ package com.rettichlp.unicacityaddon.events.faction.badfaction;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
+import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
-import com.rettichlp.unicacityaddon.modules.PlantFertilizeTimerModule;
-import com.rettichlp.unicacityaddon.modules.PlantWaterTimerModule;
-import net.labymod.utils.ModUtils;
 import net.minecraft.block.BlockDirt;
 import net.minecraft.block.BlockTallGrass;
 import net.minecraft.init.Blocks;
@@ -17,6 +15,7 @@ import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 
 /**
@@ -49,27 +48,17 @@ public class PlantEventHandler {
         String msg = e.getMessage().getUnformattedText();
 
         if (PatternHandler.PLANT_HARVEST_PATTERN.matcher(msg).find()) {
-            PlantFertilizeTimerModule.stopPlant();
-            PlantWaterTimerModule.stopPlant();
+            FileManager.DATA.setPlantFertilizeTime(-TimeUnit.MINUTES.toMillis(20));
+            FileManager.DATA.setPlantWaterTime(-TimeUnit.MINUTES.toMillis(20));
             return;
         }
 
         Matcher plantUseMatcher = PatternHandler.PLANT_USE_PATTERN.matcher(msg);
         if (plantUseMatcher.find()) {
-            if (!PlantFertilizeTimerModule.plantRunning)
-                PlantFertilizeTimerModule.plantRunning = true;
-
-            if (plantUseMatcher.group(2).equals("gewässert")) {
-                if (PlantWaterTimerModule.currentCount < (PlantWaterTimerModule.timeNeeded - 600)) {
-                    PlantWaterTimerModule.currentCount = PlantWaterTimerModule.timeNeeded;
-                    PlantWaterTimerModule.timer = ModUtils.parseTimer(PlantWaterTimerModule.currentCount);
-                }
-                return;
-            }
-
-            if (PlantFertilizeTimerModule.currentCount < (PlantFertilizeTimerModule.timeNeeded - 600)) {
-                PlantFertilizeTimerModule.currentCount = PlantFertilizeTimerModule.timeNeeded;
-                PlantFertilizeTimerModule.timer = PlantFertilizeTimerModule.calcTimer(PlantFertilizeTimerModule.currentCount);
+            if (plantUseMatcher.group(2).equals("gewässert") && System.currentTimeMillis() - TimeUnit.MINUTES.toMillis(10) > FileManager.DATA.getPlantWaterTime()) {
+                FileManager.DATA.setPlantWaterTime(System.currentTimeMillis());
+            } else if (System.currentTimeMillis() - TimeUnit.MINUTES.toMillis(10) > FileManager.DATA.getPlantFertilizeTime()) {
+                FileManager.DATA.setPlantFertilizeTime(System.currentTimeMillis());
             }
         }
     }

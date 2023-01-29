@@ -1,26 +1,22 @@
 package com.rettichlp.unicacityaddon.modules;
 
+import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.ModuleRegistry;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCModule;
+import com.rettichlp.unicacityaddon.base.text.ColorCode;
+import com.rettichlp.unicacityaddon.base.utils.TextUtils;
 import net.labymod.ingamegui.ModuleCategory;
 import net.labymod.ingamegui.moduletypes.SimpleModule;
 import net.labymod.settings.elements.ControlElement;
 import net.labymod.utils.Material;
 
-import java.text.DecimalFormat;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Dimiikou
  */
 @UCModule
 public class PlantFertilizeTimerModule extends SimpleModule {
-
-    public static boolean plantRunning = false;
-
-    public static int currentCount = 0;
-    public static int currentTick = 0;
-    public static final int timeNeeded = 4200;
-    public static String timer = "";
 
     @Override
     public String getControlName() {
@@ -39,7 +35,9 @@ public class PlantFertilizeTimerModule extends SimpleModule {
 
     @Override
     public String getDisplayValue() {
-        return timer;
+        long timeSinceLastInteraction = System.currentTimeMillis() - FileManager.DATA.getPlantFertilizeTime();
+        long timeLeft = TimeUnit.MINUTES.toMillis(70) - timeSinceLastInteraction;
+        return timeLeft >= 0 ? TextUtils.parseTimer((int) TimeUnit.MILLISECONDS.toSeconds(timeLeft)) : ColorCode.RED.getCode() + "-" + TextUtils.parseTimer((int) TimeUnit.MILLISECONDS.toSeconds(-timeLeft));
     }
 
     @Override
@@ -64,7 +62,7 @@ public class PlantFertilizeTimerModule extends SimpleModule {
 
     @Override
     public boolean isShown() {
-        return plantRunning;
+        return System.currentTimeMillis() - FileManager.DATA.getPlantFertilizeTime() < TimeUnit.MINUTES.toMillis(20);
     }
 
     @Override
@@ -74,20 +72,5 @@ public class PlantFertilizeTimerModule extends SimpleModule {
 
     @Override
     public void loadSettings() {
-    }
-
-    public static void stopPlant() {
-        plantRunning = false;
-        currentCount = 0;
-        currentTick = 0;
-        timer = "";
-    }
-
-    public static String calcTimer(int count) {
-        int minutes = count / 60;
-        int seconds = count - (minutes * 60);
-        final DecimalFormat format = new DecimalFormat("00");
-
-        return format.format(minutes) + ":" + format.format(seconds);
     }
 }

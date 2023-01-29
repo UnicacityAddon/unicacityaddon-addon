@@ -1,121 +1,236 @@
 package com.rettichlp.unicacityaddon.base.models;
 
-import java.util.ArrayList;
+import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
+import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
+import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
+import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
+import com.rettichlp.unicacityaddon.base.enums.faction.Equip;
+import joptsimple.internal.Strings;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import net.minecraft.util.math.BlockPos;
+
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Getter
+@Setter
 public class Data {
 
-    private int bankBalance;
-    private int cashBalance;
-    private int jobBalance;
-    private int jobExperience;
-    private int payDayTime;
-    private int serviceCount;
-    private long firstAidDate;
-    private List<TodolistEntry> todolist;
-    private List<CoordlistEntry> coordlist;
-    private Map<Integer, HouseDataEntry> houseData;
-    private List<EquipLogEntry> equipList;
-    private String carInfo;
+    @Builder.Default
+    private int bankBalance = 0;
 
-    public Data() {
+    @Builder.Default
+    private String carInfo = Strings.EMPTY;
+
+    @Builder.Default
+    private int cashBalance = 0;
+
+    @Builder.Default
+    private Map<DrugType, Map<DrugPurity, Integer>> drugInventoryMap = new HashMap<>();
+
+    @Builder.Default
+    private List<CoordlistEntry> coordlist = Collections.emptyList();
+
+    @Builder.Default
+    private Map<Equip, Integer> equipMap = new HashMap<>();
+
+    @Builder.Default
+    private long firstAidDate = 0;
+
+    @Builder.Default
+    private Map<Integer, HouseData> houseDataMap = new HashMap<>();
+
+    @Builder.Default
+    private int jobBalance = 0;
+
+    @Builder.Default
+    private int jobExperience = 0;
+
+    @Builder.Default
+    private int payDayTime = 0;
+
+    @Builder.Default
+    private long plantFertilizeTime = -1;
+
+    @Builder.Default
+    private long plantWaterTime = -1;
+
+    @Builder.Default
+    private int serviceCount = 0;
+
+    @Builder.Default
+    private int timer = 0;
+
+    @Builder.Default
+    private List<TodolistEntry> todolist = Collections.emptyList();
+
+    /**
+     * Adds the given value <code>i</code> to the <code>bankBalance</code>
+     *
+     * @param i Amount of money to be added to the <code>bankBalance</code>
+     */
+    public void addBankBalance(int i) {
+        bankBalance += i;
     }
 
-    public int getBankBalance() {
-        return bankBalance;
+    /**
+     * Removes the given value <code>i</code> from the <code>bankBalance</code>
+     *
+     * @param i Amount of money to be removed from the <code>bankBalance</code>
+     */
+    public void removeBankBalance(int i) {
+        bankBalance -= i;
     }
 
-    public void setBankBalance(int bankBalance) {
-        this.bankBalance = bankBalance;
+    /**
+     * Adds the given value <code>i</code> to the <code>cashBalance</code>
+     *
+     * @param i Amount of money to be added to the <code>cashBalance</code>
+     */
+    public void addCashBalance(int i) {
+        cashBalance += i;
     }
 
-    public int getJobBalance() {
-        return jobBalance;
+    /**
+     * Removes the given value <code>i</code> from the <code>cashBalance</code>
+     *
+     * @param i Amount of money to be removed from the <code>cashBalance</code>
+     */
+    public void removeCashBalance(int i) {
+        cashBalance -= i;
     }
 
-    public void setJobBalance(int jobBalance) {
-        this.jobBalance = jobBalance;
+    /**
+     * Adds the position of the <code>UPlayer</code> with the given name to the <code>coordlist</code>
+     *
+     * @param name     Name of the position to be added to the <code>coordlist</code>
+     * @param blockPos Position to be added to the <code>coordlist</code>
+     * @see BlockPos
+     * @see UPlayer
+     */
+    public boolean addCoordToCoordlist(String name, BlockPos blockPos) {
+        return coordlist.add(new CoordlistEntry(name, blockPos.getX(), blockPos.getY(), blockPos.getZ()));
     }
 
-    public int getJobExperience() {
-        return jobExperience;
+    /**
+     * Removes the position with the given name from the <code>coordlist</code>
+     *
+     * @param name Name of the position to be removed from the <code>coordlist</code>
+     */
+    public boolean removeCoordFromCoordlist(String name) {
+        return coordlist.removeIf(coordlistEntry -> coordlistEntry.getName().equalsIgnoreCase(name));
     }
 
-    public void setJobExperience(int jobExperience) {
-        this.jobExperience = jobExperience;
+    /**
+     * Adds the given <code>amount</code> of {@link DrugType} with its {@link DrugPurity} to the <code>drugInventoryMap</code>
+     *
+     * @param drugType   {@link DrugType} to be added to the <code>drugInventoryMap</code>
+     * @param drugPurity {@link DrugPurity} of the {@link DrugType}
+     * @param amount     Amount of the {@link DrugType}
+     * @see DrugType
+     * @see DrugPurity
+     */
+    public void addDrugToInventory(DrugType drugType, DrugPurity drugPurity, int amount) {
+        if (drugType != null) {
+            Map<DrugPurity, Integer> drugPurityIntegerMap = drugInventoryMap.getOrDefault(drugType, new HashMap<>());
+            int oldAmount = drugPurityIntegerMap.getOrDefault(drugPurity, 0);
+            drugPurityIntegerMap.put(drugPurity, oldAmount + amount);
+            drugInventoryMap.put(drugType, drugPurityIntegerMap);
+        }
     }
 
-    public int getCashBalance() {
-        return cashBalance;
+    /**
+     * Removes the given <code>amount</code> of {@link DrugType} with its {@link DrugPurity} from the <code>drugInventoryMap</code>
+     *
+     * @param drugType   {@link DrugType} to be removed from the <code>drugInventoryMap</code>
+     * @param drugPurity {@link DrugPurity} of the {@link DrugType}
+     * @param amount     Amount of the {@link DrugType}
+     * @see DrugType
+     * @see DrugPurity
+     */
+    public void removeDrugFromInventory(DrugType drugType, DrugPurity drugPurity, int amount) {
+        if (drugType != null) {
+            Map<DrugPurity, Integer> drugPurityIntegerMap = drugInventoryMap.getOrDefault(drugType, new HashMap<>());
+            int oldAmount = drugPurityIntegerMap.getOrDefault(drugPurity, 0);
+            drugPurityIntegerMap.put(drugPurity, Math.max(oldAmount - amount, 0));
+            drugInventoryMap.put(drugType, drugPurityIntegerMap);
+        }
     }
 
-    public void setCashBalance(int cashBalance) {
-        this.cashBalance = cashBalance;
+    /**
+     * Adds the given {@link Equip} to the <code>equipMap</code>
+     *
+     * @param equip {@link Equip} to be added to the <code>equipMap</code>
+     * @see Equip
+     */
+    public void addEquipToEquipMap(Equip equip) {
+        int newEquipAmount = equipMap.getOrDefault(equip, 0) + 1;
+        equipMap.put(equip, newEquipAmount);
     }
 
-    public int getPayDayTime() {
-        return payDayTime;
+    /**
+     * Adds the given value <code>i</code> to the <code>jobBalance</code>
+     *
+     * @param i Amount of money to be added to the <code>jobBalance</code>
+     */
+    public void addJobBalance(int i) {
+        jobBalance += i;
     }
 
-    public void setPayDayTime(int payDayTime) {
-        this.payDayTime = payDayTime;
+    /**
+     * Adds the given value <code>i</code> to the <code>jobExperience</code>
+     *
+     * @param i Amount of experience to be added to the <code>jobExperience</code>
+     */
+    public void addJobExperience(int i) {
+        jobExperience += i;
     }
 
-    public int getServiceCount() {
-        return serviceCount;
+    /**
+     * Adds the given value <code>i</code> to the <code>payDayTime</code> and sends reminder message if necessary
+     *
+     * @param i Amount of minutes to be added to the <code>jobExperience</code>
+     */
+    public void addPayDayTime(int i) {
+        UPlayer p = AbstractionLayer.getPlayer();
+        switch (payDayTime += i) {
+            case 55:
+                p.sendInfoMessage("Du hast in 5 Minuten deinen PayDay.");
+                break;
+            case 57:
+                p.sendInfoMessage("Du hast in 3 Minuten deinen PayDay.");
+                break;
+            case 59:
+                p.sendInfoMessage("Du hast in 1 Minute deinen PayDay.");
+                break;
+        }
     }
 
-    public void setServiceCount(int serviceCount) {
-        this.serviceCount = serviceCount;
+    /**
+     * Adds the given value <code>i</code> to the <code>serviceCount</code>
+     *
+     * @param i Amount of services to be added to the <code>serviceCount</code>
+     */
+    public void addServiceCount(int i) {
+        serviceCount += i;
     }
 
-    public long getFirstAidDate() {
-        return firstAidDate;
-    }
-
-    public void setFirstAidDate(long firstAidDate) {
-        this.firstAidDate = firstAidDate;
-    }
-
-    public List<TodolistEntry> getTodolist() {
-        return todolist == null ? new ArrayList<>() : todolist;
-    }
-
-    public void setTodolist(List<TodolistEntry> todolist) {
-        this.todolist = todolist;
-    }
-
-    public List<CoordlistEntry> getCoordlist() {
-        return coordlist == null ? new ArrayList<>() : coordlist;
-    }
-
-    public void setCoordlist(List<CoordlistEntry> coordlist) {
-        this.coordlist = coordlist;
-    }
-
-    public Map<Integer, HouseDataEntry> getHouseData() {
-        return houseData == null ? new HashMap<>() : houseData;
-    }
-
-    public void setHouseData(Map<Integer, HouseDataEntry> houseData) {
-        this.houseData = houseData;
-    }
-
-    public List<EquipLogEntry> getEquipList() {
-        return equipList == null ? new ArrayList<>() : equipList;
-    }
-
-    public void setEquipList(List<EquipLogEntry> equipList) {
-        this.equipList = equipList;
-    }
-
-    public String getCarInfo() {
-        return carInfo;
-    }
-
-    public void setCarInfo(String carInfo) {
-        this.carInfo = carInfo;
+    /**
+     * Removes the given value <code>i</code> from the <code>serviceCount</code>
+     *
+     * @param i Amount of services to be removed from the <code>serviceCount</code>
+     */
+    public void removeServiceCount(int i) {
+        if (serviceCount > 0)
+            serviceCount -= i;
     }
 }

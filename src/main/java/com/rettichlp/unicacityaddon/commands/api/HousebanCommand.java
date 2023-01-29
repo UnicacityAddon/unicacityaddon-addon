@@ -6,10 +6,11 @@ import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.api.Syncer;
 import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
-import com.rettichlp.unicacityaddon.base.models.HouseBanReasonEntry;
+import com.rettichlp.unicacityaddon.base.models.HouseBanReason;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
+import com.rettichlp.unicacityaddon.base.utils.TextUtils;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
@@ -21,6 +22,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
@@ -65,23 +67,16 @@ public class HousebanCommand implements IClientCommand {
             Syncer.getHouseBanEntryList().forEach(houseBanEntry -> {
                 long durationInMillis = houseBanEntry.getExpirationTime() - System.currentTimeMillis();
 
-                long seconds = durationInMillis / 1000;
-                long minutes = seconds / 60;
-                long hours = minutes / 60;
-                long days = hours / 24;
-
                 String duration = Message.getBuilder()
-                        .of(String.valueOf(days)).color(ColorCode.DARK_AQUA).advance()
-                        .of("d").color(ColorCode.AQUA).advance().space()
-                        .of(String.valueOf(hours % 24)).color(ColorCode.DARK_AQUA).advance()
-                        .of("h").color(ColorCode.AQUA).advance().space()
-                        .of(String.valueOf(minutes % 60)).color(ColorCode.DARK_AQUA).advance()
-                        .of("m").color(ColorCode.AQUA).advance().space()
-                        .of(String.valueOf(seconds % 60)).color(ColorCode.DARK_AQUA).advance()
-                        .of("s").color(ColorCode.AQUA).advance().space()
+                        .add(ColorCode.AQUA.getCode() + TextUtils.parseTimerWithTimeUnit(durationInMillis)
+                                .replace("d", ColorCode.DARK_AQUA.getCode() + "d" + ColorCode.AQUA.getCode())
+                                .replace("h", ColorCode.DARK_AQUA.getCode() + "h" + ColorCode.AQUA.getCode())
+                                .replace("m", ColorCode.DARK_AQUA.getCode() + "m" + ColorCode.AQUA.getCode())
+                                .replace("s", ColorCode.DARK_AQUA.getCode() + "s"))
                         .create();
 
                 ColorCode colorCode = ColorCode.AQUA;
+                int days = (int) TimeUnit.MILLISECONDS.toDays(durationInMillis);
                 if (days == 0)
                     colorCode = ColorCode.DARK_GREEN;
                 else if (days > 0 && days <= 5)
@@ -96,11 +91,12 @@ public class HousebanCommand implements IClientCommand {
                     colorCode = ColorCode.DARK_RED;
 
                 Message.Builder builder = Message.getBuilder();
-                houseBanEntry.getHouseBanReasonList().forEach(houseBanReasonEntry -> builder
-                        .of(houseBanReasonEntry.getReason()).color(ColorCode.RED).advance().space()
-                        .of(houseBanReasonEntry.getCreatorName() != null ? "(" : "").color(ColorCode.GRAY).advance()
-                        .of(houseBanReasonEntry.getCreatorName() != null ? houseBanReasonEntry.getCreatorName() : "").color(ColorCode.GRAY).advance()
-                        .of(houseBanReasonEntry.getCreatorName() != null ? ")" : "").color(ColorCode.GRAY).advance().space()
+                houseBanEntry.getHouseBanReasonList().forEach(houseBanReason -> builder
+                        .of("-").color(ColorCode.GRAY).advance().space()
+                        .of(houseBanReason.getReason().replace("-", " ")).color(ColorCode.RED).advance().space()
+                        .of(houseBanReason.getCreatorName() != null ? "(" : "").color(ColorCode.GRAY).advance()
+                        .of(houseBanReason.getCreatorName() != null ? houseBanReason.getCreatorName() : "").color(ColorCode.GRAY).advance()
+                        .of(houseBanReason.getCreatorName() != null ? ")" : "").color(ColorCode.GRAY).advance().space()
                         .newline());
 
                 p.sendMessage(Message.getBuilder()
@@ -108,8 +104,8 @@ public class HousebanCommand implements IClientCommand {
                         .of(houseBanEntry.getName()).color(colorCode).advance().space()
                         .of("-").color(ColorCode.GRAY).advance().space()
                         .of(duration).color(ColorCode.AQUA)
-                        .hoverEvent(HoverEvent.Action.SHOW_TEXT, builder.createComponent())
-                        .advance()
+                                .hoverEvent(HoverEvent.Action.SHOW_TEXT, builder.createComponent())
+                                .advance()
                         .createComponent());
             });
 
@@ -135,7 +131,7 @@ public class HousebanCommand implements IClientCommand {
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
         return TabCompletionBuilder.getBuilder(args)
                 .addAtIndex(1, "add", "remove")
-                .addAtIndex(3, Syncer.getHouseBanReasonEntryList().stream().map(HouseBanReasonEntry::getReason).sorted().collect(Collectors.toList()))
+                .addAtIndex(3, Syncer.getHouseBanReasonEntryList().stream().map(HouseBanReason::getReason).sorted().collect(Collectors.toList()))
                 .build();
     }
 

@@ -4,15 +4,17 @@ import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.config.ConfigElements;
+import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.base.utils.UpdateUtils;
-import com.rettichlp.unicacityaddon.modules.PayDayModule;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 
 /**
@@ -25,6 +27,7 @@ public class AccountEventHandler {
 
     @SubscribeEvent
     public void onClientChatReceived(ClientChatReceivedEvent e) {
+        UPlayer p = AbstractionLayer.getPlayer();
         String msg = e.getMessage().getUnformattedText();
         if (!UnicacityAddon.isUnicacity())
             return;
@@ -65,9 +68,21 @@ public class AccountEventHandler {
             return;
         }
 
+        if (PatternHandler.ACCOUNT_AFK_FAILURE_PATTERN.matcher(msg).find()) {
+            p.sendInfoMessage("Das Addon versucht dich anschließend in den AFK Modus zu setzen.");
+            long lastDamageTime = TickEventHandler.lastTickDamage.getKey();
+            new Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    p.sendChatMessage("/afk");
+                }
+            }, new Date(lastDamageTime + TimeUnit.SECONDS.toMillis(15)));
+            return;
+        }
+
         Matcher accountPayDayMatcher = PatternHandler.ACCOUNT_PAYDAY_PATTERN.matcher(msg);
         if (accountPayDayMatcher.find())
-            PayDayModule.setTime(Integer.parseInt(accountPayDayMatcher.group(1)));
+            FileManager.DATA.setPayDayTime(Integer.parseInt(accountPayDayMatcher.group(1)));
     }
 
     private void handleUnlockAccount() {

@@ -3,9 +3,9 @@ package com.rettichlp.unicacityaddon.commands.faction.terroristen;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
+import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.utils.MathUtils;
-import com.rettichlp.unicacityaddon.modules.ExplosiveBeltTimerModule;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
@@ -61,12 +61,12 @@ public class ExplosiveBeltCommand implements IClientCommand {
     public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args) {
         UPlayer p = AbstractionLayer.getPlayer();
 
-        if (!MathUtils.isInteger(args[0])) {
-            p.sendErrorMessage("Der Countdown muss eine Zahl sein");
+        if (args.length < 1 || !MathUtils.isInteger(args[0])) {
+            p.sendSyntaxMessage(getUsage(sender));
             return;
         }
 
-        ExplosiveBeltTimerModule.timer = Integer.parseInt(args[0]);
+        FileManager.DATA.setTimer(Integer.parseInt(args[0]));
         p.sendChatMessage("/sprenggürtel " + args[0]);
     }
 

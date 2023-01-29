@@ -4,6 +4,7 @@ import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.config.ConfigElements;
+import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ChatType;
 import com.rettichlp.unicacityaddon.base.utils.MathUtils;
@@ -37,7 +38,7 @@ public class ReinforcementCommand implements IClientCommand {
     @Override
     @Nonnull
     public String getUsage(@Nonnull ICommandSender sender) {
-        return "/reinforcement (-d/-r/-rd/-e/-ed/-m/-lb/-da/-ct/-p/-b/-gn/-t)";
+        return "/reinforcement (-d/-r/-rd/-e/-ed/-m/-lb/-da/-ct/-p/-b/-gn/-gnd/-t/-td/-test)";
     }
 
     @Override
@@ -67,6 +68,11 @@ public class ReinforcementCommand implements IClientCommand {
         ChatType chatType = firstType.getChatType();
 
         if ((args.length >= 5) && args[0].equalsIgnoreCase("ontheway")) {
+            if ((p.getFaction() == Faction.FBI || p.getFaction() == Faction.RETTUNGSDIENST || p.getFaction() == Faction.POLIZEI) && !p.inDuty()) {
+                p.sendErrorMessage("Du bist nicht im Dienst.");
+                return;
+            }
+
             String name = args[1];
 
             if (!MathUtils.isInteger(args[2]) || !MathUtils.isInteger(args[3]) || !MathUtils.isInteger(args[4]))
@@ -128,9 +134,11 @@ public class ReinforcementCommand implements IClientCommand {
         CONTRACT("-ct", ChatType.FCHAT, "Contract!"),
         PLANT("-p", ChatType.DCHAT, "Plant!"),
         BOMB("-b", ChatType.DCHAT, "Bombe!"),
-        HOSTAGE_TAKING("-gn", ChatType.DCHAT, "Geiselnahme!"),
+        HOSTAGE_TAKING("-gn", ChatType.FCHAT, "Geiselnahme!"),
+        HOSTAGE_TAKING_D("-gnd", ChatType.DCHAT, "Geiselnahme!"),
         TRAINING("-t", ChatType.FCHAT, "Training!"),
-        TRAINING_D("-td", ChatType.DCHAT, "Training!");
+        TRAINING_D("-td", ChatType.DCHAT, "Training!"),
+        TEST("-test", ChatType.FCHAT, "Test!"),;
 
         private final String argument;
         private final ChatType chatType;

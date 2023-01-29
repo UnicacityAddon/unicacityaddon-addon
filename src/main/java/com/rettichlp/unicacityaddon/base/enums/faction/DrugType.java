@@ -8,9 +8,12 @@ public enum DrugType {
     MARIJUANA("Marihuana", "Gras", false),
     METH("Methamphetamin", "Meth", false),
     LSD("LSD", "LSD", false),
+    IRON("Eisen", null, false),
+    MASK("Maske", null, false),
+    GUNPOWDER("Schwarzpulver", null, false),
     ANTIBIOTIKA("Antibiotika", null, true),
     HUSTENSAFT("Hustensaft", null, true),
-    SCHMERZMITTEL("Schmerzmittel", null, true);
+    SCHMERZMITTEL("Schmerzmittel", "Schmerzpillen", true);
 
     private final String drugName;
     private final String shortName;
@@ -37,6 +40,7 @@ public enum DrugType {
     public static DrugType getDrugType(String s) {
         return Arrays.stream(DrugType.values())
                 .filter(drugType -> s.equalsIgnoreCase(drugType.drugName) || s.equalsIgnoreCase(drugType.shortName))
-                .findFirst().orElseThrow(() -> new RuntimeException("DrugType does not exist"));
+                .findFirst()
+                .orElse(null);
     }
 }

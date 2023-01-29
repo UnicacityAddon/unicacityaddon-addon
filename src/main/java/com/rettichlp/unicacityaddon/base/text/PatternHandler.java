@@ -41,6 +41,7 @@ public class PatternHandler {
     public static final Pattern CAR_OPEN_PATTERN = Pattern.compile("^\\[Car] Du hast deinen .+ aufgeschlossen\\.$");
     public static final Pattern CAR_CLOSE_PATTERN = Pattern.compile("^\\[Car] Du hast deinen .+ abgeschlossen\\.$");
     public static final Pattern CAR_POSITION_PATTERN = Pattern.compile("^\\[Car] Das Fahrzeug befindet sich bei . X: (-?\\d+) \\| Y: (-?\\d+) \\| Z: (-?\\d+)$");
+    public static final Pattern CAR_TICKET_PATTERN = Pattern.compile("^\\[Car] Dein Fahrzeug hat ein Strafzettel \\[(.*) \\| (\\d+)\\$]\\.$");
     public static final Pattern CAR_CHECK_KFZ_PATTERN = Pattern.compile("^HQ: Das Fahrzeug mit dem Kennzeichen (?:null|.+) ist auf den Spieler (?:\\[UC])*([a-zA-Z0-9_]+) registriert, over.$" +
             "|^Kennzeichen: (?:null|.+) \\| Type: [a-zA-Z]+ \\| Besitzer: (?:\\[UC])*([a-zA-Z0-9_]+)$");
 
@@ -137,6 +138,7 @@ public class PatternHandler {
      * @see com.rettichlp.unicacityaddon.events.faction.rettungsdienst.FirstAidEventHandler
      * @see com.rettichlp.unicacityaddon.events.faction.rettungsdienst.MedicationEventHandler
      * @see com.rettichlp.unicacityaddon.events.faction.rettungsdienst.ReviveEventHandler
+     * @see com.rettichlp.unicacityaddon.events.faction.badfaction.DrugInteractionEventHandler
      */
     public static final Pattern RECIPE_ACCEPT_PATTERN = Pattern.compile("^((?:\\[UC])*\\w+) möchte dir ein Rezept für 200\\$ verkaufen\\.$");
     public static final Pattern RECIPE_GIVE_PATTERN = Pattern.compile("^Du hast ((?:\\[UC])*\\w+) ein Rezept für (Antibiotika|Hustensaft|Schmerzmittel) ausgestellt\\.$");
@@ -146,6 +148,8 @@ public class PatternHandler {
     public static final Pattern REVIVE_FAILURE_PATTERN = Pattern.compile("^Verdammt\\.\\. mein Kopf dröhnt so\\.\\.\\.$");
     public static final Pattern FIRST_AID_RECEIVE_PATTERN = Pattern.compile("^\\[Erste-Hilfe] Notarzt (?:\\[UC])*(\\w+) hat dir einen Erste-Hilfe-Schein für 14 Tage ausgestellt\\.$");
     public static final Pattern FIRST_AID_LICENCE_PATTERN = Pattern.compile("^ {2}- Erste-Hilfe-Schein: Vorhanden$");
+    public static final Pattern FIRST_AID_USE_PATTERN = Pattern.compile("^ {2}Info: Du bist nun eine Minute länger auf dem Friedhof\\.$");
+    public static final Pattern MEDICATION_GET_PATTERN = Pattern.compile("^\\[Apotheke] Du hast (?<amount>\\d+) (?<drugType>.+) erhalten, gute Besserung!$");
 
     /**
      * Pattern for communication interaction
@@ -162,18 +166,26 @@ public class PatternHandler {
     /**
      * Pattern for bad faction interaction
      *
+     * @see com.rettichlp.unicacityaddon.events.faction.badfaction.BannerEventHandler
      * @see com.rettichlp.unicacityaddon.events.faction.badfaction.DBankMessageEventHandler
-     * @see com.rettichlp.unicacityaddon.events.faction.badfaction.FBIHackEventHandler
      * @see com.rettichlp.unicacityaddon.events.faction.badfaction.GiftEigenbedarfEventHandler
      * @see com.rettichlp.unicacityaddon.events.faction.badfaction.PlantEventHandler
      */
     public static final Pattern PLANT_HARVEST_PATTERN = Pattern.compile("^\\[Plantage] Eine .+-Plantage wurde von (?:\\[UC])*(\\w+) geerntet\\. \\[\\d+g]$");
     public static final Pattern PLANT_USE_PATTERN = Pattern.compile("^\\[Plantage] Eine .+-Plantage wurde von (?:\\[UC])*(" + playerName + ") (gewässert|gedüngt)\\.$");
-    public static final Pattern FBI_HACK_STARTED_PATTERN = Pattern.compile("^\\[Polizeicomputer] Du hast einen Hackversuch gestartet\\. Geschätzte Dauer: (\\d+) Sekunden\\.$");
-    public static final Pattern DRUGDEAL_ENDED = Pattern.compile("^\\[Deal] (?:\\[UC])*(\\w+) hat den Deal angenommen\\.$" +
+    public static final Pattern DBANK_GIVE_PATTERN = Pattern.compile("^(?:\\[UC])*(\\w+) hat (?<amount>\\d+)g (?<drugType>.+) \\((?<drugPurity>Höchste|Gute|Mittlere|Schlechte) Reinheit\\) \\((\\d+)g\\) eingelagert\\.$");
+    public static final Pattern DBANK_GET_PATTERN = Pattern.compile("^(?:\\[UC])*(\\w+) hat (?<amount>\\d+)g (?<drugType>.+) \\((?<drugPurity>Höchste|Gute|Mittlere|Schlechte) Reinheit\\) \\((\\d+)g\\) aus der Drogenbank genommen\\.$");
+    public static final Pattern DRUG_DEAL_ACCEPTED = Pattern.compile("^\\[Deal] (?:\\[UC])*(\\w+) hat den Deal angenommen\\.$");
+    public static final Pattern DRUG_DEAL_ENDED = Pattern.compile("^\\[Deal] (?:\\[UC])*(\\w+) hat den Deal angenommen\\.$" +
             "|^\\[Deal] (?:\\[UC])*(\\w+) hat das Angebot abgelehnt\\.$");
-    public static final Pattern DBANK_DROP_PATTERN = Pattern.compile("^(?:\\[UC])*(\\w+) hat (\\d+)g (Kokain|Marihuana|Methamphetamin|LSD) \\((Höchste|Gute|Mittlere|Schlechte) Reinheit\\) \\((\\d+)g\\) eingelagert\\.$");
-    public static final Pattern DBANK_GET_PATTERN = Pattern.compile("^(?:\\[UC])*(\\w+) hat (\\d+)g (Kokain|Marihuana|Methamphetamin|LSD) \\((Höchste|Gute|Mittlere|Schlechte) Reinheit\\) \\((\\d+)g\\) aus der Drogenbank genommen\\.$");
+    public static final Pattern DRUG_GIVE_PATTERN = Pattern.compile("^\\[Deal] Du hast (?:\\[UC])*(\\w+) (?<amount>\\d+)g (?<drugType>.+) \\(Reinheit (?<drugPurity>\\d)\\) für (\\d+)\\$ angeboten\\.$");
+    public static final Pattern DRUG_GET_PATTERN = Pattern.compile("^\\[Deal] (?:\\[UC])*(\\w+) bietet dir (?<amount>\\d+)g (?<drugType>.+) \\(Reinheit (?<drugPurity>\\d)\\) für (\\d+)\\$ an\\.$");
+    public static final Pattern DRUG_USE_PATTERN = Pattern.compile("^(?:\\[UC])*(\\w+) hat (?<drugType>.+) genommen\\.$");
+    public static final Pattern DRUG_USE_COMMAND_PATTERN = Pattern.compile("^/use (?<drugType>.+) (?<drugPurity>\\d)$");
+    public static final Pattern TRUNK_GET_COMMAND_PATTERN = Pattern.compile("^/trunk get (?<drugType>.+) (?<drugPurity>\\d) (?<amount>\\d+)$");
+    public static final Pattern TRUNK_GIVE_COMMAND_PATTERN = Pattern.compile("^/trunk drop (?<drugType>.+) (?<drugPurity>\\d) (?<amount>\\d+)$");
+    public static final Pattern TRUNK_INTERACTION_ACCEPTED_PATTERN = Pattern.compile("^\\[Car] Du hast (?<amount>\\d+)g (?<drugType>.+) (aus dem|in den) Kofferraum (genommen|verstaut)\\.$");
+    public static final Pattern BANNER_SPRAYED_PATTERN = Pattern.compile("^\\[Graffiti] Du hast das Graffiti mit deiner Fraktionsflagge übersprayt\\.$");
 
     /**
      * Pattern for money interaction
@@ -204,12 +216,10 @@ public class PatternHandler {
             "|^\\[F-Bank] (?:\\[UC])*([a-zA-Z0-9_]+) hat (\\d+)\\$ \\(\\+(\\d+)\\$\\) aus der F-Bank genommen\\.$");
 
     /**
-     * Pattern for kill and death interaction
+     * Pattern karma interaction
      *
-     * @see com.rettichlp.unicacityaddon.events.DeathsKillsEventHandler
      * @see com.rettichlp.unicacityaddon.events.KarmaMessageEventHandler
      */
-    public static final Pattern DEATH_PATTERN = Pattern.compile("^Du bist nun für (\\d+) Minuten auf dem Friedhof\\.$");
     public static final Pattern KARMA_CHANGED_PATTERN = Pattern.compile("^\\[Karma] ([+-]\\d+) Karma\\.$");
     public static final Pattern KARMA_PATTERN = Pattern.compile("^\\[Karma] Du hast ein Karma von ([+-]\\d+)\\.$");
 
@@ -227,10 +237,22 @@ public class PatternHandler {
     public static final Pattern ACCOUNT_PASSWORD_UNLOCKED_PATTERN = Pattern.compile("^Du hast deinen Account freigeschaltet\\.$");
     public static final Pattern ACCOUNT_AFK_TRUE_PATTERN = Pattern.compile("^Du bist nun im AFK-Modus\\.$");
     public static final Pattern ACCOUNT_AFK_FALSE_PATTERN = Pattern.compile("^Du bist nun nicht mehr im AFK-Modus\\.$");
+    public static final Pattern ACCOUNT_AFK_FAILURE_PATTERN = Pattern.compile("^Du kannst noch nicht in den AFK Modus wechseln\\.$");
     public static final Pattern ACCOUNT_PAYDAY_PATTERN = Pattern.compile("^ {2}- Zeit seit PayDay: (\\d+)/60 Minuten$");
     public static final Pattern ACCOUNT_TREUEBONUS_PATTERN = Pattern.compile("^ {2}- Treuebonus: (\\d+) Punkte$");
     public static final Pattern ACCOUNT_FRIEND_JOIN_PATTERN = Pattern.compile(" » Freundesliste: (?:\\[UC])*(?<name>\\w+) ist nun online\\.");
     public static final Pattern ACCOUNT_FRIEND_LEAVE_PATTERN = Pattern.compile(" » Freundesliste: (?:\\[UC])*(?<name>\\w+) ist nun offline\\.");
+
+    /**
+     * Pattern for timer interaction
+     *
+     * @see com.rettichlp.unicacityaddon.events.TimerEventHandler
+     */
+    public static final Pattern TIMER_FBI_HACK_START_PATTERN = Pattern.compile("^\\[Polizeicomputer] Du hast einen Hackversuch gestartet\\. Geschätzte Dauer: (\\d+) Sekunden\\.$");
+    public static final Pattern TIMER_GRAVEYARD_START_PATTERN = Pattern.compile("^Du bist nun für (20|8|5) Minuten auf dem Friedhof\\.$");
+    public static final Pattern TIMER_JAIL_START_PATTERN = Pattern.compile("^\\[Gefängnis] Du bist nun für (\\d+) Minuten im Gefängnis\\.$");
+    public static final Pattern TIMER_JAIL_FINISH_PATTERN = Pattern.compile("^\\[Gefängnis] Du bist wieder frei!$");
+    public static final Pattern TIMER_JAIL_MODIFY_PATTERN = Pattern.compile("^\\[PI] Gute Arbeit\\. Du darfst nun (\\d)min früher gehen\\.$");
 
     /**
      * Pattern for uc and vc interaction
@@ -245,9 +267,10 @@ public class PatternHandler {
     public static final Pattern AD_CONTROL_PATTERN = Pattern.compile("^\\[Werbung] (\\w+) hat eine Werbung geschalten: .+$");
 
     /**
-     * Pattern for account interaction
+     * Pattern for house interaction
      *
      * @see com.rettichlp.unicacityaddon.events.house.HouseDataEventHandler
+     * @see com.rettichlp.unicacityaddon.events.house.HouseInteractionEventHandler
      * @see com.rettichlp.unicacityaddon.events.house.HouseRenterEventHandler
      */
     public static final Pattern HOUSE_BANK_HEADER_PATTERN = Pattern.compile("^=== Hauskasse Haus (\\d+) ===$");
@@ -257,8 +280,10 @@ public class PatternHandler {
     public static final Pattern HOUSE_RENTER_HEADER_PATTERN = Pattern.compile("^=== Mieter in Haus (\\d+) ===$");
     public static final Pattern HOUSE_RENTER_VALUE_PATTERN = Pattern.compile("^ {2}» (?:\\[UC])*(\\w+) \\((Online|Offline seit (\\d+)\\.(\\d+)\\.(\\d+) (\\d+):(\\d+):(\\d+))\\)$");
     public static final Pattern HOUSE_STORAGE_SUCCESSFUL_INTERACTION = Pattern.compile("^\\[Haus] Du hast (\\d+)g (\\w+) (ins|aus dem) Drogenlager (gelegt|genommen)\\.$");
-    public static final Pattern HOUSE_STORAGE_ADD_COMMAND_PATTERN = Pattern.compile("^/drogenlager drop (\\w+) (\\d+) (\\d)$");
-    public static final Pattern HOUSE_STORAGE_REMOVE_COMMAND_PATTERN = Pattern.compile("^/drogenlager get (\\w+) (\\d+) (\\d)$");
+    public static final Pattern HOUSE_STORAGE_ADD_COMMAND_PATTERN = Pattern.compile("^/drogenlager drop (?<drugType>.+) (?<amount>\\d+) (?<drugPurity>\\d)$");
+    public static final Pattern HOUSE_STORAGE_REMOVE_COMMAND_PATTERN = Pattern.compile("^/drogenlager get (?<drugType>.+) (?<amount>\\d+) (?<drugPurity>\\d)$");
+    public static final Pattern HOUSE_AKKU_PATTERN = Pattern.compile("^Du hast begonnen deinen Akku aufzuladen\\.\\.\\.$");
+    public static final Pattern HOUSE_HEAL_PATTERN = Pattern.compile("^Du hast begonnen dich zu heilen\\.\\.\\.$");
 
     /**
      * Pattern for equip interaction
@@ -284,4 +309,16 @@ public class PatternHandler {
      */
     public static final Pattern BUY_INTERRUPTED_PATTERN = Pattern.compile("^Verkäufer: (Tut (uns|mir) Leid|Verzeihung), unser Lager ist derzeit leer\\.$" +
             "|^Verkäufer: Dieses Produkt kostet \\d+\\$\\.$" + "|^Verkäufer: Du hast leider nicht genug Geld dabei\\.$");
+
+    /**
+     * Pattern for Duty Check
+     *
+     * @see com.rettichlp.unicacityaddon.events.faction.DutyEventHandler
+     */
+    public static final Pattern DUTY_JOIN_PATTERN = Pattern.compile("^Du bist nun als Arzt im Dienst!$" +
+            "|^Du bist nun im FBI Dienst!$" +
+            "|^Du bist nun im Polizei Dienst!$");
+    public static final Pattern DUTY_LEAVE_PATTERN = Pattern.compile("^Du bist nun nicht mehr als Arzt Dienst!$" +
+            "|^Du bist nun nicht mehr im FBI Dienst!$" +
+            "|^Du bist nun nicht mehr im Polizei Dienst!$");
 }

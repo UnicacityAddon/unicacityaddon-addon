@@ -6,7 +6,7 @@ import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.api.Syncer;
 import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
-import com.rettichlp.unicacityaddon.base.models.HouseBanReasonEntry;
+import com.rettichlp.unicacityaddon.base.models.HouseBanReason;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
@@ -63,17 +63,17 @@ public class HousebanReasonCommand implements IClientCommand {
                     .of("Hausverbot-Gründe:").color(ColorCode.DARK_AQUA).bold().advance()
                     .createComponent());
 
-            Syncer.getHouseBanReasonEntryList().forEach(houseBanReasonEntry -> p.sendMessage(Message.getBuilder()
+            Syncer.getHouseBanReasonEntryList().forEach(houseBanReason -> p.sendMessage(Message.getBuilder()
                     .of("»").color(ColorCode.GRAY).advance().space()
-                    .of(houseBanReasonEntry.getReason()).color(ColorCode.AQUA)
+                    .of(houseBanReason.getReason()).color(ColorCode.AQUA)
                             .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder()
                                     .of("Hinzugefügt von").color(ColorCode.GRAY).advance().space()
-                                    .of(houseBanReasonEntry.getCreatorName()).color(ColorCode.RED).advance()
+                                    .of(houseBanReason.getCreatorName()).color(ColorCode.RED).advance()
                                     .createComponent())
                             .advance().space()
                     .of("-").color(ColorCode.GRAY).advance().space()
-                    .of(String.valueOf(houseBanReasonEntry.getDays())).color(ColorCode.AQUA).advance().space()
-                    .of(houseBanReasonEntry.getDays() == 1 ? "Tag" : "Tage").color(ColorCode.AQUA).advance()
+                    .of(String.valueOf(houseBanReason.getDays())).color(ColorCode.AQUA).advance().space()
+                    .of(houseBanReason.getDays() == 1 ? "Tag" : "Tage").color(ColorCode.AQUA).advance()
                     .createComponent()));
 
             p.sendEmptyMessage();
@@ -101,7 +101,7 @@ public class HousebanReasonCommand implements IClientCommand {
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
         return TabCompletionBuilder.getBuilder(args)
                 .addAtIndex(1, "add", "remove")
-                .addAtIndex(2, Syncer.getHouseBanReasonEntryList().stream().map(HouseBanReasonEntry::getReason).sorted().collect(Collectors.toList()))
+                .addAtIndex(2, Syncer.getHouseBanReasonEntryList().stream().map(HouseBanReason::getReason).sorted().collect(Collectors.toList()))
                 .build();
     }
 

@@ -6,7 +6,6 @@ import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
-import com.rettichlp.unicacityaddon.events.ShutDownEventHandler;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
@@ -23,6 +22,8 @@ import java.util.List;
  */
 @UCCommand
 public class ShutdownJailCommand implements IClientCommand {
+
+    public static boolean shutdownJail = false;
 
     @Override
     @Nonnull
@@ -61,9 +62,9 @@ public class ShutdownJailCommand implements IClientCommand {
     @Override
     public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
         UPlayer p = AbstractionLayer.getPlayer();
-        ShutDownEventHandler.shutdownJail = !ShutDownEventHandler.shutdownJail;
+        shutdownJail = !shutdownJail;
 
-        if (ShutDownEventHandler.shutdownJail)
+        if (shutdownJail)
             Message.getBuilder().prefix().of("Dein Computer fährt nun herunter sobald du entlassen bist.").color(ColorCode.GRAY)
                     .advance().sendTo(p.getPlayer());
         else

@@ -32,11 +32,11 @@ public class ConfigElements {
             .of("-").color(ColorCode.GRAY).advance().space()
             .of("%sender%").color(ColorCode.AQUA).advance().space()
             .of("-").color(ColorCode.GRAY).advance().space()
-            .of("%x%").color(ColorCode.AQUA).advance().space()
-            .of("|").color(ColorCode.GRAY).advance().space()
-            .of("%y%").color(ColorCode.AQUA).advance().space()
-            .of("|").color(ColorCode.GRAY).advance().space()
-            .of("%z%").color(ColorCode.AQUA).advance().create();
+            .of("%navipoint%").color(ColorCode.AQUA).advance().space()
+            .of("(").color(ColorCode.GRAY).advance()
+            .of("%distance%" + "m").color(ColorCode.AQUA).advance()
+            .of(")").color(ColorCode.GRAY).advance()
+            .create();
 
     // FACTIONSUFFIX
     public static boolean getNameTagFactionSuffix() {
