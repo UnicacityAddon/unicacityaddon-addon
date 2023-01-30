@@ -62,7 +62,7 @@ public class PlantFertilizeTimerModule extends SimpleModule {
 
     @Override
     public boolean isShown() {
-        return System.currentTimeMillis() - FileManager.DATA.getPlantFertilizeTime() < TimeUnit.MINUTES.toMillis(20);
+        return System.currentTimeMillis() - FileManager.DATA.getPlantFertilizeTime() < TimeUnit.MINUTES.toMillis(90);
     }
 
     @Override
