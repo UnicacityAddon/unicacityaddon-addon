@@ -79,9 +79,9 @@ public class HouseDataEventHandler {
 
             Matcher drugStorageRemoveCommandMatcher = PatternHandler.HOUSE_STORAGE_REMOVE_COMMAND_PATTERN.matcher(waitingCommand);
             if (drugStorageRemoveCommandMatcher.find()) {
-                int amount = Integer.parseInt(drugStorageAddCommandMatcher.group("amount"));
-                DrugType drugType = DrugType.getDrugType(drugStorageAddCommandMatcher.group("drugType"));
-                DrugPurity drugPurity = DrugPurity.getDrugPurity(drugStorageAddCommandMatcher.group("drugPurity"));
+                int amount = Integer.parseInt(drugStorageRemoveCommandMatcher.group("amount"));
+                DrugType drugType = DrugType.getDrugType(drugStorageRemoveCommandMatcher.group("drugType"));
+                DrugPurity drugPurity = DrugPurity.getDrugPurity(drugStorageRemoveCommandMatcher.group("drugPurity"));
 
                 HouseData houseData = HouseDataManager.getHouseData(lastCheckedHouseNumber).removeFromStorage(drugType, drugPurity, amount);
                 HouseDataManager.updateHouseData(lastCheckedHouseNumber, houseData);

@@ -62,7 +62,7 @@ public class PlantWaterTimerModule extends SimpleModule {
 
     @Override
     public boolean isShown() {
-        return System.currentTimeMillis() - FileManager.DATA.getPlantWaterTime() < TimeUnit.MINUTES.toMillis(20);
+        return System.currentTimeMillis() - FileManager.DATA.getPlantWaterTime() < TimeUnit.MINUTES.toMillis(70);
     }
 
     @Override

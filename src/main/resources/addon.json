@@ -3,7 +3,7 @@
   "uuid": "%uuid%",
   "mainClass": "com.rettichlp.unicacityaddon.UnicacityAddon",
   "description": "This addon is a modification for UnicaCity providing specialized and nice-to-have features and utilities for everyday gameplay.",
-  "version": "1.8.0",
+  "version": 1,
   "author": "RettichLP and Dimiikou",
   "category": 3,
   "icon": "https://i.imgur.com/C7HwWxv.png"
