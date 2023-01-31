@@ -14,7 +14,7 @@ public class ChatLogReceiveChatEventHandler implements MessageReceiveEvent {
     @Override
     public boolean onReceive(String s, String s1) {
         if (UnicacityAddon.isUnicacity())
-            ChatLogCommand.chatLogMap.put(System.currentTimeMillis(), "[CHAT] " + s);
+            ChatLogCommand.chatLogMap.put(System.currentTimeMillis(), "[CHAT] " + s1);
         return false;
     }
 }
