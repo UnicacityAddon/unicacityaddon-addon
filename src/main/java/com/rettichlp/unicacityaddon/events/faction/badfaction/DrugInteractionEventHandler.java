@@ -75,20 +75,22 @@ public class DrugInteractionEventHandler {
         Matcher drugUseMatcher = PatternHandler.DRUG_USE_PATTERN.matcher(msg);
         if (drugUseMatcher.find()) {
             DrugType drugType = DrugType.getDrugType(drugUseMatcher.group("drugType"));
-            DrugPurity drugPurity;
-            switch (drugType) {
-                case COCAINE:
-                    drugPurity = ConfigElements.getCocainDrugPurity();
-                    break;
-                case MARIJUANA:
-                    drugPurity = ConfigElements.getMarihuanaDrugPurity();
-                    break;
-                case METH:
-                    drugPurity = ConfigElements.getMethDrugPurity();
-                    break;
-                default:
-                    drugPurity = DrugPurity.BEST;
+            DrugPurity drugPurity = DrugPurity.BEST;
+
+            if (drugType != null) {
+                switch (drugType) {
+                    case COCAINE:
+                        drugPurity = ConfigElements.getCocainDrugPurity();
+                        break;
+                    case MARIJUANA:
+                        drugPurity = ConfigElements.getMarihuanaDrugPurity();
+                        break;
+                    case METH:
+                        drugPurity = ConfigElements.getMethDrugPurity();
+                        break;
+                }
             }
+
             FileManager.DATA.removeDrugFromInventory(drugType, drugPurity, 1);
         }
 
