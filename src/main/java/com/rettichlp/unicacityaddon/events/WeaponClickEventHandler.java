@@ -1,8 +1,8 @@
 package com.rettichlp.unicacityaddon.events;
 
-import com.google.common.collect.ImmutableSet;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
+import com.rettichlp.unicacityaddon.base.enums.Weapon;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import net.minecraft.item.ItemStack;
@@ -13,7 +13,6 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -23,7 +22,6 @@ import java.util.concurrent.TimeUnit;
 @UCEvent
 public class WeaponClickEventHandler {
 
-    private static final Set<String> WEAPONS = ImmutableSet.of("§8M4", "§8MP5", "§8Pistole", "§8Jagdflinte");
     public static boolean tazerLoaded = false;
     private long tazerLastWarningSend = 0;
 
@@ -33,7 +31,8 @@ public class WeaponClickEventHandler {
             return;
 
         ItemStack is = e.getItemStack();
-        if (!isWeapon(is))
+        Weapon weapon = Weapon.getWeaponByItemName(is.getDisplayName());
+        if (weapon == null)
             return;
 
         tazerLoaded = false;
@@ -67,13 +66,6 @@ public class WeaponClickEventHandler {
         int munition = Integer.parseInt(munitionString.substring(2));
 
         return (--munition < 1 ? ColorCode.RED.getCode() + "0" : ColorCode.GOLD.getCode() + munition) + ColorCode.GRAY.getCode() + "/" + ColorCode.GOLD.getCode() + splittedLore[1];
-    }
-
-    private boolean isWeapon(ItemStack is) {
-        if (is == null)
-            return false;
-
-        return WEAPONS.contains(is.getDisplayName());
     }
 
     @SubscribeEvent

@@ -26,6 +26,9 @@ import java.util.Map;
 public class Data {
 
     @Builder.Default
+    private List<Armament> armamentList = Collections.emptyList();
+
+    @Builder.Default
     private int bankBalance = 0;
 
     @Builder.Default
