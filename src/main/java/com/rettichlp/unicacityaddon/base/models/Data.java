@@ -1,5 +1,6 @@
 package com.rettichlp.unicacityaddon.base.models;
 
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
@@ -140,6 +141,7 @@ public class Data {
      * @see DrugPurity
      */
     public void addDrugToInventory(DrugType drugType, DrugPurity drugPurity, int amount) {
+        UnicacityAddon.LOGGER.info("Added amount {} of DrugType {} with DrugPurity {} to inventory", drugType, drugPurity, amount);
         if (drugType != null) {
             Map<DrugPurity, Integer> drugPurityIntegerMap = drugInventoryMap.getOrDefault(drugType, new HashMap<>());
             int oldAmount = drugPurityIntegerMap.getOrDefault(drugPurity, 0);
@@ -158,6 +160,7 @@ public class Data {
      * @see DrugPurity
      */
     public void removeDrugFromInventory(DrugType drugType, DrugPurity drugPurity, int amount) {
+        UnicacityAddon.LOGGER.info("Removed amount {} of DrugType {} with DrugPurity {} from inventory", drugType, drugPurity, amount);
         if (drugType != null) {
             Map<DrugPurity, Integer> drugPurityIntegerMap = drugInventoryMap.getOrDefault(drugType, new HashMap<>());
             int oldAmount = drugPurityIntegerMap.getOrDefault(drugPurity, 0);
