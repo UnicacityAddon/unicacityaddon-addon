@@ -8,6 +8,7 @@ import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
 import com.rettichlp.unicacityaddon.base.enums.faction.Equip;
 import joptsimple.internal.Strings;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import net.minecraft.util.math.BlockPos;
 
@@ -16,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@NoArgsConstructor
 @Getter
 @Setter
 public class Data {
@@ -36,9 +38,6 @@ public class Data {
     private Integer serviceCount = 0;
     private Integer timer = 0;
     private List<TodolistEntry> todolist = new ArrayList<>();
-
-    public Data() {
-    }
 
     /**
      * Adds the given value <code>i</code> to the <code>bankBalance</code>
