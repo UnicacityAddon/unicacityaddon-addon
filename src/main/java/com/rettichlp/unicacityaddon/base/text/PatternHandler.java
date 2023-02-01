@@ -169,7 +169,6 @@ public class PatternHandler {
      * Pattern for bad faction interaction
      *
      * @see com.rettichlp.unicacityaddon.events.faction.badfaction.BannerEventHandler
-     * @see com.rettichlp.unicacityaddon.events.faction.badfaction.DBankMessageEventHandler
      * @see com.rettichlp.unicacityaddon.events.faction.badfaction.GiftEigenbedarfEventHandler
      * @see com.rettichlp.unicacityaddon.events.faction.badfaction.PlantEventHandler
      */

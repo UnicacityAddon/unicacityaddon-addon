@@ -7,11 +7,15 @@ import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
 import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
+import com.rettichlp.unicacityaddon.base.text.ColorCode;
+import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import net.minecraftforge.client.event.ClientChatEvent;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+import java.text.NumberFormat;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 
@@ -52,6 +56,23 @@ public class DrugInteractionEventHandler {
             DrugType drugType = DrugType.getDrugType(dbankGetMatcher.group("drugType"));
             DrugPurity drugPurity = DrugPurity.getDrugPurity(dbankGetMatcher.group("drugPurity"));
             FileManager.DATA.addDrugToInventory(drugType, drugPurity, amount);
+
+            if (ConfigElements.getDrugBankMessagesActivated()) {
+                NumberFormat numberFormat = NumberFormat.getNumberInstance(new Locale("da", "DK"));
+                e.setMessage(Message.getBuilder().of("D").color(ColorCode.GOLD).bold().advance()
+                        .of("-").color(ColorCode.GRAY).advance()
+                        .of("Bank").color(ColorCode.GOLD).bold().advance().space()
+                        .of("●").color(ColorCode.DARK_GRAY).advance().space()
+                        .of("-").color(ColorCode.RED).advance()
+                        .of(amount + "g").color(ColorCode.DARK_AQUA).bold().advance().space()
+                        .of(drugPurity.getPurity() + "er").color(ColorCode.DARK_AQUA).bold().advance().space()
+                        .of(drugType.getShortName()).color(ColorCode.DARK_AQUA).bold().advance().space()
+                        .of("»").color(ColorCode.GRAY).advance().space()
+                        .of(numberFormat.format(Integer.parseInt(dbankGetMatcher.group(5))) + "g").color(ColorCode.DARK_AQUA).bold().advance().space()
+                        .of("|").color(ColorCode.GRAY).advance().space()
+                        .of(dbankGetMatcher.group(1)).color(ColorCode.DARK_AQUA).bold().advance()
+                        .createComponent());
+            }
             return;
         }
 
@@ -61,6 +82,23 @@ public class DrugInteractionEventHandler {
             DrugType drugType = DrugType.getDrugType(dbankGiveMatcher.group("drugType"));
             DrugPurity drugPurity = DrugPurity.getDrugPurity(dbankGiveMatcher.group("drugPurity"));
             FileManager.DATA.removeDrugFromInventory(drugType, drugPurity, amount);
+
+            if (ConfigElements.getDrugBankMessagesActivated()) {
+                NumberFormat numberFormat = NumberFormat.getNumberInstance(new Locale("da", "DK"));
+                e.setMessage(Message.getBuilder().of("D").color(ColorCode.GOLD).bold().advance()
+                        .of("-").color(ColorCode.GRAY).advance()
+                        .of("Bank").color(ColorCode.GOLD).bold().advance().space()
+                        .of("●").color(ColorCode.DARK_GRAY).advance().space()
+                        .of("+").color(ColorCode.GREEN).advance()
+                        .of(amount + "g").color(ColorCode.DARK_AQUA).bold().advance().space()
+                        .of(drugPurity.getPurity() + "er").color(ColorCode.DARK_AQUA).bold().advance().space()
+                        .of(drugType.getShortName()).color(ColorCode.DARK_AQUA).bold().advance().space()
+                        .of("»").color(ColorCode.GRAY).advance().space()
+                        .of(numberFormat.format(Integer.parseInt(dbankGiveMatcher.group(5))) + "g").color(ColorCode.DARK_AQUA).bold().advance().space()
+                        .of("|").color(ColorCode.GRAY).advance().space()
+                        .of(dbankGiveMatcher.group(1)).color(ColorCode.DARK_AQUA).bold().advance()
+                        .createComponent());
+            }
             return;
         }
 
