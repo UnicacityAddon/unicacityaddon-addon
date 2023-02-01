@@ -104,7 +104,7 @@ public class PatternHandler {
     public static final Pattern CONTRACT_SET_PATTERN = Pattern.compile("^\\[Contract] Es wurde ein Kopfgeld auf (?:\\[UC])*(\\w+) \\(\\d+\\$\\) ausgesetzt\\.$");
     public static final Pattern CONTRACT_REMOVED_PATTERN = Pattern.compile("^\\[Contract] (?:\\[UC])*\\w+ hat (?:\\[UC])*(\\w+) von der Contract Liste gelöscht\\. \\[-\\d+]$" +
             "|^\\[Contract] (?:\\[UC])*(\\w+) hat (?:\\[UC])*(\\w+) getötet\\. Kopfgeld: \\d+\\$");
-    public static final Pattern CONTRACT_LIST_PATTERN = Pattern.compile("^ - (?:\\[UC])*(?<name>\\w+) \\[(?<money>\\d+)\\$]$");
+    public static final Pattern CONTRACT_LIST_PATTERN = Pattern.compile("^ - (?:\\[UC])*(?<name>\\w+) \\[(?<money>\\d+)\\$](| \\(AFK\\))$");
 
     /**
      * Pattern for job interaction
