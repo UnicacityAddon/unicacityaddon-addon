@@ -11,7 +11,6 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
-import com.rettichlp.unicacityaddon.commands.faction.ServiceCountCommand;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.event.ClickEvent;
 import net.minecraft.util.text.event.HoverEvent;
@@ -65,7 +64,7 @@ public class EmergencyServiceEventHandler {
         }
 
         if (PatternHandler.SERVICE_DONE_PATTERN.matcher(unformattedMsg).find()) {
-            ServiceCountCommand.addService();
+            FileManager.DATA.setServiceCount(FileManager.DATA.getServiceCount() + 1);
             APIRequest.sendStatisticAddRequest(StatisticType.SERVICE);
         }
 

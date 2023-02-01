@@ -48,16 +48,16 @@ public class PlantEventHandler {
         String msg = e.getMessage().getUnformattedText();
 
         if (PatternHandler.PLANT_HARVEST_PATTERN.matcher(msg).find()) {
-            FileManager.DATA.setPlantFertilizeTime(0);
-            FileManager.DATA.setPlantWaterTime(0);
+            FileManager.DATA.setPlantFertilizeTime(0L);
+            FileManager.DATA.setPlantWaterTime(0L);
             return;
         }
 
         Matcher plantUseMatcher = PatternHandler.PLANT_USE_PATTERN.matcher(msg);
         if (plantUseMatcher.find()) {
-            if (plantUseMatcher.group(2).equals("gewässert") && System.currentTimeMillis() - TimeUnit.MINUTES.toMillis(10) > FileManager.DATA.getPlantWaterTime()) {
+            if (msg.contains("gewässert") && System.currentTimeMillis() - TimeUnit.MINUTES.toMillis(10) > FileManager.DATA.getPlantWaterTime()) {
                 FileManager.DATA.setPlantWaterTime(System.currentTimeMillis());
-            } else if (System.currentTimeMillis() - TimeUnit.MINUTES.toMillis(10) > FileManager.DATA.getPlantFertilizeTime()) {
+            } else if (msg.contains("gedüngt") && System.currentTimeMillis() - TimeUnit.MINUTES.toMillis(10) > FileManager.DATA.getPlantFertilizeTime()) {
                 FileManager.DATA.setPlantFertilizeTime(System.currentTimeMillis());
             }
         }

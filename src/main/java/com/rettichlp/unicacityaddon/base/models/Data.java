@@ -1,15 +1,12 @@
 package com.rettichlp.unicacityaddon.base.models;
 
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
 import com.rettichlp.unicacityaddon.base.enums.faction.Equip;
 import joptsimple.internal.Strings;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import net.minecraft.util.math.BlockPos;
 
@@ -18,60 +15,89 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
-@Getter
 @Setter
 public class Data {
 
-    @Builder.Default
-    private int bankBalance = 0;
+    private Integer bankBalance;
+    private String carInfo;
+    private Integer cashBalance;
+    private Map<DrugType, Map<DrugPurity, Integer>> drugInventoryMap;
+    private List<CoordlistEntry> coordlist;
+    private Map<Equip, Integer> equipMap;
+    private Long firstAidDate;
+    private Map<Integer, HouseData> houseDataMap;
+    private Integer jobBalance;
+    private Integer jobExperience;
+    private Integer payDayTime;
+    private Long plantFertilizeTime;
+    private Long plantWaterTime;
+    private Integer serviceCount;
+    private Integer timer;
+    private List<TodolistEntry> todolist;
 
-    @Builder.Default
-    private String carInfo = Strings.EMPTY;
+    public int getBankBalance() {
+        return bankBalance != null ? bankBalance : 0;
+    }
 
-    @Builder.Default
-    private int cashBalance = 0;
+    public String getCarInfo() {
+        return carInfo != null ? carInfo : Strings.EMPTY;
+    }
 
-    @Builder.Default
-    private Map<DrugType, Map<DrugPurity, Integer>> drugInventoryMap = new HashMap<>();
+    public int getCashBalance() {
+        return cashBalance != null ? cashBalance : 0;
+    }
 
-    @Builder.Default
-    private List<CoordlistEntry> coordlist = Collections.emptyList();
+    public Map<DrugType, Map<DrugPurity, Integer>> getDrugInventoryMap() {
+        return drugInventoryMap != null ? drugInventoryMap : Collections.emptyMap();
+    }
 
-    @Builder.Default
-    private Map<Equip, Integer> equipMap = new HashMap<>();
+    public List<CoordlistEntry> getCoordlist() {
+        return coordlist != null ? coordlist : Collections.emptyList();
+    }
 
-    @Builder.Default
-    private long firstAidDate = 0;
+    public Map<Equip, Integer> getEquipMap() {
+        return equipMap != null ? equipMap : Collections.emptyMap();
+    }
 
-    @Builder.Default
-    private Map<Integer, HouseData> houseDataMap = new HashMap<>();
+    public long getFirstAidDate() {
+        return firstAidDate != null ? firstAidDate : 0;
+    }
 
-    @Builder.Default
-    private int jobBalance = 0;
+    public Map<Integer, HouseData> getHouseDataMap() {
+        return houseDataMap != null ? houseDataMap : Collections.emptyMap();
+    }
 
-    @Builder.Default
-    private int jobExperience = 0;
+    public int getJobBalance() {
+        return jobBalance != null ? jobBalance : 0;
+    }
 
-    @Builder.Default
-    private int payDayTime = 0;
+    public int getJobExperience() {
+        return jobExperience != null ? jobExperience : 0;
+    }
 
-    @Builder.Default
-    private long plantFertilizeTime = -1;
+    public int getPayDayTime() {
+        return payDayTime != null ? payDayTime : 0;
+    }
 
-    @Builder.Default
-    private long plantWaterTime = -1;
+    public long getPlantFertilizeTime() {
+        return plantFertilizeTime != null ? plantFertilizeTime : 0;
+    }
 
-    @Builder.Default
-    private int serviceCount = 0;
+    public long getPlantWaterTime() {
+        return plantWaterTime != null ? plantWaterTime : 0;
+    }
 
-    @Builder.Default
-    private int timer = 0;
+    public int getServiceCount() {
+        return serviceCount != null ? serviceCount : 0;
+    }
 
-    @Builder.Default
-    private List<TodolistEntry> todolist = Collections.emptyList();
+    public int getTimer() {
+        return timer != null ? timer : 0;
+    }
+
+    public List<TodolistEntry> getTodolist() {
+        return todolist != null ? todolist : Collections.emptyList();
+    }
 
     /**
      * Adds the given value <code>i</code> to the <code>bankBalance</code>
@@ -140,6 +166,7 @@ public class Data {
      * @see DrugPurity
      */
     public void addDrugToInventory(DrugType drugType, DrugPurity drugPurity, int amount) {
+        UnicacityAddon.LOGGER.info("DrugInventoryInteraction: Added amount {} of DrugType {} with DrugPurity {} to inventory", amount, drugType, drugPurity);
         if (drugType != null) {
             Map<DrugPurity, Integer> drugPurityIntegerMap = drugInventoryMap.getOrDefault(drugType, new HashMap<>());
             int oldAmount = drugPurityIntegerMap.getOrDefault(drugPurity, 0);
@@ -158,6 +185,7 @@ public class Data {
      * @see DrugPurity
      */
     public void removeDrugFromInventory(DrugType drugType, DrugPurity drugPurity, int amount) {
+        UnicacityAddon.LOGGER.info("DrugInventoryInteraction: Removed amount {} of DrugType {} with DrugPurity {} from inventory", amount, drugType, drugPurity);
         if (drugType != null) {
             Map<DrugPurity, Integer> drugPurityIntegerMap = drugInventoryMap.getOrDefault(drugType, new HashMap<>());
             int oldAmount = drugPurityIntegerMap.getOrDefault(drugPurity, 0);
