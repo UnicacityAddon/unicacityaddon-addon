@@ -7,97 +7,37 @@ import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
 import com.rettichlp.unicacityaddon.base.enums.faction.Equip;
 import joptsimple.internal.Strings;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import net.minecraft.util.math.BlockPos;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@NoArgsConstructor
+@Getter
 @Setter
 public class Data {
 
-    private Integer bankBalance;
-    private String carInfo;
-    private Integer cashBalance;
-    private Map<DrugType, Map<DrugPurity, Integer>> drugInventoryMap;
-    private List<CoordlistEntry> coordlist;
-    private Map<Equip, Integer> equipMap;
-    private Long firstAidDate;
-    private Map<Integer, HouseData> houseDataMap;
-    private Integer jobBalance;
-    private Integer jobExperience;
-    private Integer payDayTime;
-    private Long plantFertilizeTime;
-    private Long plantWaterTime;
-    private Integer serviceCount;
-    private Integer timer;
-    private List<TodolistEntry> todolist;
-
-    public int getBankBalance() {
-        return bankBalance != null ? bankBalance : 0;
-    }
-
-    public String getCarInfo() {
-        return carInfo != null ? carInfo : Strings.EMPTY;
-    }
-
-    public int getCashBalance() {
-        return cashBalance != null ? cashBalance : 0;
-    }
-
-    public Map<DrugType, Map<DrugPurity, Integer>> getDrugInventoryMap() {
-        return drugInventoryMap != null ? drugInventoryMap : Collections.emptyMap();
-    }
-
-    public List<CoordlistEntry> getCoordlist() {
-        return coordlist != null ? coordlist : Collections.emptyList();
-    }
-
-    public Map<Equip, Integer> getEquipMap() {
-        return equipMap != null ? equipMap : Collections.emptyMap();
-    }
-
-    public long getFirstAidDate() {
-        return firstAidDate != null ? firstAidDate : 0;
-    }
-
-    public Map<Integer, HouseData> getHouseDataMap() {
-        return houseDataMap != null ? houseDataMap : Collections.emptyMap();
-    }
-
-    public int getJobBalance() {
-        return jobBalance != null ? jobBalance : 0;
-    }
-
-    public int getJobExperience() {
-        return jobExperience != null ? jobExperience : 0;
-    }
-
-    public int getPayDayTime() {
-        return payDayTime != null ? payDayTime : 0;
-    }
-
-    public long getPlantFertilizeTime() {
-        return plantFertilizeTime != null ? plantFertilizeTime : 0;
-    }
-
-    public long getPlantWaterTime() {
-        return plantWaterTime != null ? plantWaterTime : 0;
-    }
-
-    public int getServiceCount() {
-        return serviceCount != null ? serviceCount : 0;
-    }
-
-    public int getTimer() {
-        return timer != null ? timer : 0;
-    }
-
-    public List<TodolistEntry> getTodolist() {
-        return todolist != null ? todolist : Collections.emptyList();
-    }
+    private Integer bankBalance = 0;
+    private String carInfo = Strings.EMPTY;
+    private Integer cashBalance = 0;
+    private Map<DrugType, Map<DrugPurity, Integer>> drugInventoryMap = new HashMap<>();
+    private List<CoordlistEntry> coordlist = new ArrayList<>();
+    private Map<Equip, Integer> equipMap = new HashMap<>();
+    private Long firstAidDate = 0L;
+    private Map<Integer, HouseData> houseDataMap = new HashMap<>();
+    private Integer jobBalance = 0;
+    private Integer jobExperience = 0;
+    private Integer payDayTime = 0;
+    private Long plantFertilizeTime = 0L;
+    private Long plantWaterTime = 0L;
+    private Integer serviceCount = 0;
+    private Integer timer = 0;
+    private List<TodolistEntry> todolist = new ArrayList<>();
 
     /**
      * Adds the given value <code>i</code> to the <code>bankBalance</code>
