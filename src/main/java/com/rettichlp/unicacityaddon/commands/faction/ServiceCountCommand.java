@@ -3,6 +3,7 @@ package com.rettichlp.unicacityaddon.commands.faction;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
+import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
@@ -22,8 +23,6 @@ import java.util.List;
  */
 @UCCommand
 public class ServiceCountCommand implements IClientCommand {
-
-    public static int serviceCount;
 
     @Override
     @Nonnull
@@ -51,17 +50,15 @@ public class ServiceCountCommand implements IClientCommand {
     @Override
     public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
         UPlayer p = AbstractionLayer.getPlayer();
-        if (args.length > 0) {
-            if (!args[0].equalsIgnoreCase("reset"))
-                return;
-            serviceCount = 0;
+        if (args.length > 0 && args[0].equalsIgnoreCase("reset")) {
+            FileManager.DATA.setServiceCount(0);
             p.sendInfoMessage("Servicecount wurde zurückgesetzt.");
             return;
         }
 
         Message.getBuilder().prefix().space()
                 .of("Du hast bereits").color(ColorCode.GRAY).advance().space()
-                .of("" + serviceCount).color(ColorCode.DARK_AQUA).advance().space()
+                .of(String.valueOf(FileManager.DATA.getServiceCount())).color(ColorCode.DARK_AQUA).advance().space()
                 .of("Notrufe bearbeitet.").color(ColorCode.GRAY).advance().sendTo(p.getPlayer());
     }
 
@@ -76,10 +73,6 @@ public class ServiceCountCommand implements IClientCommand {
     @Override
     public boolean isUsernameIndex(@Nonnull String[] args, int index) {
         return false;
-    }
-
-    public static void addService() {
-        serviceCount++;
     }
 
     @Override

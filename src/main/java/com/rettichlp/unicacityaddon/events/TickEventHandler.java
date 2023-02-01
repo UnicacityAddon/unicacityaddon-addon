@@ -47,6 +47,7 @@ public class TickEventHandler {
                 handleNameTag();
                 handleBombTimer();
                 handleTimer();
+                handleCustomSeconds();
             }
 
             // 3 SECONDS
@@ -64,26 +65,17 @@ public class TickEventHandler {
             if (currentTick % 1200 == 0) {
                 handlePayDay();
             }
-
-            // CUSTOM SECONDS
-            String intervalString = ConfigElements.getRefreshDisplayNamesInterval();
-            int interval = 5 * 20; // every 5 seconds
-            if (MathUtils.isInteger(intervalString))
-                interval = Integer.parseInt(intervalString) * 20;
-            if (currentTick % interval == 0)
-                handleNameTagSyncDisplayName();
         }
     }
 
     private void handleReinforcementScreenshot() {
-        if (ReinforcementEventHandler.activeReinforcement < 0 || ReinforcementEventHandler.activeReinforcement + 15 != currentTick)
-            return;
-
-        try {
-            File file = FileManager.getNewActivityImageFile("reinforcement");
-            HotkeyEventHandler.handleScreenshot(file);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        if (ReinforcementEventHandler.activeReinforcement >= 0 && ReinforcementEventHandler.activeReinforcement + 15 == currentTick) {
+            try {
+                File file = FileManager.getNewActivityImageFile("reinforcement");
+                HotkeyEventHandler.handleScreenshot(file);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
@@ -106,25 +98,18 @@ public class TickEventHandler {
             String name = entityItem.getCustomNameTag();
             String playerName = name.substring(3);
 
-            if (!Syncer.PLAYERFACTIONMAP.containsKey(name.substring(3)))
-                return;
-            if (name.contains("◤"))
-                return; // already edited
+            if (Syncer.PLAYERFACTIONMAP.containsKey(playerName) && !name.contains("◤")) {
+                String prefix = NameTagEventHandler.getPrefix(playerName, true);
+                String factionInfo = NameTagEventHandler.getFactionInfo(playerName);
 
-            String prefix = NameTagEventHandler.getPrefix(playerName, true);
-            String factionInfo = NameTagEventHandler.getFactionInfo(playerName);
+                if (name.startsWith(ColorCode.DARK_GRAY.getCode())) { // non-revivable
+                    entityItem.setCustomNameTag(ColorCode.DARK_GRAY.getCode() + "✟" + playerName + factionInfo);
+                    return;
+                }
 
-            if (name.startsWith(ColorCode.DARK_GRAY.getCode())) { // non-revivable
-                entityItem.setCustomNameTag(ColorCode.DARK_GRAY.getCode() + "✟" + playerName + factionInfo);
-                return;
+                entityItem.setCustomNameTag(prefix + "✟" + playerName + factionInfo);
             }
-
-            entityItem.setCustomNameTag(prefix + "✟" + playerName + factionInfo);
         });
-    }
-
-    private void handleNameTagSyncDisplayName() {
-        NameTagEventHandler.refreshAllDisplayNames();
     }
 
     private void handleBombTimer() {
@@ -143,6 +128,15 @@ public class TickEventHandler {
             FileManager.DATA.setTimer(FileManager.DATA.getTimer() - 1);
         } else {
             FileManager.DATA.setTimer(0);
+        }
+    }
+
+    private void handleCustomSeconds() {
+        if (UnicacityAddon.isUnicacity() && UnicacityAddon.ADDON.getConfig() != null) {
+            String intervalString = ConfigElements.getRefreshDisplayNamesInterval();
+            if (currentTick % (MathUtils.isInteger(intervalString) ? Integer.parseInt(intervalString) * 20 : 5 * 20) == 0) {
+                NameTagEventHandler.refreshAllDisplayNames();
+            }
         }
     }
 
