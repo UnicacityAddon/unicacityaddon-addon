@@ -35,6 +35,9 @@ public class Data {
     private Integer timer;
     private List<TodolistEntry> todolist;
 
+    public Data() {
+    }
+
     public int getBankBalance() {
         return bankBalance != null ? bankBalance : 0;
     }
