@@ -84,7 +84,7 @@ public class WantedEventHandler {
             return;
         }
 
-        Matcher matcher = PatternHandler.WANTED_LIST_ENTRY_PATTERN.matcher(unformattedMessage);
+        Matcher matcher = PatternHandler.WANTED_LIST_PATTERN.matcher(unformattedMessage);
         if (currentTime - wantedsShown > 1000L || !matcher.find())
             return;
 
