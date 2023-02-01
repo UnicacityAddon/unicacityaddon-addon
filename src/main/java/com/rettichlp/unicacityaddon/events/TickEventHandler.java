@@ -132,7 +132,7 @@ public class TickEventHandler {
     }
 
     private void handleCustomSeconds() {
-        if (UnicacityAddon.isUnicacity()) {
+        if (UnicacityAddon.isUnicacity() && UnicacityAddon.ADDON.getConfig() != null) {
             String intervalString = ConfigElements.getRefreshDisplayNamesInterval();
             if (currentTick % (MathUtils.isInteger(intervalString) ? Integer.parseInt(intervalString) * 20 : 5 * 20) == 0) {
                 NameTagEventHandler.refreshAllDisplayNames();
