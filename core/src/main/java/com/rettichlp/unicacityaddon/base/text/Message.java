@@ -1,14 +1,12 @@
 package com.rettichlp.unicacityaddon.base.text;
 
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.Style;
-import net.kyori.adventure.text.format.TextDecoration;
+import net.labymod.api.client.component.Component;
+import net.labymod.api.client.component.format.Style;
+import net.labymod.api.client.component.format.TextDecoration;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
-import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 
 /**
  * @author RettichLP
@@ -43,7 +41,7 @@ public class Message {
                     .of("U").color(ColorCode.BLUE).advance()
                     .of("C").color(ColorCode.RED).advance()
                     .of("A").color(ColorCode.BLUE).advance().space()
-                    .of("●").color(ColorCode.DARK_GRAY).advance().space()
+                    .of("\u25cf").color(ColorCode.DARK_GRAY).advance().space()
                     .create());
         }
 
@@ -109,11 +107,11 @@ public class Message {
 
             message.getMessageParts().forEach(messagePart -> component.append(Component.text(messagePart.getMessage())
                     .style(Style.style(messagePart.getColorCode() == null ? null : messagePart.getColorCode().getTextColor()).toBuilder()
-                            .decoration(TextDecoration.BOLD, messagePart.getFormattingCodes().contains(FormattingCode.BOLD))
-                            .decoration(TextDecoration.ITALIC, messagePart.getFormattingCodes().contains(FormattingCode.ITALIC))
-                            .decoration(TextDecoration.OBFUSCATED, messagePart.getFormattingCodes().contains(FormattingCode.OBFUSCATED))
-                            .decoration(TextDecoration.STRIKETHROUGH, messagePart.getFormattingCodes().contains(FormattingCode.STRIKETHROUGH))
-                            .decoration(TextDecoration.UNDERLINED, messagePart.getFormattingCodes().contains(FormattingCode.UNDERLINE))
+                            .decoration(TextDecoration.BOLD, messagePart.getFormattingCodes().contains(FormattingCode.BOLD) ? TextDecoration.State.TRUE : TextDecoration.State.FALSE)
+                            .decoration(TextDecoration.ITALIC, messagePart.getFormattingCodes().contains(FormattingCode.ITALIC) ? TextDecoration.State.TRUE : TextDecoration.State.FALSE)
+                            .decoration(TextDecoration.OBFUSCATED, messagePart.getFormattingCodes().contains(FormattingCode.OBFUSCATED) ? TextDecoration.State.TRUE : TextDecoration.State.FALSE)
+                            .decoration(TextDecoration.STRIKETHROUGH, messagePart.getFormattingCodes().contains(FormattingCode.STRIKETHROUGH) ? TextDecoration.State.TRUE : TextDecoration.State.FALSE)
+                            .decoration(TextDecoration.UNDERLINED, messagePart.getFormattingCodes().contains(FormattingCode.UNDERLINE) ? TextDecoration.State.TRUE : TextDecoration.State.FALSE)
                             .build())
                     .clickEvent(messagePart.getClickEvent())
                     .hoverEvent(messagePart.getHoverEvent())));

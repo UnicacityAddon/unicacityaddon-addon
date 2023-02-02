@@ -1,5 +1,6 @@
 package com.rettichlp.unicacityaddon.events.faction.polizei;
 
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import net.labymod.api.event.Subscribe;
@@ -18,6 +19,11 @@ public class WantedEventHandler {
 
     public static final Map<String, Wanted> WANTED_MAP = new HashMap<>();
     private static long wantedsShown;
+    private final UnicacityAddon unicacityAddon;
+
+    public WantedEventHandler(UnicacityAddon unicacityAddon) {
+        this.unicacityAddon = unicacityAddon;
+    }
 
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {

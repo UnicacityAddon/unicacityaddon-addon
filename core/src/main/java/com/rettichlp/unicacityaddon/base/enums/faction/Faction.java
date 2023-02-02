@@ -64,7 +64,7 @@ public enum Faction {
             .of("◢").color(ColorCode.DARK_GRAY).advance().create()),
     TERRORISTEN("terroristen", "Terroristen", "Terroristen", 203, Message.getBuilder()
             .of("◤").color(ColorCode.DARK_GRAY).advance()
-            .of("❇").color(ColorCode.GRAY).advance()
+            .of("\u2747").color(ColorCode.GRAY).advance()
             .of("◢").color(ColorCode.DARK_GRAY).advance().create());
 
     private final String apiName;

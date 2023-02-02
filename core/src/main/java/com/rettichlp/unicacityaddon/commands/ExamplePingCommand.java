@@ -1,9 +1,9 @@
 package com.rettichlp.unicacityaddon.commands;
 
-import com.google.inject.Inject;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
+import net.labymod.api.client.component.Component;
+import net.labymod.api.client.component.format.NamedTextColor;
 import net.labymod.api.client.chat.command.Command;
+import net.labymod.api.client.component.format.NamedTextColor;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,8 +12,7 @@ import java.util.List;
 
 public class ExamplePingCommand extends Command {
 
-  @Inject
-  private ExamplePingCommand() {
+  public ExamplePingCommand() {
     super("ping", "pong");
   }
 

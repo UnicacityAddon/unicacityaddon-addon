@@ -8,7 +8,10 @@ public class TickEventHandler {
 
     public static int currentTick = 0;
 
-//    @Subscribe
+    public TickEventHandler(UnicacityAddon unicacityAddon) {
+    }
+
+    //    @Subscribe
 //    public void onTick(TickEvent.ClientTickEvent event) {
 //        if (event.phase != TickEvent.Phase.END) return;
 //

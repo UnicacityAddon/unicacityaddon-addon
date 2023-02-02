@@ -1,6 +1,5 @@
 package com.rettichlp.unicacityaddon.commands.supporter;
 
-import com.google.inject.Inject;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
@@ -20,8 +19,7 @@ public class PunishCommand extends Command {
 
     private static final String usage = "/punish [Spielername] [Grund]";
 
-    @Inject
-    private PunishCommand() {
+    public PunishCommand() {
         super("punish");
     }
 

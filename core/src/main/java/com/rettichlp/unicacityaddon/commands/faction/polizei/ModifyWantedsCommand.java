@@ -1,6 +1,5 @@
 package com.rettichlp.unicacityaddon.commands.faction.polizei;
 
-import com.google.inject.Inject;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.enums.faction.ModifyWantedType;
@@ -22,8 +21,7 @@ public class ModifyWantedsCommand extends Command {
 
     private static final String usage = "/mw [Spieler] [GF/SF/SSF/S/DA5/DA10/DA15/FSA/WSA/WGV]";
 
-    @Inject
-    private ModifyWantedsCommand() {
+    public ModifyWantedsCommand() {
         super("modifywanteds", "mw");
     }
 

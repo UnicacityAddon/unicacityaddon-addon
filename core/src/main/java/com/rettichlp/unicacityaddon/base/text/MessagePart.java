@@ -1,7 +1,8 @@
 package com.rettichlp.unicacityaddon.base.text;
 
-import net.kyori.adventure.text.event.ClickEvent;
-import net.kyori.adventure.text.event.HoverEvent;
+import net.labymod.api.client.component.ComponentService;
+import net.labymod.api.client.component.event.ClickEvent;
+import net.labymod.api.client.component.event.HoverEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -100,12 +101,12 @@ public class MessagePart {
         }
 
         public Builder clickEvent(ClickEvent.Action action, String value) {
-            this.clickEvent = ClickEvent.clickEvent(action, value);
+            this.clickEvent = ComponentService.clickEvent(action, value);
             return this;
         }
 
         public <V> Builder hoverEvent(HoverEvent.Action<V> action, V value) {
-            this.hoverEvent = HoverEvent.hoverEvent(action, value);
+            this.hoverEvent = ComponentService.hoverEvent(action, value);
             return this;
         }
 

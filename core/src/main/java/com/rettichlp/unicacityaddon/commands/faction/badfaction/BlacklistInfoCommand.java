@@ -1,6 +1,5 @@
 package com.rettichlp.unicacityaddon.commands.faction.badfaction;
 
-import com.google.inject.Inject;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
@@ -20,8 +19,7 @@ public class BlacklistInfoCommand extends Command {
 
     private static final String usage = "/blacklistinfo [Spieler]";
 
-    @Inject
-    private BlacklistInfoCommand() {
+    public BlacklistInfoCommand() {
         super("blacklistinfo", "blinfo");
     }
 

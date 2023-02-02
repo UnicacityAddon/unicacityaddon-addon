@@ -1,6 +1,5 @@
 package com.rettichlp.unicacityaddon.commands;
 
-import com.google.inject.Inject;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
@@ -11,7 +10,7 @@ import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.utils.MathUtils;
 import com.rettichlp.unicacityaddon.base.utils.TextUtils;
-import net.kyori.adventure.text.event.ClickEvent;
+import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.chat.command.Command;
 
 import java.util.List;
@@ -26,8 +25,7 @@ public class TodoListCommand extends Command {
     public static List<TodolistEntry> todolist;
     private static final String usage = "/todo [add|done|delete] [Todo]";
 
-    @Inject
-    private TodoListCommand() {
+    public TodoListCommand() {
         super("todo");
     }
 
@@ -101,7 +99,7 @@ public class TodoListCommand extends Command {
                 p.sendMessage(Message.getBuilder()
                         .of("» " + id + ". ").color(ColorCode.GRAY).advance()
                         .of(todolistEntry.getTodo()).color(ColorCode.AQUA).strikethrough().advance().space()
-                        .of("[✐]").color(ColorCode.GOLD)
+                        .of("[\u2710]").color(ColorCode.GOLD)
                                 .clickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/todo edit " + id + " " + todolistEntry.getTodo())
                                 .advance().space()
                         .of("[✕]").color(ColorCode.RED)
@@ -115,7 +113,7 @@ public class TodoListCommand extends Command {
                         .of("[✔]").color(ColorCode.GREEN)
                                 .clickEvent(ClickEvent.Action.RUN_COMMAND, "/todo done " + todolistEntry.getTodo())
                                 .advance().space()
-                        .of("[✐]").color(ColorCode.GOLD)
+                        .of("[\u2710]").color(ColorCode.GOLD)
                                 .clickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/todo edit " + id + " " + todolistEntry.getTodo())
                                 .advance().space()
                         .of("[✕]").color(ColorCode.RED)

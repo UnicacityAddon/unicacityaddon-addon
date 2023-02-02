@@ -1,5 +1,6 @@
 package com.rettichlp.unicacityaddon.events.faction.badfaction.blacklist;
 
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.commands.faction.badfaction.BlacklistInfoCommand;
@@ -21,6 +22,11 @@ public class BlacklistEventHandler {
     public static final Map<String, Boolean> BLACKLIST_MAP = new HashMap<>();
 
     private static long blacklistShown;
+    private final UnicacityAddon unicacityAddon;
+
+    public BlacklistEventHandler(UnicacityAddon unicacityAddon) {
+        this.unicacityAddon = unicacityAddon;
+    }
 
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {

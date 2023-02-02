@@ -8,8 +8,8 @@ import com.rettichlp.unicacityaddon.base.teamspeak.commands.ClientVariableComman
 import com.rettichlp.unicacityaddon.base.teamspeak.events.ClientMovedEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
-import net.kyori.adventure.text.event.ClickEvent;
-import net.kyori.adventure.text.event.HoverEvent;
+import net.labymod.api.client.component.event.ClickEvent;
+import net.labymod.api.client.component.event.HoverEvent;
 import net.labymod.api.event.Subscribe;
 
 /**

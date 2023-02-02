@@ -1,6 +1,5 @@
 package com.rettichlp.unicacityaddon.commands;
 
-import com.google.inject.Inject;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
@@ -16,8 +15,7 @@ public class CancelCountdownCommand extends Command {
 
     private static final String usage = "/cancelcountdown";
 
-    @Inject
-    private CancelCountdownCommand() {
+    public CancelCountdownCommand() {
         super("cancelcountdown");
     }
 

@@ -1,6 +1,5 @@
 package com.rettichlp.unicacityaddon.commands;
 
-import com.google.inject.Inject;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.commands.faction.AFbankEinzahlenCommand;
@@ -16,8 +15,7 @@ public class ClockCommand extends Command {
 
     private static final String usage = "/clock";
 
-    @Inject
-    private ClockCommand() {
+    public ClockCommand() {
         super("clock", "uhrzeit", "uhr");
     }
 

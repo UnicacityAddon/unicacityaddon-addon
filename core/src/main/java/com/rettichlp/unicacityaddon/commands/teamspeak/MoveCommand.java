@@ -1,6 +1,5 @@
 package com.rettichlp.unicacityaddon.commands.teamspeak;
 
-import com.google.inject.Inject;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
@@ -26,8 +25,7 @@ public class MoveCommand extends Command {
 
     private static final String usage = "/move [Spieler] [Ziel]";
 
-    @Inject
-    private MoveCommand() {
+    public MoveCommand() {
         super("move");
     }
 

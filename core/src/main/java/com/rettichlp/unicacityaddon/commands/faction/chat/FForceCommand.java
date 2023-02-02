@@ -1,6 +1,5 @@
 package com.rettichlp.unicacityaddon.commands.faction.chat;
 
-import com.google.inject.Inject;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
@@ -18,8 +17,7 @@ public class FForceCommand extends Command {
 
     private static final String usage = "/fforce [Nachricht]";
 
-    @Inject
-    private FForceCommand() {
+    public FForceCommand() {
         super("fforce");
     }
 

@@ -1,6 +1,5 @@
 package com.rettichlp.unicacityaddon.commands.faction.badfaction;
 
-import com.google.inject.Inject;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
@@ -21,8 +20,7 @@ public class ACaptureCommand extends Command {
 
     private static final String usage = "/capture";
 
-    @Inject
-    private ACaptureCommand() {
+    public ACaptureCommand() {
         super("capture");
     }
 

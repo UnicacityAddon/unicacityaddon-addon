@@ -173,7 +173,7 @@ public class NameTagEventHandler {
         if (UnicacityAddon.configuration.nameTagSetting().duty().get()) {
             if (FactionManager.checkPlayerDuty(playerName))
                 duty.append(Message.getBuilder()
-                        .of(" ● ").color(ColorCode.GREEN).advance()
+                        .of(" \u25cf ").color(ColorCode.GREEN).advance()
                         .add(FormattingCode.RESET.getCode())
                         .create());
         }

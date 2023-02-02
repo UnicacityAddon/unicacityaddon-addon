@@ -16,6 +16,12 @@ import java.util.regex.Matcher;
 @UCEvent
 public class HQMessageEventHandler {
 
+    private final UnicacityAddon unicacityAddon;
+
+    public HQMessageEventHandler(UnicacityAddon unicacityAddon) {
+        this.unicacityAddon = unicacityAddon;
+    }
+
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {
         String msg = e.chatMessage().getPlainText();

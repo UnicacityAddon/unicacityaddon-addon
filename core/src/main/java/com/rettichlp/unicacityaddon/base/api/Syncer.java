@@ -3,7 +3,6 @@ package com.rettichlp.unicacityaddon.base.api;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
 import com.rettichlp.unicacityaddon.base.enums.api.AddonGroup;
@@ -17,14 +16,11 @@ import com.rettichlp.unicacityaddon.base.models.PlayerGroupEntry;
 import com.rettichlp.unicacityaddon.base.models.WantedReasonEntry;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.base.utils.ListUtils;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
-import net.labymod.api.Laby;
-import net.labymod.api.notification.Notification;
 
 public class Syncer {
 

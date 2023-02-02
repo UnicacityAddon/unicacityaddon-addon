@@ -1,6 +1,5 @@
 package com.rettichlp.unicacityaddon.commands.faction.polizei;
 
-import com.google.inject.Inject;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.api.Syncer;
@@ -30,8 +29,7 @@ public class ASUCommand extends Command {
     private static final String usage = "/asu [Spieler...] [Grund] (-v/-b/-fsa/-wsa)";
     private final Timer timer = new Timer();
 
-    @Inject
-    private ASUCommand() {
+    public ASUCommand() {
         super("asu");
     }
 

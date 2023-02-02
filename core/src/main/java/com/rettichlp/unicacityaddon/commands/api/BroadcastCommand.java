@@ -2,7 +2,6 @@ package com.rettichlp.unicacityaddon.commands.api;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.google.inject.Inject;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
@@ -29,8 +28,7 @@ public class BroadcastCommand extends Command {
 
     private static final String usage = "/broadcast [queue|send] (dd.MM.yyyy) (HH:mm:ss) (Nachricht)";
 
-    @Inject
-    private BroadcastCommand() {
+    public BroadcastCommand() {
         super("broadcast");
     }
 

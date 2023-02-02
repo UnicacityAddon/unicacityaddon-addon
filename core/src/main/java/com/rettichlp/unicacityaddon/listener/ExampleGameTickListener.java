@@ -1,6 +1,5 @@
 package com.rettichlp.unicacityaddon.listener;
 
-import com.google.inject.Inject;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
@@ -9,8 +8,7 @@ public class ExampleGameTickListener {
 
     private final UnicacityAddon addon;
 
-    @Inject
-    private ExampleGameTickListener(UnicacityAddon addon) {
+    public ExampleGameTickListener(UnicacityAddon addon) {
         this.addon = addon;
     }
 

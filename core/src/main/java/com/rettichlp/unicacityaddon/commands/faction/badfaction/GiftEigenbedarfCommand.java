@@ -1,6 +1,5 @@
 package com.rettichlp.unicacityaddon.commands.faction.badfaction;
 
-import com.google.inject.Inject;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
@@ -27,8 +26,7 @@ public class GiftEigenbedarfCommand extends Command {
 
     private static final String usage = "/gifteigenbedarf [Spieler]";
 
-    @Inject
-    private GiftEigenbedarfCommand() {
+    public GiftEigenbedarfCommand() {
         super("gifteigenbedarf");
     }
 

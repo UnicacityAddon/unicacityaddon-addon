@@ -1,6 +1,5 @@
 package com.rettichlp.unicacityaddon.commands.faction;
 
-import com.google.inject.Inject;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
@@ -25,8 +24,7 @@ public class ReinforcementCommand extends Command {
 
     private static final String usage = "/reinforcement (-d/-r/-rd/-e/-ed/-m/-lb/-da/-ct/-p/-b/-gn/-t)";
 
-    @Inject
-    private ReinforcementCommand() {
+    public ReinforcementCommand() {
         super("reinforcement", "callreinforcement", "reinf", "verstärkung");
     }
 

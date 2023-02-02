@@ -1,7 +1,6 @@
 package com.rettichlp.unicacityaddon.commands.api;
 
 import com.google.gson.JsonObject;
-import com.google.inject.Inject;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.api.Syncer;
@@ -23,8 +22,7 @@ public class NaviPointCommand extends Command {
 
     private static final String usage = "/navipoint [add|remove] [Name] (x) (y) (z) (Artikel)";
 
-    @Inject
-    private NaviPointCommand() {
+    public NaviPointCommand() {
         super("navipoint");
     }
 

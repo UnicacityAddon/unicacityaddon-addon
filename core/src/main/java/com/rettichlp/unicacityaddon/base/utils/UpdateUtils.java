@@ -5,9 +5,9 @@ import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
-import net.kyori.adventure.text.event.ClickEvent;
-import net.kyori.adventure.text.event.HoverEvent;
 import net.labymod.api.Laby;
+import net.labymod.api.client.component.event.ClickEvent;
+import net.labymod.api.client.component.event.HoverEvent;
 import net.labymod.api.notification.Notification;
 
 import java.io.File;

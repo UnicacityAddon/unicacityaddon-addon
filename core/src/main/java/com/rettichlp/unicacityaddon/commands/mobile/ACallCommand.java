@@ -1,6 +1,5 @@
 package com.rettichlp.unicacityaddon.commands.mobile;
 
-import com.google.inject.Inject;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
@@ -23,8 +22,7 @@ public class ACallCommand extends Command {
     private final Timer timer = new Timer();
     private static final String usage = "/acall [Spielername]";
 
-    @Inject
-    private ACallCommand() {
+    public ACallCommand() {
         super("acall");
     }
 

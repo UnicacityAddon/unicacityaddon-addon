@@ -1,6 +1,5 @@
 package com.rettichlp.unicacityaddon.commands.faction.badfaction;
 
-import com.google.inject.Inject;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
@@ -25,8 +24,7 @@ public class EigenbedarfCommand extends Command {
 
     private static List<String> scheduledTasks = new ArrayList<>();
 
-    @Inject
-    private EigenbedarfCommand() {
+    public EigenbedarfCommand() {
         super("eigenbedarf");
     }
 

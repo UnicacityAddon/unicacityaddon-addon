@@ -1,5 +1,6 @@
 package com.rettichlp.unicacityaddon.events.faction;
 
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import net.labymod.api.util.math.vector.FloatVector3;
 
@@ -19,7 +20,10 @@ public class FDoorEventHandler {
 //    );
     private static long lastClick;
 
-//    @Subscribe
+    public FDoorEventHandler(UnicacityAddon unicacityAddon) {
+    }
+
+    //    @Subscribe
 //    public void onRightClickBlock(PlayerInteractEvent.RightClickBlock e) {
 //        UPlayer p = AbstractionLayer.getPlayer();
 //        FloatVector3 pos = e.getPos();

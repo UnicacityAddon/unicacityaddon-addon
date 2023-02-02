@@ -1,6 +1,5 @@
 package com.rettichlp.unicacityaddon.commands.teamspeak;
 
-import com.google.inject.Inject;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
@@ -34,8 +33,7 @@ public class TSJoinCommand extends Command {
 
     private static final String usage = "/tsjoin [Channel]";
 
-    @Inject
-    private TSJoinCommand() {
+    public TSJoinCommand() {
         super("tsjoin");
     }
 

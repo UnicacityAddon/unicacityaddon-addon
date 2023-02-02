@@ -1,9 +1,8 @@
 package com.rettichlp.unicacityaddon.base.utils;
 
-import com.sun.tools.javac.comp.Todo;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
-import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
+import net.labymod.api.client.component.Component;
+import net.labymod.api.client.component.serializer.legacy.LegacyComponentSerializer;
+import net.labymod.api.client.component.serializer.plain.PlainTextComponentSerializer;
 
 import java.util.concurrent.TimeUnit;
 

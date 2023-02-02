@@ -1,6 +1,5 @@
 package com.rettichlp.unicacityaddon.commands.teamspeak;
 
-import com.google.inject.Inject;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.api.Syncer;
@@ -13,8 +12,8 @@ import com.rettichlp.unicacityaddon.base.teamspeak.commands.ClientVariableComman
 import com.rettichlp.unicacityaddon.base.teamspeak.objects.Client;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
-import net.kyori.adventure.text.event.ClickEvent;
-import net.kyori.adventure.text.event.HoverEvent;
+import net.labymod.api.client.component.event.ClickEvent;
+import net.labymod.api.client.component.event.HoverEvent;
 import net.labymod.api.client.chat.command.Command;
 
 import java.util.ArrayList;
@@ -34,8 +33,7 @@ public class ChannelActivityCommand extends Command {
 
     private static final String usage = "/channelactivity";
 
-    @Inject
-    private ChannelActivityCommand() {
+    public ChannelActivityCommand() {
         super("channelactivity");
     }
 

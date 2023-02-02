@@ -1,6 +1,5 @@
 package com.rettichlp.unicacityaddon.commands.faction.rettungsdienst;
 
-import com.google.inject.Inject;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
@@ -26,8 +25,7 @@ public class ARezeptCommand extends Command {
 
     private static final String usage = "/arezept [Spieler] [Rezept] [Anzahl]";
 
-    @Inject
-    private ARezeptCommand() {
+    public ARezeptCommand() {
         super("arezept");
     }
 

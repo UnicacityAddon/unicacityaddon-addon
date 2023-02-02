@@ -1,6 +1,5 @@
 package com.rettichlp.unicacityaddon.commands.faction.badfaction;
 
-import com.google.inject.Inject;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.api.Syncer;
@@ -21,8 +20,7 @@ public class ASetBlacklistCommand extends Command {
 
     private static final String usage = "/asetbl [Spieler...] [Grund]";
 
-    @Inject
-    private ASetBlacklistCommand() {
+    public ASetBlacklistCommand() {
         super("asetbl");
     }
 

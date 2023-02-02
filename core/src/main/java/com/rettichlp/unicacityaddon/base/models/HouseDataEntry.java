@@ -4,8 +4,8 @@ import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.event.HoverEvent;
+import net.labymod.api.client.component.Component;
+import net.labymod.api.client.component.event.HoverEvent;
 
 import java.util.HashMap;
 import java.util.Map;

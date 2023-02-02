@@ -1,6 +1,5 @@
 package com.rettichlp.unicacityaddon.commands;
 
-import com.google.inject.Inject;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
@@ -10,8 +9,8 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.utils.TextUtils;
-import net.kyori.adventure.text.event.ClickEvent;
-import net.kyori.adventure.text.event.HoverEvent;
+import net.labymod.api.client.component.event.ClickEvent;
+import net.labymod.api.client.component.event.HoverEvent;
 import net.labymod.api.client.chat.command.Command;
 import net.labymod.api.util.math.vector.FloatVector3;
 
@@ -27,8 +26,7 @@ public class CoordlistCommand extends Command {
 
     private static final String usage = "/coordlist [add|remove] [Ort]";
 
-    @Inject
-    private CoordlistCommand() {
+    public CoordlistCommand() {
         super("coordlist");
     }
 

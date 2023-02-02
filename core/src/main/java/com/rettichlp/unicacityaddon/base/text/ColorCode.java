@@ -1,10 +1,10 @@
 package com.rettichlp.unicacityaddon.base.text;
 
-import java.util.Arrays;
-import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.format.TextColor;
+import net.labymod.api.client.component.format.NamedTextColor;
+import net.labymod.api.client.component.format.TextColor;
 
 import java.awt.Color;
+import java.util.Arrays;
 
 /**
  * @author RettichLP

@@ -1,6 +1,5 @@
 package com.rettichlp.unicacityaddon.commands;
 
-import com.google.inject.Inject;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.enums.location.ATM;
@@ -8,8 +7,8 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.utils.NavigationUtils;
-import net.kyori.adventure.text.event.ClickEvent;
-import net.kyori.adventure.text.event.HoverEvent;
+import net.labymod.api.client.component.event.ClickEvent;
+import net.labymod.api.client.component.event.HoverEvent;
 import net.labymod.api.client.chat.command.Command;
 
 import java.util.List;
@@ -23,8 +22,7 @@ public class NearestATMCommand extends Command {
 
     private static final String usage = "/nearestatm";
 
-    @Inject
-    private NearestATMCommand() {
+    public NearestATMCommand() {
         super("nearestatm", "natm");
     }
 

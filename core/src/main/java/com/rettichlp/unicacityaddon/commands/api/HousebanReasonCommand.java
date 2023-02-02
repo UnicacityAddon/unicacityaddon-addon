@@ -1,7 +1,6 @@
 package com.rettichlp.unicacityaddon.commands.api;
 
 import com.google.gson.JsonObject;
-import com.google.inject.Inject;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.api.Syncer;
@@ -12,7 +11,7 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.utils.MathUtils;
-import net.kyori.adventure.text.event.HoverEvent;
+import net.labymod.api.client.component.event.HoverEvent;
 import net.labymod.api.client.chat.command.Command;
 
 import java.util.List;
@@ -26,8 +25,7 @@ public class HousebanReasonCommand extends Command {
 
     private static final String usage = "/housebanreason (add|remove) (Grund) (Tage)";
 
-    @Inject
-    private HousebanReasonCommand() {
+    public HousebanReasonCommand() {
     super("housebanreason");
     }
 

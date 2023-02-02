@@ -1,6 +1,5 @@
 package com.rettichlp.unicacityaddon.commands;
 
-import com.google.inject.Inject;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
@@ -19,8 +18,7 @@ public class UpdateAddonCommand extends Command {
 
     private static final String usage = "/updateunicacityaddon";
 
-    @Inject
-    private UpdateAddonCommand() {
+    public UpdateAddonCommand() {
         super("updateunicacityaddon");
     }
 

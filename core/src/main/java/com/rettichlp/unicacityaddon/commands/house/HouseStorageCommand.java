@@ -1,6 +1,5 @@
 package com.rettichlp.unicacityaddon.commands.house;
 
-import com.google.inject.Inject;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.manager.HouseDataManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
@@ -17,8 +16,7 @@ public class HouseStorageCommand extends Command {
 
     private static final String usage = "/drogenlagerinfo";
 
-    @Inject
-    private HouseStorageCommand() {
+    public HouseStorageCommand() {
         super("drogenlagerinfo", "dlagerinfo", "drugstorage");
     }
 

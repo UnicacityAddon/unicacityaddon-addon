@@ -2,15 +2,14 @@ package com.rettichlp.unicacityaddon.base.abstraction;
 
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
-import net.kyori.adventure.text.Component;
-import net.labymod.api.client.entity.player.ClientPlayer;
+import net.labymod.api.client.component.Component;
 import net.labymod.api.client.entity.player.Inventory;
 import net.labymod.api.client.scoreboard.Scoreboard;
 import net.labymod.api.client.session.Session;
 import net.labymod.api.client.world.ClientWorld;
+import net.labymod.api.util.math.vector.FloatVector3;
 
 import java.util.UUID;
-import net.labymod.api.util.math.vector.FloatVector3;
 
 /**
  * @author RettichLP

@@ -8,7 +8,7 @@ import com.rettichlp.unicacityaddon.base.manager.FactionManager;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.utils.NavigationUtils;
-import net.kyori.adventure.text.Component;
+import net.labymod.api.client.component.Component;
 import net.labymod.api.client.entity.player.Inventory;
 import net.labymod.api.client.scoreboard.Scoreboard;
 import net.labymod.api.client.session.Session;

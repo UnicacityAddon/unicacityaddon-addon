@@ -1,6 +1,5 @@
 package com.rettichlp.unicacityaddon.commands;
 
-import com.google.inject.Inject;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
@@ -26,8 +25,7 @@ public class CountdownCommand extends Command {
     private static boolean active = false;
     private static final String usage = "/countdown [Sekunden] [Chat]";
 
-    @Inject
-    private CountdownCommand() {
+    public CountdownCommand() {
         super("countdown");
     }
 

@@ -1,6 +1,5 @@
 package com.rettichlp.unicacityaddon.commands.mobile;
 
-import com.google.inject.Inject;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
@@ -24,8 +23,7 @@ public class ASMSCommand extends Command {
     private final Timer timer = new Timer();
     private static final String usage = "/asms [Spielername] [Nachricht]";
 
-    @Inject
-    private ASMSCommand() {
+    public ASMSCommand() {
         super("asms");
     }
 

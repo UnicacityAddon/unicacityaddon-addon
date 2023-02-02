@@ -3,8 +3,8 @@ package com.rettichlp.unicacityaddon.events;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.FormattingCode;
 import com.rettichlp.unicacityaddon.base.utils.TextUtils;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
+import net.labymod.api.client.component.Component;
+import net.labymod.api.client.component.format.TextColor;
 import net.labymod.api.client.network.NetworkPlayerInfo;
 import net.labymod.api.event.client.scoreboard.TabListUpdateEvent;
 

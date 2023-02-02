@@ -1,6 +1,5 @@
 package com.rettichlp.unicacityaddon.commands.job;
 
-import com.google.inject.Inject;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
@@ -20,8 +19,7 @@ public class ADropMoneyCommand extends Command {
     private int step = 0;
     private static final String usage = "/adropmoney";
 
-    @Inject
-    private ADropMoneyCommand() {
+    public ADropMoneyCommand() {
         super("adropmoney");
     }
 
