@@ -6,6 +6,8 @@ import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
 import com.rettichlp.unicacityaddon.base.enums.faction.Equip;
+import com.rettichlp.unicacityaddon.base.text.ColorCode;
+import com.rettichlp.unicacityaddon.base.text.Message;
 import joptsimple.internal.Strings;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -45,7 +47,7 @@ public class Data {
      * @param i Amount of money to be added to the <code>bankBalance</code>
      */
     public void addBankBalance(int i) {
-        bankBalance += i;
+        setBankBalance(getBankBalance() + i);
     }
 
     /**
@@ -54,7 +56,7 @@ public class Data {
      * @param i Amount of money to be removed from the <code>bankBalance</code>
      */
     public void removeBankBalance(int i) {
-        bankBalance -= i;
+        setBankBalance(getBankBalance() - i);
     }
 
     /**
@@ -63,7 +65,7 @@ public class Data {
      * @param i Amount of money to be added to the <code>cashBalance</code>
      */
     public void addCashBalance(int i) {
-        cashBalance += i;
+        setCashBalance(getCashBalance() + i);
     }
 
     /**
@@ -72,7 +74,7 @@ public class Data {
      * @param i Amount of money to be removed from the <code>cashBalance</code>
      */
     public void removeCashBalance(int i) {
-        cashBalance -= i;
+        setCashBalance(getCashBalance() - i);
     }
 
     /**
@@ -83,8 +85,10 @@ public class Data {
      * @see BlockPos
      * @see UPlayer
      */
-    public boolean addCoordToCoordlist(String name, BlockPos blockPos) {
-        return coordlist.add(new CoordlistEntry(name, blockPos.getX(), blockPos.getY(), blockPos.getZ()));
+    public void addCoordToCoordlist(String name, BlockPos blockPos) {
+        List<CoordlistEntry> newCoordlistEntryList = getCoordlist();
+        newCoordlistEntryList.add(new CoordlistEntry(name, blockPos.getX(), blockPos.getY(), blockPos.getZ()));
+        setCoordlist(newCoordlistEntryList);
     }
 
     /**
@@ -93,7 +97,10 @@ public class Data {
      * @param name Name of the position to be removed from the <code>coordlist</code>
      */
     public boolean removeCoordFromCoordlist(String name) {
-        return coordlist.removeIf(coordlistEntry -> coordlistEntry.getName().equalsIgnoreCase(name));
+        List<CoordlistEntry> newCoordlistEntryList = getCoordlist();
+        boolean success = newCoordlistEntryList.removeIf(coordlistEntry -> coordlistEntry.getName().equalsIgnoreCase(name));
+        setCoordlist(newCoordlistEntryList);
+        return success;
     }
 
     /**
@@ -108,10 +115,12 @@ public class Data {
     public void addDrugToInventory(DrugType drugType, DrugPurity drugPurity, int amount) {
         UnicacityAddon.LOGGER.info("DrugInventoryInteraction: Added amount {} of DrugType {} with DrugPurity {} to inventory", amount, drugType, drugPurity);
         if (drugType != null) {
-            Map<DrugPurity, Integer> drugPurityIntegerMap = drugInventoryMap.getOrDefault(drugType, new HashMap<>());
+            Map<DrugPurity, Integer> drugPurityIntegerMap = getDrugInventoryMap().getOrDefault(drugType, new HashMap<>());
             int oldAmount = drugPurityIntegerMap.getOrDefault(drugPurity, 0);
             drugPurityIntegerMap.put(drugPurity, oldAmount + amount);
-            drugInventoryMap.put(drugType, drugPurityIntegerMap);
+            Map<DrugType, Map<DrugPurity, Integer>> newdrugInventoryMap = getDrugInventoryMap();
+            newdrugInventoryMap.put(drugType, drugPurityIntegerMap);
+            setDrugInventoryMap(newdrugInventoryMap);
         }
     }
 
@@ -127,10 +136,12 @@ public class Data {
     public void removeDrugFromInventory(DrugType drugType, DrugPurity drugPurity, int amount) {
         UnicacityAddon.LOGGER.info("DrugInventoryInteraction: Removed amount {} of DrugType {} with DrugPurity {} from inventory", amount, drugType, drugPurity);
         if (drugType != null) {
-            Map<DrugPurity, Integer> drugPurityIntegerMap = drugInventoryMap.getOrDefault(drugType, new HashMap<>());
+            Map<DrugPurity, Integer> drugPurityIntegerMap = getDrugInventoryMap().getOrDefault(drugType, new HashMap<>());
             int oldAmount = drugPurityIntegerMap.getOrDefault(drugPurity, 0);
             drugPurityIntegerMap.put(drugPurity, Math.max(oldAmount - amount, 0));
-            drugInventoryMap.put(drugType, drugPurityIntegerMap);
+            Map<DrugType, Map<DrugPurity, Integer>> newdrugInventoryMap = getDrugInventoryMap();
+            newdrugInventoryMap.put(drugType, drugPurityIntegerMap);
+            setDrugInventoryMap(newdrugInventoryMap);
         }
     }
 
@@ -141,8 +152,82 @@ public class Data {
      * @see Equip
      */
     public void addEquipToEquipMap(Equip equip) {
-        int newEquipAmount = equipMap.getOrDefault(equip, 0) + 1;
-        equipMap.put(equip, newEquipAmount);
+        Map<Equip, Integer> newEquipMap = getEquipMap();
+        newEquipMap.put(equip, newEquipMap.getOrDefault(equip, 0) + 1);
+        setEquipMap(newEquipMap);
+    }
+
+    /**
+     * Returns the {@link HouseData} of the given <code>houseNumber</code> or creates them
+     *
+     * @param houseNumber Number of the house, from which the {@link HouseData} needs to be extracted
+     * @see HouseData
+     */
+    public HouseData getHouseData(int houseNumber) {
+        HouseData houseData = getHouseDataMap().getOrDefault(houseNumber, new HouseData(houseNumber));
+        updateHouseData(houseNumber, houseData);
+        return houseData;
+    }
+
+    /**
+     * Updates the <code>houseDataMap</code> with the given <code>houseNumber</code> and its {@link HouseData}
+     *
+     * @param houseNumber Number of the house to be updated
+     * @param houseData   {@link HouseData} of the house
+     * @see HouseData
+     */
+    public void updateHouseData(int houseNumber, HouseData houseData) {
+        Map<Integer, HouseData> newHouseDataMap = getHouseDataMap();
+        newHouseDataMap.put(houseNumber, houseData);
+        setHouseDataMap(newHouseDataMap);
+    }
+
+    /**
+     * Removes the <code>houseNumber</code> with its associated {@link HouseData} from the <code>houseDataMap</code>
+     *
+     * @param houseNumber Number of the house to be removed
+     * @see HouseData
+     */
+    public void removeHouseData(int houseNumber) {
+        Map<Integer, HouseData> newHouseDataMap = getHouseDataMap();
+        newHouseDataMap.remove(houseNumber);
+        setHouseDataMap(newHouseDataMap);
+    }
+
+    /**
+     * Sends a message which contains information about all house banks of registered {@link HouseData}
+     *
+     * @see UPlayer
+     * @see HouseData
+     * @see Message
+     */
+    public void sendAllHouseBankMessage() {
+        UPlayer p = AbstractionLayer.getPlayer();
+
+        p.sendEmptyMessage();
+        p.sendMessage(Message.getBuilder()
+                .of("Hauskassen:").color(ColorCode.DARK_AQUA).bold().advance()
+                .createComponent());
+        getHouseDataMap().values().forEach(houseData -> p.sendMessage(houseData.getBankITextComponent()));
+        p.sendEmptyMessage();
+    }
+
+    /**
+     * Sends a message which contains information about all drug storages of registered {@link HouseData}
+     *
+     * @see UPlayer
+     * @see HouseData
+     * @see Message
+     */
+    public void sendAllDrugStorageMessage() {
+        UPlayer p = AbstractionLayer.getPlayer();
+
+        p.sendEmptyMessage();
+        p.sendMessage(Message.getBuilder()
+                .of("Drogenlager:").color(ColorCode.DARK_AQUA).bold().advance()
+                .createComponent());
+        getHouseDataMap().values().forEach(houseData -> p.sendMessage(houseData.getStorageITextComponent()));
+        p.sendEmptyMessage();
     }
 
     /**
@@ -151,7 +236,7 @@ public class Data {
      * @param i Amount of money to be added to the <code>jobBalance</code>
      */
     public void addJobBalance(int i) {
-        jobBalance += i;
+        setJobBalance(getJobBalance() + i);
     }
 
     /**
@@ -160,7 +245,7 @@ public class Data {
      * @param i Amount of experience to be added to the <code>jobExperience</code>
      */
     public void addJobExperience(int i) {
-        jobExperience += i;
+        setJobExperience(getJobExperience() + i);
     }
 
     /**
@@ -170,7 +255,8 @@ public class Data {
      */
     public void addPayDayTime(int i) {
         UPlayer p = AbstractionLayer.getPlayer();
-        switch (payDayTime += i) {
+        setPayDayTime(getPayDayTime() + i);
+        switch (getPayDayTime()) {
             case 55:
                 p.sendInfoMessage("Du hast in 5 Minuten deinen PayDay.");
                 break;
@@ -189,7 +275,7 @@ public class Data {
      * @param i Amount of services to be added to the <code>serviceCount</code>
      */
     public void addServiceCount(int i) {
-        serviceCount += i;
+        setServiceCount(getServiceCount() + i);
     }
 
     /**
@@ -198,7 +284,7 @@ public class Data {
      * @param i Amount of services to be removed from the <code>serviceCount</code>
      */
     public void removeServiceCount(int i) {
-        if (serviceCount > 0)
-            serviceCount -= i;
+        if (getServiceCount() > 0)
+            setServiceCount(getServiceCount() - i);
     }
 }
