@@ -98,8 +98,7 @@ public class CarEventHandler {
 
             if (containerChest.getLowerChestInventory().getDisplayName().getUnformattedText().equals("§6CarControl")) {
                 int numberOfCars = (int) containerChest.getInventory().stream()
-                        .filter(itemStack -> !itemStack.isEmpty())
-                        .filter(itemStack -> itemStack.getDisplayName().startsWith(ColorCode.GOLD.getCode()))
+                        .filter(itemStack -> !itemStack.isEmpty() && itemStack.getDisplayName().startsWith(ColorCode.GOLD.getCode()))
                         .map(ItemStack::getItem)
                         .filter(item -> item.equals(Item.getItemById(328)) || item.equals(Item.getItemById(331)) || item.equals(Item.getItemById(388)))
                         .count();
