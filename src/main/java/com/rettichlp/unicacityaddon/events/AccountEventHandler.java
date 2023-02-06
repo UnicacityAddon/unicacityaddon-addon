@@ -123,7 +123,7 @@ public class AccountEventHandler {
                         .of("-").color(ColorCode.DARK_GRAY).advance().space()
                         .of("Spielzeit").color(ColorCode.GOLD).advance()
                         .of(":").color(ColorCode.DARK_GRAY).advance().space()
-                        .of(String.valueOf(playTime)).color(ColorCode.RED).advance()
+                        .of(playTime + (playTime == 1 ? " Stunde" : " Stunden")).color(ColorCode.RED).advance()
                         .createComponent());
             }
             return;
