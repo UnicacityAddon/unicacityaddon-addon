@@ -1,12 +1,17 @@
 package com.rettichlp.unicacityaddon.events;
 
+import com.google.gson.JsonObject;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
+import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
 import com.rettichlp.unicacityaddon.base.config.ConfigElements;
 import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
+import com.rettichlp.unicacityaddon.base.text.ColorCode;
+import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
+import com.rettichlp.unicacityaddon.base.utils.MathUtils;
 import com.rettichlp.unicacityaddon.base.utils.UpdateUtils;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -77,6 +82,50 @@ public class AccountEventHandler {
                     p.sendChatMessage("/afk");
                 }
             }, new Date(lastDamageTime + TimeUnit.SECONDS.toMillis(15)));
+            return;
+        }
+
+        if (PatternHandler.ACCOUNT_TREUEBONUS_PATTERN.matcher(msg).find()) {
+            JsonObject response = APIRequest.sendStatisticRequest();
+            if (response != null) {
+                JsonObject gameplayJsonObject = response.getAsJsonObject("gameplay");
+                int deaths = gameplayJsonObject.get("deaths").getAsInt();
+                int kills = gameplayJsonObject.get("kills").getAsInt();
+                float kd = gameplayJsonObject.get("kd").getAsFloat();
+                int playTime = gameplayJsonObject.get("playTime").getAsInt();
+
+                p.sendMessage(Message.getBuilder()
+                        .space().space()
+                        .of("-").color(ColorCode.DARK_GRAY).advance().space()
+                        .of("Tode").color(ColorCode.GOLD).advance()
+                        .of(":").color(ColorCode.DARK_GRAY).advance().space()
+                        .of(deaths + " Tode").color(ColorCode.RED).advance()
+                        .createComponent());
+
+                p.sendMessage(Message.getBuilder()
+                        .space().space()
+                        .of("-").color(ColorCode.DARK_GRAY).advance().space()
+                        .of("Kills").color(ColorCode.GOLD).advance()
+                        .of(":").color(ColorCode.DARK_GRAY).advance().space()
+                        .of(kills + " Kills").color(ColorCode.RED).advance()
+                        .createComponent());
+
+                p.sendMessage(Message.getBuilder()
+                        .space().space()
+                        .of("-").color(ColorCode.DARK_GRAY).advance().space()
+                        .of("K/D").color(ColorCode.GOLD).advance()
+                        .of(":").color(ColorCode.DARK_GRAY).advance().space()
+                        .of(MathUtils.DECIMAL_FORMAT.format(kd)).color(ColorCode.RED).advance()
+                        .createComponent());
+
+                p.sendMessage(Message.getBuilder()
+                        .space().space()
+                        .of("-").color(ColorCode.DARK_GRAY).advance().space()
+                        .of("Spielzeit").color(ColorCode.GOLD).advance()
+                        .of(":").color(ColorCode.DARK_GRAY).advance().space()
+                        .of(String.valueOf(playTime)).color(ColorCode.RED).advance()
+                        .createComponent());
+            }
             return;
         }
 
