@@ -24,22 +24,86 @@ import java.util.Map;
 @Setter
 public class Data {
 
-    private Integer bankBalance = 0;
-    private String carInfo = Strings.EMPTY;
-    private Integer cashBalance = 0;
-    private Map<DrugType, Map<DrugPurity, Integer>> drugInventoryMap = new HashMap<>();
-    private List<CoordlistEntry> coordlist = new ArrayList<>();
-    private Map<Equip, Integer> equipMap = new HashMap<>();
-    private Long firstAidDate = 0L;
-    private Map<Integer, HouseData> houseDataMap = new HashMap<>();
-    private Integer jobBalance = 0;
-    private Integer jobExperience = 0;
-    private Integer payDayTime = 0;
-    private Long plantFertilizeTime = 0L;
-    private Long plantWaterTime = 0L;
-    private Integer serviceCount = 0;
-    private Integer timer = 0;
-    private List<TodolistEntry> todolist = new ArrayList<>();
+    private Integer bankBalance;
+    private String carInfo;
+    private Integer cashBalance;
+    private Map<DrugType, Map<DrugPurity, Integer>> drugInventoryMap;
+    private List<CoordlistEntry> coordlist;
+    private Map<Equip, Integer> equipMap;
+    private Long firstAidDate;
+    private Map<Integer, HouseData> houseDataMap;
+    private Integer jobBalance;
+    private Integer jobExperience;
+    private Integer payDayTime;
+    private Long plantFertilizeTime;
+    private Long plantWaterTime;
+    private Integer serviceCount;
+    private Integer timer;
+    private List<TodolistEntry> todolist;
+
+    public int getBankBalance() {
+        return bankBalance != null ? bankBalance : 0;
+    }
+
+    public String getCarInfo() {
+        return carInfo != null ? carInfo : Strings.EMPTY;
+    }
+
+    public int getCashBalance() {
+        return cashBalance != null ? cashBalance : 0;
+    }
+
+    public Map<DrugType, Map<DrugPurity, Integer>> getDrugInventoryMap() {
+        return drugInventoryMap != null ? drugInventoryMap : new HashMap<>();
+    }
+
+    public List<CoordlistEntry> getCoordlist() {
+        return coordlist != null ? coordlist : new ArrayList<>();
+    }
+
+    public Map<Equip, Integer> getEquipMap() {
+        return equipMap != null ? equipMap : new HashMap<>();
+    }
+
+    public long getFirstAidDate() {
+        return firstAidDate != null ? firstAidDate : 0;
+    }
+
+    public Map<Integer, HouseData> getHouseDataMap() {
+        return houseDataMap != null ? houseDataMap : new HashMap<>();
+    }
+
+    public int getJobBalance() {
+        return jobBalance != null ? jobBalance : 0;
+    }
+
+    public int getJobExperience() {
+        return jobExperience != null ? jobExperience : 0;
+    }
+
+    public int getPayDayTime() {
+        return payDayTime != null ? payDayTime : 0;
+    }
+
+    public long getPlantFertilizeTime() {
+        return plantFertilizeTime != null ? plantFertilizeTime : 0;
+    }
+
+    public long getPlantWaterTime() {
+        return plantWaterTime != null ? plantWaterTime : 0;
+    }
+
+    public int getServiceCount() {
+        return serviceCount != null ? serviceCount : 0;
+    }
+
+    public int getTimer() {
+        return timer != null ? timer : 0;
+    }
+
+    public List<TodolistEntry> getTodolist() {
+        return todolist != null ? todolist : new ArrayList<>();
+    }
 
     /**
      * Adds the given value <code>i</code> to the <code>bankBalance</code>
@@ -47,7 +111,7 @@ public class Data {
      * @param i Amount of money to be added to the <code>bankBalance</code>
      */
     public void addBankBalance(int i) {
-        setBankBalance(getBankBalance() + i);
+        bankBalance = getBankBalance() + i;
     }
 
     /**
@@ -56,7 +120,7 @@ public class Data {
      * @param i Amount of money to be removed from the <code>bankBalance</code>
      */
     public void removeBankBalance(int i) {
-        setBankBalance(getBankBalance() - i);
+        bankBalance = getBankBalance() - i;
     }
 
     /**
@@ -65,7 +129,7 @@ public class Data {
      * @param i Amount of money to be added to the <code>cashBalance</code>
      */
     public void addCashBalance(int i) {
-        setCashBalance(getCashBalance() + i);
+        cashBalance = getCashBalance() + i;
     }
 
     /**
@@ -74,7 +138,7 @@ public class Data {
      * @param i Amount of money to be removed from the <code>cashBalance</code>
      */
     public void removeCashBalance(int i) {
-        setCashBalance(getCashBalance() - i);
+        cashBalance = getCashBalance() - i;
     }
 
     /**
@@ -88,7 +152,7 @@ public class Data {
     public void addCoordToCoordlist(String name, BlockPos blockPos) {
         List<CoordlistEntry> newCoordlistEntryList = getCoordlist();
         newCoordlistEntryList.add(new CoordlistEntry(name, blockPos.getX(), blockPos.getY(), blockPos.getZ()));
-        setCoordlist(newCoordlistEntryList);
+        coordlist = newCoordlistEntryList;
     }
 
     /**
@@ -99,7 +163,7 @@ public class Data {
     public boolean removeCoordFromCoordlist(String name) {
         List<CoordlistEntry> newCoordlistEntryList = getCoordlist();
         boolean success = newCoordlistEntryList.removeIf(coordlistEntry -> coordlistEntry.getName().equalsIgnoreCase(name));
-        setCoordlist(newCoordlistEntryList);
+        coordlist = newCoordlistEntryList;
         return success;
     }
 
@@ -120,7 +184,7 @@ public class Data {
             drugPurityIntegerMap.put(drugPurity, oldAmount + amount);
             Map<DrugType, Map<DrugPurity, Integer>> newdrugInventoryMap = getDrugInventoryMap();
             newdrugInventoryMap.put(drugType, drugPurityIntegerMap);
-            setDrugInventoryMap(newdrugInventoryMap);
+            drugInventoryMap = newdrugInventoryMap;
         }
     }
 
@@ -141,7 +205,7 @@ public class Data {
             drugPurityIntegerMap.put(drugPurity, Math.max(oldAmount - amount, 0));
             Map<DrugType, Map<DrugPurity, Integer>> newdrugInventoryMap = getDrugInventoryMap();
             newdrugInventoryMap.put(drugType, drugPurityIntegerMap);
-            setDrugInventoryMap(newdrugInventoryMap);
+            drugInventoryMap = newdrugInventoryMap;
         }
     }
 
@@ -154,7 +218,7 @@ public class Data {
     public void addEquipToEquipMap(Equip equip) {
         Map<Equip, Integer> newEquipMap = getEquipMap();
         newEquipMap.put(equip, newEquipMap.getOrDefault(equip, 0) + 1);
-        setEquipMap(newEquipMap);
+        equipMap = newEquipMap;
     }
 
     /**
@@ -179,7 +243,7 @@ public class Data {
     public void updateHouseData(int houseNumber, HouseData houseData) {
         Map<Integer, HouseData> newHouseDataMap = getHouseDataMap();
         newHouseDataMap.put(houseNumber, houseData);
-        setHouseDataMap(newHouseDataMap);
+        houseDataMap = newHouseDataMap;
     }
 
     /**
@@ -191,7 +255,7 @@ public class Data {
     public void removeHouseData(int houseNumber) {
         Map<Integer, HouseData> newHouseDataMap = getHouseDataMap();
         newHouseDataMap.remove(houseNumber);
-        setHouseDataMap(newHouseDataMap);
+        houseDataMap = newHouseDataMap;
     }
 
     /**
@@ -236,7 +300,7 @@ public class Data {
      * @param i Amount of money to be added to the <code>jobBalance</code>
      */
     public void addJobBalance(int i) {
-        setJobBalance(getJobBalance() + i);
+        jobBalance = getJobBalance() + i;
     }
 
     /**
@@ -245,7 +309,7 @@ public class Data {
      * @param i Amount of experience to be added to the <code>jobExperience</code>
      */
     public void addJobExperience(int i) {
-        setJobExperience(getJobExperience() + i);
+        jobExperience = getJobExperience() + i;
     }
 
     /**
@@ -255,8 +319,8 @@ public class Data {
      */
     public void addPayDayTime(int i) {
         UPlayer p = AbstractionLayer.getPlayer();
-        setPayDayTime(getPayDayTime() + i);
-        switch (getPayDayTime()) {
+        payDayTime = getPayDayTime() + i;
+        switch (payDayTime) {
             case 55:
                 p.sendInfoMessage("Du hast in 5 Minuten deinen PayDay.");
                 break;
@@ -275,7 +339,7 @@ public class Data {
      * @param i Amount of services to be added to the <code>serviceCount</code>
      */
     public void addServiceCount(int i) {
-        setServiceCount(getServiceCount() + i);
+        serviceCount = getServiceCount() + i;
     }
 
     /**
@@ -285,6 +349,6 @@ public class Data {
      */
     public void removeServiceCount(int i) {
         if (getServiceCount() > 0)
-            setServiceCount(getServiceCount() - i);
+            serviceCount = getServiceCount() - i;
     }
 }
