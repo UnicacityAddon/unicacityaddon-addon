@@ -75,9 +75,8 @@ public class CoordlistCommand implements IClientCommand {
             listCoords(p);
         } else if (args.length > 1 && args[0].equalsIgnoreCase("add")) {
             String name = TextUtils.makeStringByArgs(args, "-").replace("add-", "");
-            if (FileManager.DATA.addCoordToCoordlist(name, p.getPosition())) {
-                p.sendInfoMessage("Koordinaten gespeichert.");
-            }
+            FileManager.DATA.addCoordToCoordlist(name, p.getPosition());
+            p.sendInfoMessage("Koordinaten gespeichert.");
         } else if (args.length > 1 && args[0].equalsIgnoreCase("remove")) {
             String name = TextUtils.makeStringByArgs(args, "-").replace("remove-", "");
             if (FileManager.DATA.removeCoordFromCoordlist(name)) {

@@ -1,7 +1,7 @@
 package com.rettichlp.unicacityaddon.commands.house;
 
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
-import com.rettichlp.unicacityaddon.base.manager.HouseDataManager;
+import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.utils.MathUtils;
 import net.minecraft.command.ICommand;
@@ -60,11 +60,11 @@ public class HouseStorageCommand implements IClientCommand {
     @Override
     public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
         if (args.length > 1 && args[0].equalsIgnoreCase("delete") && MathUtils.isInteger(args[1])) {
-            HouseDataManager.deleteHouseData(Integer.parseInt(args[1]));
+            FileManager.DATA.removeHouseData(Integer.parseInt(args[1]));
             return;
         }
 
-        HouseDataManager.sendAllDrugStorageMessage();
+        FileManager.DATA.sendAllDrugStorageMessage();
     }
 
     @Override
