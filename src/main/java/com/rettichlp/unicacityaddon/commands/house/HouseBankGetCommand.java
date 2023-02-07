@@ -3,7 +3,7 @@ package com.rettichlp.unicacityaddon.commands.house;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
-import com.rettichlp.unicacityaddon.base.manager.HouseDataManager;
+import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.utils.TextUtils;
 import com.rettichlp.unicacityaddon.events.house.HouseDataEventHandler;
@@ -72,7 +72,7 @@ public class HouseBankGetCommand implements IClientCommand {
             new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    int houseBankBalance = HouseDataManager.getHouseData(HouseDataEventHandler.lastCheckedHouseNumber).getHouseBank();
+                    int houseBankBalance = FileManager.DATA.getHouseData(HouseDataEventHandler.lastCheckedHouseNumber).getHouseBank();
                     p.sendChatMessage("/hauskasse get " + houseBankBalance);
                 }
             }, 1000);
