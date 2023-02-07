@@ -104,8 +104,8 @@ public class DrugInteractionEventHandler {
 
         Matcher medicationGetMatcher = PatternHandler.MEDICATION_GET_PATTERN.matcher(msg);
         if (medicationGetMatcher.find()) {
-            int amount = Integer.parseInt(dbankGiveMatcher.group("amount"));
-            DrugType drugType = DrugType.getDrugType(dbankGiveMatcher.group("drugType"));
+            int amount = Integer.parseInt(medicationGetMatcher.group("amount"));
+            DrugType drugType = DrugType.getDrugType(medicationGetMatcher.group("drugType"));
             FileManager.DATA.addDrugToInventory(drugType, DrugPurity.BEST, amount);
             return;
         }
