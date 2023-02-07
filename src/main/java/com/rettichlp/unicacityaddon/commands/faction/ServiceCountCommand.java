@@ -56,7 +56,7 @@ public class ServiceCountCommand implements IClientCommand {
             return;
         }
 
-        Message.getBuilder().prefix().space()
+        Message.getBuilder().prefix()
                 .of("Du hast bereits").color(ColorCode.GRAY).advance().space()
                 .of(String.valueOf(FileManager.DATA.getServiceCount())).color(ColorCode.DARK_AQUA).advance().space()
                 .of("Notrufe bearbeitet.").color(ColorCode.GRAY).advance().sendTo(p.getPlayer());

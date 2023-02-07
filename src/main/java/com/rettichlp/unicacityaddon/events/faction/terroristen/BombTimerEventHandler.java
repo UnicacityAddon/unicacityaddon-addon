@@ -69,7 +69,7 @@ public class BombTimerEventHandler {
                     .of(time.isEmpty() ? "" : ")").color(ColorCode.DARK_GRAY).advance()
                     .space()
                     .of(location != null ? "[" : "").color(ColorCode.DARK_GRAY).advance()
-                    .of(location != null ? "[Sperrgebiet aufheben]" : "").color(ColorCode.RED)
+                    .of(location != null ? "Sperrgebiet aufheben" : "").color(ColorCode.RED)
                             .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Sperrgebiet aufheben").color(ColorCode.RED).advance().createComponent())
                             .clickEvent(ClickEvent.Action.SUGGEST_COMMAND, location != null ? "/removesperrgebiet " + getLocationWithArticle(location) : "")
                             .advance()
