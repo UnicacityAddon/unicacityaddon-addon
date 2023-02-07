@@ -11,6 +11,7 @@ import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.utils.MathUtils;
 import com.rettichlp.unicacityaddon.base.utils.TextUtils;
 import com.rettichlp.unicacityaddon.commands.BusCommand;
+import com.rettichlp.unicacityaddon.commands.faction.badfaction.DropDrugAllCommand;
 import com.rettichlp.unicacityaddon.events.faction.ReinforcementEventHandler;
 import com.rettichlp.unicacityaddon.events.house.HouseInteractionEventHandler;
 import com.rettichlp.unicacityaddon.modules.BombTimerModule;
@@ -40,7 +41,12 @@ public class TickEventHandler {
             // EVERY TICK
             handleReinforcementScreenshot();
             handleDamageTracker();
-            handleBusTracker();
+
+            // 0,25 SECONDS
+            if (currentTick % 5 == 0) {
+                BusCommand.process();
+                DropDrugAllCommand.process();
+            }
 
             // 1 SECOND
             if (currentTick % 20 == 0) {
@@ -86,10 +92,6 @@ public class TickEventHandler {
         } else if (lastTickDamage.getValue() < currentHeal) {
             lastTickDamage = Maps.immutableEntry(System.currentTimeMillis(), currentHeal);
         }
-    }
-
-    private void handleBusTracker() {
-        BusCommand.process();
     }
 
     private void handleNameTag() {
