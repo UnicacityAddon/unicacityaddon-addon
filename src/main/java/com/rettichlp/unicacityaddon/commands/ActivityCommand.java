@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 /**
@@ -68,34 +69,33 @@ public class ActivityCommand implements IClientCommand {
                 .of("Aktivitäten:").color(ColorCode.DARK_AQUA).bold().advance()
                 .createComponent());
 
-        int screenshotCount = FileManager.getAddonScreenshotDir().listFiles((dir, name) -> name.endsWith(".jpg")).length;
-        p.sendMessage(Message.getBuilder()
-                .of("»").color(ColorCode.GRAY).advance().space()
-                .of("keine Zuordnung").color(ColorCode.GRAY).advance()
-                .of(":").color(ColorCode.GRAY).advance().space()
-                .of(String.valueOf(screenshotCount)).color(ColorCode.AQUA).advance().space()
-                .of("[↗]").color(ColorCode.BLUE)
-                        .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Ordner öffnen").color(ColorCode.RED).advance().createComponent())
-                        .clickEvent(ClickEvent.Action.OPEN_FILE, FileManager.getAddonScreenshotDir().getAbsolutePath())
-                        .advance()
-                .createComponent());
-
+        AtomicInteger overallCount = new AtomicInteger();
         screenshotTypeList.stream().map(ScreenshotType::getDirectoryName).sorted().forEach(s -> {
             int entryCount = FileManager.getAddonActivityScreenDir(s)
                     .listFiles((dir, name) -> name.endsWith("-" + s + ".jpg"))
                     .length;
 
-            p.sendMessage(Message.getBuilder()
-                    .of("»").color(ColorCode.GRAY).advance().space()
-                    .of(Character.toUpperCase(s.charAt(0)) + s.substring(1)).color(ColorCode.GRAY).advance()
-                    .of(":").color(ColorCode.GRAY).advance().space()
-                    .of(String.valueOf(entryCount)).color(ColorCode.AQUA).advance().space()
-                    .of("[↗]").color(ColorCode.BLUE)
-                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Ordner öffnen").color(ColorCode.RED).advance().createComponent())
-                            .clickEvent(ClickEvent.Action.OPEN_FILE, FileManager.getAddonActivityScreenDir(s).getAbsolutePath())
-                            .advance()
-                    .createComponent());
+            overallCount.addAndGet(entryCount);
+            if (entryCount > 0) {
+                p.sendMessage(Message.getBuilder()
+                        .of("»").color(ColorCode.GRAY).advance().space()
+                        .of(Character.toUpperCase(s.charAt(0)) + s.substring(1)).color(ColorCode.GRAY).advance()
+                        .of(":").color(ColorCode.GRAY).advance().space()
+                        .of(String.valueOf(entryCount)).color(ColorCode.AQUA).advance().space()
+                        .of("[↗]").color(ColorCode.BLUE)
+                                .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Ordner öffnen").color(ColorCode.RED).advance().createComponent())
+                                .clickEvent(ClickEvent.Action.OPEN_FILE, FileManager.getAddonActivityScreenDir(s).getAbsolutePath())
+                                .advance()
+                        .createComponent());
+            }
         });
+
+        p.sendMessage(Message.getBuilder()
+                .of("»").color(ColorCode.GRAY).advance().space()
+                .of("Gesamt").color(ColorCode.DARK_AQUA).advance()
+                .of(":").color(ColorCode.GRAY).advance().space()
+                .of(String.valueOf(overallCount.get())).color(ColorCode.AQUA).advance().space()
+                .createComponent());
 
         p.sendEmptyMessage();
     }
