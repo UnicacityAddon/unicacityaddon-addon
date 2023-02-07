@@ -5,6 +5,7 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
+import lombok.NoArgsConstructor;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
@@ -14,13 +15,8 @@ import java.util.regex.Matcher;
  * @author Dimiikou
  */
 @UCEvent
+@NoArgsConstructor
 public class HQMessageEventHandler {
-
-    private final UnicacityAddon unicacityAddon;
-
-    public HQMessageEventHandler(UnicacityAddon unicacityAddon) {
-        this.unicacityAddon = unicacityAddon;
-    }
 
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {

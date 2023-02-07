@@ -8,6 +8,7 @@ import com.rettichlp.unicacityaddon.base.teamspeak.commands.ClientVariableComman
 import com.rettichlp.unicacityaddon.base.teamspeak.events.ClientMovedEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
+import lombok.NoArgsConstructor;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.event.HoverEvent;
 import net.labymod.api.event.Subscribe;
@@ -17,6 +18,7 @@ import net.labymod.api.event.Subscribe;
  * @author RettichLP
  */
 @UCEvent
+@NoArgsConstructor
 public class WaitingRoomEventHandler {
 
     @Subscribe

@@ -2,6 +2,7 @@ package com.rettichlp.unicacityaddon.events.faction;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
+import lombok.NoArgsConstructor;
 import net.labymod.api.util.math.vector.FloatVector3;
 
 import java.util.HashSet;
@@ -11,6 +12,7 @@ import java.util.Set;
  * @author Fuzzlemann
  */
 @UCEvent
+@NoArgsConstructor
 public class FDoorEventHandler {
 
 //    private final Set<FDoor> F_DOORS = ImmutableSet.of(

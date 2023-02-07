@@ -3,6 +3,7 @@ package com.rettichlp.unicacityaddon.events.faction;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.base.utils.ForgeUtils;
+import lombok.NoArgsConstructor;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
@@ -15,6 +16,7 @@ import java.util.regex.Matcher;
  * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/events/NameFormatEventHandler.java">UCUtils by paulzhng</a>
  */
 @UCEvent
+@NoArgsConstructor
 public class ContractEventHandler {
 
     public static final List<String> CONTRACT_LIST = new ArrayList<>();

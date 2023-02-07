@@ -9,6 +9,7 @@ import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import jdk.internal.joptsimple.internal.Strings;
+import lombok.NoArgsConstructor;
 import net.labymod.api.client.chat.ChatMessage;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
@@ -20,6 +21,7 @@ import java.util.TimerTask;
  * @author Dimiikou
  */
 @UCEvent
+@NoArgsConstructor
 public class ReportEventHandler {
 
     private static final Timer t = new Timer();

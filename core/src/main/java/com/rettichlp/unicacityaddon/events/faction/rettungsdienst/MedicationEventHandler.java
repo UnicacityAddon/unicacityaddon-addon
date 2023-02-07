@@ -5,6 +5,7 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.commands.faction.rettungsdienst.ARezeptAnnehmenCommand;
 import com.rettichlp.unicacityaddon.commands.faction.rettungsdienst.ARezeptCommand;
+import lombok.NoArgsConstructor;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
@@ -15,6 +16,7 @@ import java.util.TimerTask;
  * @author RettichLP
  */
 @UCEvent
+@NoArgsConstructor
 public class MedicationEventHandler {
 
     private static final Timer TIMER = new Timer();

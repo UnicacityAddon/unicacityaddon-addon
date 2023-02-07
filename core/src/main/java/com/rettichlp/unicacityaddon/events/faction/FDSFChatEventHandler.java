@@ -4,6 +4,7 @@ import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.events.MobileEventHandler;
+import lombok.NoArgsConstructor;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatMessageSendEvent;
 
@@ -11,6 +12,7 @@ import net.labymod.api.event.client.chat.ChatMessageSendEvent;
  * @author RettichLP
  */
 @UCEvent
+@NoArgsConstructor
 public class FDSFChatEventHandler {
 
     @Subscribe

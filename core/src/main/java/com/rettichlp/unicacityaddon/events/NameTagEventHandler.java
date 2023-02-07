@@ -16,6 +16,7 @@ import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.events.faction.ContractEventHandler;
 import com.rettichlp.unicacityaddon.events.faction.badfaction.blacklist.BlacklistEventHandler;
 import com.rettichlp.unicacityaddon.events.faction.polizei.WantedEventHandler;
+import lombok.NoArgsConstructor;
 import net.labymod.api.client.entity.player.Player;
 
 import java.util.List;
@@ -24,6 +25,7 @@ import java.util.List;
  * @author RettichLP
  */
 @UCEvent
+@NoArgsConstructor
 public class NameTagEventHandler {
 
     /**

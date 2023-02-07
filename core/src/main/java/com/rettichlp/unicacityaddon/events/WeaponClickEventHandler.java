@@ -1,6 +1,7 @@
 package com.rettichlp.unicacityaddon.events;
 
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
+import lombok.NoArgsConstructor;
 import net.labymod.api.client.entity.player.ClientPlayer;
 import net.labymod.api.client.world.item.ItemStack;
 import net.labymod.api.event.Subscribe;
@@ -15,6 +16,7 @@ import java.util.Set;
  * @see <a href="https://github.com/paulzhng/UCUtils/blob/e1e4cc90a852a24fbb552413eb478097f865c6f3/src/main/java/de/fuzzlemann/ucutils/events/WeaponClickEventHandler.java">UCUtils by paulzhng</a>
  */
 @UCEvent
+@NoArgsConstructor
 public class WeaponClickEventHandler {
 
     private static final Set<String> WEAPONS = ImmutableSet.of("§8M4", "§8MP5", "§8Pistole", "§8Jagdflinte");

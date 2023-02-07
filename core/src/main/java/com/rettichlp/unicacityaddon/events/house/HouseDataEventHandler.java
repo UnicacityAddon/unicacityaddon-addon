@@ -9,6 +9,7 @@ import com.rettichlp.unicacityaddon.base.models.HouseDataEntry;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import jdk.internal.joptsimple.internal.Strings;
+import lombok.NoArgsConstructor;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatMessageSendEvent;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
@@ -22,6 +23,7 @@ import java.util.regex.Matcher;
  * @author RettichLP
  */
 @UCEvent
+@NoArgsConstructor
 public class HouseDataEventHandler {
 
     private static int lastCheckedHouseNumber = 0;

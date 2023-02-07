@@ -1,8 +1,8 @@
 package com.rettichlp.unicacityaddon.events.faction.polizei;
 
-import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
+import lombok.NoArgsConstructor;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
@@ -15,15 +15,11 @@ import java.util.regex.Matcher;
  * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/events/NameFormatEventHandler.java">UCUtils by paulzhng</a>
  */
 @UCEvent
+@NoArgsConstructor
 public class WantedEventHandler {
 
     public static final Map<String, Wanted> WANTED_MAP = new HashMap<>();
     private static long wantedsShown;
-    private final UnicacityAddon unicacityAddon;
-
-    public WantedEventHandler(UnicacityAddon unicacityAddon) {
-        this.unicacityAddon = unicacityAddon;
-    }
 
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {

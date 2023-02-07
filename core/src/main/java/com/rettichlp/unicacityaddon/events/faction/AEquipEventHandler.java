@@ -1,6 +1,7 @@
 package com.rettichlp.unicacityaddon.events.faction;
 
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
+import lombok.NoArgsConstructor;
 
 import java.util.Timer;
 
@@ -9,6 +10,7 @@ import java.util.Timer;
  * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/commands/ABuyCommand.java">UCUtils by paulzhng</a>
  */
 @UCEvent
+@NoArgsConstructor
 public class AEquipEventHandler {
 
     private static final Timer TIMER = new Timer();

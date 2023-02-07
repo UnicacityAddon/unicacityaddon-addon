@@ -6,6 +6,7 @@ import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.base.utils.TextUtils;
+import lombok.NoArgsConstructor;
 import net.labymod.api.client.component.event.HoverEvent;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
@@ -16,6 +17,7 @@ import java.util.concurrent.TimeUnit;
  * @author Dimiikou
  */
 @UCEvent
+@NoArgsConstructor
 public class FirstAidEventHandler {
 
     public static long firstAidIssuingTime;

@@ -6,6 +6,7 @@ import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.models.EquipLogEntry;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
+import lombok.NoArgsConstructor;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
@@ -17,6 +18,7 @@ import java.util.regex.Matcher;
  * @author Dimiikou
  */
 @UCEvent
+@NoArgsConstructor
 public class EquipEventHandler {
 
     public static List<EquipLogEntry> equipLogEntryList = new ArrayList<>();

@@ -2,6 +2,7 @@ package com.rettichlp.unicacityaddon.events;
 
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.utils.ForgeUtils;
+import lombok.NoArgsConstructor;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
@@ -9,6 +10,7 @@ import net.labymod.api.event.client.chat.ChatReceiveEvent;
  * @author Dimiikou
  */
 @UCEvent
+@NoArgsConstructor
 public class ShutDownEventHandler {
 
     public static boolean shutdownJail = false;

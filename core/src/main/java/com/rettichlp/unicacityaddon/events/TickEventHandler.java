@@ -2,8 +2,10 @@ package com.rettichlp.unicacityaddon.events;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
+import lombok.NoArgsConstructor;
 
 @UCEvent
+@NoArgsConstructor
 public class TickEventHandler {
 
     public static int currentTick = 0;

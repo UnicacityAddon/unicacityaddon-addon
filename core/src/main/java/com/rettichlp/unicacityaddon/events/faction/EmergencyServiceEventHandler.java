@@ -10,6 +10,7 @@ import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.commands.faction.ServiceCountCommand;
+import lombok.NoArgsConstructor;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.event.HoverEvent;
 import net.labymod.api.client.chat.ChatMessage;
@@ -26,6 +27,7 @@ import java.util.regex.Matcher;
  * @author RettichLP
  */
 @UCEvent
+@NoArgsConstructor
 public class EmergencyServiceEventHandler {
 
     private static final List<ServiceCallBox> activeEmergencyCallBoxList = new ArrayList<>();

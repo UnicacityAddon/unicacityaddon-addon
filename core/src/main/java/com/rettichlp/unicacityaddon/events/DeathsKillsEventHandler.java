@@ -11,6 +11,7 @@ import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.base.utils.MathUtils;
 import com.rettichlp.unicacityaddon.commands.faction.AFbankEinzahlenCommand;
+import lombok.NoArgsConstructor;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
@@ -20,6 +21,7 @@ import java.util.regex.Matcher;
  * @author Dimiikou
  */
 @UCEvent
+@NoArgsConstructor
 public class DeathsKillsEventHandler {
 
     @Subscribe

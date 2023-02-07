@@ -8,6 +8,7 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.events.AccountEventHandler;
 import com.rettichlp.unicacityaddon.events.MobileEventHandler;
+import lombok.NoArgsConstructor;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
@@ -18,6 +19,7 @@ import java.util.regex.Matcher;
  * @author RettichLP
  */
 @UCEvent
+@NoArgsConstructor
 public class ReviveEventHandler {
 
     private static long reviveByMedicStartTime = 0; // revive time if you are dead

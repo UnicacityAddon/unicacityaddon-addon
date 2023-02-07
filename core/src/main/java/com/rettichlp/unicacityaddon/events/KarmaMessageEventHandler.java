@@ -11,6 +11,7 @@ import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.events.faction.rettungsdienst.ReviveEventHandler;
+import lombok.NoArgsConstructor;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
@@ -23,6 +24,7 @@ import java.util.regex.Matcher;
  * @author Dimiikou
  */
 @UCEvent
+@NoArgsConstructor
 public class KarmaMessageEventHandler {
 
     private boolean karmaCheck = false;

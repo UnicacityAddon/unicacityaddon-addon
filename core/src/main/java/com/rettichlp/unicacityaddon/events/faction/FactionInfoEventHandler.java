@@ -1,6 +1,7 @@
 package com.rettichlp.unicacityaddon.events.faction;
 
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
+import lombok.NoArgsConstructor;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
@@ -16,6 +17,7 @@ import java.util.regex.Pattern;
  * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/commands/faction/CheckActiveMembersCommand.java">UCUtils by paulzhng</a>
  */
 @UCEvent
+@NoArgsConstructor
 public class FactionInfoEventHandler {
 
     private static final Timer TIMER = new Timer();

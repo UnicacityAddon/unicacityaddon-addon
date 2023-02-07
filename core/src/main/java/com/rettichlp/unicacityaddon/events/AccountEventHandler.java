@@ -9,6 +9,7 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.base.utils.UpdateUtils;
 import jdk.internal.joptsimple.internal.Strings;
+import lombok.NoArgsConstructor;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
@@ -20,6 +21,7 @@ import java.util.regex.Matcher;
  * @author Dimiikou
  */
 @UCEvent
+@NoArgsConstructor
 public class AccountEventHandler {
 
     public static boolean isAfk = false;
