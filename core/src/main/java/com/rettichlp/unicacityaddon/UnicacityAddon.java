@@ -16,14 +16,12 @@ import com.rettichlp.unicacityaddon.commands.CountdownCommand;
 import com.rettichlp.unicacityaddon.commands.DiscordCommand;
 import com.rettichlp.unicacityaddon.commands.DyavolCommand;
 import com.rettichlp.unicacityaddon.commands.EinzahlenCommand;
-import com.rettichlp.unicacityaddon.commands.ExamplePingCommand;
 import com.rettichlp.unicacityaddon.commands.MemberInfoCommand;
 import com.rettichlp.unicacityaddon.commands.NaviCommand;
 import com.rettichlp.unicacityaddon.commands.NearestATMCommand;
 import com.rettichlp.unicacityaddon.commands.NearestJobCommand;
 import com.rettichlp.unicacityaddon.commands.ReichensteuerCommand;
 import com.rettichlp.unicacityaddon.commands.ScreenCommand;
-import com.rettichlp.unicacityaddon.commands.ShutdownFriedhofCommand;
 import com.rettichlp.unicacityaddon.commands.ShutdownJailCommand;
 import com.rettichlp.unicacityaddon.commands.SyncPlayerDataCommand;
 import com.rettichlp.unicacityaddon.commands.TimerCommand;
@@ -78,15 +76,51 @@ import com.rettichlp.unicacityaddon.commands.teamspeak.MoveHereCommand;
 import com.rettichlp.unicacityaddon.commands.teamspeak.MoveToCommand;
 import com.rettichlp.unicacityaddon.commands.teamspeak.TSFindCommand;
 import com.rettichlp.unicacityaddon.commands.teamspeak.TSJoinCommand;
+import com.rettichlp.unicacityaddon.events.ABuyEventHandler;
+import com.rettichlp.unicacityaddon.events.AccountEventHandler;
+import com.rettichlp.unicacityaddon.events.CarEventHandler;
+import com.rettichlp.unicacityaddon.events.DeathsKillsEventHandler;
 import com.rettichlp.unicacityaddon.events.FriendJoinEventHandler;
+import com.rettichlp.unicacityaddon.events.HotkeyEventHandler;
+import com.rettichlp.unicacityaddon.events.KarmaMessageEventHandler;
+import com.rettichlp.unicacityaddon.events.MobileEventHandler;
+import com.rettichlp.unicacityaddon.events.MoneyEventHandler;
+import com.rettichlp.unicacityaddon.events.NameTagEventHandler;
+import com.rettichlp.unicacityaddon.events.NavigationEventHandler;
+import com.rettichlp.unicacityaddon.events.RenderTagEventHandler;
+import com.rettichlp.unicacityaddon.events.TabListEventHandler;
 import com.rettichlp.unicacityaddon.events.TickEventHandler;
+import com.rettichlp.unicacityaddon.events.WeaponClickEventHandler;
+import com.rettichlp.unicacityaddon.events.faction.AEquipEventHandler;
+import com.rettichlp.unicacityaddon.events.faction.AFbankEinzahlenEventHandler;
+import com.rettichlp.unicacityaddon.events.faction.ContractEventHandler;
+import com.rettichlp.unicacityaddon.events.faction.EmergencyServiceEventHandler;
+import com.rettichlp.unicacityaddon.events.faction.EquipEventHandler;
+import com.rettichlp.unicacityaddon.events.faction.FDSFChatEventHandler;
 import com.rettichlp.unicacityaddon.events.faction.FDoorEventHandler;
-import com.rettichlp.unicacityaddon.events.faction.badfaction.FBIHackEventHandler;
+import com.rettichlp.unicacityaddon.events.faction.FactionInfoEventHandler;
+import com.rettichlp.unicacityaddon.events.faction.ReinforcementEventHandler;
+import com.rettichlp.unicacityaddon.events.faction.ShareLocationEventHandler;
+import com.rettichlp.unicacityaddon.events.faction.badfaction.DBankMessageEventHandler;
+import com.rettichlp.unicacityaddon.events.faction.badfaction.GaggedEventHandler;
+import com.rettichlp.unicacityaddon.events.faction.badfaction.GiftEigenbedarfEventHandler;
+import com.rettichlp.unicacityaddon.events.faction.badfaction.PlantEventHandler;
 import com.rettichlp.unicacityaddon.events.faction.badfaction.blacklist.BlacklistEventHandler;
 import com.rettichlp.unicacityaddon.events.faction.badfaction.blacklist.BlacklistModifyEventHandler;
 import com.rettichlp.unicacityaddon.events.faction.polizei.HQMessageEventHandler;
 import com.rettichlp.unicacityaddon.events.faction.polizei.WantedEventHandler;
-import com.rettichlp.unicacityaddon.listener.ExampleGameTickListener;
+import com.rettichlp.unicacityaddon.events.faction.rettungsdienst.FireEventHandler;
+import com.rettichlp.unicacityaddon.events.faction.rettungsdienst.FirstAidEventHandler;
+import com.rettichlp.unicacityaddon.events.faction.rettungsdienst.MedicationEventHandler;
+import com.rettichlp.unicacityaddon.events.faction.rettungsdienst.ReviveEventHandler;
+import com.rettichlp.unicacityaddon.events.faction.rettungsdienst.ServiceMessageEventHandler;
+import com.rettichlp.unicacityaddon.events.faction.terroristen.BombTimerEventHandler;
+import com.rettichlp.unicacityaddon.events.house.HouseDataEventHandler;
+import com.rettichlp.unicacityaddon.events.house.HouseRenterEventHandler;
+import com.rettichlp.unicacityaddon.events.job.FishermanEventHandler;
+import com.rettichlp.unicacityaddon.events.job.JobEventHandler;
+import com.rettichlp.unicacityaddon.events.team.ReportEventHandler;
+import com.rettichlp.unicacityaddon.events.teamspeak.WaitingRoomEventHandler;
 import net.labymod.api.Laby;
 import net.labymod.api.addon.LabyAddon;
 import net.labymod.api.client.Minecraft;
@@ -105,158 +139,164 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
 
     @Override
     protected void enable() {
-        MINECRAFT = labyAPI().minecraft();
-        LOGGER = this.logger();
-        ADDON = this;
-        configuration = this.configuration();
-
-        // TODO: 16.12.2022 NOT FOR PROD
-        this.registerCommand(new MoveToCommand());
-        this.registerCommand(new ASetBlacklistCommand());
-        this.registerCommand(new ClockCommand());
-        this.registerCommand(new ModifyWantedsCommand());
-        this.registerCommand(new MemberInfoCommand());
-        this.registerCommand(new PunishCommand());
-        this.registerCommand(new TokenCommand());
-        this.registerCommand(new ARezeptCommand());
-        this.registerCommand(new NearestJobCommand());
-        this.registerCommand(new BroadcastCommand());
-        this.registerCommand(new MoveCommand());
-        this.registerCommand(new DyavolCommand());
-        this.registerCommand(new AFbankEinzahlenCommand());
-        this.registerCommand(new HouseBankCommand());
-        this.registerCommand(new TSJoinCommand());
-        this.registerCommand(new TimerCommand());
-        this.registerCommand(new CalculateCommand());
-        this.registerCommand(new NearestATMCommand());
-        this.registerCommand(new CoordlistCommand());
-        this.registerCommand(new CountdownCommand());
-        this.registerCommand(new ShutdownJailCommand());
-        this.registerCommand(new SellDrugCommand());
-        this.registerCommand(new StummCommand());
-        this.registerCommand(new ModifyBlacklistCommand());
-        this.registerCommand(new ExplosiveBeltCommand());
-        this.registerCommand(new TopListCommand());
-        this.registerCommand(new AEquipCommand());
-        this.registerCommand(new ACallCommand());
-        this.registerCommand(new ReichensteuerCommand());
-        this.registerCommand(new NaviCommand());
-        this.registerCommand(new DForceCommand());
-        this.registerCommand(new HousebanReasonCommand());
-        this.registerCommand(new DiscordCommand());
-        this.registerCommand(new HouseStorageCommand());
-        this.registerCommand(new ShareLocationCommand());
-        this.registerCommand(new EinzahlenCommand());
-        this.registerCommand(new YasinCommand());
-        this.registerCommand(new PlayerGroupCommand());
-        this.registerCommand(new ServiceCountCommand());
-        this.registerCommand(new EquipListCommand());
-        this.registerCommand(new ASMSCommand());
-        this.registerCommand(new TodoListCommand());
-//        this.registerCommand(new ChatLogCommand());
-        this.registerCommand(new BlacklistInfoCommand());
-        this.registerCommand(new SyncPlayerDataCommand());
-        this.registerCommand(new ReinforcementCommand());
-        this.registerCommand(new MoveHereCommand());
-        this.registerCommand(new FForceCommand());
-        this.registerCommand(new ARezeptAnnehmenCommand());
-        this.registerCommand(new ShutdownFriedhofCommand());
-        this.registerCommand(new ChannelActivityCommand());
-        this.registerCommand(new ASUCommand());
-        this.registerCommand(new ScreenCommand());
-        this.registerCommand(new GiftEigenbedarfCommand());
-        this.registerCommand(new ABuyCommand());
-        this.registerCommand(new WantedReasonCommand());
-        this.registerCommand(new SFForceCommand());
-        this.registerCommand(new ADropMoneyCommand());
-        this.registerCommand(new HousebanCommand());
-        this.registerCommand(new FactionInfoCommand());
-        this.registerCommand(new ReplyCommand());
-        this.registerCommand(new CancelCountdownCommand());
-        this.registerCommand(new UpdateAddonCommand());
-        this.registerCommand(new EigenbedarfCommand());
-        this.registerCommand(new BlockCommand());
-        this.registerCommand(new TSFindCommand());
-        this.registerCommand(new NaviPointCommand());
-        this.registerCommand(new BlacklistReasonCommand());
-        this.registerCommand(new GaggedCommand());
-        this.registerCommand(new SchmarzmarktLocationsCommand());
-        this.registerCommand(new ACaptureCommand());
-        this.registerListener(new BlacklistModifyEventHandler(this));
-        this.registerListener(new TickEventHandler(this));
-        this.registerListener(new FDoorEventHandler(this));
-        this.registerListener(new FBIHackEventHandler(this));
-        this.registerListener(new WantedEventHandler(this));
-//        this.registerListener(new ChatLogReceiveChatEventHandler(this));
-        this.registerListener(new HQMessageEventHandler(this));
-        this.registerListener(new FriendJoinEventHandler(this));
-        this.registerListener(new BlacklistEventHandler(this));
-//        this.registerListener(new HouseDataEventHandler(this));
-//        this.registerListener(new HotkeyEventHandler(this));
-//        this.registerListener(new DeathsKillsEventHandler(this));
-//        this.registerListener(new KarmaMessageEventHandler(this));
-//        this.registerListener(new ReportEventHandler(this));
-//        this.registerListener(new GiftEigenbedarfEventHandler(this));
-//        this.registerListener(new DutyEventHandler(this));
-//        this.registerListener(new MedicationEventHandler(this));
-//        this.registerListener(new EquipEventHandler(this));
-//        this.registerListener(new ServiceMessageEventHandler(this));
-//        this.registerListener(new BombTimerEventHandler(this));
-//        this.registerListener(new WeaponClickEventHandler(this));
-//        this.registerListener(new WaitingRoomEventHandler(this));
-//        this.registerListener(new AccountEventHandler(this));
-//        this.registerListener(new ChatLogSendChatEventHandler(this));
-//        this.registerListener(new HouseRenterEventHandler(this));
-//        this.registerListener(new FireEventHandler(this));
-//        this.registerListener(new FactionInfoEventHandler(this));
-//        this.registerListener(new ReviveEventHandler(this));
-//        this.registerListener(new MoneyEventHandler(this));
-//        this.registerListener(new AFbankEinzahlenEventHandler(this));
-//        this.registerListener(new ShareLocationEventHandler(this));
-//        this.registerListener(new GaggedEventHandler(this));
-//        this.registerListener(new PlantEventHandler(this));
-//        this.registerListener(new ReinforcementEventHandler(this));
-//        this.registerListener(new JobEventHandler(this));
-//        this.registerListener(new DBankMessageEventHandler(this));
-//        this.registerListener(new HouseInteractionEventHandler(this));
-//        this.registerListener(new MobileEventHandler(this));
-//        this.registerListener(new ContractEventHandler(this));
-//        this.registerListener(new FDSFChatEventHandler(this));
-//        this.registerListener(new NavigationEventHandler(this));
-//        this.registerListener(new FirstAidEventHandler(this));
-//        this.registerListener(new FishermanEventHandler(this));
-//        this.registerListener(new NameTagEventHandler(this));
-//        this.registerListener(new ABuyEventHandler(this));
-//        this.registerListener(new AEquipEventHandler(this));
-//        this.registerListener(new CarEventHandler(this));
-//        this.registerListener(new EmergencyServiceEventHandler(this));
-//        this.registerListener(new ShutDownEventHandler(this));
-
-        //        UpdateUtils.modFile = e.getSourceFile();
-        //        asmDataTable = e.getAsmData();
-        //        CommandRegistry.register();
-        //        EventRegistry.register();
-
         this.registerSettingCategory();
-        //        HudWidgetRegistry.register();
 
-        this.registerListener(new ExampleGameTickListener(this));
-        this.registerCommand(new ExamplePingCommand());
+        this.registerListener(new ABuyEventHandler()); // TODO: 08.02.2023
+        this.registerListener(new AccountEventHandler()); // TODO: 08.02.2023
+        this.registerListener(new CarEventHandler()); // TODO: 08.02.2023
+        this.registerListener(new DeathsKillsEventHandler()); // TODO: 08.02.2023
+        this.registerListener(new FriendJoinEventHandler()); // TODO: 08.02.2023
+        this.registerListener(new HotkeyEventHandler()); // TODO: 08.02.2023
+        this.registerListener(new KarmaMessageEventHandler()); // TODO: 08.02.2023
+        this.registerListener(new MobileEventHandler()); // TODO: 08.02.2023
+        this.registerListener(new MoneyEventHandler()); // TODO: 08.02.2023
+        this.registerListener(new NameTagEventHandler()); // TODO: 08.02.2023
+        this.registerListener(new NavigationEventHandler()); // TODO: 08.02.2023
+        this.registerListener(new RenderTagEventHandler()); // TODO: 08.02.2023
+        this.registerListener(new TabListEventHandler()); // TODO: 08.02.2023
+        this.registerListener(new TickEventHandler()); // TODO: 08.02.2023
+        this.registerListener(new TimerEventHandler()); // TODO: 08.02.2023
+        this.registerListener(new WeaponClickEventHandler()); // TODO: 08.02.2023
+        // chatlog
+        this.registerListener(new ChatLogReceiveChatEventHandler()); // TODO: 08.02.2023
+        this.registerListener(new ChatLogSendChatEventHandler()); // TODO: 08.02.2023
+        // faction
+        this.registerListener(new AEquipEventHandler()); // TODO: 08.02.2023
+        this.registerListener(new AFbankEinzahlenEventHandler()); // TODO: 08.02.2023
+        this.registerListener(new ContractEventHandler()); // TODO: 08.02.2023
+        this.registerListener(new EmergencyServiceEventHandler()); // TODO: 08.02.2023
+        this.registerListener(new EquipEventHandler()); // TODO: 08.02.2023
+        this.registerListener(new FDSFChatEventHandler()); // TODO: 08.02.2023
+        this.registerListener(new FDoorEventHandler()); // TODO: 08.02.2023
+        this.registerListener(new FactionInfoEventHandler()); // TODO: 08.02.2023
+        this.registerListener(new ReinforcementEventHandler()); // TODO: 08.02.2023
+        this.registerListener(new ShareLocationEventHandler()); // TODO: 08.02.2023
+        // faction - badfaction
+        this.registerListener(new BannerEventHandler()); // TODO: 08.02.2023
+        this.registerListener(new DBankMessageEventHandler()); // TODO: 08.02.2023
+        this.registerListener(new DrugInteractionEventHandler()); // TODO: 08.02.2023
+        this.registerListener(new GaggedEventHandler()); // TODO: 08.02.2023
+        this.registerListener(new GiftEigenbedarfEventHandler()); // TODO: 08.02.2023
+        this.registerListener(new PlantEventHandler()); // TODO: 08.02.2023
+        // faction - badfaction - blacklist
+        this.registerListener(new BlacklistEventHandler()); // TODO: 08.02.2023
+        this.registerListener(new BlacklistModifyEventHandler()); // TODO: 08.02.2023
+        // faction - polizei
+        this.registerListener(new HQMessageEventHandler()); // TODO: 08.02.2023
+        this.registerListener(new WantedEventHandler()); // TODO: 08.02.2023
+        // faction - rettungsdienst
+        this.registerListener(new FireEventHandler()); // TODO: 08.02.2023
+        this.registerListener(new FirstAidEventHandler()); // TODO: 08.02.2023
+        this.registerListener(new MedicationEventHandler()); // TODO: 08.02.2023
+        this.registerListener(new ReviveEventHandler()); // TODO: 08.02.2023
+        this.registerListener(new ServiceMessageEventHandler()); // TODO: 08.02.2023
+        // faction - terroristen
+        this.registerListener(new BombTimerEventHandler()); // TODO: 08.02.2023
+        // house
+        this.registerListener(new HouseDataEventHandler());
+        this.registerListener(new HouseInteractionEventHandler()); // TODO: 08.02.2023
+        this.registerListener(new HouseRenterEventHandler()); // TODO: 08.02.2023
+        // job
+        this.registerListener(new FishermanEventHandler()); // TODO: 08.02.2023
+        this.registerListener(new JobEventHandler()); // TODO: 08.02.2023
+        // team
+        this.registerListener(new ReportEventHandler()); // TODO: 08.02.2023
+        // teamspeak
+        this.registerListener(new WaitingRoomEventHandler()); // TODO: 08.02.2023
+
+        this.registerCommand(new ABuyCommand()); // TODO: 08.02.2023
+        this.registerCommand(new BusCommand()); // TODO: 08.02.2023
+        this.registerCommand(new CalculateCommand()); // TODO: 08.02.2023
+        this.registerCommand(new CancelCountdownCommand()); // TODO: 08.02.2023
+        this.registerCommand(new ChatLogCommad()); // TODO: 08.02.2023
+        this.registerCommand(new ClockCommand()); // TODO: 08.02.2023
+        this.registerCommand(new CoordlistCommand()); // TODO: 08.02.2023
+        this.registerCommand(new CountdownCommand()); // TODO: 08.02.2023
+        this.registerCommand(new DiscordCommand()); // TODO: 08.02.2023
+        this.registerCommand(new DyavolCommand()); // TODO: 08.02.2023
+        this.registerCommand(new EinzahlenCommand()); // TODO: 08.02.2023
+        this.registerCommand(new MemberInfoCommand()); // TODO: 08.02.2023
+        this.registerCommand(new NaviCommand()); // TODO: 08.02.2023
+        this.registerCommand(new NearestATMCommand()); // TODO: 08.02.2023
+        this.registerCommand(new NearestJobCommand()); // TODO: 08.02.2023
+        this.registerCommand(new ReichensteuerCommand()); // TODO: 08.02.2023
+        this.registerCommand(new ScreenCommand()); // TODO: 08.02.2023
+        this.registerCommand(new ShutdownGraveyardCommand()); // TODO: 08.02.2023
+        this.registerCommand(new ShutdownJailCommand()); // TODO: 08.02.2023
+        this.registerCommand(new SyncPlayerDataCommand()); // TODO: 08.02.2023
+        this.registerCommand(new TimerCommand()); // TODO: 08.02.2023
+        this.registerCommand(new TodoListCommand()); // TODO: 08.02.2023
+        this.registerCommand(new UpdateAddonCommand()); // TODO: 08.02.2023
+        this.registerCommand(new YasinCommand()); // TODO: 08.02.2023
+        // api
+        this.registerCommand(new BlacklistReasonCommand());
+        this.registerCommand(new BroadcastCommand());
+        this.registerCommand(new HousebanCommand());
+        this.registerCommand(new HousebanReasonCommand());
+        this.registerCommand(new NaviPointCommand());
+        this.registerCommand(new PlayerGroupCommand());
+        this.registerCommand(new TokenCommand());
+        this.registerCommand(new TopListCommand());
+        this.registerCommand(new WantedReasonCommand());
+        // faction
+        this.registerCommand(new AEquipCommand());
+        this.registerCommand(new AFbankEinzahlenCommand());
+        this.registerCommand(new EquipListCommand());
+        this.registerCommand(new FactionInfoCommand());
+        this.registerCommand(new ReinforcementCommand());
+        this.registerCommand(new ServiceCountCommand());
+        this.registerCommand(new ShareLocationCommand());
+        // faction - badfaction
+        this.registerCommand(new ACaptureCommand());
+        this.registerCommand(new ASetBlacklistCommand());
+        this.registerCommand(new BlacklistInfoCommand());
+        this.registerCommand(new DBankDropAllCommand());
+        this.registerCommand(new EigenbedarfCommand());
+        this.registerCommand(new GaggedCommand());
+        this.registerCommand(new GiftEigenbedarfCommand());
+        this.registerCommand(new ModifyBlacklistCommand());
+        this.registerCommand(new SchmarzmarktLocationsCommand());
+        this.registerCommand(new SellDrugCommand());
+        // faction - chat
+        this.registerCommand(new DForceCommand());
+        this.registerCommand(new FForceCommand());
+        this.registerCommand(new SFForceCommand());
+        // faction - polizei
+        this.registerCommand(new ASUCommand());
+        this.registerCommand(new ModifyWantedsCommand());
+        // faction - rettungsdienst
+        this.registerCommand(new ARezeptAnnehmenCommand());
+        this.registerCommand(new ARezeptCommand());
+        // faction - terroristen
+        this.registerCommand(new ExplosiveBeltCommand());
+        // house
+        this.registerCommand(new HouseBankCommand());
+        this.registerCommand(new HouseStorageCommand());
+        // job
+        this.registerCommand(new ADropMoneyCommand());
+        // mobile
+        this.registerCommand(new ACallCommand());
+        this.registerCommand(new ASMSCommand());
+        this.registerCommand(new BlockCommand());
+        this.registerCommand(new ReplyCommand());
+        this.registerCommand(new StummCommand());
+        // supporter
+        this.registerCommand(new PunishCommand());
+        // teamspeak
+        this.registerCommand(new ChannelActivityCommand());
+        this.registerCommand(new MoveCommand());
+        this.registerCommand(new MoveHereCommand());
+        this.registerCommand(new MoveToCommand());
+        this.registerCommand(new TSFindCommand());
+        this.registerCommand(new TSJoinCommand());
 
         BroadcastChecker.start();
-        LOGGER.info("Started BroadcastChecker");
         TokenManager.createToken();
-        LOGGER.info("Created API Token");
         Syncer.syncAll();
-
         new Thread(TSClientQuery::getInstance).start();
-        LOGGER.info("Started TSClientQuery");
-
-        //        KeyBindRegistry.registerKeyBinds();
         FileManager.loadData();
 
-
-        LOGGER.info("Enabled the Addon");
+        this.logger().info("Enabled UnicacityAddon");
     }
 
     @Override
@@ -265,6 +305,8 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
     }
 
     public static boolean isUnicacity() {
+        return true; // TODO: 08.02.2023
+
         if (MINECRAFT.clientWorld() == null)
             return false;
 

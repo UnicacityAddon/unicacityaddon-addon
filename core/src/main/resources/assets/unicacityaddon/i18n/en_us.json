@@ -257,7 +257,7 @@
       },
       "orderedTablist": {
         "name": "Sortierte Tabliste",
-        "descriptione": "Sortiert die Tabliste nach Duty-Fraktionen, UC's, Buildern und aktiven Reports"
+        "description": "Sortiert die Tabliste nach Duty-Fraktionen, UC's, Buildern und aktiven Reports"
       },
       "despawnTime": {
         "name": "Despawn Zeitpunkt",
