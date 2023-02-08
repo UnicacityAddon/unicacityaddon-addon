@@ -22,7 +22,7 @@ import net.labymod.api.event.Subscribe;
 public class WaitingRoomEventHandler {
 
     @Subscribe
-    public static void onClientMoved(ClientMovedEvent e) {
+    public void onClientMoved(ClientMovedEvent e) {
         UPlayer p = AbstractionLayer.getPlayer();
 
         if (!UnicacityAddon.isUnicacity())
@@ -40,7 +40,7 @@ public class WaitingRoomEventHandler {
         }
     }
 
-    private static void handleEnterSupportChannel(UPlayer p, int clientID) {
+    private void handleEnterSupportChannel(UPlayer p, int clientID) {
         new Thread(() -> {
             ClientVariableCommand.Response response = new ClientVariableCommand(clientID).getResponse();
             String name = response.getDescription();
@@ -59,7 +59,7 @@ public class WaitingRoomEventHandler {
         }).start();
     }
 
-    private static void handleEnterPublicChannel(UPlayer p, int clientID) {
+    private void handleEnterPublicChannel(UPlayer p, int clientID) {
         new Thread(() -> {
             ClientVariableCommand.Response response = new ClientVariableCommand(clientID).getResponse();
             String name = response.getDescription();

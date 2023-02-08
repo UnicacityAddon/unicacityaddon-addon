@@ -28,7 +28,7 @@ public class PatternHandler {
     /**
      * Pattern for bomb timer
      *
-     * @see com.rettichlp.unicacityaddon.modules.BombTimerModule
+     * @see com.rettichlp.unicacityaddon.events.faction.terroristen.BombTimerEventHandler
      */
     public static final Pattern BOMB_PLACED_PATTERN = Pattern.compile("^News: ACHTUNG! Es wurde eine Bombe in der Nähe von (?<location>.+) gefunden!$");
     public static final Pattern BOMB_REMOVED_PATTERN = Pattern.compile("^News: Die Bombe konnte (nicht|erfolgreich) entschärft werden!$");
@@ -164,6 +164,7 @@ public class PatternHandler {
     public static final Pattern MOBILE_REMOVE_PATTERN = Pattern.compile("^((?:\\[UC])*\\w+) hat dir deine Kommunikationsgeräte abgenommen\\.$");
     public static final Pattern MOBILE_GET_PATTERN = Pattern.compile("^Du hast dein Handy genommen\\.$" +
             "|^((?:\\[UC])*\\w+) hat dir deine Kommunikationsgeräte wiedergegeben\\.$");
+    public static final Pattern MOBILE_TOGGLE_PATTERN = Pattern.compile("^Du hast dein Telefon (ein|aus)geschaltet\\.$");
 
     /**
      * Pattern for bad faction interaction
