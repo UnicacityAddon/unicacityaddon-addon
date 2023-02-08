@@ -13,9 +13,7 @@ import java.util.UUID;
 
 /**
  * @author RettichLP
- * @see <a
- * href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/base/abstraction/UPlayer.java">UCUtils
- * by paulzhng</a>
+ * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/base/abstraction/UPlayer.java">UCUtils by paulzhng</a>
  */
 public interface UPlayer {
 
@@ -54,6 +52,7 @@ public interface UPlayer {
     Inventory getInventoryContainer();
 
     Faction getFaction();
+
     boolean inDuty();
 
     int getRank();

@@ -15,14 +15,14 @@ import static com.rettichlp.unicacityaddon.base.api.request.APIRequest.mapOf;
 /**
  * @author RettichLP
  */
-public class HouseDataEntry {
+public class HouseData {
 
     private final int houseNumber;
     private int houseBank;
 
     private final Map<DrugType, Map<DrugPurity, Integer>> storageMap;
 
-    public HouseDataEntry(int houseNumber) {
+    public HouseData(int houseNumber) {
         this.houseNumber = houseNumber;
 
         houseBank = 0;
@@ -59,12 +59,12 @@ public class HouseDataEntry {
                 DrugPurity.BAD, 0));
     }
 
-    public HouseDataEntry setHouseBank(int houseBank) {
+    public HouseData setHouseBank(int houseBank) {
         this.houseBank = houseBank;
         return this;
     }
 
-    public Component getBankComponent() {
+    public Component getBankITextComponent() {
         return Message.getBuilder()
                 .of("»").color(ColorCode.GRAY).advance().space()
                 .of(houseNumber + ":").color(ColorCode.DARK_AQUA).advance().space()
@@ -72,7 +72,7 @@ public class HouseDataEntry {
                 .createComponent();
     }
 
-    public Component getStorageComponent() {
+    public Component getStorageITextComponent() {
         Message.Builder hoverMessageBuilder = Message.getBuilder()
                 .of("Drogenlager:").color(ColorCode.DARK_AQUA).bold().advance().newline();
 
@@ -126,7 +126,7 @@ public class HouseDataEntry {
                 .createComponent();
     }
 
-    public HouseDataEntry addToStorage(DrugType drugType, DrugPurity drugPurity, int amount) {
+    public HouseData addToStorage(DrugType drugType, DrugPurity drugPurity, int amount) {
         Map<DrugPurity, Integer> drugPurityIntegerMap = storageMap.get(drugType);
         int oldAmount = drugPurityIntegerMap.get(drugPurity);
         drugPurityIntegerMap.put(drugPurity, oldAmount + amount);
@@ -134,7 +134,7 @@ public class HouseDataEntry {
         return this;
     }
 
-    public HouseDataEntry removeFromStorage(DrugType drugType, DrugPurity drugPurity, int amount) {
+    public HouseData removeFromStorage(DrugType drugType, DrugPurity drugPurity, int amount) {
         Map<DrugPurity, Integer> drugPurityIntegerMap = storageMap.get(drugType);
         int oldAmount = drugPurityIntegerMap.get(drugPurity);
         drugPurityIntegerMap.put(drugPurity, oldAmount != 0 ? oldAmount - amount : 0);

@@ -1,6 +1,7 @@
 package com.rettichlp.unicacityaddon.base.api;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
 
 import java.math.BigInteger;
@@ -12,7 +13,7 @@ public class TokenManager {
     public static String API_TOKEN;
 
     public static void createToken() {
-        String uuid = UnicacityAddon.MINECRAFT.sessionAccessor().session().getUniqueId().toString().replace("-", "");
+        String uuid = AbstractionLayer.getPlayer().getUniqueID().toString().replace("-", "");
         String salt = "423WhKRMTfRv4mn6u8hLcPj7bYesKh4Ex4yRErYuW4KsgYjpo35nSU11QYj3OINAJwcd0TPDD6AkqhSq";
         String authToken = UnicacityAddon.MINECRAFT.sessionAccessor().session().getAccessToken();
         API_TOKEN = hash(uuid + salt + authToken);

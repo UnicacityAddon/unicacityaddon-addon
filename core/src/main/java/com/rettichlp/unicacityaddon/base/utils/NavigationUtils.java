@@ -4,8 +4,9 @@ import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.api.Syncer;
 import com.rettichlp.unicacityaddon.base.enums.location.ATM;
+import com.rettichlp.unicacityaddon.base.enums.location.Bus;
 import com.rettichlp.unicacityaddon.base.enums.location.Job;
-import com.rettichlp.unicacityaddon.base.models.NaviPointEntry;
+import com.rettichlp.unicacityaddon.base.models.NaviPoint;
 import net.labymod.api.util.math.vector.FloatVector3;
 import org.spongepowered.include.com.google.common.collect.Maps;
 
@@ -49,19 +50,38 @@ public class NavigationUtils {
         return Maps.immutableEntry(nearestDistance, nearestJob);
     }
 
-    public static Map.Entry<Double, NaviPointEntry> getNearestNaviPoint(int x, int y, int z) {
+    public static Map.Entry<Double, Bus> getNearestBus() {
+        return getNearestBus(AbstractionLayer.getPlayer().getPosition());
+    }
+
+    public static Map.Entry<Double, Bus> getNearestBus(FloatVector3 blockPos) {
+        Bus nearestBus = null;
+        double nearestDistance = Double.MAX_VALUE;
+
+        for (Bus bus : Bus.values()) {
+            double distance = blockPos.distance(new FloatVector3(bus.getX(), bus.getY(), bus.getZ()));
+            if (distance < nearestDistance) {
+                nearestDistance = distance;
+                nearestBus = bus;
+            }
+        }
+
+        return Maps.immutableEntry(nearestDistance, nearestBus);
+    }
+
+    public static Map.Entry<Double, NaviPoint> getNearestNaviPoint(int x, int y, int z) {
         return getNearestNaviPoint(new FloatVector3(x, y, z));
     }
 
-    public static Map.Entry<Double, NaviPointEntry> getNearestNaviPoint(UPlayer p) {
+    public static Map.Entry<Double, NaviPoint> getNearestNaviPoint(UPlayer p) {
         return getNearestNaviPoint(p.getPosition());
     }
 
-    public static Map.Entry<Double, NaviPointEntry> getNearestNaviPoint(FloatVector3 blockPos) {
-        NaviPointEntry nearestNaviPoint = null;
+    public static Map.Entry<Double, NaviPoint> getNearestNaviPoint(FloatVector3 blockPos) {
+        NaviPoint nearestNaviPoint = null;
         double nearestDistance = Double.MAX_VALUE;
 
-        for (NaviPointEntry naviPointEntry : Syncer.NAVIPOINTLIST) {
+        for (NaviPoint naviPointEntry : Syncer.NAVIPOINTLIST) {
             double distance = blockPos.distance(new FloatVector3(naviPointEntry.getX(), naviPointEntry.getY(), naviPointEntry.getZ()));
             if (distance < nearestDistance) {
                 nearestDistance = distance;

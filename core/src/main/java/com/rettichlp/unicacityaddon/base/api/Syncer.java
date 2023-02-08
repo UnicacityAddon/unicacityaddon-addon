@@ -7,13 +7,13 @@ import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
 import com.rettichlp.unicacityaddon.base.enums.api.AddonGroup;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
-import com.rettichlp.unicacityaddon.base.models.BlacklistReasonEntry;
-import com.rettichlp.unicacityaddon.base.models.BroadcastEntry;
-import com.rettichlp.unicacityaddon.base.models.HouseBanEntry;
-import com.rettichlp.unicacityaddon.base.models.HouseBanReasonEntry;
-import com.rettichlp.unicacityaddon.base.models.NaviPointEntry;
-import com.rettichlp.unicacityaddon.base.models.PlayerGroupEntry;
-import com.rettichlp.unicacityaddon.base.models.WantedReasonEntry;
+import com.rettichlp.unicacityaddon.base.models.BlacklistReason;
+import com.rettichlp.unicacityaddon.base.models.Broadcast;
+import com.rettichlp.unicacityaddon.base.models.HouseBan;
+import com.rettichlp.unicacityaddon.base.models.HouseBanReason;
+import com.rettichlp.unicacityaddon.base.models.NaviPoint;
+import com.rettichlp.unicacityaddon.base.models.PlayerGroup;
+import com.rettichlp.unicacityaddon.base.models.WantedReason;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.base.utils.ListUtils;
 
@@ -26,8 +26,8 @@ public class Syncer {
 
     public static final Map<String, Faction> PLAYERFACTIONMAP = new HashMap<>();
     public static final Map<String, Integer> PLAYERRANKMAP = new HashMap<>();
-    public static List<HouseBanEntry> HOUSEBANENTRYLIST = new ArrayList<>();
-    public static List<NaviPointEntry> NAVIPOINTLIST = new ArrayList<>();
+    public static List<HouseBan> HOUSEBANENTRYLIST = new ArrayList<>();
+    public static List<NaviPoint> NAVIPOINTLIST = new ArrayList<>();
 
     public static void syncAll() {
         new Thread(() -> {
@@ -89,8 +89,6 @@ public class Syncer {
                 });
             }
 
-            getPlayerGroupEntryList("LEMILIEU").forEach(playerGroupEntry -> PLAYERFACTIONMAP.put(playerGroupEntry.getName(), Faction.LEMILIEU));
-
 //            Laby.labyAPI().notificationController().push(Notification.builder()
 //                    .title(Component.text("Synchronisierung", NamedTextColor.AQUA))
 //                    .text(Component.text("Fraktionen aktualisiert."))
@@ -118,11 +116,11 @@ public class Syncer {
         });
     }
 
-    public static List<BlacklistReasonEntry> getBlacklistReasonEntryList() {
+    public static List<BlacklistReason> getBlacklistReasonEntryList() {
         JsonArray response = APIRequest.sendBlacklistReasonRequest();
         if (response == null)
             return new ArrayList<>();
-        List<BlacklistReasonEntry> blacklistReasonEntryList = new ArrayList<>();
+        List<BlacklistReason> blacklistReasonList = new ArrayList<>();
         response.forEach(jsonElement -> {
             JsonObject o = jsonElement.getAsJsonObject();
 
@@ -132,16 +130,16 @@ public class Syncer {
             int price = o.get("price").getAsInt();
             String issuerName = o.get("issuerName").getAsString();
 
-            blacklistReasonEntryList.add(new BlacklistReasonEntry(kills, reason, issuerUUID, price, issuerName));
+            blacklistReasonList.add(new BlacklistReason(kills, reason, issuerUUID, price, issuerName));
         });
-        return blacklistReasonEntryList;
+        return blacklistReasonList;
     }
 
-    public static List<BroadcastEntry> getBroadcastEntryList() {
+    public static List<Broadcast> getBroadcastEntryList() {
         JsonArray response = APIRequest.sendBroadcastQueueRequest();
         if (response == null)
             return new ArrayList<>();
-        List<BroadcastEntry> broadcastEntryList = new ArrayList<>();
+        List<Broadcast> broadcastList = new ArrayList<>();
         response.forEach(jsonElement -> {
             JsonObject o = jsonElement.getAsJsonObject();
 
@@ -152,21 +150,21 @@ public class Syncer {
             long sendTime = o.get("sendTime").getAsLong();
             long time = o.get("time").getAsLong();
 
-            broadcastEntryList.add(new BroadcastEntry(broadcast, id, issuerName, issuerUUID, sendTime, time));
+            broadcastList.add(new Broadcast(broadcast, id, issuerName, issuerUUID, sendTime, time));
         });
-        return broadcastEntryList;
+        return broadcastList;
     }
 
-    public static List<HouseBanEntry> getHouseBanEntryList() {
+    public static List<HouseBan> getHouseBanEntryList() {
         JsonArray response = APIRequest.sendHouseBanRequest(AbstractionLayer.getPlayer().getFaction().equals(Faction.RETTUNGSDIENST));
         if (response == null)
             return new ArrayList<>();
-        List<HouseBanEntry> houseBanEntryList = new ArrayList<>();
+        List<HouseBan> houseBanList = new ArrayList<>();
         response.forEach(jsonElement -> {
             JsonObject o = jsonElement.getAsJsonObject();
 
             long duration = o.get("duration").getAsLong();
-            List<HouseBanReasonEntry> houseBanReasonList = new ArrayList<>();
+            List<HouseBanReason> houseBanReasonList = new ArrayList<>();
             long expirationTime = o.get("expirationTime").getAsLong();
             String name = o.get("name").getAsString();
             long startTime = o.get("startTime").getAsLong();
@@ -180,19 +178,19 @@ public class Syncer {
                 String issuerName = o1.has("issuerName") ? o1.get("issuerName").getAsString() : null;
                 int days = o1.get("days").getAsInt();
 
-                houseBanReasonList.add(new HouseBanReasonEntry(reason, issuerUUID, issuerName, days));
+                houseBanReasonList.add(new HouseBanReason(reason, issuerUUID, issuerName, days));
             });
 
-            houseBanEntryList.add(new HouseBanEntry(duration, houseBanReasonList, expirationTime, name, startTime, uuid));
+            houseBanList.add(new HouseBan(duration, houseBanReasonList, expirationTime, name, startTime, uuid));
         });
-        return houseBanEntryList;
+        return houseBanList;
     }
 
-    public static List<HouseBanReasonEntry> getHouseBanReasonEntryList() {
+    public static List<HouseBanReason> getHouseBanReasonEntryList() {
         JsonArray response = APIRequest.sendHouseBanReasonRequest();
         if (response == null)
             return new ArrayList<>();
-        List<HouseBanReasonEntry> houseBanReasonEntryList = new ArrayList<>();
+        List<HouseBanReason> houseBanReasonList = new ArrayList<>();
         response.forEach(jsonElement -> {
             JsonObject o = jsonElement.getAsJsonObject();
 
@@ -201,16 +199,16 @@ public class Syncer {
             String creatorName = o.has("creatorName") ? o.get("creatorName").getAsString() : null;
             int days = o.get("days").getAsInt();
 
-            houseBanReasonEntryList.add(new HouseBanReasonEntry(reason, creatorUUID, creatorName, days));
+            houseBanReasonList.add(new HouseBanReason(reason, creatorUUID, creatorName, days));
         });
-        return houseBanReasonEntryList;
+        return houseBanReasonList;
     }
 
-    public static List<NaviPointEntry> getNaviPointEntryList() {
+    public static List<NaviPoint> getNaviPointEntryList() {
         JsonArray response = APIRequest.sendNaviPointRequest();
         if (response == null)
             return new ArrayList<>();
-        List<NaviPointEntry> naviPointEntryList = new ArrayList<>();
+        List<NaviPoint> naviPointList = new ArrayList<>();
         response.forEach(jsonElement -> {
             JsonObject o = jsonElement.getAsJsonObject();
 
@@ -220,9 +218,9 @@ public class Syncer {
             int z = o.get("z").getAsInt();
             String article = o.get("article").getAsString();
 
-            naviPointEntryList.add(new NaviPointEntry(name, x, y, z, article));
+            naviPointList.add(new NaviPoint(name, x, y, z, article));
         });
-        return naviPointEntryList;
+        return naviPointList;
     }
 
     public static List<String> getPlayerGroupList() {
@@ -234,27 +232,27 @@ public class Syncer {
         return playerGroupList;
     }
 
-    public static List<PlayerGroupEntry> getPlayerGroupEntryList(String group) {
+    public static List<PlayerGroup> getPlayerGroupEntryList(String group) {
         JsonObject response = APIRequest.sendPlayerRequest();
         if (response == null || !response.has(group))
             return new ArrayList<>();
-        List<PlayerGroupEntry> playerGroupEntryList = new ArrayList<>();
+        List<PlayerGroup> playerGroupList = new ArrayList<>();
         response.get(group).getAsJsonArray().forEach(jsonElement -> {
             JsonObject o = jsonElement.getAsJsonObject();
 
             String name = o.get("name").getAsString();
             String uuid = o.get("uuid").getAsString();
 
-            playerGroupEntryList.add(new PlayerGroupEntry(name, uuid));
+            playerGroupList.add(new PlayerGroup(name, uuid));
         });
-        return playerGroupEntryList;
+        return playerGroupList;
     }
 
-    public static List<WantedReasonEntry> getWantedReasonEntryList() {
+    public static List<WantedReason> getWantedReasonEntryList() {
         JsonArray response = APIRequest.sendWantedReasonRequest();
         if (response == null)
             return new ArrayList<>();
-        List<WantedReasonEntry> wantedReasonEntryList = new ArrayList<>();
+        List<WantedReason> wantedReasonList = new ArrayList<>();
         response.forEach(jsonElement -> {
             JsonObject o = jsonElement.getAsJsonObject();
 
@@ -263,8 +261,8 @@ public class Syncer {
             String creatorName = o.get("creatorName").getAsString();
             int points = o.get("points").getAsInt();
 
-            wantedReasonEntryList.add(new WantedReasonEntry(reason, creatorUUID, creatorName, points));
+            wantedReasonList.add(new WantedReason(reason, creatorUUID, creatorName, points));
         });
-        return wantedReasonEntryList;
+        return wantedReasonList;
     }
 }

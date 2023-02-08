@@ -1,9 +1,13 @@
 package com.rettichlp.unicacityaddon.base.models;
 
 import com.rettichlp.unicacityaddon.base.api.Syncer;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import net.labymod.api.util.math.vector.FloatVector3;
 
-public class NaviPointEntry {
+@AllArgsConstructor
+@Getter
+public class NaviPoint {
 
     private final String name;
     private final int x;
@@ -11,43 +15,19 @@ public class NaviPointEntry {
     private final int z;
     private final String article;
 
-    public NaviPointEntry(String name, int x, int y, int z, String article) {
-        this.name = name;
-        this.x = x;
-        this.y = y;
-        this.z = z;
-        this.article = article;
-    }
-
-    public String getName() {
-        return name;
-    }
-
     public String getTabName() {
         return name.replace(" ", "-");
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public int getZ() {
-        return z;
     }
 
     public String getArticleFourthCase() {
         return article.replace("der", "den");
     }
 
-    public FloatVector3  getFloatVector3() {
+    public FloatVector3 getBlockPos() {
         return new FloatVector3(x, y, z);
     }
 
-    public static NaviPointEntry getNaviPointEntryByTabName(String tabName) {
+    public static NaviPoint getNaviPointEntryByTabName(String tabName) {
         return Syncer.NAVIPOINTLIST.stream()
                 .filter(naviPointEntry -> naviPointEntry.getTabName().equals(tabName))
                 .findFirst()

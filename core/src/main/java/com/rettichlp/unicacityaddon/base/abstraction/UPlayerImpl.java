@@ -22,9 +22,7 @@ import java.util.UUID;
 
 /**
  * @author RettichLP
- * @see <a
- * href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/base/abstraction/UPlayerImpl.java">UCUtils
- * by paulzhng</a>
+ * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/base/abstraction/UPlayerImpl.java">UCUtils by paulzhng</a>
  */
 public class UPlayerImpl implements UPlayer {
 
@@ -49,14 +47,18 @@ public class UPlayerImpl implements UPlayer {
 
     @Override
     public void sendErrorMessage(String message) {
-        sendMessage(Message.getBuilder().error().space().of(message).color(ColorCode.GRAY).advance()
-            .createComponent());
+        sendMessage(Message.getBuilder()
+                .error().space()
+                .of(message).color(ColorCode.GRAY).advance()
+                .createComponent());
     }
 
     @Override
     public void sendInfoMessage(String message) {
-        sendMessage(Message.getBuilder().info().space().of(message).color(ColorCode.WHITE).advance()
-            .createComponent());
+        sendMessage(Message.getBuilder()
+                .info().space()
+                .of(message).color(ColorCode.WHITE).advance()
+                .createComponent());
     }
 
     @Override
@@ -66,10 +68,11 @@ public class UPlayerImpl implements UPlayer {
 
     @Override
     public void sendAPIMessage(String message, boolean success) {
-        sendMessage(
-            Message.getBuilder().prefix().of("API Response:").color(ColorCode.GRAY).advance()
-                .space().of(message).color(success ? ColorCode.GREEN : ColorCode.RED)
-                .advance().createComponent());
+        sendMessage(Message.getBuilder()
+                .prefix()
+                .of("API Response:").color(ColorCode.GRAY).advance().space()
+                .of(message).color(success ? ColorCode.GREEN : ColorCode.RED).advance()
+                .createComponent());
     }
 
     @Override
@@ -190,7 +193,6 @@ public class UPlayerImpl implements UPlayer {
     @Override
     public boolean isSuperUser() {
         String uuid = getUniqueID().toString().replace("-", "");
-        return uuid.equals("25855f4d38744a7fa6ade9e4f3042e19") || uuid.equals(
-            "6e49e42eefca4d9389f9f395b887809e");
+        return uuid.equals("25855f4d38744a7fa6ade9e4f3042e19") || uuid.equals("6e49e42eefca4d9389f9f395b887809e");
     }
 }

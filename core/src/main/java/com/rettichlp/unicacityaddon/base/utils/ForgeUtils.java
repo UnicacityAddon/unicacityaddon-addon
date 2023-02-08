@@ -66,6 +66,8 @@ public class ForgeUtils {
     public static void shutdownPC() {
 //        String shutdownCommand;
 //
+//        FileManager.saveData();
+//
 //        if (SystemUtils.IS_OS_AIX) {
 //            shutdownCommand = "shutdown -Fh now";
 //        } else if (SystemUtils.IS_OS_SOLARIS || SystemUtils.IS_OS_SUN_OS) {
@@ -85,7 +87,7 @@ public class ForgeUtils {
 //        try {
 //            Runtime.getRuntime().exec(shutdownCommand);
 //        } catch (IOException e) {
-//            //Logger.LOGGER.catchin(e); TODO
+//            UnicacityAddon.LOGGER.throwing(e);
 //        }
     }
 }
