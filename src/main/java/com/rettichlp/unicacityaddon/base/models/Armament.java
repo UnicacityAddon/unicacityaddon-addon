@@ -1,18 +1,32 @@
 package com.rettichlp.unicacityaddon.base.models;
 
+import com.rettichlp.unicacityaddon.base.enums.Weapon;
+
 public class Armament {
 
-    // TODO: 29.01.2023 Variablen:
-    // Waffe -> Enum TODO: Anlegen
-    // Ammunition -> Integer (int)
+    private final String name;
+    private final Weapon weapon;
+    private final int amount;
 
-    // TODO: 29.01.2023 Constructor
-    // alle Variablen
+    public Armament(String name, Weapon weapon, int amount) {
+        this.name = name;
+        this.weapon = weapon;
+        this.amount = amount;
+    }
 
-    // TODO: 29.01.2023 Getter
-    // alle Variablen
+    public String getName() {
+        return name;
+    }
+
+    public Weapon getWeapon() {
+        return weapon;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
 }
 
 
-// TODO: 29.01.2023 not last as name
-// TODO: 29.01.2023 add last event listener + pattern (Du hast deine xyz mit abc Kugeln beladen usw.)
+
