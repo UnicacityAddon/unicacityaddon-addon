@@ -20,20 +20,17 @@ import java.util.concurrent.TimeUnit;
 @NoArgsConstructor
 public class FirstAidEventHandler {
 
-    public static long firstAidIssuingTime;
-
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {
         String msg = e.chatMessage().getPlainText();
 
         if (PatternHandler.FIRST_AID_RECEIVE_PATTERN.matcher(msg).find()) {
-            firstAidIssuingTime = System.currentTimeMillis();
-            FileManager.saveData();
+            FileManager.DATA.setFirstAidDate(System.currentTimeMillis());
             return;
         }
 
         if (PatternHandler.FIRST_AID_LICENCE_PATTERN.matcher(msg).find()) {
-            long expirationTime = firstAidIssuingTime + TimeUnit.DAYS.toMillis(14); // Erhaltsdatum + 14 Tage = Auslaufdatum
+            long expirationTime = FileManager.DATA.getFirstAidDate() + TimeUnit.DAYS.toMillis(14); // Erhaltsdatum + 14 Tage = Auslaufdatum
             long timeLeft = expirationTime - System.currentTimeMillis(); // Auslaufdatum - aktuelle Datum = Dauer des Scheins
             e.setMessage(Message.getBuilder()
                     .space().space()
@@ -41,7 +38,7 @@ public class FirstAidEventHandler {
                     .of("Erste-Hilfe-Schein").color(ColorCode.BLUE).advance()
                     .of(":").color(ColorCode.DARK_GRAY).advance().space()
                     .of("Vorhanden").color(ColorCode.AQUA)
-                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of(TextUtils.parseTime(TimeUnit.MILLISECONDS, timeLeft)).color(ColorCode.RED).advance().createComponent())
+                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of(TextUtils.parseTimerWithTimeUnit(timeLeft)).color(ColorCode.RED).advance().createComponent())
                             .advance()
                     .createComponent());
         }

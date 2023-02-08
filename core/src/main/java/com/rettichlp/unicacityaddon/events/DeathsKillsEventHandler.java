@@ -45,11 +45,6 @@ public class DeathsKillsEventHandler {
             return;
         }
 
-        if (PatternHandler.DEATH_PATTERN.matcher(msg).find()) {
-            APIRequest.sendStatisticAddRequest(StatisticType.DEATH);
-            return;
-        }
-
         if (PatternHandler.ACCOUNT_TREUEBONUS_PATTERN.matcher(msg).find()) {
             JsonObject response = APIRequest.sendStatisticRequest();
             if (response == null)

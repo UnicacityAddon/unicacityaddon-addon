@@ -13,7 +13,6 @@ import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.base.utils.ImageUploadUtils;
-import jdk.internal.joptsimple.internal.Strings;
 import lombok.NoArgsConstructor;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
@@ -42,13 +41,15 @@ public class HotkeyEventHandler {
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e)  {
         Matcher matcher = PatternHandler.AD_CONTROL_PATTERN.matcher(e.chatMessage().getPlainText());
-        if (!matcher.find()) return;
+        if (!matcher.find())
+            return;
         adIssuer = matcher.group(1);
         adTime = System.currentTimeMillis();
     }
 
 //    private void handleHotkey() {
-//        if (System.currentTimeMillis() - lastHotkeyUse < TimeUnit.SECONDS.toMillis(1) || Keyboard.isKeyDown(0)) return;
+//        if (System.currentTimeMillis() - lastHotkeyUse < TimeUnit.SECONDS.toMillis(1) || Keyboard.isKeyDown(0))
+//            return;
 //        UPlayer p = AbstractionLayer.getPlayer();
 //
 //        if (Keyboard.isKeyDown(KeyBindRegistry.addonScreenshot.getKeyCode())) {
@@ -56,7 +57,8 @@ public class HotkeyEventHandler {
 //            lastHotkeyUse = System.currentTimeMillis();
 //        }
 //
-//        if (UnicacityAddon.MINECRAFT.currentScreen != null) return;
+//        if (UnicacityAddon.MINECRAFT.currentScreen != null)
+//            return;
 //
 //        if (Keyboard.isKeyDown(KeyBindRegistry.adFreigeben.getKeyCode())) {
 //            handleAd("freigeben");
@@ -78,7 +80,7 @@ public class HotkeyEventHandler {
 //            lastHotkeyUse = System.currentTimeMillis();
 //        } else if (Keyboard.isKeyDown(KeyBindRegistry.freinforcement.getKeyCode())) {
 //            BlockPos position = p.getPosition();
-//            p.sendChatMessage("/f FloatVector3erstärkung! -> X: " + position.getX() + " | Y: " + position.getY() + " | Z: " + position.getZ());
+//            p.sendChatMessage("/f Benötige Verstärkung! -> X: " + position.getX() + " | Y: " + position.getY() + " | Z: " + position.getZ());
 //            lastHotkeyUse = System.currentTimeMillis();
 //        } else if (Keyboard.isKeyDown(KeyBindRegistry.dreinforcement.getKeyCode())) {
 //            BlockPos position = p.getPosition();
@@ -87,9 +89,6 @@ public class HotkeyEventHandler {
 //        } else if (Keyboard.isKeyDown(KeyBindRegistry.publicChannelJoin.getKeyCode())) {
 //            handlePublicChannelJoin();
 //            lastHotkeyUse = System.currentTimeMillis();
-//        } else if (Keyboard.isKeyDown(KeyBindRegistry.damageIndicator.getKeyCode())) {
-//            RenderTagEventHandler.showPlayerInfo = !RenderTagEventHandler.showPlayerInfo;
-//            NameTagEventHandler.refreshAllDisplayNames();
 //        }
 //    }
 
@@ -131,22 +130,25 @@ public class HotkeyEventHandler {
 //    }
 
     private static void uploadScreenshot(File screenshotFile) {
-        if (screenshotFile == null) return;
+        if (screenshotFile == null)
+            return;
         String link = ImageUploadUtils.uploadToLink(screenshotFile);
         AbstractionLayer.getPlayer().copyToClipboard(link);
 //        LabyMod.getInstance().notifyMessageRaw(ColorCode.GREEN.getCode() + "Screenshot hochgeladen!", "Link in Zwischenablage kopiert.");
     }
 
     private void handleAd(String type) {
-        if (adIssuer == null || System.currentTimeMillis() - adTime > TimeUnit.SECONDS.toMillis(20)) return;
+        if (adIssuer == null || System.currentTimeMillis() - adTime > TimeUnit.SECONDS.toMillis(20))
+            return;
         AbstractionLayer.getPlayer().sendChatMessage("/adcontrol " + adIssuer + " " + type);
         adIssuer = null;
     }
 
     private void handleCancelReport() {
         UPlayer p = AbstractionLayer.getPlayer();
-        String farewell = UnicacityAddon.configuration.reportMessageSetting().farewell().getOrDefault(Strings.EMPTY);
-        if (!farewell.isEmpty()) p.sendChatMessage(farewell);
+        String farewell = UnicacityAddon.configuration.reportMessageSetting().farewell().getOrDefault("");
+        if (!farewell.isEmpty())
+            p.sendChatMessage(farewell);
         p.sendChatMessage("/cr");
     }
 

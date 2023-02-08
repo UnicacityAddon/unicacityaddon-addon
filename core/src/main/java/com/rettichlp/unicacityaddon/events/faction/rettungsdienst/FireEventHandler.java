@@ -20,7 +20,8 @@ public class FireEventHandler {
 //        UPlayer p = AbstractionLayer.getPlayer();
 //        String msg = e.chatMessage().getPlainText();
 //
-//        if (!msg.equals("Fehler: Es brennt noch!")) return;
+//        if (!msg.equals("Fehler: Es brennt noch!"))
+//            return;
 //
 //        World world = UnicacityAddon.MINECRAFT.world;
 //        BlockPos pos = p.getPosition();
@@ -33,7 +34,8 @@ public class FireEventHandler {
 //                .filter(FloatVector3 -> world.getBlockState(floatVector3).getMaterial().equals(Material.FIRE))
 //                .collect(Collectors.toList());
 //
-//        if (fireBlocks.isEmpty()) return;
+//        if (fireBlocks.isEmpty())
+//            return;
 //
 //        p.sendMessage(Message.getBuilder()
 //                .of("Feuer in der Nähe:").color(ColorCode.DARK_RED).advance()

@@ -5,16 +5,17 @@ import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.config.join.CommandSetting;
 import com.rettichlp.unicacityaddon.base.config.join.PasswordSetting;
+import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
-import com.rettichlp.unicacityaddon.base.utils.UpdateUtils;
-import jdk.internal.joptsimple.internal.Strings;
 import lombok.NoArgsConstructor;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
+import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 
 /**
@@ -28,7 +29,9 @@ public class AccountEventHandler {
 
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {
+        UPlayer p = AbstractionLayer.getPlayer();
         String msg = e.chatMessage().getPlainText();
+
         if (!UnicacityAddon.isUnicacity())
             return;
 
@@ -68,15 +71,27 @@ public class AccountEventHandler {
             return;
         }
 
+        if (PatternHandler.ACCOUNT_AFK_FAILURE_PATTERN.matcher(msg).find()) {
+            p.sendInfoMessage("Das Addon versucht dich anschließend in den AFK Modus zu setzen.");
+            long lastDamageTime = TickEventHandler.lastTickDamage.getKey();
+            new Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    p.sendChatMessage("/afk");
+                }
+            }, new Date(lastDamageTime + TimeUnit.SECONDS.toMillis(15)));
+            return;
+        }
+
         Matcher accountPayDayMatcher = PatternHandler.ACCOUNT_PAYDAY_PATTERN.matcher(msg);
-//        if (accountPayDayMatcher.find())
-//            PayDayModule.setTime(Integer.parseInt(accountPayDayMatcher.group(1)));
+        if (accountPayDayMatcher.find())
+            FileManager.DATA.setPayDayTime(Integer.parseInt(accountPayDayMatcher.group(1)));
     }
 
     private void handleUnlockAccount() {
         PasswordSetting passwordSetting = UnicacityAddon.configuration.passwordSetting();
         if (passwordSetting.enabled().get())
-            AbstractionLayer.getPlayer().sendChatMessage("/passwort " + passwordSetting.password().getOrDefault(Strings.EMPTY));
+            AbstractionLayer.getPlayer().sendChatMessage("/passwort " + passwordSetting.password().getOrDefault(""));
     }
 
     private void handleJoin() {
@@ -86,7 +101,7 @@ public class AccountEventHandler {
             @Override
             public void run() {
                 // MOBILEEVENTHANDLER
-                p.sendChatMessage("/togglephone");
+                p.sendChatMessage("/mobile");
 
                 // AUTOMATE_COMMAND_SETTINGS
                 CommandSetting commandSetting = UnicacityAddon.configuration.commandSetting();
@@ -95,7 +110,7 @@ public class AccountEventHandler {
                     new Timer().schedule(new TimerTask() {
                         @Override
                         public void run() {
-                            if (!commandSetting.first().getOrDefault(Strings.EMPTY).isEmpty())
+                            if (!commandSetting.first().getOrDefault("").isEmpty())
                                 p.sendChatMessage(commandSetting.first().get());
                         }
                     }, 500);
@@ -104,7 +119,7 @@ public class AccountEventHandler {
                     new Timer().schedule(new TimerTask() {
                         @Override
                         public void run() {
-                            if (!commandSetting.second().getOrDefault(Strings.EMPTY).isEmpty())
+                            if (!commandSetting.second().getOrDefault("").isEmpty())
                                 p.sendChatMessage(commandSetting.second().get());
                         }
                     }, 1000);
@@ -113,19 +128,19 @@ public class AccountEventHandler {
                     new Timer().schedule(new TimerTask() {
                         @Override
                         public void run() {
-                            if (!commandSetting.third().getOrDefault(Strings.EMPTY).isEmpty())
+                            if (!commandSetting.third().getOrDefault("").isEmpty())
                                 p.sendChatMessage(commandSetting.third().get());
                         }
                     }, 1500);
                 }
 
-                // UPDATECHECKER
-                new Timer().schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        UpdateUtils.updateChecker();
-                    }
-                }, 2000);
+//                // UPDATECHECKER
+//                new Timer().schedule(new TimerTask() {
+//                    @Override
+//                    public void run() {
+//                        UpdateUtils.updateChecker();
+//                    }
+//                }, 2000);
             }
         }, 1000);
     }

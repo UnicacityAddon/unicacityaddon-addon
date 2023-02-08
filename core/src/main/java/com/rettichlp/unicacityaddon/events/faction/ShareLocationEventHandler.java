@@ -4,17 +4,21 @@ import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.config.sloc.DefaultSlocSetting;
+import com.rettichlp.unicacityaddon.base.models.NaviPoint;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
+import com.rettichlp.unicacityaddon.base.utils.NavigationUtils;
 import lombok.NoArgsConstructor;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.event.HoverEvent;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
+import net.labymod.api.util.math.vector.FloatVector3;
 
+import java.util.Map;
 import java.util.regex.Matcher;
 
 /**
@@ -49,12 +53,21 @@ public class ShareLocationEventHandler {
                 .of("" + posZ).color(ColorCode.AQUA).advance()
                 .createComponent();
 
+        Map.Entry<Double, NaviPoint> doubleNaviPointEntry = NavigationUtils.getNearestNaviPoint(posX, posY, posZ);
+
+        String navipointString;
+        if (doubleNaviPointEntry.getValue() == null) {
+            navipointString = "unbekannter Ort";
+            p.sendErrorMessage("Navipunkte wurden nicht geladen. Versuche /syncdata um diese neu zu laden!");
+        } else {
+            navipointString = doubleNaviPointEntry.getValue().getName().replace("-", " ");
+        }
+
         p.sendMessageAsString(UnicacityAddon.configuration.slocSetting().sloc().getOrDefault(DefaultSlocSetting.SLOC)
                 .replace("&", "§")
                 .replace("%sender%", senderName)
-                .replace("%x%", String.valueOf(posX))
-                .replace("%y%", String.valueOf(posY))
-                .replace("%z%", String.valueOf(posZ)));
+                .replace("%navipoint%", navipointString)
+                .replace("%distance%", String.valueOf((int) p.getPosition().distance(new FloatVector3(posX, posY, posZ)))));
 
         p.sendMessage(Message.getBuilder()
                 .of("»").color(ColorCode.GRAY).advance().space()

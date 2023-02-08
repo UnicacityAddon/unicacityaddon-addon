@@ -6,8 +6,11 @@ import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
+import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import lombok.NoArgsConstructor;
+import net.labymod.api.client.component.event.ClickEvent;
+import net.labymod.api.client.component.event.HoverEvent;
 import net.labymod.api.client.scoreboard.DisplaySlot;
 import net.labymod.api.client.scoreboard.Scoreboard;
 import net.labymod.api.client.scoreboard.ScoreboardScore;
@@ -33,20 +36,45 @@ public class CarEventHandler {
         String msg = e.chatMessage().getPlainText();
 
         if (PatternHandler.CAR_OPEN_PATTERN.matcher(msg).find()) {
-//            CarOpenModule.info = ColorCode.GREEN.getCode() + "offen";
-            FileManager.saveData();
+            FileManager.DATA.setCarInfo(ColorCode.GREEN.getCode() + "offen");
             return;
         }
 
         if (PatternHandler.CAR_CLOSE_PATTERN.matcher(msg).find()) {
-//            CarOpenModule.info = ColorCode.RED.getCode() + "zu";
-            FileManager.saveData();
+            FileManager.DATA.setCarInfo(ColorCode.RED.getCode() + "zu");
             return;
         }
 
         Matcher carPositionMatcher = PatternHandler.CAR_POSITION_PATTERN.matcher(msg);
         if (carPositionMatcher.find() && UnicacityAddon.configuration.carRoute().get()) {
             p.setNaviRoute(Integer.parseInt(carPositionMatcher.group(1)), Integer.parseInt(carPositionMatcher.group(2)), Integer.parseInt(carPositionMatcher.group(3)));
+            return;
+        }
+
+        Matcher carTicketMatcher = PatternHandler.CAR_TICKET_PATTERN.matcher(msg);
+        if (carTicketMatcher.find()) {
+            int fine = Integer.parseInt(carTicketMatcher.group(2));
+
+            if (FileManager.DATA.getCashBalance() >= fine) {
+                e.setMessage(Message.getBuilder()
+                        .of("[").color(ColorCode.DARK_GRAY).advance()
+                        .of("Car").color(ColorCode.GOLD).advance()
+                        .of("]").color(ColorCode.DARK_GRAY).advance().space()
+                        .of("Dein Fahrzeug hat ein Strafzettel").color(ColorCode.GRAY).advance().space()
+                        .of("[").color(ColorCode.DARK_GRAY).advance()
+                        .of(carTicketMatcher.group(1)).color(ColorCode.GOLD).advance().space()
+                        .of("|").color(ColorCode.GRAY).advance().space()
+                        .of(String.valueOf(fine)).color(ColorCode.GOLD).advance()
+                        .of("]").color(ColorCode.DARK_GRAY).advance().space()
+                        .of("[").color(ColorCode.DARK_GRAY).advance()
+                        .of("Bezahlen").color(ColorCode.GREEN)
+                                .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of(fine + "$ bezahlen").color(ColorCode.RED).advance().createComponent())
+                                .clickEvent(ClickEvent.Action.RUN_COMMAND, "/payticket " + fine)
+                                .advance()
+                        .of("]").color(ColorCode.DARK_GRAY).advance()
+                        .createComponent());
+            }
+
             return;
         }
 

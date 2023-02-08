@@ -4,11 +4,10 @@ import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
-import com.rettichlp.unicacityaddon.base.manager.HouseDataManager;
-import com.rettichlp.unicacityaddon.base.models.HouseDataEntry;
+import com.rettichlp.unicacityaddon.base.manager.FileManager;
+import com.rettichlp.unicacityaddon.base.models.HouseData;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
-import jdk.internal.joptsimple.internal.Strings;
 import lombok.NoArgsConstructor;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatMessageSendEvent;
@@ -28,7 +27,7 @@ public class HouseDataEventHandler {
 
     private static int lastCheckedHouseNumber = 0;
     private static long lastCheck = -1;
-    private static String waitingCommand = Strings.EMPTY;
+    private static String waitingCommand = "";
 
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {
@@ -46,8 +45,8 @@ public class HouseDataEventHandler {
         if (houseBankValueMatcher.find()) {
             if (System.currentTimeMillis() - lastCheck < 500)
                 e.setCancelled(true);
-            HouseDataEntry houseDataEntry = HouseDataManager.getHouseData(lastCheckedHouseNumber).setHouseBank(Integer.parseInt(houseBankValueMatcher.group(1)));
-            HouseDataManager.saveHouseData(lastCheckedHouseNumber, houseDataEntry);
+            HouseData houseData = FileManager.DATA.getHouseData(lastCheckedHouseNumber).setHouseBank(Integer.parseInt(houseBankValueMatcher.group(1)));
+            FileManager.DATA.updateHouseData(lastCheckedHouseNumber, houseData);
             return;
         }
 
@@ -68,26 +67,26 @@ public class HouseDataEventHandler {
 
             Matcher drugStorageAddCommandMatcher = PatternHandler.HOUSE_STORAGE_ADD_COMMAND_PATTERN.matcher(waitingCommand);
             if (drugStorageAddCommandMatcher.find()) {
-                String[] splittetMsg = waitingCommand.split(" ");
+                int amount = Integer.parseInt(drugStorageAddCommandMatcher.group("amount"));
+                DrugType drugType = DrugType.getDrugType(drugStorageAddCommandMatcher.group("drugType"));
+                DrugPurity drugPurity = DrugPurity.getDrugPurity(drugStorageAddCommandMatcher.group("drugPurity"));
 
-                DrugType drugType = DrugType.getDrugType(splittetMsg[2]);
-                DrugPurity drugPurity = DrugPurity.values()[Integer.parseInt(splittetMsg[4])];
-                int amount = Integer.parseInt(splittetMsg[3]);
+                HouseData houseData = FileManager.DATA.getHouseData(lastCheckedHouseNumber).addToStorage(drugType, drugPurity, amount);
+                FileManager.DATA.updateHouseData(lastCheckedHouseNumber, houseData);
 
-                HouseDataEntry houseDataEntry = HouseDataManager.getHouseData(lastCheckedHouseNumber).addToStorage(drugType, drugPurity, amount);
-                HouseDataManager.saveHouseData(lastCheckedHouseNumber, houseDataEntry);
+                FileManager.DATA.removeDrugFromInventory(drugType, drugPurity, amount);
             }
 
             Matcher drugStorageRemoveCommandMatcher = PatternHandler.HOUSE_STORAGE_REMOVE_COMMAND_PATTERN.matcher(waitingCommand);
             if (drugStorageRemoveCommandMatcher.find()) {
-                String[] splittetMsg = waitingCommand.split(" ");
+                int amount = Integer.parseInt(drugStorageRemoveCommandMatcher.group("amount"));
+                DrugType drugType = DrugType.getDrugType(drugStorageRemoveCommandMatcher.group("drugType"));
+                DrugPurity drugPurity = DrugPurity.getDrugPurity(drugStorageRemoveCommandMatcher.group("drugPurity"));
 
-                DrugType drugType = DrugType.getDrugType(splittetMsg[2]);
-                DrugPurity drugPurity = DrugPurity.values()[Integer.parseInt(splittetMsg[4])];
-                int amount = Integer.parseInt(splittetMsg[3]);
+                HouseData houseData = FileManager.DATA.getHouseData(lastCheckedHouseNumber).removeFromStorage(drugType, drugPurity, amount);
+                FileManager.DATA.updateHouseData(lastCheckedHouseNumber, houseData);
 
-                HouseDataEntry houseDataEntry = HouseDataManager.getHouseData(lastCheckedHouseNumber).removeFromStorage(drugType, drugPurity, amount);
-                HouseDataManager.saveHouseData(lastCheckedHouseNumber, houseDataEntry);
+                FileManager.DATA.addDrugToInventory(drugType, drugPurity, amount);
             }
         }
     }

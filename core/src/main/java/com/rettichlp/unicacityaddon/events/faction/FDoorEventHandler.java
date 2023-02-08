@@ -1,6 +1,5 @@
 package com.rettichlp.unicacityaddon.events.faction;
 
-import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import lombok.NoArgsConstructor;
 import net.labymod.api.util.math.vector.FloatVector3;
@@ -15,50 +14,54 @@ import java.util.Set;
 @NoArgsConstructor
 public class FDoorEventHandler {
 
-//    private final Set<FDoor> F_DOORS = ImmutableSet.of(
-//            new FDoor(new FloatVector3(-167, 69, 204), new FloatVector3(-167, 71, 205)), // Ballas HQ
-//            new FDoor(new FloatVector3(878, 62, -89), new FloatVector3(880, 64, -89)), // FBI HQ
-//            new FDoor(new FloatVector3(273, 69, -273), new FloatVector3(273, 72, -275)) // le Milieu Garage
-//    );
+    private final Set<FDoor> F_DOORS = Set.of(
+            new FDoor(new FloatVector3(-167, 69, 204), new FloatVector3(-167, 71, 205)), // Ballas HQ
+            new FDoor(new FloatVector3(878, 62, -89), new FloatVector3(880, 64, -89)), // FBI HQ
+            new FDoor(new FloatVector3(273, 69, -273), new FloatVector3(273, 72, -275)) // le Milieu Garage
+    );
     private static long lastClick;
 
-    public FDoorEventHandler(UnicacityAddon unicacityAddon) {
-    }
-
-    //    @Subscribe
+//    @Subscribe
 //    public void onRightClickBlock(PlayerInteractEvent.RightClickBlock e) {
 //        UPlayer p = AbstractionLayer.getPlayer();
 //        FloatVector3 pos = e.getPos();
 //
-//        if (p.getPosition().distance(new FloatVector3(-167, 69, 204)) > 15
-//                && p.getPosition().distance(new FloatVector3(878, 62, -89)) > 15
-//                && p.getPosition().distance(new FloatVector3(273, 69, -273)) > 15
-//                || p.getPosition().distance(new FloatVector3(pos.getX(), pos.getY(), pos.getZ())) > 4) return;
+//        if (p.getPosition().distance(new FloatVector3(-167, 69, 204) > 15
+//                && p.getPosition().distance(new FloatVector3(878, 62, -89) > 15
+//                && p.getPosition().distance(new FloatVector3(273, 69, -273) > 15
+//                || p.getPosition().distance(new FloatVector3(pos.getX(), pos.getY(), pos.getZ()) > 4)
+//            return;
 //
 //        FDoor fDoor = checkForFDoor(e.getPos());
-//        if (fDoor == null) return;
+//        if (fDoor == null)
+//            return;
 //
-//        if (System.currentTimeMillis() - lastClick < 1000) return;
-//        if (!fDoor.canBeToggled()) return;
+//        if (System.currentTimeMillis() - lastClick < 1000)
+//            return;
+//        if (!fDoor.canBeToggled())
+//            return;
 //
 //        lastClick = System.currentTimeMillis();
 //        p.sendChatMessage("/fdoor");
 //    }
 
     private FDoor checkForFDoor(FloatVector3 pos) {
-//        for (FDoor fDoor : F_DOORS) {
-//            for (FloatVector3 openPosition : fDoor.getOpenPositions()) {
-//                if (pos.equals(openPosition)) return fDoor;
-//            }
-//
-//            for (FloatVector3 closePosition : fDoor.getClosePositions()) {
-//                if (pos.equals(closePosition)) return fDoor;
-//            }
-//        }
+        for (FDoor fDoor : F_DOORS) {
+            for (FloatVector3 openPosition : fDoor.getOpenPositions()) {
+                if (pos.equals(openPosition))
+                    return fDoor;
+            }
+
+            for (FloatVector3 closePosition : fDoor.getClosePositions()) {
+                if (pos.equals(closePosition))
+                    return fDoor;
+            }
+        }
         return null;
     }
 
     private static class FDoor {
+
         private final Set<FloatVector3> openPositions = new HashSet<>();
         private final Set<FloatVector3> closePositions = new HashSet<>();
 
@@ -102,7 +105,8 @@ public class FDoorEventHandler {
 //                    open = air;
 //                    set = true;
 //                } else {
-//                    if (air != open) return false;
+//                    if (air != open)
+//                        return false;
 //                }
 //            }
             return true;

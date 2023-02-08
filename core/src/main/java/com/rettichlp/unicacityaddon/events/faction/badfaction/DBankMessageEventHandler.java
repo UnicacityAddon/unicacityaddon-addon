@@ -29,7 +29,7 @@ public class DBankMessageEventHandler {
         if (!UnicacityAddon.configuration.factionMessageSetting().dBank().get())
             return;
 
-        Matcher dropMatcher = PatternHandler.DBANK_DROP_PATTERN.matcher(msg);
+        Matcher dropMatcher = PatternHandler.DBANK_GIVE_PATTERN.matcher(msg);
         if (dropMatcher.find()) {
             NumberFormat numberFormat = NumberFormat.getNumberInstance(new Locale("da", "DK"));
             DrugPurity purity = null;
@@ -48,7 +48,7 @@ public class DBankMessageEventHandler {
             e.setMessage(Message.getBuilder().of("D").color(ColorCode.GOLD).bold().advance()
                     .of("-").color(ColorCode.GRAY).advance()
                     .of("Bank").color(ColorCode.GOLD).bold().advance().space()
-                    .of("\u25cf").color(ColorCode.DARK_GRAY).advance().space()
+                    .of("●").color(ColorCode.DARK_GRAY).advance().space()
                     .of("+").color(ColorCode.GREEN).advance()
                     .of(dropMatcher.group(2) + "g").color(ColorCode.DARK_AQUA).bold().advance().space()
                     .of(purity.getPurity() + "er").color(ColorCode.DARK_AQUA).bold().advance().space()
@@ -79,7 +79,7 @@ public class DBankMessageEventHandler {
             e.setMessage(Message.getBuilder().of("D").color(ColorCode.GOLD).bold().advance()
                     .of("-").color(ColorCode.GRAY).advance()
                     .of("Bank").color(ColorCode.GOLD).bold().advance().space()
-                    .of("\u25cf").color(ColorCode.DARK_GRAY).advance().space()
+                    .of("●").color(ColorCode.DARK_GRAY).advance().space()
                     .of("-").color(ColorCode.RED).advance()
                     .of(getMatcher.group(2) + "g").color(ColorCode.DARK_AQUA).bold().advance().space()
                     .of(purity.getPurity() + "er").color(ColorCode.DARK_AQUA).bold().advance().space()

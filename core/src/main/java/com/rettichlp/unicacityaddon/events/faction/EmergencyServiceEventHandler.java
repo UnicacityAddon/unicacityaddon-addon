@@ -5,15 +5,15 @@ import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
 import com.rettichlp.unicacityaddon.base.enums.api.StatisticType;
 import com.rettichlp.unicacityaddon.base.enums.location.ServiceCallBox;
+import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
-import com.rettichlp.unicacityaddon.commands.faction.ServiceCountCommand;
 import lombok.NoArgsConstructor;
+import net.labymod.api.client.chat.ChatMessage;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.event.HoverEvent;
-import net.labymod.api.client.chat.ChatMessage;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatMessageSendEvent;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
@@ -38,41 +38,41 @@ public class EmergencyServiceEventHandler {
         ChatMessage chatMessage = e.chatMessage();
         String unformattedMsg = chatMessage.getPlainText();
 
-//        if (PatternHandler.SERVICE_ARRIVED_PATTERN.matcher(unformattedMsg).find()) {
+        if (PatternHandler.SERVICE_ARRIVED_PATTERN.matcher(unformattedMsg).find()) {
 //            // TODO: 10.12.2022 p.playSound(SoundRegistry.SERVICE_SOUND, 1, 1);
-//            EmergencyServiceModule.currentCount++;
-//            return;
-//        }
-//
-//        if (PatternHandler.SERVICE_REQUEUED_PATTERN.matcher(unformattedMsg).find()) {
-//            EmergencyServiceModule.currentCount++;
-//            return;
-//        }
-//
-//        if (PatternHandler.SERVICE_ACCEPTED_PATTERN.matcher(unformattedMsg).find() && EmergencyServiceModule.currentCount > 0) {
-//            EmergencyServiceModule.currentCount--;
-//            return;
-//        }
-//
-//        if (PatternHandler.SERVICE_DELETED_PATTERN.matcher(unformattedMsg).find() && EmergencyServiceModule.currentCount > 0) {
-//            EmergencyServiceModule.currentCount--;
-//            return;
-//        }
-//
-//        if (PatternHandler.SERVICE_NO_SERVICE_PATTERN.matcher(unformattedMsg).find()) {
-//            EmergencyServiceModule.currentCount = 0;
-//            return;
-//        }
+            FileManager.DATA.addServiceCount(1);
+            return;
+        }
+
+        if (PatternHandler.SERVICE_REQUEUED_PATTERN.matcher(unformattedMsg).find()) {
+            FileManager.DATA.addServiceCount(1);
+            return;
+        }
+
+        if (PatternHandler.SERVICE_ACCEPTED_PATTERN.matcher(unformattedMsg).find()) {
+            FileManager.DATA.removeServiceCount(1);
+            return;
+        }
+
+        if (PatternHandler.SERVICE_DELETED_PATTERN.matcher(unformattedMsg).find()) {
+            FileManager.DATA.removeServiceCount(1);
+            return;
+        }
+
+        if (PatternHandler.SERVICE_NO_SERVICE_PATTERN.matcher(unformattedMsg).find()) {
+            FileManager.DATA.setServiceCount(0);
+            return;
+        }
 
         if (PatternHandler.SERVICE_DONE_PATTERN.matcher(unformattedMsg).find()) {
-            ServiceCountCommand.addService();
+            FileManager.DATA.setServiceCount(FileManager.DATA.getServiceCount() + 1);
             APIRequest.sendStatisticAddRequest(StatisticType.SERVICE);
         }
 
         Matcher serviceOverviewMatcher = PatternHandler.SERVICE_OVERVIEW_PATTERN.matcher(unformattedMsg);
         if (serviceOverviewMatcher.find()) {
             String openServices = serviceOverviewMatcher.group(1);
-//            EmergencyServiceModule.currentCount = Integer.parseInt(openServices);
+            FileManager.DATA.setServiceCount(Integer.parseInt(openServices));
         }
 
         Matcher serviceCallBoxMatcher = PatternHandler.SERVICE_CALL_BOX_PATTERN.matcher(unformattedMsg);

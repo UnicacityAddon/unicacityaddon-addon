@@ -49,7 +49,6 @@ public class NameTagEventHandler {
 //        String duty = getDuty(playerUsername);
 //
 //        e.setDisplayname(houseBan + outlaw + prefix + playerUsername + factionInfo + duty);
-//        entityPlayer.setGlowing(RenderTagEventHandler.showPlayerInfo && !AbstractionLayer.getPlayer().getPlayer().canEntityBeSeen(entityPlayer));
 //    }
 
     private String getHouseBan(String playerName) {
@@ -175,7 +174,7 @@ public class NameTagEventHandler {
         if (UnicacityAddon.configuration.nameTagSetting().duty().get()) {
             if (FactionManager.checkPlayerDuty(playerName))
                 duty.append(Message.getBuilder()
-                        .of(" \u25cf ").color(ColorCode.GREEN).advance()
+                        .of(" ● ").color(ColorCode.GREEN).advance()
                         .add(FormattingCode.RESET.getCode())
                         .create());
         }

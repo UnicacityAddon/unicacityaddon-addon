@@ -34,6 +34,10 @@ public class MobileEventHandler {
     private boolean whitelistSound = false;
 
     /**
+     * If the user has set a password for their account, <code>/mobile</code> cannot be listed until the account is unlocked.
+     * As a result, <code>hasCommunications</code> remains false. To avoid this, the check is carried out again when the message
+     * came that the account was unlocked.<br><br>
+     * <p>
      * Quote: "Du hast richtig gedacht aber es einfach falsch verstanden." - Dimiikou, 04.10.2022
      */
     @Subscribe
@@ -47,14 +51,14 @@ public class MobileEventHandler {
             e.setCancelled(true);
         }
 
-        Matcher mobileRemoveMatcher = PatternHandler.MOBILE_REMOVE_PATTERN.matcher(msg);
-        if (mobileRemoveMatcher.find()) {
+        Matcher communicationsRemoveMatcher = PatternHandler.MOBILE_REMOVE_PATTERN.matcher(msg);
+        if (communicationsRemoveMatcher.find()) {
             hasCommunications = false;
             return;
         }
 
-        Matcher mobileGetMatcher = PatternHandler.MOBILE_GET_PATTERN.matcher(msg);
-        if (mobileGetMatcher.find()) {
+        Matcher communicationsGetMatcher = PatternHandler.MOBILE_GET_PATTERN.matcher(msg);
+        if (communicationsGetMatcher.find()) {
             hasCommunications = true;
             return;
         }
@@ -100,7 +104,8 @@ public class MobileEventHandler {
         Matcher mobileSmsMatcher = PatternHandler.MOBILE_SMS_PATTERN.matcher(msg);
         if (mobileSmsMatcher.find()) {
             String playerName = mobileSmsMatcher.group(1);
-            if (!AccountEventHandler.isAfk) AbstractionLayer.getPlayer().sendChatMessage("/nummer " + playerName);
+            if (!AccountEventHandler.isAfk)
+                AbstractionLayer.getPlayer().sendChatMessage("/nummer " + playerName);
             isActive = true;
             if (blockedPlayerList.contains(playerName)) {
                 blockNextMessage = true;

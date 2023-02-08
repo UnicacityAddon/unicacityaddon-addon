@@ -3,24 +3,19 @@ package com.rettichlp.unicacityaddon.base.manager;
 import com.google.gson.Gson;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.models.Data;
-import com.rettichlp.unicacityaddon.commands.CoordlistCommand;
-import com.rettichlp.unicacityaddon.commands.TodoListCommand;
-import com.rettichlp.unicacityaddon.commands.faction.ServiceCountCommand;
-import com.rettichlp.unicacityaddon.events.faction.EquipEventHandler;
-import com.rettichlp.unicacityaddon.events.faction.rettungsdienst.FirstAidEventHandler;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Objects;
 
 /**
  * @author RettichLP
  */
 public class FileManager {
+
+    public static Data DATA;
 
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
 
@@ -123,40 +118,10 @@ public class FileManager {
     public static void loadData() {
         try {
             File dataFile = FileManager.getDataFile();
-            if (dataFile == null)
-                return;
-            Gson g = new Gson();
-            String jsonData = ""; // FileUtils.readFileToString(dataFile, StandardCharsets.UTF_8.toString());
-
-            if (jsonData.isEmpty()) {
-//                MoneyHudWidget.bankBalance = 0;
-//                MoneyHudWidget.cashBalance = 0;
-//                JobModule.setBalance(0);
-//                JobModule.setExperience(0);
-//                PayDayModule.setTime(0);
-                ServiceCountCommand.serviceCount = 0;
-                FirstAidEventHandler.firstAidIssuingTime = 0;
-                TodoListCommand.todolist = Collections.emptyList();
-                CoordlistCommand.coordlist = Collections.emptyList();
-                HouseDataManager.HOUSE_DATA = new HashMap<>();
-                EquipEventHandler.equipLogEntryList = Collections.emptyList();
-//                CarOpenModule.info = "";
-                return;
-            }
-
-            Data data = g.fromJson(jsonData, Data.class);
-//            MoneyHudWidget.bankBalance = data.getBankBalance();
-//            MoneyHudWidget.cashBalance = data.getCashBalance();
-//            JobModule.jobBalance = data.getJobBalance();
-//            JobModule.jobExperience = data.getJobExperience();
-//            PayDayModule.currentTime = data.getPayDayTime();
-            ServiceCountCommand.serviceCount = data.getServiceCount();
-            FirstAidEventHandler.firstAidIssuingTime = data.getFirstAidDate();
-            TodoListCommand.todolist = data.getTodolist();
-            CoordlistCommand.coordlist = data.getCoordlist();
-            HouseDataManager.HOUSE_DATA = data.getHouseData();
-            EquipEventHandler.equipLogEntryList = data.getEquipList();
-//            CarOpenModule.info = data.getCarInfo() == null ? Strings.EMPTY : data.getCarInfo();
+            assert dataFile != null;
+//            String jsonData = FileUtils.readFileToString(dataFile, StandardCharsets.UTF_8.toString());
+//            DATA = jsonData == null || jsonData.equals("") || jsonData.equals("null") ? new Data() : new Gson().fromJson(jsonData, Data.class);
+            Runtime.getRuntime().addShutdownHook(new Thread(FileManager::saveData));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -168,23 +133,10 @@ public class FileManager {
     public static void saveData() {
         try {
             File dataFile = FileManager.getDataFile();
-            if (dataFile == null)
-                return;
-            Gson g = new Gson();
-            Data data = new Data();
-//            data.setBankBalance(MoneyHudWidget.bankBalance);
-//            data.setCashBalance(MoneyHudWidget.cashBalance);
-//            data.setJobBalance(JobModule.jobBalance);
-//            data.setJobExperience(JobModule.jobExperience);
-//            data.setPayDayTime(PayDayModule.currentTime);
-            data.setFirstAidDate(FirstAidEventHandler.firstAidIssuingTime);
-            data.setTodolist(TodoListCommand.todolist);
-            data.setCoordlist(CoordlistCommand.coordlist);
-            data.setHouseData(HouseDataManager.HOUSE_DATA);
-            data.setEquipList(EquipEventHandler.equipLogEntryList);
-//            data.setCarInfo(CarOpenModule.info);
-            data.setServiceCount(ServiceCountCommand.serviceCount);
-//            FileUtils.writeStringToFile(dataFile, g.toJson(data), StandardCharsets.UTF_8.toString());
+            if (dataFile != null && DATA != null) {
+                Gson g = new Gson();
+//                FileUtils.writeStringToFile(dataFile, g.toJson(DATA), StandardCharsets.UTF_8.toString());
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
