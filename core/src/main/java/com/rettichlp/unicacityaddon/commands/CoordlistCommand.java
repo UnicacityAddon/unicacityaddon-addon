@@ -9,20 +9,18 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.utils.TextUtils;
+import net.labymod.api.client.chat.command.Command;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.event.HoverEvent;
-import net.labymod.api.client.chat.command.Command;
-import net.labymod.api.util.math.vector.FloatVector3;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author RettichLP
  */
 @UCCommand
 public class CoordlistCommand extends Command {
-
-    public static List<CoordlistEntry> coordlist;
 
     private static final String usage = "/coordlist [add|remove] [Ort]";
 
@@ -37,9 +35,14 @@ public class CoordlistCommand extends Command {
         if (arguments.length == 0) {
             listCoords(p);
         } else if (arguments.length > 1 && arguments[0].equalsIgnoreCase("add")) {
-            addCoord(p, TextUtils.makeStringByArgs(arguments, "-").replace("add-", ""));
+            String name = TextUtils.makeStringByArgs(arguments, "-").replace("add-", "");
+            FileManager.DATA.addCoordToCoordlist(name, p.getPosition());
+            p.sendInfoMessage("Koordinaten gespeichert.");
         } else if (arguments.length > 1 && arguments[0].equalsIgnoreCase("remove")) {
-            removeCoord(p, TextUtils.makeStringByArgs(arguments, "-").replace("remove-", ""));
+            String name = TextUtils.makeStringByArgs(arguments, "-").replace("remove-", "");
+            if (FileManager.DATA.removeCoordFromCoordlist(name)) {
+                p.sendInfoMessage("Koordinaten gelöscht.");
+            }
         } else {
             p.sendSyntaxMessage(usage);
         }
@@ -48,7 +51,11 @@ public class CoordlistCommand extends Command {
 
     @Override
     public List<String> complete(String[] arguments) {
-        return TabCompletionBuilder.getBuilder(arguments).build();
+        return TabCompletionBuilder.getBuilder(arguments)
+                .addAtIndex(1, "add")
+                .addAtIndex(1, "remove")
+                .addAtIndex(2, FileManager.DATA.getCoordlist().stream().map(CoordlistEntry::getName).collect(Collectors.toList()))
+                .build();
     }
 
     private void listCoords(UPlayer p) {
@@ -57,33 +64,20 @@ public class CoordlistCommand extends Command {
                 .of("Koordinaten:").color(ColorCode.DARK_AQUA).bold().advance()
                 .createComponent());
 
-        coordlist.forEach(coordlistEntry -> p.sendMessage(Message.getBuilder()
+        FileManager.DATA.getCoordlist().forEach(coordlistEntry -> p.sendMessage(Message.getBuilder()
                 .of("»").color(ColorCode.GRAY).advance().space()
                 .of(coordlistEntry.getName().replace("-", " ")).color(ColorCode.AQUA).advance().space()
                 .of("-").color(ColorCode.GRAY).advance().space()
                 .of("[➤]").color(ColorCode.GREEN)
-                .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Route anzeigen").color(ColorCode.RED).advance().createComponent())
-                .clickEvent(ClickEvent.Action.RUN_COMMAND, "/navi " + coordlistEntry.getX() + "/" + coordlistEntry.getY() + "/" + coordlistEntry.getZ())
-                .advance().space()
+                        .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Route anzeigen").color(ColorCode.RED).advance().createComponent())
+                        .clickEvent(ClickEvent.Action.RUN_COMMAND, "/navi " + coordlistEntry.getX() + "/" + coordlistEntry.getY() + "/" + coordlistEntry.getZ())
+                        .advance().space()
                 .of("[✕]").color(ColorCode.RED)
-                .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Löschen").color(ColorCode.RED).advance().createComponent())
-                .clickEvent(ClickEvent.Action.RUN_COMMAND, "/coordlist remove " + coordlistEntry.getName())
-                .advance()
+                        .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Löschen").color(ColorCode.RED).advance().createComponent())
+                        .clickEvent(ClickEvent.Action.RUN_COMMAND, "/coordlist remove " + coordlistEntry.getName())
+                        .advance()
                 .createComponent()));
 
         p.sendEmptyMessage();
-    }
-
-    private void addCoord(UPlayer p, String name) {
-        FloatVector3 blockPos = p.getPosition();
-        coordlist.add(new CoordlistEntry(name, blockPos.getX(), blockPos.getY(), blockPos.getZ()));
-        FileManager.saveData();
-        p.sendInfoMessage("Koordinaten gespeichert.");
-    }
-
-    private void removeCoord(UPlayer p, String name) {
-        coordlist.removeIf(coordlistEntry -> coordlistEntry.getName().equalsIgnoreCase(name));
-        FileManager.saveData();
-        p.sendInfoMessage("Koordinaten gelöscht.");
     }
 }

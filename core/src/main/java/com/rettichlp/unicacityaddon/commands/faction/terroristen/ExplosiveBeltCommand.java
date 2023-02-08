@@ -3,6 +3,7 @@ package com.rettichlp.unicacityaddon.commands.faction.terroristen;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
+import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.utils.MathUtils;
 import net.labymod.api.client.chat.command.Command;
@@ -25,12 +26,12 @@ public class ExplosiveBeltCommand extends Command {
     public boolean execute(String prefix, String[] arguments) {
         UPlayer p = AbstractionLayer.getPlayer();
 
-        if (!MathUtils.isInteger(arguments[0])) {
-            p.sendErrorMessage("Der Countdown muss eine Zahl sein");
+        if (arguments.length < 1 || !MathUtils.isInteger(arguments[0])) {
+            p.sendSyntaxMessage(usage);
             return true;
         }
 
-//        ExplosiveBeltTimerHudWidget.timer = Integer.parseInt(arguments[0]);
+        FileManager.DATA.setTimer(Integer.parseInt(arguments[0]));
         p.sendChatMessage("/sprenggürtel " + arguments[0]);
         return true;
     }

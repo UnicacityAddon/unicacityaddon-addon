@@ -17,7 +17,6 @@ import java.util.TimerTask;
 public class ADropMoneyCommand extends Command {
 
     private int step = 0;
-    private static final String usage = "/adropmoney";
 
     public ADropMoneyCommand() {
         super("adropmoney");

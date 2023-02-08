@@ -28,12 +28,8 @@ public class MemberInfoCommand extends Command {
     public boolean execute(String prefix, String[] arguments) {
         UPlayer p = AbstractionLayer.getPlayer();
 
-        if (arguments.length < 1) {
-            p.sendSyntaxMessage(usage);
-            return true;
-        }
-
-        p.sendChatMessage("/memberinfo " + arguments[0]);
+        String faction = arguments.length < 1 ? p.getFaction().getFactionKey() : arguments[0];
+        p.sendChatMessage("/memberinfo " + faction);
         return true;
     }
 

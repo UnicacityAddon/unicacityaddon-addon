@@ -6,7 +6,6 @@ import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
-import com.rettichlp.unicacityaddon.events.ShutDownEventHandler;
 import net.labymod.api.client.chat.command.Command;
 
 import java.util.List;
@@ -17,18 +16,18 @@ import java.util.List;
 @UCCommand
 public class ShutdownJailCommand extends Command {
 
-    private static final String usage = "/shutdownjail";
+    public static boolean shutdownJail = false;
 
     public ShutdownJailCommand() {
-        super("shutdownjail");
+        super("shutdownjail", "shutdowngefängnis");
     }
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
         UPlayer p = AbstractionLayer.getPlayer();
-        ShutDownEventHandler.shutdownJail = !ShutDownEventHandler.shutdownJail;
+        shutdownJail = !shutdownJail;
 
-        if (ShutDownEventHandler.shutdownJail)
+        if (shutdownJail)
             p.sendMessage(Message.getBuilder()
                     .prefix()
                     .of("Dein Computer fährt nun herunter sobald du entlassen bist.").color(ColorCode.GRAY).advance()
@@ -37,7 +36,7 @@ public class ShutdownJailCommand extends Command {
             p.sendMessage(Message.getBuilder()
                     .prefix()
                     .of("Dein Computer fährt nun").color(ColorCode.GRAY).advance().space()
-                    .of("nichtmehr").color(ColorCode.RED).advance().space()
+                    .of("nicht mehr").color(ColorCode.RED).advance().space()
                     .of("herunter sobald du entlassen bist.").color(ColorCode.GRAY).advance()
                     .createComponent());
         return true;

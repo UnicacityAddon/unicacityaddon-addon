@@ -3,6 +3,7 @@ package com.rettichlp.unicacityaddon.commands.faction;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
+import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
@@ -16,10 +17,6 @@ import java.util.List;
 @UCCommand
 public class ServiceCountCommand extends Command {
 
-    public static int serviceCount;
-
-    private static final String usage = "/servicecount (reset)";
-
     public ServiceCountCommand() {
         super("servicecount", "YXZ");
     }
@@ -27,17 +24,15 @@ public class ServiceCountCommand extends Command {
     @Override
     public boolean execute(String prefix, String[] arguments) {
         UPlayer p = AbstractionLayer.getPlayer();
-        if (arguments.length > 0) {
-            if (!arguments[0].equalsIgnoreCase("reset"))
-                return true;
-            serviceCount = 0;
+        if (arguments.length > 0 && arguments[0].equalsIgnoreCase("reset")) {
+            FileManager.DATA.setServiceCount(0);
             p.sendInfoMessage("Servicecount wurde zurückgesetzt.");
             return true;
         }
 
-        p.sendMessage(Message.getBuilder().prefix().space()
+        p.sendMessage(Message.getBuilder().prefix()
                 .of("Du hast bereits").color(ColorCode.GRAY).advance().space()
-                .of("" + serviceCount).color(ColorCode.DARK_AQUA).advance().space()
+                .of(String.valueOf(FileManager.DATA.getServiceCount())).color(ColorCode.DARK_AQUA).advance().space()
                 .of("Notrufe bearbeitet.").color(ColorCode.GRAY).advance()
                 .createComponent());
         return true;
@@ -48,9 +43,5 @@ public class ServiceCountCommand extends Command {
         return TabCompletionBuilder.getBuilder(arguments)
                 .addAtIndex(1, "reset")
                 .build();
-    }
-
-    public static void addService() {
-        serviceCount++;
     }
 }

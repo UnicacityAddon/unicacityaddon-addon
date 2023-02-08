@@ -6,7 +6,6 @@ import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
-import com.rettichlp.unicacityaddon.events.ShutDownEventHandler;
 import net.labymod.api.client.chat.command.Command;
 
 import java.util.List;
@@ -15,20 +14,20 @@ import java.util.List;
  * @author Dimiikou
  */
 @UCCommand
-public class ShutdownFriedhofCommand extends Command {
+public class ShutdownGraveyardCommand extends Command {
 
-    private static final String usage = "/shutdownfriedhof";
+    public static boolean shutdownGraveyard = false;
 
-    public ShutdownFriedhofCommand() {
-        super("shutdownfriedhof");
+    public ShutdownGraveyardCommand() {
+        super("shutdowngraveyard", "shutdownfriedhof");
     }
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
         UPlayer p = AbstractionLayer.getPlayer();
-        ShutDownEventHandler.shutdownFriedhof = !ShutDownEventHandler.shutdownFriedhof;
+        shutdownGraveyard = !shutdownGraveyard;
 
-        if (ShutDownEventHandler.shutdownFriedhof)
+        if (shutdownGraveyard)
             p.sendMessage(Message.getBuilder()
                     .prefix()
                     .of("Dein Computer fährt nun herunter sobald du wieder lebst.").color(ColorCode.GRAY).advance()
@@ -37,7 +36,7 @@ public class ShutdownFriedhofCommand extends Command {
             p.sendMessage(Message.getBuilder()
                     .prefix()
                     .of("Dein Computer fährt nun").color(ColorCode.GRAY).advance().space()
-                    .of("nichtmehr").color(ColorCode.RED).advance().space()
+                    .of("nicht mehr").color(ColorCode.RED).advance().space()
                     .of("herunter sobald du wieder lebst.").color(ColorCode.GRAY).advance()
                     .createComponent());
         return true;

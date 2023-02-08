@@ -12,7 +12,6 @@ import com.rettichlp.unicacityaddon.base.teamspeak.commands.ClientMoveCommand;
 import com.rettichlp.unicacityaddon.base.teamspeak.objects.Client;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
-import jdk.internal.joptsimple.internal.Strings;
 import net.labymod.api.client.chat.command.Command;
 
 import java.util.Collections;
@@ -40,7 +39,7 @@ public class MoveToCommand extends Command {
             return true;
         }
 
-        if (!UnicacityAddon.configuration.tsApiKey().getOrDefault(Strings.EMPTY).matches("([A-Z0-9]{4}(-*)){6}")) {
+        if (!UnicacityAddon.configuration.tsApiKey().getOrDefault("").matches("([A-Z0-9]{4}(-*)){6}")) {
             p.sendErrorMessage("Teamspeak API Key ist nicht gültig!");
             return true;
         }

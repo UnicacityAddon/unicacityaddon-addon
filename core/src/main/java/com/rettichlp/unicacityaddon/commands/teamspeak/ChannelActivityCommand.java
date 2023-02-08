@@ -12,9 +12,9 @@ import com.rettichlp.unicacityaddon.base.teamspeak.commands.ClientVariableComman
 import com.rettichlp.unicacityaddon.base.teamspeak.objects.Client;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
+import net.labymod.api.client.chat.command.Command;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.event.HoverEvent;
-import net.labymod.api.client.chat.command.Command;
 
 import java.util.ArrayList;
 import java.util.Collections;

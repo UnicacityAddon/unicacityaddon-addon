@@ -7,9 +7,9 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.utils.NavigationUtils;
+import net.labymod.api.client.chat.command.Command;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.event.HoverEvent;
-import net.labymod.api.client.chat.command.Command;
 
 import java.util.List;
 import java.util.Map;
@@ -19,8 +19,6 @@ import java.util.Map;
  */
 @UCCommand
 public class NearestJobCommand extends Command {
-
-    private static final String usage = "/nearestjob";
 
     public NearestJobCommand() {
         super("nearestjob", "njob");
@@ -42,7 +40,7 @@ public class NearestJobCommand extends Command {
                                 .of("Route anzeigen").color(ColorCode.RED).advance()
                                 .createComponent())
                         .clickEvent(ClickEvent.Action.RUN_COMMAND, nearestJob.getValue().getNaviCommand())
-                .advance()
+                        .advance()
                 .createComponent());
         return true;
     }

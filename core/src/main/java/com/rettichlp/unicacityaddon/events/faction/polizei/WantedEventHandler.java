@@ -40,7 +40,8 @@ public class WantedEventHandler {
             int wantedPoints = Integer.parseInt(wantedsGivenPointsMatcher.group(2));
 
             Wanted wanted = WANTED_MAP.get(name);
-            if (wanted == null) return;
+            if (wanted == null)
+                return;
 
             wanted.setAmount(wantedPoints);
             return;
@@ -61,7 +62,7 @@ public class WantedEventHandler {
             return;
         }
 
-        Matcher wantedListEntryMatcher = PatternHandler.WANTED_LIST_ENTRY_PATTERN.matcher(msg);
+        Matcher wantedListEntryMatcher = PatternHandler.WANTED_LIST_PATTERN.matcher(msg);
         if (wantedListEntryMatcher.find() && System.currentTimeMillis() - wantedsShown < 1000L) {
             String name = wantedListEntryMatcher.group(1);
             int wantedPoints = Integer.parseInt(wantedListEntryMatcher.group(2));

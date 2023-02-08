@@ -15,10 +15,8 @@ import java.util.List;
 @UCCommand
 public class GaggedCommand extends Command {
 
-    private static final String usage = "/geknebelt";
-
     public GaggedCommand() {
-    super("geknebelt");
+        super("geknebelt");
     }
 
     @Override
@@ -26,8 +24,10 @@ public class GaggedCommand extends Command {
         UPlayer p = AbstractionLayer.getPlayer();
         GaggedEventHandler.toggleGagged();
 
-        if (GaggedEventHandler.isGagged()) p.sendInfoMessage("Ab sofort kannst du nur noch flüstern.");
-        else p.sendInfoMessage("Ab sofort kannst du wieder normal reden.");
+        if (GaggedEventHandler.isGagged())
+            p.sendInfoMessage("Ab sofort kannst du nur noch flüstern.");
+        else
+            p.sendInfoMessage("Ab sofort kannst du wieder normal reden.");
         return true;
     }
 

@@ -6,12 +6,12 @@ import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.api.Syncer;
 import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
-import com.rettichlp.unicacityaddon.base.models.BlacklistReasonEntry;
+import com.rettichlp.unicacityaddon.base.models.BlacklistReason;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
-import net.labymod.api.client.component.event.HoverEvent;
 import net.labymod.api.client.chat.command.Command;
+import net.labymod.api.client.component.event.HoverEvent;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -72,7 +72,7 @@ public class BlacklistReasonCommand extends Command {
     public List<String> complete(String[] arguments) {
         return TabCompletionBuilder.getBuilder(arguments)
                 .addAtIndex(1, "add", "remove")
-                .addAtIndex(2, Syncer.getBlacklistReasonEntryList().stream().map(BlacklistReasonEntry::getReason).sorted().collect(Collectors.toList()))
+                .addAtIndex(2, Syncer.getBlacklistReasonEntryList().stream().map(BlacklistReason::getReason).sorted().collect(Collectors.toList()))
                 .build();
     }
 }

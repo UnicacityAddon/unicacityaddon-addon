@@ -27,7 +27,7 @@ public class StummCommand extends Command {
         MobileEventHandler.muted = !MobileEventHandler.muted;
 
         if (MobileEventHandler.muted)
-            p.sendInfoMessage("Du hast den Handy auf stumm gestellt.");
+            p.sendInfoMessage("Du hast dein Handy auf stumm gestellt.");
         else
             p.sendInfoMessage("Du hast dein Handy wieder laut gestellt.");
         return true;

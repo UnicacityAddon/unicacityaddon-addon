@@ -8,8 +8,10 @@ import com.rettichlp.unicacityaddon.base.config.UnicacityAddonConfiguration;
 import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.teamspeak.TSClientQuery;
 import com.rettichlp.unicacityaddon.commands.ABuyCommand;
+import com.rettichlp.unicacityaddon.commands.BusCommand;
 import com.rettichlp.unicacityaddon.commands.CalculateCommand;
 import com.rettichlp.unicacityaddon.commands.CancelCountdownCommand;
+import com.rettichlp.unicacityaddon.commands.ChatLogCommand;
 import com.rettichlp.unicacityaddon.commands.ClockCommand;
 import com.rettichlp.unicacityaddon.commands.CoordlistCommand;
 import com.rettichlp.unicacityaddon.commands.CountdownCommand;
@@ -22,6 +24,7 @@ import com.rettichlp.unicacityaddon.commands.NearestATMCommand;
 import com.rettichlp.unicacityaddon.commands.NearestJobCommand;
 import com.rettichlp.unicacityaddon.commands.ReichensteuerCommand;
 import com.rettichlp.unicacityaddon.commands.ScreenCommand;
+import com.rettichlp.unicacityaddon.commands.ShutdownGraveyardCommand;
 import com.rettichlp.unicacityaddon.commands.ShutdownJailCommand;
 import com.rettichlp.unicacityaddon.commands.SyncPlayerDataCommand;
 import com.rettichlp.unicacityaddon.commands.TimerCommand;
@@ -47,6 +50,7 @@ import com.rettichlp.unicacityaddon.commands.faction.ShareLocationCommand;
 import com.rettichlp.unicacityaddon.commands.faction.badfaction.ACaptureCommand;
 import com.rettichlp.unicacityaddon.commands.faction.badfaction.ASetBlacklistCommand;
 import com.rettichlp.unicacityaddon.commands.faction.badfaction.BlacklistInfoCommand;
+import com.rettichlp.unicacityaddon.commands.faction.badfaction.DBankDropAllCommand;
 import com.rettichlp.unicacityaddon.commands.faction.badfaction.EigenbedarfCommand;
 import com.rettichlp.unicacityaddon.commands.faction.badfaction.GaggedCommand;
 import com.rettichlp.unicacityaddon.commands.faction.badfaction.GiftEigenbedarfCommand;
@@ -90,7 +94,10 @@ import com.rettichlp.unicacityaddon.events.NavigationEventHandler;
 import com.rettichlp.unicacityaddon.events.RenderTagEventHandler;
 import com.rettichlp.unicacityaddon.events.TabListEventHandler;
 import com.rettichlp.unicacityaddon.events.TickEventHandler;
+import com.rettichlp.unicacityaddon.events.TimerEventHandler;
 import com.rettichlp.unicacityaddon.events.WeaponClickEventHandler;
+import com.rettichlp.unicacityaddon.events.chatlog.ChatLogReceiveChatEventHandler;
+import com.rettichlp.unicacityaddon.events.chatlog.ChatLogSendChatEventHandler;
 import com.rettichlp.unicacityaddon.events.faction.AEquipEventHandler;
 import com.rettichlp.unicacityaddon.events.faction.AFbankEinzahlenEventHandler;
 import com.rettichlp.unicacityaddon.events.faction.ContractEventHandler;
@@ -101,7 +108,9 @@ import com.rettichlp.unicacityaddon.events.faction.FDoorEventHandler;
 import com.rettichlp.unicacityaddon.events.faction.FactionInfoEventHandler;
 import com.rettichlp.unicacityaddon.events.faction.ReinforcementEventHandler;
 import com.rettichlp.unicacityaddon.events.faction.ShareLocationEventHandler;
+import com.rettichlp.unicacityaddon.events.faction.badfaction.BannerEventHandler;
 import com.rettichlp.unicacityaddon.events.faction.badfaction.DBankMessageEventHandler;
+import com.rettichlp.unicacityaddon.events.faction.badfaction.DrugInteractionEventHandler;
 import com.rettichlp.unicacityaddon.events.faction.badfaction.GaggedEventHandler;
 import com.rettichlp.unicacityaddon.events.faction.badfaction.GiftEigenbedarfEventHandler;
 import com.rettichlp.unicacityaddon.events.faction.badfaction.PlantEventHandler;
@@ -116,15 +125,14 @@ import com.rettichlp.unicacityaddon.events.faction.rettungsdienst.ReviveEventHan
 import com.rettichlp.unicacityaddon.events.faction.rettungsdienst.ServiceMessageEventHandler;
 import com.rettichlp.unicacityaddon.events.faction.terroristen.BombTimerEventHandler;
 import com.rettichlp.unicacityaddon.events.house.HouseDataEventHandler;
+import com.rettichlp.unicacityaddon.events.house.HouseInteractionEventHandler;
 import com.rettichlp.unicacityaddon.events.house.HouseRenterEventHandler;
 import com.rettichlp.unicacityaddon.events.job.FishermanEventHandler;
 import com.rettichlp.unicacityaddon.events.job.JobEventHandler;
 import com.rettichlp.unicacityaddon.events.team.ReportEventHandler;
 import com.rettichlp.unicacityaddon.events.teamspeak.WaitingRoomEventHandler;
-import net.labymod.api.Laby;
 import net.labymod.api.addon.LabyAddon;
 import net.labymod.api.client.Minecraft;
-import net.labymod.api.client.network.server.ServerData;
 import net.labymod.api.models.addon.annotation.AddonMain;
 import net.labymod.api.util.logging.Logging;
 
@@ -141,93 +149,93 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
     protected void enable() {
         this.registerSettingCategory();
 
-        this.registerListener(new ABuyEventHandler()); // TODO: 08.02.2023
-        this.registerListener(new AccountEventHandler()); // TODO: 08.02.2023
-        this.registerListener(new CarEventHandler()); // TODO: 08.02.2023
-        this.registerListener(new DeathsKillsEventHandler()); // TODO: 08.02.2023
-        this.registerListener(new FriendJoinEventHandler()); // TODO: 08.02.2023
-        this.registerListener(new HotkeyEventHandler()); // TODO: 08.02.2023
-        this.registerListener(new KarmaMessageEventHandler()); // TODO: 08.02.2023
-        this.registerListener(new MobileEventHandler()); // TODO: 08.02.2023
-        this.registerListener(new MoneyEventHandler()); // TODO: 08.02.2023
-        this.registerListener(new NameTagEventHandler()); // TODO: 08.02.2023
-        this.registerListener(new NavigationEventHandler()); // TODO: 08.02.2023
-        this.registerListener(new RenderTagEventHandler()); // TODO: 08.02.2023
-        this.registerListener(new TabListEventHandler()); // TODO: 08.02.2023
-        this.registerListener(new TickEventHandler()); // TODO: 08.02.2023
-        this.registerListener(new TimerEventHandler()); // TODO: 08.02.2023
-        this.registerListener(new WeaponClickEventHandler()); // TODO: 08.02.2023
+        this.registerListener(new ABuyEventHandler());
+        this.registerListener(new AccountEventHandler());
+        this.registerListener(new CarEventHandler());
+        this.registerListener(new DeathsKillsEventHandler());
+        this.registerListener(new FriendJoinEventHandler());
+        this.registerListener(new HotkeyEventHandler());
+        this.registerListener(new KarmaMessageEventHandler());
+        this.registerListener(new MobileEventHandler());
+        this.registerListener(new MoneyEventHandler());
+        this.registerListener(new NameTagEventHandler());
+        this.registerListener(new NavigationEventHandler());
+        this.registerListener(new RenderTagEventHandler());
+        this.registerListener(new TabListEventHandler());
+        this.registerListener(new TickEventHandler());
+        this.registerListener(new TimerEventHandler());
+        this.registerListener(new WeaponClickEventHandler());
         // chatlog
-        this.registerListener(new ChatLogReceiveChatEventHandler()); // TODO: 08.02.2023
-        this.registerListener(new ChatLogSendChatEventHandler()); // TODO: 08.02.2023
+        this.registerListener(new ChatLogReceiveChatEventHandler());
+        this.registerListener(new ChatLogSendChatEventHandler());
         // faction
-        this.registerListener(new AEquipEventHandler()); // TODO: 08.02.2023
-        this.registerListener(new AFbankEinzahlenEventHandler()); // TODO: 08.02.2023
-        this.registerListener(new ContractEventHandler()); // TODO: 08.02.2023
-        this.registerListener(new EmergencyServiceEventHandler()); // TODO: 08.02.2023
-        this.registerListener(new EquipEventHandler()); // TODO: 08.02.2023
-        this.registerListener(new FDSFChatEventHandler()); // TODO: 08.02.2023
-        this.registerListener(new FDoorEventHandler()); // TODO: 08.02.2023
-        this.registerListener(new FactionInfoEventHandler()); // TODO: 08.02.2023
-        this.registerListener(new ReinforcementEventHandler()); // TODO: 08.02.2023
-        this.registerListener(new ShareLocationEventHandler()); // TODO: 08.02.2023
+        this.registerListener(new AEquipEventHandler());
+        this.registerListener(new AFbankEinzahlenEventHandler());
+        this.registerListener(new ContractEventHandler());
+        this.registerListener(new EmergencyServiceEventHandler());
+        this.registerListener(new EquipEventHandler());
+        this.registerListener(new FDSFChatEventHandler());
+        this.registerListener(new FDoorEventHandler());
+        this.registerListener(new FactionInfoEventHandler());
+        this.registerListener(new ReinforcementEventHandler());
+        this.registerListener(new ShareLocationEventHandler());
         // faction - badfaction
-        this.registerListener(new BannerEventHandler()); // TODO: 08.02.2023
-        this.registerListener(new DBankMessageEventHandler()); // TODO: 08.02.2023
-        this.registerListener(new DrugInteractionEventHandler()); // TODO: 08.02.2023
-        this.registerListener(new GaggedEventHandler()); // TODO: 08.02.2023
-        this.registerListener(new GiftEigenbedarfEventHandler()); // TODO: 08.02.2023
-        this.registerListener(new PlantEventHandler()); // TODO: 08.02.2023
+        this.registerListener(new BannerEventHandler());
+        this.registerListener(new DBankMessageEventHandler());
+        this.registerListener(new DrugInteractionEventHandler());
+        this.registerListener(new GaggedEventHandler());
+        this.registerListener(new GiftEigenbedarfEventHandler());
+        this.registerListener(new PlantEventHandler());
         // faction - badfaction - blacklist
-        this.registerListener(new BlacklistEventHandler()); // TODO: 08.02.2023
-        this.registerListener(new BlacklistModifyEventHandler()); // TODO: 08.02.2023
+        this.registerListener(new BlacklistEventHandler());
+        this.registerListener(new BlacklistModifyEventHandler());
         // faction - polizei
-        this.registerListener(new HQMessageEventHandler()); // TODO: 08.02.2023
-        this.registerListener(new WantedEventHandler()); // TODO: 08.02.2023
+        this.registerListener(new HQMessageEventHandler());
+        this.registerListener(new WantedEventHandler());
         // faction - rettungsdienst
-        this.registerListener(new FireEventHandler()); // TODO: 08.02.2023
-        this.registerListener(new FirstAidEventHandler()); // TODO: 08.02.2023
-        this.registerListener(new MedicationEventHandler()); // TODO: 08.02.2023
-        this.registerListener(new ReviveEventHandler()); // TODO: 08.02.2023
-        this.registerListener(new ServiceMessageEventHandler()); // TODO: 08.02.2023
+        this.registerListener(new FireEventHandler());
+        this.registerListener(new FirstAidEventHandler());
+        this.registerListener(new MedicationEventHandler());
+        this.registerListener(new ReviveEventHandler());
+        this.registerListener(new ServiceMessageEventHandler());
         // faction - terroristen
-        this.registerListener(new BombTimerEventHandler()); // TODO: 08.02.2023
+        this.registerListener(new BombTimerEventHandler());
         // house
         this.registerListener(new HouseDataEventHandler());
-        this.registerListener(new HouseInteractionEventHandler()); // TODO: 08.02.2023
-        this.registerListener(new HouseRenterEventHandler()); // TODO: 08.02.2023
+        this.registerListener(new HouseInteractionEventHandler());
+        this.registerListener(new HouseRenterEventHandler());
         // job
-        this.registerListener(new FishermanEventHandler()); // TODO: 08.02.2023
-        this.registerListener(new JobEventHandler()); // TODO: 08.02.2023
+        this.registerListener(new FishermanEventHandler());
+        this.registerListener(new JobEventHandler());
         // team
-        this.registerListener(new ReportEventHandler()); // TODO: 08.02.2023
+        this.registerListener(new ReportEventHandler());
         // teamspeak
-        this.registerListener(new WaitingRoomEventHandler()); // TODO: 08.02.2023
+        this.registerListener(new WaitingRoomEventHandler());
 
-        this.registerCommand(new ABuyCommand()); // TODO: 08.02.2023
-        this.registerCommand(new BusCommand()); // TODO: 08.02.2023
-        this.registerCommand(new CalculateCommand()); // TODO: 08.02.2023
-        this.registerCommand(new CancelCountdownCommand()); // TODO: 08.02.2023
-        this.registerCommand(new ChatLogCommad()); // TODO: 08.02.2023
-        this.registerCommand(new ClockCommand()); // TODO: 08.02.2023
-        this.registerCommand(new CoordlistCommand()); // TODO: 08.02.2023
-        this.registerCommand(new CountdownCommand()); // TODO: 08.02.2023
-        this.registerCommand(new DiscordCommand()); // TODO: 08.02.2023
-        this.registerCommand(new DyavolCommand()); // TODO: 08.02.2023
-        this.registerCommand(new EinzahlenCommand()); // TODO: 08.02.2023
-        this.registerCommand(new MemberInfoCommand()); // TODO: 08.02.2023
-        this.registerCommand(new NaviCommand()); // TODO: 08.02.2023
-        this.registerCommand(new NearestATMCommand()); // TODO: 08.02.2023
-        this.registerCommand(new NearestJobCommand()); // TODO: 08.02.2023
-        this.registerCommand(new ReichensteuerCommand()); // TODO: 08.02.2023
-        this.registerCommand(new ScreenCommand()); // TODO: 08.02.2023
-        this.registerCommand(new ShutdownGraveyardCommand()); // TODO: 08.02.2023
-        this.registerCommand(new ShutdownJailCommand()); // TODO: 08.02.2023
-        this.registerCommand(new SyncPlayerDataCommand()); // TODO: 08.02.2023
-        this.registerCommand(new TimerCommand()); // TODO: 08.02.2023
-        this.registerCommand(new TodoListCommand()); // TODO: 08.02.2023
-        this.registerCommand(new UpdateAddonCommand()); // TODO: 08.02.2023
-        this.registerCommand(new YasinCommand()); // TODO: 08.02.2023
+        this.registerCommand(new ABuyCommand());
+        this.registerCommand(new BusCommand());
+        this.registerCommand(new CalculateCommand());
+        this.registerCommand(new CancelCountdownCommand());
+        this.registerCommand(new ChatLogCommand());
+        this.registerCommand(new ClockCommand());
+        this.registerCommand(new CoordlistCommand());
+        this.registerCommand(new CountdownCommand());
+        this.registerCommand(new DiscordCommand());
+        this.registerCommand(new DyavolCommand());
+        this.registerCommand(new EinzahlenCommand());
+        this.registerCommand(new MemberInfoCommand());
+        this.registerCommand(new NaviCommand());
+        this.registerCommand(new NearestATMCommand());
+        this.registerCommand(new NearestJobCommand());
+        this.registerCommand(new ReichensteuerCommand());
+        this.registerCommand(new ScreenCommand());
+        this.registerCommand(new ShutdownGraveyardCommand());
+        this.registerCommand(new ShutdownJailCommand());
+        this.registerCommand(new SyncPlayerDataCommand());
+        this.registerCommand(new TimerCommand());
+        this.registerCommand(new TodoListCommand());
+        this.registerCommand(new UpdateAddonCommand());
+        this.registerCommand(new YasinCommand());
         // api
         this.registerCommand(new BlacklistReasonCommand());
         this.registerCommand(new BroadcastCommand());
@@ -307,13 +315,13 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
     public static boolean isUnicacity() {
         return true; // TODO: 08.02.2023
 
-        if (MINECRAFT.clientWorld() == null)
-            return false;
-
-        ServerData serverData = Laby.labyAPI().serverController().getCurrentServerData();
-        if (serverData == null)
-            return false;
-
-        return serverData.address().matches("unicacity", 25565, true);
+//        if (MINECRAFT.clientWorld() == null)
+//            return false;
+//
+//        ServerData serverData = Laby.labyAPI().serverController().getCurrentServerData();
+//        if (serverData == null)
+//            return false;
+//
+//        return serverData.address().matches("unicacity", 25565, true);
     }
 }

@@ -18,8 +18,6 @@ import java.util.List;
 @UCCommand
 public class DyavolCommand extends Command {
 
-    private static final String usage = "/dyavol";
-
     public DyavolCommand() {
         super("dyavol");
     }

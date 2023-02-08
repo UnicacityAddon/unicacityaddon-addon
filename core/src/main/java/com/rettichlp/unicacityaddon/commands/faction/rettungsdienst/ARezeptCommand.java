@@ -19,9 +19,9 @@ import java.util.stream.Collectors;
 @UCCommand
 public class ARezeptCommand extends Command {
 
-    public static int amount = 0;
-    public static DrugType medication;
     public static String target;
+    public static DrugType medication;
+    public static int amount = 0;
 
     private static final String usage = "/arezept [Spieler] [Rezept] [Anzahl]";
 

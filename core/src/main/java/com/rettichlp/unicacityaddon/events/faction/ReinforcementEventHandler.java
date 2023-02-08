@@ -5,7 +5,7 @@ import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.config.reinforcement.DefaultReinforcementSetting;
 import com.rettichlp.unicacityaddon.base.enums.faction.ReinforcementType;
-import com.rettichlp.unicacityaddon.base.models.NaviPointEntry;
+import com.rettichlp.unicacityaddon.base.models.NaviPoint;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
@@ -13,10 +13,10 @@ import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.base.utils.NavigationUtils;
 import com.rettichlp.unicacityaddon.events.TickEventHandler;
 import lombok.NoArgsConstructor;
+import net.labymod.api.client.chat.ChatMessage;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.event.HoverEvent;
-import net.labymod.api.client.chat.ChatMessage;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatMessageSendEvent;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
@@ -70,8 +70,8 @@ public class ReinforcementEventHandler {
                     .of("" + posZ).color(ColorCode.AQUA).advance()
                     .createComponent();
 
-            Map.Entry<Double, NaviPointEntry> nearestNaviPoint = NavigationUtils.getNearestNaviPoint(posX, posY, posZ);
-            NaviPointEntry navipoint = nearestNaviPoint.getValue();
+            Map.Entry<Double, NaviPoint> nearestNaviPoint = NavigationUtils.getNearestNaviPoint(posX, posY, posZ);
+            NaviPoint navipoint = nearestNaviPoint.getValue();
 
             String navipointString;
             if (navipoint == null) {
@@ -142,12 +142,12 @@ public class ReinforcementEventHandler {
     }
 
     @Subscribe
-    public void onClientMessageSend(ChatMessageSendEvent e) {
+    public void onChatMessageSend(ChatMessageSendEvent e) {
         if (UnicacityAddon.configuration.reinforcementSetting().screen().get() && e.getMessage().toLowerCase().startsWith("/reinforcement ontheway "))
             activeReinforcement = TickEventHandler.currentTick;
     }
 
-    private class Reinforcement {
+    private static class Reinforcement {
 
         private final String issuerName;
         private final ReinforcementType reinforcementType;

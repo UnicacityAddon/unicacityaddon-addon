@@ -13,7 +13,6 @@ import com.rettichlp.unicacityaddon.base.teamspeak.objects.Channel;
 import com.rettichlp.unicacityaddon.base.teamspeak.objects.Client;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
-import jdk.internal.joptsimple.internal.Strings;
 import net.labymod.api.client.chat.command.Command;
 
 import java.util.Arrays;
@@ -43,7 +42,7 @@ public class TSFindCommand extends Command {
                 return;
             }
 
-            if (!UnicacityAddon.configuration.tsApiKey().getOrDefault(Strings.EMPTY).matches("([A-Z0-9]{4}(-*)){6}")) {
+            if (!UnicacityAddon.configuration.tsApiKey().getOrDefault("").matches("([A-Z0-9]{4}(-*)){6}")) {
                 p.sendErrorMessage("Teamspeak API Key ist nicht gültig!");
                 return;
             }
@@ -65,7 +64,10 @@ public class TSFindCommand extends Command {
             Client client = clients.get(0);
 
             ChannelListCommand.Response channelListResponse = new ChannelListCommand().getResponse();
-            Channel channel = channelListResponse.getChannels().stream().filter(channelIter -> client.getChannelID() == channelIter.getChannelID()).findFirst().orElse(null);
+            Channel channel = channelListResponse.getChannels().stream()
+                    .filter(channelIter -> client.getChannelID() == channelIter.getChannelID())
+                    .findFirst()
+                    .orElse(null);
 
             if (channel == null)
                 throw new IllegalStateException();

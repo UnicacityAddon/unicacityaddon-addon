@@ -20,8 +20,8 @@ public class ASMSCommand extends Command {
 
     public static boolean isActive;
 
-    private final Timer timer = new Timer();
     private static final String usage = "/asms [Spielername] [Nachricht]";
+    private final Timer timer = new Timer();
 
     public ASMSCommand() {
         super("asms");

@@ -9,8 +9,8 @@ import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
-import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.chat.command.Command;
+import net.labymod.api.client.component.event.ClickEvent;
 
 import java.util.List;
 
@@ -19,8 +19,6 @@ import java.util.List;
  */
 @UCCommand
 public class YasinCommand extends Command {
-
-    private static final String usage = "/yasin [add|done|remove] [Name]";
 
     public YasinCommand() {
         super("yasin");

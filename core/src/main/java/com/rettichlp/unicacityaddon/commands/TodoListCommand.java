@@ -10,8 +10,8 @@ import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.utils.MathUtils;
 import com.rettichlp.unicacityaddon.base.utils.TextUtils;
-import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.chat.command.Command;
+import net.labymod.api.client.component.event.ClickEvent;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,9 +21,6 @@ import java.util.Optional;
  */
 @UCCommand
 public class TodoListCommand extends Command {
-
-    public static List<TodolistEntry> todolist;
-    private static final String usage = "/todo [add|done|delete] [Todo]";
 
     public TodoListCommand() {
         super("todo");
@@ -37,46 +34,42 @@ public class TodoListCommand extends Command {
             todoList();
         } else if (arguments.length > 1 && arguments[0].equalsIgnoreCase("done")) {
             String todo = TextUtils.makeStringByArgs(arguments, " ").replace("done ", "");
-            Optional<TodolistEntry> todolistEntryOptional = todolist.stream().filter(todolistEntry -> todolistEntry.getTodo().equals(todo)).findFirst();
+            Optional<TodolistEntry> todolistEntryOptional = FileManager.DATA.getTodolist().stream().filter(todolistEntry -> todolistEntry.getTodo().equals(todo)).findFirst();
             if (!todolistEntryOptional.isPresent()) {
                 p.sendErrorMessage("Keinen Eintrag gefunden.");
                 return true;
             }
-            int index = todolist.indexOf(todolistEntryOptional.get());
+            int index = FileManager.DATA.getTodolist().indexOf(todolistEntryOptional.get());
             TodolistEntry todolistEntry = todolistEntryOptional.get();
             todolistEntry.setDone(true);
-            todolist.set(index, todolistEntry);
-            FileManager.saveData();
+            FileManager.DATA.getTodolist().set(index, todolistEntry);
             p.sendInfoMessage("Aufgabe als erledigt markiert.");
         } else if (arguments.length > 1 && arguments[0].equalsIgnoreCase("delete")) {
             String todo = TextUtils.makeStringByArgs(arguments, " ").replace("delete ", "");
-            boolean success = todolist.removeIf(todolistEntry -> todolistEntry.getTodo().equals(todo));
+            boolean success = FileManager.DATA.getTodolist().removeIf(todolistEntry -> todolistEntry.getTodo().equals(todo));
             if (!success) {
                 p.sendErrorMessage("Keinen Eintrag mit dieser ID gefunden.");
                 return true;
             }
-            FileManager.saveData();
             p.sendInfoMessage("Aufgabe aus Todoliste gelöscht.");
         } else if (arguments.length > 2 && arguments[0].equalsIgnoreCase("edit") && MathUtils.isInteger(arguments[1])) {
             int index = Integer.parseInt(arguments[1]) - 1;
-            if (index > todolist.size() - 1) {
+            if (index > FileManager.DATA.getTodolist().size() - 1) {
                 p.sendErrorMessage("Keinen Eintrag mit dieser ID gefunden.");
                 return true;
             }
             String todo = TextUtils.makeStringByArgs(arguments, " ").replaceAll("(?i)edit " + arguments[1] + " ", "");
             TodolistEntry todolistEntry = new TodolistEntry(todo);
-            todolist.set(index, todolistEntry);
-            FileManager.saveData();
+            FileManager.DATA.getTodolist().set(index, todolistEntry);
             p.sendInfoMessage("Aufgabe editiert.");
         } else {
             String todo = TextUtils.makeStringByArgs(arguments, " ");
             TodolistEntry todolistEntry = new TodolistEntry(todo);
-            if (todolist.stream().anyMatch(te -> te.getTodo().equals(todo))) {
+            if (FileManager.DATA.getTodolist().stream().anyMatch(te -> te.getTodo().equals(todo))) {
                 p.sendErrorMessage("Dieses Todo gibt es bereits!");
                 return true;
             }
-            todolist.add(todolistEntry);
-            FileManager.saveData();
+            FileManager.DATA.getTodolist().add(todolistEntry);
             p.sendInfoMessage("Aufgabe zur Todoliste hinzugefügt.");
         }
         return true;
@@ -93,18 +86,18 @@ public class TodoListCommand extends Command {
         p.sendMessage(Message.getBuilder()
                 .of("Todoliste:").color(ColorCode.DARK_AQUA).bold().advance()
                 .createComponent());
-        todolist.forEach(todolistEntry -> {
-            int id = todolist.indexOf(todolistEntry) + 1;
+        FileManager.DATA.getTodolist().forEach(todolistEntry -> {
+            int id = FileManager.DATA.getTodolist().indexOf(todolistEntry) + 1;
             if (todolistEntry.isDone())
                 p.sendMessage(Message.getBuilder()
                         .of("» " + id + ". ").color(ColorCode.GRAY).advance()
                         .of(todolistEntry.getTodo()).color(ColorCode.AQUA).strikethrough().advance().space()
-                        .of("[\u2710]").color(ColorCode.GOLD)
+                        .of("[✐]").color(ColorCode.GOLD)
                                 .clickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/todo edit " + id + " " + todolistEntry.getTodo())
                                 .advance().space()
                         .of("[✕]").color(ColorCode.RED)
-                        .clickEvent(ClickEvent.Action.RUN_COMMAND, "/todo delete " + todolistEntry.getTodo())
-                        .advance()
+                                .clickEvent(ClickEvent.Action.RUN_COMMAND, "/todo delete " + todolistEntry.getTodo())
+                                .advance()
                         .createComponent());
             else
                 p.sendMessage(Message.getBuilder()
@@ -113,7 +106,7 @@ public class TodoListCommand extends Command {
                         .of("[✔]").color(ColorCode.GREEN)
                                 .clickEvent(ClickEvent.Action.RUN_COMMAND, "/todo done " + todolistEntry.getTodo())
                                 .advance().space()
-                        .of("[\u2710]").color(ColorCode.GOLD)
+                        .of("[✐]").color(ColorCode.GOLD)
                                 .clickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/todo edit " + id + " " + todolistEntry.getTodo())
                                 .advance().space()
                         .of("[✕]").color(ColorCode.RED)

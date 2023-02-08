@@ -19,8 +19,8 @@ public class ACallCommand extends Command {
 
     public static boolean isActive;
 
-    private final Timer timer = new Timer();
     private static final String usage = "/acall [Spielername]";
+    private final Timer timer = new Timer();
 
     public ACallCommand() {
         super("acall");

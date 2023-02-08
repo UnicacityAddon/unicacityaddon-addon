@@ -3,6 +3,7 @@ package com.rettichlp.unicacityaddon.commands.faction;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
+import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.enums.faction.ReinforcementType;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ChatType;
@@ -44,6 +45,11 @@ public class ReinforcementCommand extends Command {
         ChatType chatType = firstType.getChatType();
 
         if ((arguments.length >= 5) && arguments[0].equalsIgnoreCase("ontheway")) {
+            if ((p.getFaction() == Faction.FBI || p.getFaction() == Faction.RETTUNGSDIENST || p.getFaction() == Faction.POLIZEI) && !p.inDuty()) {
+                p.sendErrorMessage("Du bist nicht im Dienst.");
+                return true;
+            }
+
             String name = arguments[1];
 
             if (!MathUtils.isInteger(arguments[2]) || !MathUtils.isInteger(arguments[3]) || !MathUtils.isInteger(arguments[4]))

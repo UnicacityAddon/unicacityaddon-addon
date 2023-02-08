@@ -1,8 +1,8 @@
 package com.rettichlp.unicacityaddon.events.faction.badfaction.blacklist;
 
-import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
+import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.enums.faction.ModifyBlacklistType;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
@@ -19,9 +19,6 @@ import java.util.regex.Matcher;
 @UCEvent
 @NoArgsConstructor
 public class BlacklistModifyEventHandler {
-
-    public BlacklistModifyEventHandler(UnicacityAddon unicacityAddon) {
-    }
 
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {
@@ -55,6 +52,8 @@ public class BlacklistModifyEventHandler {
         if (!name.equals(ModifyBlacklistCommand.target))
             return;
 
+        int outlawPriceModificator = 0;
+
         if (ModifyBlacklistCommand.type == ModifyBlacklistType.OUTLAW) {
             if (reason.contains("[Vogelfrei]")) {
                 p.sendErrorMessage("Der Spieler ist bereits vogelfrei!");
@@ -63,6 +62,8 @@ public class BlacklistModifyEventHandler {
 
             reason = removeModifiers(reason);
             reason += " [Vogelfrei]"; // append outlaw reason
+
+            outlawPriceModificator = p.getFaction().equals(Faction.LEMILIEU) ? 500 : 0;
         } else {
             if (reason.contains(ModifyBlacklistCommand.addReason.getReason())) {
                 p.sendErrorMessage("Der Spieler besitzt diesen Blacklistgrund bereits!");
@@ -82,7 +83,7 @@ public class BlacklistModifyEventHandler {
 
         // delete from and re-add blacklist
         p.sendChatMessage("/bl del " + ModifyBlacklistCommand.target);
-        p.sendChatMessage("/bl set " + ModifyBlacklistCommand.target + " " + kills + " " + price + " " + reason);
+        p.sendChatMessage("/bl set " + ModifyBlacklistCommand.target + " " + kills + " " + (price + outlawPriceModificator) + " " + reason);
     }
 
     //Removes all known Modifiers

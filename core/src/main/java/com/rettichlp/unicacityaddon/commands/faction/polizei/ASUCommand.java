@@ -5,7 +5,7 @@ import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.api.Syncer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.enums.faction.WantedFlag;
-import com.rettichlp.unicacityaddon.base.models.WantedReasonEntry;
+import com.rettichlp.unicacityaddon.base.models.WantedReason;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.utils.ForgeUtils;
 import net.labymod.api.client.chat.command.Command;
@@ -45,7 +45,7 @@ public class ASUCommand extends Command {
         int reasonIndex = arguments.length - wantedFlags.size() - 1;
         List<String> players = Arrays.asList(arguments).subList(0, reasonIndex);
 
-        WantedReasonEntry wantedReasonEntry = WantedReasonEntry.getWantedReasonEntryByReason(arguments[reasonIndex]);
+        WantedReason wantedReasonEntry = WantedReason.getWantedReasonEntryByReason(arguments[reasonIndex]);
         if (wantedReasonEntry == null) {
             p.sendErrorMessage("Der Wantedgrund wurde nicht gefunden!");
             return true;
@@ -92,7 +92,7 @@ public class ASUCommand extends Command {
     @Override
     public List<String> complete(String[] arguments) {
         return TabCompletionBuilder.getBuilder(arguments)
-                .addToAllFromIndex(2, Syncer.getWantedReasonEntryList().stream().map(WantedReasonEntry::getReason).sorted().collect(Collectors.toList()))
+                .addToAllFromIndex(2, Syncer.getWantedReasonEntryList().stream().map(WantedReason::getReason).sorted().collect(Collectors.toList()))
                 .addToAllFromIndex(2, ForgeUtils.getOnlinePlayers())
                 .addToAllFromIndex(3, Arrays.stream(WantedFlag.values()).map(WantedFlag::getFlagArgument).sorted().collect(Collectors.toList()))
                 .build();

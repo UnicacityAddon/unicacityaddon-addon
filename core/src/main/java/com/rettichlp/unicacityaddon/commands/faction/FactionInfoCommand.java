@@ -8,9 +8,9 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.events.faction.FactionInfoEventHandler;
+import net.labymod.api.client.chat.command.Command;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.event.HoverEvent;
-import net.labymod.api.client.chat.command.Command;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,7 +24,6 @@ import java.util.stream.Collectors;
  * @author RettichLP
  * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/commands/faction/CheckActiveMembersCommand.java">UCUtils by paulzhng</a>
  */
-@SuppressWarnings("UnstableApiUsage")
 @UCCommand
 public class FactionInfoCommand extends Command {
 
@@ -89,7 +88,7 @@ public class FactionInfoCommand extends Command {
 
         return new HashMap<>();
 
-// TODO: 11.12.2022
+//        TODO: 11.12.2022
 //        try {
 //            return Uninterruptibles.getUninterruptibly(FactionInfoEventHandler.future);
 //        } catch (ExecutionException e) {

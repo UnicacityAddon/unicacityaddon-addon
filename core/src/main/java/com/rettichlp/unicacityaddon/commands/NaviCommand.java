@@ -4,7 +4,7 @@ import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.api.Syncer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
-import com.rettichlp.unicacityaddon.base.models.NaviPointEntry;
+import com.rettichlp.unicacityaddon.base.models.NaviPoint;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.utils.MathUtils;
 import com.rettichlp.unicacityaddon.base.utils.TextUtils;
@@ -18,8 +18,6 @@ import java.util.stream.Collectors;
  */
 @UCCommand
 public class NaviCommand extends Command {
-
-    private static final String usage = "/navi";
 
     public NaviCommand() {
         super("navi");
@@ -38,20 +36,20 @@ public class NaviCommand extends Command {
             return true;
         }
 
-        NaviPointEntry naviPointEntry = NaviPointEntry.getNaviPointEntryByTabName(arguments[0].trim());
-        if (naviPointEntry == null) {
+        NaviPoint naviPoint = NaviPoint.getNaviPointEntryByTabName(arguments[0].trim());
+        if (naviPoint == null) {
             p.sendChatMessage("/navi " + TextUtils.makeStringByArgs(arguments, " "));
             return true;
         }
 
-        p.setNaviRoute(naviPointEntry.getFloatVector3());
+        p.setNaviRoute(naviPoint.getBlockPos());
         return true;
     }
 
     @Override
     public List<String> complete(String[] arguments) {
         return TabCompletionBuilder.getBuilder(arguments)
-                .addAtIndex(1, Syncer.NAVIPOINTLIST.stream().map(NaviPointEntry::getName).sorted().collect(Collectors.toList()))
+                .addAtIndex(1, Syncer.NAVIPOINTLIST.stream().map(NaviPoint::getName).sorted().collect(Collectors.toList()))
                 .build();
     }
 }

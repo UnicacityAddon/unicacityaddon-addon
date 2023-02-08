@@ -5,7 +5,7 @@ import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.api.Syncer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.enums.faction.ModifyBlacklistType;
-import com.rettichlp.unicacityaddon.base.models.BlacklistReasonEntry;
+import com.rettichlp.unicacityaddon.base.models.BlacklistReason;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import net.labymod.api.client.chat.command.Command;
 
@@ -20,7 +20,7 @@ public class ModifyBlacklistCommand extends Command {
 
     public static String target;
     public static ModifyBlacklistType type;
-    public static BlacklistReasonEntry addReason;
+    public static BlacklistReason addReason;
     public static long executedTime = -1;
 
     private static final String usage = "/modifyblacklist [Spieler] [Grund/-v]";
@@ -40,15 +40,15 @@ public class ModifyBlacklistCommand extends Command {
 
         String reason = arguments[1];
 
-        BlacklistReasonEntry blacklistReasonEntry = BlacklistReasonEntry.getBlacklistReasonEntryByReason(reason);
-        if (!reason.equalsIgnoreCase("-v") && blacklistReasonEntry == null) {
+        BlacklistReason blacklistReason = BlacklistReason.getBlacklistReasonEntryByReason(reason);
+        if (!reason.equalsIgnoreCase("-v") && blacklistReason == null) {
             p.sendErrorMessage("Blacklistgrund wurde nicht gefunden!");
             return true;
         }
 
         target = arguments[0];
-        if (blacklistReasonEntry != null) {
-            addReason = blacklistReasonEntry;
+        if (blacklistReason != null) {
+            addReason = blacklistReason;
             type = ModifyBlacklistType.MODIFY_REASON;
         } else {
             type = ModifyBlacklistType.OUTLAW;
@@ -63,8 +63,8 @@ public class ModifyBlacklistCommand extends Command {
     @Override
     public List<String> complete(String[] arguments) {
         return TabCompletionBuilder.getBuilder(arguments)
-                .addAtIndex(1, Syncer.getBlacklistReasonEntryList().stream().map(BlacklistReasonEntry::getReason).sorted().collect(Collectors.toList()))
-                .addAtIndex(1, "-v")
+                .addAtIndex(2, Syncer.getBlacklistReasonEntryList().stream().map(BlacklistReason::getReason).sorted().collect(Collectors.toList()))
+                .addAtIndex(2, "-v")
                 .build();
     }
 }

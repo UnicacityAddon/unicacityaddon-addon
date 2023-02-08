@@ -22,8 +22,8 @@ public class CountdownCommand extends Command {
 
     public static int countdown;
 
-    private static boolean active = false;
     private static final String usage = "/countdown [Sekunden] [Chat]";
+    private static boolean active = false;
 
     public CountdownCommand() {
         super("countdown");
@@ -38,12 +38,7 @@ public class CountdownCommand extends Command {
             return true;
         }
 
-        if (arguments.length < 2) {
-            p.sendSyntaxMessage(usage);
-            return true;
-        }
-
-        if (!MathUtils.isInteger(arguments[0])) {
+        if (arguments.length < 1 || !MathUtils.isInteger(arguments[0])) {
             p.sendSyntaxMessage(usage);
             return true;
         }
@@ -55,7 +50,7 @@ public class CountdownCommand extends Command {
             return true;
         }
 
-        ChatType chatType = ChatType.getChatTypeByDisplayName(arguments[1]);
+        ChatType chatType = arguments.length == 1 ? ChatType.CHAT : ChatType.getChatTypeByDisplayName(arguments[1]);
         if (chatType == null) {
             p.sendSyntaxMessage(usage);
             return true;
@@ -91,7 +86,7 @@ public class CountdownCommand extends Command {
     @Override
     public List<String> complete(String[] arguments) {
         return TabCompletionBuilder.getBuilder(arguments)
-                .addAtIndex(1, Arrays.stream(ChatType.values()).map(ChatType::getDisplayName).sorted().collect(Collectors.toList()))
+                .addAtIndex(2, Arrays.stream(ChatType.values()).map(ChatType::getDisplayName).sorted().collect(Collectors.toList()))
                 .build();
     }
 }

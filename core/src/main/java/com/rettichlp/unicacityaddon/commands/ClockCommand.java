@@ -13,8 +13,6 @@ import java.util.List;
 @UCCommand
 public class ClockCommand extends Command {
 
-    private static final String usage = "/clock";
-
     public ClockCommand() {
         super("clock", "uhrzeit", "uhr");
     }

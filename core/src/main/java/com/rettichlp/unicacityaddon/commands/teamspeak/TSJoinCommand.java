@@ -16,7 +16,6 @@ import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.utils.ForgeUtils;
 import com.rettichlp.unicacityaddon.base.utils.TextUtils;
-import jdk.internal.joptsimple.internal.Strings;
 import net.labymod.api.client.chat.command.Command;
 
 import java.util.HashMap;
@@ -46,7 +45,7 @@ public class TSJoinCommand extends Command {
             return true;
         }
 
-        if (!UnicacityAddon.configuration.tsApiKey().getOrDefault(Strings.EMPTY).matches("([A-Z0-9]{4}(-*)){6}")) {
+        if (!UnicacityAddon.configuration.tsApiKey().getOrDefault("").matches("([A-Z0-9]{4}(-*)){6}")) {
             p.sendErrorMessage("Teamspeak API Key ist nicht gültig!");
             return true;
         }

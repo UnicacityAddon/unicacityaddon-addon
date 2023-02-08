@@ -13,8 +13,6 @@ import java.util.List;
 @UCCommand
 public class CancelCountdownCommand extends Command {
 
-    private static final String usage = "/cancelcountdown";
-
     public CancelCountdownCommand() {
         super("cancelcountdown");
     }
