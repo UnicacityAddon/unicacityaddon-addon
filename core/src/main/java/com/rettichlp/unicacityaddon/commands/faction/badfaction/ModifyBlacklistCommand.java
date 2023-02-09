@@ -1,7 +1,7 @@
 package com.rettichlp.unicacityaddon.commands.faction.badfaction;
 
-import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
-import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
+import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.api.Syncer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.enums.faction.ModifyBlacklistType;
@@ -31,7 +31,7 @@ public class ModifyBlacklistCommand extends Command {
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        UPlayer p = AbstractionLayer.getPlayer();
+        AddonPlayer p = UnicacityAddon.PLAYER;
 
         if (arguments.length != 2) {
             p.sendSyntaxMessage(usage);
@@ -56,7 +56,7 @@ public class ModifyBlacklistCommand extends Command {
 
         executedTime = System.currentTimeMillis();
 
-        p.sendChatMessage("/bl");
+        p.sendServerMessage("/bl");
         return true;
     }
 

@@ -1,7 +1,7 @@
 package com.rettichlp.unicacityaddon.commands.faction;
 
-import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
-import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
+import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
@@ -35,7 +35,7 @@ public class FactionInfoCommand extends Command {
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        UPlayer p = AbstractionLayer.getPlayer();
+        AddonPlayer p = UnicacityAddon.PLAYER;
         List<Faction> chosenFactions = new ArrayList<>();
 
         for (String s : arguments) {
@@ -84,7 +84,7 @@ public class FactionInfoCommand extends Command {
 
     private Map<Boolean, Integer> getMembers(Faction faction) {
         FactionInfoEventHandler.future = new CompletableFuture<>();
-        AbstractionLayer.getPlayer().sendChatMessage("/memberinfo " + faction.getFactionKey());
+        UnicacityAddon.PLAYER.sendServerMessage("/memberinfo " + faction.getFactionKey());
 
         return new HashMap<>();
 

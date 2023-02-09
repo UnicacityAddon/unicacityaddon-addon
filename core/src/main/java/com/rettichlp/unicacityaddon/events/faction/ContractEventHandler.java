@@ -1,9 +1,9 @@
 package com.rettichlp.unicacityaddon.events.faction;
 
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.base.utils.ForgeUtils;
-import lombok.NoArgsConstructor;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
@@ -16,11 +16,16 @@ import java.util.regex.Matcher;
  * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/events/NameFormatEventHandler.java">UCUtils by paulzhng</a>
  */
 @UCEvent
-@NoArgsConstructor
 public class ContractEventHandler {
 
     public static final List<String> CONTRACT_LIST = new ArrayList<>();
     private static long hitlistShown;
+
+    private final UnicacityAddon unicacityAddon;
+
+    public ContractEventHandler(UnicacityAddon unicacityAddon) {
+        this.unicacityAddon = unicacityAddon;
+    }
 
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {
@@ -29,7 +34,7 @@ public class ContractEventHandler {
 
         Matcher contractSetMatcher = PatternHandler.CONTRACT_SET_PATTERN.matcher(unformattedMessage);
         if (contractSetMatcher.find()) {
-            // TODO: 10.12.2022 AbstractionLayer.getPlayer().playSound(SoundRegistry.CONTRACT_SET_SOUND, 1, 1);
+            // TODO: 10.12.2022 p.playSound(SoundRegistry.CONTRACT_SET_SOUND, 1, 1);
             String name = contractSetMatcher.group(1);
             CONTRACT_LIST.add(name);
             return;
@@ -46,7 +51,7 @@ public class ContractEventHandler {
                 break;
             }
 
-            // TODO: 10.12.2022 AbstractionLayer.getPlayer().playSound(SoundRegistry.CONTRACT_FULFILLED_SOUND, 1, 1);
+            // TODO: 10.12.2022 p.playSound(SoundRegistry.CONTRACT_FULFILLED_SOUND, 1, 1);
             CONTRACT_LIST.remove(name);
             return;
         }

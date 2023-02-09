@@ -1,5 +1,7 @@
 package com.rettichlp.unicacityaddon;
 
+import com.rettichlp.unicacityaddon.base.AddonPlayer;
+import com.rettichlp.unicacityaddon.base.DefaultAddonPlayer;
 import com.rettichlp.unicacityaddon.base.api.Syncer;
 import com.rettichlp.unicacityaddon.base.api.TokenManager;
 import com.rettichlp.unicacityaddon.base.api.checks.BroadcastChecker;
@@ -142,6 +144,7 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
     public static final String VERSION = "2.0.0-dev";
     public static Minecraft MINECRAFT;
     public static Logging LOGGER;
+    public static AddonPlayer PLAYER;
     public static UnicacityAddon ADDON;
     public static UnicacityAddonConfiguration configuration;
 
@@ -149,68 +152,70 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
     protected void enable() {
         this.registerSettingCategory();
 
-        this.registerListener(new ABuyEventHandler());
-        this.registerListener(new AccountEventHandler());
-        this.registerListener(new CarEventHandler());
-        this.registerListener(new DeathsKillsEventHandler());
-        this.registerListener(new FriendJoinEventHandler());
-        this.registerListener(new HotkeyEventHandler());
-        this.registerListener(new KarmaMessageEventHandler());
-        this.registerListener(new MobileEventHandler());
-        this.registerListener(new MoneyEventHandler());
-        this.registerListener(new NameTagEventHandler());
-        this.registerListener(new NavigationEventHandler());
-        this.registerListener(new RenderTagEventHandler());
-        this.registerListener(new TabListEventHandler());
-        this.registerListener(new TickEventHandler());
-        this.registerListener(new TimerEventHandler());
-        this.registerListener(new WeaponClickEventHandler());
+        PLAYER = new DefaultAddonPlayer(this);
+
+        this.registerListener(new ABuyEventHandler(this));
+        this.registerListener(new AccountEventHandler(this));
+        this.registerListener(new CarEventHandler(this));
+        this.registerListener(new DeathsKillsEventHandler(this));
+        this.registerListener(new FriendJoinEventHandler(this));
+        this.registerListener(new HotkeyEventHandler(this));
+        this.registerListener(new KarmaMessageEventHandler(this));
+        this.registerListener(new MobileEventHandler(this));
+        this.registerListener(new MoneyEventHandler(this));
+        this.registerListener(new NameTagEventHandler(this));
+        this.registerListener(new NavigationEventHandler(this));
+        this.registerListener(new RenderTagEventHandler(this));
+        this.registerListener(new TabListEventHandler(this));
+        this.registerListener(new TickEventHandler(this));
+        this.registerListener(new TimerEventHandler(this));
+        this.registerListener(new WeaponClickEventHandler(this));
         // chatlog
-        this.registerListener(new ChatLogReceiveChatEventHandler());
-        this.registerListener(new ChatLogSendChatEventHandler());
+        this.registerListener(new ChatLogReceiveChatEventHandler(this));
+        this.registerListener(new ChatLogSendChatEventHandler(this));
         // faction
-        this.registerListener(new AEquipEventHandler());
-        this.registerListener(new AFbankEinzahlenEventHandler());
-        this.registerListener(new ContractEventHandler());
-        this.registerListener(new EmergencyServiceEventHandler());
-        this.registerListener(new EquipEventHandler());
-        this.registerListener(new FDSFChatEventHandler());
-        this.registerListener(new FDoorEventHandler());
-        this.registerListener(new FactionInfoEventHandler());
-        this.registerListener(new ReinforcementEventHandler());
-        this.registerListener(new ShareLocationEventHandler());
+        this.registerListener(new AEquipEventHandler(this));
+        this.registerListener(new AFbankEinzahlenEventHandler(this));
+        this.registerListener(new ContractEventHandler(this));
+        this.registerListener(new EmergencyServiceEventHandler(this));
+        this.registerListener(new EquipEventHandler(this));
+        this.registerListener(new FDSFChatEventHandler(this));
+        this.registerListener(new FDoorEventHandler(this));
+        this.registerListener(new FactionInfoEventHandler(this));
+        this.registerListener(new ReinforcementEventHandler(this));
+        this.registerListener(new ShareLocationEventHandler(this));
         // faction - badfaction
-        this.registerListener(new BannerEventHandler());
-        this.registerListener(new DBankMessageEventHandler());
-        this.registerListener(new DrugInteractionEventHandler());
-        this.registerListener(new GaggedEventHandler());
-        this.registerListener(new GiftEigenbedarfEventHandler());
-        this.registerListener(new PlantEventHandler());
+        this.registerListener(new BannerEventHandler(this));
+        this.registerListener(new DBankMessageEventHandler(this));
+        this.registerListener(new DrugInteractionEventHandler(this));
+        this.registerListener(new GaggedEventHandler(this));
+        this.registerListener(new GiftEigenbedarfEventHandler(this));
+        this.registerListener(new PlantEventHandler(this));
         // faction - badfaction - blacklist
-        this.registerListener(new BlacklistEventHandler());
-        this.registerListener(new BlacklistModifyEventHandler());
+        this.registerListener(new BlacklistEventHandler(this));
+        this.registerListener(new BlacklistModifyEventHandler(this));
         // faction - polizei
-        this.registerListener(new HQMessageEventHandler());
-        this.registerListener(new WantedEventHandler());
+        this.registerListener(new HQMessageEventHandler(this));
+        this.registerListener(new WantedEventHandler(this));
         // faction - rettungsdienst
-        this.registerListener(new FireEventHandler());
-        this.registerListener(new FirstAidEventHandler());
-        this.registerListener(new MedicationEventHandler());
-        this.registerListener(new ReviveEventHandler());
-        this.registerListener(new ServiceMessageEventHandler());
+        this.registerListener(new FireEventHandler(this));
+        this.registerListener(new FirstAidEventHandler(this));
+        this.registerListener(new MedicationEventHandler(this));
+        this.registerListener(new ReviveEventHandler(this));
+        this.registerListener(new ServiceMessageEventHandler(this));
         // faction - terroristen
-        this.registerListener(new BombTimerEventHandler());
+        this.registerListener(new BombTimerEventHandler(this));
         // house
-        this.registerListener(new HouseDataEventHandler());
-        this.registerListener(new HouseInteractionEventHandler());
-        this.registerListener(new HouseRenterEventHandler());
+        this.registerListener(new HouseDataEventHandler(this));
+        this.registerListener(new HouseInteractionEventHandler(this));
+        this.registerListener(new HouseRenterEventHandler(this));
         // job
-        this.registerListener(new FishermanEventHandler());
-        this.registerListener(new JobEventHandler());
+        this.registerListener(new FishermanEventHandler(this));
+        this.registerListener(new JobEventHandler(this));
         // team
-        this.registerListener(new ReportEventHandler());
+        this.registerListener(new ReportEventHandler(this));
         // teamspeak
-        this.registerListener(new WaitingRoomEventHandler());
+        this.registerListener(new WaitingRoomEventHandler(this));
 
         this.registerCommand(new ABuyCommand());
         this.registerCommand(new BusCommand());
@@ -304,6 +309,7 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
         new Thread(TSClientQuery::getInstance).start();
         FileManager.loadData();
 
+        TickEventHandler.currentTick = 0;
         this.logger().info("Enabled UnicacityAddon");
     }
 

@@ -1,7 +1,7 @@
 package com.rettichlp.unicacityaddon.commands.faction;
 
-import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
-import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
+import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.enums.faction.ReinforcementType;
@@ -31,7 +31,7 @@ public class ReinforcementCommand extends Command {
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        UPlayer p = AbstractionLayer.getPlayer();
+        AddonPlayer p = UnicacityAddon.PLAYER;
 
         if (!MobileEventHandler.hasCommunications) {
             p.sendErrorMessage("Du hast keine Kommunikationsmittel!");
@@ -58,7 +58,7 @@ public class ReinforcementCommand extends Command {
             int y = Integer.parseInt(arguments[3]);
             int z = Integer.parseInt(arguments[4]);
 
-            p.sendChatMessage(chatType.getChatCommand() + " " + name + ", ich bin zu deinem Verstärkungsruf unterwegs! (" + (int) p.getPosition().distance(new FloatVector3(x, y, z)) + " Meter entfernt)");
+            p.sendServerMessage(chatType.getChatCommand() + " " + name + ", ich bin zu deinem Verstärkungsruf unterwegs! (" + (int) p.getPosition().distance(new FloatVector3(x, y, z)) + " Meter entfernt)");
             p.setNaviRoute(x, y, z);
             return true;
         }
@@ -69,9 +69,9 @@ public class ReinforcementCommand extends Command {
         float posZ = position.getZ();
 
         if (firstType.getMessage() != null)
-            p.sendChatMessage(chatType.getChatCommand() + " " + firstType.getMessage());
+            p.sendServerMessage(chatType.getChatCommand() + " " + firstType.getMessage());
 
-        p.sendChatMessage(chatType.getChatCommand() + " Benötige Verstärkung! -> X: " + posX + " | Y: " + posY + " | Z: " + posZ);
+        p.sendServerMessage(chatType.getChatCommand() + " Benötige Verstärkung! -> X: " + posX + " | Y: " + posY + " | Z: " + posZ);
         return true;
     }
 

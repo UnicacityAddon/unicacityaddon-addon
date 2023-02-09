@@ -1,8 +1,7 @@
 package com.rettichlp.unicacityaddon.events;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
-import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
+import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
 import com.rettichlp.unicacityaddon.base.enums.api.StatisticType;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
@@ -28,10 +27,16 @@ public class KarmaMessageEventHandler {
     private boolean karmaCheck = false;
     private int karma;
 
+    private final UnicacityAddon unicacityAddon;
+
+    public KarmaMessageEventHandler(UnicacityAddon unicacityAddon) {
+        this.unicacityAddon = unicacityAddon;
+    }
+
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {
         String msg = e.chatMessage().getPlainText();
-        UPlayer p = AbstractionLayer.getPlayer();
+        AddonPlayer p = UnicacityAddon.PLAYER;
 
         if (AccountEventHandler.isAfk)
             return;
@@ -42,7 +47,7 @@ public class KarmaMessageEventHandler {
 
             // WORKAROUND START (for medics because ✨UCMDMOD✨) TODO: Remove later
             if (!p.getFaction().equals(Faction.RETTUNGSDIENST) && !ReviveEventHandler.isDead) {
-                p.sendChatMessage("/karma");
+                p.sendServerMessage("/karma");
                 karmaCheck = true;
                 e.setCancelled(true);
             }
@@ -58,7 +63,7 @@ public class KarmaMessageEventHandler {
 
         Matcher karmaMatcher = PatternHandler.KARMA_PATTERN.matcher(msg);
         if (karmaMatcher.find() && karmaCheck) {
-            if (karma < 0 && UnicacityAddon.configuration.despawnTime().get()) {
+            if (karma < 0 && unicacityAddon.configuration().despawnTime().get()) {
                 Calendar cal = Calendar.getInstance();
                 cal.add(Calendar.MINUTE, 5);
                 Date date = cal.getTime();

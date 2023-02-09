@@ -1,8 +1,8 @@
 package com.rettichlp.unicacityaddon.commands.api;
 
 import com.google.gson.JsonObject;
-import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
-import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
+import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.api.TokenManager;
 import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
@@ -29,7 +29,7 @@ public class TokenCommand extends Command {
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        UPlayer p = AbstractionLayer.getPlayer();
+        AddonPlayer p = UnicacityAddon.PLAYER;
 
         if (arguments.length == 0) {
             p.sendMessage(Message.getBuilder()

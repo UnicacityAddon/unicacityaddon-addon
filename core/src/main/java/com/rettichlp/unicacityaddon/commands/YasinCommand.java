@@ -2,8 +2,8 @@ package com.rettichlp.unicacityaddon.commands;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
-import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
+import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
@@ -26,7 +26,7 @@ public class YasinCommand extends Command {
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        UPlayer p = AbstractionLayer.getPlayer();
+        AddonPlayer p = UnicacityAddon.PLAYER;
 
         new Thread(() -> {
             if (arguments.length == 0) {
@@ -56,7 +56,7 @@ public class YasinCommand extends Command {
         return TabCompletionBuilder.getBuilder(arguments).build();
     }
 
-    private void yasinList(UPlayer p) {
+    private void yasinList(AddonPlayer p) {
         p.sendEmptyMessage();
         p.sendMessage(Message.getBuilder()
                 .of("Yasin's Liste:").color(ColorCode.DARK_AQUA).bold().advance()

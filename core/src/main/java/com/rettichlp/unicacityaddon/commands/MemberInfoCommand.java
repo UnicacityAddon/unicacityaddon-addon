@@ -1,7 +1,7 @@
 package com.rettichlp.unicacityaddon.commands;
 
-import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
-import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
+import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
@@ -26,10 +26,10 @@ public class MemberInfoCommand extends Command {
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        UPlayer p = AbstractionLayer.getPlayer();
+        AddonPlayer p = UnicacityAddon.PLAYER;
 
         String faction = arguments.length < 1 ? p.getFaction().getFactionKey() : arguments[0];
-        p.sendChatMessage("/memberinfo " + faction);
+        p.sendServerMessage("/memberinfo " + faction);
         return true;
     }
 

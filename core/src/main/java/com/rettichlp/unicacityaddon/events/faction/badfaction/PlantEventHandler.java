@@ -1,5 +1,6 @@
 package com.rettichlp.unicacityaddon.events.faction.badfaction;
 
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
@@ -16,7 +17,13 @@ import java.util.regex.Matcher;
 @UCEvent
 public class PlantEventHandler {
 
-//    @Subscribe
+    private final UnicacityAddon unicacityAddon;
+
+    public PlantEventHandler(UnicacityAddon unicacityAddon) {
+        this.unicacityAddon = unicacityAddon;
+    }
+
+    //    @Subscribe
 //    public void onPlayerInteract(PlayerInteractEvent e) {
 //        if (!(e instanceof PlayerInteractEvent.RightClickBlock) || e.getHand().equals(EnumHand.OFF_HAND) || !UnicacityAddon.isUnicacity()) return;
 //
@@ -29,7 +36,7 @@ public class PlantEventHandler {
 //
 //        if (!clickedBlockIsFern || !bottomBlockIsPodzol) return;
 //
-//        AbstractionLayer.getPlayer().sendChatMessage("/plant");
+//        p.sendServerMessage("/plant");
 //    }
 
     @Subscribe

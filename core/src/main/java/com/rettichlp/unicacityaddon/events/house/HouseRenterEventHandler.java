@@ -1,12 +1,11 @@
 package com.rettichlp.unicacityaddon.events.house;
 
-import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
-import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
+import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
-import lombok.NoArgsConstructor;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.event.HoverEvent;
 import net.labymod.api.event.Subscribe;
@@ -29,7 +28,6 @@ import java.util.regex.Matcher;
  * @author RettichLP
  */
 @UCEvent
-@NoArgsConstructor
 public class HouseRenterEventHandler {
 
     public static final Map<Integer, Map.Entry<Integer, Integer>> HOUSE_RENTER_MAP = new HashMap<>();
@@ -41,6 +39,12 @@ public class HouseRenterEventHandler {
 
     final Timer TIMER = new Timer();
 
+    private final UnicacityAddon unicacityAddon;
+
+    public HouseRenterEventHandler(UnicacityAddon unicacityAddon) {
+        this.unicacityAddon = unicacityAddon;
+    }
+
     @Subscribe
     public void onClientMessageSend(ChatMessageSendEvent e) {
         String msg = e.getMessage();
@@ -50,7 +54,7 @@ public class HouseRenterEventHandler {
         TIMER.schedule(new TimerTask() {
             @Override
             public void run() {
-                UPlayer p = AbstractionLayer.getPlayer();
+                AddonPlayer p = UnicacityAddon.PLAYER;
                 p.sendEmptyMessage();
 
                 HOUSE_RENTER_MAP.put(lastHouseNumber, Maps.immutableEntry(lastRenterAmount, lastRenterOnlineAmount));

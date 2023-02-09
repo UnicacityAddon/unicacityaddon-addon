@@ -1,5 +1,6 @@
 package com.rettichlp.unicacityaddon.events;
 
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.FormattingCode;
 import com.rettichlp.unicacityaddon.base.utils.TextUtils;
@@ -20,6 +21,12 @@ import java.util.List;
 public class TabListEventHandler implements Comparator<NetworkPlayerInfo> {
 
     private static final List<String> ORDERED_ENTRIES = Arrays.asList("§1[UC]", "§1", "§9[UC]", "§9", "§4[UC]", "§4", "§6[UC]", "§6", "§8[§9UC§8]§c", "§8[§eB§8]", "§8[§6R§8]", "[UC]");
+
+    private final UnicacityAddon unicacityAddon;
+
+    public TabListEventHandler(UnicacityAddon unicacityAddon) {
+        this.unicacityAddon = unicacityAddon;
+    }
 
     @Subscribe
     public void onTabListUpdate(TabListUpdateEvent e) {

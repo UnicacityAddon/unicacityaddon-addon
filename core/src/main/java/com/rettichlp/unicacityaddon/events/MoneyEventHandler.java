@@ -1,8 +1,7 @@
 package com.rettichlp.unicacityaddon.events;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
-import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
+import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
 import com.rettichlp.unicacityaddon.base.config.atm.ATMSetting;
 import com.rettichlp.unicacityaddon.base.enums.api.StatisticType;
@@ -12,7 +11,6 @@ import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.commands.ReichensteuerCommand;
-import lombok.NoArgsConstructor;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatMessageSendEvent;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
@@ -26,15 +24,20 @@ import java.util.regex.Matcher;
  * @author RettichLP
  */
 @UCEvent
-@NoArgsConstructor
 public class MoneyEventHandler {
 
     private boolean isGRBankCommand;
 
+    private final UnicacityAddon unicacityAddon;
+
+    public MoneyEventHandler(UnicacityAddon unicacityAddon) {
+        this.unicacityAddon = unicacityAddon;
+    }
+
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {
         String msg = e.chatMessage().getPlainText();
-        UPlayer p = AbstractionLayer.getPlayer();
+        AddonPlayer p = UnicacityAddon.PLAYER;
 
         Matcher jobSalaryMatcher = PatternHandler.JOB_SALARY_PATTERN.matcher(msg);
         if (jobSalaryMatcher.find()) {
@@ -59,18 +62,18 @@ public class MoneyEventHandler {
         if (kontoauszugMatcher.find()) {
             FileManager.DATA.setBankBalance(Integer.parseInt(kontoauszugMatcher.group(1)));
 
-            ATMSetting atmSetting = UnicacityAddon.configuration.atmSetting();
+            ATMSetting atmSetting = unicacityAddon.configuration().atmSetting();
             if (atmSetting.enabled().get()) {
                 if (atmSetting.fBank().get()) {
-                    p.sendChatMessage("/fbank");
+                    p.sendServerMessage("/fbank");
                 }
 
                 if (atmSetting.grBank().get()) {
-                    p.sendChatMessage("/grkasse info");
+                    p.sendServerMessage("/grkasse info");
                 }
 
                 if (atmSetting.atmInfo().get()) {
-                    p.sendChatMessage("/atminfo");
+                    p.sendServerMessage("/atminfo");
                 }
             }
 

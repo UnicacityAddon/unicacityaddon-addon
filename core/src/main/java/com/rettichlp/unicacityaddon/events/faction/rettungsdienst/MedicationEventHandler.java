@@ -1,11 +1,10 @@
 package com.rettichlp.unicacityaddon.events.faction.rettungsdienst;
 
-import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.commands.faction.rettungsdienst.ARezeptAnnehmenCommand;
 import com.rettichlp.unicacityaddon.commands.faction.rettungsdienst.ARezeptCommand;
-import lombok.NoArgsConstructor;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
@@ -16,11 +15,16 @@ import java.util.TimerTask;
  * @author RettichLP
  */
 @UCEvent
-@NoArgsConstructor
 public class MedicationEventHandler {
 
     private static final Timer TIMER = new Timer();
     private static long lastExecution;
+
+    private final UnicacityAddon unicacityAddon;
+
+    public MedicationEventHandler(UnicacityAddon unicacityAddon) {
+        this.unicacityAddon = unicacityAddon;
+    }
 
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {
@@ -55,12 +59,12 @@ public class MedicationEventHandler {
     public static void acceptRecipe() {
         --ARezeptAnnehmenCommand.amount;
         lastExecution = System.currentTimeMillis();
-        AbstractionLayer.getPlayer().acceptOffer();
+        UnicacityAddon.PLAYER.acceptOffer();
     }
 
     public static void giveRecipe() {
         --ARezeptCommand.amount;
         lastExecution = System.currentTimeMillis();
-        AbstractionLayer.getPlayer().sellMedication(ARezeptCommand.target, ARezeptCommand.medication);
+        UnicacityAddon.PLAYER.sellMedication(ARezeptCommand.target, ARezeptCommand.medication);
     }
 }

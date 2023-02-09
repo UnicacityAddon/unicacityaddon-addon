@@ -1,14 +1,12 @@
 package com.rettichlp.unicacityaddon.events.team;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
-import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
+import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.config.message.ReportMessageSetting;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
-import lombok.NoArgsConstructor;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
@@ -22,7 +20,6 @@ import java.util.regex.Pattern;
  * @author Dimiikou
  */
 @UCEvent
-@NoArgsConstructor
 public class ReportEventHandler {
 
     private static final Timer t = new Timer();
@@ -34,11 +31,17 @@ public class ReportEventHandler {
             "((?:[a-z0-9]{2,}://)?(?:(?:[0-9]{1,3}\\.){3}[0-9]{1,3}|([-\\w_]+\\.[a-z]{2,}?))(?::[0-9]{1,5})?.*?(?=[!\"§ \n]|$))",
             Pattern.CASE_INSENSITIVE);
 
+    private final UnicacityAddon unicacityAddon;
+
+    public ReportEventHandler(UnicacityAddon unicacityAddon) {
+        this.unicacityAddon = unicacityAddon;
+    }
+
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {
-        UPlayer p = AbstractionLayer.getPlayer();
+        AddonPlayer p = UnicacityAddon.PLAYER;
         String unformattedMsg = e.chatMessage().getPlainText();
-        ReportMessageSetting reportMessageSetting = UnicacityAddon.configuration.reportMessageSetting();
+        ReportMessageSetting reportMessageSetting = unicacityAddon.configuration().reportMessageSetting();
 
         if (PatternHandler.REPORT_ACCEPTED_PATTERN.matcher(unformattedMsg).find()) {
             isReport = true;
@@ -49,7 +52,7 @@ public class ReportEventHandler {
                 @Override
                 public void run() {
                     if (System.currentTimeMillis() - lastExecution > 1000L) {
-                        p.sendChatMessage(reportMessageSetting.greeting().get());
+                        p.sendServerMessage(reportMessageSetting.greeting().get());
                         lastExecution = System.currentTimeMillis();
                     }
                 }

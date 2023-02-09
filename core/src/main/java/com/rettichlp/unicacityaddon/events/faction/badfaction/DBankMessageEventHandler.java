@@ -7,7 +7,6 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
-import lombok.NoArgsConstructor;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
@@ -19,14 +18,19 @@ import java.util.regex.Matcher;
  * @author Dimiikou
  */
 @UCEvent
-@NoArgsConstructor
 public class DBankMessageEventHandler {
+
+    private final UnicacityAddon unicacityAddon;
+
+    public DBankMessageEventHandler(UnicacityAddon unicacityAddon) {
+        this.unicacityAddon = unicacityAddon;
+    }
 
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {
         String msg = e.chatMessage().getPlainText();
 
-        if (!UnicacityAddon.configuration.factionMessageSetting().dBank().get())
+        if (!unicacityAddon.configuration().factionMessageSetting().dBank().get())
             return;
 
         Matcher dropMatcher = PatternHandler.DBANK_GIVE_PATTERN.matcher(msg);

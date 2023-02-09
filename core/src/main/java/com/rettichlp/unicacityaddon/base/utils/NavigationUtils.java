@@ -1,7 +1,7 @@
 package com.rettichlp.unicacityaddon.base.utils;
 
-import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
-import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
+import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.api.Syncer;
 import com.rettichlp.unicacityaddon.base.enums.location.ATM;
 import com.rettichlp.unicacityaddon.base.enums.location.Bus;
@@ -25,7 +25,7 @@ public class NavigationUtils {
         double nearestDistance = Double.MAX_VALUE;
 
         for (ATM atm : ATM.values()) {
-            double distance = AbstractionLayer.getPlayer().getPosition().distance(new FloatVector3(atm.getX(), atm.getY(), atm.getZ()));
+            double distance = UnicacityAddon.PLAYER.getPosition().distance(new FloatVector3(atm.getX(), atm.getY(), atm.getZ()));
             if (distance < nearestDistance) {
                 nearestDistance = distance;
                 nearestATM = atm;
@@ -40,7 +40,7 @@ public class NavigationUtils {
         double nearestDistance = Double.MAX_VALUE;
 
         for (Job job : Job.values()) {
-            double distance = AbstractionLayer.getPlayer().getPosition().distance(new FloatVector3(job.getX(), job.getY(), job.getZ()));
+            double distance = UnicacityAddon.PLAYER.getPosition().distance(new FloatVector3(job.getX(), job.getY(), job.getZ()));
             if (distance < nearestDistance) {
                 nearestDistance = distance;
                 nearestJob = job;
@@ -51,7 +51,7 @@ public class NavigationUtils {
     }
 
     public static Map.Entry<Double, Bus> getNearestBus() {
-        return getNearestBus(AbstractionLayer.getPlayer().getPosition());
+        return getNearestBus(UnicacityAddon.PLAYER.getPosition());
     }
 
     public static Map.Entry<Double, Bus> getNearestBus(FloatVector3 blockPos) {
@@ -73,7 +73,7 @@ public class NavigationUtils {
         return getNearestNaviPoint(new FloatVector3(x, y, z));
     }
 
-    public static Map.Entry<Double, NaviPoint> getNearestNaviPoint(UPlayer p) {
+    public static Map.Entry<Double, NaviPoint> getNearestNaviPoint(AddonPlayer p) {
         return getNearestNaviPoint(p.getPosition());
     }
 
@@ -94,6 +94,6 @@ public class NavigationUtils {
 
     public static void stopRoute() {
         routeMessageClearExecuteTime = System.currentTimeMillis();
-        AbstractionLayer.getPlayer().sendChatMessage("/stoproute");
+        UnicacityAddon.PLAYER.sendServerMessage("/stoproute");
     }
 }

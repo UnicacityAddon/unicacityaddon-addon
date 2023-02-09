@@ -1,6 +1,6 @@
 package com.rettichlp.unicacityaddon.commands.faction.badfaction;
 
-import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import net.labymod.api.client.chat.command.Command;
@@ -29,14 +29,14 @@ public class ACaptureCommand extends Command {
         if (isActive)
             return true;
 
-        AbstractionLayer.getPlayer().sendChatMessage("/capture");
+        UnicacityAddon.PLAYER.sendServerMessage("/capture");
         isActive = true;
 
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                AbstractionLayer.getPlayer().sendChatMessage("/capture");
+                UnicacityAddon.PLAYER.sendServerMessage("/capture");
                 isActive = false;
             }
         }, TimeUnit.SECONDS.toMillis(15));

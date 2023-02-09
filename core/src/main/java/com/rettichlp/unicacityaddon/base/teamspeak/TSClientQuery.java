@@ -1,7 +1,6 @@
 package com.rettichlp.unicacityaddon.base.teamspeak;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.teamspeak.commands.AuthCommand;
 import com.rettichlp.unicacityaddon.base.teamspeak.commands.BaseCommand;
 import com.rettichlp.unicacityaddon.base.teamspeak.commands.ClientNotifyRegisterCommand;
@@ -55,7 +54,7 @@ public class TSClientQuery implements Closeable {
     public static void reconnect() {
         disconnect();
         getInstance();
-        AbstractionLayer.getPlayer().sendInfoMessage("TeamSpeak ClientQuery Wiederherstellung abgeschlossen.");
+        UnicacityAddon.PLAYER.sendInfoMessage("TeamSpeak ClientQuery Wiederherstellung abgeschlossen.");
     }
 
     public static void disconnect() {

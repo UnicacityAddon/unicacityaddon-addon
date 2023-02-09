@@ -1,7 +1,7 @@
 package com.rettichlp.unicacityaddon.commands.teamspeak;
 
-import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
-import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
+import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.api.Syncer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
@@ -40,7 +40,7 @@ public class ChannelActivityCommand extends Command {
     @Override
     public boolean execute(String prefix, String[] arguments) {
         new Thread(() -> {
-            UPlayer p = AbstractionLayer.getPlayer();
+            AddonPlayer p = UnicacityAddon.PLAYER;
 
             if (!TSClientQuery.clientQueryConnected) {
                 p.sendErrorMessage("Keine Verbindung zur TeamSpeak ClientQuery!");

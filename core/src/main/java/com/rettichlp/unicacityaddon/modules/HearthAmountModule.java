@@ -33,7 +33,7 @@
 //    }
 //
 //    @Override public String getDisplayValue() {
-//        return HEART_DECIMAL_FORMAT.format(AbstractionLayer.getPlayer().getPlayer().getHealth() / 2) + ColorCode.RED.getCode() + "\u2764";
+//        return HEART_DECIMAL_FORMAT.format(UnicacityAddon.PLAYER.getPlayer().getHealth() / 2) + ColorCode.RED.getCode() + "❤";
 //    }
 //
 //    @Override public String getDefaultValue() {

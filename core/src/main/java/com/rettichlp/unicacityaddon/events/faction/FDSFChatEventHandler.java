@@ -1,10 +1,9 @@
 package com.rettichlp.unicacityaddon.events.faction;
 
-import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
-import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
+import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.events.MobileEventHandler;
-import lombok.NoArgsConstructor;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatMessageSendEvent;
 
@@ -12,12 +11,17 @@ import net.labymod.api.event.client.chat.ChatMessageSendEvent;
  * @author RettichLP
  */
 @UCEvent
-@NoArgsConstructor
 public class FDSFChatEventHandler {
+
+    private final UnicacityAddon unicacityAddon;
+
+    public FDSFChatEventHandler(UnicacityAddon unicacityAddon) {
+        this.unicacityAddon = unicacityAddon;
+    }
 
     @Subscribe
     public void onChatMessageSend(ChatMessageSendEvent e) {
-        UPlayer p = AbstractionLayer.getPlayer();
+        AddonPlayer p = UnicacityAddon.PLAYER;
         String msg = e.getMessage();
 
         if (msg.startsWith("/f ") && !MobileEventHandler.hasCommunications) {

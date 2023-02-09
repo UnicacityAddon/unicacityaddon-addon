@@ -1,8 +1,8 @@
 package com.rettichlp.unicacityaddon.events;
 
 import com.google.gson.JsonObject;
-import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
-import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
+import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
 import com.rettichlp.unicacityaddon.base.enums.api.StatisticType;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
@@ -11,7 +11,6 @@ import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.base.utils.MathUtils;
 import com.rettichlp.unicacityaddon.commands.faction.AFbankEinzahlenCommand;
-import lombok.NoArgsConstructor;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
@@ -21,13 +20,18 @@ import java.util.regex.Matcher;
  * @author Dimiikou
  */
 @UCEvent
-@NoArgsConstructor
 public class DeathsKillsEventHandler {
+
+    private final UnicacityAddon unicacityAddon;
+
+    public DeathsKillsEventHandler(UnicacityAddon unicacityAddon) {
+        this.unicacityAddon = unicacityAddon;
+    }
 
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {
         String msg = e.chatMessage().getPlainText();
-        UPlayer p = AbstractionLayer.getPlayer();
+        AddonPlayer p = UnicacityAddon.PLAYER;
 
         Matcher jailKillMatcher = PatternHandler.WANTED_KILL.matcher(msg);
         if (jailKillMatcher.find()) {

@@ -1,8 +1,8 @@
 package com.rettichlp.unicacityaddon.events;
 
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
-import lombok.NoArgsConstructor;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
@@ -13,7 +13,6 @@ import java.util.Timer;
  * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/commands/ABuyCommand.java">UCUtils by paulzhng</a>
  */
 @UCEvent
-@NoArgsConstructor
 public class ABuyEventHandler {
 
     private static final Timer TIMER = new Timer();
@@ -21,7 +20,13 @@ public class ABuyEventHandler {
     private static int amountLeft;
     private static int slotIndex;
 
-//    @Subscribe
+    private final UnicacityAddon unicacityAddon;
+
+    public ABuyEventHandler(UnicacityAddon unicacityAddon) {
+        this.unicacityAddon = unicacityAddon;
+    }
+
+    //    @Subscribe
 //    public void onKeyboardClickEvent(GuiScreenEvent.KeyboardInputEvent.Post e) {
 //        int amount = ABuyCommand.amount;
 //        if (amount == 0)
@@ -92,13 +97,11 @@ public class ABuyEventHandler {
     }
 
 //    private void buy() {
-//        UPlayer p = AbstractionLayer.getPlayer();
-//
 //        --amountLeft;
 //        lastBuy = System.currentTimeMillis();
 //
 //        Container container = p.getOpenContainer();
-//        UnicacityAddon.MINECRAFT.playerController.windowClick(container.windowId, slotIndex, 0, ClickType.PICKUP, UnicacityAddon.MINECRAFT.player);
+//        unicacityAddon.MINECRAFT.playerController.windowClick(container.windowId, slotIndex, 0, ClickType.PICKUP, unicacityAddon.MINECRAFT.player);
 //
 //        container.detectAndSendChanges();
 //        p.getInventoryContainer().detectAndSendChanges();

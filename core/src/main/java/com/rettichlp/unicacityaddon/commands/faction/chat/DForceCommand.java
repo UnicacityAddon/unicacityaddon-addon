@@ -1,7 +1,7 @@
 package com.rettichlp.unicacityaddon.commands.faction.chat;
 
-import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
-import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
+import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.utils.TextUtils;
@@ -23,7 +23,7 @@ public class DForceCommand extends Command {
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        UPlayer p = AbstractionLayer.getPlayer();
+        AddonPlayer p = UnicacityAddon.PLAYER;
 
         if (arguments.length == 0) {
             p.sendSyntaxMessage(usage);
@@ -31,7 +31,7 @@ public class DForceCommand extends Command {
         }
 
         String message = TextUtils.makeStringByArgs(arguments, " ");
-        p.sendChatMessage("/d " + message);
+        p.sendServerMessage("/d " + message);
         return true;
     }
 

@@ -1,7 +1,7 @@
 package com.rettichlp.unicacityaddon.commands.faction;
 
-import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
-import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
+import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
@@ -30,7 +30,7 @@ public class ShareLocationCommand extends Command {
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        UPlayer p = AbstractionLayer.getPlayer();
+        AddonPlayer p = UnicacityAddon.PLAYER;
 
         if (!MobileEventHandler.hasCommunications) {
             p.sendErrorMessage("Du hast keine Kommunikationsmittel!");
@@ -62,7 +62,7 @@ public class ShareLocationCommand extends Command {
         float posY = position.getY();
         float posZ = position.getZ();
 
-        p.sendChatMessage(command + " Positionsteilung für " + playerString + "! -> X: " + posX + " | Y: " + posY + " | Z: " + posZ);
+        p.sendServerMessage(command + " Positionsteilung für " + playerString + "! -> X: " + posX + " | Y: " + posY + " | Z: " + posZ);
 
         p.sendMessage(Message.getBuilder().prefix()
                 .of("Du hast eine Positionsmitteilung an ").color(ColorCode.AQUA).advance()

@@ -1,7 +1,7 @@
 package com.rettichlp.unicacityaddon.events.faction;
 
-import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
-import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
+import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
 import com.rettichlp.unicacityaddon.base.enums.api.StatisticType;
 import com.rettichlp.unicacityaddon.base.enums.location.ServiceCallBox;
@@ -10,7 +10,6 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
-import lombok.NoArgsConstructor;
 import net.labymod.api.client.chat.ChatMessage;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.event.HoverEvent;
@@ -27,14 +26,19 @@ import java.util.regex.Matcher;
  * @author RettichLP
  */
 @UCEvent
-@NoArgsConstructor
 public class EmergencyServiceEventHandler {
 
     private static final List<ServiceCallBox> activeEmergencyCallBoxList = new ArrayList<>();
 
+    private final UnicacityAddon unicacityAddon;
+
+    public EmergencyServiceEventHandler(UnicacityAddon unicacityAddon) {
+        this.unicacityAddon = unicacityAddon;
+    }
+
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {
-        UPlayer p = AbstractionLayer.getPlayer();
+        AddonPlayer p = UnicacityAddon.PLAYER;
         ChatMessage chatMessage = e.chatMessage();
         String unformattedMsg = chatMessage.getPlainText();
 
@@ -102,7 +106,7 @@ public class EmergencyServiceEventHandler {
 
         if (serviceCallBoxOptional.isPresent()) {
             ServiceCallBox serviceCallBox = serviceCallBoxOptional.get();
-            AbstractionLayer.getPlayer().sendChatMessage("/f ➡ Unterwegs zur Notrufsäule (" + serviceCallBox.getLocationName() + ")");
+            UnicacityAddon.PLAYER.sendServerMessage("/f ➡ Unterwegs zur Notrufsäule (" + serviceCallBox.getLocationName() + ")");
             activeEmergencyCallBoxList.remove(serviceCallBox);
         }
     }

@@ -1,7 +1,7 @@
 package com.rettichlp.unicacityaddon.events.faction;
 
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
-import lombok.NoArgsConstructor;
 
 import java.util.Timer;
 
@@ -10,7 +10,6 @@ import java.util.Timer;
  * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/commands/ABuyCommand.java">UCUtils by paulzhng</a>
  */
 @UCEvent
-@NoArgsConstructor
 public class AEquipEventHandler {
 
     private static final Timer TIMER = new Timer();
@@ -18,7 +17,13 @@ public class AEquipEventHandler {
     private static int amountLeft;
     private static int slotIndex;
 
-//    @Subscribe
+    private final UnicacityAddon unicacityAddon;
+
+    public AEquipEventHandler(UnicacityAddon unicacityAddon) {
+        this.unicacityAddon = unicacityAddon;
+    }
+
+    //    @Subscribe
 //    public void onKeyboardClickEvent(GuiScreenEvent.KeyboardInputEvent.Post e) {
 //        int amount = AEquipCommand.amount;
 //        if (amount == 0)
@@ -89,8 +94,6 @@ public class AEquipEventHandler {
 //    }
 //
 //    private void equip() {
-//        UPlayer p = AbstractionLayer.getPlayer();
-//
 //        --amountLeft;
 //        lastEquip = System.currentTimeMillis();
 //
@@ -101,6 +104,6 @@ public class AEquipEventHandler {
 //        p.getInventoryContainer().detectAndSendChanges();
 //
 //        if (amountLeft > 0)
-//            p.sendChatMessage("/equip");
+//            p.sendServerMessage("/equip");
 //    }
 }

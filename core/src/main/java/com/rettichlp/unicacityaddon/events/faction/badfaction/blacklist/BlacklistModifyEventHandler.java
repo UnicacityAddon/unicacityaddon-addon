@@ -1,13 +1,12 @@
 package com.rettichlp.unicacityaddon.events.faction.badfaction.blacklist;
 
-import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
-import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
+import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.enums.faction.ModifyBlacklistType;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.commands.faction.badfaction.ModifyBlacklistCommand;
-import lombok.NoArgsConstructor;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
@@ -17,14 +16,19 @@ import java.util.regex.Matcher;
  * @author Dimiikou
  */
 @UCEvent
-@NoArgsConstructor
 public class BlacklistModifyEventHandler {
+
+    private final UnicacityAddon unicacityAddon;
+
+    public BlacklistModifyEventHandler(UnicacityAddon unicacityAddon) {
+        this.unicacityAddon = unicacityAddon;
+    }
 
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {
         if (System.currentTimeMillis() - ModifyBlacklistCommand.executedTime > 1000L)
             return;
-        UPlayer p = AbstractionLayer.getPlayer();
+        AddonPlayer p = UnicacityAddon.PLAYER;
 
         String msg = e.chatMessage().getPlainText();
 
@@ -82,8 +86,8 @@ public class BlacklistModifyEventHandler {
         }
 
         // delete from and re-add blacklist
-        p.sendChatMessage("/bl del " + ModifyBlacklistCommand.target);
-        p.sendChatMessage("/bl set " + ModifyBlacklistCommand.target + " " + kills + " " + (price + outlawPriceModificator) + " " + reason);
+        p.sendServerMessage("/bl del " + ModifyBlacklistCommand.target);
+        p.sendServerMessage("/bl set " + ModifyBlacklistCommand.target + " " + kills + " " + (price + outlawPriceModificator) + " " + reason);
     }
 
     //Removes all known Modifiers

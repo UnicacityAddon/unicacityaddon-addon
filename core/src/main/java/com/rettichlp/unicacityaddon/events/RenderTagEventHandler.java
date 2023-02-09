@@ -1,5 +1,6 @@
 package com.rettichlp.unicacityaddon.events;
 
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 import net.labymod.api.Laby;
 import net.labymod.api.client.entity.player.ClientPlayer;
 
@@ -10,14 +11,20 @@ import java.util.Objects;
  */
 public class RenderTagEventHandler /*implements RenderEntityEvent*/ {
 
-//    @Override
+    private final UnicacityAddon unicacityAddon;
+
+    public RenderTagEventHandler(UnicacityAddon unicacityAddon) {
+        this.unicacityAddon = unicacityAddon;
+    }
+
+    //    @Override
 //    public void onRender(Entity entity, double x, double y, double z, float v3) {
 //        if (entity instanceof EntityPlayer) {
 //            EntityPlayer entityPlayer = (EntityPlayer) entity;
 //            String entityPlayerName = entityPlayer.getName();
 //            y = y + entityPlayer.height + getDamageIndicatorValue() + getFriendTagValue(entityPlayer);
 //
-//            EntityPlayerSP entityPlayerSP = AbstractionLayer.getPlayer().getPlayer();
+//            EntityPlayerSP entityPlayerSP = p.getPlayer();
 //            if (entityPlayer.isSneaking()
 //                    || !entityPlayer.canEntityBeSeen(entityPlayerSP)
 //                    || (entityPlayer.equals(entityPlayerSP) && entityPlayer.isRiding())

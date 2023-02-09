@@ -1,7 +1,7 @@
 package com.rettichlp.unicacityaddon.base.api.checks;
 
-import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
-import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
+import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.api.Syncer;
 import com.rettichlp.unicacityaddon.base.models.Broadcast;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
@@ -36,7 +36,7 @@ public class BroadcastChecker {
                 continue;
             receivedBroadcasts.add(broadcast.getId());
 
-            UPlayer p = AbstractionLayer.getPlayer();
+            AddonPlayer p = UnicacityAddon.PLAYER;
 
             timer.schedule(new TimerTask() {
                 @Override

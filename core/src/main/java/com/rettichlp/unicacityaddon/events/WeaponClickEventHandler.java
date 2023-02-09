@@ -1,7 +1,7 @@
 package com.rettichlp.unicacityaddon.events;
 
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
-import lombok.NoArgsConstructor;
 import net.labymod.api.client.world.item.ItemStack;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
@@ -13,14 +13,19 @@ import java.util.Set;
  * @see <a href="https://github.com/paulzhng/UCUtils/blob/e1e4cc90a852a24fbb552413eb478097f865c6f3/src/main/java/de/fuzzlemann/ucutils/events/WeaponClickEventHandler.java">UCUtils by paulzhng</a>
  */
 @UCEvent
-@NoArgsConstructor
 public class WeaponClickEventHandler {
 
     private static final Set<String> WEAPONS = Set.of("§8M4", "§8MP5", "§8Pistole", "§8Jagdflinte");
     public static boolean tazerLoaded = false;
     private long tazerLastWarningSend = 0;
 
-//    @Subscribe
+    private final UnicacityAddon unicacityAddon;
+
+    public WeaponClickEventHandler(UnicacityAddon unicacityAddon) {
+        this.unicacityAddon = unicacityAddon;
+    }
+
+    //    @Subscribe
 //    public void onPlayerInteract(PlayerInteractEvent e) {
 //        if (!(e instanceof PlayerInteractEvent.RightClickItem || e instanceof PlayerInteractEvent.RightClickBlock || e instanceof PlayerInteractEvent.EntityInteractSpecific))
 //            return;
@@ -90,7 +95,7 @@ public class WeaponClickEventHandler {
 //        if (System.currentTimeMillis() - tazerLastWarningSend < TimeUnit.SECONDS.toMillis(5))
 //            return;
 //
-//        AbstractionLayer.getPlayer().sendInfoMessage("Achtung! Dein Tazer ist geladen!");
+//        p.sendInfoMessage("Achtung! Dein Tazer ist geladen!");
 //        tazerLastWarningSend = System.currentTimeMillis();
 //    }
 }

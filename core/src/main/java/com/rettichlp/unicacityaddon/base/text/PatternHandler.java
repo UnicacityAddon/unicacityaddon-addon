@@ -1,6 +1,7 @@
 package com.rettichlp.unicacityaddon.base.text;
 
-import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
+
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 
 import java.util.regex.Pattern;
 
@@ -12,7 +13,7 @@ public class PatternHandler {
     /**
      * Quote: Rettich: "In welchem Forum ist der Vorschlag drin?" Dimiikou: "In Vorschläge" - RettichLP und Dimiikou, 09.10.2022
      */
-    private static final String playerName = AbstractionLayer.getPlayer().getName();
+    private static final String playerName = UnicacityAddon.PLAYER.getName();
 
     /**
      * Pattern for faction and util data

@@ -1,8 +1,7 @@
 package com.rettichlp.unicacityaddon.events.faction;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
-import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
+import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.config.reinforcement.DefaultReinforcementSetting;
 import com.rettichlp.unicacityaddon.base.enums.faction.ReinforcementType;
 import com.rettichlp.unicacityaddon.base.models.NaviPoint;
@@ -12,7 +11,6 @@ import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.base.utils.NavigationUtils;
 import com.rettichlp.unicacityaddon.events.TickEventHandler;
-import lombok.NoArgsConstructor;
 import net.labymod.api.client.chat.ChatMessage;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.event.ClickEvent;
@@ -31,15 +29,20 @@ import java.util.regex.Pattern;
  * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/commands/faction/CallReinforcementCommand.java">UCUtils by paulzhng</a>
  */
 @UCEvent
-@NoArgsConstructor
 public class ReinforcementEventHandler {
 
     private static Reinforcement lastReinforcement;
     public static int activeReinforcement = -1;
 
+    private final UnicacityAddon unicacityAddon;
+
+    public ReinforcementEventHandler(UnicacityAddon unicacityAddon) {
+        this.unicacityAddon = unicacityAddon;
+    }
+
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e)  {
-        UPlayer p = AbstractionLayer.getPlayer();
+        AddonPlayer p = UnicacityAddon.PLAYER;
         ChatMessage chatMessage = e.chatMessage();
         String unformattedMsg = chatMessage.getPlainText();
 
@@ -81,7 +84,7 @@ public class ReinforcementEventHandler {
                 navipointString = navipoint.getName().replace("-", " ");
             }
 
-            p.sendMessageAsString(UnicacityAddon.configuration.reinforcementSetting().reinforcement().getOrDefault(DefaultReinforcementSetting.REINFORCEMENT)
+            p.sendMessage(unicacityAddon.configuration().reinforcementSetting().reinforcement().getOrDefault(DefaultReinforcementSetting.REINFORCEMENT)
                     .replace("&", "§")
                     .replace("%type%", type)
                     .replace("%sender%", fullName)
@@ -114,7 +117,7 @@ public class ReinforcementEventHandler {
             String reinforcementSenderName = onTheWayMatcher.group(3);
             String distance = onTheWayMatcher.group(4);
 
-            p.sendMessageAsString(UnicacityAddon.configuration.reinforcementSetting().answer().getOrDefault(DefaultReinforcementSetting.ANSWER)
+            p.sendMessage(unicacityAddon.configuration().reinforcementSetting().answer().getOrDefault(DefaultReinforcementSetting.ANSWER)
                     .replace("&", "§")
                     .replace("%sender%", senderFullName)
                     .replace("%target%", reinforcementSenderName)
@@ -143,7 +146,7 @@ public class ReinforcementEventHandler {
 
     @Subscribe
     public void onChatMessageSend(ChatMessageSendEvent e) {
-        if (UnicacityAddon.configuration.reinforcementSetting().screen().get() && e.getMessage().toLowerCase().startsWith("/reinforcement ontheway "))
+        if (unicacityAddon.configuration().reinforcementSetting().screen().get() && e.getMessage().toLowerCase().startsWith("/reinforcement ontheway "))
             activeReinforcement = TickEventHandler.currentTick;
     }
 

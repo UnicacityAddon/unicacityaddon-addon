@@ -1,8 +1,7 @@
 package com.rettichlp.unicacityaddon.base.models;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
-import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
+import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
 import com.rettichlp.unicacityaddon.base.enums.faction.Equip;
@@ -199,12 +198,12 @@ public class Data {
     }
 
     /**
-     * Adds the position of the <code>UPlayer</code> with the given name to the <code>coordlist</code>
+     * Adds the position of the <code>AddonPlayer</code> with the given name to the <code>coordlist</code>
      *
      * @param name     Name of the position to be added to the <code>coordlist</code>
      * @param blockPos Position to be added to the <code>coordlist</code>
      * @see FloatVector3
-     * @see UPlayer
+     * @see AddonPlayer
      */
     public void addCoordToCoordlist(String name, FloatVector3 blockPos) {
         List<CoordlistEntry> newCoordlistEntryList = getCoordlist();
@@ -318,12 +317,12 @@ public class Data {
     /**
      * Sends a message which contains information about all house banks of registered {@link HouseData}
      *
-     * @see UPlayer
+     * @see AddonPlayer
      * @see HouseData
      * @see Message
      */
     public void sendAllHouseBankMessage() {
-        UPlayer p = AbstractionLayer.getPlayer();
+        AddonPlayer p = UnicacityAddon.PLAYER;
 
         p.sendEmptyMessage();
         p.sendMessage(Message.getBuilder()
@@ -336,12 +335,12 @@ public class Data {
     /**
      * Sends a message which contains information about all drug storages of registered {@link HouseData}
      *
-     * @see UPlayer
+     * @see AddonPlayer
      * @see HouseData
      * @see Message
      */
     public void sendAllDrugStorageMessage() {
-        UPlayer p = AbstractionLayer.getPlayer();
+        AddonPlayer p = UnicacityAddon.PLAYER;
 
         p.sendEmptyMessage();
         p.sendMessage(Message.getBuilder()
@@ -375,7 +374,7 @@ public class Data {
      * @param i Amount of minutes to be added to the <code>jobExperience</code>
      */
     public void addPayDayTime(int i) {
-        UPlayer p = AbstractionLayer.getPlayer();
+        AddonPlayer p = UnicacityAddon.PLAYER;
         payDayTime = getPayDayTime() + i;
         switch (payDayTime) {
             case 55:

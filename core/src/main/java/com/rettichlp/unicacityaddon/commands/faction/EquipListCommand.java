@@ -1,7 +1,7 @@
 package com.rettichlp.unicacityaddon.commands.faction;
 
-import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
-import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
+import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
@@ -31,7 +31,7 @@ public class EquipListCommand extends Command {
      */
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        UPlayer p = AbstractionLayer.getPlayer();
+        AddonPlayer p = UnicacityAddon.PLAYER;
         if (arguments.length == 1 && arguments[0].equalsIgnoreCase("reset")) {
             FileManager.DATA.setEquipMap(new HashMap<>());
             p.sendInfoMessage("Equipliste gelöscht.");
@@ -47,7 +47,7 @@ public class EquipListCommand extends Command {
                 .build();
     }
 
-    private void equipList(UPlayer p) {
+    private void equipList(AddonPlayer p) {
         NumberFormat numberFormat = NumberFormat.getNumberInstance(new Locale("da", "DK"));
         p.sendEmptyMessage();
         p.sendMessage(Message.getBuilder()

@@ -1,7 +1,7 @@
 package com.rettichlp.unicacityaddon.commands.faction;
 
-import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
-import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
+import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
@@ -36,7 +36,7 @@ public class AFbankEinzahlenCommand extends Command {
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        UPlayer p = AbstractionLayer.getPlayer();
+        AddonPlayer p = UnicacityAddon.PLAYER;
         if (arguments.length != 2 || !MathUtils.isInteger(arguments[1])) {
             p.sendSyntaxMessage(usage);
             return true;
@@ -51,7 +51,7 @@ public class AFbankEinzahlenCommand extends Command {
             return true;
 
         // check if there are taxes
-        p.sendChatMessage("/fbank " + interaction + " 4");
+        p.sendServerMessage("/fbank " + interaction + " 4");
         amount = Integer.parseInt(arguments[1]) - 4; // we already paid 4$
 
         STARTED.set(true);
@@ -65,11 +65,11 @@ public class AFbankEinzahlenCommand extends Command {
 
                 if (amount > 1000) {
                     // if amount is bigger than 1000, add or remove 1k from faction bank and wait
-                    p.sendChatMessage("/fbank " + interaction + " 1000");
+                    p.sendServerMessage("/fbank " + interaction + " 1000");
                     amount -= 1000;
                 } else {
                     // otherwise add or remove the remainder and stop the task
-                    p.sendChatMessage("/fbank " + interaction + " " + amount);
+                    p.sendServerMessage("/fbank " + interaction + " " + amount);
                     STARTED.set(false);
                     cancel();
 
@@ -103,7 +103,7 @@ public class AFbankEinzahlenCommand extends Command {
         String dateString = dateFormat.format(date);
         String timeString = timeFormat.format(date);
 
-        AbstractionLayer.getPlayer().sendMessage(Message.getBuilder()
+        UnicacityAddon.PLAYER.sendMessage(Message.getBuilder()
                 .prefix()
                 .of("Heute ist ").color(ColorCode.GRAY).advance()
                 .of(dayString).color(ColorCode.BLUE).advance()

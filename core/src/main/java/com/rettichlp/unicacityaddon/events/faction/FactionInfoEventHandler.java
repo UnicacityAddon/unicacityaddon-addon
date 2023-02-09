@@ -1,11 +1,11 @@
 package com.rettichlp.unicacityaddon.events.faction;
 
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.api.Syncer;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
-import lombok.NoArgsConstructor;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
@@ -22,7 +22,6 @@ import java.util.regex.Pattern;
  * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/commands/faction/CheckActiveMembersCommand.java">UCUtils by paulzhng</a>
  */
 @UCEvent
-@NoArgsConstructor
 public class FactionInfoEventHandler {
 
     private static final Timer TIMER = new Timer();
@@ -30,6 +29,12 @@ public class FactionInfoEventHandler {
     private static final Map<Boolean, Integer> MEMBER_MAP = new HashMap<>();
     private static long memberlistShown;
     public static CompletableFuture<Map<Boolean, Integer>> future;
+
+    private final UnicacityAddon unicacityAddon;
+
+    public FactionInfoEventHandler(UnicacityAddon unicacityAddon) {
+        this.unicacityAddon = unicacityAddon;
+    }
 
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {

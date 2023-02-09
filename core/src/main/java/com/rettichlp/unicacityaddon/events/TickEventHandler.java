@@ -6,7 +6,6 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.commands.BusCommand;
 import com.rettichlp.unicacityaddon.events.faction.ReinforcementEventHandler;
 import com.rettichlp.unicacityaddon.events.house.HouseInteractionEventHandler;
-import lombok.NoArgsConstructor;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.lifecycle.GameTickEvent;
 import org.spongepowered.include.com.google.common.collect.Maps;
@@ -16,16 +15,21 @@ import java.io.IOException;
 import java.util.Map;
 
 @UCEvent
-@NoArgsConstructor
 public class TickEventHandler {
 
-    public static int currentTick = 0;
+    public static int currentTick = -1;
 
     public static Map.Entry<Long, Float> lastTickDamage = Maps.immutableEntry(0L, 0F);
 
+    private final UnicacityAddon unicacityAddon;
+
+    public TickEventHandler(UnicacityAddon unicacityAddon) {
+        this.unicacityAddon = unicacityAddon;
+    }
+
     @Subscribe
     public void onGameTick(GameTickEvent e) {
-        if (UnicacityAddon.MINECRAFT.clientWorld() != null) {
+        if (currentTick >= 0) {
             currentTick++;
 
             // EVERY TICK
@@ -71,7 +75,7 @@ public class TickEventHandler {
     }
 
     private void handleDamageTracker() {
-        float currentHeal = 10; //AbstractionLayer.getPlayer().getPlayer().getHealth();
+        float currentHeal = UnicacityAddon.PLAYER.getPlayer().getHealth();
         if (lastTickDamage.getValue() > currentHeal) {
             lastTickDamage = Maps.immutableEntry(System.currentTimeMillis(), currentHeal);
         } else if (lastTickDamage.getValue() < currentHeal) {
@@ -124,7 +128,7 @@ public class TickEventHandler {
 
     private void handleCustomSeconds() {
         if (UnicacityAddon.isUnicacity()) {
-            int interval = UnicacityAddon.configuration.nameTagSetting().updateInterval().getOrDefault(5);
+            int interval = unicacityAddon.configuration().nameTagSetting().updateInterval().getOrDefault(5);
             if (currentTick % (interval * 20) == 0) {
                 NameTagEventHandler.refreshAllDisplayNames();
             }

@@ -1,7 +1,7 @@
 package com.rettichlp.unicacityaddon.commands;
 
-import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
-import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
+import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.api.Syncer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.enums.location.Bus;
@@ -35,10 +35,10 @@ public class BusCommand extends Command {
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        UPlayer p = AbstractionLayer.getPlayer();
+        AddonPlayer p = UnicacityAddon.PLAYER;
 
         if (arguments.length < 1) {
-            p.sendChatMessage("/bus");
+            p.sendServerMessage("/bus");
             return true;
         }
 
@@ -52,7 +52,7 @@ public class BusCommand extends Command {
         DESTINATION = NavigationUtils.getNearestBus(naviPoint.getBlockPos()).getValue();
 
         limiter = 0;
-        p.sendChatMessage("/bus");
+        p.sendServerMessage("/bus");
         return active = true;
     }
 
@@ -70,7 +70,7 @@ public class BusCommand extends Command {
 //
 //            Container container = guiHopper.inventorySlots;
 //            if (container.windowId != lastWindowId && container instanceof ContainerHopper) {
-//                UPlayer p = AbstractionLayer.getPlayer();
+//                AddonPlayer p = UnicacityAddon.PLAYER;
 //                lastWindowId = container.windowId;
 //
 //                Map<Bus, Slot> busSlotMap = container.inventorySlots.stream()

@@ -1,9 +1,9 @@
 package com.rettichlp.unicacityaddon.events.faction.badfaction.blacklist;
 
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.commands.faction.badfaction.BlacklistInfoCommand;
-import lombok.NoArgsConstructor;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
@@ -17,12 +17,17 @@ import java.util.regex.Matcher;
  * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/events/NameFormatEventHandler.java">UCUtils by paulzhng</a>
  */
 @UCEvent
-@NoArgsConstructor
 public class BlacklistEventHandler {
 
     public static final Map<String, Boolean> BLACKLIST_MAP = new HashMap<>();
 
     private static long blacklistShown;
+
+    private final UnicacityAddon unicacityAddon;
+
+    public BlacklistEventHandler(UnicacityAddon unicacityAddon) {
+        this.unicacityAddon = unicacityAddon;
+    }
 
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {

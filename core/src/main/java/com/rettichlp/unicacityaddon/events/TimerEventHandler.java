@@ -1,5 +1,6 @@
 package com.rettichlp.unicacityaddon.events;
 
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
 import com.rettichlp.unicacityaddon.base.enums.api.StatisticType;
 import com.rettichlp.unicacityaddon.base.manager.FileManager;
@@ -8,7 +9,6 @@ import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.base.utils.ForgeUtils;
 import com.rettichlp.unicacityaddon.commands.ShutdownJailCommand;
 import com.rettichlp.unicacityaddon.events.faction.rettungsdienst.ReviveEventHandler;
-import lombok.NoArgsConstructor;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
@@ -19,10 +19,15 @@ import java.util.regex.Matcher;
  * @author RettichLP
  */
 @UCEvent
-@NoArgsConstructor
 public class TimerEventHandler {
 
     private static boolean isJail = false;
+
+    private final UnicacityAddon unicacityAddon;
+
+    public TimerEventHandler(UnicacityAddon unicacityAddon) {
+        this.unicacityAddon = unicacityAddon;
+    }
 
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {

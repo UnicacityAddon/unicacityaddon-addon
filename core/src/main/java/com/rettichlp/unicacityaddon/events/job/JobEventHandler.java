@@ -1,11 +1,10 @@
 package com.rettichlp.unicacityaddon.events.job;
 
-import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
-import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
+import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.enums.DropPosition;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
-import lombok.NoArgsConstructor;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 import net.labymod.api.util.math.vector.FloatVector3;
@@ -19,7 +18,6 @@ import java.util.regex.Matcher;
  * @author RettichLP
  */
 @UCEvent
-@NoArgsConstructor
 public class JobEventHandler {
 
     public static boolean isTabakJob = false;
@@ -30,18 +28,23 @@ public class JobEventHandler {
     private long lastUse = -1;
     private final Timer timer = new Timer();
 
-//    @Subscribe
+    private final UnicacityAddon unicacityAddon;
+
+    public JobEventHandler(UnicacityAddon unicacityAddon) {
+        this.unicacityAddon = unicacityAddon;
+    }
+
+    //    @Subscribe
 //    public void onPlayerInteract(PlayerInteractEvent e) {
 //        if (!(e instanceof PlayerInteractEvent.RightClickBlock) || !UnicacityAddon.isUnicacity())
 //            return;
-//        UPlayer p = AbstractionLayer.getPlayer();
 //
 //        World world = e.getWorld();
 //        BlockPos blockPos = e.getPos();
 //
 //        if (isDropState && System.currentTimeMillis() - lastUse > 1000 && onDump(blockPos)) {
 //            lastUse = System.currentTimeMillis();
-//            p.sendChatMessage("/dropwaste");
+//            p.sendServerMessage("/dropwaste");
 //            return;
 //        }
 //
@@ -56,7 +59,7 @@ public class JobEventHandler {
 
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {
-        UPlayer p = AbstractionLayer.getPlayer();
+        AddonPlayer p = UnicacityAddon.PLAYER;
         String msg = e.chatMessage().getPlainText();
 
         if (PatternHandler.WASTE_JOB_START_PATTERN.matcher(msg).find()) {
@@ -86,7 +89,7 @@ public class JobEventHandler {
         }
 
         if (PatternHandler.MINERS_JOB_END_PATTERN.matcher(msg).find()) {
-            p.sendChatMessage("/dropstone");
+            p.sendServerMessage("/dropstone");
             p.stopRoute();
             return;
         }
@@ -105,7 +108,7 @@ public class JobEventHandler {
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    p.sendChatMessage("/droptransport");
+                    p.sendServerMessage("/droptransport");
                 }
             }, TimeUnit.SECONDS.toMillis(10));
         }
@@ -114,13 +117,13 @@ public class JobEventHandler {
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    p.sendChatMessage("/dropdrink");
+                    p.sendServerMessage("/dropdrink");
                 }
             }, TimeUnit.SECONDS.toMillis((long) 2.5));
         }
 
         if (PatternHandler.PIZZA_START_PATTERN.matcher(msg).find()) {
-            p.sendChatMessage("/getpizza");
+            p.sendServerMessage("/getpizza");
             return;
         }
 
@@ -129,7 +132,7 @@ public class JobEventHandler {
             new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    p.sendChatMessage("/getpizza");
+                    p.sendServerMessage("/getpizza");
                 }
             }, TimeUnit.SECONDS.toMillis(3));
     }
@@ -142,10 +145,9 @@ public class JobEventHandler {
     }
 
     private void drop() {
-        UPlayer p = AbstractionLayer.getPlayer();
         if (isNewspaperJob)
-            p.sendChatMessage("/dropzeitung");
+            UnicacityAddon.PLAYER.sendServerMessage("/dropzeitung");
         else if (isWasteJob)
-            p.sendChatMessage("/getwaste");
+            UnicacityAddon.PLAYER.sendServerMessage("/getwaste");
     }
 }

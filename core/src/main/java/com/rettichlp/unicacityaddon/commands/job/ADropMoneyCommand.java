@@ -1,7 +1,7 @@
 package com.rettichlp.unicacityaddon.commands.job;
 
-import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
-import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
+import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import net.labymod.api.client.chat.command.Command;
@@ -24,20 +24,20 @@ public class ADropMoneyCommand extends Command {
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        UPlayer p = AbstractionLayer.getPlayer();
+        AddonPlayer p = UnicacityAddon.PLAYER;
 
         new Timer().scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
                 switch (step++) {
                     case 1:
-                        p.sendChatMessage("/bank abbuchen 15000");
+                        p.sendServerMessage("/bank abbuchen 15000");
                         break;
                     case 2:
-                        p.sendChatMessage("/dropmoney");
+                        p.sendServerMessage("/dropmoney");
                         break;
                     case 3:
-                        p.sendChatMessage("/bank einzahlen 15000");
+                        p.sendServerMessage("/bank einzahlen 15000");
                         step = 0;
                         this.cancel();
                         break;

@@ -1,7 +1,7 @@
 package com.rettichlp.unicacityaddon.commands.faction.badfaction;
 
-import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
-import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
+import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
@@ -26,7 +26,7 @@ public class DBankDropAllCommand extends Command {
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        UPlayer p = AbstractionLayer.getPlayer();
+        AddonPlayer p = UnicacityAddon.PLAYER;
 
         // reset drug inventory tracker
         if (arguments.length > 0 && arguments[0].equalsIgnoreCase("reset")) {
@@ -49,7 +49,7 @@ public class DBankDropAllCommand extends Command {
                 if (commandQueue.isEmpty()) {
                     timer.cancel();
                 } else {
-                    p.sendChatMessage(commandQueue.get(0));
+                    p.sendServerMessage(commandQueue.get(0));
                     commandQueue.remove(0);
                 }
             }

@@ -1,6 +1,6 @@
 package com.rettichlp.unicacityaddon.commands;
 
-import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import net.labymod.api.client.chat.command.Command;
@@ -20,7 +20,7 @@ public class CancelCountdownCommand extends Command {
     @Override
     public boolean execute(String prefix, String[] arguments) {
         CountdownCommand.countdown = -1;
-        AbstractionLayer.getPlayer().sendInfoMessage("Der Countdown wurde abgebrochen.");
+        UnicacityAddon.PLAYER.sendInfoMessage("Der Countdown wurde abgebrochen.");
         return true;
     }
 

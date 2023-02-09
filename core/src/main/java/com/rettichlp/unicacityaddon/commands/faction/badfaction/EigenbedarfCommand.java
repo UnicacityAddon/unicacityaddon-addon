@@ -1,7 +1,6 @@
 package com.rettichlp.unicacityaddon.commands.faction.badfaction;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.config.ownUse.setting.KokainSetting;
 import com.rettichlp.unicacityaddon.base.config.ownUse.setting.MarihuanaSetting;
@@ -53,7 +52,7 @@ public class EigenbedarfCommand extends Command {
         }
 
         new Thread(() -> scheduledTasks.forEach(s -> {
-            AbstractionLayer.getPlayer().sendChatMessage(s);
+            UnicacityAddon.PLAYER.sendServerMessage(s);
             try {
                 Thread.sleep(TimeUnit.SECONDS.toMillis(1));
             } catch (InterruptedException e) {

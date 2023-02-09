@@ -1,7 +1,7 @@
 package com.rettichlp.unicacityaddon.commands;
 
-import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
-import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
+import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
@@ -26,13 +26,13 @@ public class ReichensteuerCommand extends Command {
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        UPlayer p = AbstractionLayer.getPlayer();
+        AddonPlayer p = UnicacityAddon.PLAYER;
 
         if (FileManager.DATA.getBankBalance() > 100000) {
             if (isActive)
                 return true;
 
-            p.sendChatMessage("/atminfo");
+            p.sendServerMessage("/atminfo");
             isActive = true;
             int removeMoneyAmount = FileManager.DATA.getBankBalance() - 100000;
 
@@ -40,12 +40,12 @@ public class ReichensteuerCommand extends Command {
                 @Override
                 public void run() {
                     if (cashInATM < removeMoneyAmount) {
-                        p.sendChatMessage("/bank abbuchen " + (cashInATM));
+                        p.sendServerMessage("/bank abbuchen " + (cashInATM));
                         p.sendInfoMessage("Du musst noch " + (removeMoneyAmount - cashInATM) + " abbuchen.");
                         isActive = false;
                         return;
                     }
-                    p.sendChatMessage("/bank abbuchen " + removeMoneyAmount);
+                    p.sendServerMessage("/bank abbuchen " + removeMoneyAmount);
                     isActive = false;
                 }
             }, 400);

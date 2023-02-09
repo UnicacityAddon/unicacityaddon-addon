@@ -1,8 +1,7 @@
 package com.rettichlp.unicacityaddon.events;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
-import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
+import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.teamspeak.CommandResponse;
@@ -13,7 +12,6 @@ import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.base.utils.ImageUploadUtils;
-import lombok.NoArgsConstructor;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
@@ -26,14 +24,19 @@ import java.util.regex.Matcher;
  * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/events/AlternateScreenshotEventHandler.java">UCUtils by paulzhng</a>
  */
 @UCEvent
-@NoArgsConstructor
 public class HotkeyEventHandler {
 
     private String adIssuer;
     private long adTime;
     private static long lastHotkeyUse = -1;
 
-//    @Subscribe
+    private final UnicacityAddon unicacityAddon;
+
+    public HotkeyEventHandler(UnicacityAddon unicacityAddon) {
+        this.unicacityAddon = unicacityAddon;
+    }
+
+    //    @Subscribe
 //    public void onKey(KeyEvent e) {
 //        handleHotkey();
 //    }
@@ -50,7 +53,7 @@ public class HotkeyEventHandler {
 //    private void handleHotkey() {
 //        if (System.currentTimeMillis() - lastHotkeyUse < TimeUnit.SECONDS.toMillis(1) || Keyboard.isKeyDown(0))
 //            return;
-//        UPlayer p = AbstractionLayer.getPlayer();
+//        AddonPlayer p = UnicacityAddon.PLAYER;
 //
 //        if (Keyboard.isKeyDown(KeyBindRegistry.addonScreenshot.getKeyCode())) {
 //            handleScreenshot();
@@ -67,24 +70,24 @@ public class HotkeyEventHandler {
 //            handleAd("blockieren");
 //            lastHotkeyUse = System.currentTimeMillis();
 //        } else if (Keyboard.isKeyDown(KeyBindRegistry.acceptReport.getKeyCode())) {
-//            p.sendChatMessage("/ar");
+//            p.sendServerMessage("/ar");
 //            lastHotkeyUse = System.currentTimeMillis();
 //        } else if (Keyboard.isKeyDown(KeyBindRegistry.cancelReport.getKeyCode())) {
 //            handleCancelReport();
 //            lastHotkeyUse = System.currentTimeMillis();
 //        } else if (Keyboard.isKeyDown(KeyBindRegistry.aDuty.getKeyCode())) {
-//            p.sendChatMessage("/aduty");
+//            p.sendServerMessage("/aduty");
 //            lastHotkeyUse = System.currentTimeMillis();
 //        } else if (Keyboard.isKeyDown(KeyBindRegistry.aDutySilent.getKeyCode())) {
-//            p.sendChatMessage("/aduty -s");
+//            p.sendServerMessage("/aduty -s");
 //            lastHotkeyUse = System.currentTimeMillis();
 //        } else if (Keyboard.isKeyDown(KeyBindRegistry.freinforcement.getKeyCode())) {
 //            BlockPos position = p.getPosition();
-//            p.sendChatMessage("/f Benötige Verstärkung! -> X: " + position.getX() + " | Y: " + position.getY() + " | Z: " + position.getZ());
+//            p.sendServerMessage("/f Benötige Verstärkung! -> X: " + position.getX() + " | Y: " + position.getY() + " | Z: " + position.getZ());
 //            lastHotkeyUse = System.currentTimeMillis();
 //        } else if (Keyboard.isKeyDown(KeyBindRegistry.dreinforcement.getKeyCode())) {
 //            BlockPos position = p.getPosition();
-//            p.sendChatMessage("/d Benötige Verstärkung! -> X: " + position.getX() + " | Y: " + position.getY() + " | Z: " + position.getZ());
+//            p.sendServerMessage("/d Benötige Verstärkung! -> X: " + position.getX() + " | Y: " + position.getY() + " | Z: " + position.getZ());
 //            lastHotkeyUse = System.currentTimeMillis();
 //        } else if (Keyboard.isKeyDown(KeyBindRegistry.publicChannelJoin.getKeyCode())) {
 //            handlePublicChannelJoin();
@@ -129,31 +132,31 @@ public class HotkeyEventHandler {
 //        handleScreenshot(file);
 //    }
 
-    private static void uploadScreenshot(File screenshotFile) {
+    private static void uploadScreenshot(AddonPlayer p, File screenshotFile) {
         if (screenshotFile == null)
             return;
         String link = ImageUploadUtils.uploadToLink(screenshotFile);
-        AbstractionLayer.getPlayer().copyToClipboard(link);
+        p.copyToClipboard(link);
 //        LabyMod.getInstance().notifyMessageRaw(ColorCode.GREEN.getCode() + "Screenshot hochgeladen!", "Link in Zwischenablage kopiert.");
     }
 
     private void handleAd(String type) {
         if (adIssuer == null || System.currentTimeMillis() - adTime > TimeUnit.SECONDS.toMillis(20))
             return;
-        AbstractionLayer.getPlayer().sendChatMessage("/adcontrol " + adIssuer + " " + type);
+        UnicacityAddon.PLAYER.sendServerMessage("/adcontrol " + adIssuer + " " + type);
         adIssuer = null;
     }
 
     private void handleCancelReport() {
-        UPlayer p = AbstractionLayer.getPlayer();
-        String farewell = UnicacityAddon.configuration.reportMessageSetting().farewell().getOrDefault("");
+        AddonPlayer p = UnicacityAddon.PLAYER;
+        String farewell = unicacityAddon.configuration().reportMessageSetting().farewell().getOrDefault("");
         if (!farewell.isEmpty())
-            p.sendChatMessage(farewell);
-        p.sendChatMessage("/cr");
+            p.sendServerMessage(farewell);
+        p.sendServerMessage("/cr");
     }
 
     private void handlePublicChannelJoin() {
-        UPlayer p = AbstractionLayer.getPlayer();
+        AddonPlayer p = UnicacityAddon.PLAYER;
         if (p.getFaction().equals(Faction.NULL)) {
             p.sendErrorMessage("Du befindest dich in keiner Fraktion.");
             return;

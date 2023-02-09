@@ -1,7 +1,7 @@
 package com.rettichlp.unicacityaddon.commands;
 
-import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
-import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
+import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ChatType;
@@ -31,7 +31,7 @@ public class CountdownCommand extends Command {
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        UPlayer p = AbstractionLayer.getPlayer();
+        AddonPlayer p = UnicacityAddon.PLAYER;
 
         if (active) {
             p.sendErrorMessage("Es ist gerade schon ein Countdown aktiv!");
@@ -69,13 +69,13 @@ public class CountdownCommand extends Command {
             @Override
             public void run() {
                 if (countdown == 0) {
-                    p.sendChatMessage(chatType.getChatCommand() + " Start!");
+                    p.sendServerMessage(chatType.getChatCommand() + " Start!");
                 } else if (countdown == -1) {
                     timer.cancel();
                     active = false;
                     return;
                 } else {
-                    p.sendChatMessage(chatType.getChatCommand() + " " + countdown);
+                    p.sendServerMessage(chatType.getChatCommand() + " " + countdown);
                 }
                 countdown--;
             }

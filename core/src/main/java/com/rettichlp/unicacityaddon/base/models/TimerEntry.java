@@ -1,7 +1,7 @@
 package com.rettichlp.unicacityaddon.base.models;
 
-import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
-import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
+import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 
@@ -47,7 +47,7 @@ public class TimerEntry {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                UPlayer p = AbstractionLayer.getPlayer();
+                AddonPlayer p = UnicacityAddon.PLAYER;
                 // TODO: 10.12.2022 p.playSound("ui.toast.challenge_complete");
                 p.sendEmptyMessage();
                 p.sendMessage(Message.getBuilder()

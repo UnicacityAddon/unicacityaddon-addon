@@ -1,11 +1,10 @@
 package com.rettichlp.unicacityaddon.events.faction;
 
-import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.enums.faction.Equip;
 import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
-import lombok.NoArgsConstructor;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
@@ -16,8 +15,13 @@ import java.util.regex.Matcher;
  * @author Dimiikou
  */
 @UCEvent
-@NoArgsConstructor
 public class EquipEventHandler {
+
+    private final UnicacityAddon unicacityAddon;
+
+    public EquipEventHandler(UnicacityAddon unicacityAddon) {
+        this.unicacityAddon = unicacityAddon;
+    }
 
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {
@@ -34,7 +38,7 @@ public class EquipEventHandler {
             if (equip != null) {
                 FileManager.DATA.addEquipToEquipMap(equip);
             } else {
-                AbstractionLayer.getPlayer().sendErrorMessage("Equip wurde nicht gefunden.");
+                UnicacityAddon.PLAYER.sendErrorMessage("Equip wurde nicht gefunden.");
             }
         }
     }

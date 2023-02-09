@@ -1,7 +1,7 @@
 package com.rettichlp.unicacityaddon.events.faction;
 
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
-import lombok.NoArgsConstructor;
 import net.labymod.api.util.math.vector.FloatVector3;
 
 import java.util.HashSet;
@@ -11,7 +11,6 @@ import java.util.Set;
  * @author Fuzzlemann
  */
 @UCEvent
-@NoArgsConstructor
 public class FDoorEventHandler {
 
     private final Set<FDoor> F_DOORS = Set.of(
@@ -21,9 +20,14 @@ public class FDoorEventHandler {
     );
     private static long lastClick;
 
-//    @Subscribe
+    private final UnicacityAddon unicacityAddon;
+
+    public FDoorEventHandler(UnicacityAddon unicacityAddon) {
+        this.unicacityAddon = unicacityAddon;
+    }
+
+    //    @Subscribe
 //    public void onRightClickBlock(PlayerInteractEvent.RightClickBlock e) {
-//        UPlayer p = AbstractionLayer.getPlayer();
 //        FloatVector3 pos = e.getPos();
 //
 //        if (p.getPosition().distance(new FloatVector3(-167, 69, 204) > 15
@@ -42,7 +46,7 @@ public class FDoorEventHandler {
 //            return;
 //
 //        lastClick = System.currentTimeMillis();
-//        p.sendChatMessage("/fdoor");
+//        p.sendServerMessage("/fdoor");
 //    }
 
     private FDoor checkForFDoor(FloatVector3 pos) {
@@ -99,7 +103,7 @@ public class FDoorEventHandler {
 //            boolean set = false;
 //            boolean open = false;
 //            for (FloatVector3 openPosition : openPositions) {
-//                IBlockState blockState = AbstractionLayer.getPlayer().getWorld().getBlockState(openPosition);
+//                IBlockState blockState = p.getWorld().getBlockState(openPosition);
 //                boolean air = blockState.getBlock() instanceof BlockAir;
 //                if (!set) {
 //                    open = air;

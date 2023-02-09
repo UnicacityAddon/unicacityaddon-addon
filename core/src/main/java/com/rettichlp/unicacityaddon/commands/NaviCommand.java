@@ -1,7 +1,7 @@
 package com.rettichlp.unicacityaddon.commands;
 
-import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
-import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
+import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.api.Syncer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.models.NaviPoint;
@@ -25,20 +25,20 @@ public class NaviCommand extends Command {
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        UPlayer p = AbstractionLayer.getPlayer();
+        AddonPlayer p = UnicacityAddon.PLAYER;
         if (arguments.length < 1) {
-            p.sendChatMessage("/navi");
+            p.sendServerMessage("/navi");
             return true;
         }
 
         if (MathUtils.isInteger(arguments[0])) {
-            p.sendChatMessage("/navi Haus:" + arguments[0]);
+            p.sendServerMessage("/navi Haus:" + arguments[0]);
             return true;
         }
 
         NaviPoint naviPoint = NaviPoint.getNaviPointEntryByTabName(arguments[0].trim());
         if (naviPoint == null) {
-            p.sendChatMessage("/navi " + TextUtils.makeStringByArgs(arguments, " "));
+            p.sendServerMessage("/navi " + TextUtils.makeStringByArgs(arguments, " "));
             return true;
         }
 

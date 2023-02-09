@@ -4,7 +4,6 @@ import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.commands.ChatLogCommand;
-import lombok.NoArgsConstructor;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
@@ -12,8 +11,13 @@ import net.labymod.api.event.client.chat.ChatReceiveEvent;
  * @author RettichLP
  */
 @UCEvent
-@NoArgsConstructor
 public class ChatLogReceiveChatEventHandler {
+
+    private final UnicacityAddon unicacityAddon;
+
+    public ChatLogReceiveChatEventHandler(UnicacityAddon unicacityAddon) {
+        this.unicacityAddon = unicacityAddon;
+    }
 
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {

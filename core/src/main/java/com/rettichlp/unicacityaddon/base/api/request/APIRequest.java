@@ -3,7 +3,6 @@ package com.rettichlp.unicacityaddon.base.api.request;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.builder.RequestBuilder;
 import com.rettichlp.unicacityaddon.base.enums.api.ApplicationPath;
 import com.rettichlp.unicacityaddon.base.enums.api.StatisticType;
@@ -43,7 +42,7 @@ public class APIRequest {
         return RequestBuilder.getBuilder()
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.BLACKLISTREASON)
-                .subPath(AbstractionLayer.getPlayer().getFaction().name())
+                .subPath(UnicacityAddon.PLAYER.getFaction().name())
                 .getAsJsonArray();
     }
 
@@ -51,7 +50,7 @@ public class APIRequest {
         return RequestBuilder.getBuilder()
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.BLACKLISTREASON)
-                .subPath(AbstractionLayer.getPlayer().getFaction() + "/add")
+                .subPath(UnicacityAddon.PLAYER.getFaction() + "/add")
                 .parameter(mapOf(
                         "reason", reason,
                         "price", price,
@@ -63,7 +62,7 @@ public class APIRequest {
         return RequestBuilder.getBuilder()
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.BLACKLISTREASON)
-                .subPath(AbstractionLayer.getPlayer().getFaction() + "/remove")
+                .subPath(UnicacityAddon.PLAYER.getFaction() + "/remove")
                 .parameter(mapOf("reason", reason))
                 .getAsJsonObject();
     }
@@ -218,7 +217,7 @@ public class APIRequest {
         return RequestBuilder.getBuilder()
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.STATISTIC)
-                .subPath(AbstractionLayer.getPlayer().getName())
+                .subPath(UnicacityAddon.PLAYER.getName())
                 .getAsJsonObject();
     }
 
@@ -234,7 +233,7 @@ public class APIRequest {
         RequestBuilder.getBuilder()
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.STATISTIC)
-                .subPath(AbstractionLayer.getPlayer().getName() + "/add")
+                .subPath(UnicacityAddon.PLAYER.getName() + "/add")
                 .parameter(mapOf("type", statisticType.name()))
                 .sendAsync();
     }

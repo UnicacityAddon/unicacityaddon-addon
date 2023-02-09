@@ -1,14 +1,12 @@
 package com.rettichlp.unicacityaddon.events;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
-import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
+import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
-import lombok.NoArgsConstructor;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.event.HoverEvent;
 import net.labymod.api.client.scoreboard.DisplaySlot;
@@ -25,14 +23,19 @@ import java.util.regex.Matcher;
  * @author RettichLP
  */
 @UCEvent
-@NoArgsConstructor
 public class CarEventHandler {
 
     private static final List<Integer> sentTankWarnings = new ArrayList<>();
 
+    private final UnicacityAddon unicacityAddon;
+
+    public CarEventHandler(UnicacityAddon unicacityAddon) {
+        this.unicacityAddon = unicacityAddon;
+    }
+
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {
-        UPlayer p = AbstractionLayer.getPlayer();
+        AddonPlayer p = UnicacityAddon.PLAYER;
         String msg = e.chatMessage().getPlainText();
 
         if (PatternHandler.CAR_OPEN_PATTERN.matcher(msg).find()) {
@@ -46,7 +49,7 @@ public class CarEventHandler {
         }
 
         Matcher carPositionMatcher = PatternHandler.CAR_POSITION_PATTERN.matcher(msg);
-        if (carPositionMatcher.find() && UnicacityAddon.configuration.carRoute().get()) {
+        if (carPositionMatcher.find() && unicacityAddon.configuration().carRoute().get()) {
             p.setNaviRoute(Integer.parseInt(carPositionMatcher.group(1)), Integer.parseInt(carPositionMatcher.group(2)), Integer.parseInt(carPositionMatcher.group(3)));
             return;
         }
@@ -83,13 +86,13 @@ public class CarEventHandler {
             String name = checkKFZMatcher.group(1);
             if (name == null)
                 name = checkKFZMatcher.group(2);
-            p.sendChatMessage("/memberinfo " + name);
+            p.sendServerMessage("/memberinfo " + name);
         }
     }
 
     public static void checkTank() {
-        UPlayer p = AbstractionLayer.getPlayer();
-        Scoreboard scoreboard = p.getWorldScoreboard();
+        AddonPlayer p = UnicacityAddon.PLAYER;
+        Scoreboard scoreboard = p.getScoreboard();
         ScoreboardScore scoreboardScore = scoreboard.getScores(scoreboard.objective(DisplaySlot.SIDEBAR))
                 .stream()
                 .filter(score -> score.getName().equals(ColorCode.GREEN.getCode() + "Tank" + ColorCode.DARK_GRAY.getCode() + ":"))

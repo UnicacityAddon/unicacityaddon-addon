@@ -1,12 +1,11 @@
 package com.rettichlp.unicacityaddon.events.faction;
 
-import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.commands.faction.AFbankEinzahlenCommand;
-import lombok.NoArgsConstructor;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
@@ -17,8 +16,13 @@ import java.util.regex.Matcher;
  * @author Dimiikou
  */
 @UCEvent
-@NoArgsConstructor
 public class AFbankEinzahlenEventHandler {
+
+    private final UnicacityAddon unicacityAddon;
+
+    public AFbankEinzahlenEventHandler(UnicacityAddon unicacityAddon) {
+        this.unicacityAddon = unicacityAddon;
+    }
 
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {
@@ -33,7 +37,7 @@ public class AFbankEinzahlenEventHandler {
             AFbankEinzahlenCommand.timer.schedule(new TimerTask() {
                 public void run() {
                     AFbankEinzahlenCommand.sendClockMessage();
-                    AbstractionLayer.getPlayer().sendMessage(Message.getBuilder()
+                    UnicacityAddon.PLAYER.sendMessage(Message.getBuilder()
                             .prefix()
                             .of("Nicht eingezahlt wurden: ").color(ColorCode.GRAY).advance()
                             .of(AFbankEinzahlenCommand.amount + "$").color(ColorCode.BLUE).advance()

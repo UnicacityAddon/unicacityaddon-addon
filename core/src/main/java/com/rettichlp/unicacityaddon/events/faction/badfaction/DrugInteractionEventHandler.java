@@ -1,15 +1,13 @@
 package com.rettichlp.unicacityaddon.events.faction.badfaction;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
-import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
+import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.config.ownUse.OwnUseSetting;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
 import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
-import lombok.NoArgsConstructor;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatMessageSendEvent;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
@@ -21,7 +19,6 @@ import java.util.regex.Matcher;
  * @author RettichLP
  */
 @UCEvent
-@NoArgsConstructor
 public class DrugInteractionEventHandler {
 
     private static int amount;
@@ -30,9 +27,15 @@ public class DrugInteractionEventHandler {
     private static long time;
     private static String type;
 
+    private final UnicacityAddon unicacityAddon;
+
+    public DrugInteractionEventHandler(UnicacityAddon unicacityAddon) {
+        this.unicacityAddon = unicacityAddon;
+    }
+
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {
-        UPlayer p = AbstractionLayer.getPlayer();
+        AddonPlayer p = UnicacityAddon.PLAYER;
         String msg = e.chatMessage().getPlainText();
 
         Matcher drugGetMatcher = PatternHandler.DRUG_GET_PATTERN.matcher(msg);
@@ -80,7 +83,7 @@ public class DrugInteractionEventHandler {
             DrugType drugType = DrugType.getDrugType(drugUseMatcher.group("drugType"));
             DrugPurity drugPurity = DrugPurity.BEST;
 
-            OwnUseSetting ownUseSetting = UnicacityAddon.configuration.ownUseSetting();
+            OwnUseSetting ownUseSetting = unicacityAddon.configuration().ownUseSetting();
             if (drugType != null) {
                 switch (drugType) {
                     case COCAINE:

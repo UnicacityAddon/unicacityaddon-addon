@@ -1,6 +1,7 @@
 package com.rettichlp.unicacityaddon.base.teamspeak.objects;
 
 import com.rettichlp.unicacityaddon.base.teamspeak.CommandResponse;
+
 import java.util.Map;
 
 /**

@@ -1,14 +1,12 @@
 package com.rettichlp.unicacityaddon.events;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
-import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
+import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.config.join.CommandSetting;
 import com.rettichlp.unicacityaddon.base.config.join.PasswordSetting;
 import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
-import lombok.NoArgsConstructor;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
@@ -22,14 +20,20 @@ import java.util.regex.Matcher;
  * @author Dimiikou
  */
 @UCEvent
-@NoArgsConstructor
 public class AccountEventHandler {
 
     public static boolean isAfk = false;
 
+    private final UnicacityAddon unicacityAddon;
+
+    public AccountEventHandler(UnicacityAddon unicacityAddon) {
+        this.unicacityAddon = unicacityAddon;
+    }
+
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {
-        UPlayer p = AbstractionLayer.getPlayer();
+        AddonPlayer p = UnicacityAddon.PLAYER;
+        System.out.println("NAME: " + p.getName());
         String msg = e.chatMessage().getPlainText();
 
         if (!UnicacityAddon.isUnicacity())
@@ -56,7 +60,7 @@ public class AccountEventHandler {
             return;
         }
 
-        if (PatternHandler.RESOURCEPACK_PATTERN.matcher(msg).find() && UnicacityAddon.configuration.texturePack().get()) {
+        if (PatternHandler.RESOURCEPACK_PATTERN.matcher(msg).find() && unicacityAddon.configuration().texturePack().get()) {
             e.setCancelled(true);
             return;
         }
@@ -77,7 +81,7 @@ public class AccountEventHandler {
             new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    p.sendChatMessage("/afk");
+                    p.sendServerMessage("/afk");
                 }
             }, new Date(lastDamageTime + TimeUnit.SECONDS.toMillis(15)));
             return;
@@ -89,29 +93,29 @@ public class AccountEventHandler {
     }
 
     private void handleUnlockAccount() {
-        PasswordSetting passwordSetting = UnicacityAddon.configuration.passwordSetting();
+        PasswordSetting passwordSetting = unicacityAddon.configuration().passwordSetting();
         if (passwordSetting.enabled().get())
-            AbstractionLayer.getPlayer().sendChatMessage("/passwort " + passwordSetting.password().getOrDefault(""));
+            UnicacityAddon.PLAYER.sendServerMessage("/passwort " + passwordSetting.password().getOrDefault(""));
     }
 
     private void handleJoin() {
-        UPlayer p = AbstractionLayer.getPlayer();
+        AddonPlayer p = UnicacityAddon.PLAYER;
 
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
                 // MOBILEEVENTHANDLER
-                p.sendChatMessage("/mobile");
+                p.sendServerMessage("/mobile");
 
                 // AUTOMATE_COMMAND_SETTINGS
-                CommandSetting commandSetting = UnicacityAddon.configuration.commandSetting();
+                CommandSetting commandSetting = unicacityAddon.configuration().commandSetting();
                 if (commandSetting.enabled().get()) {
                     // AUTOMATE_COMMAND_FIRST_SETTINGS
                     new Timer().schedule(new TimerTask() {
                         @Override
                         public void run() {
                             if (!commandSetting.first().getOrDefault("").isEmpty())
-                                p.sendChatMessage(commandSetting.first().get());
+                                p.sendServerMessage(commandSetting.first().get());
                         }
                     }, 500);
 
@@ -120,7 +124,7 @@ public class AccountEventHandler {
                         @Override
                         public void run() {
                             if (!commandSetting.second().getOrDefault("").isEmpty())
-                                p.sendChatMessage(commandSetting.second().get());
+                                p.sendServerMessage(commandSetting.second().get());
                         }
                     }, 1000);
 
@@ -129,7 +133,7 @@ public class AccountEventHandler {
                         @Override
                         public void run() {
                             if (!commandSetting.third().getOrDefault("").isEmpty())
-                                p.sendChatMessage(commandSetting.third().get());
+                                p.sendServerMessage(commandSetting.third().get());
                         }
                     }, 1500);
                 }

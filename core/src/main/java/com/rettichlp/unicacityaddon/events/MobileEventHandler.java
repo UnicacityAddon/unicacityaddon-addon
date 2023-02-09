@@ -1,12 +1,11 @@
 package com.rettichlp.unicacityaddon.events;
 
-import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
-import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
+import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.commands.mobile.ACallCommand;
 import com.rettichlp.unicacityaddon.commands.mobile.ASMSCommand;
-import lombok.NoArgsConstructor;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
@@ -21,7 +20,6 @@ import java.util.regex.Matcher;
  * @author RettichLP
  */
 @UCEvent
-@NoArgsConstructor
 public class MobileEventHandler {
 
     public static int lastCheckedNumber = 0;
@@ -33,6 +31,12 @@ public class MobileEventHandler {
     private boolean blockNextMessage = false;
     private boolean whitelistSound = false;
 
+    private final UnicacityAddon unicacityAddon;
+
+    public MobileEventHandler(UnicacityAddon unicacityAddon) {
+        this.unicacityAddon = unicacityAddon;
+    }
+
     /**
      * If the user has set a password for their account, <code>/mobile</code> cannot be listed until the account is unlocked.
      * As a result, <code>hasCommunications</code> remains false. To avoid this, the check is carried out again when the message
@@ -43,7 +47,7 @@ public class MobileEventHandler {
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {
         String msg = e.chatMessage().getPlainText();
-        UPlayer p = AbstractionLayer.getPlayer();
+        AddonPlayer p = UnicacityAddon.PLAYER;
 
         // blocks next SMS message (because SMS messages has two independent message parts)
         if (blockNextMessage && msg.matches("^(?:\\[UC])*\\w+: .*$")) {
@@ -72,7 +76,7 @@ public class MobileEventHandler {
                 new Timer().schedule(new TimerTask() {
                     @Override
                     public void run() {
-                        p.sendChatMessage("/togglephone");
+                        p.sendServerMessage("/togglephone");
                     }
                 }, TimeUnit.SECONDS.toMillis(1));
             }
@@ -105,7 +109,7 @@ public class MobileEventHandler {
         if (mobileSmsMatcher.find()) {
             String playerName = mobileSmsMatcher.group(1);
             if (!AccountEventHandler.isAfk)
-                AbstractionLayer.getPlayer().sendChatMessage("/nummer " + playerName);
+                p.sendServerMessage("/nummer " + playerName);
             isActive = true;
             if (blockedPlayerList.contains(playerName)) {
                 blockNextMessage = true;

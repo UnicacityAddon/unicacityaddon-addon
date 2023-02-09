@@ -1,10 +1,9 @@
 package com.rettichlp.unicacityaddon.events.job;
 
-import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
-import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
+import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
-import lombok.NoArgsConstructor;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 import net.labymod.api.util.math.vector.FloatVector3;
@@ -16,7 +15,6 @@ import java.util.List;
  * @author RettichLP
  */
 @UCEvent
-@NoArgsConstructor
 public class FishermanEventHandler {
 
     public static boolean dropFish = false;
@@ -34,10 +32,16 @@ public class FishermanEventHandler {
             new FloatVector3(-522, 63, 10)
     );
 
+    private final UnicacityAddon unicacityAddon;
+
+    public FishermanEventHandler(UnicacityAddon unicacityAddon) {
+        this.unicacityAddon = unicacityAddon;
+    }
+
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e)  {
         String msg = e.chatMessage().getPlainText();
-        UPlayer p = AbstractionLayer.getPlayer();
+        AddonPlayer p = UnicacityAddon.PLAYER;
 
         if (PatternHandler.FISHER_START.matcher(msg).find()) {
             fisherManJob = canCatchFish = true;
@@ -78,7 +82,7 @@ public class FishermanEventHandler {
             count = 0;
             fisherManJob = onTargetLocation = canCatchFish = false;
             if (p.getPosition().distance(FISHER_START_POSITION) < 2) {
-                p.sendChatMessage("/dropfish");
+                p.sendServerMessage("/dropfish");
                 return;
             }
             dropFish = true;
@@ -90,9 +94,8 @@ public class FishermanEventHandler {
     }
 
     private void catchFish() {
-        UPlayer p = AbstractionLayer.getPlayer();
         if (canCatchFish && onTargetLocation && count < 5) {
-            p.sendChatMessage("/catchfish");
+            UnicacityAddon.PLAYER.sendServerMessage("/catchfish");
             onTargetLocation = canCatchFish = false;
         }
     }

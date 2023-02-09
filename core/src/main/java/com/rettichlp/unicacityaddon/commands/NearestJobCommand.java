@@ -1,6 +1,6 @@
 package com.rettichlp.unicacityaddon.commands;
 
-import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.enums.location.Job;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
@@ -28,7 +28,7 @@ public class NearestJobCommand extends Command {
     public boolean execute(String prefix, String[] arguments) {
         Map.Entry<Double, Job> nearestJob = NavigationUtils.getNearestJob();
 
-        AbstractionLayer.getPlayer().sendMessage(Message.getBuilder()
+        UnicacityAddon.PLAYER.sendMessage(Message.getBuilder()
                 .prefix()
                 .of("Job").color(ColorCode.GRAY).advance().space()
                 .of(nearestJob.getValue().getName()).color(ColorCode.AQUA).bold().advance().space()

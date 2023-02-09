@@ -1,7 +1,6 @@
 package com.rettichlp.unicacityaddon.events;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.api.Syncer;
 import com.rettichlp.unicacityaddon.base.config.nametag.setting.AllianceFactionNameTagSetting;
 import com.rettichlp.unicacityaddon.base.config.nametag.setting.FactionNameTagSetting;
@@ -17,7 +16,6 @@ import com.rettichlp.unicacityaddon.base.utils.TextUtils;
 import com.rettichlp.unicacityaddon.events.faction.ContractEventHandler;
 import com.rettichlp.unicacityaddon.events.faction.badfaction.blacklist.BlacklistEventHandler;
 import com.rettichlp.unicacityaddon.events.faction.polizei.WantedEventHandler;
-import lombok.NoArgsConstructor;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.TextDecoration;
 import net.labymod.api.client.entity.player.Player;
@@ -30,8 +28,13 @@ import java.util.List;
  * @author RettichLP
  */
 @UCEvent
-@NoArgsConstructor
 public class NameTagEventHandler {
+
+    private final UnicacityAddon unicacityAddon;
+
+    public NameTagEventHandler(UnicacityAddon unicacityAddon) {
+        this.unicacityAddon = unicacityAddon;
+    }
 
     /**
      * Quote: "Wenn ich gleich nicht mehr antworte, einfach laut meinen Namen sagen." - Lou, 02.10.2022
@@ -64,7 +67,7 @@ public class NameTagEventHandler {
         StringBuilder houseBan = new StringBuilder();
         houseBan.append(FormattingCode.RESET.getCode());
 
-        if (UnicacityAddon.configuration.nameTagSetting().houseBan().get()) {
+        if (unicacityAddon.configuration().nameTagSetting().houseBan().get()) {
             if (Syncer.HOUSEBANENTRYLIST.stream().anyMatch(houseBanEntry -> houseBanEntry.getName().equals(playerName)))
                 houseBan.append(Message.getBuilder()
                         .of("[").color(ColorCode.DARK_GRAY).advance()
@@ -81,7 +84,7 @@ public class NameTagEventHandler {
         StringBuilder outlaw = new StringBuilder();
         outlaw.append(FormattingCode.RESET.getCode());
 
-        if (UnicacityAddon.configuration.nameTagSetting().specificNameTagSetting().enabled().get()) {
+        if (unicacityAddon.configuration().nameTagSetting().specificNameTagSetting().enabled().get()) {
             if (BlacklistEventHandler.BLACKLIST_MAP.containsKey(playerName)) {
                 if (BlacklistEventHandler.BLACKLIST_MAP.get(playerName))
                     outlaw.append(Message.getBuilder()
@@ -96,7 +99,7 @@ public class NameTagEventHandler {
         return outlaw.toString();
     }
 
-    public static String getPrefix(String playerName, boolean isCorpse) {
+    public String getPrefix(String playerName, boolean isCorpse) {
         StringBuilder prefix = new StringBuilder();
         prefix.append(FormattingCode.RESET.getCode());
         if (isCorpse)
@@ -105,13 +108,13 @@ public class NameTagEventHandler {
         if (Syncer.PLAYERFACTIONMAP.containsKey(playerName)) {
             Faction targetPlayerFaction = Syncer.PLAYERFACTIONMAP.get(playerName);
 
-            FactionNameTagSetting factionNameTagSetting = UnicacityAddon.configuration.nameTagSetting().factionNameTagSetting();
+            FactionNameTagSetting factionNameTagSetting = unicacityAddon.configuration().nameTagSetting().factionNameTagSetting();
             if (factionNameTagSetting.enabled().get()) {
-                if (targetPlayerFaction.equals(AbstractionLayer.getPlayer().getFaction()))
+                if (targetPlayerFaction.equals(UnicacityAddon.PLAYER.getFaction()))
                     prefix.append(factionNameTagSetting.color().getOrDefault(ColorCode.BLUE).getCode());
             }
 
-            AllianceFactionNameTagSetting allianceFactionNameTagSetting = UnicacityAddon.configuration.nameTagSetting().allianceFactionNameTagSetting();
+            AllianceFactionNameTagSetting allianceFactionNameTagSetting = unicacityAddon.configuration().nameTagSetting().allianceFactionNameTagSetting();
             if (allianceFactionNameTagSetting.enabled().get()) {
                 ColorCode allianceColor = allianceFactionNameTagSetting.color().getOrDefault(ColorCode.DARK_PURPLE);
                 Faction allianceFaction1 = allianceFactionNameTagSetting.faction1().getOrDefault(Faction.NULL);
@@ -120,7 +123,7 @@ public class NameTagEventHandler {
                     prefix.append(allianceColor.getCode());
             }
 
-            StreetwarNameTagSetting streetwarNameTagSetting = UnicacityAddon.configuration.nameTagSetting().streetwarNameTagSetting();
+            StreetwarNameTagSetting streetwarNameTagSetting = unicacityAddon.configuration().nameTagSetting().streetwarNameTagSetting();
             if (streetwarNameTagSetting.enabled().get()) {
                 ColorCode streetwarColor = streetwarNameTagSetting.color().getOrDefault(ColorCode.RED);
                 Faction streetwarFaction1 = streetwarNameTagSetting.faction1().getOrDefault(Faction.NULL);
@@ -130,7 +133,7 @@ public class NameTagEventHandler {
             }
         }
 
-        SpecificNameTagSetting specificNameTagSetting = UnicacityAddon.configuration.nameTagSetting().specificNameTagSetting();
+        SpecificNameTagSetting specificNameTagSetting = unicacityAddon.configuration().nameTagSetting().specificNameTagSetting();
         if (specificNameTagSetting.enabled().get()) {
             WantedEventHandler.Wanted wanted = WantedEventHandler.WANTED_MAP.get(playerName);
             if (wanted != null) {
@@ -163,13 +166,13 @@ public class NameTagEventHandler {
         return prefix.toString();
     }
 
-    public static String getFactionInfo(String playerName) {
+    public String getFactionInfo(String playerName) {
         StringBuilder suffix = new StringBuilder();
         suffix.append(FormattingCode.RESET.getCode());
 
         if (Syncer.PLAYERFACTIONMAP.containsKey(playerName)) {
             Faction targetPlayerFaction = Syncer.PLAYERFACTIONMAP.get(playerName);
-            if (UnicacityAddon.configuration.nameTagSetting().factionInfo().get())
+            if (unicacityAddon.configuration().nameTagSetting().factionInfo().get())
                 suffix.append(" ").append(targetPlayerFaction.getNameTagSuffix());
         }
 
@@ -180,7 +183,7 @@ public class NameTagEventHandler {
         StringBuilder duty = new StringBuilder();
         duty.append(FormattingCode.RESET.getCode());
 
-        if (UnicacityAddon.configuration.nameTagSetting().duty().get()) {
+        if (unicacityAddon.configuration().nameTagSetting().duty().get()) {
             if (FactionManager.checkPlayerDuty(playerName))
                 duty.append(Message.getBuilder()
                         .of(" ● ").color(ColorCode.GREEN).advance()

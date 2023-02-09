@@ -1,7 +1,7 @@
 package com.rettichlp.unicacityaddon.events.faction.rettungsdienst;
 
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
-import lombok.NoArgsConstructor;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
@@ -9,15 +9,19 @@ import net.labymod.api.event.client.chat.ChatReceiveEvent;
  * @author RettichLP
  */
 @UCEvent
-@NoArgsConstructor
 public class FireEventHandler {
+
+    private final UnicacityAddon unicacityAddon;
+
+    public FireEventHandler(UnicacityAddon unicacityAddon) {
+        this.unicacityAddon = unicacityAddon;
+    }
 
     /**
      * Quote: "Meine Öffi-Nachricht geht nicht... oh... ich habe den Imgur-Link eingefügt..." - [UC]laaurin_, 02.10.2022
      */
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {
-//        UPlayer p = AbstractionLayer.getPlayer();
 //        String msg = e.chatMessage().getPlainText();
 //
 //        if (!msg.equals("Fehler: Es brennt noch!"))

@@ -1,7 +1,7 @@
 package com.rettichlp.unicacityaddon.commands.supporter;
 
-import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
-import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
+import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.enums.Punishment;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
@@ -25,7 +25,7 @@ public class PunishCommand extends Command {
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        UPlayer p = AbstractionLayer.getPlayer();
+        AddonPlayer p = UnicacityAddon.PLAYER;
 
         if (arguments.length < 2) {
             p.sendSyntaxMessage(usage);
@@ -42,24 +42,24 @@ public class PunishCommand extends Command {
         int banDuration = punishment.getBanDuration();
 
         if (punishment.getCheckpoints() > 0)
-            p.sendChatMessage("/checkpoints " + arguments[0] + " " + punishment.getCheckpoints() + " " + reason);
+            p.sendServerMessage("/checkpoints " + arguments[0] + " " + punishment.getCheckpoints() + " " + reason);
         if (punishment.getBanDuration() > 0)
-            p.sendChatMessage("/tban " + arguments[0] + " 0 0 " + banDuration + " " + reason);
+            p.sendServerMessage("/tban " + arguments[0] + " 0 0 " + banDuration + " " + reason);
         if (punishment.getBanDuration() == -1)
-            p.sendChatMessage("/ban " + arguments[0] + " " + reason);
+            p.sendServerMessage("/ban " + arguments[0] + " " + reason);
         if (punishment.isLoyalityPointReset())
-            p.sendChatMessage("/resettreuebonus " + arguments[0]);
+            p.sendServerMessage("/resettreuebonus " + arguments[0]);
         if (punishment.getWeaponLock() > 0)
-            p.sendChatMessage("/waffensperre " + arguments[0] + " 0 0 " + punishment.getWeaponLock() * 24 * 60 + " " + reason);
+            p.sendServerMessage("/waffensperre " + arguments[0] + " 0 0 " + punishment.getWeaponLock() * 24 * 60 + " " + reason);
         if (punishment.getFactionLock() > 0)
-            p.sendChatMessage("/fraksperre " + arguments[0] + " " + punishment.getFactionLock() + " " + reason);
+            p.sendServerMessage("/fraksperre " + arguments[0] + " " + punishment.getFactionLock() + " " + reason);
         if (punishment.getAdLock() > 0)
-            p.sendChatMessage("/adsperre " + arguments[0] + " " + punishment.getAdLock() + " " + reason);
+            p.sendServerMessage("/adsperre " + arguments[0] + " " + punishment.getAdLock() + " " + reason);
         if (punishment.isKick())
-            p.sendChatMessage("/kick " + arguments[0] + " " + reason);
+            p.sendServerMessage("/kick " + arguments[0] + " " + reason);
         if (punishment.getWarnAmmount() > 0)
             for (int i = 0; i < punishment.getWarnAmmount(); i++) {
-                p.sendChatMessage("/warn " + arguments[0] + " " + reason);
+                p.sendServerMessage("/warn " + arguments[0] + " " + reason);
             }
 
         return true;

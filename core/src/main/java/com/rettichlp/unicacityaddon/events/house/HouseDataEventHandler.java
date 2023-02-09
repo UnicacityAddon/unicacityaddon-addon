@@ -1,14 +1,12 @@
 package com.rettichlp.unicacityaddon.events.house;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
 import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.models.HouseData;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
-import lombok.NoArgsConstructor;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatMessageSendEvent;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
@@ -22,12 +20,17 @@ import java.util.regex.Matcher;
  * @author RettichLP
  */
 @UCEvent
-@NoArgsConstructor
 public class HouseDataEventHandler {
 
     private static int lastCheckedHouseNumber = 0;
     private static long lastCheck = -1;
     private static String waitingCommand = "";
+
+    private final UnicacityAddon unicacityAddon;
+
+    public HouseDataEventHandler(UnicacityAddon unicacityAddon) {
+        this.unicacityAddon = unicacityAddon;
+    }
 
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {
@@ -57,7 +60,7 @@ public class HouseDataEventHandler {
                 @Override
                 public void run() {
                     lastCheck = System.currentTimeMillis();
-                    AbstractionLayer.getPlayer().sendChatMessage("/hkasse");
+                    UnicacityAddon.PLAYER.sendServerMessage("/hkasse");
                 }
             }, 1000);
         }
@@ -96,7 +99,7 @@ public class HouseDataEventHandler {
         String msg = e.getMessage();
         if (msg.startsWith("/drogenlager ")) {
             lastCheck = System.currentTimeMillis();
-            AbstractionLayer.getPlayer().sendChatMessage("/hkasse");
+            UnicacityAddon.PLAYER.sendServerMessage("/hkasse");
             waitingCommand = msg;
         }
     }

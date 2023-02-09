@@ -1,11 +1,11 @@
-package com.rettichlp.unicacityaddon.base.abstraction;
+package com.rettichlp.unicacityaddon.base;
 
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import net.labymod.api.client.component.Component;
+import net.labymod.api.client.entity.player.ClientPlayer;
 import net.labymod.api.client.entity.player.Inventory;
 import net.labymod.api.client.scoreboard.Scoreboard;
-import net.labymod.api.client.session.Session;
 import net.labymod.api.client.world.ClientWorld;
 import net.labymod.api.util.math.vector.FloatVector3;
 
@@ -13,15 +13,22 @@ import java.util.UUID;
 
 /**
  * @author RettichLP
- * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/base/abstraction/UPlayer.java">UCUtils by paulzhng</a>
  */
-public interface UPlayer {
+public interface AddonPlayer {
 
-    Session getSession();
+    ClientPlayer getPlayer();
+
+    String getName();
+
+    UUID getUniqueId();
+
+    void sendMessage(String message);
 
     void sendMessage(Component component);
 
-    void sendMessageAsString(String message);
+    void sendAPIMessage(String message, boolean success);
+
+    void sendEmptyMessage();
 
     void sendErrorMessage(String message);
 
@@ -29,33 +36,25 @@ public interface UPlayer {
 
     void sendSyntaxMessage(String message);
 
-    void sendAPIMessage(String message, boolean success);
-
-    void sendEmptyMessage();
-
-    void sendChatMessage(String message);
-
-//    void playSound(String soundIn);
-//
-//    void playSound(SoundEvent soundIn, int volume, int pitch);
-
-    String getName();
-
-    UUID getUniqueID();
-
-    FloatVector3 getPosition();
-
-    Scoreboard getWorldScoreboard();
+    void sendServerMessage(String message);
 
     ClientWorld getWorld();
 
-    Inventory getInventoryContainer();
+    FloatVector3 getPosition();
+
+    Scoreboard getScoreboard();
+
+    Inventory getInventory();
+
+//    void playSound(String soundIn);
+
+//    void playSound(SoundEvent soundIn, int volume, int pitch);
 
     Faction getFaction();
 
-    boolean inDuty();
-
     int getRank();
+
+    boolean inDuty();
 
     void sellMedication(String target, DrugType medication);
 

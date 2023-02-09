@@ -8,7 +8,6 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.base.utils.ForgeUtils;
 import com.rettichlp.unicacityaddon.commands.ShutdownGraveyardCommand;
-import lombok.NoArgsConstructor;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
@@ -20,7 +19,6 @@ import java.util.regex.Matcher;
  * @author RettichLP
  */
 @UCEvent
-@NoArgsConstructor
 public class ReviveEventHandler {
 
     public static boolean isDead = false;
@@ -28,6 +26,12 @@ public class ReviveEventHandler {
     private static long reviveByMedicStartTime = 0; // revive time if you are dead
     private static long reviveFromMedicStartTime = 0; // revive time if you are the medic
     private static final Timer timer = new Timer();
+
+    private final UnicacityAddon unicacityAddon;
+
+    public ReviveEventHandler(UnicacityAddon unicacityAddon) {
+        this.unicacityAddon = unicacityAddon;
+    }
 
     @Subscribe
     public void onReviveStart(ChatReceiveEvent e) {
@@ -63,7 +67,6 @@ public class ReviveEventHandler {
 
 //    @SubscribeEvent
 //    public void onSuccessfulRevive(PotionEvent.PotionAddedEvent e) {
-//        UPlayer p = AbstractionLayer.getPlayer();
 //
 //        if (isDead && e.getPotionEffect().getPotion().equals(Potion.getPotionById(15))) {
 //            isDead = false;
@@ -82,7 +85,7 @@ public class ReviveEventHandler {
 //            }
 //
 //            if (MobileEventHandler.hasCommunications && !AccountEventHandler.isAfk)
-//                p.sendChatMessage("/togglephone");
+//                p.sendServerMessage("/togglephone");
 //        }
 //    }
 

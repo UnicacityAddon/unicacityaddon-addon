@@ -1,7 +1,7 @@
 package com.rettichlp.unicacityaddon.commands;
 
-import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
-import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
+import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.models.CoordlistEntry;
@@ -30,7 +30,7 @@ public class CoordlistCommand extends Command {
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        UPlayer p = AbstractionLayer.getPlayer();
+        AddonPlayer p = UnicacityAddon.PLAYER;
 
         if (arguments.length == 0) {
             listCoords(p);
@@ -58,7 +58,7 @@ public class CoordlistCommand extends Command {
                 .build();
     }
 
-    private void listCoords(UPlayer p) {
+    private void listCoords(AddonPlayer p) {
         p.sendEmptyMessage();
         p.sendMessage(Message.getBuilder()
                 .of("Koordinaten:").color(ColorCode.DARK_AQUA).bold().advance()

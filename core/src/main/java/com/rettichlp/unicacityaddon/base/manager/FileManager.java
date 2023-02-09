@@ -1,7 +1,6 @@
 package com.rettichlp.unicacityaddon.base.manager;
 
 import com.google.gson.Gson;
-import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.models.Data;
 
 import java.io.File;
@@ -25,58 +24,33 @@ public class FileManager {
 
     public static File getUnicacityAddonDir() {
         File unicacityAddonDir = new File(getMinecraftDir().getAbsolutePath() + "/unicacityAddon/");
-        if (unicacityAddonDir.exists() || unicacityAddonDir.mkdir())
-            return unicacityAddonDir;
-
-        AbstractionLayer.getPlayer().sendErrorMessage("Ordner 'unicacityAddon' wurde nicht gefunden!");
-
-        return null;
+        return unicacityAddonDir.exists() || unicacityAddonDir.mkdir() ? unicacityAddonDir : null;
     }
 
     public static File getAddonScreenshotDir() {
         if (getUnicacityAddonDir() == null)
             return null;
         File addonScreenshotDir = new File(getUnicacityAddonDir().getAbsolutePath() + "/screenshots/");
-        if (addonScreenshotDir.exists() || addonScreenshotDir.mkdir())
-            return addonScreenshotDir;
-
-        AbstractionLayer.getPlayer().sendErrorMessage("Ordner 'screenshots' wurde nicht gefunden!");
-
-        return null;
+        return addonScreenshotDir.exists() || addonScreenshotDir.mkdir() ? addonScreenshotDir : null;
     }
 
     public static File getAddonActivityScreenDir(String type) {
         if (getAddonScreenshotDir() == null)
             return null;
         File addonScreenshotDir = new File(getAddonScreenshotDir().getAbsolutePath() + "/" + type);
-        if (addonScreenshotDir.exists() || addonScreenshotDir.mkdir())
-            return addonScreenshotDir;
-
-        AbstractionLayer.getPlayer().sendErrorMessage("Ordner 'screenshots/" + type + "' wurde nicht gefunden!");
-
-        return null;
+        return addonScreenshotDir.exists() || addonScreenshotDir.mkdir() ? addonScreenshotDir : null;
     }
 
     public static File getOptionsFile() {
         File optionsFile = new File(getMinecraftDir().getAbsolutePath() + "/options.txt");
-        if (optionsFile.exists())
-            return optionsFile;
-
-        AbstractionLayer.getPlayer().sendErrorMessage("Datei 'options.txt' wurde nicht gefunden!");
-
-        return null;
+        return optionsFile.exists() ? optionsFile : null;
     }
 
     public static File getDataFile() throws IOException {
         if (getUnicacityAddonDir() == null)
             return null;
         File dataFile = new File(getUnicacityAddonDir().getAbsolutePath() + "/data.json");
-        if (dataFile.exists() || dataFile.createNewFile())
-            return dataFile;
-
-        AbstractionLayer.getPlayer().sendErrorMessage("Datei 'data.json' wurde nicht gefunden!");
-
-        return null;
+        return dataFile.exists() || dataFile.createNewFile() ? dataFile : null;
     }
 
     public static File getNewImageFile() throws IOException {

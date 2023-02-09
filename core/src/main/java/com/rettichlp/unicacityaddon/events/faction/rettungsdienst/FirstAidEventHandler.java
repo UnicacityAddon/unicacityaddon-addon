@@ -1,12 +1,12 @@
 package com.rettichlp.unicacityaddon.events.faction.rettungsdienst;
 
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.base.utils.TextUtils;
-import lombok.NoArgsConstructor;
 import net.labymod.api.client.component.event.HoverEvent;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
@@ -17,8 +17,13 @@ import java.util.concurrent.TimeUnit;
  * @author Dimiikou
  */
 @UCEvent
-@NoArgsConstructor
 public class FirstAidEventHandler {
+
+    private final UnicacityAddon unicacityAddon;
+
+    public FirstAidEventHandler(UnicacityAddon unicacityAddon) {
+        this.unicacityAddon = unicacityAddon;
+    }
 
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {

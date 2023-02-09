@@ -1,7 +1,7 @@
 package com.rettichlp.unicacityaddon.commands.faction.polizei;
 
-import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
-import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
+import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.enums.faction.ModifyWantedType;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.utils.ForgeUtils;
@@ -27,7 +27,7 @@ public class ModifyWantedsCommand extends Command {
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        UPlayer p = AbstractionLayer.getPlayer();
+        AddonPlayer p = UnicacityAddon.PLAYER;
 
         if (arguments.length < 2)
             return true;
@@ -68,7 +68,7 @@ public class ModifyWantedsCommand extends Command {
         }
 
         if (wanted.getAmount() > wantedAmount) {
-            p.sendChatMessage("/clear " + target);
+            p.sendServerMessage("/clear " + target);
         }
 
         if (wantedAmount > 69)
@@ -79,7 +79,7 @@ public class ModifyWantedsCommand extends Command {
             return true;
         }
 
-        p.sendChatMessage("/su " + wantedAmount + " " + target + " " + wantedReason);
+        p.sendServerMessage("/su " + wantedAmount + " " + target + " " + wantedReason);
         return true;
     }
 

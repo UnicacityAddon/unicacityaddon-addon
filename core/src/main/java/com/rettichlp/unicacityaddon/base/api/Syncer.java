@@ -3,7 +3,7 @@ package com.rettichlp.unicacityaddon.base.api;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
 import com.rettichlp.unicacityaddon.base.enums.api.AddonGroup;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
@@ -156,7 +156,7 @@ public class Syncer {
     }
 
     public static List<HouseBan> getHouseBanEntryList() {
-        JsonArray response = APIRequest.sendHouseBanRequest(AbstractionLayer.getPlayer().getFaction().equals(Faction.RETTUNGSDIENST));
+        JsonArray response = APIRequest.sendHouseBanRequest(UnicacityAddon.PLAYER.getFaction().equals(Faction.RETTUNGSDIENST));
         if (response == null)
             return new ArrayList<>();
         List<HouseBan> houseBanList = new ArrayList<>();

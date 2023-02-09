@@ -1,7 +1,7 @@
 package com.rettichlp.unicacityaddon.commands.faction.polizei;
 
-import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
-import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
+import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.api.Syncer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.enums.faction.WantedFlag;
@@ -35,7 +35,7 @@ public class ASUCommand extends Command {
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        UPlayer p = AbstractionLayer.getPlayer();
+        AddonPlayer p = UnicacityAddon.PLAYER;
         if (arguments.length < 2) {
             p.sendSyntaxMessage(usage);
             return true;
@@ -63,7 +63,7 @@ public class ASUCommand extends Command {
         return true;
     }
 
-    private void giveWanteds(UPlayer issuer, String reason, int amount, List<String> players) {
+    private void giveWanteds(AddonPlayer issuer, String reason, int amount, List<String> players) {
         int maxAmount = Math.min(amount, 69);
 
         if (players.size() > 14) {
@@ -79,12 +79,12 @@ public class ASUCommand extends Command {
 
                     String player = players.get(i++);
 
-                    issuer.sendChatMessage("/su " + maxAmount + " " + player + " " + reason);
+                    issuer.sendServerMessage("/su " + maxAmount + " " + player + " " + reason);
                 }
             }, 0, TimeUnit.SECONDS.toMillis(1));
         } else {
             for (String player : players) {
-                issuer.sendChatMessage("/su " + amount + " " + player + " " + reason);
+                issuer.sendServerMessage("/su " + amount + " " + player + " " + reason);
             }
         }
     }
