@@ -1,12 +1,20 @@
 package com.rettichlp.unicacityaddon.base.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-
-@AllArgsConstructor
-@Getter
 public class PlayerGroup {
 
     private final String name;
     private final String uuid;
+
+    public PlayerGroup(String name, String uuid) {
+        this.name = name;
+        this.uuid = uuid;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
 }

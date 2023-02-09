@@ -64,7 +64,7 @@ public class HouseData {
         return this;
     }
 
-    public Component getBankITextComponent() {
+    public Component getBankComponent() {
         return Message.getBuilder()
                 .of("»").color(ColorCode.GRAY).advance().space()
                 .of(houseNumber + ":").color(ColorCode.DARK_AQUA).advance().space()
@@ -72,7 +72,7 @@ public class HouseData {
                 .createComponent();
     }
 
-    public Component getStorageITextComponent() {
+    public Component getStorageComponent() {
         Message.Builder hoverMessageBuilder = Message.getBuilder()
                 .of("Drogenlager:").color(ColorCode.DARK_AQUA).bold().advance().newline();
 

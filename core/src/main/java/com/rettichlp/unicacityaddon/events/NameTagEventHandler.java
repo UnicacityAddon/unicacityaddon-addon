@@ -13,11 +13,16 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.FormattingCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
+import com.rettichlp.unicacityaddon.base.utils.TextUtils;
 import com.rettichlp.unicacityaddon.events.faction.ContractEventHandler;
 import com.rettichlp.unicacityaddon.events.faction.badfaction.blacklist.BlacklistEventHandler;
 import com.rettichlp.unicacityaddon.events.faction.polizei.WantedEventHandler;
 import lombok.NoArgsConstructor;
+import net.labymod.api.client.component.Component;
+import net.labymod.api.client.component.format.TextDecoration;
 import net.labymod.api.client.entity.player.Player;
+import net.labymod.api.event.Subscribe;
+import net.labymod.api.event.client.render.PlayerNameTagRenderEvent;
 
 import java.util.List;
 
@@ -32,24 +37,28 @@ public class NameTagEventHandler {
      * Quote: "Wenn ich gleich nicht mehr antworte, einfach laut meinen Namen sagen." - Lou, 02.10.2022
      * "Fällst du dann aus dem Bett?" - RettichLP und Ullrich, 02.10.2022
      */
-//    @Subscribe
-//    public void onRenderNameTag(PlayerEvent.NameFormat e) {
-//        if (!UnicacityAddon.isUnicacity())
-//            return;
-//        EntityPlayer entityPlayer = e.getEntityPlayer();
-//        String playerUsername = e.getUsername();
-//        String displayName = ScorePlayerTeam.formatPlayerName(entityPlayer.getTeam(), playerUsername);
-//        if (displayName.contains(FormattingCode.OBFUSCATED.getCode()))
-//            return;
-//
-//        String houseBan = getHouseBan(playerUsername);
-//        String outlaw = getOutlaw(playerUsername);
-//        String prefix = getPrefix(playerUsername, false);
-//        String factionInfo = getFactionInfo(playerUsername);
-//        String duty = getDuty(playerUsername);
-//
-//        e.setDisplayname(houseBan + outlaw + prefix + playerUsername + factionInfo + duty);
-//    }
+    @Subscribe
+    public void onPlayerNameTagRender(PlayerNameTagRenderEvent e) {
+        Component nameTag = e.nameTag();
+
+        String userName = TextUtils.plain(nameTag);
+        if (!e.nameTag().style().isDecorationSet(TextDecoration.OBFUSCATED)) {
+            String houseBan = getHouseBan(userName);
+            String outlaw = getOutlaw(userName);
+            String prefix = getPrefix(userName, false);
+            String factionInfo = getFactionInfo(userName);
+            String duty = getDuty(userName);
+
+            e.setNameTag(Message.getBuilder()
+                    .add(houseBan)
+                    .add(outlaw)
+                    .add(prefix)
+                    .add(userName)
+                    .add(factionInfo)
+                    .add(duty)
+                    .createComponent());
+        }
+    }
 
     private String getHouseBan(String playerName) {
         StringBuilder houseBan = new StringBuilder();

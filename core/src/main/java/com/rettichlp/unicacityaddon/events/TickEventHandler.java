@@ -5,7 +5,10 @@ import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.commands.BusCommand;
 import com.rettichlp.unicacityaddon.events.faction.ReinforcementEventHandler;
+import com.rettichlp.unicacityaddon.events.house.HouseInteractionEventHandler;
 import lombok.NoArgsConstructor;
+import net.labymod.api.event.Subscribe;
+import net.labymod.api.event.client.lifecycle.GameTickEvent;
 import org.spongepowered.include.com.google.common.collect.Maps;
 
 import java.io.File;
@@ -20,47 +23,47 @@ public class TickEventHandler {
 
     public static Map.Entry<Long, Float> lastTickDamage = Maps.immutableEntry(0L, 0F);
 
-//    @Subscribe
-//    public void onTick(TickEvent.ClientTickEvent event) {
-//        if (event.phase == TickEvent.Phase.END && UnicacityAddon.MINECRAFT.world != null) {
-//            currentTick++;
-//
-//            // EVERY TICK
-//            handleReinforcementScreenshot();
-//            handleDamageTracker();
-//            handleBusTracker();
-//
-//            // 1 SECOND
-//            if (currentTick % 20 == 0) {
-//                handleNameTag();
-//                handleBombTimer();
-//                handleTimer();
-//                handleCustomSeconds();
-//            }
-//
-//            // 3 SECONDS
-//            if (currentTick % 60 == 0) {
-//                HouseInteractionEventHandler.increaseProgress(1);
-//            }
-//
-//            // 5 SECONDS
-//            if (currentTick % 100 == 0) {
-//                handleScoreboardCheck();
-//                HouseInteractionEventHandler.increaseProgress(0);
-//            }
-//
-//            // 60 SECONDS
-//            if (currentTick % 1200 == 0) {
-//                handlePayDay();
-//            }
-//        }
-//    }
+    @Subscribe
+    public void onGameTick(GameTickEvent e) {
+        if (UnicacityAddon.MINECRAFT.clientWorld() != null) {
+            currentTick++;
+
+            // EVERY TICK
+            handleReinforcementScreenshot();
+            handleDamageTracker();
+            handleBusTracker();
+
+            // 1 SECOND
+            if (currentTick % 20 == 0) {
+                handleNameTag();
+                handleBombTimer();
+                handleTimer();
+                handleCustomSeconds();
+            }
+
+            // 3 SECONDS
+            if (currentTick % 60 == 0) {
+                HouseInteractionEventHandler.increaseProgress(1);
+            }
+
+            // 5 SECONDS
+            if (currentTick % 100 == 0) {
+                handleScoreboardCheck();
+                HouseInteractionEventHandler.increaseProgress(0);
+            }
+
+            // 60 SECONDS
+            if (currentTick % 1200 == 0) {
+                handlePayDay();
+            }
+        }
+    }
 
     private void handleReinforcementScreenshot() {
         if (ReinforcementEventHandler.activeReinforcement >= 0 && ReinforcementEventHandler.activeReinforcement + 15 == currentTick) {
             try {
                 File file = FileManager.getNewActivityImageFile("reinforcement");
-//                HotkeyEventHandler.handleScreenshot(file);
+                //                HotkeyEventHandler.handleScreenshot(file);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -80,7 +83,7 @@ public class TickEventHandler {
         BusCommand.process();
     }
 
-//    private void handleNameTag() {
+    private void handleNameTag() {
 //        List<EntityItem> items = UnicacityAddon.MINECRAFT.world.getEntities(EntityItem.class, (ent) -> ent != null && ent.hasCustomName() && ent.getItem().getItem() instanceof ItemSkull);
 //        items.forEach(entityItem -> {
 //            String name = entityItem.getCustomNameTag();
@@ -98,9 +101,9 @@ public class TickEventHandler {
 //                entityItem.setCustomNameTag(prefix + "✟" + playerName + factionInfo);
 //            }
 //        });
-//    }
+    }
 
-//    private void handleBombTimer() {
+    private void handleBombTimer() {
 //        if (!BombTimerModule.isBomb)
 //            return;
 //        if (BombTimerModule.currentCount++ >= 780)
@@ -109,7 +112,7 @@ public class TickEventHandler {
 //            BombTimerModule.timer = TextUtils.parseTimer(BombTimerModule.currentCount);
 //        if (BombTimerModule.currentCount > 1200)
 //            BombTimerModule.stopBombTimer();
-//    }
+    }
 
     private void handleTimer() {
         if (FileManager.DATA.getTimer() > 0) {
@@ -128,10 +131,9 @@ public class TickEventHandler {
         }
     }
 
-//    private void handleScoreboardCheck() {
-//        Scoreboard scoreboard = AbstractionLayer.getPlayer().getWorldScoreboard();
-//        CarEventHandler.checkTank(scoreboard);
-//    }
+    private void handleScoreboardCheck() {
+        CarEventHandler.checkTank();
+    }
 
     private void handlePayDay() {
         FileManager.saveData();

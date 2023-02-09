@@ -8,9 +8,6 @@ import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
 import com.rettichlp.unicacityaddon.base.enums.faction.Equip;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import net.labymod.api.util.math.vector.FloatVector3;
 
 import java.util.ArrayList;
@@ -18,9 +15,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@NoArgsConstructor
-@Getter
-@Setter
 public class Data {
 
     private Integer bankBalance;
@@ -44,64 +38,128 @@ public class Data {
         return bankBalance != null ? bankBalance : 0;
     }
 
+    public void setBankBalance(Integer bankBalance) {
+        this.bankBalance = bankBalance;
+    }
+
     public String getCarInfo() {
         return carInfo != null ? carInfo : "";
+    }
+
+    public void setCarInfo(String carInfo) {
+        this.carInfo = carInfo;
     }
 
     public int getCashBalance() {
         return cashBalance != null ? cashBalance : 0;
     }
 
+    public void setCashBalance(Integer cashBalance) {
+        this.cashBalance = cashBalance;
+    }
+
     public Map<DrugType, Map<DrugPurity, Integer>> getDrugInventoryMap() {
         return drugInventoryMap != null ? drugInventoryMap : new HashMap<>();
+    }
+
+    public void setDrugInventoryMap(Map<DrugType, Map<DrugPurity, Integer>> drugInventoryMap) {
+        this.drugInventoryMap = drugInventoryMap;
     }
 
     public List<CoordlistEntry> getCoordlist() {
         return coordlist != null ? coordlist : new ArrayList<>();
     }
 
+    public void setCoordlist(List<CoordlistEntry> coordlist) {
+        this.coordlist = coordlist;
+    }
+
     public Map<Equip, Integer> getEquipMap() {
         return equipMap != null ? equipMap : new HashMap<>();
+    }
+
+    public void setEquipMap(Map<Equip, Integer> equipMap) {
+        this.equipMap = equipMap;
     }
 
     public long getFirstAidDate() {
         return firstAidDate != null ? firstAidDate : 0;
     }
 
+    public void setFirstAidDate(Long firstAidDate) {
+        this.firstAidDate = firstAidDate;
+    }
+
     public Map<Integer, HouseData> getHouseDataMap() {
         return houseDataMap != null ? houseDataMap : new HashMap<>();
+    }
+
+    public void setHouseDataMap(Map<Integer, HouseData> houseDataMap) {
+        this.houseDataMap = houseDataMap;
     }
 
     public int getJobBalance() {
         return jobBalance != null ? jobBalance : 0;
     }
 
+    public void setJobBalance(Integer jobBalance) {
+        this.jobBalance = jobBalance;
+    }
+
     public int getJobExperience() {
         return jobExperience != null ? jobExperience : 0;
+    }
+
+    public void setJobExperience(Integer jobExperience) {
+        this.jobExperience = jobExperience;
     }
 
     public int getPayDayTime() {
         return payDayTime != null ? payDayTime : 0;
     }
 
+    public void setPayDayTime(Integer payDayTime) {
+        this.payDayTime = payDayTime;
+    }
+
     public long getPlantFertilizeTime() {
         return plantFertilizeTime != null ? plantFertilizeTime : 0;
+    }
+
+    public void setPlantFertilizeTime(Long plantFertilizeTime) {
+        this.plantFertilizeTime = plantFertilizeTime;
     }
 
     public long getPlantWaterTime() {
         return plantWaterTime != null ? plantWaterTime : 0;
     }
 
+    public void setPlantWaterTime(Long plantWaterTime) {
+        this.plantWaterTime = plantWaterTime;
+    }
+
     public int getServiceCount() {
         return serviceCount != null ? serviceCount : 0;
+    }
+
+    public void setServiceCount(Integer serviceCount) {
+        this.serviceCount = serviceCount;
     }
 
     public int getTimer() {
         return timer != null ? timer : 0;
     }
 
+    public void setTimer(Integer timer) {
+        this.timer = timer;
+    }
+
     public List<TodolistEntry> getTodolist() {
         return todolist != null ? todolist : new ArrayList<>();
+    }
+
+    public void setTodolist(List<TodolistEntry> todolist) {
+        this.todolist = todolist;
     }
 
     /**
@@ -271,7 +329,7 @@ public class Data {
         p.sendMessage(Message.getBuilder()
                 .of("Hauskassen:").color(ColorCode.DARK_AQUA).bold().advance()
                 .createComponent());
-        getHouseDataMap().values().forEach(houseData -> p.sendMessage(houseData.getBankITextComponent()));
+        getHouseDataMap().values().forEach(houseData -> p.sendMessage(houseData.getBankComponent()));
         p.sendEmptyMessage();
     }
 
@@ -289,7 +347,7 @@ public class Data {
         p.sendMessage(Message.getBuilder()
                 .of("Drogenlager:").color(ColorCode.DARK_AQUA).bold().advance()
                 .createComponent());
-        getHouseDataMap().values().forEach(houseData -> p.sendMessage(houseData.getStorageITextComponent()));
+        getHouseDataMap().values().forEach(houseData -> p.sendMessage(houseData.getStorageComponent()));
         p.sendEmptyMessage();
     }
 

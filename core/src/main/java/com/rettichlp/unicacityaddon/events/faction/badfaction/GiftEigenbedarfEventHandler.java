@@ -24,7 +24,7 @@ public class GiftEigenbedarfEventHandler {
         UPlayer p = AbstractionLayer.getPlayer();
         String msg = e.chatMessage().getPlainText();
 
-        Matcher drugDealEndedMatcher = PatternHandler.DRUGDEAL_ENDED.matcher(msg);
+        Matcher drugDealEndedMatcher = PatternHandler.DRUG_DEAL_ENDED.matcher(msg);
         if (drugDealEndedMatcher.find() && !GiftEigenbedarfCommand.scheduledTasks.isEmpty()) {
             p.sendChatMessage(GiftEigenbedarfCommand.scheduledTasks.remove(0));
         }

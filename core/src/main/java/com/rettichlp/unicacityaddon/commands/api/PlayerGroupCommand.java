@@ -36,9 +36,9 @@ public class PlayerGroupCommand extends Command {
                     .of(arguments[1]).color(ColorCode.DARK_AQUA).advance()
                     .createComponent());
 
-            Syncer.getPlayerGroupEntryList(arguments[1]).forEach(playerGroupEntry -> p.sendMessage(Message.getBuilder()
+            Syncer.getPlayerGroupEntryList(arguments[1]).forEach(playerGroup -> p.sendMessage(Message.getBuilder()
                     .of("»").color(ColorCode.GRAY).advance().space()
-                    .of(playerGroupEntry.getName()).color(ColorCode.AQUA).advance()
+                    .of(playerGroup.getName()).color(ColorCode.AQUA).advance()
                     .createComponent()));
 
             p.sendEmptyMessage();
