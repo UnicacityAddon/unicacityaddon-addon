@@ -6,6 +6,7 @@ import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
+import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import net.minecraft.client.gui.GuiHopper;
@@ -24,7 +25,7 @@ import net.minecraftforge.common.util.Constants;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -62,7 +63,7 @@ public class DropDrugAllCommand implements IClientCommand {
     @Override
     @Nonnull
     public List<String> getAliases() {
-        return Collections.singletonList("dda");
+        return Arrays.asList("dda", "asservatenkammerdropall", "ada");
     }
 
     @Override
@@ -199,8 +200,10 @@ public class DropDrugAllCommand implements IClientCommand {
         drugInventoryMap.entrySet().stream()
                 .filter(drugTypeMapEntry -> drugTypeMapEntry.getKey().equals(DrugType.COCAINE) || drugTypeMapEntry.getKey().equals(DrugType.MARIJUANA) || drugTypeMapEntry.getKey().equals(DrugType.METH) || drugTypeMapEntry.getKey().equals(DrugType.LSD))
                 .forEach(drugTypeMapEntry -> drugTypeMapEntry.getValue().forEach((drugPurity, integer) -> {
-                    if (integer > 0)
-                        commandQueue.add("/dbank drop " + drugTypeMapEntry.getKey().getShortName() + " " + integer + " " + drugPurity.getPurity());
+                    if (integer > 0) {
+                        String type = p.getFaction().equals(Faction.FBI) ? "asservatenkammer" : "dbank";
+                        commandQueue.add("/" + type + " drop " + drugTypeMapEntry.getKey().getShortName() + " " + integer + " " + drugPurity.getPurity());
+                    }
                 }));
 
         Timer timer = new Timer();
