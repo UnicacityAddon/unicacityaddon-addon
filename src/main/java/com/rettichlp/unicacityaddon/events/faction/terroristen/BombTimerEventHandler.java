@@ -44,10 +44,12 @@ public class BombTimerEventHandler {
                 e.setMessage(Message.getBuilder()
                         .add(formattedMsg)
                         .space()
-                        .of("[Sperrgebiet ausrufen]").color(ColorCode.RED)
+                        .of("[").color(ColorCode.DARK_GRAY).advance()
+                        .of("Sperrgebiet ausrufen").color(ColorCode.RED)
                                 .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Sperrgebiet ausrufen").color(ColorCode.RED).advance().createComponent())
                                 .clickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/sperrgebiet " + getLocationWithArticle(location))
                                 .advance()
+                        .of("]").color(ColorCode.DARK_GRAY).advance()
                         .createComponent());
             }
 
@@ -66,10 +68,12 @@ public class BombTimerEventHandler {
                     .of(time).color(state.equals("nicht") ? ColorCode.RED : ColorCode.GREEN).advance()
                     .of(time.isEmpty() ? "" : ")").color(ColorCode.DARK_GRAY).advance()
                     .space()
-                    .of(location != null ? "[Sperrgebiet aufheben]" : "").color(ColorCode.RED)
+                    .of(location != null ? "[" : "").color(ColorCode.DARK_GRAY).advance()
+                    .of(location != null ? "Sperrgebiet aufheben" : "").color(ColorCode.RED)
                             .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Sperrgebiet aufheben").color(ColorCode.RED).advance().createComponent())
                             .clickEvent(ClickEvent.Action.SUGGEST_COMMAND, location != null ? "/removesperrgebiet " + getLocationWithArticle(location) : "")
                             .advance()
+                    .of(location != null ? "]" : "").color(ColorCode.DARK_GRAY).advance()
                     .createComponent());
             BombTimerModule.stopBombTimer();
         }

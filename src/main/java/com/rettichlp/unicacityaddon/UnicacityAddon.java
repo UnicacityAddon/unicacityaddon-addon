@@ -1,5 +1,6 @@
 package com.rettichlp.unicacityaddon;
 
+import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.api.Syncer;
 import com.rettichlp.unicacityaddon.base.api.TokenManager;
 import com.rettichlp.unicacityaddon.base.api.checks.BroadcastChecker;
@@ -10,6 +11,8 @@ import com.rettichlp.unicacityaddon.base.registry.EventRegistry;
 import com.rettichlp.unicacityaddon.base.registry.KeyBindRegistry;
 import com.rettichlp.unicacityaddon.base.registry.ModuleRegistry;
 import com.rettichlp.unicacityaddon.base.teamspeak.TSClientQuery;
+import com.rettichlp.unicacityaddon.base.text.ColorCode;
+import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.utils.UpdateUtils;
 import com.rettichlp.unicacityaddon.events.chatlog.ChatLogReceiveChatEventHandler;
 import com.rettichlp.unicacityaddon.events.chatlog.ChatLogSendChatEventHandler;
@@ -91,5 +94,14 @@ public class UnicacityAddon extends LabyModAddon {
             ip = ip.split(":")[0]; // strip unused port
 
         return ip.toLowerCase().endsWith("unicacity.de");
+    }
+
+    public static void debug(String debugMessage) {
+        AbstractionLayer.getPlayer().sendMessage(Message.getBuilder()
+                .of("[").color(ColorCode.DARK_GRAY).advance()
+                .of("DEBUG").color(ColorCode.YELLOW).advance()
+                .of("]").color(ColorCode.DARK_GRAY).advance().space()
+                .add(debugMessage)
+                .createComponent());
     }
 }

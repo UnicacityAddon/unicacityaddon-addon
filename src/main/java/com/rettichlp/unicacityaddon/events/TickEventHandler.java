@@ -11,6 +11,7 @@ import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.utils.MathUtils;
 import com.rettichlp.unicacityaddon.base.utils.TextUtils;
 import com.rettichlp.unicacityaddon.commands.BusCommand;
+import com.rettichlp.unicacityaddon.commands.faction.badfaction.DropDrugAllCommand;
 import com.rettichlp.unicacityaddon.events.faction.ReinforcementEventHandler;
 import com.rettichlp.unicacityaddon.events.house.HouseInteractionEventHandler;
 import com.rettichlp.unicacityaddon.modules.BombTimerModule;
@@ -40,13 +41,19 @@ public class TickEventHandler {
             // EVERY TICK
             handleReinforcementScreenshot();
             handleDamageTracker();
-            handleBusTracker();
+
+            // 0,25 SECONDS
+            if (currentTick % 5 == 0) {
+                BusCommand.process();
+                DropDrugAllCommand.process();
+            }
 
             // 1 SECOND
             if (currentTick % 20 == 0) {
                 handleNameTag();
                 handleBombTimer();
                 handleTimer();
+                handleCustomSeconds();
             }
 
             // 3 SECONDS
@@ -64,26 +71,17 @@ public class TickEventHandler {
             if (currentTick % 1200 == 0) {
                 handlePayDay();
             }
-
-            // CUSTOM SECONDS
-            String intervalString = ConfigElements.getRefreshDisplayNamesInterval();
-            int interval = 5 * 20; // every 5 seconds
-            if (MathUtils.isInteger(intervalString))
-                interval = Integer.parseInt(intervalString) * 20;
-            if (currentTick % interval == 0)
-                handleNameTagSyncDisplayName();
         }
     }
 
     private void handleReinforcementScreenshot() {
-        if (ReinforcementEventHandler.activeReinforcement < 0 || ReinforcementEventHandler.activeReinforcement + 15 != currentTick)
-            return;
-
-        try {
-            File file = FileManager.getNewActivityImageFile("reinforcement");
-            HotkeyEventHandler.handleScreenshot(file);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        if (ReinforcementEventHandler.activeReinforcement >= 0 && ReinforcementEventHandler.activeReinforcement + 15 == currentTick) {
+            try {
+                File file = FileManager.getNewActivityImageFile("reinforcement");
+                HotkeyEventHandler.handleScreenshot(file);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
@@ -96,35 +94,24 @@ public class TickEventHandler {
         }
     }
 
-    private void handleBusTracker() {
-        BusCommand.process();
-    }
-
     private void handleNameTag() {
         List<EntityItem> items = UnicacityAddon.MINECRAFT.world.getEntities(EntityItem.class, (ent) -> ent != null && ent.hasCustomName() && ent.getItem().getItem() instanceof ItemSkull);
         items.forEach(entityItem -> {
             String name = entityItem.getCustomNameTag();
             String playerName = name.substring(3);
 
-            if (!Syncer.PLAYERFACTIONMAP.containsKey(name.substring(3)))
-                return;
-            if (name.contains("◤"))
-                return; // already edited
+            if (Syncer.PLAYERFACTIONMAP.containsKey(playerName) && !name.contains("◤")) {
+                String prefix = NameTagEventHandler.getPrefix(playerName, true);
+                String factionInfo = NameTagEventHandler.getFactionInfo(playerName);
 
-            String prefix = NameTagEventHandler.getPrefix(playerName, true);
-            String factionInfo = NameTagEventHandler.getFactionInfo(playerName);
+                if (name.startsWith(ColorCode.DARK_GRAY.getCode())) { // non-revivable
+                    entityItem.setCustomNameTag(ColorCode.DARK_GRAY.getCode() + "✟" + playerName + factionInfo);
+                    return;
+                }
 
-            if (name.startsWith(ColorCode.DARK_GRAY.getCode())) { // non-revivable
-                entityItem.setCustomNameTag(ColorCode.DARK_GRAY.getCode() + "✟" + playerName + factionInfo);
-                return;
+                entityItem.setCustomNameTag(prefix + "✟" + playerName + factionInfo);
             }
-
-            entityItem.setCustomNameTag(prefix + "✟" + playerName + factionInfo);
         });
-    }
-
-    private void handleNameTagSyncDisplayName() {
-        NameTagEventHandler.refreshAllDisplayNames();
     }
 
     private void handleBombTimer() {
@@ -146,6 +133,15 @@ public class TickEventHandler {
         }
     }
 
+    private void handleCustomSeconds() {
+        if (UnicacityAddon.isUnicacity() && UnicacityAddon.ADDON.getConfig() != null) {
+            String intervalString = ConfigElements.getRefreshDisplayNamesInterval();
+            if (currentTick % (MathUtils.isInteger(intervalString) ? Integer.parseInt(intervalString) * 20 : 5 * 20) == 0) {
+                NameTagEventHandler.refreshAllDisplayNames();
+            }
+        }
+    }
+
     private void handleScoreboardCheck() {
         Scoreboard scoreboard = AbstractionLayer.getPlayer().getWorldScoreboard();
         CarEventHandler.checkTank(scoreboard);
@@ -153,7 +149,7 @@ public class TickEventHandler {
 
     private void handlePayDay() {
         FileManager.saveData();
-        if (!AccountEventHandler.isAfk) {
+        if (UnicacityAddon.isUnicacity() && !AccountEventHandler.isAfk) {
             FileManager.DATA.addPayDayTime(1);
         }
     }

@@ -4,12 +4,10 @@ import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.registry.SoundRegistry;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
-import com.rettichlp.unicacityaddon.base.utils.ForgeUtils;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,16 +36,11 @@ public class ContractEventHandler {
             return;
         }
 
-        // TODO TRANSFORM TO REGEX
-        if (currentTime - hitlistShown > 5000L || !unformattedMessage.startsWith(" - "))
-            return;
-        if (!unformattedMessage.contains("$"))
-            return;
-
-        String[] splittedMessage = StringUtils.split(unformattedMessage, " ");
-        String name = ForgeUtils.stripPrefix(splittedMessage[1]);
-
-        CONTRACT_LIST.add(name);
+        Matcher contractListMatcher = PatternHandler.CONTRACT_LIST_PATTERN.matcher(unformattedMessage);
+        if (contractListMatcher.find() && currentTime - hitlistShown < 5000) {
+            String name = contractListMatcher.group("name");
+            CONTRACT_LIST.add(name);
+        }
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)

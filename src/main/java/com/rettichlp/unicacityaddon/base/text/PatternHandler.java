@@ -79,13 +79,14 @@ public class PatternHandler {
      * Pattern for name tag providing
      *
      * @see com.rettichlp.unicacityaddon.events.DeathsKillsEventHandler
+     * @see com.rettichlp.unicacityaddon.events.chatlog.ChatLogReceiveChatEventHandler
      * @see com.rettichlp.unicacityaddon.events.faction.ContractEventHandler
      * @see com.rettichlp.unicacityaddon.events.faction.badfaction.blacklist.BlacklistEventHandler
      * @see com.rettichlp.unicacityaddon.events.faction.badfaction.blacklist.BlacklistModifyEventHandler
      * @see com.rettichlp.unicacityaddon.events.faction.polizei.HQMessageEventHandler
      * @see com.rettichlp.unicacityaddon.events.faction.polizei.WantedEventHandler
      */
-    public static final Pattern WANTED_LIST_ENTRY_PATTERN = Pattern.compile("^ {2}- (?:\\[UC])*(\\w+) \\| (\\d+) WPS \\((.+)\\)(| \\| AFK)$");
+    public static final Pattern WANTED_LIST_PATTERN = Pattern.compile("^ {2}- (?:\\[UC])*(\\w+) \\| (\\d+) WPS \\((.+)\\)(| \\| AFK)$");
     public static final Pattern WANTED_GIVEN_REASON_PATTERN = Pattern.compile("^HQ: Gesuchter: (?:\\[UC])*(\\w+)\\. Grund: (.+)$");
     public static final Pattern WANTED_REASON = Pattern.compile("^HQ: Fahndungsgrund: (.+) \\| Fahndungszeit: (.+)\\.$");
     public static final Pattern WANTED_GIVEN_POINTS_PATTERN = Pattern.compile("^HQ: (?:\\[UC])*(\\w+)'s momentanes WantedLevel: (\\d+)$");
@@ -103,6 +104,7 @@ public class PatternHandler {
     public static final Pattern CONTRACT_SET_PATTERN = Pattern.compile("^\\[Contract] Es wurde ein Kopfgeld auf (?:\\[UC])*(\\w+) \\(\\d+\\$\\) ausgesetzt\\.$");
     public static final Pattern CONTRACT_REMOVED_PATTERN = Pattern.compile("^\\[Contract] (?:\\[UC])*\\w+ hat (?:\\[UC])*(\\w+) von der Contract Liste gelöscht\\. \\[-\\d+]$" +
             "|^\\[Contract] (?:\\[UC])*(\\w+) hat (?:\\[UC])*(\\w+) getötet\\. Kopfgeld: \\d+\\$");
+    public static final Pattern CONTRACT_LIST_PATTERN = Pattern.compile("^ - (?:\\[UC])*(?<name>\\w+) \\[(?<money>\\d+)\\$](| \\(AFK\\))$");
 
     /**
      * Pattern for job interaction
@@ -166,7 +168,6 @@ public class PatternHandler {
      * Pattern for bad faction interaction
      *
      * @see com.rettichlp.unicacityaddon.events.faction.badfaction.BannerEventHandler
-     * @see com.rettichlp.unicacityaddon.events.faction.badfaction.DBankMessageEventHandler
      * @see com.rettichlp.unicacityaddon.events.faction.badfaction.GiftEigenbedarfEventHandler
      * @see com.rettichlp.unicacityaddon.events.faction.badfaction.PlantEventHandler
      */

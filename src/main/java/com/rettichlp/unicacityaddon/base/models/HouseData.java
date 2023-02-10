@@ -59,6 +59,10 @@ public class HouseData {
                 DrugPurity.BAD, 0));
     }
 
+    public int getHouseBank() {
+        return houseBank;
+    }
+
     public HouseData setHouseBank(int houseBank) {
         this.houseBank = houseBank;
         return this;

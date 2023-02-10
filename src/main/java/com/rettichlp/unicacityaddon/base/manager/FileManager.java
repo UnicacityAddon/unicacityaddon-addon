@@ -18,7 +18,7 @@ import java.util.Objects;
  */
 public class FileManager {
 
-    public static Data DATA = new Data();
+    public static Data DATA;
 
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
 
@@ -121,12 +121,9 @@ public class FileManager {
     public static void loadData() {
         try {
             File dataFile = FileManager.getDataFile();
-            if (dataFile != null) {
-                Gson g = new Gson();
-                String jsonData = FileUtils.readFileToString(dataFile, StandardCharsets.UTF_8.toString());
-                DATA = g.fromJson(jsonData, Data.class);
-            }
-
+            assert dataFile != null;
+            String jsonData = FileUtils.readFileToString(dataFile, StandardCharsets.UTF_8.toString());
+            DATA = jsonData == null || jsonData.equals("") || jsonData.equals("null") ? new Data() : new Gson().fromJson(jsonData, Data.class);
             Runtime.getRuntime().addShutdownHook(new Thread(FileManager::saveData));
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -139,7 +136,7 @@ public class FileManager {
     public static void saveData() {
         try {
             File dataFile = FileManager.getDataFile();
-            if (dataFile != null) {
+            if (dataFile != null && DATA != null) {
                 Gson g = new Gson();
                 FileUtils.writeStringToFile(dataFile, g.toJson(DATA), StandardCharsets.UTF_8.toString());
             }

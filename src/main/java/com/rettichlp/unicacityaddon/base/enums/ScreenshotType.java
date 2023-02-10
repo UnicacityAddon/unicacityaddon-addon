@@ -5,26 +5,26 @@ package com.rettichlp.unicacityaddon.base.enums;
  */
 public enum ScreenshotType {
 
-    KILLS("kills"),
-    GROSSEREIGNIS("großeinsatz"),
+    ANDERE("andere"),
+    BLACKLIST("blacklist"),
     DROGENEINNAHME("drogeneinnahme"),
     EQUIP("equip"),
+    GROSSEREIGNIS("großeinsatz"),
+    KILLS("kills"),
+    KORRUPTION("korruption"),
+    NOTRUF("notruf"),
     REINFORCEMENT("reinforcement"),
     ROLEPLAY("roleplay"),
-    VERHAFTUNG("verhaftung"),
-    KORRUPTION("korruption"),
     TICKET("ticket"),
-    BLACKLIST("blacklist"),
-    NOTRUF("notruf"),
-    ANDERE("andere");
+    VERHAFTUNG("verhaftung");
 
-    private final String displayName;
+    private final String directoryName;
 
-    ScreenshotType(String displayName) {
-        this.displayName = displayName;
+    ScreenshotType(String directoryName) {
+        this.directoryName = directoryName;
     }
 
-    public String getDisplayName() {
-        return this.displayName;
+    public String getDirectoryName() {
+        return this.directoryName;
     }
 }

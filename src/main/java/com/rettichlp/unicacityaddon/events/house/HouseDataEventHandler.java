@@ -5,7 +5,6 @@ import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
 import com.rettichlp.unicacityaddon.base.manager.FileManager;
-import com.rettichlp.unicacityaddon.base.manager.HouseDataManager;
 import com.rettichlp.unicacityaddon.base.models.HouseData;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
@@ -25,8 +24,9 @@ import java.util.regex.Matcher;
 @UCEvent
 public class HouseDataEventHandler {
 
-    private static int lastCheckedHouseNumber = 0;
-    private static long lastCheck = -1;
+    public static int lastCheckedHouseNumber = 0;
+    public static long lastCheck = -1;
+
     private static String waitingCommand = Strings.EMPTY;
 
     @SubscribeEvent
@@ -45,8 +45,8 @@ public class HouseDataEventHandler {
         if (houseBankValueMatcher.find()) {
             if (System.currentTimeMillis() - lastCheck < 500)
                 e.setCanceled(true);
-            HouseData houseData = HouseDataManager.getHouseData(lastCheckedHouseNumber).setHouseBank(Integer.parseInt(houseBankValueMatcher.group(1)));
-            HouseDataManager.updateHouseData(lastCheckedHouseNumber, houseData);
+            HouseData houseData = FileManager.DATA.getHouseData(lastCheckedHouseNumber).setHouseBank(Integer.parseInt(houseBankValueMatcher.group(1)));
+            FileManager.DATA.updateHouseData(lastCheckedHouseNumber, houseData);
             return;
         }
 
@@ -71,8 +71,8 @@ public class HouseDataEventHandler {
                 DrugType drugType = DrugType.getDrugType(drugStorageAddCommandMatcher.group("drugType"));
                 DrugPurity drugPurity = DrugPurity.getDrugPurity(drugStorageAddCommandMatcher.group("drugPurity"));
 
-                HouseData houseData = HouseDataManager.getHouseData(lastCheckedHouseNumber).addToStorage(drugType, drugPurity, amount);
-                HouseDataManager.updateHouseData(lastCheckedHouseNumber, houseData);
+                HouseData houseData = FileManager.DATA.getHouseData(lastCheckedHouseNumber).addToStorage(drugType, drugPurity, amount);
+                FileManager.DATA.updateHouseData(lastCheckedHouseNumber, houseData);
 
                 FileManager.DATA.removeDrugFromInventory(drugType, drugPurity, amount);
             }
@@ -83,8 +83,8 @@ public class HouseDataEventHandler {
                 DrugType drugType = DrugType.getDrugType(drugStorageRemoveCommandMatcher.group("drugType"));
                 DrugPurity drugPurity = DrugPurity.getDrugPurity(drugStorageRemoveCommandMatcher.group("drugPurity"));
 
-                HouseData houseData = HouseDataManager.getHouseData(lastCheckedHouseNumber).removeFromStorage(drugType, drugPurity, amount);
-                HouseDataManager.updateHouseData(lastCheckedHouseNumber, houseData);
+                HouseData houseData = FileManager.DATA.getHouseData(lastCheckedHouseNumber).removeFromStorage(drugType, drugPurity, amount);
+                FileManager.DATA.updateHouseData(lastCheckedHouseNumber, houseData);
 
                 FileManager.DATA.addDrugToInventory(drugType, drugPurity, amount);
             }
