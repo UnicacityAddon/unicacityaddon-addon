@@ -131,12 +131,10 @@ public class DropDrugAllCommand implements IClientCommand {
                 UnicacityAddon.MINECRAFT.playerController.windowClick(windowId, 2, 0, ClickType.PICKUP, UnicacityAddon.MINECRAFT.player);
             } else {
                 guiContainer.inventorySlots.getInventory().stream()
-                        .filter(itemStack -> !itemStack.isEmpty())
-                        .filter(itemStack -> !itemStack.getDisplayName().contains("Kokain") && !itemStack.getDisplayName().contains("Marihuana") && !itemStack.getDisplayName().contains("Methamphetamin"))
+                        .filter(itemStack -> !itemStack.isEmpty() && !itemStack.getDisplayName().contains("Kokain") && !itemStack.getDisplayName().contains("Marihuana") && !itemStack.getDisplayName().contains("Methamphetamin"))
                         .forEach(itemStack -> {
-
-                                NBTTagCompound nbtTagCompound = itemStack.getSubCompound("display");
-                                assert nbtTagCompound != null;
+                            NBTTagCompound nbtTagCompound = itemStack.getSubCompound("display");
+                            if (nbtTagCompound != null) {
                                 String lore = nbtTagCompound.getTagList("Lore", Constants.NBT.TAG_STRING).getStringTagAt(0);
 
                                 Matcher loreMatcher = Pattern.compile("» (?<amount>\\d)(g| Pillen| Flaschen| Päckchen| Stück| Kisten)").matcher(lore);
@@ -145,16 +143,12 @@ public class DropDrugAllCommand implements IClientCommand {
                                     DrugType drugType = DrugType.getDrugType(itemStack.getDisplayName().substring(2));
 
                                     if (drugType != null) {
-                                        UnicacityAddon.debug("CHEST: PUT " + drugType + " " + DrugPurity.BEST + " " + amount);
-
                                         Map<DrugPurity, Integer> drugPurityMap = drugInventoryMap.getOrDefault(drugType, new HashMap<>());
                                         drugPurityMap.put(DrugPurity.BEST, amount);
                                         drugInventoryMap.put(drugType, drugPurityMap);
-
-                                        UnicacityAddon.debug(drugInventoryMap.toString());
                                     }
                                 }
-
+                            }
                         });
 
                 active = false;
@@ -173,24 +167,21 @@ public class DropDrugAllCommand implements IClientCommand {
                     .filter(itemStack -> !itemStack.isEmpty())
                     .forEach(itemStack -> {
                         NBTTagCompound nbtTagCompound = itemStack.getSubCompound("display");
-                        assert nbtTagCompound != null;
-                        String drugPurityNbt = nbtTagCompound.getTagList("Lore", Constants.NBT.TAG_STRING).getStringTagAt(1);
-                        String amountNbt = nbtTagCompound.getTagList("Lore", Constants.NBT.TAG_STRING).getStringTagAt(2);
+                        if (nbtTagCompound != null) {
+                            String drugPurityNbt = nbtTagCompound.getTagList("Lore", Constants.NBT.TAG_STRING).getStringTagAt(1);
+                            String amountNbt = nbtTagCompound.getTagList("Lore", Constants.NBT.TAG_STRING).getStringTagAt(2);
 
-                        Matcher loreMatcher = Pattern.compile("» (?<amount>\\d)g").matcher(amountNbt);
-                        if (loreMatcher.find()) {
-                            int amount = Integer.parseInt(loreMatcher.group("amount"));
-                            DrugType drugType = DrugType.getDrugType(itemStack.getDisplayName().substring(4));
-                            DrugPurity drugPurity = DrugPurity.getDrugPurity(drugPurityNbt.split(" ")[0].substring(2));
+                            Matcher loreMatcher = Pattern.compile("» (?<amount>\\d+)g").matcher(amountNbt);
+                            if (loreMatcher.find()) {
+                                int amount = Integer.parseInt(loreMatcher.group("amount"));
+                                DrugType drugType = DrugType.getDrugType(itemStack.getDisplayName().substring(4));
+                                DrugPurity drugPurity = DrugPurity.getDrugPurity(drugPurityNbt.split(" ")[0].substring(2));
 
-                            if (drugType != null) {
-                                UnicacityAddon.debug("HOPPER: PUT " + drugType + " " + drugPurity + " " + amount);
-
-                                Map<DrugPurity, Integer> drugPurityMap = drugInventoryMap.getOrDefault(drugType, new HashMap<>());
-                                drugPurityMap.put(drugPurity, amount);
-                                drugInventoryMap.put(drugType, drugPurityMap);
-
-                                UnicacityAddon.debug(drugInventoryMap.toString());
+                                if (drugType != null) {
+                                    Map<DrugPurity, Integer> drugPurityMap = drugInventoryMap.getOrDefault(drugType, new HashMap<>());
+                                    drugPurityMap.put(drugPurity, amount);
+                                    drugInventoryMap.put(drugType, drugPurityMap);
+                                }
                             }
                         }
                     });
@@ -205,10 +196,11 @@ public class DropDrugAllCommand implements IClientCommand {
         p.getPlayer().closeScreen();
 
         List<String> commandQueue = new ArrayList<>();
-        drugInventoryMap.forEach((drugType, drugPurityIntegerMap) -> drugPurityIntegerMap
-                .forEach((drugPurity, integer) -> {
+        drugInventoryMap.entrySet().stream()
+                .filter(drugTypeMapEntry -> drugTypeMapEntry.getKey().equals(DrugType.COCAINE) || drugTypeMapEntry.getKey().equals(DrugType.MARIJUANA) || drugTypeMapEntry.getKey().equals(DrugType.METH) || drugTypeMapEntry.getKey().equals(DrugType.LSD))
+                .forEach(drugTypeMapEntry -> drugTypeMapEntry.getValue().forEach((drugPurity, integer) -> {
                     if (integer > 0)
-                        commandQueue.add("/dbank drop " + drugType.getShortName() + " " + integer + " " + drugPurity.getPurity());
+                        commandQueue.add("/dbank drop " + drugTypeMapEntry.getKey().getShortName() + " " + integer + " " + drugPurity.getPurity());
                 }));
 
         Timer timer = new Timer();
@@ -218,7 +210,6 @@ public class DropDrugAllCommand implements IClientCommand {
                 if (commandQueue.isEmpty()) {
                     timer.cancel();
                 } else {
-                    UnicacityAddon.debug(commandQueue.get(0));
                     p.sendChatMessage(commandQueue.get(0));
                     commandQueue.remove(0);
                 }
