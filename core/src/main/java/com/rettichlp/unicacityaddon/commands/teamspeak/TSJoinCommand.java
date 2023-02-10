@@ -44,7 +44,7 @@ public class TSJoinCommand extends Command {
             return true;
         }
 
-        if (!UnicacityAddon.configuration.tsApiKey().getOrDefault("").matches("([A-Z0-9]{4}(-*)){6}")) {
+        if (!UnicacityAddon.ADDON.configuration().tsApiKey().getOrDefault("").matches("([A-Z0-9]{4}(-*)){6}")) {
             p.sendErrorMessage("Teamspeak API Key ist nicht gültig!");
             return true;
         }

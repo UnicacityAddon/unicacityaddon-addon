@@ -1,14 +1,15 @@
 package com.rettichlp.unicacityaddon.events.faction;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.api.Syncer;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
+import com.rettichlp.unicacityaddon.base.manager.FactionManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
+import java.util.AbstractMap;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
@@ -68,7 +69,9 @@ public class FactionInfoEventHandler {
                     .of(factionString).color(ColorCode.DARK_AQUA).advance()
                     .of("]").color(ColorCode.DARK_GRAY).advance().space()
                     .of("(").color(ColorCode.DARK_GRAY).advance()
-                    .of(String.valueOf(Syncer.PLAYERFACTIONMAP.values().stream().filter(f -> f.equals(faction)).count())).color(ColorCode.AQUA).advance()
+                    .of(String.valueOf(FactionManager.getInstance().getFactionData().entrySet().stream()
+                            .filter(stringEntryEntry -> stringEntryEntry.getValue().getKey().equals(faction))
+                            .count())).color(ColorCode.AQUA).advance()
                     .of(")").color(ColorCode.DARK_GRAY).advance().space()
                     .of("===").color(ColorCode.DARK_GRAY).advance()
                     .createComponent());
@@ -82,7 +85,7 @@ public class FactionInfoEventHandler {
 
         if (future == null) {
             String name = msg.substring(3).split(" ")[0];
-            Integer rank = Syncer.PLAYERRANKMAP.get(name.replace("[UC]", ""));
+            Integer rank = FactionManager.getInstance().getFactionData().getOrDefault(name.replace("[UC]", ""), new AbstractMap.SimpleEntry<>(Faction.NULL, -1)).getValue();
 
             String formattedMessage = ColorCode.GRAY.getCode() + msg
                     .replace(" » ", "")
@@ -93,7 +96,7 @@ public class FactionInfoEventHandler {
 
             e.setMessage(Message.getBuilder().space()
                     .of("» Rang:").color(ColorCode.GRAY).advance().space()
-                    .of(rank != null ? String.valueOf(rank) : "X").color(ColorCode.AQUA).advance().space()
+                    .of(rank >= 0 ? String.valueOf(rank) : "X").color(ColorCode.AQUA).advance().space()
                     .of("|").color(ColorCode.DARK_GRAY).advance().space()
                     .add(formattedMessage)
                     .createComponent());

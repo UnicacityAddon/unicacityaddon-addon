@@ -29,7 +29,6 @@ public class BlacklistModifyEventHandler {
         if (System.currentTimeMillis() - ModifyBlacklistCommand.executedTime > 1000L)
             return;
         AddonPlayer p = UnicacityAddon.PLAYER;
-
         String msg = e.chatMessage().getPlainText();
 
         // remove start message

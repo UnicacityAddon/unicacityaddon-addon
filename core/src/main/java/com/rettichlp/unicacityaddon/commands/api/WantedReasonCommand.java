@@ -3,7 +3,7 @@ package com.rettichlp.unicacityaddon.commands.api;
 import com.google.gson.JsonObject;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
-import com.rettichlp.unicacityaddon.base.api.Syncer;
+import com.rettichlp.unicacityaddon.base.api.request.APIConverter;
 import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.models.WantedReason;
@@ -49,7 +49,7 @@ public class WantedReasonCommand extends Command {
     public List<String> complete(String[] arguments) {
         return TabCompletionBuilder.getBuilder(arguments)
                 .addAtIndex(1, "add", "remove")
-                .addAtIndex(2, Syncer.getWantedReasonEntryList().stream().map(WantedReason::getReason).sorted().collect(Collectors.toList()))
+                .addAtIndex(2, APIConverter.getWantedReasonEntryList().stream().map(WantedReason::getReason).sorted().collect(Collectors.toList()))
                 .build();
     }
 }

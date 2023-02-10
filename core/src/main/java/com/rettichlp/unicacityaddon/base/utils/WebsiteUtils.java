@@ -43,7 +43,7 @@ public class WebsiteUtils {
             Scanner scanner = new Scanner(new InputStreamReader(httpURLConnection.getInputStream(), StandardCharsets.UTF_8));
             while (scanner.hasNextLine())
                 websiteSource.append(scanner.nextLine()).append("\n\r");
-            UnicacityAddon.LOGGER.info("APIResponse - " + httpURLConnection.getResponseCode() + " [" + urlString.replace(TokenManager.API_TOKEN, "TOKEN") + "]");
+            UnicacityAddon.LOGGER.info("APIResponse - " + httpURLConnection.getResponseCode() + " [" + urlString/*.replace(TokenManager.API_TOKEN, "TOKEN")*/ + "]");
             return websiteSource.toString();
         } catch (IOException e) {
             e.printStackTrace();

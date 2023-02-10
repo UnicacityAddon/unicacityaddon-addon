@@ -17,7 +17,7 @@ public class TSAPIKeyLoader {
     private final List<File> possibleConfigDirectories = new ArrayList<>();
 
     public void load() throws IOException {
-        if (!UnicacityAddon.configuration.tsApiKey().getOrDefault(Strings.EMPTY).isEmpty())
+        if (!UnicacityAddon.ADDON.configuration().tsApiKey().getOrDefault(Strings.EMPTY).isEmpty())
             return;
 
         loadPossibleConfigDirectories();

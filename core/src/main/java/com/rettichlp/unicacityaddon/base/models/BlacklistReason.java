@@ -1,6 +1,6 @@
 package com.rettichlp.unicacityaddon.base.models;
 
-import com.rettichlp.unicacityaddon.base.api.Syncer;
+import com.rettichlp.unicacityaddon.base.api.request.APIConverter;
 
 public class BlacklistReason {
 
@@ -39,7 +39,7 @@ public class BlacklistReason {
     }
 
     public static BlacklistReason getBlacklistReasonEntryByReason(String reason) {
-        return Syncer.getBlacklistReasonEntryList().stream()
+        return APIConverter.getBlacklistReasonEntryList().stream()
                 .filter(blacklistReasonEntry -> blacklistReasonEntry.getReason().equals(reason))
                 .findFirst()
                 .orElse(null);

@@ -35,9 +35,9 @@ public class BombTimerEventHandler {
         AddonPlayer p = UnicacityAddon.PLAYER;
         ChatMessage chatMessage = e.chatMessage();
         String formattedMsg = chatMessage.getFormattedText();
-        String unformattedMsg = chatMessage.getPlainText();
+        String msg = chatMessage.getPlainText();
 
-        Matcher bombPlacedMatcher = PatternHandler.BOMB_PLACED_PATTERN.matcher(unformattedMsg);
+        Matcher bombPlacedMatcher = PatternHandler.BOMB_PLACED_PATTERN.matcher(msg);
         if (bombPlacedMatcher.find()) {
 //            BombTimerModule.isBomb = true; // TODO: 08.02.2023
 //            BombTimerModule.timer = "00:00"; // TODO: 08.02.2023
@@ -60,7 +60,7 @@ public class BombTimerEventHandler {
             return;
         }
 
-        Matcher m = PatternHandler.BOMB_REMOVED_PATTERN.matcher(unformattedMsg);
+        Matcher m = PatternHandler.BOMB_REMOVED_PATTERN.matcher(msg);
         if (m.find()) {
             String state = m.group(1);
 

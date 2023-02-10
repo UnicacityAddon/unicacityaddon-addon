@@ -99,7 +99,7 @@ public class TSClientQuery implements Closeable {
     }
 
     private void authenticate() {
-        AuthCommand authCommand = new AuthCommand(UnicacityAddon.configuration.tsApiKey().getOrDefault(Strings.EMPTY));
+        AuthCommand authCommand = new AuthCommand(UnicacityAddon.ADDON.configuration().tsApiKey().getOrDefault(Strings.EMPTY));
         authCommand.execute(this);
 
         CommandResponse response = authCommand.getResponse();

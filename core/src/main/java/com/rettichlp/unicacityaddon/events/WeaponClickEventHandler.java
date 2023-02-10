@@ -6,7 +6,8 @@ import net.labymod.api.client.world.item.ItemStack;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
-import java.util.Set;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author RettichLP
@@ -15,7 +16,7 @@ import java.util.Set;
 @UCEvent
 public class WeaponClickEventHandler {
 
-    private static final Set<String> WEAPONS = Set.of("§8M4", "§8MP5", "§8Pistole", "§8Jagdflinte");
+    private static final List<String> WEAPONS = Arrays.asList("§8M4", "§8MP5", "§8Pistole", "§8Jagdflinte");
     public static boolean tazerLoaded = false;
     private long tazerLastWarningSend = 0;
 
@@ -77,10 +78,10 @@ public class WeaponClickEventHandler {
 
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {
-        String message = e.chatMessage().getPlainText();
-        if (message.equals("Dein Tazer ist nun bereit!")) {
+        String msg = e.chatMessage().getPlainText();
+        if (msg.equals("Dein Tazer ist nun bereit!")) {
             tazerLoaded = true;
-        } else if (message.equals("Dein Tazer ist nun nicht mehr bereit!") || message.equals("Dein Tazer muss sich noch aufladen...")) {
+        } else if (msg.equals("Dein Tazer ist nun nicht mehr bereit!") || msg.equals("Dein Tazer muss sich noch aufladen...")) {
             tazerLoaded = false;
         }
     }

@@ -41,7 +41,7 @@ public class TSFindCommand extends Command {
                 return;
             }
 
-            if (!UnicacityAddon.configuration.tsApiKey().getOrDefault("").matches("([A-Z0-9]{4}(-*)){6}")) {
+            if (!UnicacityAddon.ADDON.configuration().tsApiKey().getOrDefault("").matches("([A-Z0-9]{4}(-*)){6}")) {
                 p.sendErrorMessage("Teamspeak API Key ist nicht gültig!");
                 return;
             }

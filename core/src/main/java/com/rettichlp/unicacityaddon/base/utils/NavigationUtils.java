@@ -2,7 +2,7 @@ package com.rettichlp.unicacityaddon.base.utils;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
-import com.rettichlp.unicacityaddon.base.api.Syncer;
+import com.rettichlp.unicacityaddon.base.api.request.APIConverter;
 import com.rettichlp.unicacityaddon.base.enums.location.ATM;
 import com.rettichlp.unicacityaddon.base.enums.location.Bus;
 import com.rettichlp.unicacityaddon.base.enums.location.Job;
@@ -81,7 +81,7 @@ public class NavigationUtils {
         NaviPoint nearestNaviPoint = null;
         double nearestDistance = Double.MAX_VALUE;
 
-        for (NaviPoint naviPointEntry : Syncer.NAVIPOINTLIST) {
+        for (NaviPoint naviPointEntry : APIConverter.NAVIPOINTLIST) {
             double distance = blockPos.distance(new FloatVector3(naviPointEntry.getX(), naviPointEntry.getY(), naviPointEntry.getZ()));
             if (distance < nearestDistance) {
                 nearestDistance = distance;

@@ -2,7 +2,7 @@ package com.rettichlp.unicacityaddon.commands;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
-import com.rettichlp.unicacityaddon.base.api.Syncer;
+import com.rettichlp.unicacityaddon.base.api.request.APIConverter;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
@@ -31,7 +31,7 @@ public class DyavolCommand extends Command {
                 .of("D'yavol:").color(ColorCode.DARK_RED).bold().advance()
                 .createComponent());
 
-        Syncer.getPlayerGroupEntryList("DYAVOL").forEach(playerGroupEntry -> {
+        APIConverter.getPlayerGroupEntryList("DYAVOL").forEach(playerGroupEntry -> {
             boolean online = ForgeUtils.getOnlinePlayers().contains(playerGroupEntry.getName());
             p.sendMessage(Message.getBuilder()
                     .of("»").color(ColorCode.GRAY).advance().space()

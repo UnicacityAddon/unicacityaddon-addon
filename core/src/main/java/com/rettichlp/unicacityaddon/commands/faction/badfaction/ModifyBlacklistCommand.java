@@ -2,7 +2,7 @@ package com.rettichlp.unicacityaddon.commands.faction.badfaction;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
-import com.rettichlp.unicacityaddon.base.api.Syncer;
+import com.rettichlp.unicacityaddon.base.api.request.APIConverter;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.enums.faction.ModifyBlacklistType;
 import com.rettichlp.unicacityaddon.base.models.BlacklistReason;
@@ -63,7 +63,7 @@ public class ModifyBlacklistCommand extends Command {
     @Override
     public List<String> complete(String[] arguments) {
         return TabCompletionBuilder.getBuilder(arguments)
-                .addAtIndex(2, Syncer.getBlacklistReasonEntryList().stream().map(BlacklistReason::getReason).sorted().collect(Collectors.toList()))
+                .addAtIndex(2, APIConverter.getBlacklistReasonEntryList().stream().map(BlacklistReason::getReason).sorted().collect(Collectors.toList()))
                 .addAtIndex(2, "-v")
                 .build();
     }

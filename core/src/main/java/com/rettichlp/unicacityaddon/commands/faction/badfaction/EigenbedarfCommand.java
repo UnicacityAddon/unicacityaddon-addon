@@ -29,9 +29,9 @@ public class EigenbedarfCommand extends Command {
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        KokainSetting kokainSetting = UnicacityAddon.configuration.ownUseSetting().kokainSetting();
-        MarihuanaSetting marihuanaSetting = UnicacityAddon.configuration.ownUseSetting().marihuanaSetting();
-        MethamphetaminSetting methamphetaminSetting = UnicacityAddon.configuration.ownUseSetting().methamphetaminSetting();
+        KokainSetting kokainSetting = UnicacityAddon.ADDON.configuration().ownUseSetting().kokainSetting();
+        MarihuanaSetting marihuanaSetting = UnicacityAddon.ADDON.configuration().ownUseSetting().marihuanaSetting();
+        MethamphetaminSetting methamphetaminSetting = UnicacityAddon.ADDON.configuration().ownUseSetting().methamphetaminSetting();
 
         if (kokainSetting.enabled().get()) {
             DrugPurity drugPurity = kokainSetting.purity().getOrDefault(DrugPurity.BEST);

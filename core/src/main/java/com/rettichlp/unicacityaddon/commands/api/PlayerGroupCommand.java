@@ -3,7 +3,7 @@ package com.rettichlp.unicacityaddon.commands.api;
 import com.google.gson.JsonObject;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
-import com.rettichlp.unicacityaddon.base.api.Syncer;
+import com.rettichlp.unicacityaddon.base.api.request.APIConverter;
 import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
@@ -36,7 +36,7 @@ public class PlayerGroupCommand extends Command {
                     .of(arguments[1]).color(ColorCode.DARK_AQUA).advance()
                     .createComponent());
 
-            Syncer.getPlayerGroupEntryList(arguments[1]).forEach(playerGroup -> p.sendMessage(Message.getBuilder()
+            APIConverter.getPlayerGroupEntryList(arguments[1]).forEach(playerGroup -> p.sendMessage(Message.getBuilder()
                     .of("»").color(ColorCode.GRAY).advance().space()
                     .of(playerGroup.getName()).color(ColorCode.AQUA).advance()
                     .createComponent()));
@@ -63,7 +63,7 @@ public class PlayerGroupCommand extends Command {
     public List<String> complete(String[] arguments) {
         return TabCompletionBuilder.getBuilder(arguments)
                 .addAtIndex(1, "list", "add", "remove")
-                .addAtIndex(2, Syncer.getPlayerGroupList())
+                .addAtIndex(2, APIConverter.getPlayerGroupList())
                 .build();
     }
 }

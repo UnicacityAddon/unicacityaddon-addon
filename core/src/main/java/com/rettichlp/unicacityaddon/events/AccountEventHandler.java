@@ -33,7 +33,6 @@ public class AccountEventHandler {
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {
         AddonPlayer p = UnicacityAddon.PLAYER;
-        System.out.println("NAME: " + p.getName());
         String msg = e.chatMessage().getPlainText();
 
         if (!UnicacityAddon.isUnicacity())
@@ -105,7 +104,7 @@ public class AccountEventHandler {
             @Override
             public void run() {
                 // MOBILEEVENTHANDLER
-                p.sendServerMessage("/mobile");
+                // TODO: 09.02.2023 p.sendServerMessage("/mobile");
 
                 // AUTOMATE_COMMAND_SETTINGS
                 CommandSetting commandSetting = unicacityAddon.configuration().commandSetting();

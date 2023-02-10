@@ -3,7 +3,7 @@ package com.rettichlp.unicacityaddon.commands.api;
 import com.google.gson.JsonObject;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
-import com.rettichlp.unicacityaddon.base.api.Syncer;
+import com.rettichlp.unicacityaddon.base.api.request.APIConverter;
 import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.models.NaviPoint;
@@ -51,7 +51,7 @@ public class NaviPointCommand extends Command {
         FloatVector3 targetPos = UnicacityAddon.PLAYER.getPosition();
         return TabCompletionBuilder.getBuilder(arguments)
                 .addAtIndex(1, "add", "remove")
-                .addAtIndex(2, Syncer.NAVIPOINTLIST.stream().map(NaviPoint::getName).sorted().collect(Collectors.toList()))
+                .addAtIndex(2, APIConverter.NAVIPOINTLIST.stream().map(NaviPoint::getName).sorted().collect(Collectors.toList()))
                 .addAtIndex(3, String.valueOf(targetPos.getX())) // x
                 .addAtIndex(4, String.valueOf(targetPos.getY())) // y
                 .addAtIndex(5, String.valueOf(targetPos.getZ())) // z

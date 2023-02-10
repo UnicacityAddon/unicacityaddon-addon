@@ -40,46 +40,46 @@ public class EmergencyServiceEventHandler {
     public void onChatReceive(ChatReceiveEvent e) {
         AddonPlayer p = UnicacityAddon.PLAYER;
         ChatMessage chatMessage = e.chatMessage();
-        String unformattedMsg = chatMessage.getPlainText();
+        String msg = chatMessage.getPlainText();
 
-        if (PatternHandler.SERVICE_ARRIVED_PATTERN.matcher(unformattedMsg).find()) {
+        if (PatternHandler.SERVICE_ARRIVED_PATTERN.matcher(msg).find()) {
 //            // TODO: 10.12.2022 p.playSound(SoundRegistry.SERVICE_SOUND, 1, 1);
             FileManager.DATA.addServiceCount(1);
             return;
         }
 
-        if (PatternHandler.SERVICE_REQUEUED_PATTERN.matcher(unformattedMsg).find()) {
+        if (PatternHandler.SERVICE_REQUEUED_PATTERN.matcher(msg).find()) {
             FileManager.DATA.addServiceCount(1);
             return;
         }
 
-        if (PatternHandler.SERVICE_ACCEPTED_PATTERN.matcher(unformattedMsg).find()) {
+        if (PatternHandler.SERVICE_ACCEPTED_PATTERN.matcher(msg).find()) {
             FileManager.DATA.removeServiceCount(1);
             return;
         }
 
-        if (PatternHandler.SERVICE_DELETED_PATTERN.matcher(unformattedMsg).find()) {
+        if (PatternHandler.SERVICE_DELETED_PATTERN.matcher(msg).find()) {
             FileManager.DATA.removeServiceCount(1);
             return;
         }
 
-        if (PatternHandler.SERVICE_NO_SERVICE_PATTERN.matcher(unformattedMsg).find()) {
+        if (PatternHandler.SERVICE_NO_SERVICE_PATTERN.matcher(msg).find()) {
             FileManager.DATA.setServiceCount(0);
             return;
         }
 
-        if (PatternHandler.SERVICE_DONE_PATTERN.matcher(unformattedMsg).find()) {
+        if (PatternHandler.SERVICE_DONE_PATTERN.matcher(msg).find()) {
             FileManager.DATA.setServiceCount(FileManager.DATA.getServiceCount() + 1);
             APIRequest.sendStatisticAddRequest(StatisticType.SERVICE);
         }
 
-        Matcher serviceOverviewMatcher = PatternHandler.SERVICE_OVERVIEW_PATTERN.matcher(unformattedMsg);
+        Matcher serviceOverviewMatcher = PatternHandler.SERVICE_OVERVIEW_PATTERN.matcher(msg);
         if (serviceOverviewMatcher.find()) {
             String openServices = serviceOverviewMatcher.group(1);
             FileManager.DATA.setServiceCount(Integer.parseInt(openServices));
         }
 
-        Matcher serviceCallBoxMatcher = PatternHandler.SERVICE_CALL_BOX_PATTERN.matcher(unformattedMsg);
+        Matcher serviceCallBoxMatcher = PatternHandler.SERVICE_CALL_BOX_PATTERN.matcher(msg);
         if (serviceCallBoxMatcher.find()) {
             ServiceCallBox serviceCallBox = ServiceCallBox.getServiceCallBoxByLocationName(serviceCallBoxMatcher.group(2));
             if (serviceCallBox != null) {

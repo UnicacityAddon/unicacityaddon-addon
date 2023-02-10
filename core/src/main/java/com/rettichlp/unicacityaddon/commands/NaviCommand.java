@@ -2,7 +2,7 @@ package com.rettichlp.unicacityaddon.commands;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
-import com.rettichlp.unicacityaddon.base.api.Syncer;
+import com.rettichlp.unicacityaddon.base.api.request.APIConverter;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.models.NaviPoint;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
@@ -49,7 +49,7 @@ public class NaviCommand extends Command {
     @Override
     public List<String> complete(String[] arguments) {
         return TabCompletionBuilder.getBuilder(arguments)
-                .addAtIndex(1, Syncer.NAVIPOINTLIST.stream().map(NaviPoint::getName).sorted().collect(Collectors.toList()))
+                .addAtIndex(1, APIConverter.NAVIPOINTLIST.stream().map(NaviPoint::getName).sorted().collect(Collectors.toList()))
                 .build();
     }
 }

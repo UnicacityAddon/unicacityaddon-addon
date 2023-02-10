@@ -1,7 +1,6 @@
 package com.rettichlp.unicacityaddon.base;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.api.Syncer;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.manager.FactionManager;
@@ -18,6 +17,7 @@ import net.labymod.api.util.math.vector.FloatVector3;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
+import java.util.AbstractMap;
 import java.util.UUID;
 
 public class DefaultAddonPlayer implements AddonPlayer {
@@ -115,12 +115,12 @@ public class DefaultAddonPlayer implements AddonPlayer {
 
     @Override
     public Faction getFaction() {
-        return Syncer.PLAYERFACTIONMAP.getOrDefault(getName(), Faction.NULL);
+        return FactionManager.getInstance().getFactionData().getOrDefault(getName(), new AbstractMap.SimpleEntry<>(Faction.NULL, -1)).getKey();
     }
 
     @Override
     public int getRank() {
-        return Syncer.PLAYERRANKMAP.getOrDefault(getName(), -1);
+        return FactionManager.getInstance().getFactionData().getOrDefault(getName(), new AbstractMap.SimpleEntry<>(Faction.NULL, -1)).getValue();
     }
 
     @Override

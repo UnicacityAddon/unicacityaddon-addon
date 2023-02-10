@@ -3,7 +3,7 @@ package com.rettichlp.unicacityaddon.commands.api;
 import com.google.gson.JsonObject;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
-import com.rettichlp.unicacityaddon.base.api.Syncer;
+import com.rettichlp.unicacityaddon.base.api.request.APIConverter;
 import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.models.BlacklistReason;
@@ -38,7 +38,7 @@ public class BlacklistReasonCommand extends Command {
                     .of("Blacklist-Gründe:").color(ColorCode.DARK_AQUA).bold().advance()
                     .createComponent());
 
-            Syncer.getBlacklistReasonEntryList().forEach(blacklistReasonEntry -> p.sendMessage(Message.getBuilder()
+            APIConverter.getBlacklistReasonEntryList().forEach(blacklistReasonEntry -> p.sendMessage(Message.getBuilder()
                     .of("»").color(ColorCode.GRAY).advance().space()
                     .of(blacklistReasonEntry.getReason()).color(ColorCode.AQUA)
                             .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder()
@@ -72,7 +72,7 @@ public class BlacklistReasonCommand extends Command {
     public List<String> complete(String[] arguments) {
         return TabCompletionBuilder.getBuilder(arguments)
                 .addAtIndex(1, "add", "remove")
-                .addAtIndex(2, Syncer.getBlacklistReasonEntryList().stream().map(BlacklistReason::getReason).sorted().collect(Collectors.toList()))
+                .addAtIndex(2, APIConverter.getBlacklistReasonEntryList().stream().map(BlacklistReason::getReason).sorted().collect(Collectors.toList()))
                 .build();
     }
 }

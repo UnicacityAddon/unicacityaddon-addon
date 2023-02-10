@@ -34,7 +34,7 @@ public class ReviveEventHandler {
     }
 
     @Subscribe
-    public void onReviveStart(ChatReceiveEvent e) {
+    public void onChatReceive(ChatReceiveEvent e) {
         String msg = e.chatMessage().getPlainText();
 
         Matcher reviveByMedicStartMatcher = PatternHandler.REVIVE_BY_MEDIC_START_PATTERN.matcher(msg);

@@ -42,7 +42,6 @@ public class TickEventHandler {
                 handleNameTag();
                 handleBombTimer();
                 handleTimer();
-                handleCustomSeconds();
             }
 
             // 3 SECONDS
@@ -67,9 +66,9 @@ public class TickEventHandler {
         if (ReinforcementEventHandler.activeReinforcement >= 0 && ReinforcementEventHandler.activeReinforcement + 15 == currentTick) {
             try {
                 File file = FileManager.getNewActivityImageFile("reinforcement");
-                //                HotkeyEventHandler.handleScreenshot(file);
+                //HotkeyEventHandler.handleScreenshot(file);
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                UnicacityAddon.LOGGER.warn(e.getMessage());
             }
         }
     }
@@ -93,7 +92,7 @@ public class TickEventHandler {
 //            String name = entityItem.getCustomNameTag();
 //            String playerName = name.substring(3);
 //
-//            if (Syncer.PLAYERFACTIONMAP.containsKey(playerName) && !name.contains("◤")) {
+//            if (Syncer.getPlayerfactionMap().containsKey(playerName) && !name.contains("◤")) {
 //                String prefix = NameTagEventHandler.getPrefix(playerName, true);
 //                String factionInfo = NameTagEventHandler.getFactionInfo(playerName);
 //
@@ -123,15 +122,6 @@ public class TickEventHandler {
             FileManager.DATA.setTimer(FileManager.DATA.getTimer() - 1);
         } else {
             FileManager.DATA.setTimer(0);
-        }
-    }
-
-    private void handleCustomSeconds() {
-        if (UnicacityAddon.isUnicacity()) {
-            int interval = unicacityAddon.configuration().nameTagSetting().updateInterval().getOrDefault(5);
-            if (currentTick % (interval * 20) == 0) {
-                NameTagEventHandler.refreshAllDisplayNames();
-            }
         }
     }
 

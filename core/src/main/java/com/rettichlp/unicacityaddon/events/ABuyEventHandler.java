@@ -88,8 +88,8 @@ public class ABuyEventHandler {
         if (amountLeft == 0)
             return;
 
-        String message = e.chatMessage().getPlainText();
-        if (!PatternHandler.BUY_INTERRUPTED_PATTERN.matcher(message).find())
+        String msg = e.chatMessage().getPlainText();
+        if (!PatternHandler.BUY_INTERRUPTED_PATTERN.matcher(msg).find())
             return;
 
         amountLeft = 0;

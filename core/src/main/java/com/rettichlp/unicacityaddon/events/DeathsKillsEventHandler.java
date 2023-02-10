@@ -30,8 +30,8 @@ public class DeathsKillsEventHandler {
 
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {
-        String msg = e.chatMessage().getPlainText();
         AddonPlayer p = UnicacityAddon.PLAYER;
+        String msg = e.chatMessage().getPlainText();
 
         Matcher jailKillMatcher = PatternHandler.WANTED_KILL.matcher(msg);
         if (jailKillMatcher.find()) {

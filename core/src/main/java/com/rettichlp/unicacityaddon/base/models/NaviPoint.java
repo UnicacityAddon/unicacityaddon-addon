@@ -1,6 +1,6 @@
 package com.rettichlp.unicacityaddon.base.models;
 
-import com.rettichlp.unicacityaddon.base.api.Syncer;
+import com.rettichlp.unicacityaddon.base.api.request.APIConverter;
 import net.labymod.api.util.math.vector.FloatVector3;
 
 public class NaviPoint {
@@ -52,7 +52,7 @@ public class NaviPoint {
     }
 
     public static NaviPoint getNaviPointEntryByTabName(String tabName) {
-        return Syncer.NAVIPOINTLIST.stream()
+        return APIConverter.NAVIPOINTLIST.stream()
                 .filter(naviPointEntry -> naviPointEntry.getTabName().equals(tabName))
                 .findFirst()
                 .orElse(null);

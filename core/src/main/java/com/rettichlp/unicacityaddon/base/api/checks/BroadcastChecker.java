@@ -2,7 +2,7 @@ package com.rettichlp.unicacityaddon.base.api.checks;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
-import com.rettichlp.unicacityaddon.base.api.Syncer;
+import com.rettichlp.unicacityaddon.base.api.request.APIConverter;
 import com.rettichlp.unicacityaddon.base.models.Broadcast;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
@@ -24,12 +24,13 @@ public class BroadcastChecker {
             @Override
             public void run() {
                 checkForBroadcast();
+                UnicacityAddon.debug("Checking for Broadcast");
             }
         }, TimeUnit.SECONDS.toMillis(30), TimeUnit.SECONDS.toMillis(30));
     }
 
     private static void checkForBroadcast() {
-        for (Broadcast broadcast : Syncer.getBroadcastEntryList()) {
+        for (Broadcast broadcast : APIConverter.getBroadcastEntryList()) {
             if (broadcast.getSendTime() < System.currentTimeMillis())
                 continue;
             if (receivedBroadcasts.contains(broadcast.getId()))

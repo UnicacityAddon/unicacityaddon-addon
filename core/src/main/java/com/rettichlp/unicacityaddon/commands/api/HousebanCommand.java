@@ -3,7 +3,7 @@ package com.rettichlp.unicacityaddon.commands.api;
 import com.google.gson.JsonObject;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
-import com.rettichlp.unicacityaddon.base.api.Syncer;
+import com.rettichlp.unicacityaddon.base.api.request.APIConverter;
 import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.models.HouseBanReason;
@@ -40,7 +40,7 @@ public class HousebanCommand extends Command {
                     .of("Hausverbote:").color(ColorCode.DARK_AQUA).bold().advance()
                     .createComponent());
 
-            Syncer.getHouseBanEntryList().forEach(houseBanEntry -> {
+            APIConverter.HOUSEBANENTRYLIST.forEach(houseBanEntry -> {
                 long durationInMillis = houseBanEntry.getExpirationTime() - System.currentTimeMillis();
 
                 String duration = Message.getBuilder()
@@ -107,7 +107,7 @@ public class HousebanCommand extends Command {
     public List<String> complete(String[] arguments) {
         return TabCompletionBuilder.getBuilder(arguments)
                 .addAtIndex(1, "add", "remove")
-                .addAtIndex(3, Syncer.getHouseBanReasonEntryList().stream().map(HouseBanReason::getReason).sorted().collect(Collectors.toList()))
+                .addAtIndex(3, APIConverter.getHouseBanReasonEntryList().stream().map(HouseBanReason::getReason).sorted().collect(Collectors.toList()))
                 .build();
     }
 }

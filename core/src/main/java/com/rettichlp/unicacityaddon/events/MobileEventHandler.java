@@ -46,8 +46,8 @@ public class MobileEventHandler {
      */
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {
-        String msg = e.chatMessage().getPlainText();
         AddonPlayer p = UnicacityAddon.PLAYER;
+        String msg = e.chatMessage().getPlainText();
 
         // blocks next SMS message (because SMS messages has two independent message parts)
         if (blockNextMessage && msg.matches("^(?:\\[UC])*\\w+: .*$")) {

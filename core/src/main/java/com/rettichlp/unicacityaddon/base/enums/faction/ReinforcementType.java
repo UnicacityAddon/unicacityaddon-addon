@@ -40,7 +40,7 @@ public enum ReinforcementType {
     }
 
     public ChatType getChatType() {
-        return UnicacityAddon.configuration.nameTagSetting().allianceFactionNameTagSetting().enabled().get() ? chatType : ChatType.FCHAT;
+        return UnicacityAddon.ADDON.configuration().nameTagSetting().allianceFactionNameTagSetting().enabled().get() ? chatType : ChatType.FCHAT;
     }
 
     public String getMessage() {

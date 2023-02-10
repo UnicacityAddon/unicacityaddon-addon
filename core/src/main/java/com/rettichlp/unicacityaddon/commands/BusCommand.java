@@ -2,7 +2,7 @@ package com.rettichlp.unicacityaddon.commands;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
-import com.rettichlp.unicacityaddon.base.api.Syncer;
+import com.rettichlp.unicacityaddon.base.api.request.APIConverter;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.enums.location.Bus;
 import com.rettichlp.unicacityaddon.base.models.NaviPoint;
@@ -59,7 +59,7 @@ public class BusCommand extends Command {
     @Override
     public List<String> complete(String[] arguments) {
         return TabCompletionBuilder.getBuilder(arguments)
-                .addAtIndex(1, Syncer.getNaviPointEntryList().stream().map(NaviPoint::getTabName).collect(Collectors.toList()))
+                .addAtIndex(1, APIConverter.getNaviPointEntryList().stream().map(NaviPoint::getTabName).collect(Collectors.toList()))
                 .build();
     }
 

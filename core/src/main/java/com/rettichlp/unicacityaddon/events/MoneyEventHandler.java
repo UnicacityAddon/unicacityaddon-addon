@@ -36,8 +36,8 @@ public class MoneyEventHandler {
 
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {
-        String msg = e.chatMessage().getPlainText();
         AddonPlayer p = UnicacityAddon.PLAYER;
+        String msg = e.chatMessage().getPlainText();
 
         Matcher jobSalaryMatcher = PatternHandler.JOB_SALARY_PATTERN.matcher(msg);
         if (jobSalaryMatcher.find()) {
@@ -131,13 +131,13 @@ public class MoneyEventHandler {
         }
 
         Matcher cashToFBankMatcher = PatternHandler.CASH_TO_FBANK_PATTERN.matcher(msg);
-        if (cashToFBankMatcher.find()) {
+        if (cashToFBankMatcher.find() && msg.contains(p.getName())) {
             FileManager.DATA.removeCashBalance(Integer.parseInt(cashToFBankMatcher.group(1)));
             return;
         }
 
         Matcher cashFromFBankMatcher = PatternHandler.CASH_FROM_FBANK_PATTERN.matcher(msg);
-        if (cashFromFBankMatcher.find()) {
+        if (cashFromFBankMatcher.find() && msg.contains(p.getName())) {
             FileManager.DATA.addCashBalance(Integer.parseInt(cashFromFBankMatcher.group(1)));
             return;
         }

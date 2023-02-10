@@ -1,6 +1,6 @@
 package com.rettichlp.unicacityaddon.base.models;
 
-import com.rettichlp.unicacityaddon.base.api.Syncer;
+import com.rettichlp.unicacityaddon.base.api.request.APIConverter;
 
 public class WantedReason {
 
@@ -33,7 +33,7 @@ public class WantedReason {
     }
 
     public static WantedReason getWantedReasonEntryByReason(String reason) {
-        return Syncer.getWantedReasonEntryList().stream()
+        return APIConverter.getWantedReasonEntryList().stream()
                 .filter(wantedReason -> wantedReason.getReason().equals(reason))
                 .findFirst()
                 .orElse(null);

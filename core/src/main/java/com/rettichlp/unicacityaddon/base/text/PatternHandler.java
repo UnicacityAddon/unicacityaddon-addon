@@ -1,7 +1,7 @@
 package com.rettichlp.unicacityaddon.base.text;
 
 
-import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.base.api.request.APIConverter;
 
 import java.util.regex.Pattern;
 
@@ -12,13 +12,14 @@ public class PatternHandler {
 
     /**
      * Quote: Rettich: "In welchem Forum ist der Vorschlag drin?" Dimiikou: "In Vorschläge" - RettichLP und Dimiikou, 09.10.2022
-     */
-    private static final String playerName = UnicacityAddon.PLAYER.getName();
-
-    /**
+     *
+     * <br>
+     * <br>
+     * <br>
+     *
      * Pattern for faction and util data
      *
-     * @see com.rettichlp.unicacityaddon.base.api.Syncer
+     * @see APIConverter
      * @see com.rettichlp.unicacityaddon.base.utils.ForgeUtils
      */
     public static final Pattern NAME_PATTERN = Pattern.compile("<h4 class=\"h5 g-mb-5\"><strong>(\\w+)");
@@ -176,7 +177,7 @@ public class PatternHandler {
      * @see com.rettichlp.unicacityaddon.events.faction.badfaction.PlantEventHandler
      */
     public static final Pattern PLANT_HARVEST_PATTERN = Pattern.compile("^\\[Plantage] Eine .+-Plantage wurde von (?:\\[UC])*(\\w+) geerntet\\. \\[\\d+g]$");
-    public static final Pattern PLANT_USE_PATTERN = Pattern.compile("^\\[Plantage] Eine .+-Plantage wurde von (?:\\[UC])*(" + playerName + ") (gewässert|gedüngt)\\.$");
+    public static final Pattern PLANT_USE_PATTERN = Pattern.compile("^\\[Plantage] Eine .+-Plantage wurde von (?:\\[UC])*(\\w+) (gewässert|gedüngt)\\.$");
     public static final Pattern DBANK_GIVE_PATTERN = Pattern.compile("^(?:\\[UC])*(\\w+) hat (?<amount>\\d+)g (?<drugType>.+) \\((?<drugPurity>Höchste|Gute|Mittlere|Schlechte) Reinheit\\) \\((\\d+)g\\) eingelagert\\.$");
     public static final Pattern DBANK_GET_PATTERN = Pattern.compile("^(?:\\[UC])*(\\w+) hat (?<amount>\\d+)g (?<drugType>.+) \\((?<drugPurity>Höchste|Gute|Mittlere|Schlechte) Reinheit\\) \\((\\d+)g\\) aus der Drogenbank genommen\\.$");
     public static final Pattern DRUG_DEAL_ACCEPTED = Pattern.compile("^\\[Deal] (?:\\[UC])*(\\w+) hat den Deal angenommen\\.$");
@@ -208,8 +209,8 @@ public class PatternHandler {
     public static final Pattern BANK_TRANSFER_GET_PATTERN = Pattern.compile("^(?:\\[UC])*(\\w+) hat dir (\\d+)\\$ überwiesen!$");
     public static final Pattern CASH_GIVE_PATTERN = Pattern.compile("^Du hast (?:\\[UC])*(\\w+) (\\d+)\\$ gegeben!$");
     public static final Pattern CASH_TAKE_PATTERN = Pattern.compile("^(?:\\[UC])*(\\w+) hat dir (\\d+)\\$ gegeben!$");
-    public static final Pattern CASH_TO_FBANK_PATTERN = Pattern.compile("^\\[F-Bank] " + playerName + " hat (\\d+)\\$ (|\\(-(\\d+)\\$\\) )in die Fraktionsbank eingezahlt\\.$");
-    public static final Pattern CASH_FROM_FBANK_PATTERN = Pattern.compile("^\\[F-Bank] " + playerName + " hat (\\d+)\\$ aus der Fraktionsbank genommen\\.$");
+    public static final Pattern CASH_TO_FBANK_PATTERN = Pattern.compile("^\\[F-Bank] \\w+ hat (\\d+)\\$ (|\\(-(\\d+)\\$\\) )in die Fraktionsbank eingezahlt\\.$");
+    public static final Pattern CASH_FROM_FBANK_PATTERN = Pattern.compile("^\\[F-Bank] \\w+ hat (\\d+)\\$ aus der Fraktionsbank genommen\\.$");
     public static final Pattern CASH_TO_BANK_PATTERN = Pattern.compile("^ {2}Eingezahlt: \\+(\\d+)\\$$");
     public static final Pattern CASH_FROM_BANK_PATTERN = Pattern.compile("^ {2}Auszahlung: -(\\d+)\\$$");
     public static final Pattern CASH_GET_PATTERN = Pattern.compile("^ {2}\\+(\\d+)\\$$");

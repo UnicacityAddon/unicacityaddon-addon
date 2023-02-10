@@ -1,10 +1,9 @@
-package com.rettichlp.unicacityaddon.base.api;
+package com.rettichlp.unicacityaddon.base.api.request;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
 import com.rettichlp.unicacityaddon.base.enums.api.AddonGroup;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.models.BlacklistReason;
@@ -14,27 +13,20 @@ import com.rettichlp.unicacityaddon.base.models.HouseBanReason;
 import com.rettichlp.unicacityaddon.base.models.NaviPoint;
 import com.rettichlp.unicacityaddon.base.models.PlayerGroup;
 import com.rettichlp.unicacityaddon.base.models.WantedReason;
-import com.rettichlp.unicacityaddon.base.text.PatternHandler;
-import com.rettichlp.unicacityaddon.base.utils.ListUtils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-public class Syncer {
+public class APIConverter {
 
-    public static final Map<String, Faction> PLAYERFACTIONMAP = new HashMap<>();
-    public static final Map<String, Integer> PLAYERRANKMAP = new HashMap<>();
     public static List<HouseBan> HOUSEBANENTRYLIST = new ArrayList<>();
     public static List<NaviPoint> NAVIPOINTLIST = new ArrayList<>();
 
     public static void syncAll() {
         new Thread(() -> {
             Thread t1 = syncPlayerAddonGroupMap();
-            Thread t2 = syncPlayerFactionData();
-            Thread t3 = syncHousebanEntryList();
-            Thread t4 = syncNaviPointEntryList();
+            Thread t2 = syncHousebanEntryList();
+            Thread t3 = syncNaviPointEntryList();
 
             try {
                 t1.start();
@@ -45,16 +37,13 @@ public class Syncer {
 
                 t3.start();
                 t3.join();
-
-                t4.start();
-                t4.join();
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
         }).start();
     }
 
-    public static Thread syncPlayerAddonGroupMap() {
+    private static Thread syncPlayerAddonGroupMap() {
         return new Thread(() -> {
             JsonObject response = APIRequest.sendPlayerRequest();
             if (response != null) {
@@ -65,55 +54,15 @@ public class Syncer {
                     }
                 }
             }
-//            Laby.labyAPI().minecraft().executeOnRenderThread(() -> UnicacityAddon.ADDON.labyAPI().notificationController().push(Notification.builder()
-//                    .title(Component.text("Synchronisierung", NamedTextColor.AQUA))
-//                    .text(Component.text("Addon Gruppen aktualisiert."))
-//                    .build()));
         });
     }
 
-    public static Thread syncPlayerFactionData() {
-        return new Thread(() -> {
-            PLAYERFACTIONMAP.clear();
-            PLAYERRANKMAP.clear();
-            for (Faction faction : Faction.values()) {
-                String factionWebsiteSource = faction.getWebsiteSource();
-                List<String> nameList = ListUtils.getAllMatchesFromString(PatternHandler.NAME_PATTERN, factionWebsiteSource);
-                List<String> rankList = ListUtils.getAllMatchesFromString(PatternHandler.RANK_PATTERN, factionWebsiteSource);
-                nameList.forEach(name -> {
-                    String formattedname = name.replace("<h4 class=\"h5 g-mb-5\"><strong>", "");
-                    PLAYERFACTIONMAP.put(formattedname, faction);
-                    PLAYERRANKMAP.put(formattedname, Integer.parseInt(String.valueOf(rankList.get(nameList.indexOf(name))
-                            .replace("<strong>Rang ", "")
-                            .charAt(0))));
-                });
-            }
-
-//            Laby.labyAPI().notificationController().push(Notification.builder()
-//                    .title(Component.text("Synchronisierung", NamedTextColor.AQUA))
-//                    .text(Component.text("Fraktionen aktualisiert."))
-//                    .build());
-        });
+    private static Thread syncHousebanEntryList() {
+        return new Thread(() -> HOUSEBANENTRYLIST = getHouseBanEntryList());
     }
 
-    public static Thread syncHousebanEntryList() {
-        return new Thread(() -> {
-            HOUSEBANENTRYLIST = getHouseBanEntryList();
-//            Laby.labyAPI().notificationController().push(Notification.builder()
-//                    .title(Component.text("Synchronisierung", NamedTextColor.AQUA))
-//                    .text(Component.text("Hausverbote aktualisiert."))
-//                    .build());
-        });
-    }
-
-    public static Thread syncNaviPointEntryList() {
-        return new Thread(() -> {
-            NAVIPOINTLIST = getNaviPointEntryList();
-//            Laby.labyAPI().notificationController().push(Notification.builder()
-//                    .title(Component.text("Synchronisierung", NamedTextColor.AQUA))
-//                    .text(Component.text("Navipunkte aktualisiert."))
-//                    .build());
-        });
+    private static Thread syncNaviPointEntryList() {
+        return new Thread(() -> NAVIPOINTLIST = getNaviPointEntryList());
     }
 
     public static List<BlacklistReason> getBlacklistReasonEntryList() {

@@ -2,7 +2,7 @@ package com.rettichlp.unicacityaddon.commands.faction.polizei;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
-import com.rettichlp.unicacityaddon.base.api.Syncer;
+import com.rettichlp.unicacityaddon.base.api.request.APIConverter;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.enums.faction.WantedFlag;
 import com.rettichlp.unicacityaddon.base.models.WantedReason;
@@ -92,7 +92,7 @@ public class ASUCommand extends Command {
     @Override
     public List<String> complete(String[] arguments) {
         return TabCompletionBuilder.getBuilder(arguments)
-                .addToAllFromIndex(2, Syncer.getWantedReasonEntryList().stream().map(WantedReason::getReason).sorted().collect(Collectors.toList()))
+                .addToAllFromIndex(2, APIConverter.getWantedReasonEntryList().stream().map(WantedReason::getReason).sorted().collect(Collectors.toList()))
                 .addToAllFromIndex(2, ForgeUtils.getOnlinePlayers())
                 .addToAllFromIndex(3, Arrays.stream(WantedFlag.values()).map(WantedFlag::getFlagArgument).sorted().collect(Collectors.toList()))
                 .build();

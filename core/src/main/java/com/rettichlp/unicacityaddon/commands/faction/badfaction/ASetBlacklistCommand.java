@@ -2,7 +2,7 @@ package com.rettichlp.unicacityaddon.commands.faction.badfaction;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
-import com.rettichlp.unicacityaddon.base.api.Syncer;
+import com.rettichlp.unicacityaddon.base.api.request.APIConverter;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.models.BlacklistReason;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
@@ -48,7 +48,7 @@ public class ASetBlacklistCommand extends Command {
     public List<String> complete(String[] arguments) {
         return TabCompletionBuilder.getBuilder(arguments)
                 .addToAllFromIndex(2, ForgeUtils.getOnlinePlayers())
-                .addToAllFromIndex(2, Syncer.getBlacklistReasonEntryList().stream().map(BlacklistReason::getReason).sorted().collect(Collectors.toList()))
+                .addToAllFromIndex(2, APIConverter.getBlacklistReasonEntryList().stream().map(BlacklistReason::getReason).sorted().collect(Collectors.toList()))
                 .build();
     }
 }

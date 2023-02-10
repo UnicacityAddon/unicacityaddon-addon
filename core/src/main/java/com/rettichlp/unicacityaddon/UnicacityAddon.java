@@ -2,13 +2,9 @@ package com.rettichlp.unicacityaddon;
 
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.DefaultAddonPlayer;
-import com.rettichlp.unicacityaddon.base.api.Syncer;
-import com.rettichlp.unicacityaddon.base.api.TokenManager;
-import com.rettichlp.unicacityaddon.base.api.checks.BroadcastChecker;
 import com.rettichlp.unicacityaddon.base.config.DefaultUnicacityAddonConfiguration;
-import com.rettichlp.unicacityaddon.base.config.UnicacityAddonConfiguration;
-import com.rettichlp.unicacityaddon.base.manager.FileManager;
-import com.rettichlp.unicacityaddon.base.teamspeak.TSClientQuery;
+import com.rettichlp.unicacityaddon.base.text.ColorCode;
+import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.commands.ABuyCommand;
 import com.rettichlp.unicacityaddon.commands.BusCommand;
 import com.rettichlp.unicacityaddon.commands.CalculateCommand;
@@ -94,6 +90,7 @@ import com.rettichlp.unicacityaddon.events.MoneyEventHandler;
 import com.rettichlp.unicacityaddon.events.NameTagEventHandler;
 import com.rettichlp.unicacityaddon.events.NavigationEventHandler;
 import com.rettichlp.unicacityaddon.events.RenderTagEventHandler;
+import com.rettichlp.unicacityaddon.events.ServerLoginEventHandler;
 import com.rettichlp.unicacityaddon.events.TabListEventHandler;
 import com.rettichlp.unicacityaddon.events.TickEventHandler;
 import com.rettichlp.unicacityaddon.events.TimerEventHandler;
@@ -144,15 +141,37 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
     public static final String VERSION = "2.0.0-dev";
     public static Minecraft MINECRAFT;
     public static Logging LOGGER;
-    public static AddonPlayer PLAYER;
     public static UnicacityAddon ADDON;
-    public static UnicacityAddonConfiguration configuration;
+    public static AddonPlayer PLAYER;
+
+    @Override
+    public void load() {
+        ADDON = this;
+        LOGGER = this.logger();
+        PLAYER = new DefaultAddonPlayer(this);
+
+
+
+//        BroadcastChecker.start();
+//
+//        System.out.println("TOKEN: " + this.labyAPI().minecraft().sessionAccessor().session().getAccessToken());
+//
+//        String apitoken = TokenManager.createToken(this.labyAPI().minecraft().sessionAccessor().session());
+//
+//        System.out.println(apitoken);
+//
+//        System.out.println("API TOKEN: " + TokenManager.API_TOKEN);
+//
+//        Syncer.syncAll();
+//        new Thread(TSClientQuery::getInstance).start();
+//        FileManager.loadData();
+
+        TickEventHandler.currentTick = -1;
+    }
 
     @Override
     protected void enable() {
         this.registerSettingCategory();
-
-        PLAYER = new DefaultAddonPlayer(this);
 
         this.registerListener(new ABuyEventHandler(this));
         this.registerListener(new AccountEventHandler(this));
@@ -166,6 +185,7 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
         this.registerListener(new NameTagEventHandler(this));
         this.registerListener(new NavigationEventHandler(this));
         this.registerListener(new RenderTagEventHandler(this));
+        this.registerListener(new ServerLoginEventHandler(this));
         this.registerListener(new TabListEventHandler(this));
         this.registerListener(new TickEventHandler(this));
         this.registerListener(new TimerEventHandler(this));
@@ -303,13 +323,6 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
         this.registerCommand(new TSFindCommand());
         this.registerCommand(new TSJoinCommand());
 
-        BroadcastChecker.start();
-        TokenManager.createToken();
-        Syncer.syncAll();
-        new Thread(TSClientQuery::getInstance).start();
-        FileManager.loadData();
-
-        TickEventHandler.currentTick = 0;
         this.logger().info("Enabled UnicacityAddon");
     }
 
@@ -321,13 +334,23 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
     public static boolean isUnicacity() {
         return true; // TODO: 08.02.2023
 
-//        if (MINECRAFT.clientWorld() == null)
-//            return false;
-//
-//        ServerData serverData = Laby.labyAPI().serverController().getCurrentServerData();
-//        if (serverData == null)
-//            return false;
-//
-//        return serverData.address().matches("unicacity", 25565, true);
+        //        if (MINECRAFT.clientWorld() == null)
+        //            return false;
+        //
+        //        ServerData serverData = Laby.labyAPI().serverController().getCurrentServerData();
+        //        if (serverData == null)
+        //            return false;
+        //
+        //        return serverData.address().matches("unicacity", 25565, true);
+    }
+
+    public static void debug(String debugMessage) {
+        UnicacityAddon.PLAYER.sendMessage("otter");
+        UnicacityAddon.PLAYER.sendMessage(Message.getBuilder()
+                .of("[").color(ColorCode.DARK_GRAY).advance()
+                .of("DEBUG").color(ColorCode.YELLOW).advance()
+                .of("]").color(ColorCode.DARK_GRAY).advance().space()
+                .add(debugMessage)
+                .createComponent());
     }
 }

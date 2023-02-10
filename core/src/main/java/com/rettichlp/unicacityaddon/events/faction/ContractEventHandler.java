@@ -29,10 +29,10 @@ public class ContractEventHandler {
 
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {
-        String unformattedMessage = e.chatMessage().getPlainText();
+        String msg = e.chatMessage().getPlainText();
         long currentTime = System.currentTimeMillis();
 
-        Matcher contractSetMatcher = PatternHandler.CONTRACT_SET_PATTERN.matcher(unformattedMessage);
+        Matcher contractSetMatcher = PatternHandler.CONTRACT_SET_PATTERN.matcher(msg);
         if (contractSetMatcher.find()) {
             // TODO: 10.12.2022 p.playSound(SoundRegistry.CONTRACT_SET_SOUND, 1, 1);
             String name = contractSetMatcher.group(1);
@@ -40,7 +40,7 @@ public class ContractEventHandler {
             return;
         }
 
-        Matcher contractRemovedMatcher = PatternHandler.CONTRACT_REMOVED_PATTERN.matcher(unformattedMessage);
+        Matcher contractRemovedMatcher = PatternHandler.CONTRACT_REMOVED_PATTERN.matcher(msg);
         if (contractRemovedMatcher.find()) {
             String name = null;
             for (int i = 1; i < contractRemovedMatcher.groupCount() + 1; i++) {
@@ -57,15 +57,15 @@ public class ContractEventHandler {
         }
 
         // TODO TRANSFORM TO REGEX
-        if (unformattedMessage.equals("=~=~=~Contracts~=~=~=")) {
+        if (msg.equals("=~=~=~Contracts~=~=~=")) {
             CONTRACT_LIST.clear();
             hitlistShown = currentTime;
             return;
         }
 
         // TODO TRANSFORM TO REGEX
-        if (currentTime - hitlistShown < 5000L && unformattedMessage.startsWith(" - ") && unformattedMessage.contains("$")) {
-            String[] splittedMessage = unformattedMessage.split(" ");
+        if (currentTime - hitlistShown < 5000L && msg.startsWith(" - ") && msg.contains("$")) {
+            String[] splittedMessage = msg.split(" ");
             String name = ForgeUtils.stripPrefix(splittedMessage[1]);
             CONTRACT_LIST.add(name);
         }

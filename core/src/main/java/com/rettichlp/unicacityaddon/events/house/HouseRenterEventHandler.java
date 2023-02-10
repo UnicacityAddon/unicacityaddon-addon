@@ -96,13 +96,13 @@ public class HouseRenterEventHandler {
             if (isOnline) {
                 lastRenterOnlineAmount++;
             } else {
-                Date date;
+                Date date = null;
 
                 try {
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
                     date = simpleDateFormat.parse(renterMatcher.group(3) + "/" + renterMatcher.group(4) + "/" + renterMatcher.group(5));
                 } catch (ParseException ex) {
-                    throw new RuntimeException(ex);
+                    UnicacityAddon.LOGGER.warn(ex.getMessage());
                 }
 
                 if (date == null)

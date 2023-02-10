@@ -1,7 +1,7 @@
 package com.rettichlp.unicacityaddon.base.api;
 
-import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
+import net.labymod.api.client.session.Session;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -11,10 +11,10 @@ public class TokenManager {
 
     public static String API_TOKEN;
 
-    public static void createToken() {
-        String uuid = UnicacityAddon.PLAYER.getUniqueId().toString().replace("-", "");
+    public static void createToken(Session session) {
+        String uuid = session.getUniqueId().toString().replace("-", "");
         String salt = "423WhKRMTfRv4mn6u8hLcPj7bYesKh4Ex4yRErYuW4KsgYjpo35nSU11QYj3OINAJwcd0TPDD6AkqhSq";
-        String authToken = UnicacityAddon.MINECRAFT.sessionAccessor().session().getAccessToken();
+        String authToken = session.getAccessToken();
         API_TOKEN = hash(uuid + salt + authToken);
         APIRequest.sendTokenCreateRequest();
     }

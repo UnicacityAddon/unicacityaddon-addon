@@ -35,8 +35,8 @@ public class KarmaMessageEventHandler {
 
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {
-        String msg = e.chatMessage().getPlainText();
         AddonPlayer p = UnicacityAddon.PLAYER;
+        String msg = e.chatMessage().getPlainText();
 
         if (AccountEventHandler.isAfk)
             return;
