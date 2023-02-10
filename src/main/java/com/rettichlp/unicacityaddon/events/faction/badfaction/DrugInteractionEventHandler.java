@@ -51,11 +51,14 @@ public class DrugInteractionEventHandler {
         }
 
         Matcher dbankGetMatcher = PatternHandler.DBANK_GET_PATTERN.matcher(msg);
-        if (dbankGetMatcher.find() && msg.contains(p.getName())) {
+        if (dbankGetMatcher.find()) {
             int amount = Integer.parseInt(dbankGetMatcher.group("amount"));
             DrugType drugType = DrugType.getDrugType(dbankGetMatcher.group("drugType"));
             DrugPurity drugPurity = DrugPurity.getDrugPurity(dbankGetMatcher.group("drugPurity"));
-            FileManager.DATA.addDrugToInventory(drugType, drugPurity, amount);
+
+            if (msg.contains(p.getName())) {
+                FileManager.DATA.addDrugToInventory(drugType, drugPurity, amount);
+            }
 
             if (ConfigElements.getDrugBankMessagesActivated()) {
                 NumberFormat numberFormat = NumberFormat.getNumberInstance(new Locale("da", "DK"));
@@ -77,11 +80,14 @@ public class DrugInteractionEventHandler {
         }
 
         Matcher dbankGiveMatcher = PatternHandler.DBANK_GIVE_PATTERN.matcher(msg);
-        if (dbankGiveMatcher.find() && msg.contains(p.getName())) {
+        if (dbankGiveMatcher.find()) {
             int amount = Integer.parseInt(dbankGiveMatcher.group("amount"));
             DrugType drugType = DrugType.getDrugType(dbankGiveMatcher.group("drugType"));
             DrugPurity drugPurity = DrugPurity.getDrugPurity(dbankGiveMatcher.group("drugPurity"));
-            FileManager.DATA.removeDrugFromInventory(drugType, drugPurity, amount);
+
+            if (msg.contains(p.getName())) {
+                FileManager.DATA.removeDrugFromInventory(drugType, drugPurity, amount);
+            }
 
             if (ConfigElements.getDrugBankMessagesActivated()) {
                 NumberFormat numberFormat = NumberFormat.getNumberInstance(new Locale("da", "DK"));
