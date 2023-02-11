@@ -400,6 +400,12 @@ public class ConfigElements {
                 .getAsBoolean(); // default = true
     }
 
+    // PlantBurnMessages
+    public static boolean getPlantBurnMessageActivated() {
+        return !UnicacityAddon.ADDON.getConfig().has("PLANT_BURN_MESSAGE_SETTING") || UnicacityAddon.ADDON.getConfig().get("PLANT_BURN_MESSAGE_SETTING")
+                .getAsBoolean(); // default = true
+    }
+
     // EquipSettings
     public static String getBaseballBatPrice() {
         return UnicacityAddon.ADDON.getConfig().has("EQUIP_BASEBALLBAT_SETTING") && !UnicacityAddon.ADDON.getConfig().get("EQUIP_BASEBALLBAT_SETTING").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("EQUIP_BASEBALLBAT_SETTING").getAsString().startsWith("-")

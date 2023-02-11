@@ -86,6 +86,9 @@ public class ConfigSettings {
         BooleanElement drugVaultSetting = new BooleanElement("Asservatenkammer Nachrichten", unicacityAddon, new ControlElement.IconData(Material.CHEST), "DRUG_VAULT_MESSAGE_SETTING", ConfigElements.getDrugVaultMessageActivated());
         settings.add(drugVaultSetting);
 
+        BooleanElement plantBurnSetting = new BooleanElement("Plant-Burn Nachricht", unicacityAddon, new ControlElement.IconData(Material.FIRE), "PLANT_BURN_MESSAGE_SETTING", ConfigElements.getPlantBurnMessageActivated());
+        settings.add(plantBurnSetting);
+
         return settings;
     }
 

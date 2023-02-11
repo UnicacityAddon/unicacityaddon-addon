@@ -327,4 +327,10 @@ public class PatternHandler {
     public static final Pattern DRUG_VAULT_GET = Pattern.compile("^HQ: (.+) (?:\\\\[UC\\\\])*([a-zA-Z0-9_]+) hat ([0-9]+)g (.+) \\((.+)\\) aus der Asservatenkammer genommen.$");
 
     public static final Pattern DRUG_VAULT_BURN = Pattern.compile("^HQ: (.+) (?:\\\\[UC\\\\])*([a-zA-Z0-9_]+) hat ([0-9]+)g (Kokain|Methamphetamin|Marihuana|LSD) \\((Höchste Reinheit|Gute Reinheit|Mittlere Reinheit|Schlechte Reinheit)\\) vernichtet.$");
+
+    /**
+     * Pattern for plant burn message
+     * @see com.rettichlp.unicacityaddon.events.faction.polizei.PlantBurnMessageEventHandler
+     */
+    public static final Pattern PLANT_BURN = Pattern.compile("^HQ: (.+) (?:\\\\[UC\\\\])*([a-zA-Z0-9_]+) hat erfolgreich eine (Kokain|Marihuana) Plantage verbrannt, over.$");
 }
