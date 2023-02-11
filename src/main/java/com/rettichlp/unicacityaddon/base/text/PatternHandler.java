@@ -317,4 +317,14 @@ public class PatternHandler {
      * @see com.rettichlp.unicacityaddon.events.faction.kirche.PrayEventHandler
      */
     public static final Pattern PRAYING_START_PATTERN = Pattern.compile("^\\[Kirche] Du hast begonnen für (?:\\[UC])*(?<name>\\w+) zu beten\\.$");
+
+    /**
+     * Pattern for drug vault messages
+     * @see com.rettichlp.unicacityaddon.events.faction.fbi.DrugVaultMessageEventHandler
+     */
+    public static final Pattern DRUG_VAULT_DROP = Pattern.compile("^HQ: (.+) (?:\\\\[UC\\\\])*([a-zA-Z0-9_]+) hat ([0-9]+)g (Kokain|Methamphetamin|Marihuana|LSD) \\((Höchste Reinheit|Gute Reinheit|Mittlere Reinheit|Schlechte Reinheit)\\) in der Asservatenkammer verstaut.$");
+
+    public static final Pattern DRUG_VAULT_GET = Pattern.compile("^HQ: (.+) (?:\\\\[UC\\\\])*([a-zA-Z0-9_]+) hat ([0-9]+)g (.+) \\((.+)\\) aus der Asservatenkammer genommen.$");
+
+    public static final Pattern DRUG_VAULT_BURN = Pattern.compile("^HQ: (.+) (?:\\\\[UC\\\\])*([a-zA-Z0-9_]+) hat ([0-9]+)g (Kokain|Methamphetamin|Marihuana|LSD) \\((Höchste Reinheit|Gute Reinheit|Mittlere Reinheit|Schlechte Reinheit)\\) vernichtet.$");
 }

@@ -83,6 +83,9 @@ public class ConfigSettings {
         BooleanElement dbankMessageSettings = new BooleanElement("D-Bank Nachrichten", unicacityAddon, new ControlElement.IconData(Material.SUGAR), "DBANK_MESSAGE_SETTINGS", ConfigElements.getDrugBankMessagesActivated());
         settings.add(dbankMessageSettings);
 
+        BooleanElement drugVaultSetting = new BooleanElement("Asservatenkammer Nachrichten", unicacityAddon, new ControlElement.IconData(Material.CHEST), "DRUG_VAULT_MESSAGE_SETTING", ConfigElements.getDrugVaultMessageActivated());
+        settings.add(drugVaultSetting);
+
         return settings;
     }
 
