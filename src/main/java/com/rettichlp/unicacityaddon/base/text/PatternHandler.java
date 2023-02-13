@@ -322,11 +322,11 @@ public class PatternHandler {
      * Pattern for drug vault messages
      * @see com.rettichlp.unicacityaddon.events.faction.fbi.DrugVaultMessageEventHandler
      */
-    public static final Pattern DRUG_VAULT_DROP = Pattern.compile("^HQ: (.+) (?:\\[UC])*(\\w+) hat (\\d+)g (Kokain|Methamphetamin|Marihuana|LSD) \\\\((Höchste|Gute|Mittlere|Schlechte) Reinheit\\\\) in der Asservatenkammer verstaut.$");
+    public static final Pattern DRUG_VAULT_DROP = Pattern.compile("^HQ: (.+) (?:\\\\[UC\\\\])*(\\w+) hat (\\d+)g (Kokain|Methamphetamin|Marihuana|LSD) \\((Höchste Reinheit|Gute Reinheit|Mittlere Reinheit|Schlechte Reinheit)\\) in der Asservatenkammer verstaut.$");
 
-    public static final Pattern DRUG_VAULT_GET = Pattern.compile("^HQ: (.+) (?:\\[UC])*(\\w+) hat (\\d+)g (Kokain|Methamphetamin|Marihuana|LSD) \\\\((Höchste|Gute|Mittlere|Schlechte) Reinheit\\\\) aus der Asservatenkammer genommen.$");
+    public static final Pattern DRUG_VAULT_GET = Pattern.compile("^HQ: (.+) (?:\\\\[UC\\\\])*(\\w+) hat (\\d+)g (Kokain|Methamphetamin|Marihuana|LSD) \\((Höchste Reinheit|Gute Reinheit|Mittlere Reinheit|Schlechte Reinheit)\\) aus der Asservatenkammer genommen.$");
 
-    public static final Pattern DRUG_VAULT_BURN = Pattern.compile("^HQ: (.+) (?:\\[UC])*(\\w+) hat (\\d+)g (Kokain|Methamphetamin|Marihuana|LSD) \\\\((Höchste|Gute|Mittlere|Schlechte) Reinheit\\\\) vernichtet.$");
+    public static final Pattern DRUG_VAULT_BURN = Pattern.compile("^HQ: (.+) (?:\\\\[UC\\\\])*(\\w+) hat (\\d+)g (Kokain|Methamphetamin|Marihuana|LSD) \\((Höchste Reinheit|Gute Reinheit|Mittlere Reinheit|Schlechte Reinheit)\\) vernichtet.$");
 
     /**
      * Pattern for plant burn message
