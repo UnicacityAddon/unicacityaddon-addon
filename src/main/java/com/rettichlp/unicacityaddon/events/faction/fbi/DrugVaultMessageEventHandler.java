@@ -13,6 +13,7 @@ import java.util.regex.Matcher;
 /**
  * @author Gelegenheitscode
  */
+
 @UCEvent
 public class DrugVaultMessageEventHandler {
     @SubscribeEvent
@@ -22,8 +23,8 @@ public class DrugVaultMessageEventHandler {
         }
         String msg = e.getMessage().getUnformattedText();
 
-        if (PatternHandler.DRUG_VAULT_DROP.matcher(msg).find()) {
-            Matcher m = PatternHandler.DRUG_VAULT_DROP.matcher(msg);
+        Matcher m = PatternHandler.DRUG_VAULT_DROP.matcher(msg);
+        if (m.find()) {
             e.setMessage(Message.getBuilder().of("Asservatenkammer").color(ColorCode.DARK_AQUA).bold().advance().space()
                     .of("|").color(ColorCode.DARK_GRAY).advance().space()
                     .of("+").color(ColorCode.GREEN).advance()
@@ -38,8 +39,9 @@ public class DrugVaultMessageEventHandler {
                     .createComponent());
             return;
 
-        } if (PatternHandler.DRUG_VAULT_GET.matcher(msg).find()) {
-            Matcher m = PatternHandler.DRUG_VAULT_GET.matcher(msg);
+        }
+        m = PatternHandler.DRUG_VAULT_GET.matcher(msg);
+        if (m.find()) {
             e.setMessage(Message.getBuilder().of("Asservatenkammer").color(ColorCode.DARK_AQUA).bold().advance().space()
                     .of("|").color(ColorCode.DARK_GRAY).advance().space()
                     .of("-").color(ColorCode.RED).advance()
@@ -54,8 +56,9 @@ public class DrugVaultMessageEventHandler {
                     .createComponent());
             return;
 
-        } if (PatternHandler.DRUG_VAULT_BURN.matcher(msg).find()) {
-            Matcher m = PatternHandler.DRUG_VAULT_BURN.matcher(msg);
+        }
+        m = PatternHandler.DRUG_VAULT_BURN.matcher(msg);
+        if (m.find()) {
             e.setMessage(Message.getBuilder().of("Asservatenkammer").color(ColorCode.DARK_AQUA).bold().advance().space()
                     .of("|").color(ColorCode.DARK_GRAY).advance().space()
                     .of("✕").color(ColorCode.GOLD).advance().space()
