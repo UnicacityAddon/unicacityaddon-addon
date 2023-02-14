@@ -22,7 +22,6 @@ import java.util.List;
 /**
  * @author Gelegenheitscode
  */
-
 @UCCommand
 public class KorruptionsrechnerCommand implements IClientCommand {
 
@@ -71,25 +70,24 @@ public class KorruptionsrechnerCommand implements IClientCommand {
         MethDrugs1 = Betrag / 100;
         MethDrugs2 = Betrag / 50;
         p.sendMessage(Message.getBuilder()
-                .of("»").color(ColorCode.GRAY).advance().space()
                 .of("Korruptionspreise für").color(ColorCode.DARK_AQUA).advance().space()
                 .of(target).color(ColorCode.DARK_AQUA).advance()
                 .of(":").color(ColorCode.DARK_GRAY).advance().space()
                 .createComponent());
         p.sendMessage(Message.getBuilder()
-                .of("▶").color(ColorCode.DARK_GRAY).advance().space()
+                .of("»").color(ColorCode.GRAY).advance().space()
                 .of("Geld").color(ColorCode.DARK_AQUA).advance()
                 .of(":").color(ColorCode.DARK_GRAY).advance().space()
                 .of(Betrag + "$").color(ColorCode.AQUA).advance()
                 .createComponent());
         p.sendMessage(Message.getBuilder()
-                .of("▶").color(ColorCode.DARK_GRAY).advance().space()
+                .of("»").color(ColorCode.GRAY).advance().space()
                 .of("Drogen").color(ColorCode.DARK_AQUA).advance()
                 .of(":").color(ColorCode.DARK_GRAY).advance().space()
                 .of(Drugs + "g").color(ColorCode.AQUA).advance()
                 .createComponent());
         p.sendMessage(Message.getBuilder()
-                .of("▶").color(ColorCode.DARK_GRAY).advance().space()
+                .of("»").color(ColorCode.GRAY).advance().space()
                 .of("Meth").color(ColorCode.DARK_AQUA).advance()
                 .of(":").color(ColorCode.DARK_GRAY).advance().space()
                 .of(MethDrugs0 + "g").color(ColorCode.AQUA).advance().space()
@@ -109,9 +107,7 @@ public class KorruptionsrechnerCommand implements IClientCommand {
     @Override
     @Nonnull
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
-        return TabCompletionBuilder.getBuilder(args)
-                .addToAllFromIndex(2, ForgeUtils.getOnlinePlayers())
-                .build();
+        return TabCompletionBuilder.getBuilder(args).build();
     }
 
     @Override
