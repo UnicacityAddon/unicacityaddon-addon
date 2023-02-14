@@ -83,10 +83,10 @@ public class ConfigSettings {
         BooleanElement dbankMessageSettings = new BooleanElement("D-Bank Nachrichten", unicacityAddon, new ControlElement.IconData(Material.SUGAR), "DBANK_MESSAGE_SETTINGS", ConfigElements.getDrugBankMessagesActivated());
         settings.add(dbankMessageSettings);
 
-        BooleanElement drugVaultSetting = new BooleanElement("Asservatenkammer Nachrichten", unicacityAddon, new ControlElement.IconData(Material.CHEST), "DRUG_VAULT_MESSAGE_SETTING", ConfigElements.getDrugVaultMessageActivated());
+        BooleanElement drugVaultSetting = new BooleanElement("Asservatenkammer Nachrichten", unicacityAddon, new ControlElement.IconData(Material.CHEST), "DRUG_VAULT_MESSAGE_SETTINGS", ConfigElements.getDrugVaultMessageActivated());
         settings.add(drugVaultSetting);
 
-        BooleanElement plantBurnSetting = new BooleanElement("Plant-Burn Nachricht", unicacityAddon, new ControlElement.IconData(Material.FIRE), "PLANT_BURN_MESSAGE_SETTING", ConfigElements.getPlantBurnMessageActivated());
+        BooleanElement plantBurnSetting = new BooleanElement("Plant-Burn Nachricht", unicacityAddon, new ControlElement.IconData(Material.FIRE), "PLANT_BURN_MESSAGE_SETTINGS", ConfigElements.getPlantBurnMessageActivated());
         settings.add(plantBurnSetting);
 
         return settings;
