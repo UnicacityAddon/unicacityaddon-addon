@@ -7,7 +7,7 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.utils.ForgeUtils;
-import com.rettichlp.unicacityaddon.events.faction.polizei.WantedEventHandler;
+import com.rettichlp.unicacityaddon.events.faction.state.WantedEventHandler;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
