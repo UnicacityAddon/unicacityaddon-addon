@@ -396,13 +396,13 @@ public class ConfigElements {
 
     // DrugVaultMessages
     public static boolean getDrugVaultMessageActivated() {
-        return !UnicacityAddon.ADDON.getConfig().has("DRUG_VAULT_MESSAGE_SETTING") || UnicacityAddon.ADDON.getConfig().get("DRUG_VAULT_MESSAGE_SETTING")
+        return !UnicacityAddon.ADDON.getConfig().has("DRUG_VAULT_MESSAGE_SETTINGS") || UnicacityAddon.ADDON.getConfig().get("DRUG_VAULT_MESSAGE_SETTINGS")
                 .getAsBoolean(); // default = true
     }
 
     // PlantBurnMessages
     public static boolean getPlantBurnMessageActivated() {
-        return !UnicacityAddon.ADDON.getConfig().has("PLANT_BURN_MESSAGE_SETTING") || UnicacityAddon.ADDON.getConfig().get("PLANT_BURN_MESSAGE_SETTING")
+        return !UnicacityAddon.ADDON.getConfig().has("PLANT_BURN_MESSAGE_SETTINGS") || UnicacityAddon.ADDON.getConfig().get("PLANT_BURN_MESSAGE_SETTINGS")
                 .getAsBoolean(); // default = true
     }
 

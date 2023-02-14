@@ -1,4 +1,4 @@
-package com.rettichlp.unicacityaddon.events.faction.polizei;
+package com.rettichlp.unicacityaddon.events.faction.state;
 
 import com.rettichlp.unicacityaddon.base.config.ConfigElements;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
