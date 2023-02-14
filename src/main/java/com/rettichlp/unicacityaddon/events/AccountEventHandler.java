@@ -13,6 +13,7 @@ import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.base.utils.MathUtils;
 import com.rettichlp.unicacityaddon.base.utils.UpdateUtils;
+import com.rettichlp.unicacityaddon.commands.MaskInfoCommand;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -126,6 +127,16 @@ public class AccountEventHandler {
                         .of(playTime + (playTime == 1 ? " Stunde" : " Stunden")).color(ColorCode.RED).advance()
                         .createComponent());
             }
+            return;
+        }
+
+        if (PatternHandler.ACCOUNT_MASK_ON_PATTERN.matcher(msg).find()) {
+            MaskInfoCommand.startTime = System.currentTimeMillis();
+            return;
+        }
+
+        if (PatternHandler.ACCOUNT_MASK_OFF_PATTERN.matcher(msg).find()) {
+            MaskInfoCommand.startTime = 0;
             return;
         }
 
