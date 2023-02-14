@@ -34,7 +34,7 @@ public class MemberInfoCommand implements IClientCommand {
     @Override
     @Nonnull
     public String getUsage(@Nonnull ICommandSender sender) {
-        return "/memberinfo [Fraktion]";
+        return "/memberinfo (Fraktion)";
     }
 
     @Override
