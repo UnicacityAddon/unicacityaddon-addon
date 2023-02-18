@@ -53,6 +53,7 @@ public class KorruptionsrechnerCommand implements IClientCommand {
             p.sendSyntaxMessage(getUsage(sender));
             return;
         }
+        
         String target = args[0];
 
         WantedEventHandler.Wanted wanted = WantedEventHandler.WANTED_MAP.get(target);
