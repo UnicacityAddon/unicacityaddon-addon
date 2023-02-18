@@ -48,6 +48,7 @@ public class KorruptionsrechnerCommand implements IClientCommand {
     @Override
     public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
         UPlayer p = AbstractionLayer.getPlayer();
+
         if (args.length < 1) {
             p.sendSyntaxMessage(getUsage(sender));
             return;
