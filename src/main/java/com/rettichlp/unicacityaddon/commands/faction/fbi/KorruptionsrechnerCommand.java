@@ -6,7 +6,6 @@ import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
-import com.rettichlp.unicacityaddon.base.utils.ForgeUtils;
 import com.rettichlp.unicacityaddon.events.faction.state.WantedEventHandler;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
@@ -83,7 +82,7 @@ public class KorruptionsrechnerCommand implements IClientCommand {
                 .of("»").color(ColorCode.GRAY).advance().space()
                 .of("Drogen").color(ColorCode.DARK_AQUA).advance()
                 .of(":").color(ColorCode.DARK_GRAY).advance().space()
-                .of(Drugs + "g").color(ColorCode.AQUA).advance()
+                .of(drugs + "g").color(ColorCode.AQUA).advance()
                 .createComponent());
         p.sendMessage(Message.getBuilder()
                 .of("»").color(ColorCode.GRAY).advance().space()
