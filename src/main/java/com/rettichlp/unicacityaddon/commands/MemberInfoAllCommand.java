@@ -19,6 +19,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -60,10 +61,10 @@ public class MemberInfoAllCommand implements IClientCommand {
         Faction faction = Faction.getFactionByFactionKey(factionString);
         if (faction != null) {
 
-            List<String> factionMemberList = Syncer.PLAYERFACTIONMAP.entrySet().stream()
+            Map<String, Integer> factionMemberList = Syncer.PLAYERFACTIONMAP.entrySet().stream()
                     .filter(stringFactionEntry -> stringFactionEntry.getValue().equals(faction))
                     .map(Map.Entry::getKey)
-                    .collect(Collectors.toList());
+                    .collect(Collectors.toMap(s -> s, Syncer.PLAYERRANKMAP::get));
 
             p.sendMessage(Message.getBuilder().space().space()
                     .of("===").color(ColorCode.DARK_GRAY).advance().space()
@@ -77,17 +78,19 @@ public class MemberInfoAllCommand implements IClientCommand {
                     .of("===").color(ColorCode.DARK_GRAY).advance()
                     .createComponent());
 
-            factionMemberList.forEach(s -> {
-                boolean online = ForgeUtils.getOnlinePlayers().contains(s);
-                Integer rank = Syncer.PLAYERRANKMAP.get(s);
+            factionMemberList.entrySet().stream()
+                    .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                    .forEach(stringIntegerEntry -> {
+                        String playername = stringIntegerEntry.getKey();
+                        Integer rank = stringIntegerEntry.getValue();
 
-                p.sendMessage(Message.getBuilder().space()
-                        .of("» Rang:").color(ColorCode.GRAY).advance().space()
-                        .of(rank != null ? String.valueOf(rank) : "X").color(ColorCode.AQUA).advance().space()
-                        .of("|").color(ColorCode.DARK_GRAY).advance().space()
-                        .of(s).color(online ? ColorCode.GREEN : ColorCode.RED).advance()
-                        .createComponent());
-            });
+                        p.sendMessage(Message.getBuilder().space()
+                                .of("» Rang:").color(ColorCode.GRAY).advance().space()
+                                .of(rank != null ? String.valueOf(rank) : "X").color(ColorCode.AQUA).advance().space()
+                                .of("|").color(ColorCode.DARK_GRAY).advance().space()
+                                .of(playername).color(ForgeUtils.getOnlinePlayers().contains(playername) ? ColorCode.GREEN : ColorCode.RED).advance()
+                                .createComponent());
+                    });
         } else {
             p.sendErrorMessage("Fraktion nicht gefunden.");
         }
