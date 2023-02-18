@@ -91,7 +91,7 @@ public class KorruptionsrechnerCommand implements IClientCommand {
                 .of(":").color(ColorCode.DARK_GRAY).advance().space()
                 .of(methDrugs0 + "g").color(ColorCode.AQUA).advance().space()
                 .of("|").color(ColorCode.DARK_GRAY).advance().space()
-                .of(MethDrugs1 + "g").color(ColorCode.AQUA).advance().space()
+                .of(methDrugs1 + "g").color(ColorCode.AQUA).advance().space()
                 .of("|").color(ColorCode.DARK_GRAY).advance().space()
                 .of(MethDrugs2 + "g").color(ColorCode.AQUA).advance()
                 .createComponent());
