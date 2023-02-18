@@ -73,6 +73,7 @@ public class BombTimerEventHandler {
                     throw new RuntimeException(f);
                 }
             }
+            
             String time = BombTimerModule.timer.startsWith(ColorCode.RED.getCode()) ? BombTimerModule.timer.substring(2) : BombTimerModule.timer;
             e.setMessage(Message.getBuilder()
                     .add(formattedMsg)
