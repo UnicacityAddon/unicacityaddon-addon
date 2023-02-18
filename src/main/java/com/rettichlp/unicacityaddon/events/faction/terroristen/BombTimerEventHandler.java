@@ -64,6 +64,7 @@ public class BombTimerEventHandler {
         Matcher m = PatternHandler.BOMB_REMOVED_PATTERN.matcher(unformattedMsg);
         if (m.find()) {
             String state = m.group(1);
+            
             if (ConfigElements.getAutomatedBombScreenshot())  {
                 try {
                     File file = FileManager.getNewActivityImageFile("großeinsatz");
