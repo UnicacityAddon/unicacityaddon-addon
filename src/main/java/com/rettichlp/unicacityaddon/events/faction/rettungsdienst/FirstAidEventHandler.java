@@ -49,7 +49,7 @@ public class FirstAidEventHandler {
             new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    AbstractionLayer.getPlayer().sendInfoMessage("Du kannst wieder Erste Hilfe geben.");
+                    AbstractionLayer.getPlayer().sendInfoMessage("Du kannst wieder Erste Hilfe leisten.");
                 }
             }, TimeUnit.SECONDS.toMillis(90));
         }
