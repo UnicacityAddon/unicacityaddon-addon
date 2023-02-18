@@ -75,7 +75,7 @@ public class KorruptionsrechnerCommand implements IClientCommand {
                 .of("»").color(ColorCode.GRAY).advance().space()
                 .of("Geld").color(ColorCode.DARK_AQUA).advance()
                 .of(":").color(ColorCode.DARK_GRAY).advance().space()
-                .of(Betrag + "$").color(ColorCode.AQUA).advance()
+                .of(money + "$").color(ColorCode.AQUA).advance()
                 .createComponent());
         p.sendMessage(Message.getBuilder()
                 .of("»").color(ColorCode.GRAY).advance().space()
