@@ -61,7 +61,6 @@ public class KorruptionsrechnerCommand implements IClientCommand {
             p.sendErrorMessage("Du hast /wanteds noch nicht ausgeführt!");
             return;
         }
-        int MethDrugs2;
         int money = wanted.getAmount() * 150;
         Drugs = Betrag / 55;
         MethDrugs0 = Betrag / 110;
