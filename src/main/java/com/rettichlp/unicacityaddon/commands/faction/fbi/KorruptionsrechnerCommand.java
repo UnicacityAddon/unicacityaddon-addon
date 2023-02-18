@@ -65,7 +65,7 @@ public class KorruptionsrechnerCommand implements IClientCommand {
         int drugs = money / 55;
         int methDrugs0 = money / 110;
         int methDrugs1 = money / 100;
-        MethDrugs2 = Betrag / 50;
+        int methDrugs2 = money / 50;
         p.sendMessage(Message.getBuilder()
                 .of("Korruptionspreise für").color(ColorCode.DARK_AQUA).advance().space()
                 .of(target).color(ColorCode.DARK_AQUA).advance()
