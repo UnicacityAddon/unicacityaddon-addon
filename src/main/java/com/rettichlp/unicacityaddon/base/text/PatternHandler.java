@@ -244,6 +244,8 @@ public class PatternHandler {
     public static final Pattern ACCOUNT_TREUEBONUS_PATTERN = Pattern.compile("^ {2}- Treuebonus: (\\d+) Punkte$");
     public static final Pattern ACCOUNT_FRIEND_JOIN_PATTERN = Pattern.compile(" » Freundesliste: (?:\\[UC])*(?<name>\\w+) ist nun online\\.");
     public static final Pattern ACCOUNT_FRIEND_LEAVE_PATTERN = Pattern.compile(" » Freundesliste: (?:\\[UC])*(?<name>\\w+) ist nun offline\\.");
+    public static final Pattern ACCOUNT_MASK_ON_PATTERN = Pattern.compile("^\\[Masken] Du bist nun für 20 Minuten maskiert\\. \\[#\\d+]$");
+    public static final Pattern ACCOUNT_MASK_OFF_PATTERN = Pattern.compile("^\\[Masken] Du hast deine Maske abgenommen\\.$");
 
     /**
      * Pattern for timer interaction
