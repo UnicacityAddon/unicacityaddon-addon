@@ -1,11 +1,8 @@
 package com.rettichlp.unicacityaddon.events;
 
-import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
-import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
 import com.rettichlp.unicacityaddon.base.config.ConfigElements;
 import com.rettichlp.unicacityaddon.base.enums.api.StatisticType;
-import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
@@ -31,7 +28,6 @@ public class KarmaMessageEventHandler {
     @SubscribeEvent
     public void onClientChatReceived(ClientChatReceivedEvent e) {
         String msg = e.getMessage().getUnformattedText();
-        UPlayer p = AbstractionLayer.getPlayer();
 
         if (AccountEventHandler.isAfk)
             return;
@@ -39,14 +35,6 @@ public class KarmaMessageEventHandler {
         Matcher karmaChangedMatcher = PatternHandler.KARMA_CHANGED_PATTERN.matcher(msg);
         if (karmaChangedMatcher.find()) {
             ReviveEventHandler.handleRevive();
-
-            // WORKAROUND START (for medics because ✨UCMDMOD✨) TODO: Remove later
-            if (!p.getFaction().equals(Faction.RETTUNGSDIENST) && !ReviveEventHandler.isDead) {
-                p.sendChatMessage("/karma");
-                karmaCheck = true;
-                e.setCanceled(true);
-            }
-            // WORKAROUND END
 
             karma = Integer.parseInt(karmaChangedMatcher.group(1));
             if (karma < 0 && karma > -9) {
