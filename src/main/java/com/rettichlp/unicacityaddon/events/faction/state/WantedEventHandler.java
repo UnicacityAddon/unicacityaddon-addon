@@ -82,7 +82,6 @@ public class WantedEventHandler {
         if (unformattedMessage.equals("Online Spieler mit WantedPunkten:")) {
             WANTED_MAP.clear();
             wantedsShown = currentTime;
-
             return;
         }
 
@@ -115,24 +114,6 @@ public class WantedEventHandler {
             }
         }
     }
-    private ColorCode getWpColorCode(int wpAmount) {
-        ColorCode colorCode;
-        if (wpAmount > 60) {
-            colorCode = ColorCode.DARK_RED;
-        } else if (wpAmount > 50) {
-            colorCode = ColorCode.RED;
-        } else if (wpAmount > 25) {
-            colorCode = ColorCode.GOLD;
-        } else if (wpAmount > 15) {
-            colorCode = ColorCode.YELLOW;
-        } else if (wpAmount > 1) {
-            colorCode = ColorCode.GREEN;
-        } else {
-            colorCode = ColorCode.DARK_GREEN;
-        }
-        return colorCode;
-    }
-
     public static class Wanted {
 
         private String reason;
@@ -158,5 +139,22 @@ public class WantedEventHandler {
         public void setAmount(int amount) {
             this.amount = amount;
         }
+    }
+    private ColorCode getWpColorCode(int wpAmount) {
+        ColorCode colorCode;
+        if (wpAmount > 60) {
+            colorCode = ColorCode.DARK_RED;
+        } else if (wpAmount > 50) {
+            colorCode = ColorCode.RED;
+        } else if (wpAmount > 25) {
+            colorCode = ColorCode.GOLD;
+        } else if (wpAmount > 15) {
+            colorCode = ColorCode.YELLOW;
+        } else if (wpAmount > 1) {
+            colorCode = ColorCode.GREEN;
+        } else {
+            colorCode = ColorCode.DARK_GREEN;
+        }
+        return colorCode;
     }
 }
