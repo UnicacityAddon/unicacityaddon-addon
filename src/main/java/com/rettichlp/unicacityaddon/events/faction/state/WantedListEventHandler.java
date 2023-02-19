@@ -17,147 +17,49 @@ import java.util.regex.Matcher;
 public class WantedListEventHandler {
     @SubscribeEvent
     public void onChat(ClientChatReceivedEvent e)   {
-        if (!ConfigElements.getBetterWantedList())  {
-            return;
-        }
         String msg = e.getMessage().getUnformattedText();
 
-        Matcher m = PatternHandler.WANTED_LIST_PATTERN.matcher(msg);
-        if (m.find())   {
-            int WantedAmount = Integer.parseInt(m.group(2));
-            if (WantedAmount == 1) {
-                if (msg.contains("AFK")) {
-                    e.setMessage(Message.getBuilder().of("▶").color(ColorCode.DARK_GRAY).advance().space()
-                            .of(m.group(1)).color(ColorCode.DARK_GREEN).advance().space()
-                            .of("|").color(ColorCode.DARK_GRAY).advance().space()
-                            .of(m.group(3)).color(ColorCode.DARK_GREEN).advance().space()
-                            .of("(").color(ColorCode.GRAY).advance()
-                            .of(m.group(2)).color(ColorCode.BLUE).advance()
-                            .of(")").color(ColorCode.GRAY).advance().space()
-                            .of("|").color(ColorCode.DARK_GRAY).advance().space()
-                            .of("AFK").color(ColorCode.GRAY).advance()
-                            .createComponent());
-                } else  {
-                    e.setMessage(Message.getBuilder().of("▶").color(ColorCode.DARK_GRAY).advance().space()
-                            .of(m.group(1)).color(ColorCode.DARK_GREEN).advance().space()
-                            .of("|").color(ColorCode.DARK_GRAY).advance().space()
-                            .of(m.group(3)).color(ColorCode.DARK_GREEN).advance().space()
-                            .of("(").color(ColorCode.GRAY).advance()
-                            .of(m.group(2)).color(ColorCode.BLUE).advance()
-                            .of(")").color(ColorCode.GRAY).advance().space()
-                            .createComponent());
-                }
-            } else if (WantedAmount <= 15 && WantedAmount >= 2) {
-                if (msg.contains("AFK")) {
-                    e.setMessage(Message.getBuilder().of("▶").color(ColorCode.DARK_GRAY).advance().space()
-                            .of(m.group(1)).color(ColorCode.GREEN).advance().space()
-                            .of("|").color(ColorCode.DARK_GRAY).advance().space()
-                            .of(m.group(3)).color(ColorCode.GREEN).advance().space()
-                            .of("(").color(ColorCode.GRAY).advance()
-                            .of(m.group(2)).color(ColorCode.BLUE).advance()
-                            .of(")").color(ColorCode.GRAY).advance().space()
-                            .of("|").color(ColorCode.DARK_GRAY).advance().space()
-                            .of("AFK").color(ColorCode.GRAY).advance()
-                            .createComponent());
-                } else  {
-                    e.setMessage(Message.getBuilder().of("▶").color(ColorCode.DARK_GRAY).advance().space()
-                            .of(m.group(1)).color(ColorCode.GREEN).advance().space()
-                            .of("|").color(ColorCode.DARK_GRAY).advance().space()
-                            .of(m.group(3)).color(ColorCode.GREEN).advance().space()
-                            .of("(").color(ColorCode.GRAY).advance()
-                            .of(m.group(2)).color(ColorCode.BLUE).advance()
-                            .of(")").color(ColorCode.GRAY).advance().space()
-                            .createComponent());
-                }
-            } else if (WantedAmount <= 25 && WantedAmount >= 16)    {
-                if (msg.contains("AFK")) {
-                    e.setMessage(Message.getBuilder().of("▶").color(ColorCode.DARK_GRAY).advance().space()
-                            .of(m.group(1)).color(ColorCode.YELLOW).advance().space()
-                            .of("|").color(ColorCode.DARK_GRAY).advance().space()
-                            .of(m.group(3)).color(ColorCode.YELLOW).advance().space()
-                            .of("(").color(ColorCode.GRAY).advance()
-                            .of(m.group(2)).color(ColorCode.BLUE).advance()
-                            .of(")").color(ColorCode.GRAY).advance().space()
-                            .of("|").color(ColorCode.DARK_GRAY).advance().space()
-                            .of("AFK").color(ColorCode.GRAY).advance()
-                            .createComponent());
-                } else  {
-                    e.setMessage(Message.getBuilder().of("▶").color(ColorCode.DARK_GRAY).advance().space()
-                            .of(m.group(1)).color(ColorCode.YELLOW).advance().space()
-                            .of("|").color(ColorCode.DARK_GRAY).advance().space()
-                            .of(m.group(3)).color(ColorCode.YELLOW).advance().space()
-                            .of("(").color(ColorCode.GRAY).advance()
-                            .of(m.group(2)).color(ColorCode.BLUE).advance()
-                            .of(")").color(ColorCode.GRAY).advance().space()
-                            .createComponent());
-                }
-            } else if (WantedAmount <= 49 && WantedAmount >26)  {
-                if (msg.contains("AFK")) {
-                    e.setMessage(Message.getBuilder().of("▶").color(ColorCode.DARK_GRAY).advance().space()
-                            .of(m.group(1)).color(ColorCode.GOLD).advance().space()
-                            .of("|").color(ColorCode.DARK_GRAY).advance().space()
-                            .of(m.group(3)).color(ColorCode.GOLD).advance().space()
-                            .of("(").color(ColorCode.GRAY).advance()
-                            .of(m.group(2)).color(ColorCode.BLUE).advance()
-                            .of(")").color(ColorCode.GRAY).advance().space()
-                            .of("|").color(ColorCode.DARK_GRAY).advance().space()
-                            .of("AFK").color(ColorCode.GRAY).advance()
-                            .createComponent());
-                } else  {
-                    e.setMessage(Message.getBuilder().of("▶").color(ColorCode.DARK_GRAY).advance().space()
-                            .of(m.group(1)).color(ColorCode.GOLD).advance().space()
-                            .of("|").color(ColorCode.DARK_GRAY).advance().space()
-                            .of(m.group(3)).color(ColorCode.GOLD).advance().space()
-                            .of("(").color(ColorCode.GRAY).advance()
-                            .of(m.group(2)).color(ColorCode.BLUE).advance()
-                            .of(")").color(ColorCode.GRAY).advance().space()
-                            .createComponent());
-                }
-            } else if (WantedAmount <= 59 && WantedAmount >=50) {
-                if (msg.contains("AFK")) {
-                    e.setMessage(Message.getBuilder().of("▶").color(ColorCode.DARK_GRAY).advance().space()
-                            .of(m.group(1)).color(ColorCode.RED).advance().space()
-                            .of("|").color(ColorCode.DARK_GRAY).advance().space()
-                            .of(m.group(3)).color(ColorCode.RED).advance().space()
-                            .of("(").color(ColorCode.GRAY).advance()
-                            .of(m.group(2)).color(ColorCode.BLUE).advance()
-                            .of(")").color(ColorCode.GRAY).advance().space()
-                            .of("|").color(ColorCode.DARK_GRAY).advance().space()
-                            .of("AFK").color(ColorCode.GRAY).advance()
-                            .createComponent());
-                } else  {
-                    e.setMessage(Message.getBuilder().of("▶").color(ColorCode.DARK_GRAY).advance().space()
-                            .of(m.group(1)).color(ColorCode.RED).advance().space()
-                            .of("|").color(ColorCode.DARK_GRAY).advance().space()
-                            .of(m.group(3)).color(ColorCode.RED).advance().space()
-                            .of("(").color(ColorCode.GRAY).advance()
-                            .of(m.group(2)).color(ColorCode.BLUE).advance()
-                            .of(")").color(ColorCode.GRAY).advance().space()
-                            .createComponent());
-                }
-            } else if (WantedAmount <= 69 && WantedAmount >= 60)    {
-                if (msg.contains("AFK")) {
-                    e.setMessage(Message.getBuilder().of("▶").color(ColorCode.DARK_GRAY).advance().space()
-                            .of(m.group(1)).color(ColorCode.DARK_RED).advance().space()
-                            .of("|").color(ColorCode.DARK_GRAY).advance().space()
-                            .of(m.group(3)).color(ColorCode.DARK_RED).advance().space()
-                            .of("(").color(ColorCode.GRAY).advance()
-                            .of(m.group(2)).color(ColorCode.BLUE).advance()
-                            .of(")").color(ColorCode.GRAY).advance().space()
-                            .of("|").color(ColorCode.DARK_GRAY).advance().space()
-                            .of("AFK").color(ColorCode.GRAY).advance()
-                            .createComponent());
-                } else  {
-                    e.setMessage(Message.getBuilder().of("▶").color(ColorCode.DARK_GRAY).advance().space()
-                            .of(m.group(1)).color(ColorCode.DARK_RED).advance().space()
-                            .of("|").color(ColorCode.DARK_GRAY).advance().space()
-                            .of(m.group(3)).color(ColorCode.DARK_RED).advance().space()
-                            .of("(").color(ColorCode.GRAY).advance()
-                            .of(m.group(2)).color(ColorCode.BLUE).advance()
-                            .of(")").color(ColorCode.GRAY).advance().space()
-                            .createComponent());
-                }
+        if (!ConfigElements.getBetterWantedList()) {
+            return;
+        }
+
+        Matcher wantedListMatcher = PatternHandler.WANTED_LIST_PATTERN.matcher(msg);
+        if (wantedListMatcher.find()) {
+
+            String playerName = wantedListMatcher.group(1);
+            String wpReason = wantedListMatcher.group(3);
+            int wpAmount = Integer.parseInt(wantedListMatcher.group(2));
+            boolean isAfk = wantedListMatcher.group(4).contains("AFK");
+
+            ColorCode colorCode;
+
+            if (wpAmount == 1) {
+                colorCode = ColorCode.DARK_GREEN;
+            } else if (wpAmount <= 15 && wpAmount >= 2) {
+                colorCode = ColorCode.GREEN;
+            } else if (wpAmount <= 25 && wpAmount >= 16) {
+                colorCode = ColorCode.YELLOW;
+            } else if (wpAmount <= 49 && wpAmount > 26) {
+                colorCode = ColorCode.GOLD;
+            } else if (wpAmount <= 59 && wpAmount >= 50) {
+                colorCode = ColorCode.RED;
+            } else if (wpAmount <= 69 && wpAmount >= 60) {
+                colorCode = ColorCode.DARK_RED;
+            } else {
+                colorCode = ColorCode.RED;
             }
+
+            e.setMessage(Message.getBuilder()
+                    .of("▶").color(ColorCode.DARK_GRAY).advance().space()
+                    .of(playerName).color(colorCode).advance().space()
+                    .of("|").color(ColorCode.DARK_GRAY).advance().space()
+                    .of(wpReason).color(colorCode).advance().space()
+                    .of("(").color(ColorCode.GRAY).advance()
+                    .of(String.valueOf(wpAmount)).color(ColorCode.BLUE).advance()
+                    .of(")").color(ColorCode.GRAY).advance().space()
+                    .of(isAfk ? "|" : "").color(ColorCode.DARK_GRAY).advance().space()
+                    .of(isAfk ? "AFK" : "").color(ColorCode.GRAY).advance()
+                    .createComponent());
         }
     }
 }
