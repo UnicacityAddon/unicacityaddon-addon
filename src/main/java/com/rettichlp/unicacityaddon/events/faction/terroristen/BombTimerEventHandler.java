@@ -2,13 +2,16 @@ package com.rettichlp.unicacityaddon.events.faction.terroristen;
 
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
+import com.rettichlp.unicacityaddon.base.config.ConfigElements;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
+import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.models.NaviPoint;
 import com.rettichlp.unicacityaddon.base.registry.SoundRegistry;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
+import com.rettichlp.unicacityaddon.events.HotkeyEventHandler;
 import com.rettichlp.unicacityaddon.modules.BombTimerModule;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.event.ClickEvent;
@@ -16,6 +19,8 @@ import net.minecraft.util.text.event.HoverEvent;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.regex.Matcher;
 
 /**
@@ -59,7 +64,16 @@ public class BombTimerEventHandler {
         Matcher m = PatternHandler.BOMB_REMOVED_PATTERN.matcher(unformattedMsg);
         if (m.find()) {
             String state = m.group(1);
-
+            
+            if (ConfigElements.getAutomatedBombScreenshot())  {
+                try {
+                    File file = FileManager.getNewActivityImageFile("großeinsatz");
+                    HotkeyEventHandler.handleScreenshot(file);
+                } catch (IOException f) {
+                    throw new RuntimeException(f);
+                }
+            }
+            
             String time = BombTimerModule.timer.startsWith(ColorCode.RED.getCode()) ? BombTimerModule.timer.substring(2) : BombTimerModule.timer;
             e.setMessage(Message.getBuilder()
                     .add(formattedMsg)

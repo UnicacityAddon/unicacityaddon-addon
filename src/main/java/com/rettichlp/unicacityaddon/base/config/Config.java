@@ -78,6 +78,9 @@ public class Config {
         atmSettings.setSubSettings(ConfigSettings.getATMSettings(unicacityAddon));
         list.add(atmSettings);
 
+        BooleanElement automatedBombScreenSettings = new BooleanElement("Bombenscreenshot", unicacityAddon, new ControlElement.IconData(Material.TNT), "AUTOMATED_BOMB_SCREEN_SETTINGS", ConfigElements.getAutomatedBombScreenshot());
+        list.add(automatedBombScreenSettings);
+
         BooleanElement carFindSettings = new BooleanElement("Route bei /car find", unicacityAddon, new ControlElement.IconData(Material.MINECART), "CAR_FIND_SETTINGS", ConfigElements.getEventCarFind());
         list.add(carFindSettings);
 
@@ -115,6 +118,9 @@ public class Config {
 
         BooleanElement despawnTimeAfterKarma = new BooleanElement("Despawn Zeitpunkt", unicacityAddon, new ControlElement.IconData(Material.SKULL_ITEM), "ESTIMATED_DESPAWN_TIME_SETTINGS", ConfigElements.getEstimatedDespawnTime());
         list.add(despawnTimeAfterKarma);
+
+        BooleanElement betterWantedList = new BooleanElement("Bessere Fahndungsliste", unicacityAddon, new ControlElement.IconData(Material.COOKED_FISH), "BETTER_WANTED_LIST_SETTINGS", ConfigElements.getBetterWantedList());
+        list.add(betterWantedList);
 
         ListContainerElement soundSettings = new ListContainerElement("Sounds", new ControlElement.IconData(Material.NOTE_BLOCK));
         soundSettings.setSubSettings(ConfigSettings.getSoundSettings(unicacityAddon));
