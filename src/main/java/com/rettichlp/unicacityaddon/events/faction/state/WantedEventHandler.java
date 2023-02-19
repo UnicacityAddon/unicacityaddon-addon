@@ -141,7 +141,7 @@ public class WantedEventHandler {
             this.amount = amount;
         }
     }
-    
+
     private ColorCode getWpColorCode(int wpAmount) {
         ColorCode colorCode;
         if (wpAmount > 60) {
