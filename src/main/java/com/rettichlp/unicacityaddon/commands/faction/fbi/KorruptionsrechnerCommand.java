@@ -60,6 +60,7 @@ public class KorruptionsrechnerCommand implements IClientCommand {
             p.sendErrorMessage("Du hast /wanteds noch nicht ausgeführt!");
             return;
         }
+
         int money = wanted.getAmount() * 150;
         int drugs = money / 55;
         int methDrugs0 = money / 110;
@@ -78,6 +79,7 @@ public class KorruptionsrechnerCommand implements IClientCommand {
                 .of(":").color(ColorCode.DARK_GRAY).advance().space()
                 .of(money + "$").color(ColorCode.AQUA).advance()
                 .createComponent());
+        
         p.sendMessage(Message.getBuilder()
                 .of("»").color(ColorCode.GRAY).advance().space()
                 .of("Drogen").color(ColorCode.DARK_AQUA).advance()
@@ -94,7 +96,6 @@ public class KorruptionsrechnerCommand implements IClientCommand {
                 .of("|").color(ColorCode.DARK_GRAY).advance().space()
                 .of(methDrugs2 + "g").color(ColorCode.AQUA).advance()
                 .createComponent());
-
     }
 
     @Override
