@@ -95,7 +95,7 @@ public class WantedEventHandler {
 
             ColorCode colorCode = getWpColorCode(wpAmount);
 
-            e.setMessage(Message.getBuilder()
+            e.setMessage(Message.getBuilder().space().space()
                     .of("»").color(ColorCode.DARK_GRAY).advance().space()
                     .of(playerName).color(colorCode).advance().space()
                     .of("|").color(ColorCode.DARK_GRAY).advance().space()
