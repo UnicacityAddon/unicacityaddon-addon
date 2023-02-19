@@ -67,7 +67,7 @@ public class HouseBankGetCommand implements IClientCommand {
     public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
         UPlayer p = AbstractionLayer.getPlayer();
         if (args.length > 1 && args[1].equalsIgnoreCase("all")) {
-            p.sendChatMessage("/hkasse");
+            p.sendChatMessage("/hauskasse");
             HouseDataEventHandler.lastCheck = System.currentTimeMillis();
             new Timer().schedule(new TimerTask() {
                 @Override
@@ -79,7 +79,7 @@ public class HouseBankGetCommand implements IClientCommand {
             return;
         }
 
-        p.sendChatMessage("/hauskasse " + TextUtils.makeStringByArgs(args, ""));
+        p.sendChatMessage("/hauskasse" + (args.length > 0 ? " " + TextUtils.makeStringByArgs(args, " ") : ""));
     }
 
     @Override

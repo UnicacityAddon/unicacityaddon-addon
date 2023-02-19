@@ -64,7 +64,7 @@ public class HousebanCommand implements IClientCommand {
                     .of("Hausverbote:").color(ColorCode.DARK_AQUA).bold().advance()
                     .createComponent());
 
-            Syncer.getHouseBanEntryList().forEach(houseBanEntry -> {
+            Syncer.HOUSEBANENTRYLIST.forEach(houseBanEntry -> {
                 long durationInMillis = houseBanEntry.getExpirationTime() - System.currentTimeMillis();
 
                 String duration = Message.getBuilder()
