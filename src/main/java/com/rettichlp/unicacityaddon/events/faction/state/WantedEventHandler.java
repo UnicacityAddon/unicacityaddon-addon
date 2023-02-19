@@ -1,6 +1,8 @@
 package com.rettichlp.unicacityaddon.events.faction.state;
 
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
+import com.rettichlp.unicacityaddon.base.text.ColorCode;
+import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
@@ -85,14 +87,50 @@ public class WantedEventHandler {
         }
 
         Matcher matcher = PatternHandler.WANTED_LIST_PATTERN.matcher(unformattedMessage);
-        if (currentTime - wantedsShown > 1000L || !matcher.find())
-            return;
+        if (matcher.find()) {
+            String playerName = matcher.group(1);
+            String wpReason = matcher.group(3);
+            int wpAmount = Integer.parseInt(matcher.group(2));
+            boolean isAfk = matcher.group(4).contains("AFK");
 
-        String name = matcher.group(1);
-        int wantedPoints = Integer.parseInt(matcher.group(2));
-        String reason = matcher.group(3);
+            ColorCode colorCode = getWpColorCode(wpAmount);
 
-        WANTED_MAP.put(name, new Wanted(reason, wantedPoints));
+            e.setMessage(Message.getBuilder()
+                    .of("»").color(ColorCode.DARK_GRAY).advance().space()
+                    .of(playerName).color(colorCode).advance().space()
+                    .of("|").color(ColorCode.DARK_GRAY).advance().space()
+                    .of(wpReason).color(colorCode).advance().space()
+                    .of("(").color(ColorCode.GRAY).advance()
+                    .of(String.valueOf(wpAmount)).color(ColorCode.BLUE).advance()
+                    .of(")").color(ColorCode.GRAY).advance().space()
+                    .of(isAfk ? "|" : "").color(ColorCode.DARK_GRAY).advance().space()
+                    .of(isAfk ? "AFK" : "").color(ColorCode.GRAY).advance()
+                    .createComponent());
+
+            if (currentTime - wantedsShown < 1000L) {
+                String name = matcher.group(1);
+                int wantedPoints = Integer.parseInt(matcher.group(2));
+                String reason = matcher.group(3);
+                WANTED_MAP.put(name, new Wanted(reason, wantedPoints));
+            }
+        }
+    }
+    private ColorCode getWpColorCode(int wpAmount) {
+        ColorCode colorCode;
+        if (wpAmount > 60) {
+            colorCode = ColorCode.DARK_RED;
+        } else if (wpAmount > 50) {
+            colorCode = ColorCode.RED;
+        } else if (wpAmount > 25) {
+            colorCode = ColorCode.GOLD;
+        } else if (wpAmount > 15) {
+            colorCode = ColorCode.YELLOW;
+        } else if (wpAmount > 1) {
+            colorCode = ColorCode.GREEN;
+        } else {
+            colorCode = ColorCode.DARK_GREEN;
+        }
+        return colorCode;
     }
 
     public static class Wanted {
