@@ -114,7 +114,7 @@ public class WantedEventHandler {
             }
         }
     }
-    
+
     public static class Wanted {
 
         private String reason;
