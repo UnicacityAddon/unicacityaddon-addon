@@ -144,6 +144,8 @@ public class PatternHandler {
      * @see com.rettichlp.unicacityaddon.events.faction.badfaction.DrugInteractionEventHandler
      */
     public static final Pattern RECIPE_ACCEPT_PATTERN = Pattern.compile("^((?:\\[UC])*\\w+) möchte dir ein Rezept für 200\\$ verkaufen\\.$");
+
+    public static final Pattern REVIVE_DONE_PATTERN = Pattern.compile("^[Karma] +1 Karma.");
     public static final Pattern RECIPE_GIVE_PATTERN = Pattern.compile("^Du hast ((?:\\[UC])*\\w+) ein Rezept für (Antibiotika|Hustensaft|Schmerzmittel) ausgestellt\\.$");
     public static final Pattern REVIVE_BY_MEDIC_START_PATTERN = Pattern.compile("^Du wirst von (?:\\[UC])*(\\w+) wiederbelebt\\.$");
     // TODO: 22.01.2023 public static final Pattern REVIVE_BY_MEDIC_FINISH_PATTERN = Pattern.compile("^Du lebst nun wieder\\.$");
@@ -329,6 +331,9 @@ public class PatternHandler {
      */
     public static final Pattern DRUG_VAULT_DROP_PATTERN = Pattern.compile("^HQ: (.+) (?:\\[UC])*(\\w+) hat (\\d+)g (Kokain|Methamphetamin|Marihuana|LSD) \\((Höchste Reinheit|Gute Reinheit|Mittlere Reinheit|Schlechte Reinheit)\\) in der Asservatenkammer verstaut\\.$");
     public static final Pattern DRUG_VAULT_GET_PATTERN = Pattern.compile("^HQ: (.+) (?:\\[UC])*(\\w+) hat (\\d+)g (Kokain|Methamphetamin|Marihuana|LSD) \\((Höchste Reinheit|Gute Reinheit|Mittlere Reinheit|Schlechte Reinheit)\\) aus der Asservatenkammer genommen\\.$");
+    public static final Pattern DRUG_VAULT_INFOTITLE_PATTERN = Pattern.compile("^ ===== Asservatenkammer \\((\\w+)\\) =====$");
+    public static final Pattern DRUG_VAULT_INFO_PATTERN = Pattern.compile("^  » Mittlere Reinheit: (\\d+)g  » Höchste Reinheit: (\\d+)g  » Gute Reinheit: (\\d+)g  » Schlechte Reinheit: (\\d+)g$");
+    public static final Pattern DRUG_VAULT_INFOLSD_PATTERN = Pattern.compile("^  » LSD: (\\d+) Stück$");
     public static final Pattern DRUG_VAULT_BURN_PATTERN = Pattern.compile("^HQ: (.+) (?:\\[UC])*(\\w+) hat (\\d+)g (Kokain|Methamphetamin|Marihuana|LSD) \\((Höchste Reinheit|Gute Reinheit|Mittlere Reinheit|Schlechte Reinheit)\\) vernichtet\\.$");
     public static final Pattern PLANT_BURN_PATTERN = Pattern.compile("^HQ: (.+) (?:\\[UC])*(\\w+) hat erfolgreich eine (Kokain|Marihuana) Plantage verbrannt, over\\.$");
 }

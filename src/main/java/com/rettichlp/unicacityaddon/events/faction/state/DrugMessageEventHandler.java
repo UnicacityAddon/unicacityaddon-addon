@@ -1,5 +1,7 @@
 package com.rettichlp.unicacityaddon.events.faction.state;
 
+import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
+import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.config.ConfigElements;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
@@ -19,6 +21,7 @@ public class DrugMessageEventHandler {
     @SubscribeEvent
     public void onClientChatReceived(ClientChatReceivedEvent e) {
         String msg = e.getMessage().getUnformattedText();
+        UPlayer p = AbstractionLayer.getPlayer();
 
         if (ConfigElements.getDrugVaultMessageActivated()) {
             Matcher drugVaultDropMatcher = PatternHandler.DRUG_VAULT_DROP_PATTERN.matcher(msg);
@@ -69,6 +72,57 @@ public class DrugMessageEventHandler {
                         .of("|").color(ColorCode.DARK_GRAY).advance().space()
                         .of(drugVaultBurnMatcher.group(2)).color(ColorCode.AQUA).advance()
                         .createComponent());
+                return;
+            }
+            Matcher drugVaultInfoMatcher = PatternHandler.DRUG_VAULT_INFO_PATTERN.matcher(msg);
+            if (drugVaultInfoMatcher.find()) {
+                e.setCanceled(true);
+                p.sendMessage(Message.getBuilder()
+                        .of("»").color(ColorCode.DARK_GRAY).advance().space()
+                        .of("Höchste Reinheit").color(ColorCode.GOLD).advance()
+                        .of(":").color(ColorCode.DARK_GRAY).advance().space()
+                        .of(drugVaultInfoMatcher.group(2)).color(ColorCode.YELLOW).advance()
+                        .of("g").color(ColorCode.YELLOW).advance().createComponent());
+                p.sendMessage(Message.getBuilder()
+                        .of("»").color(ColorCode.DARK_GRAY).advance().space()
+                        .of("Gute Reinheit").color(ColorCode.GOLD).advance()
+                        .of(":").color(ColorCode.DARK_GRAY).advance().space()
+                        .of(drugVaultInfoMatcher.group(3)).color(ColorCode.YELLOW).advance()
+                        .of("g").color(ColorCode.YELLOW).advance().createComponent());
+                p.sendMessage(Message.getBuilder()
+                        .of("»").color(ColorCode.DARK_GRAY).advance().space()
+                        .of("Mittlere Reinheit").color(ColorCode.GOLD).advance()
+                        .of(":").color(ColorCode.DARK_GRAY).advance().space()
+                        .of(drugVaultInfoMatcher.group(1)).color(ColorCode.YELLOW).advance()
+                        .of("g").color(ColorCode.YELLOW).advance().createComponent());
+                p.sendMessage(Message.getBuilder()
+                        .of("»").color(ColorCode.DARK_GRAY).advance().space()
+                        .of("Schlechte Reinheit").color(ColorCode.GOLD).advance()
+                        .of(":").color(ColorCode.DARK_GRAY).advance().space()
+                        .of(drugVaultInfoMatcher.group(4)).color(ColorCode.YELLOW).advance()
+                        .of("g").color(ColorCode.YELLOW).advance()
+                        .createComponent());
+                return;
+            }
+            Matcher drugVaultInfoLSDMatcher = PatternHandler.DRUG_VAULT_INFOLSD_PATTERN.matcher(msg);
+            if (drugVaultInfoLSDMatcher.find()) {
+                e.setMessage(Message.getBuilder()
+                        .of("»").color(ColorCode.DARK_GRAY).advance().space()
+                        .of("LSD").color(ColorCode.GOLD).advance()
+                        .of(":").color(ColorCode.DARK_GRAY).advance().space()
+                        .of(drugVaultInfoLSDMatcher.group(1)).color(ColorCode.YELLOW).advance().space()
+                        .of("Stück").color(ColorCode.YELLOW).advance().createComponent());
+                return;
+            }
+            Matcher drugVaultInfoTitleMatcher = PatternHandler.DRUG_VAULT_INFOTITLE_PATTERN.matcher(msg);
+            if (drugVaultInfoTitleMatcher.find()) {
+                e.setMessage(Message.getBuilder()
+                        .of("===").color(ColorCode.DARK_GRAY).advance().space()
+                        .of("Asservatenkammer").color(ColorCode.GOLD).advance().space()
+                        .of("[").color(ColorCode.DARK_GRAY).advance()
+                        .of(drugVaultInfoTitleMatcher.group(1)).color(ColorCode.YELLOW).advance()
+                        .of("]").color(ColorCode.DARK_GRAY).advance().space()
+                        .of("===").color(ColorCode.DARK_GRAY).advance().createComponent());
                 return;
             }
         }
