@@ -79,27 +79,27 @@ public class DrugMessageEventHandler {
                 e.setCanceled(true);
                 p.sendMessage(Message.getBuilder()
                         .of("»").color(ColorCode.DARK_GRAY).advance().space()
-                        .of("Höchste Reinheit").color(ColorCode.GOLD).advance()
+                        .of(drugVaultInfoMatcher.group(1) + " Reinheit").color(ColorCode.GOLD).advance()
                         .of(":").color(ColorCode.DARK_GRAY).advance().space()
                         .of(drugVaultInfoMatcher.group(2)).color(ColorCode.YELLOW).advance()
                         .of("g").color(ColorCode.YELLOW).advance().createComponent());
                 p.sendMessage(Message.getBuilder()
                         .of("»").color(ColorCode.DARK_GRAY).advance().space()
-                        .of("Gute Reinheit").color(ColorCode.GOLD).advance()
-                        .of(":").color(ColorCode.DARK_GRAY).advance().space()
-                        .of(drugVaultInfoMatcher.group(3)).color(ColorCode.YELLOW).advance()
-                        .of("g").color(ColorCode.YELLOW).advance().createComponent());
-                p.sendMessage(Message.getBuilder()
-                        .of("»").color(ColorCode.DARK_GRAY).advance().space()
-                        .of("Mittlere Reinheit").color(ColorCode.GOLD).advance()
-                        .of(":").color(ColorCode.DARK_GRAY).advance().space()
-                        .of(drugVaultInfoMatcher.group(1)).color(ColorCode.YELLOW).advance()
-                        .of("g").color(ColorCode.YELLOW).advance().createComponent());
-                p.sendMessage(Message.getBuilder()
-                        .of("»").color(ColorCode.DARK_GRAY).advance().space()
-                        .of("Schlechte Reinheit").color(ColorCode.GOLD).advance()
+                        .of(drugVaultInfoMatcher.group(3) + " Reinheit").color(ColorCode.GOLD).advance()
                         .of(":").color(ColorCode.DARK_GRAY).advance().space()
                         .of(drugVaultInfoMatcher.group(4)).color(ColorCode.YELLOW).advance()
+                        .of("g").color(ColorCode.YELLOW).advance().createComponent());
+                p.sendMessage(Message.getBuilder()
+                        .of("»").color(ColorCode.DARK_GRAY).advance().space()
+                        .of(drugVaultInfoMatcher.group(5) + " Reinheit").color(ColorCode.GOLD).advance()
+                        .of(":").color(ColorCode.DARK_GRAY).advance().space()
+                        .of(drugVaultInfoMatcher.group(6)).color(ColorCode.YELLOW).advance()
+                        .of("g").color(ColorCode.YELLOW).advance().createComponent());
+                p.sendMessage(Message.getBuilder()
+                        .of("»").color(ColorCode.DARK_GRAY).advance().space()
+                        .of(drugVaultInfoMatcher.group(7) + " fReinheit").color(ColorCode.GOLD).advance()
+                        .of(":").color(ColorCode.DARK_GRAY).advance().space()
+                        .of(drugVaultInfoMatcher.group(8)).color(ColorCode.YELLOW).advance()
                         .of("g").color(ColorCode.YELLOW).advance()
                         .createComponent());
                 return;

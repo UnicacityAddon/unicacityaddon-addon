@@ -332,7 +332,7 @@ public class PatternHandler {
     public static final Pattern DRUG_VAULT_DROP_PATTERN = Pattern.compile("^HQ: (.+) (?:\\[UC])*(\\w+) hat (\\d+)g (Kokain|Methamphetamin|Marihuana|LSD) \\((Höchste Reinheit|Gute Reinheit|Mittlere Reinheit|Schlechte Reinheit)\\) in der Asservatenkammer verstaut\\.$");
     public static final Pattern DRUG_VAULT_GET_PATTERN = Pattern.compile("^HQ: (.+) (?:\\[UC])*(\\w+) hat (\\d+)g (Kokain|Methamphetamin|Marihuana|LSD) \\((Höchste Reinheit|Gute Reinheit|Mittlere Reinheit|Schlechte Reinheit)\\) aus der Asservatenkammer genommen\\.$");
     public static final Pattern DRUG_VAULT_INFOTITLE_PATTERN = Pattern.compile("^ ===== Asservatenkammer \\((\\w+)\\) =====$");
-    public static final Pattern DRUG_VAULT_INFO_PATTERN = Pattern.compile("^  » Mittlere Reinheit: (\\d+)g  » Höchste Reinheit: (\\d+)g  » Gute Reinheit: (\\d+)g  » Schlechte Reinheit: (\\d+)g$");
+    public static final Pattern DRUG_VAULT_INFO_PATTERN = Pattern.compile("^  » (Mittlere|Höchste|Gute|Schlechte) Reinheit: (\\d+)g  » (Mittlere|Höchste|Gute|Schlechte) Reinheit: (\\d+)g  » (Mittlere|Höchste|Gute|Schlechte) Reinheit: (\\d+)g  » (Mittlere|Höchste|Gute|Schlechte) Reinheit: (\\d+)g$");
     public static final Pattern DRUG_VAULT_INFOLSD_PATTERN = Pattern.compile("^  » LSD: (\\d+) Stück$");
     public static final Pattern DRUG_VAULT_BURN_PATTERN = Pattern.compile("^HQ: (.+) (?:\\[UC])*(\\w+) hat (\\d+)g (Kokain|Methamphetamin|Marihuana|LSD) \\((Höchste Reinheit|Gute Reinheit|Mittlere Reinheit|Schlechte Reinheit)\\) vernichtet\\.$");
     public static final Pattern PLANT_BURN_PATTERN = Pattern.compile("^HQ: (.+) (?:\\[UC])*(\\w+) hat erfolgreich eine (Kokain|Marihuana) Plantage verbrannt, over\\.$");
