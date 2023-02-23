@@ -8,7 +8,7 @@ import com.rettichlp.unicacityaddon.base.enums.faction.ReinforcementType;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ChatType;
 import com.rettichlp.unicacityaddon.base.utils.MathUtils;
-import com.rettichlp.unicacityaddon.events.MobileEventHandler;
+import com.rettichlp.unicacityaddon.listener.MobileEventHandler;
 import net.labymod.api.client.chat.command.Command;
 import net.labymod.api.util.math.vector.FloatVector3;
 

@@ -4,7 +4,7 @@ import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
-import com.rettichlp.unicacityaddon.events.faction.badfaction.GaggedEventHandler;
+import com.rettichlp.unicacityaddon.listener.faction.badfaction.GaggedEventHandler;
 import net.labymod.api.client.chat.command.Command;
 
 import java.util.List;

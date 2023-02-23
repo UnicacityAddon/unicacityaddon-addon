@@ -5,7 +5,7 @@ import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.enums.faction.ModifyWantedType;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.utils.ForgeUtils;
-import com.rettichlp.unicacityaddon.events.faction.polizei.WantedEventHandler;
+import com.rettichlp.unicacityaddon.listener.faction.polizei.WantedEventHandler;
 import net.labymod.api.client.chat.command.Command;
 
 import java.util.Arrays;

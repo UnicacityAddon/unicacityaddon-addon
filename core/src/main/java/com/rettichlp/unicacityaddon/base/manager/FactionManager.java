@@ -5,7 +5,7 @@ import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.base.utils.ForgeUtils;
 import com.rettichlp.unicacityaddon.base.utils.ListUtils;
-import com.rettichlp.unicacityaddon.events.TabListEventHandler;
+import com.rettichlp.unicacityaddon.listener.TabListEventHandler;
 
 import java.util.AbstractMap;
 import java.util.HashMap;

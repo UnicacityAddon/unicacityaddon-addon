@@ -5,7 +5,7 @@ import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.utils.MathUtils;
-import com.rettichlp.unicacityaddon.events.faction.rettungsdienst.MedicationEventHandler;
+import com.rettichlp.unicacityaddon.listener.faction.rettungsdienst.MedicationEventHandler;
 import net.labymod.api.client.chat.command.Command;
 
 import java.util.List;
