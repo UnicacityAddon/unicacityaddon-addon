@@ -79,6 +79,11 @@ import com.rettichlp.unicacityaddon.commands.teamspeak.MoveHereCommand;
 import com.rettichlp.unicacityaddon.commands.teamspeak.MoveToCommand;
 import com.rettichlp.unicacityaddon.commands.teamspeak.TSFindCommand;
 import com.rettichlp.unicacityaddon.commands.teamspeak.TSJoinCommand;
+import com.rettichlp.unicacityaddon.hudwidgets.CarHudWidget;
+import com.rettichlp.unicacityaddon.hudwidgets.JobHudWidget;
+import com.rettichlp.unicacityaddon.hudwidgets.MoneyHudWidget;
+import com.rettichlp.unicacityaddon.hudwidgets.PayDayHudWidget;
+import com.rettichlp.unicacityaddon.hudwidgets.TestHudWidget;
 import com.rettichlp.unicacityaddon.listener.ABuyEventHandler;
 import com.rettichlp.unicacityaddon.listener.AccountEventHandler;
 import com.rettichlp.unicacityaddon.listener.CarEventHandler;
@@ -133,6 +138,7 @@ import com.rettichlp.unicacityaddon.listener.team.ReportEventHandler;
 import com.rettichlp.unicacityaddon.listener.teamspeak.WaitingRoomEventHandler;
 import net.labymod.api.addon.LabyAddon;
 import net.labymod.api.client.Minecraft;
+import net.labymod.api.client.gui.hud.HudWidgetRegistry;
 import net.labymod.api.models.addon.annotation.AddonMain;
 import net.labymod.api.util.logging.Logging;
 
@@ -173,6 +179,13 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
     @Override
     protected void enable() {
         this.registerSettingCategory();
+
+        HudWidgetRegistry registry = this.labyAPI().hudWidgetRegistry();
+        registry.register(new CarHudWidget("unicacityaddon_car"));
+        registry.register(new JobHudWidget("unicacityaddon_job"));
+        registry.register(new MoneyHudWidget("unicacityaddon_money"));
+        registry.register(new PayDayHudWidget("unicacityaddon_payday"));
+        registry.register(new TestHudWidget("unicacityaddon_test"));
 
         this.registerListener(new ABuyEventHandler(this));
         this.registerListener(new AccountEventHandler(this));
