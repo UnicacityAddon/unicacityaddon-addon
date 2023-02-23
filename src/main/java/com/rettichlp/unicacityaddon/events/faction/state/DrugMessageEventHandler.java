@@ -97,7 +97,7 @@ public class DrugMessageEventHandler {
                         .of("g").color(ColorCode.YELLOW).advance().createComponent());
                 p.sendMessage(Message.getBuilder()
                         .of("»").color(ColorCode.DARK_GRAY).advance().space()
-                        .of(drugVaultInfoMatcher.group(7) + " fReinheit").color(ColorCode.GOLD).advance()
+                        .of(drugVaultInfoMatcher.group(7) + " Reinheit").color(ColorCode.GOLD).advance()
                         .of(":").color(ColorCode.DARK_GRAY).advance().space()
                         .of(drugVaultInfoMatcher.group(8)).color(ColorCode.YELLOW).advance()
                         .of("g").color(ColorCode.YELLOW).advance()
