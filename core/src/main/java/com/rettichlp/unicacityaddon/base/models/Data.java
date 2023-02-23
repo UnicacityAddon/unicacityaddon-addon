@@ -5,6 +5,8 @@ import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
 import com.rettichlp.unicacityaddon.base.enums.faction.Equip;
+import com.rettichlp.unicacityaddon.base.events.OfflineDataChangedEvent;
+import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import net.labymod.api.util.math.vector.FloatVector3;
@@ -39,6 +41,7 @@ public class Data {
 
     public void setBankBalance(Integer bankBalance) {
         this.bankBalance = bankBalance;
+        saveAndFireEvent();
     }
 
     public String getCarInfo() {
@@ -47,6 +50,7 @@ public class Data {
 
     public void setCarInfo(String carInfo) {
         this.carInfo = carInfo;
+        saveAndFireEvent();
     }
 
     public int getCashBalance() {
@@ -55,6 +59,7 @@ public class Data {
 
     public void setCashBalance(Integer cashBalance) {
         this.cashBalance = cashBalance;
+        saveAndFireEvent();
     }
 
     public Map<DrugType, Map<DrugPurity, Integer>> getDrugInventoryMap() {
@@ -63,6 +68,7 @@ public class Data {
 
     public void setDrugInventoryMap(Map<DrugType, Map<DrugPurity, Integer>> drugInventoryMap) {
         this.drugInventoryMap = drugInventoryMap;
+        saveAndFireEvent();
     }
 
     public List<CoordlistEntry> getCoordlist() {
@@ -71,6 +77,7 @@ public class Data {
 
     public void setCoordlist(List<CoordlistEntry> coordlist) {
         this.coordlist = coordlist;
+        saveAndFireEvent();
     }
 
     public Map<Equip, Integer> getEquipMap() {
@@ -79,6 +86,7 @@ public class Data {
 
     public void setEquipMap(Map<Equip, Integer> equipMap) {
         this.equipMap = equipMap;
+        saveAndFireEvent();
     }
 
     public long getFirstAidDate() {
@@ -87,6 +95,7 @@ public class Data {
 
     public void setFirstAidDate(Long firstAidDate) {
         this.firstAidDate = firstAidDate;
+        saveAndFireEvent();
     }
 
     public Map<Integer, HouseData> getHouseDataMap() {
@@ -95,6 +104,7 @@ public class Data {
 
     public void setHouseDataMap(Map<Integer, HouseData> houseDataMap) {
         this.houseDataMap = houseDataMap;
+        saveAndFireEvent();
     }
 
     public int getJobBalance() {
@@ -103,6 +113,7 @@ public class Data {
 
     public void setJobBalance(Integer jobBalance) {
         this.jobBalance = jobBalance;
+        saveAndFireEvent();
     }
 
     public int getJobExperience() {
@@ -111,6 +122,7 @@ public class Data {
 
     public void setJobExperience(Integer jobExperience) {
         this.jobExperience = jobExperience;
+        saveAndFireEvent();
     }
 
     public int getPayDayTime() {
@@ -119,6 +131,7 @@ public class Data {
 
     public void setPayDayTime(Integer payDayTime) {
         this.payDayTime = payDayTime;
+        saveAndFireEvent();
     }
 
     public long getPlantFertilizeTime() {
@@ -127,6 +140,7 @@ public class Data {
 
     public void setPlantFertilizeTime(Long plantFertilizeTime) {
         this.plantFertilizeTime = plantFertilizeTime;
+        saveAndFireEvent();
     }
 
     public long getPlantWaterTime() {
@@ -135,6 +149,7 @@ public class Data {
 
     public void setPlantWaterTime(Long plantWaterTime) {
         this.plantWaterTime = plantWaterTime;
+        saveAndFireEvent();
     }
 
     public int getServiceCount() {
@@ -143,6 +158,7 @@ public class Data {
 
     public void setServiceCount(Integer serviceCount) {
         this.serviceCount = serviceCount;
+        saveAndFireEvent();
     }
 
     public int getTimer() {
@@ -151,6 +167,7 @@ public class Data {
 
     public void setTimer(Integer timer) {
         this.timer = timer;
+        saveAndFireEvent();
     }
 
     public List<TodolistEntry> getTodolist() {
@@ -159,6 +176,7 @@ public class Data {
 
     public void setTodolist(List<TodolistEntry> todolist) {
         this.todolist = todolist;
+        saveAndFireEvent();
     }
 
     /**
@@ -168,6 +186,7 @@ public class Data {
      */
     public void addBankBalance(int i) {
         bankBalance = getBankBalance() + i;
+        saveAndFireEvent();
     }
 
     /**
@@ -177,6 +196,7 @@ public class Data {
      */
     public void removeBankBalance(int i) {
         bankBalance = getBankBalance() - i;
+        saveAndFireEvent();
     }
 
     /**
@@ -186,6 +206,7 @@ public class Data {
      */
     public void addCashBalance(int i) {
         cashBalance = getCashBalance() + i;
+        saveAndFireEvent();
     }
 
     /**
@@ -195,6 +216,7 @@ public class Data {
      */
     public void removeCashBalance(int i) {
         cashBalance = getCashBalance() - i;
+        saveAndFireEvent();
     }
 
     /**
@@ -209,6 +231,7 @@ public class Data {
         List<CoordlistEntry> newCoordlistEntryList = getCoordlist();
         newCoordlistEntryList.add(new CoordlistEntry(name, blockPos.getX(), blockPos.getY(), blockPos.getZ()));
         coordlist = newCoordlistEntryList;
+        saveAndFireEvent();
     }
 
     /**
@@ -220,6 +243,7 @@ public class Data {
         List<CoordlistEntry> newCoordlistEntryList = getCoordlist();
         boolean success = newCoordlistEntryList.removeIf(coordlistEntry -> coordlistEntry.getName().equalsIgnoreCase(name));
         coordlist = newCoordlistEntryList;
+        saveAndFireEvent();
         return success;
     }
 
@@ -241,6 +265,7 @@ public class Data {
             Map<DrugType, Map<DrugPurity, Integer>> newdrugInventoryMap = getDrugInventoryMap();
             newdrugInventoryMap.put(drugType, drugPurityIntegerMap);
             drugInventoryMap = newdrugInventoryMap;
+            saveAndFireEvent();
         }
     }
 
@@ -262,6 +287,7 @@ public class Data {
             Map<DrugType, Map<DrugPurity, Integer>> newdrugInventoryMap = getDrugInventoryMap();
             newdrugInventoryMap.put(drugType, drugPurityIntegerMap);
             drugInventoryMap = newdrugInventoryMap;
+            saveAndFireEvent();
         }
     }
 
@@ -275,6 +301,7 @@ public class Data {
         Map<Equip, Integer> newEquipMap = getEquipMap();
         newEquipMap.put(equip, newEquipMap.getOrDefault(equip, 0) + 1);
         equipMap = newEquipMap;
+        saveAndFireEvent();
     }
 
     /**
@@ -300,6 +327,7 @@ public class Data {
         Map<Integer, HouseData> newHouseDataMap = getHouseDataMap();
         newHouseDataMap.put(houseNumber, houseData);
         houseDataMap = newHouseDataMap;
+        saveAndFireEvent();
     }
 
     /**
@@ -312,6 +340,7 @@ public class Data {
         Map<Integer, HouseData> newHouseDataMap = getHouseDataMap();
         newHouseDataMap.remove(houseNumber);
         houseDataMap = newHouseDataMap;
+        saveAndFireEvent();
     }
 
     /**
@@ -357,6 +386,7 @@ public class Data {
      */
     public void addJobBalance(int i) {
         jobBalance = getJobBalance() + i;
+        saveAndFireEvent();
     }
 
     /**
@@ -366,6 +396,7 @@ public class Data {
      */
     public void addJobExperience(int i) {
         jobExperience = getJobExperience() + i;
+        saveAndFireEvent();
     }
 
     /**
@@ -374,19 +405,8 @@ public class Data {
      * @param i Amount of minutes to be added to the <code>jobExperience</code>
      */
     public void addPayDayTime(int i) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
         payDayTime = getPayDayTime() + i;
-        switch (payDayTime) {
-            case 55:
-                p.sendInfoMessage("Du hast in 5 Minuten deinen PayDay.");
-                break;
-            case 57:
-                p.sendInfoMessage("Du hast in 3 Minuten deinen PayDay.");
-                break;
-            case 59:
-                p.sendInfoMessage("Du hast in 1 Minute deinen PayDay.");
-                break;
-        }
+        saveAndFireEvent();
     }
 
     /**
@@ -396,6 +416,7 @@ public class Data {
      */
     public void addServiceCount(int i) {
         serviceCount = getServiceCount() + i;
+        saveAndFireEvent();
     }
 
     /**
@@ -406,5 +427,11 @@ public class Data {
     public void removeServiceCount(int i) {
         if (getServiceCount() > 0)
             serviceCount = getServiceCount() - i;
+        saveAndFireEvent();
+    }
+
+    private void saveAndFireEvent() {
+        UnicacityAddon.ADDON.labyAPI().eventBus().fire(new OfflineDataChangedEvent(FileManager.DATA));
+        FileManager.saveData();
     }
 }

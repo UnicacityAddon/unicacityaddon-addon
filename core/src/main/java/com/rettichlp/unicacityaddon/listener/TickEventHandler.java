@@ -130,7 +130,6 @@ public class TickEventHandler {
     }
 
     private void handlePayDay() {
-        FileManager.saveData();
         if (UnicacityAddon.isUnicacity() && !AccountEventHandler.isAfk) {
             FileManager.DATA.addPayDayTime(1);
         }

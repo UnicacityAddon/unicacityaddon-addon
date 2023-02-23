@@ -3,6 +3,7 @@ package com.rettichlp.unicacityaddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.DefaultAddonPlayer;
 import com.rettichlp.unicacityaddon.base.config.DefaultUnicacityAddonConfiguration;
+import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.commands.ABuyCommand;
@@ -150,7 +151,7 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
         LOGGER = this.logger();
         PLAYER = new DefaultAddonPlayer(this);
 
-
+        FileManager.loadData();
 
 //        BroadcastChecker.start();
 //

@@ -93,9 +93,8 @@ public class FileManager {
         try {
             File dataFile = FileManager.getDataFile();
             assert dataFile != null;
-//            String jsonData = FileUtils.readFileToString(dataFile, StandardCharsets.UTF_8.toString());
-//            DATA = jsonData == null || jsonData.equals("") || jsonData.equals("null") ? new Data() : new Gson().fromJson(jsonData, Data.class);
-            Runtime.getRuntime().addShutdownHook(new Thread(FileManager::saveData));
+            String jsonData = null; // FileUtils.readFileToString(dataFile, StandardCharsets.UTF_8.toString()); todo
+            DATA = jsonData == null || jsonData.equals("") || jsonData.equals("null") ? new Data() : new Gson().fromJson(jsonData, Data.class);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
