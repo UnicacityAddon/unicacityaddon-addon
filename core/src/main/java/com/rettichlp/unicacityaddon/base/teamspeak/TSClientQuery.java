@@ -59,7 +59,7 @@ public class TSClientQuery implements Closeable {
 
     public static void disconnect() {
         if (instance != null) {
-            // TODO Logger.LOGGER.info("Closing the TeamSpeak Client Query Connection...");
+            UnicacityAddon.LOGGER.info("Closing the TeamSpeak Client Query Connection...");
             instance.close();
         }
     }
@@ -69,7 +69,7 @@ public class TSClientQuery implements Closeable {
     }
 
     private void connect() throws IOException {
-        // TODO Logger.LOGGER.info("Setting up the TeamSpeak Client Query Connection...");
+        UnicacityAddon.LOGGER.info("Setting up the TeamSpeak Client Query Connection...");
 
         setupConnection();
         authenticate();

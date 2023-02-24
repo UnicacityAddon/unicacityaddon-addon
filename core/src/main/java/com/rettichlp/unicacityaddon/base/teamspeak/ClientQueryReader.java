@@ -1,5 +1,6 @@
 package com.rettichlp.unicacityaddon.base.teamspeak;
 
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.teamspeak.commands.BaseCommand;
 import com.rettichlp.unicacityaddon.base.teamspeak.events.TSEvent;
 
@@ -75,7 +76,7 @@ public class ClientQueryReader extends Thread implements Closeable {
                     }
                 }
             } catch (IOException | IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException | ClassNotFoundException e) {
-                // TODO Logger.LOGGER.catching(e);
+                UnicacityAddon.LOGGER.error(e.getMessage());
             }
 
 //            Uninterruptibles.sleepUninterruptibly(100, TimeUnit.MILLISECONDS);

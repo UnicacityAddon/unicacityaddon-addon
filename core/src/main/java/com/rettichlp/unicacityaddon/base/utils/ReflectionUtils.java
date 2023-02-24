@@ -1,5 +1,7 @@
 package com.rettichlp.unicacityaddon.base.utils;
 
+import com.rettichlp.unicacityaddon.UnicacityAddon;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -47,7 +49,7 @@ public class ReflectionUtils {
         try {
             return Class.forName(packageName + "." + className.substring(0, className.lastIndexOf('.')));
         } catch (ClassNotFoundException e) {
-            // TODO: handle the exception
+            UnicacityAddon.LOGGER.error(e.getMessage());
         }
         return null;
     }
@@ -61,7 +63,7 @@ public class ReflectionUtils {
 
             return (T) field.get(object);
         } catch (IllegalAccessException e) {
-            // TODO: handle the exception
+            UnicacityAddon.LOGGER.error(e.getMessage());
         }
 
         return null;
