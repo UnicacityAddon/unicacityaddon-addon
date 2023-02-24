@@ -19,7 +19,7 @@ public class MoneyHudWidget extends TextHudWidget<TextHudWidgetConfig> {
     @Override
     public void load(TextHudWidgetConfig config) {
         super.load(config);
-        this.bank = super.createLine("Bargeld", FileManager.DATA.getBankBalance() + "$");
+        this.bank = super.createLine("Bank", FileManager.DATA.getBankBalance() + "$");
         this.cash = super.createLine("Bargeld", FileManager.DATA.getCashBalance() + "$");
     }
 

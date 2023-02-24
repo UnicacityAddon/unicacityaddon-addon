@@ -181,10 +181,16 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
         this.registerSettingCategory();
 
         HudWidgetRegistry registry = this.labyAPI().hudWidgetRegistry();
+        registry.register(new CarHudWidget("unicacityaddon_bomb"));
         registry.register(new CarHudWidget("unicacityaddon_car"));
+        registry.register(new CarHudWidget("unicacityaddon_service"));
+        registry.register(new JobHudWidget("unicacityaddon_hearth"));
+        registry.register(new MoneyHudWidget("unicacityaddon_inventory"));
         registry.register(new JobHudWidget("unicacityaddon_job"));
         registry.register(new MoneyHudWidget("unicacityaddon_money"));
         registry.register(new PayDayHudWidget("unicacityaddon_payday"));
+        registry.register(new MoneyHudWidget("unicacityaddon_plant"));
+        registry.register(new PayDayHudWidget("unicacityaddon_timer"));
         registry.register(new TestHudWidget("unicacityaddon_test"));
 
         this.registerListener(new ABuyEventHandler(this));

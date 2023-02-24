@@ -1,10 +1,10 @@
 package com.rettichlp.unicacityaddon.hudwidgets;
 
 import com.rettichlp.unicacityaddon.base.events.OfflineDataChangedEvent;
+import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidget;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidgetConfig;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextLine;
-import net.labymod.api.client.render.font.RenderableComponent;
 import net.labymod.api.event.Subscribe;
 
 public class CarHudWidget extends TextHudWidget<TextHudWidgetConfig> {
@@ -18,13 +18,7 @@ public class CarHudWidget extends TextHudWidget<TextHudWidgetConfig> {
     @Override
     public void load(TextHudWidgetConfig config) {
         super.load(config);
-        this.textLine = super.createLine("Auto", "");
-    }
-
-    @Override
-    public boolean isVisibleInGame() {
-        RenderableComponent renderableComponent = this.textLine.getRenderableComponent();
-        return renderableComponent != null && renderableComponent.getText().length() > 0;
+        this.textLine = super.createLine("Auto", FileManager.DATA.getCarInfo());
     }
 
     @Subscribe

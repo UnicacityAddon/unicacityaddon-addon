@@ -8,6 +8,7 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
+import com.rettichlp.unicacityaddon.hudwidgets.BombHudWidget;
 import net.labymod.api.client.chat.ChatMessage;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.event.HoverEvent;
@@ -39,8 +40,7 @@ public class BombTimerEventHandler {
 
         Matcher bombPlacedMatcher = PatternHandler.BOMB_PLACED_PATTERN.matcher(msg);
         if (bombPlacedMatcher.find()) {
-//            BombTimerModule.isBomb = true; // TODO: 08.02.2023
-//            BombTimerModule.timer = "00:00"; // TODO: 08.02.2023
+            BombHudWidget.timer = 0;
 //            p.playSound(SoundRegistry.BOMB_SOUND, 1, 1); // TODO: 08.02.2023
 
             if (((p.getFaction().equals(Faction.POLIZEI) || p.getFaction().equals(Faction.FBI)) && p.getRank() > 3) || p.isSuperUser()) {

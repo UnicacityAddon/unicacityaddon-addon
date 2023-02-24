@@ -1,6 +1,7 @@
 package com.rettichlp.unicacityaddon.listener;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.base.events.UnicacityAddonTickEvent;
 import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.commands.BusCommand;
@@ -44,7 +45,6 @@ public class TickEventHandler {
             if (currentTick % 20 == 0) {
                 UnicacityAddon.ADDON.labyAPI().eventBus().fire(new UnicacityAddonTickEvent(UnicacityAddonTickEvent.Phase.SECOND));
                 handleNameTag();
-                handleBombTimer();
                 handleTimer();
             }
 
@@ -108,17 +108,6 @@ public class TickEventHandler {
 //                entityItem.setCustomNameTag(prefix + "✟" + playerName + factionInfo);
 //            }
 //        });
-    }
-
-    private void handleBombTimer() {
-//        if (!BombTimerModule.isBomb)
-//            return;
-//        if (BombTimerModule.currentCount++ >= 780)
-//            BombTimerModule.timer = ColorCode.RED.getCode() + TextUtils.parseTimer(BombTimerModule.currentCount);
-//        else
-//            BombTimerModule.timer = TextUtils.parseTimer(BombTimerModule.currentCount);
-//        if (BombTimerModule.currentCount > 1200)
-//            BombTimerModule.stopBombTimer();
     }
 
     private void handleTimer() {

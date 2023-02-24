@@ -9,8 +9,7 @@ import net.labymod.api.event.Subscribe;
 
 public class JobHudWidget extends TextHudWidget<TextHudWidgetConfig> {
 
-    private TextLine experience;
-    private TextLine money;
+    private TextLine textLine;
 
     public JobHudWidget(String id) {
         super(id);
@@ -19,13 +18,11 @@ public class JobHudWidget extends TextHudWidget<TextHudWidgetConfig> {
     @Override
     public void load(TextHudWidgetConfig config) {
         super.load(config);
-        this.money = super.createLine("Geld", FileManager.DATA.getJobBalance() + "$");
-        this.experience = super.createLine("Exp", FileManager.DATA.getJobExperience() + " EXP");
+        this.textLine = super.createLine("Job", FileManager.DATA.getJobBalance() + "$ | " + FileManager.DATA.getJobExperience() + " EXP");
     }
 
     @Subscribe
     public void onOfflineDataChanged(OfflineDataChangedEvent e) {
-        this.experience.updateAndFlush(e.getData().getJobExperience() + " EXP");
-        this.money.updateAndFlush(e.getData().getJobBalance() + "$");
+        this.textLine.updateAndFlush(e.getData().getJobBalance() + "$ | " + e.getData().getJobExperience() + " EXP");
     }
 }
