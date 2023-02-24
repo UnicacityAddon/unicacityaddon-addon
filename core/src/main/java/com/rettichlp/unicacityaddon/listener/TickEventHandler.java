@@ -6,7 +6,6 @@ import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.commands.BusCommand;
 import com.rettichlp.unicacityaddon.listener.faction.ReinforcementEventHandler;
-import com.rettichlp.unicacityaddon.listener.house.HouseInteractionEventHandler;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.lifecycle.GameTickEvent;
 import org.spongepowered.include.com.google.common.collect.Maps;
@@ -18,7 +17,7 @@ import java.util.Map;
 @UCEvent
 public class TickEventHandler {
 
-    public static int currentTick = -1;
+    public static int currentTick = 0;
 
     public static Map.Entry<Long, Float> lastTickDamage = Maps.immutableEntry(0L, 0F);
 
@@ -30,39 +29,46 @@ public class TickEventHandler {
 
     @Subscribe
     public void onGameTick(GameTickEvent e) {
+        currentTick++;
+
         UnicacityAddon.ADDON.labyAPI().eventBus().fire(new UnicacityAddonTickEvent(UnicacityAddonTickEvent.Phase.TICK));
 
-        // TODO: 24.02.2023 transform to UnicacityAddonTickEvent
-        if (currentTick >= 0) {
-            currentTick++;
+        // 1 SECOND
+        if (currentTick % 20 == 0) {
+            UnicacityAddon.ADDON.labyAPI().eventBus().fire(new UnicacityAddonTickEvent(UnicacityAddonTickEvent.Phase.SECOND));
+        }
 
-            // EVERY TICK
+        // 3 SECONDS
+        if (currentTick % 60 == 0) {
+            UnicacityAddon.ADDON.labyAPI().eventBus().fire(new UnicacityAddonTickEvent(UnicacityAddonTickEvent.Phase.SECOND_3));
+        }
+
+        // 5 SECONDS
+        if (currentTick % 100 == 0) {
+            UnicacityAddon.ADDON.labyAPI().eventBus().fire(new UnicacityAddonTickEvent(UnicacityAddonTickEvent.Phase.SECOND_5));
+        }
+
+        // 1 MINUTE
+        if (currentTick % 1200 == 0) {
+            UnicacityAddon.ADDON.labyAPI().eventBus().fire(new UnicacityAddonTickEvent(UnicacityAddonTickEvent.Phase.MINUTE));
+        }
+    }
+
+    @Subscribe
+    public void onUnicacityAddonTick(UnicacityAddonTickEvent e) {
+        if (e.isIngame() && e.isPhase(UnicacityAddonTickEvent.Phase.TICK)) {
             handleReinforcementScreenshot();
             handleDamageTracker();
             handleBusTracker();
+        }
 
-            // 1 SECOND
-            if (currentTick % 20 == 0) {
-                UnicacityAddon.ADDON.labyAPI().eventBus().fire(new UnicacityAddonTickEvent(UnicacityAddonTickEvent.Phase.SECOND));
-                handleNameTag();
-                handleTimer();
-            }
+        if (e.isPhase(UnicacityAddonTickEvent.Phase.SECOND)) {
+            handleNameTag();
+            handleTimer();
+        }
 
-            // 3 SECONDS
-            if (currentTick % 60 == 0) {
-                HouseInteractionEventHandler.increaseProgress(1);
-            }
-
-            // 5 SECONDS
-            if (currentTick % 100 == 0) {
-                handleScoreboardCheck();
-                HouseInteractionEventHandler.increaseProgress(0);
-            }
-
-            // 60 SECONDS
-            if (currentTick % 1200 == 0) {
-                handlePayDay();
-            }
+        if (e.isPhase(UnicacityAddonTickEvent.Phase.MINUTE)) {
+            handlePayDay();
         }
     }
 
@@ -116,10 +122,6 @@ public class TickEventHandler {
         } else {
             FileManager.DATA.setTimer(0);
         }
-    }
-
-    private void handleScoreboardCheck() {
-        CarEventHandler.checkTank();
     }
 
     private void handlePayDay() {

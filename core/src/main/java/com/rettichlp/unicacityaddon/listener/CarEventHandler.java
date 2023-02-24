@@ -2,6 +2,7 @@ package com.rettichlp.unicacityaddon.listener;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
+import com.rettichlp.unicacityaddon.base.events.UnicacityAddonTickEvent;
 import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
@@ -90,33 +91,36 @@ public class CarEventHandler {
         }
     }
 
-    public static void checkTank() {
-        AddonPlayer p = UnicacityAddon.PLAYER;
-        Scoreboard scoreboard = p.getScoreboard();
-        ScoreboardScore scoreboardScore = scoreboard.getScores(scoreboard.objective(DisplaySlot.SIDEBAR))
-                .stream()
-                .filter(score -> score.getName().equals(ColorCode.GREEN.getCode() + "Tank" + ColorCode.DARK_GRAY.getCode() + ":"))
-                .findFirst()
-                .orElse(null);
+    @Subscribe
+    public void onUnicacityAddonTick(UnicacityAddonTickEvent e) {
+        if (e.isUnicacity() && e.isPhase(UnicacityAddonTickEvent.Phase.SECOND_5)) {
+            AddonPlayer p = UnicacityAddon.PLAYER;
+            Scoreboard scoreboard = p.getScoreboard();
+            ScoreboardScore scoreboardScore = scoreboard.getScores(scoreboard.getObjective(DisplaySlot.SIDEBAR))
+                    .stream()
+                    .filter(score -> score.getName().equals(ColorCode.GREEN.getCode() + "Tank" + ColorCode.DARK_GRAY.getCode() + ":"))
+                    .findFirst()
+                    .orElse(null);
 
-        if (scoreboardScore == null)
-            return;
+            if (scoreboardScore == null)
+                return;
 
-        int tank = scoreboardScore.getValue();
-        switch (tank) {
-            case 100:
-                sentTankWarnings.clear();
-                break;
-            case 15:
-            case 10:
-            case 5:
-                if (!sentTankWarnings.contains(tank)) {
-                    p.sendInfoMessage("Dein Tank hat noch " + tank + " Liter.");
-                    // TODO: 09.12.2022 Implement sounds
-                    // p.playSound("block.note.harp");
-                    sentTankWarnings.add(tank);
-                }
-                break;
+            int tank = scoreboardScore.getValue();
+            switch (tank) {
+                case 100:
+                    sentTankWarnings.clear();
+                    break;
+                case 15:
+                case 10:
+                case 5:
+                    if (!sentTankWarnings.contains(tank)) {
+                        p.sendInfoMessage("Dein Tank hat noch " + tank + " Liter.");
+                        // TODO: 09.12.2022 Implement sounds
+                        // p.playSound("block.note.harp");
+                        sentTankWarnings.add(tank);
+                    }
+                    break;
+            }
         }
     }
 }

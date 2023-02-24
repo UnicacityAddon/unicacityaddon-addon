@@ -1,6 +1,7 @@
 package com.rettichlp.unicacityaddon.listener.house;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.base.events.UnicacityAddonTickEvent;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
@@ -44,6 +45,17 @@ public class HouseInteractionEventHandler {
         if (houseHealMatcher.find()) {
             progress[1] = 0;
             setMessage(progress[1]);
+        }
+    }
+
+    @Subscribe
+    public void onUnicacityAddonTick(UnicacityAddonTickEvent e) {
+        if (e.isUnicacity() && e.isPhase(UnicacityAddonTickEvent.Phase.SECOND_3)) {
+            increaseProgress(1);
+        }
+
+        if (e.isUnicacity() && e.isPhase(UnicacityAddonTickEvent.Phase.SECOND_5)) {
+            increaseProgress(0);
         }
     }
 
