@@ -6,6 +6,7 @@ import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidget;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidgetConfig;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextLine;
+import net.labymod.api.client.gui.icon.Icon;
 import net.labymod.api.event.Subscribe;
 
 import static com.rettichlp.unicacityaddon.base.utils.MathUtils.HEART_DECIMAL_FORMAT;
@@ -13,15 +14,18 @@ import static com.rettichlp.unicacityaddon.base.utils.MathUtils.HEART_DECIMAL_FO
 public class HearthHudWidget extends TextHudWidget<TextHudWidgetConfig> {
 
     private TextLine textLine;
+    private final Icon hudWidgetIcon;
 
-    public HearthHudWidget(String id) {
+    public HearthHudWidget(String id, Icon icon) {
         super(id);
+        this.hudWidgetIcon = icon;
     }
 
     @Override
     public void load(TextHudWidgetConfig config) {
         super.load(config);
         this.textLine = super.createLine("Herzen", "nicht geladen");
+        this.setIcon(this.hudWidgetIcon);
     }
 
     @Subscribe

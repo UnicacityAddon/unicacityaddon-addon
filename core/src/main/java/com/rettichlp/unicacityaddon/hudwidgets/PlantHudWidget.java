@@ -7,6 +7,7 @@ import com.rettichlp.unicacityaddon.base.utils.TextUtils;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidget;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidgetConfig;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextLine;
+import net.labymod.api.client.gui.icon.Icon;
 import net.labymod.api.event.Subscribe;
 
 import java.util.concurrent.TimeUnit;
@@ -15,9 +16,11 @@ public class PlantHudWidget extends TextHudWidget<TextHudWidgetConfig> {
 
     private TextLine fertilize;
     private TextLine water;
+    private final Icon hudWidgetIcon;
 
-    public PlantHudWidget(String id) {
+    public PlantHudWidget(String id, Icon icon) {
         super(id);
+        this.hudWidgetIcon = icon;
     }
 
     @Override
@@ -25,6 +28,7 @@ public class PlantHudWidget extends TextHudWidget<TextHudWidgetConfig> {
         super.load(config);
         this.fertilize = super.createLine("Düngen", "");
         this.water = super.createLine("Wässern", "");
+        this.setIcon(this.hudWidgetIcon);
     }
 
     @Override

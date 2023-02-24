@@ -5,6 +5,7 @@ import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidget;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidgetConfig;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextLine;
+import net.labymod.api.client.gui.icon.Icon;
 import net.labymod.api.event.Subscribe;
 
 import java.util.Map;
@@ -12,9 +13,11 @@ import java.util.Map;
 public class InventoryHudWidget extends TextHudWidget<TextHudWidgetConfig> {
 
     private TextLine textLine;
+    private final Icon hudWidgetIcon;
 
-    public InventoryHudWidget(String id) {
+    public InventoryHudWidget(String id, Icon icon) {
         super(id);
+        this.hudWidgetIcon = icon;
     }
 
     @Override
@@ -27,6 +30,7 @@ public class InventoryHudWidget extends TextHudWidget<TextHudWidgetConfig> {
                 .reduce(0, Integer::sum);
 
         this.textLine = super.createLine("Inventar", amount);
+        this.setIcon(this.hudWidgetIcon);
     }
 
     @Subscribe

@@ -1,5 +1,37 @@
 {
   "unicacityaddon": {
+    "hudWidget": {
+      "bomb": {
+        "name": "Bomben Timer"
+      },
+      "car":{
+        "name": "Auto Info"
+      },
+      "service": {
+        "name": "Offene Services"
+      },
+      "hearth": {
+        "name": "Herzen Anzeige"
+      },
+      "inventory": {
+        "name": "Inventar"
+      },
+      "job": {
+        "name": "Job Belohnungen"
+      },
+      "money": {
+        "name": "Geld"
+      },
+      "payday": {
+        "name": "Zeit bis zum PayDay"
+      },
+      "plant": {
+        "name": "Plant Timer"
+      },
+      "timer": {
+        "name": "Timer"
+      }
+    },
     "settings": {
       "header": {
         "nametags": {

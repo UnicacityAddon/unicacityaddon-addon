@@ -6,6 +6,7 @@ import com.rettichlp.unicacityaddon.base.utils.TextUtils;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidget;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidgetConfig;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextLine;
+import net.labymod.api.client.gui.icon.Icon;
 import net.labymod.api.event.Subscribe;
 
 public class BombHudWidget extends TextHudWidget<TextHudWidgetConfig> {
@@ -13,14 +14,18 @@ public class BombHudWidget extends TextHudWidget<TextHudWidgetConfig> {
     public static int timer = -1;
     public static TextLine textLine;
 
-    public BombHudWidget(String id) {
+    private final Icon hudWidgetIcon;
+
+    public BombHudWidget(String id, Icon icon) {
         super(id);
+        this.hudWidgetIcon = icon;
     }
 
     @Override
     public void load(TextHudWidgetConfig config) {
         super.load(config);
         textLine = super.createLine("Bombe", "");
+        this.setIcon(this.hudWidgetIcon);
     }
 
     @Override

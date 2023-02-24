@@ -97,7 +97,6 @@ import com.rettichlp.unicacityaddon.hudwidgets.JobHudWidget;
 import com.rettichlp.unicacityaddon.hudwidgets.MoneyHudWidget;
 import com.rettichlp.unicacityaddon.hudwidgets.PayDayHudWidget;
 import com.rettichlp.unicacityaddon.hudwidgets.PlantHudWidget;
-import com.rettichlp.unicacityaddon.hudwidgets.TestHudWidget;
 import com.rettichlp.unicacityaddon.hudwidgets.TimerHudWidget;
 import com.rettichlp.unicacityaddon.listener.ABuyEventHandler;
 import com.rettichlp.unicacityaddon.listener.AccountEventHandler;
@@ -155,7 +154,9 @@ import net.labymod.api.client.Minecraft;
 import net.labymod.api.client.entity.player.tag.PositionType;
 import net.labymod.api.client.entity.player.tag.TagRegistry;
 import net.labymod.api.client.gui.hud.HudWidgetRegistry;
+import net.labymod.api.client.gui.icon.Icon;
 import net.labymod.api.client.network.server.ServerData;
+import net.labymod.api.client.resources.ResourceLocation;
 import net.labymod.api.models.addon.annotation.AddonMain;
 import net.labymod.api.util.logging.Logging;
 
@@ -360,18 +361,18 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
     }
 
     private void registerHudWidgets() {
+        Icon hudIcon = Icon.texture(ResourceLocation.create("unicacityaddon", "textures/uc.png")).resolution(64, 64);
         HudWidgetRegistry registry = this.labyAPI().hudWidgetRegistry();
-        registry.register(new BombHudWidget("bomb")); // TODO: 24.02.2023 add i18n text
-        registry.register(new CarHudWidget("car"));
-        registry.register(new EmergencyServiceHudWidget("service"));
-        registry.register(new HearthHudWidget("hearth"));
-        registry.register(new InventoryHudWidget("inventory"));
-        registry.register(new JobHudWidget("job"));
-        registry.register(new MoneyHudWidget("money"));
-        registry.register(new PayDayHudWidget("payday"));
-        registry.register(new PlantHudWidget("plant"));
-        registry.register(new TimerHudWidget("timer"));
-        registry.register(new TestHudWidget("test"));
+        registry.register(new BombHudWidget("bomb", hudIcon));
+        registry.register(new CarHudWidget("car", hudIcon));
+        registry.register(new EmergencyServiceHudWidget("service", hudIcon));
+        registry.register(new HearthHudWidget("hearth", hudIcon));
+        registry.register(new InventoryHudWidget("inventory", hudIcon));
+        registry.register(new JobHudWidget("job", hudIcon));
+        registry.register(new MoneyHudWidget("money", hudIcon));
+        registry.register(new PayDayHudWidget("payday", hudIcon));
+        registry.register(new PlantHudWidget("plant", hudIcon));
+        registry.register(new TimerHudWidget("timer", hudIcon));
     }
 
     private void registerTags() {
