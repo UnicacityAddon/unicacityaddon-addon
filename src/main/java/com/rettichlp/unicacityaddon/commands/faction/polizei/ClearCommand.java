@@ -53,24 +53,13 @@ public class ClearCommand implements IClientCommand {
             p.sendSyntaxMessage(getUsage(sender));
             return;
         }
-
-        List<String> players = Arrays.asList(args);
-
-        clearWanteds(p, players);
-    }
-
-    private void clearWanteds(UPlayer issuer, List<String> players) {
-        for (String player : players) {
-            issuer.sendChatMessage("/clear " + player);
-        }
+        Arrays.stream(args).forEach(player -> p.sendChatMessage("/clear " + player));
     }
 
     @Override
     @Nonnull
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
-        return TabCompletionBuilder.getBuilder(args)
-                .addToAllFromIndex(2, ForgeUtils.getOnlinePlayers())
-                .build();
+        return TabCompletionBuilder.getBuilder(args).build();
     }
 
     @Override
