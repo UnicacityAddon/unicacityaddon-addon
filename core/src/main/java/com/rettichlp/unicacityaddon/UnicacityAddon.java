@@ -7,6 +7,11 @@ import com.rettichlp.unicacityaddon.base.api.checks.BroadcastChecker;
 import com.rettichlp.unicacityaddon.base.api.request.APIConverter;
 import com.rettichlp.unicacityaddon.base.config.DefaultUnicacityAddonConfiguration;
 import com.rettichlp.unicacityaddon.base.manager.FileManager;
+import com.rettichlp.unicacityaddon.base.nametags.AddonTag;
+import com.rettichlp.unicacityaddon.base.nametags.DutyTag;
+import com.rettichlp.unicacityaddon.base.nametags.FactionInfoTag;
+import com.rettichlp.unicacityaddon.base.nametags.HouseBanTag;
+import com.rettichlp.unicacityaddon.base.nametags.OutlawTag;
 import com.rettichlp.unicacityaddon.base.teamspeak.TSClientQuery;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
@@ -105,7 +110,6 @@ import com.rettichlp.unicacityaddon.listener.MobileEventHandler;
 import com.rettichlp.unicacityaddon.listener.MoneyEventHandler;
 import com.rettichlp.unicacityaddon.listener.NameTagEventHandler;
 import com.rettichlp.unicacityaddon.listener.NavigationEventHandler;
-import com.rettichlp.unicacityaddon.listener.RenderTagEventHandler;
 import com.rettichlp.unicacityaddon.listener.ServerLoginEventHandler;
 import com.rettichlp.unicacityaddon.listener.TabListEventHandler;
 import com.rettichlp.unicacityaddon.listener.TickEventHandler;
@@ -148,6 +152,8 @@ import com.rettichlp.unicacityaddon.listener.team.ReportEventHandler;
 import com.rettichlp.unicacityaddon.listener.teamspeak.WaitingRoomEventHandler;
 import net.labymod.api.addon.LabyAddon;
 import net.labymod.api.client.Minecraft;
+import net.labymod.api.client.entity.player.tag.PositionType;
+import net.labymod.api.client.entity.player.tag.TagRegistry;
 import net.labymod.api.client.gui.hud.HudWidgetRegistry;
 import net.labymod.api.client.network.server.ServerData;
 import net.labymod.api.models.addon.annotation.AddonMain;
@@ -178,6 +184,8 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
     protected void enable() {
         this.registerSettingCategory();
 
+        this.registerTags();
+
         HudWidgetRegistry registry = this.labyAPI().hudWidgetRegistry();
         registry.register(new BombHudWidget("bomb")); // TODO: 24.02.2023 add i18n text
         registry.register(new CarHudWidget("car"));
@@ -202,7 +210,6 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
         this.registerListener(new MoneyEventHandler(this));
         this.registerListener(new NameTagEventHandler(this));
         this.registerListener(new NavigationEventHandler(this));
-        this.registerListener(new RenderTagEventHandler(this));
         this.registerListener(new ServerLoginEventHandler(this));
         this.registerListener(new TabListEventHandler(this));
         this.registerListener(new TickEventHandler(this));
@@ -373,5 +380,38 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
                 .of("]").color(ColorCode.DARK_GRAY).advance().space()
                 .add(debugMessage)
                 .createComponent());
+    }
+
+    private void registerTags() {
+        TagRegistry tagRegistry = this.labyAPI().tagRegistry();
+        tagRegistry.register(
+                "unicacityaddon_addontag",
+                PositionType.ABOVE_NAME,
+                AddonTag.create(this)
+        );
+
+        tagRegistry.register(
+                "unicacityaddon_housebantag",
+                PositionType.LEFT_TO_NAME,
+                HouseBanTag.create(this)
+        );
+
+        tagRegistry.register(
+                "unicacityaddon_outlawtag",
+                PositionType.LEFT_TO_NAME,
+                OutlawTag.create(this)
+        );
+
+        tagRegistry.register(
+                "unicacityaddon_factioninfotag",
+                PositionType.RIGHT_TO_NAME,
+                FactionInfoTag.create(this)
+        );
+
+        tagRegistry.register(
+                "unicacityaddon_dutytag",
+                PositionType.RIGHT_TO_NAME,
+                DutyTag.create(this)
+        );
     }
 }
