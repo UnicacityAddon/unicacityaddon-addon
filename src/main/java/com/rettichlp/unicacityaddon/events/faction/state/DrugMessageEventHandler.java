@@ -104,6 +104,7 @@ public class DrugMessageEventHandler {
                         .createComponent());
                 return;
             }
+            
             Matcher drugVaultInfoLSDMatcher = PatternHandler.DRUG_VAULT_INFOLSD_PATTERN.matcher(msg);
             if (drugVaultInfoLSDMatcher.find()) {
                 e.setMessage(Message.getBuilder()
