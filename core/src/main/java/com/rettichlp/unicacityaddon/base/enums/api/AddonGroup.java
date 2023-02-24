@@ -1,28 +1,31 @@
 package com.rettichlp.unicacityaddon.base.enums.api;
 
-import java.awt.Color;
+import com.rettichlp.unicacityaddon.base.text.ColorCode;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public enum AddonGroup {
-    BETA("BETA", "UCAddon Beta-Tester", new Color(217, 59, 228, 1), new ArrayList<>()),
+    CEO("CEO", "UCAddon CEO", ColorCode.RED, new ArrayList<>()),
+    DEV("DEV", "UCAddon Developer", ColorCode.AQUA, new ArrayList<>()),
+    MOD("MOD", "UCAddon Moderator", ColorCode.BLUE, new ArrayList<>()),
+    SUP("SUP", "UCAddon Supporter", ColorCode.GOLD, new ArrayList<>()),
+    BETA("BETA", "UCAddon Beta-Tester", ColorCode.DARK_PURPLE, new ArrayList<>()),
+    VIP("VIP", "UCAddon VIP", ColorCode.YELLOW, new ArrayList<>()),
     BLACKLIST("BLACKLIST", "", null, new ArrayList<>()),
-    CEO("CEO", "UCAddon CEO", new Color(228, 59, 59, 1), new ArrayList<>()),
-    DEV("DEV", "UCAddon Developer", new Color(96, 159, 238, 1), new ArrayList<>()),
-    DYAVOL("DYAVOL", "", null, new ArrayList<>()),
-    MOD("MOD", "UCAddon Moderator", new Color(96, 159, 238, 1), new ArrayList<>()),
-    SUP("SUP", "UCAddon Supporter", new Color(228, 110, 59, 1), new ArrayList<>()),
-    VIP("VIP", "UCAddon VIP", new Color(227, 228, 59, 1), new ArrayList<>());
+    DYAVOL("DYAVOL", "", null, new ArrayList<>());
 
     private final String apiName;
     private final String displayName;
-    private final Color color;
+    private final ColorCode colorCode;
     private final List<String> memberList;
 
-    AddonGroup(String apiName, String displayName, Color color, List<String> memberList) {
+    AddonGroup(String apiName, String displayName, ColorCode colorCode, List<String> memberList) {
         this.apiName = apiName;
         this.displayName = displayName;
-        this.color = color;
+        this.colorCode = colorCode;
         this.memberList = memberList;
     }
 
@@ -34,11 +37,18 @@ public enum AddonGroup {
         return displayName;
     }
 
-    public Color getColor() {
-        return color;
+    public ColorCode getColorCode() {
+        return colorCode;
     }
 
     public List<String> getMemberList() {
         return memberList;
+    }
+
+    public static List<AddonGroup> getAddonGroupsOfPlayer(String playerName) {
+        return Arrays.stream(AddonGroup.values())
+                .filter(addonGroup -> addonGroup.memberList.contains(playerName))
+                .sorted()
+                .collect(Collectors.toList());
     }
 }
