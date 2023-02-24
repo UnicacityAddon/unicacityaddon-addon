@@ -149,8 +149,8 @@ import com.rettichlp.unicacityaddon.listener.job.FishermanEventHandler;
 import com.rettichlp.unicacityaddon.listener.job.JobEventHandler;
 import com.rettichlp.unicacityaddon.listener.team.ReportEventHandler;
 import com.rettichlp.unicacityaddon.listener.teamspeak.WaitingRoomEventHandler;
+import net.labymod.api.LabyAPI;
 import net.labymod.api.addon.LabyAddon;
-import net.labymod.api.client.Minecraft;
 import net.labymod.api.client.entity.player.tag.PositionType;
 import net.labymod.api.client.entity.player.tag.TagRegistry;
 import net.labymod.api.client.gui.hud.HudWidgetRegistry;
@@ -164,17 +164,15 @@ import net.labymod.api.util.logging.Logging;
 public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration> {
 
     public static final String VERSION = "2.0.0-dev";
-    public static Minecraft MINECRAFT;
-    public static Logging LOGGER;
     public static UnicacityAddon ADDON;
     public static AddonPlayer PLAYER;
+    public static Logging LOGGER;
 
     @Override
     public void load() {
         ADDON = this;
-        MINECRAFT = this.labyAPI().minecraft();
-        LOGGER = this.logger();
         PLAYER = new DefaultAddonPlayer(this);
+        LOGGER = this.logger();
 
         FileManager.loadData();
 
@@ -409,8 +407,9 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
     }
 
     public static boolean isUnicacity() {
-        if (MINECRAFT.isIngame()) {
-            ServerData serverData = ADDON.labyAPI().serverController().getCurrentServerData();
+        LabyAPI labyAPI = ADDON.labyAPI();
+        if (labyAPI.minecraft().isIngame()) {
+            ServerData serverData = labyAPI.serverController().getCurrentServerData();
             return serverData != null && serverData.address().matches("unicacity.de", 25565, true);
         }
         return false;

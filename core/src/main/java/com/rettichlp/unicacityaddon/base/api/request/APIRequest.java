@@ -252,7 +252,7 @@ public class APIRequest {
                 .applicationPath(ApplicationPath.TOKEN)
                 .subPath(CREATE_SUB_PATH)
                 .parameter(mapOf(
-                        "authToken", UnicacityAddon.MINECRAFT.sessionAccessor().session().getAccessToken(),
+                        "authToken", UnicacityAddon.ADDON.labyAPI().minecraft().sessionAccessor().session().getAccessToken(),
                         "version", UnicacityAddon.VERSION))
                 .getAsJsonObject();
     }

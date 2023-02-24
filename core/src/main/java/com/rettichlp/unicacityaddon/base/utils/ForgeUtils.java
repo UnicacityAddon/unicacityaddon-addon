@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 public class ForgeUtils {
 
     public static List<String> getOnlinePlayers() {
-        ClientPacketListener clientPacketListener = UnicacityAddon.MINECRAFT.clientPacketListener();
+        ClientPacketListener clientPacketListener = UnicacityAddon.ADDON.labyAPI().minecraft().getClientPacketListener();
         if (clientPacketListener == null)
             return Collections.emptyList();
 

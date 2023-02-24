@@ -12,7 +12,7 @@ public class UnicacityAddonTickEvent implements Event {
     }
 
     public boolean isIngame() {
-        return UnicacityAddon.MINECRAFT.isIngame();
+        return UnicacityAddon.ADDON.labyAPI().minecraft().isIngame();
     }
 
     public boolean isUnicacity() {
