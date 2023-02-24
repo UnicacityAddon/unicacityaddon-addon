@@ -25,6 +25,8 @@ public class AccountEventHandler {
 
     public static boolean isAfk = false;
 
+    private boolean isMessageLocked = false;
+
     private final UnicacityAddon unicacityAddon;
 
     public AccountEventHandler(UnicacityAddon unicacityAddon) {
@@ -97,14 +99,28 @@ public class AccountEventHandler {
         AddonPlayer p = UnicacityAddon.PLAYER;
 
         switch (e.getData().getPayDayTime()) {
+            case 0:
+            case 56:
+            case 58:
+                isMessageLocked = false;
+                break;
             case 55:
-                p.sendInfoMessage("Du hast in 5 Minuten deinen PayDay.");
+                if (!isMessageLocked) {
+                    p.sendInfoMessage("Du hast in 5 Minuten deinen PayDay.");
+                    isMessageLocked = true;
+                }
                 break;
             case 57:
-                p.sendInfoMessage("Du hast in 3 Minuten deinen PayDay.");
+                if (!isMessageLocked) {
+                    p.sendInfoMessage("Du hast in 3 Minuten deinen PayDay.");
+                    isMessageLocked = true;
+                }
                 break;
             case 59:
-                p.sendInfoMessage("Du hast in 1 Minute deinen PayDay.");
+                if (!isMessageLocked) {
+                    p.sendInfoMessage("Du hast in 1 Minute deinen PayDay.");
+                    isMessageLocked = true;
+                }
                 break;
         }
     }
