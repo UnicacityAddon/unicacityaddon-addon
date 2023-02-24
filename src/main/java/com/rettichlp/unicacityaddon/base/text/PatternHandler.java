@@ -144,7 +144,6 @@ public class PatternHandler {
      * @see com.rettichlp.unicacityaddon.events.faction.badfaction.DrugInteractionEventHandler
      */
     public static final Pattern RECIPE_ACCEPT_PATTERN = Pattern.compile("^((?:\\[UC])*\\w+) möchte dir ein Rezept für 200\\$ verkaufen\\.$");
-
     public static final Pattern REVIVE_DONE_PATTERN = Pattern.compile("^[Karma] +1 Karma.");
     public static final Pattern RECIPE_GIVE_PATTERN = Pattern.compile("^Du hast ((?:\\[UC])*\\w+) ein Rezept für (Antibiotika|Hustensaft|Schmerzmittel) ausgestellt\\.$");
     public static final Pattern REVIVE_BY_MEDIC_START_PATTERN = Pattern.compile("^Du wirst von (?:\\[UC])*(\\w+) wiederbelebt\\.$");
