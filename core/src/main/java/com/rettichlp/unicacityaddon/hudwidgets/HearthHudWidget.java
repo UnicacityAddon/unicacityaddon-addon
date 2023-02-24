@@ -21,12 +21,12 @@ public class HearthHudWidget extends TextHudWidget<TextHudWidgetConfig> {
     @Override
     public void load(TextHudWidgetConfig config) {
         super.load(config);
-        this.textLine = super.createLine("Herzen", HEART_DECIMAL_FORMAT.format(UnicacityAddon.PLAYER.getHealth() / 2) + ColorCode.RED.getCode() + "❤");
+        this.textLine = super.createLine("Herzen", "nicht geladen");
     }
 
     @Subscribe
     public void onUnicacityAddonTick(UnicacityAddonTickEvent e) {
-        if (e.isPhase(UnicacityAddonTickEvent.Phase.TICK)) {
+        if (e.isIngame() && e.isPhase(UnicacityAddonTickEvent.Phase.TICK)) {
             this.textLine.updateAndFlush(HEART_DECIMAL_FORMAT.format(UnicacityAddon.PLAYER.getHealth() / 2) + ColorCode.RED.getCode() + "❤");
         }
     }

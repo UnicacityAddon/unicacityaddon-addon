@@ -7,6 +7,7 @@ import com.rettichlp.unicacityaddon.base.api.checks.BroadcastChecker;
 import com.rettichlp.unicacityaddon.base.api.request.APIConverter;
 import com.rettichlp.unicacityaddon.base.config.DefaultUnicacityAddonConfiguration;
 import com.rettichlp.unicacityaddon.base.manager.FileManager;
+import com.rettichlp.unicacityaddon.base.teamspeak.TSClientQuery;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.commands.ABuyCommand;
@@ -148,6 +149,7 @@ import com.rettichlp.unicacityaddon.listener.teamspeak.WaitingRoomEventHandler;
 import net.labymod.api.addon.LabyAddon;
 import net.labymod.api.client.Minecraft;
 import net.labymod.api.client.gui.hud.HudWidgetRegistry;
+import net.labymod.api.client.network.server.ServerData;
 import net.labymod.api.models.addon.annotation.AddonMain;
 import net.labymod.api.util.logging.Logging;
 
@@ -169,9 +171,7 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
 
         FileManager.loadData();
 
-//        new Thread(TSClientQuery::getInstance).start();
-
-        TickEventHandler.currentTick = -1;
+        new Thread(TSClientQuery::getInstance).start();
     }
 
     @Override
@@ -342,6 +342,15 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
         this.registerCommand(new TSJoinCommand());
 
         this.logger().info("Enabled UnicacityAddon");
+
+        TokenManager.createToken(this.labyAPI().minecraft().sessionAccessor().session());
+        this.logger().info("Created Token");
+
+        BroadcastChecker.start();
+        this.logger().info("Started BroadcastChecker");
+
+        APIConverter.syncAll();
+        this.logger().info("Started Sync process");
     }
 
     @Override
@@ -350,20 +359,14 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
     }
 
     public static boolean isUnicacity() {
-        return true; // TODO: 08.02.2023
-
-        //        if (MINECRAFT.clientWorld() == null)
-        //            return false;
-        //
-        //        ServerData serverData = Laby.labyAPI().serverController().getCurrentServerData();
-        //        if (serverData == null)
-        //            return false;
-        //
-        //        return serverData.address().matches("unicacity", 25565, true);
+        if (MINECRAFT.isIngame()) {
+            ServerData serverData = ADDON.labyAPI().serverController().getCurrentServerData();
+            return serverData != null && serverData.address().matches("unicacity.de", 25565, true);
+        }
+        return false;
     }
 
     public static void debug(String debugMessage) {
-        UnicacityAddon.PLAYER.sendMessage("otter");
         UnicacityAddon.PLAYER.sendMessage(Message.getBuilder()
                 .of("[").color(ColorCode.DARK_GRAY).advance()
                 .of("DEBUG").color(ColorCode.YELLOW).advance()
