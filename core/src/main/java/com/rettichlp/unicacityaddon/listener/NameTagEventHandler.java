@@ -10,11 +10,11 @@ import com.rettichlp.unicacityaddon.base.manager.FactionManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.FormattingCode;
+import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.listener.faction.ContractEventHandler;
 import com.rettichlp.unicacityaddon.listener.faction.badfaction.blacklist.BlacklistEventHandler;
 import com.rettichlp.unicacityaddon.listener.faction.polizei.WantedEventHandler;
 import net.labymod.api.client.component.format.TextDecoration;
-import net.labymod.api.client.entity.player.tag.TagType;
 import net.labymod.api.client.network.NetworkPlayerInfo;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.render.PlayerNameTagRenderEvent;
@@ -39,19 +39,16 @@ public class NameTagEventHandler {
      */
     @Subscribe
     public void onPlayerNameTagRender(PlayerNameTagRenderEvent e) {
-        if (e.tagType().equals(TagType.SCOREBOARD)) {
-            return;
-        }
+        if (e.context().equals(PlayerNameTagRenderEvent.Context.PLAYER_RENDER)) {
+            NetworkPlayerInfo networkPlayerInfo = e.playerInfo();
+            if (networkPlayerInfo != null && !e.nameTag().style().isDecorationSet(TextDecoration.OBFUSCATED)) {
+                String playerName = networkPlayerInfo.profile().getUsername();
+                String prefix = getPrefix(playerName, false);
 
-        NetworkPlayerInfo networkPlayerInfo = e.playerInfo();
-        if (networkPlayerInfo != null && !e.nameTag().style().isDecorationSet(TextDecoration.OBFUSCATED)) {
-            String playerName = networkPlayerInfo.profile().getUsername();
-            String prefix = getPrefix(playerName, false);
-
-//            e.setNameTag(Message.getBuilder()
-//                    .add(prefix)
-//                    .add(playerName)
-//                    .createComponent());
+                if (!prefix.equals(FormattingCode.RESET.getCode())) {
+                    e.setNameTag(Message.getBuilder().add(prefix + playerName).createComponent());
+                }
+            }
         }
     }
 
