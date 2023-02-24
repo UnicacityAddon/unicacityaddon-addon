@@ -114,6 +114,7 @@ public class DrugMessageEventHandler {
                         .of("Stück").color(ColorCode.YELLOW).advance().createComponent());
                 return;
             }
+            
             Matcher drugVaultInfoTitleMatcher = PatternHandler.DRUG_VAULT_INFOTITLE_PATTERN.matcher(msg);
             if (drugVaultInfoTitleMatcher.find()) {
                 e.setMessage(Message.getBuilder()
