@@ -74,6 +74,7 @@ public class DrugMessageEventHandler {
                         .createComponent());
                 return;
             }
+            
             Matcher drugVaultInfoMatcher = PatternHandler.DRUG_VAULT_INFO_PATTERN.matcher(msg);
             if (drugVaultInfoMatcher.find()) {
                 e.setCanceled(true);
