@@ -40,6 +40,8 @@ public interface AddonPlayer {
 
     ClientWorld getWorld();
 
+    float getHealth();
+
     FloatVector3 getPosition();
 
     Scoreboard getScoreboard();

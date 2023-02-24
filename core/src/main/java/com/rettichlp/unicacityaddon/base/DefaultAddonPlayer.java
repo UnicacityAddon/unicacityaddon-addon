@@ -99,6 +99,11 @@ public class DefaultAddonPlayer implements AddonPlayer {
     }
 
     @Override
+    public float getHealth() {
+        return getPlayer().getHealth();
+    }
+
+    @Override
     public FloatVector3 getPosition() {
         return getPlayer().position();
     }
