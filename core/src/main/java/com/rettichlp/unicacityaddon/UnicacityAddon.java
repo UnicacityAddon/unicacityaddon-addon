@@ -2,6 +2,9 @@ package com.rettichlp.unicacityaddon;
 
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.DefaultAddonPlayer;
+import com.rettichlp.unicacityaddon.base.api.TokenManager;
+import com.rettichlp.unicacityaddon.base.api.checks.BroadcastChecker;
+import com.rettichlp.unicacityaddon.base.api.request.APIConverter;
 import com.rettichlp.unicacityaddon.base.config.DefaultUnicacityAddonConfiguration;
 import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
@@ -79,11 +82,17 @@ import com.rettichlp.unicacityaddon.commands.teamspeak.MoveHereCommand;
 import com.rettichlp.unicacityaddon.commands.teamspeak.MoveToCommand;
 import com.rettichlp.unicacityaddon.commands.teamspeak.TSFindCommand;
 import com.rettichlp.unicacityaddon.commands.teamspeak.TSJoinCommand;
+import com.rettichlp.unicacityaddon.hudwidgets.BombHudWidget;
 import com.rettichlp.unicacityaddon.hudwidgets.CarHudWidget;
+import com.rettichlp.unicacityaddon.hudwidgets.EmergencyServiceHudWidget;
+import com.rettichlp.unicacityaddon.hudwidgets.HearthHudWidget;
+import com.rettichlp.unicacityaddon.hudwidgets.InventoryHudWidget;
 import com.rettichlp.unicacityaddon.hudwidgets.JobHudWidget;
 import com.rettichlp.unicacityaddon.hudwidgets.MoneyHudWidget;
 import com.rettichlp.unicacityaddon.hudwidgets.PayDayHudWidget;
+import com.rettichlp.unicacityaddon.hudwidgets.PlantHudWidget;
 import com.rettichlp.unicacityaddon.hudwidgets.TestHudWidget;
+import com.rettichlp.unicacityaddon.hudwidgets.TimerHudWidget;
 import com.rettichlp.unicacityaddon.listener.ABuyEventHandler;
 import com.rettichlp.unicacityaddon.listener.AccountEventHandler;
 import com.rettichlp.unicacityaddon.listener.CarEventHandler;
@@ -154,24 +163,13 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
     @Override
     public void load() {
         ADDON = this;
+        MINECRAFT = this.labyAPI().minecraft();
         LOGGER = this.logger();
         PLAYER = new DefaultAddonPlayer(this);
 
         FileManager.loadData();
 
-//        BroadcastChecker.start();
-//
-//        System.out.println("TOKEN: " + this.labyAPI().minecraft().sessionAccessor().session().getAccessToken());
-//
-//        String apitoken = TokenManager.createToken(this.labyAPI().minecraft().sessionAccessor().session());
-//
-//        System.out.println(apitoken);
-//
-//        System.out.println("API TOKEN: " + TokenManager.API_TOKEN);
-//
-//        Syncer.syncAll();
 //        new Thread(TSClientQuery::getInstance).start();
-//        FileManager.loadData();
 
         TickEventHandler.currentTick = -1;
     }
@@ -181,17 +179,17 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
         this.registerSettingCategory();
 
         HudWidgetRegistry registry = this.labyAPI().hudWidgetRegistry();
-        registry.register(new CarHudWidget("unicacityaddon_bomb"));
-        registry.register(new CarHudWidget("unicacityaddon_car"));
-        registry.register(new CarHudWidget("unicacityaddon_service"));
-        registry.register(new JobHudWidget("unicacityaddon_hearth"));
-        registry.register(new MoneyHudWidget("unicacityaddon_inventory"));
-        registry.register(new JobHudWidget("unicacityaddon_job"));
-        registry.register(new MoneyHudWidget("unicacityaddon_money"));
-        registry.register(new PayDayHudWidget("unicacityaddon_payday"));
-        registry.register(new MoneyHudWidget("unicacityaddon_plant"));
-        registry.register(new PayDayHudWidget("unicacityaddon_timer"));
-        registry.register(new TestHudWidget("unicacityaddon_test"));
+        registry.register(new BombHudWidget("bomb")); // TODO: 24.02.2023 add i18n text
+        registry.register(new CarHudWidget("car"));
+        registry.register(new EmergencyServiceHudWidget("service"));
+        registry.register(new HearthHudWidget("hearth"));
+        registry.register(new InventoryHudWidget("inventory"));
+        registry.register(new JobHudWidget("job"));
+        registry.register(new MoneyHudWidget("money"));
+        registry.register(new PayDayHudWidget("payday"));
+        registry.register(new PlantHudWidget("plant"));
+        registry.register(new TimerHudWidget("timer"));
+        registry.register(new TestHudWidget("test"));
 
         this.registerListener(new ABuyEventHandler(this));
         this.registerListener(new AccountEventHandler(this));
