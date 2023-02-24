@@ -184,21 +184,29 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
     protected void enable() {
         this.registerSettingCategory();
 
+        this.registerListeners();
+        this.registerCommands();
+        this.registerHudWidgets();
         this.registerTags();
 
-        HudWidgetRegistry registry = this.labyAPI().hudWidgetRegistry();
-        registry.register(new BombHudWidget("bomb")); // TODO: 24.02.2023 add i18n text
-        registry.register(new CarHudWidget("car"));
-        registry.register(new EmergencyServiceHudWidget("service"));
-        registry.register(new HearthHudWidget("hearth"));
-        registry.register(new InventoryHudWidget("inventory"));
-        registry.register(new JobHudWidget("job"));
-        registry.register(new MoneyHudWidget("money"));
-        registry.register(new PayDayHudWidget("payday"));
-        registry.register(new PlantHudWidget("plant"));
-        registry.register(new TimerHudWidget("timer"));
-        registry.register(new TestHudWidget("test"));
+        this.logger().info("Enabled UnicacityAddon");
 
+        TokenManager.createToken(this.labyAPI().minecraft().sessionAccessor().session());
+        this.logger().info("Created Token");
+
+        BroadcastChecker.start();
+        this.logger().info("Started BroadcastChecker");
+
+        APIConverter.syncAll();
+        this.logger().info("Started Sync process");
+    }
+
+    @Override
+    protected Class<DefaultUnicacityAddonConfiguration> configurationClass() {
+        return DefaultUnicacityAddonConfiguration.class;
+    }
+
+    private void registerListeners() {
         this.registerListener(new ABuyEventHandler(this));
         this.registerListener(new AccountEventHandler(this));
         this.registerListener(new CarEventHandler(this));
@@ -261,7 +269,9 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
         this.registerListener(new ReportEventHandler(this));
         // teamspeak
         this.registerListener(new WaitingRoomEventHandler(this));
+    }
 
+    private void registerCommands() {
         this.registerCommand(new ABuyCommand());
         this.registerCommand(new BusCommand());
         this.registerCommand(new CalculateCommand());
@@ -347,39 +357,21 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
         this.registerCommand(new MoveToCommand());
         this.registerCommand(new TSFindCommand());
         this.registerCommand(new TSJoinCommand());
-
-        this.logger().info("Enabled UnicacityAddon");
-
-        TokenManager.createToken(this.labyAPI().minecraft().sessionAccessor().session());
-        this.logger().info("Created Token");
-
-        BroadcastChecker.start();
-        this.logger().info("Started BroadcastChecker");
-
-        APIConverter.syncAll();
-        this.logger().info("Started Sync process");
     }
 
-    @Override
-    protected Class<DefaultUnicacityAddonConfiguration> configurationClass() {
-        return DefaultUnicacityAddonConfiguration.class;
-    }
-
-    public static boolean isUnicacity() {
-        if (MINECRAFT.isIngame()) {
-            ServerData serverData = ADDON.labyAPI().serverController().getCurrentServerData();
-            return serverData != null && serverData.address().matches("unicacity.de", 25565, true);
-        }
-        return false;
-    }
-
-    public static void debug(String debugMessage) {
-        UnicacityAddon.PLAYER.sendMessage(Message.getBuilder()
-                .of("[").color(ColorCode.DARK_GRAY).advance()
-                .of("DEBUG").color(ColorCode.YELLOW).advance()
-                .of("]").color(ColorCode.DARK_GRAY).advance().space()
-                .add(debugMessage)
-                .createComponent());
+    private void registerHudWidgets() {
+        HudWidgetRegistry registry = this.labyAPI().hudWidgetRegistry();
+        registry.register(new BombHudWidget("bomb")); // TODO: 24.02.2023 add i18n text
+        registry.register(new CarHudWidget("car"));
+        registry.register(new EmergencyServiceHudWidget("service"));
+        registry.register(new HearthHudWidget("hearth"));
+        registry.register(new InventoryHudWidget("inventory"));
+        registry.register(new JobHudWidget("job"));
+        registry.register(new MoneyHudWidget("money"));
+        registry.register(new PayDayHudWidget("payday"));
+        registry.register(new PlantHudWidget("plant"));
+        registry.register(new TimerHudWidget("timer"));
+        registry.register(new TestHudWidget("test"));
     }
 
     private void registerTags() {
@@ -413,5 +405,22 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
                 PositionType.RIGHT_TO_NAME,
                 DutyTag.create(this)
         );
+    }
+
+    public static boolean isUnicacity() {
+        if (MINECRAFT.isIngame()) {
+            ServerData serverData = ADDON.labyAPI().serverController().getCurrentServerData();
+            return serverData != null && serverData.address().matches("unicacity.de", 25565, true);
+        }
+        return false;
+    }
+
+    public static void debug(String debugMessage) {
+        UnicacityAddon.PLAYER.sendMessage(Message.getBuilder()
+                .of("[").color(ColorCode.DARK_GRAY).advance()
+                .of("DEBUG").color(ColorCode.YELLOW).advance()
+                .of("]").color(ColorCode.DARK_GRAY).advance().space()
+                .add(debugMessage)
+                .createComponent());
     }
 }

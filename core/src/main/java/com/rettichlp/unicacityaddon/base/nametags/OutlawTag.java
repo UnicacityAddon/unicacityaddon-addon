@@ -27,7 +27,7 @@ public class OutlawTag extends NameTag {
     @Override
     protected @Nullable RenderableComponent getRenderableComponent() {
         if (unicacityAddon.configuration().nameTagSetting().specificNameTagSetting().enabled().get()) {
-            Optional<Player> playerOptional = UnicacityAddon.MINECRAFT.clientWorld().getPlayers().stream()
+            Optional<Player> playerOptional = UnicacityAddon.PLAYER.getWorld().getPlayers().stream()
                     .filter(p -> p.gameUser().getUniqueId().equals(this.entity.getUniqueId()))
                     .findFirst();
 

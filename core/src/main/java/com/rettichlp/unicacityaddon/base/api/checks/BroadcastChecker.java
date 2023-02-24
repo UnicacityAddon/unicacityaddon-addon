@@ -24,7 +24,6 @@ public class BroadcastChecker {
             @Override
             public void run() {
                 checkForBroadcast();
-                UnicacityAddon.debug("Checking for Broadcast");
             }
         }, TimeUnit.SECONDS.toMillis(30), TimeUnit.SECONDS.toMillis(30));
     }
