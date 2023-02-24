@@ -29,6 +29,9 @@ public class TickEventHandler {
 
     @Subscribe
     public void onGameTick(GameTickEvent e) {
+        UnicacityAddon.ADDON.labyAPI().eventBus().fire(new UnicacityAddonTickEvent(UnicacityAddonTickEvent.Phase.TICK));
+
+        // TODO: 24.02.2023 transform to UnicacityAddonTickEvent
         if (currentTick >= 0) {
             currentTick++;
 
@@ -39,6 +42,7 @@ public class TickEventHandler {
 
             // 1 SECOND
             if (currentTick % 20 == 0) {
+                UnicacityAddon.ADDON.labyAPI().eventBus().fire(new UnicacityAddonTickEvent(UnicacityAddonTickEvent.Phase.SECOND));
                 handleNameTag();
                 handleBombTimer();
                 handleTimer();
