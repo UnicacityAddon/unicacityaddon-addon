@@ -10,6 +10,7 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
+import com.rettichlp.unicacityaddon.hudwidgets.EmergencyServiceHudWidget;
 import net.labymod.api.client.chat.ChatMessage;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.event.HoverEvent;
@@ -29,6 +30,7 @@ import java.util.regex.Matcher;
 public class EmergencyServiceEventHandler {
 
     private static final List<ServiceCallBox> activeEmergencyCallBoxList = new ArrayList<>();
+    private int openServices = 0;
 
     private final UnicacityAddon unicacityAddon;
 
@@ -42,41 +44,34 @@ public class EmergencyServiceEventHandler {
         ChatMessage chatMessage = e.chatMessage();
         String msg = chatMessage.getPlainText();
 
-        if (PatternHandler.SERVICE_ARRIVED_PATTERN.matcher(msg).find()) {
+        if (PatternHandler.SERVICE_ARRIVED_PATTERN.matcher(msg).find() || PatternHandler.SERVICE_REQUEUED_PATTERN.matcher(msg).find()) {
 //            // TODO: 10.12.2022 p.playSound(SoundRegistry.SERVICE_SOUND, 1, 1);
-            FileManager.DATA.addServiceCount(1);
+            openServices++;
+            EmergencyServiceHudWidget.textLine.updateAndFlush(openServices);
             return;
         }
 
-        if (PatternHandler.SERVICE_REQUEUED_PATTERN.matcher(msg).find()) {
-            FileManager.DATA.addServiceCount(1);
-            return;
-        }
-
-        if (PatternHandler.SERVICE_ACCEPTED_PATTERN.matcher(msg).find()) {
-            FileManager.DATA.removeServiceCount(1);
-            return;
-        }
-
-        if (PatternHandler.SERVICE_DELETED_PATTERN.matcher(msg).find()) {
-            FileManager.DATA.removeServiceCount(1);
+        if (PatternHandler.SERVICE_ACCEPTED_PATTERN.matcher(msg).find() || PatternHandler.SERVICE_DELETED_PATTERN.matcher(msg).find()) {
+            openServices--;
+            EmergencyServiceHudWidget.textLine.updateAndFlush(openServices);
             return;
         }
 
         if (PatternHandler.SERVICE_NO_SERVICE_PATTERN.matcher(msg).find()) {
-            FileManager.DATA.setServiceCount(0);
+            openServices = 0;
+            EmergencyServiceHudWidget.textLine.updateAndFlush(openServices);
             return;
         }
 
         if (PatternHandler.SERVICE_DONE_PATTERN.matcher(msg).find()) {
-            FileManager.DATA.setServiceCount(FileManager.DATA.getServiceCount() + 1);
+            FileManager.DATA.addServiceCount(1);
             APIRequest.sendStatisticAddRequest(StatisticType.SERVICE);
         }
 
         Matcher serviceOverviewMatcher = PatternHandler.SERVICE_OVERVIEW_PATTERN.matcher(msg);
         if (serviceOverviewMatcher.find()) {
-            String openServices = serviceOverviewMatcher.group(1);
-            FileManager.DATA.setServiceCount(Integer.parseInt(openServices));
+            openServices = Integer.parseInt(serviceOverviewMatcher.group(1));
+            EmergencyServiceHudWidget.textLine.updateAndFlush(openServices);
         }
 
         Matcher serviceCallBoxMatcher = PatternHandler.SERVICE_CALL_BOX_PATTERN.matcher(msg);
