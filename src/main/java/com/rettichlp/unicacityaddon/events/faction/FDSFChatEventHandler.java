@@ -1,5 +1,6 @@
 package com.rettichlp.unicacityaddon.events.faction;
 
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
@@ -18,17 +19,17 @@ public class FDSFChatEventHandler {
         String msg = e.getMessage();
         UPlayer p = AbstractionLayer.getPlayer();
 
-        if (msg.startsWith("/f ") && !MobileEventHandler.hasCommunications) {
+        if (msg.startsWith("/f ") && !MobileEventHandler.hasCommunications && UnicacityAddon.isUnicacity()) {
             p.sendErrorMessage("Du hast keine Kommunikationsmittel!");
             p.sendInfoMessage("Wenn du die Nachricht trotzdem senden möchtest, nutze /fforce [Nachricht]. Die Nachricht ist in der Zwischenablage.");
             p.copyToClipboard(msg.replace("/f ", ""));
             e.setCanceled(true);
-        } else if (msg.startsWith("/d ") && !MobileEventHandler.hasCommunications) {
+        } else if (msg.startsWith("/d ") && !MobileEventHandler.hasCommunications && UnicacityAddon.isUnicacity()) {
             p.sendErrorMessage("Du hast keine Kommunikationsmittel!");
             p.sendInfoMessage("Wenn du die Nachricht trotzdem senden möchtest, nutze /dforce [Nachricht]. Die Nachricht ist in der Zwischenablage.");
             p.copyToClipboard(msg.replace("/d ", ""));
             e.setCanceled(true);
-        } else if (msg.startsWith("/sf ") && !MobileEventHandler.hasCommunications) {
+        } else if (msg.startsWith("/sf ") && !MobileEventHandler.hasCommunications && UnicacityAddon.isUnicacity()) {
             p.sendErrorMessage("Du hast keine Kommunikationsmittel!");
             p.sendInfoMessage("Wenn du die Nachricht trotzdem senden möchtest, nutze /sfforce [Nachricht]. Die Nachricht ist in der Zwischenablage.");
             p.copyToClipboard(msg.replace("/sf ", ""));
