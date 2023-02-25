@@ -138,7 +138,7 @@ public class AccountEventHandler {
             @Override
             public void run() {
                 // MOBILEEVENTHANDLER
-                // TODO: 09.02.2023 p.sendServerMessage("/mobile");
+                p.sendServerMessage("/togglephone");
 
                 // AUTOMATE_COMMAND_SETTINGS
                 CommandSetting commandSetting = unicacityAddon.configuration().commandSetting();
@@ -170,14 +170,6 @@ public class AccountEventHandler {
                         }
                     }, 1500);
                 }
-
-//                // UPDATECHECKER
-//                new Timer().schedule(new TimerTask() {
-//                    @Override
-//                    public void run() {
-//                        UpdateUtils.updateChecker();
-//                    }
-//                }, 2000);
             }
         }, 1000);
     }

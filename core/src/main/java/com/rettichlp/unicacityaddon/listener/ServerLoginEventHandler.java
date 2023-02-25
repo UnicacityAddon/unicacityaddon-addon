@@ -3,7 +3,7 @@ package com.rettichlp.unicacityaddon.listener;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.manager.FactionManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
-import net.labymod.api.client.network.server.ServerAddress;
+import net.labymod.api.client.network.server.ServerData;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.network.server.ServerLoginEvent;
 
@@ -21,9 +21,9 @@ public class ServerLoginEventHandler {
 
     @Subscribe
     public void onServerLogin(ServerLoginEvent e) {
-        ServerAddress actualAddress = e.serverData().actualAddress();
-
-        if (actualAddress.matches("unicacity.de", 25565, true)) {
+        ServerData serverData = e.serverData();
+        if (serverData.address().matches("unicacity.de", 25565, true)) {
+            MobileEventHandler.activeCommunicationsCheck = true;
             FactionManager.getInstance().getFactionData();
         }
     }

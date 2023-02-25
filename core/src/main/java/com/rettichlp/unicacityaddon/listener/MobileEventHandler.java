@@ -53,6 +53,7 @@ public class MobileEventHandler {
         if (blockNextMessage && msg.matches("^(?:\\[UC])*\\w+: .*$")) {
             blockNextMessage = false;
             e.setCancelled(true);
+            return;
         }
 
         Matcher communicationsRemoveMatcher = PatternHandler.MOBILE_REMOVE_PATTERN.matcher(msg);
@@ -68,19 +69,22 @@ public class MobileEventHandler {
         }
 
         Matcher mobileTogglePattern = PatternHandler.MOBILE_TOGGLE_PATTERN.matcher(msg);
-        if (mobileTogglePattern.find() && activeCommunicationsCheck) {
-            if (msg.contains("eingeschaltet")) {
-                activeCommunicationsCheck = false;
-                hasCommunications = true;
-            } else {
-                new Timer().schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        p.sendServerMessage("/togglephone");
-                    }
-                }, TimeUnit.SECONDS.toMillis(1));
+        if (mobileTogglePattern.find()) {
+            hasCommunications = true;
+
+            if (activeCommunicationsCheck) {
+                e.setCancelled(true);
+                if (msg.contains("eingeschaltet")) {
+                    activeCommunicationsCheck = false;
+                } else {
+                    new Timer().schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            p.sendServerMessage("/togglephone");
+                        }
+                    }, TimeUnit.SECONDS.toMillis(1));
+                }
             }
-            e.setCancelled(true);
             return;
         }
 
@@ -91,6 +95,7 @@ public class MobileEventHandler {
                 e.setCancelled(true);
                 ACallCommand.isActive = ASMSCommand.isActive = isActive = false;
             }
+            return;
         }
 
         Matcher mobileCallMatcher = PatternHandler.MOBILE_CALL_PATTERN.matcher(msg);
@@ -103,6 +108,7 @@ public class MobileEventHandler {
                 whitelistSound = true;
                 // TODO: 09.12.2022 p.playSound("record.cat");
             }
+            return;
         }
 
         Matcher mobileSmsMatcher = PatternHandler.MOBILE_SMS_PATTERN.matcher(msg);
