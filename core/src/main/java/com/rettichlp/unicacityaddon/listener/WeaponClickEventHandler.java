@@ -1,13 +1,21 @@
 package com.rettichlp.unicacityaddon.listener;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.base.enums.Weapon;
+import com.rettichlp.unicacityaddon.base.events.WeaponShotEvent;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
+import com.rettichlp.unicacityaddon.base.utils.TextUtils;
+import net.labymod.api.client.entity.player.ClientPlayer;
 import net.labymod.api.client.world.item.ItemStack;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
+import net.labymod.api.event.client.entity.player.ClientPlayerInteractEvent;
+import net.labymod.api.nbt.NBTTag;
+import net.labymod.api.nbt.tags.NBTTagCompound;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author RettichLP
@@ -16,8 +24,7 @@ import java.util.List;
 @UCEvent
 public class WeaponClickEventHandler {
 
-    private static final List<String> WEAPONS = Arrays.asList("§8M4", "§8MP5", "§8Pistole", "§8Jagdflinte");
-    public static boolean tazerLoaded = false;
+    private static boolean tazerLoaded = false;
     private long tazerLastWarningSend = 0;
 
     private final UnicacityAddon unicacityAddon;
@@ -26,54 +33,40 @@ public class WeaponClickEventHandler {
         this.unicacityAddon = unicacityAddon;
     }
 
-    //    @Subscribe
-//    public void onPlayerInteract(PlayerInteractEvent e) {
-//        if (!(e instanceof PlayerInteractEvent.RightClickItem || e instanceof PlayerInteractEvent.RightClickBlock || e instanceof PlayerInteractEvent.EntityInteractSpecific))
-//            return;
-//
-//        ItemStack is = e.getItemStack();
-//        if (!isWeapon(is))
-//            return;
-//
-//        tazerLoaded = false;
-//        handleMunitionDisplay(is);
-//    }
+    @Subscribe
+    public void onClientPlayerInteract(ClientPlayerInteractEvent e) {
+        ClientPlayerInteractEvent.InteractionType interactionType = e.type();
 
-    private static void handleMunitionDisplay(ItemStack is) {
-        String text = getText(is);
-        if (text == null)
-            return;
+        if (interactionType.equals(ClientPlayerInteractEvent.InteractionType.INTERACT)) {
+            ClientPlayer clientPlayer = e.clientPlayer();
+            ItemStack mainHandItemStack = clientPlayer.getMainHandItemStack();
 
-//        UnicacityAddon.MINECRAFT.ingameGUI.setOverlayMessage(text, true);
+            UnicacityAddon.debug("WEAPON: " + TextUtils.legacy(mainHandItemStack.getDisplayName()));
+            Weapon weapon = Weapon.getWeaponByItemName(TextUtils.legacy(mainHandItemStack.getDisplayName()));
+            if (weapon != null) {
+                NBTTagCompound nbtTagCompound = mainHandItemStack.getNBTTag();
+                if (nbtTagCompound != null) {
+                    NBTTag<?> nbtTag = nbtTagCompound.get("display");
+                    if (nbtTag != null) {
+                        UnicacityAddon.debug("NBT: " + nbtTag);
+                        Matcher matcher = Pattern.compile("(\\d+)/(\\d+)").matcher(nbtTag.value().toString());
+                        if (matcher.find()) {
+                            int loaded = Integer.parseInt(matcher.group(1)) - 1;
+                            int backup = Integer.parseInt(matcher.group(2));
+                            UnicacityAddon.ADDON.labyAPI().eventBus().fire(new WeaponShotEvent(weapon, loaded, backup));
+                        }
+                    }
+                }
+            }
+        } else if (interactionType.equals(ClientPlayerInteractEvent.InteractionType.ATTACK) && tazerLoaded && System.currentTimeMillis() - tazerLastWarningSend > TimeUnit.SECONDS.toMillis(5)) {
+            UnicacityAddon.PLAYER.sendInfoMessage("Achtung! Dein Tazer ist geladen!");
+            tazerLastWarningSend = System.currentTimeMillis();
+        }
     }
 
-    private static String getText(ItemStack is) {
-//        NBTTagCompound nbt = is.getTagCompound();
-//        if (nbt == null)
-//            return null;
-//
-//        NBTTagCompound display = nbt.getCompoundTag("display");
-//
-//        String lore = display.getTagList("Lore", Constants.NBT.TAG_STRING).getStringTagAt(0);
-//        String[] splittedLore = lore.split("/");
-//        if (splittedLore.length != 2)
-//            return null;
-//
-//        String munitionString = splittedLore[0];
-//        if (munitionString.length() < 2)
-//            return null;
-//
-//        int munition = Integer.parseInt(munitionString.substring(2));
-//
-//        return (--munition < 1 ? ColorCode.RED.getCode() + "0" : ColorCode.GOLD.getCode() + munition) + ColorCode.GRAY.getCode() + "/" + ColorCode.GOLD.getCode() + splittedLore[1];
-        return "";
-    }
-
-    private boolean isWeapon(ItemStack is) {
-        if (is == null)
-            return false;
-
-        return WEAPONS.contains(is.getDisplayName());
+    @Subscribe
+    public void onWeaponShot(WeaponShotEvent e) {
+        tazerLoaded = false;
     }
 
     @Subscribe
@@ -85,18 +78,4 @@ public class WeaponClickEventHandler {
             tazerLoaded = false;
         }
     }
-
-//    @SubscribeEvent
-//    public void onWeaponInteract(PlayerInteractEvent e) {
-//        if (!tazerLoaded)
-//            return;
-//        if (!(e instanceof PlayerInteractEvent.LeftClickBlock || e instanceof PlayerInteractEvent.EntityInteractSpecific || e instanceof PlayerInteractEvent.LeftClickEmpty))
-//            return;
-//
-//        if (System.currentTimeMillis() - tazerLastWarningSend < TimeUnit.SECONDS.toMillis(5))
-//            return;
-//
-//        p.sendInfoMessage("Achtung! Dein Tazer ist geladen!");
-//        tazerLastWarningSend = System.currentTimeMillis();
-//    }
 }

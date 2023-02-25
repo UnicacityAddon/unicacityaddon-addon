@@ -88,6 +88,7 @@ import com.rettichlp.unicacityaddon.commands.teamspeak.MoveHereCommand;
 import com.rettichlp.unicacityaddon.commands.teamspeak.MoveToCommand;
 import com.rettichlp.unicacityaddon.commands.teamspeak.TSFindCommand;
 import com.rettichlp.unicacityaddon.commands.teamspeak.TSJoinCommand;
+import com.rettichlp.unicacityaddon.hudwidgets.AmmunitionHudWidget;
 import com.rettichlp.unicacityaddon.hudwidgets.BombHudWidget;
 import com.rettichlp.unicacityaddon.hudwidgets.CarHudWidget;
 import com.rettichlp.unicacityaddon.hudwidgets.EmergencyServiceHudWidget;
@@ -361,6 +362,7 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
     private void registerHudWidgets() {
         Icon hudIcon = Icon.texture(ResourceLocation.create("unicacityaddon", "textures/uc.png")).resolution(64, 64);
         HudWidgetRegistry registry = this.labyAPI().hudWidgetRegistry();
+        registry.register(new AmmunitionHudWidget("ammunition", hudIcon));
         registry.register(new BombHudWidget("bomb", hudIcon));
         registry.register(new CarHudWidget("car", hudIcon));
         registry.register(new EmergencyServiceHudWidget("service", hudIcon));
