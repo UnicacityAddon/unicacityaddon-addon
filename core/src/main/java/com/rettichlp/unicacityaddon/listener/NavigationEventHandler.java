@@ -4,7 +4,6 @@ import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
-import com.rettichlp.unicacityaddon.base.utils.NavigationUtils;
 import com.rettichlp.unicacityaddon.listener.job.FishermanEventHandler;
 import com.rettichlp.unicacityaddon.listener.job.JobEventHandler;
 import net.labymod.api.event.Subscribe;
@@ -18,6 +17,8 @@ import java.util.regex.Matcher;
 @UCEvent
 public class NavigationEventHandler {
 
+    public static long routeMessageClearExecuteTime = -1;
+
     private final UnicacityAddon unicacityAddon;
 
     public NavigationEventHandler(UnicacityAddon unicacityAddon) {
@@ -30,7 +31,7 @@ public class NavigationEventHandler {
         String msg = e.chatMessage().getPlainText();
 
         Matcher routeMatcher = PatternHandler.ROUTE_PATTERNS.matcher(msg);
-        if (routeMatcher.find() && System.currentTimeMillis() - NavigationUtils.routeMessageClearExecuteTime < 500L) {
+        if (routeMatcher.find() && System.currentTimeMillis() - routeMessageClearExecuteTime < 1000L) {
             e.setCancelled(true);
             return;
         }

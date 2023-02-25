@@ -18,8 +18,6 @@ import java.util.Map;
  */
 public class NavigationUtils {
 
-    public static long routeMessageClearExecuteTime = -1;
-
     public static Map.Entry<Double, ATM> getNearestATM() {
         ATM nearestATM = null;
         double nearestDistance = Double.MAX_VALUE;
@@ -90,10 +88,5 @@ public class NavigationUtils {
         }
 
         return Maps.immutableEntry(nearestDistance, nearestNaviPoint);
-    }
-
-    public static void stopRoute() {
-        routeMessageClearExecuteTime = System.currentTimeMillis();
-        UnicacityAddon.PLAYER.sendServerMessage("/stoproute");
     }
 }

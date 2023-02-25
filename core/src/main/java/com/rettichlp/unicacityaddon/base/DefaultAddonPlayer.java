@@ -6,7 +6,7 @@ import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.manager.FactionManager;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
-import com.rettichlp.unicacityaddon.base.utils.NavigationUtils;
+import com.rettichlp.unicacityaddon.listener.NavigationEventHandler;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.entity.player.ClientPlayer;
 import net.labymod.api.client.entity.player.Inventory;
@@ -145,6 +145,7 @@ public class DefaultAddonPlayer implements AddonPlayer {
 
     @Override
     public void stopRoute() {
+        NavigationEventHandler.routeMessageClearExecuteTime = System.currentTimeMillis();
         sendServerMessage("/stoproute");
     }
 
@@ -155,8 +156,8 @@ public class DefaultAddonPlayer implements AddonPlayer {
 
     @Override
     public void setNaviRoute(FloatVector3 floatVector3) {
-        NavigationUtils.stopRoute();
-        sendServerMessage("/navi " + floatVector3.getX() + "/" + floatVector3.getY() + "/" + floatVector3.getZ());
+        stopRoute();
+        sendServerMessage("/navi " + (int) floatVector3.getX() + "/" + (int) floatVector3.getY() + "/" + (int) floatVector3.getZ());
     }
 
     @Override
