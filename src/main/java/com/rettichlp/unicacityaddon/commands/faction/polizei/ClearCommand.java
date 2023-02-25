@@ -76,5 +76,4 @@ public class ClearCommand implements IClientCommand {
     public int compareTo(@Nonnull ICommand o) {
         return 0;
     }
-
 }
