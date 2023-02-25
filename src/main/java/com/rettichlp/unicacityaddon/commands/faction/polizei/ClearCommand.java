@@ -52,6 +52,7 @@ public class ClearCommand implements IClientCommand {
             p.sendSyntaxMessage(getUsage(sender));
             return;
         }
+        
         Arrays.stream(args).forEach(player -> p.sendChatMessage("/clear " + player));
     }
 
