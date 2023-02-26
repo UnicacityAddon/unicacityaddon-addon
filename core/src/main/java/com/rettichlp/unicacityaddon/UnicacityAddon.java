@@ -164,7 +164,7 @@ import net.labymod.api.util.logging.Logging;
 @AddonMain
 public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration> {
 
-    public static final String VERSION = "2.0.0-dev";
+    public static final String VERSION = "2.0.0-alpha";
     public static UnicacityAddon ADDON;
     public static AddonPlayer PLAYER;
     public static Logging LOGGER;

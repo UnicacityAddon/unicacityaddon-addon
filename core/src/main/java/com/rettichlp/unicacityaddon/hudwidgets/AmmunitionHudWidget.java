@@ -38,7 +38,6 @@ public class AmmunitionHudWidget extends TextHudWidget<TextHudWidgetConfig> {
 
     @Subscribe
     public void onWeaponShot(WeaponShotEvent e) {
-        UnicacityAddon.debug(e.getWeaponAmmunitionText());
         this.textLine.updateAndFlush(e.getWeaponAmmunitionText());
     }
 }

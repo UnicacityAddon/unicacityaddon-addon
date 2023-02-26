@@ -6,6 +6,7 @@ import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.commands.BusCommand;
 import com.rettichlp.unicacityaddon.listener.faction.ReinforcementEventHandler;
+import net.labymod.api.event.Phase;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.lifecycle.GameTickEvent;
 import org.spongepowered.include.com.google.common.collect.Maps;
@@ -29,28 +30,30 @@ public class TickEventHandler {
 
     @Subscribe
     public void onGameTick(GameTickEvent e) {
-        currentTick++;
+        if (e.phase().equals(Phase.POST)) {
+            currentTick++;
 
-        UnicacityAddon.ADDON.labyAPI().eventBus().fire(new UnicacityAddonTickEvent(UnicacityAddonTickEvent.Phase.TICK));
+            UnicacityAddon.ADDON.labyAPI().eventBus().fire(new UnicacityAddonTickEvent(UnicacityAddonTickEvent.Phase.TICK));
 
-        // 1 SECOND
-        if (currentTick % 20 == 0) {
-            UnicacityAddon.ADDON.labyAPI().eventBus().fire(new UnicacityAddonTickEvent(UnicacityAddonTickEvent.Phase.SECOND));
-        }
+            // 1 SECOND
+            if (currentTick % 20 == 0) {
+                UnicacityAddon.ADDON.labyAPI().eventBus().fire(new UnicacityAddonTickEvent(UnicacityAddonTickEvent.Phase.SECOND));
+            }
 
-        // 3 SECONDS
-        if (currentTick % 60 == 0) {
-            UnicacityAddon.ADDON.labyAPI().eventBus().fire(new UnicacityAddonTickEvent(UnicacityAddonTickEvent.Phase.SECOND_3));
-        }
+            // 3 SECONDS
+            if (currentTick % 60 == 0) {
+                UnicacityAddon.ADDON.labyAPI().eventBus().fire(new UnicacityAddonTickEvent(UnicacityAddonTickEvent.Phase.SECOND_3));
+            }
 
-        // 5 SECONDS
-        if (currentTick % 100 == 0) {
-            UnicacityAddon.ADDON.labyAPI().eventBus().fire(new UnicacityAddonTickEvent(UnicacityAddonTickEvent.Phase.SECOND_5));
-        }
+            // 5 SECONDS
+            if (currentTick % 100 == 0) {
+                UnicacityAddon.ADDON.labyAPI().eventBus().fire(new UnicacityAddonTickEvent(UnicacityAddonTickEvent.Phase.SECOND_5));
+            }
 
-        // 1 MINUTE
-        if (currentTick % 1200 == 0) {
-            UnicacityAddon.ADDON.labyAPI().eventBus().fire(new UnicacityAddonTickEvent(UnicacityAddonTickEvent.Phase.MINUTE));
+            // 1 MINUTE
+            if (currentTick % 1200 == 0) {
+                UnicacityAddon.ADDON.labyAPI().eventBus().fire(new UnicacityAddonTickEvent(UnicacityAddonTickEvent.Phase.MINUTE));
+            }
         }
     }
 

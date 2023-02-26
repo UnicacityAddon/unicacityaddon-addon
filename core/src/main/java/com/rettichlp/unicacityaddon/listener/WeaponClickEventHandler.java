@@ -41,14 +41,12 @@ public class WeaponClickEventHandler {
             ClientPlayer clientPlayer = e.clientPlayer();
             ItemStack mainHandItemStack = clientPlayer.getMainHandItemStack();
 
-            UnicacityAddon.debug("WEAPON: " + TextUtils.legacy(mainHandItemStack.getDisplayName()));
             Weapon weapon = Weapon.getWeaponByItemName(TextUtils.legacy(mainHandItemStack.getDisplayName()));
             if (weapon != null) {
                 NBTTagCompound nbtTagCompound = mainHandItemStack.getNBTTag();
                 if (nbtTagCompound != null) {
                     NBTTag<?> nbtTag = nbtTagCompound.get("display");
                     if (nbtTag != null) {
-                        UnicacityAddon.debug("NBT: " + nbtTag);
                         Matcher matcher = Pattern.compile("(\\d+)/(\\d+)").matcher(nbtTag.value().toString());
                         if (matcher.find()) {
                             int loaded = Integer.parseInt(matcher.group(1)) - 1;
