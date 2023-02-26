@@ -15,7 +15,9 @@ dependencies {
     // other repository has to be specified with their url. Example:
     // maven(mavenCentral(), "org.apache.httpcomponents:httpclient:4.5.13")
 
-    implementation("org.projectlombok:lombok:1.18.24")
+    // https://mvnrepository.com/artifact/commons-io/commons-io
+    implementation("commons-io", "commons-io", "2.6")
+
 }
 
 labyModProcessor {

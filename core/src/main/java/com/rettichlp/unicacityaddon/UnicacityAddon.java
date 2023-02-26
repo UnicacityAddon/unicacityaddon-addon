@@ -174,9 +174,7 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
         ADDON = this;
         PLAYER = new DefaultAddonPlayer(this);
         LOGGER = this.logger();
-
         FileManager.loadData();
-
         new Thread(TSClientQuery::getInstance).start();
     }
 
@@ -188,17 +186,11 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
         this.registerCommands();
         this.registerHudWidgets();
         this.registerTags();
-
         this.logger().info("Enabled UnicacityAddon");
 
         TokenManager.createToken(this.labyAPI().minecraft().sessionAccessor().session());
-        this.logger().info("Created Token");
-
         BroadcastChecker.start();
-        this.logger().info("Started BroadcastChecker");
-
         APIConverter.syncAll();
-        this.logger().info("Started Sync process");
     }
 
     @Override

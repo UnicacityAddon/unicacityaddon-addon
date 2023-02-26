@@ -2,9 +2,11 @@ package com.rettichlp.unicacityaddon.base.manager;
 
 import com.google.gson.Gson;
 import com.rettichlp.unicacityaddon.base.models.Data;
+import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
@@ -93,8 +95,8 @@ public class FileManager {
         try {
             File dataFile = FileManager.getDataFile();
             assert dataFile != null;
-            String jsonData = null; // FileUtils.readFileToString(dataFile, StandardCharsets.UTF_8.toString()); todo
-            DATA = jsonData == null || jsonData.equals("") || jsonData.equals("null") ? new Data() : new Gson().fromJson(jsonData, Data.class);
+            String jsonData = FileUtils.readFileToString(dataFile, StandardCharsets.UTF_8);
+            DATA = jsonData.contains("payDayTime") ? new Gson().fromJson(jsonData, Data.class) : new Data();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -108,7 +110,7 @@ public class FileManager {
             File dataFile = FileManager.getDataFile();
             if (dataFile != null && DATA != null) {
                 Gson g = new Gson();
-//                FileUtils.writeStringToFile(dataFile, g.toJson(DATA), StandardCharsets.UTF_8.toString());
+                FileUtils.writeStringToFile(dataFile, g.toJson(DATA), StandardCharsets.UTF_8);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
