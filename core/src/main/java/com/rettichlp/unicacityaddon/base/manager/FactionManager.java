@@ -23,8 +23,7 @@ import java.util.stream.Collectors;
 public class FactionManager {
 
     private static FactionManager instance;
-
-    public static Map<String, Map.Entry<Faction, Integer>> factionData = new HashMap<>();
+    private static Map<String, Map.Entry<Faction, Integer>> factionData = new HashMap<>();
 
     private FactionManager() {
         generateFactionData();

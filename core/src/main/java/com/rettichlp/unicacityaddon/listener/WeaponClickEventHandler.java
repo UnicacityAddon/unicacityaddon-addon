@@ -51,7 +51,7 @@ public class WeaponClickEventHandler {
                         if (matcher.find()) {
                             int loaded = Integer.parseInt(matcher.group(1)) - 1;
                             int backup = Integer.parseInt(matcher.group(2));
-                            UnicacityAddon.ADDON.labyAPI().eventBus().fire(new WeaponShotEvent(weapon, loaded, backup));
+                            this.unicacityAddon.labyAPI().eventBus().fire(new WeaponShotEvent(weapon, loaded, backup));
                         }
                     }
                 }
