@@ -4,7 +4,7 @@ import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
-import com.rettichlp.unicacityaddon.listener.MobileEventHandler;
+import com.rettichlp.unicacityaddon.listener.MobileListener;
 import net.labymod.api.client.chat.command.Command;
 
 import java.util.List;
@@ -27,11 +27,11 @@ public class BlockCommand extends Command {
 
         if (arguments.length > 0) {
             String playerName = arguments[0];
-            if (MobileEventHandler.blockedPlayerList.contains(playerName)) {
-                MobileEventHandler.blockedPlayerList.remove(playerName);
+            if (MobileListener.blockedPlayerList.contains(playerName)) {
+                MobileListener.blockedPlayerList.remove(playerName);
                 p.sendInfoMessage("Du hast " + playerName + " wieder freigegeben.");
             } else {
-                MobileEventHandler.blockedPlayerList.add(playerName);
+                MobileListener.blockedPlayerList.add(playerName);
                 p.sendInfoMessage("Du hast " + playerName + " blockiert.");
             }
         } else

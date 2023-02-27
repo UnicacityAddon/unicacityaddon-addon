@@ -4,7 +4,7 @@ import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
-import com.rettichlp.unicacityaddon.listener.faction.badfaction.GaggedEventHandler;
+import com.rettichlp.unicacityaddon.listener.faction.badfaction.GaggedListener;
 import net.labymod.api.client.chat.command.Command;
 
 import java.util.List;
@@ -22,9 +22,9 @@ public class GaggedCommand extends Command {
     @Override
     public boolean execute(String prefix, String[] arguments) {
         AddonPlayer p = UnicacityAddon.PLAYER;
-        GaggedEventHandler.toggleGagged();
+        GaggedListener.toggleGagged();
 
-        if (GaggedEventHandler.isGagged())
+        if (GaggedListener.isGagged())
             p.sendInfoMessage("Ab sofort kannst du nur noch flüstern.");
         else
             p.sendInfoMessage("Ab sofort kannst du wieder normal reden.");

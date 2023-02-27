@@ -7,7 +7,7 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.utils.ForgeUtils;
-import com.rettichlp.unicacityaddon.listener.MobileEventHandler;
+import com.rettichlp.unicacityaddon.listener.MobileListener;
 import net.labymod.api.client.chat.command.Command;
 import net.labymod.api.util.math.vector.FloatVector3;
 
@@ -32,7 +32,7 @@ public class ShareLocationCommand extends Command {
     public boolean execute(String prefix, String[] arguments) {
         AddonPlayer p = UnicacityAddon.PLAYER;
 
-        if (!MobileEventHandler.hasCommunications) {
+        if (!MobileListener.hasCommunications) {
             p.sendErrorMessage("Du hast keine Kommunikationsmittel!");
             return true;
         }

@@ -4,7 +4,7 @@ import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
-import com.rettichlp.unicacityaddon.listener.MobileEventHandler;
+import com.rettichlp.unicacityaddon.listener.MobileListener;
 import net.labymod.api.client.chat.command.Command;
 
 import java.util.List;
@@ -24,9 +24,9 @@ public class StummCommand extends Command {
     @Override
     public boolean execute(String prefix, String[] arguments) {
         AddonPlayer p = UnicacityAddon.PLAYER;
-        MobileEventHandler.muted = !MobileEventHandler.muted;
+        MobileListener.muted = !MobileListener.muted;
 
-        if (MobileEventHandler.muted)
+        if (MobileListener.muted)
             p.sendInfoMessage("Du hast dein Handy auf stumm gestellt.");
         else
             p.sendInfoMessage("Du hast dein Handy wieder laut gestellt.");

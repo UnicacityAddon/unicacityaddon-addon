@@ -30,7 +30,7 @@ public class PatternHandler {
     /**
      * Pattern for bomb timer
      *
-     * @see com.rettichlp.unicacityaddon.listener.faction.terroristen.BombTimerEventHandler
+     * @see com.rettichlp.unicacityaddon.listener.faction.terroristen.BombTimerListener
      */
     public static final Pattern BOMB_PLACED_PATTERN = Pattern.compile("^News: ACHTUNG! Es wurde eine Bombe in der Nähe von (?<location>.+) gefunden!$");
     public static final Pattern BOMB_REMOVED_PATTERN = Pattern.compile("^News: Die Bombe konnte (nicht|erfolgreich) entschärft werden!$");
@@ -38,7 +38,7 @@ public class PatternHandler {
     /**
      * Pattern for car interaction
      *
-     * @see com.rettichlp.unicacityaddon.listener.CarEventHandler
+     * @see com.rettichlp.unicacityaddon.listener.CarListener
      */
     public static final Pattern CAR_OPEN_PATTERN = Pattern.compile("^\\[Car] Du hast deinen .+ aufgeschlossen\\.$");
     public static final Pattern CAR_CLOSE_PATTERN = Pattern.compile("^\\[Car] Du hast deinen .+ abgeschlossen\\.$");
@@ -50,8 +50,8 @@ public class PatternHandler {
     /**
      * Pattern for reinforcement and sloc interaction
      *
-     * @see com.rettichlp.unicacityaddon.listener.faction.ReinforcementEventHandler
-     * @see com.rettichlp.unicacityaddon.listener.faction.ShareLocationEventHandler
+     * @see com.rettichlp.unicacityaddon.listener.faction.ReinforcementListener
+     * @see com.rettichlp.unicacityaddon.listener.faction.ShareLocationListener
      */
     public static final Pattern REINFORCEMENT_PATTERN = Pattern.compile("^(.+ ((?:\\[UC])*\\w+)): Benötige Verstärkung! -> X: (-*\\d+) \\| Y: (-*\\d+) \\| Z: (-*\\d+)$");
     public static final Pattern ON_THE_WAY_PATTERN = Pattern.compile("^(.+ (?:\\[UC])*(\\w+)): ((?:\\[UC])*\\w+), ich bin zu deinem Verstärkungsruf unterwegs! \\((\\d+) Meter entfernt\\)$");
@@ -60,8 +60,8 @@ public class PatternHandler {
     /**
      * Pattern for service data
      *
-     * @see com.rettichlp.unicacityaddon.listener.faction.EmergencyServiceEventHandler
-     * @see com.rettichlp.unicacityaddon.listener.faction.rettungsdienst.ServiceMessageEventHandler
+     * @see com.rettichlp.unicacityaddon.listener.faction.EmergencyServiceListener
+     * @see com.rettichlp.unicacityaddon.listener.faction.rettungsdienst.ServiceMessageListener
      */
     public static final Pattern SERVICE_ARRIVED_PATTERN = Pattern.compile("^Ein Notruf von ((?:\\[UC])*\\w+) \\((\\d+)\\): \"(.*)\"$");
     public static final Pattern SERVICE_LOCATION_PATTERN = Pattern.compile("^Der näheste Punkt ist ([^.]+)\\.$");
@@ -80,13 +80,13 @@ public class PatternHandler {
     /**
      * Pattern for name tag providing
      *
-     * @see com.rettichlp.unicacityaddon.listener.DeathsKillsEventHandler
-     * @see com.rettichlp.unicacityaddon.listener.chatlog.ChatLogReceiveChatEventHandler
-     * @see com.rettichlp.unicacityaddon.listener.faction.ContractEventHandler
-     * @see com.rettichlp.unicacityaddon.listener.faction.badfaction.blacklist.BlacklistEventHandler
-     * @see com.rettichlp.unicacityaddon.listener.faction.badfaction.blacklist.BlacklistModifyEventHandler
-     * @see com.rettichlp.unicacityaddon.listener.faction.polizei.HQMessageEventHandler
-     * @see com.rettichlp.unicacityaddon.listener.faction.polizei.WantedEventHandler
+     * @see com.rettichlp.unicacityaddon.listener.DeathsKillsListener
+     * @see com.rettichlp.unicacityaddon.listener.chatlog.ChatLogReceiveChatListener
+     * @see com.rettichlp.unicacityaddon.listener.faction.ContractListener
+     * @see com.rettichlp.unicacityaddon.listener.faction.badfaction.blacklist.BlacklistListener
+     * @see com.rettichlp.unicacityaddon.listener.faction.badfaction.blacklist.BlacklistModifyListener
+     * @see com.rettichlp.unicacityaddon.listener.faction.polizei.HQMessageListener
+     * @see com.rettichlp.unicacityaddon.listener.faction.polizei.WantedListener
      */
     public static final Pattern WANTED_LIST_PATTERN = Pattern.compile("^ {2}- (?:\\[UC])*(\\w+) \\| (\\d+) WPS \\((.+)\\)(| \\| AFK)$");
     public static final Pattern WANTED_GIVEN_REASON_PATTERN = Pattern.compile("^HQ: Gesuchter: (?:\\[UC])*(\\w+)\\. Grund: (.+)$");
@@ -111,8 +111,8 @@ public class PatternHandler {
     /**
      * Pattern for job interaction
      *
-     * @see com.rettichlp.unicacityaddon.listener.job.FishermanEventHandler
-     * @see com.rettichlp.unicacityaddon.listener.job.JobEventHandler
+     * @see com.rettichlp.unicacityaddon.listener.job.FishermanListener
+     * @see com.rettichlp.unicacityaddon.listener.job.JobListener
      */
     public static final Pattern FISHER_START = Pattern.compile("^\\[Fischer] Mit /findschwarm kannst du dir den nächsten Fischschwarm anzeigen lassen\\.$");
     public static final Pattern FISHER_SPOT_FOUND = Pattern.compile("^\\[Fischer] Du hast einen Fischschwarm gefunden!$");
@@ -139,10 +139,10 @@ public class PatternHandler {
     /**
      * Pattern for medic interaction
      *
-     * @see com.rettichlp.unicacityaddon.listener.faction.rettungsdienst.FirstAidEventHandler
-     * @see com.rettichlp.unicacityaddon.listener.faction.rettungsdienst.MedicationEventHandler
-     * @see com.rettichlp.unicacityaddon.listener.faction.rettungsdienst.ReviveEventHandler
-     * @see com.rettichlp.unicacityaddon.listener.faction.badfaction.DrugInteractionEventHandler
+     * @see com.rettichlp.unicacityaddon.listener.faction.rettungsdienst.FirstAidListener
+     * @see com.rettichlp.unicacityaddon.listener.faction.rettungsdienst.MedicationListener
+     * @see com.rettichlp.unicacityaddon.listener.faction.rettungsdienst.ReviveListener
+     * @see com.rettichlp.unicacityaddon.listener.faction.badfaction.DrugInteractionListener
      */
     public static final Pattern RECIPE_ACCEPT_PATTERN = Pattern.compile("^((?:\\[UC])*\\w+) möchte dir ein Rezept für 200\\$ verkaufen\\.$");
     public static final Pattern RECIPE_GIVE_PATTERN = Pattern.compile("^Du hast ((?:\\[UC])*\\w+) ein Rezept für (Antibiotika|Hustensaft|Schmerzmittel) ausgestellt\\.$");
@@ -157,7 +157,7 @@ public class PatternHandler {
     /**
      * Pattern for communication interaction
      *
-     * @see com.rettichlp.unicacityaddon.listener.MobileEventHandler
+     * @see com.rettichlp.unicacityaddon.listener.MobileListener
      */
     public static final Pattern MOBILE_NUMBER_PATTERN = Pattern.compile("^Nummer von (?:\\[UC])*\\w+: (\\d+)$");
     public static final Pattern MOBILE_CALL_PATTERN = Pattern.compile("^Dein Handy klingelt! Ein Anruf von (?:\\[UC])*(\\w+)$");
@@ -170,10 +170,10 @@ public class PatternHandler {
     /**
      * Pattern for bad faction interaction
      *
-     * @see com.rettichlp.unicacityaddon.listener.faction.badfaction.BannerEventHandler
-     * @see com.rettichlp.unicacityaddon.listener.faction.badfaction.DBankMessageEventHandler
-     * @see com.rettichlp.unicacityaddon.listener.faction.badfaction.GiftEigenbedarfEventHandler
-     * @see com.rettichlp.unicacityaddon.listener.faction.badfaction.PlantEventHandler
+     * @see com.rettichlp.unicacityaddon.listener.faction.badfaction.BannerListener
+     * @see com.rettichlp.unicacityaddon.listener.faction.badfaction.DBankMessageListener
+     * @see com.rettichlp.unicacityaddon.listener.faction.badfaction.GiftEigenbedarfListener
+     * @see com.rettichlp.unicacityaddon.listener.faction.badfaction.PlantListener
      */
     public static final Pattern PLANT_HARVEST_PATTERN = Pattern.compile("^\\[Plantage] Eine .+-Plantage wurde von (?:\\[UC])*(\\w+) geerntet\\. \\[\\d+g]$");
     public static final Pattern PLANT_USE_PATTERN = Pattern.compile("^\\[Plantage] Eine .+-Plantage wurde von (?:\\[UC])*(\\w+) (gewässert|gedüngt)\\.$");
@@ -194,8 +194,8 @@ public class PatternHandler {
     /**
      * Pattern for money interaction
      *
-     * @see com.rettichlp.unicacityaddon.listener.MoneyEventHandler
-     * @see com.rettichlp.unicacityaddon.listener.faction.AFbankEinzahlenEventHandler
+     * @see com.rettichlp.unicacityaddon.listener.MoneyListener
+     * @see com.rettichlp.unicacityaddon.listener.faction.AFbankEinzahlenListener
      */
     public static final Pattern JOB_SALARY_PATTERN = Pattern.compile("^\\[PayDay] Du bekommst dein Gehalt von (\\d+)\\$ am PayDay ausgezahlt\\.$");
     public static final Pattern JOB_EXPERIENCE_PATTERN = Pattern.compile("^ {2}\\+(\\d+) Exp!(| \\(x(\\d+)\\))$");
@@ -222,7 +222,7 @@ public class PatternHandler {
     /**
      * Pattern karma interaction
      *
-     * @see com.rettichlp.unicacityaddon.listener.KarmaMessageEventHandler
+     * @see com.rettichlp.unicacityaddon.listener.KarmaMessageListener
      */
     public static final Pattern KARMA_CHANGED_PATTERN = Pattern.compile("^\\[Karma] ([+-]\\d+) Karma\\.$");
     public static final Pattern KARMA_PATTERN = Pattern.compile("^\\[Karma] Du hast ein Karma von ([+-]\\d+)\\.$");
@@ -230,8 +230,8 @@ public class PatternHandler {
     /**
      * Pattern for account interaction
      *
-     * @see com.rettichlp.unicacityaddon.listener.AccountEventHandler
-     * @see com.rettichlp.unicacityaddon.listener.DeathsKillsEventHandler
+     * @see com.rettichlp.unicacityaddon.listener.AccountListener
+     * @see com.rettichlp.unicacityaddon.listener.DeathsKillsListener
      */
     public static final Pattern ACCOUNT_WELCOME_BACK_PATTERN = Pattern.compile("^Willkommen zurück!$");
     public static final Pattern RESOURCEPACK_PATTERN = Pattern.compile("^Wir empfehlen dir unser Resourcepack zu nutzen\\.$|" +
@@ -250,7 +250,7 @@ public class PatternHandler {
     /**
      * Pattern for timer interaction
      *
-     * @see com.rettichlp.unicacityaddon.listener.TimerEventHandler
+     * @see com.rettichlp.unicacityaddon.listener.TimerListener
      */
     public static final Pattern TIMER_FBI_HACK_START_PATTERN = Pattern.compile("^\\[Polizeicomputer] Du hast einen Hackversuch gestartet\\. Geschätzte Dauer: (\\d+) Sekunden\\.$");
     public static final Pattern TIMER_GRAVEYARD_START_PATTERN = Pattern.compile("^Du bist nun für (20|8|5) Minuten auf dem Friedhof\\.$");
@@ -261,8 +261,8 @@ public class PatternHandler {
     /**
      * Pattern for uc and vc interaction
      *
-     * @see com.rettichlp.unicacityaddon.listener.HotkeyEventHandler
-     * @see com.rettichlp.unicacityaddon.listener.team.ReportEventHandler
+     * @see com.rettichlp.unicacityaddon.listener.HotkeyListener
+     * @see com.rettichlp.unicacityaddon.listener.team.ReportListener
      */
     public static final Pattern REPORT_PATTERN = Pattern.compile("^Es liegt ein neuer Report \\[\\d+] von (?:\\[UC])*(\\w+) vor! Thema: [a-zA-Z]+$|" +
             "^Es liegt ein neuer Report von (?:\\[UC])*(\\w+) vor! Thema: [a-zA-Z]+$");
@@ -273,9 +273,9 @@ public class PatternHandler {
     /**
      * Pattern for house interaction
      *
-     * @see com.rettichlp.unicacityaddon.listener.house.HouseDataEventHandler
-     * @see com.rettichlp.unicacityaddon.listener.house.HouseInteractionEventHandler
-     * @see com.rettichlp.unicacityaddon.listener.house.HouseRenterEventHandler
+     * @see com.rettichlp.unicacityaddon.listener.house.HouseDataListener
+     * @see com.rettichlp.unicacityaddon.listener.house.HouseInteractionListener
+     * @see com.rettichlp.unicacityaddon.listener.house.HouseRenterListener
      */
     public static final Pattern HOUSE_BANK_HEADER_PATTERN = Pattern.compile("^=== Hauskasse Haus (\\d+) ===$");
     public static final Pattern HOUSE_BANK_VALUE_PATTERN = Pattern.compile("^ {2}» (\\d+)\\$$");
@@ -292,7 +292,7 @@ public class PatternHandler {
     /**
      * Pattern for equip interaction
      *
-     * @see com.rettichlp.unicacityaddon.listener.faction.EquipEventHandler
+     * @see com.rettichlp.unicacityaddon.listener.faction.EquipListener
      */
     public static final Pattern TRACKER_PATTERN = Pattern.compile("^Du hast einen Peilsender an (?:\\[UC])*(\\w+) befestigt\\.$");
     public static final Pattern EQUIP_PATTERN = Pattern.compile("^(|\\[Equip] )Du hast (dir|dich mit) (|ein |eine |einen |einem )([a-zA-Z-äöüßÄÖÜ ]+) equip(|p)t[!.]$");
@@ -301,7 +301,7 @@ public class PatternHandler {
     /**
      * Pattern for navigation interaction
      *
-     * @see com.rettichlp.unicacityaddon.listener.NavigationEventHandler
+     * @see com.rettichlp.unicacityaddon.listener.NavigationListener
      */
     public static final Pattern ROUTE_PATTERNS = Pattern.compile("^Du hast keine Route\\.$" +
             "|^Du hast deine Route gelöscht\\.$");
@@ -309,7 +309,7 @@ public class PatternHandler {
     /**
      * Pattern for shop interaction
      *
-     * @see com.rettichlp.unicacityaddon.listener.ABuyEventHandler
+     * @see com.rettichlp.unicacityaddon.listener.ABuyListener
      */
     public static final Pattern BUY_INTERRUPTED_PATTERN = Pattern.compile("^Verkäufer: (Tut (uns|mir) Leid|Verzeihung), unser Lager ist derzeit leer\\.$" +
             "|^Verkäufer: Dieses Produkt kostet \\d+\\$\\.$" + "|^Verkäufer: Du hast leider nicht genug Geld dabei\\.$");

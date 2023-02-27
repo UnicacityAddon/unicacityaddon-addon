@@ -3,7 +3,7 @@ package com.rettichlp.unicacityaddon.base.nametags;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
-import com.rettichlp.unicacityaddon.listener.faction.badfaction.blacklist.BlacklistEventHandler;
+import com.rettichlp.unicacityaddon.listener.faction.badfaction.blacklist.BlacklistListener;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.entity.player.Player;
 import net.labymod.api.client.entity.player.tag.tags.NameTag;
@@ -46,7 +46,7 @@ public class OutlawTag extends NameTag {
                 .of("]").color(ColorCode.DARK_GRAY).advance()
                 .createComponent();
 
-        boolean isOutlaw = BlacklistEventHandler.BLACKLIST_MAP.containsKey(playerName) && BlacklistEventHandler.BLACKLIST_MAP.get(playerName);
+        boolean isOutlaw = BlacklistListener.BLACKLIST_MAP.containsKey(playerName) && BlacklistListener.BLACKLIST_MAP.get(playerName);
 
         return isOutlaw ? RenderableComponent.of(component) : null;
     }

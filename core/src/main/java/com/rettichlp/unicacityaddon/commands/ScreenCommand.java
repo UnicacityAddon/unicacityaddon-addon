@@ -45,9 +45,9 @@ public class ScreenCommand extends Command {
             File file = FileManager.getNewActivityImageFile(arguments[0]);
             // TODO: 08.02.2023
 //            if (UnicacityAddon.ADDON.configuration().screenUpload().get())
-//                HotkeyEventHandler.handleScreenshotWithUpload(file);
+//                HotkeyListener.handleScreenshotWithUpload(file);
 //            else
-//                HotkeyEventHandler.handleScreenshotWithoutUpload(file);
+//                HotkeyListener.handleScreenshotWithoutUpload(file);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

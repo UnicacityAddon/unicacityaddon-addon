@@ -5,7 +5,7 @@ import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.enums.faction.ModifyWantedType;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.utils.ForgeUtils;
-import com.rettichlp.unicacityaddon.listener.faction.polizei.WantedEventHandler;
+import com.rettichlp.unicacityaddon.listener.faction.polizei.WantedListener;
 import net.labymod.api.client.chat.command.Command;
 
 import java.util.Arrays;
@@ -34,7 +34,7 @@ public class ModifyWantedsCommand extends Command {
 
         String target = arguments[0];
 
-        WantedEventHandler.Wanted wanted = WantedEventHandler.WANTED_MAP.get(target);
+        WantedListener.Wanted wanted = WantedListener.WANTED_MAP.get(target);
         if (wanted == null) {
             p.sendErrorMessage("Du hast /wanteds noch nicht ausgeführt!");
             return true;

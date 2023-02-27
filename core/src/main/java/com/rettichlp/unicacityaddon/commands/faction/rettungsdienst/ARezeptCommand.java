@@ -6,7 +6,7 @@ import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.utils.MathUtils;
-import com.rettichlp.unicacityaddon.listener.faction.rettungsdienst.MedicationEventHandler;
+import com.rettichlp.unicacityaddon.listener.faction.rettungsdienst.MedicationListener;
 import net.labymod.api.client.chat.command.Command;
 
 import java.util.Arrays;
@@ -46,7 +46,7 @@ public class ARezeptCommand extends Command {
         if (!MathUtils.isInteger(arguments[2]))
             return true;
         amount = Integer.parseInt(arguments[2]);
-        MedicationEventHandler.giveRecipe();
+        MedicationListener.giveRecipe();
         return true;
     }
 
