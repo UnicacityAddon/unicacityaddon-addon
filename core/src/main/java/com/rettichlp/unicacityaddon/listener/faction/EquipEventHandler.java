@@ -2,6 +2,7 @@ package com.rettichlp.unicacityaddon.listener.faction;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.enums.faction.Equip;
+import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import net.labymod.api.event.Subscribe;
@@ -35,7 +36,7 @@ public class EquipEventHandler {
                     .orElse(null);
 
             if (equip != null) {
-//                FileManager.DATA.addEquipToEquipMap(equip);
+                FileManager.DATA.addEquipToEquipMap(equip);
             } else {
                 UnicacityAddon.PLAYER.sendErrorMessage("Equip wurde nicht gefunden.");
             }

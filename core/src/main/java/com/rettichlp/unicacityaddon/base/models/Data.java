@@ -23,7 +23,7 @@ public class Data {
     private Integer cashBalance;
     private Map<DrugType, Map<DrugPurity, Integer>> drugInventoryMap;
     private List<CoordlistEntry> coordlist;
-    // TODO: 26.02.2023 private Map<Equip, Integer> equipMap; and usages!
+    private Map<Equip, Integer> equipMap;
     private Long firstAidDate;
     private Map<Integer, HouseData> houseDataMap;
     private Integer jobBalance;
@@ -80,14 +80,14 @@ public class Data {
         saveAndFireEvent();
     }
 
-//    public Map<Equip, Integer> getEquipMap() {
-//        return equipMap != null ? equipMap : new HashMap<>();
-//    }
+    public Map<Equip, Integer> getEquipMap() {
+        return equipMap != null ? equipMap : new HashMap<>();
+    }
 
-//    public void setEquipMap(Map<Equip, Integer> equipMap) {
-//        this.equipMap = equipMap;
-//        saveAndFireEvent();
-//    }
+    public void setEquipMap(Map<Equip, Integer> equipMap) {
+        this.equipMap = equipMap;
+        saveAndFireEvent();
+    }
 
     public long getFirstAidDate() {
         return firstAidDate != null ? firstAidDate : 0;
@@ -297,12 +297,12 @@ public class Data {
      * @param equip {@link Equip} to be added to the <code>equipMap</code>
      * @see Equip
      */
-//    public void addEquipToEquipMap(Equip equip) {
-//        Map<Equip, Integer> newEquipMap = getEquipMap();
-//        newEquipMap.put(equip, newEquipMap.getOrDefault(equip, 0) + 1);
-//        equipMap = newEquipMap;
-//        saveAndFireEvent();
-//    }
+    public void addEquipToEquipMap(Equip equip) {
+        Map<Equip, Integer> newEquipMap = getEquipMap();
+        newEquipMap.put(equip, newEquipMap.getOrDefault(equip, 0) + 1);
+        equipMap = newEquipMap;
+        saveAndFireEvent();
+    }
 
     /**
      * Returns the {@link HouseData} of the given <code>houseNumber</code> or creates them
