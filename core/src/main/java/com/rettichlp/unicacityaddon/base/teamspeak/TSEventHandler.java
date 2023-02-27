@@ -1,5 +1,6 @@
 package com.rettichlp.unicacityaddon.base.teamspeak;
 
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.teamspeak.events.ClientMessageReceivedEvent;
 import com.rettichlp.unicacityaddon.base.teamspeak.events.ClientMovedEvent;
 import com.rettichlp.unicacityaddon.base.teamspeak.events.TSEvent;
@@ -30,7 +31,7 @@ public class TSEventHandler {
     }
 
     static void fireEvent(TSEvent event) {
-//        MinecraftForge.EVENT_BUS.post(event);
+        UnicacityAddon.ADDON.labyAPI().eventBus().fire(event);
 
         try {
             for (TSListener listener : EVENT_LISTENERS) {

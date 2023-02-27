@@ -18,6 +18,11 @@ dependencies {
     // https://mvnrepository.com/artifact/commons-io/commons-io
     implementation("commons-io", "commons-io", "2.6")
 
+    // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
+    implementation("org.apache.commons", "commons-lang3", "3.12.0")
+
+    // https://mvnrepository.com/artifact/com.google.guava/guava
+    implementation("com.google.guava", "guava", "31.1-jre")
 }
 
 labyModProcessor {
