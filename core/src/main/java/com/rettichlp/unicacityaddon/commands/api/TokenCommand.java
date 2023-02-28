@@ -12,6 +12,7 @@ import com.rettichlp.unicacityaddon.base.text.Message;
 import net.labymod.api.client.chat.command.Command;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.event.HoverEvent;
+import net.labymod.api.notification.Notification;
 
 import java.util.List;
 
@@ -48,7 +49,10 @@ public class TokenCommand extends Command {
             p.sendAPIMessage(response.get("info").getAsString(), true);
         } else if (arguments.length == 1 && arguments[0].equalsIgnoreCase("copy")) {
             p.copyToClipboard(TokenManager.API_TOKEN);
-            // TODO: 10.12.2022 LabyMod.getInstance().notifyMessageRaw(ColorCode.GREEN.getCode() + "Kopiert!", "Token in Zwischenablage kopiert.");
+            UnicacityAddon.ADDON.labyAPI().notificationController().push(Notification.builder()
+                    .title(Message.getBuilder().of("Kopiert!").color(ColorCode.GREEN).bold().advance().createComponent())
+                    .text(Message.getBuilder().of("Token in Zwischenablage kopiert.").color(ColorCode.WHITE).advance().createComponent())
+                    .build());
         } else if (arguments.length == 1 && arguments[0].equalsIgnoreCase("revoke")) {
             JsonObject response = APIRequest.sendTokenRevokeRequest();
             if (response == null)

@@ -18,6 +18,7 @@ import net.labymod.api.Laby;
 import net.labymod.api.client.gui.screen.key.Key;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.input.KeyEvent;
+import net.labymod.api.notification.Notification;
 import net.labymod.api.util.math.vector.FloatVector3;
 
 import java.io.File;
@@ -106,7 +107,7 @@ public class HotkeyListener {
         }
     }
 
-    public static File createScreenshot(File file) {
+    public File createScreenshot(File file) {
         if (file != null) {
             // TODO: 28.02.2023
 //            try {
@@ -114,31 +115,40 @@ public class HotkeyListener {
 //                assert framebuffer != null;
 //                BufferedImage image = ScreenShotHelper.createScreenshot(UnicacityAddon.MINECRAFT.displayWidth, UnicacityAddon.MINECRAFT.displayHeight, framebuffer);
 //                ImageIO.write(image, "jpg", file);
-//                LabyMod.getInstance().notifyMessageRaw(ColorCode.GREEN.getCode() + "Screenshot erstellt!", "Wird gespeichert...");
-//                return file;
+                this.unicacityAddon.labyAPI().notificationController().push(Notification.builder()
+                        .title(Message.getBuilder().of("Screenshot erstellt!").color(ColorCode.GREEN).bold().advance().createComponent())
+                        .text(Message.getBuilder().of("Wird gespeichert...").color(ColorCode.WHITE).advance().createComponent())
+                        .build());
+                return file;
 //            } catch (IOException e) {
 //                throw new RuntimeException(e);
 //            }
         }
-//        LabyMod.getInstance().notifyMessageRaw(ColorCode.RED.getCode() + "Fehler!", "Screenshot konnte nicht erstellt werden.");
+        this.unicacityAddon.labyAPI().notificationController().push(Notification.builder()
+                .title(Message.getBuilder().of("Fehler!").color(ColorCode.RED).bold().advance().createComponent())
+                .text(Message.getBuilder().of("Screenshot konnte nicht erstellt werden.").color(ColorCode.WHITE).advance().createComponent())
+                .build());
         return null;
     }
 
-    public static void handleScreenshotWithoutUpload(File file) {
+    public void handleScreenshotWithoutUpload(File file) {
         createScreenshot(file);
     }
 
-    public static void handleScreenshotWithUpload(File file) {
+    public void handleScreenshotWithUpload(File file) {
         File screenFile = createScreenshot(file);
         Thread thread = new Thread(() -> uploadScreenshot(screenFile));
         thread.start();
     }
 
-    private static void uploadScreenshot(File screenshotFile) {
+    private void uploadScreenshot(File screenshotFile) {
         if (screenshotFile == null)
             return;
         String link = ImageUploadUtils.uploadToLink(screenshotFile);
         UnicacityAddon.PLAYER.copyToClipboard(link);
-//        LabyMod.getInstance().notifyMessageRaw(ColorCode.GREEN.getCode() + "Screenshot hochgeladen!", "Link in Zwischenablage kopiert.");
+        this.unicacityAddon.labyAPI().notificationController().push(Notification.builder()
+                .title(Message.getBuilder().of("Screenshot hochgeladen!").color(ColorCode.GREEN).bold().advance().createComponent())
+                .text(Message.getBuilder().of("Link in Zwischenablage kopiert.").color(ColorCode.WHITE).advance().createComponent())
+                .build());
     }
 }

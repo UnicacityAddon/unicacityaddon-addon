@@ -11,7 +11,9 @@ import com.rettichlp.unicacityaddon.base.models.HouseBanReason;
 import com.rettichlp.unicacityaddon.base.models.NaviPoint;
 import com.rettichlp.unicacityaddon.base.models.PlayerGroup;
 import com.rettichlp.unicacityaddon.base.models.WantedReason;
-import com.rettichlp.unicacityaddon.base.text.NotificationCenter;
+import com.rettichlp.unicacityaddon.base.text.ColorCode;
+import com.rettichlp.unicacityaddon.base.text.Message;
+import net.labymod.api.notification.Notification;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,21 +50,30 @@ public class APIConverter {
     private static Thread syncPlayerAddonGroupMap() {
         return new Thread(() -> {
             ADDONGROUPMAP = getPlayerGroupEntryMap();
-            NotificationCenter.send(NotificationCenter.SYNCED_ADDON_GROUP_NOTIFICATION);
+            UnicacityAddon.ADDON.labyAPI().notificationController().push(Notification.builder()
+                    .title(Message.getBuilder().of("Synchronisiert").color(ColorCode.DARK_AQUA).bold().advance().createComponent())
+                    .text(Message.getBuilder().of("Addon Gruppen synchronisiert.").color(ColorCode.AQUA).advance().createComponent())
+                    .build());
         });
     }
 
     private static Thread syncHousebanEntryList() {
         return new Thread(() -> {
             HOUSEBANENTRYLIST = getHouseBanEntryList();
-            NotificationCenter.send(NotificationCenter.SYNCED_HOUSE_BANS_NOTIFICATION);
+            UnicacityAddon.ADDON.labyAPI().notificationController().push(Notification.builder()
+                    .title(Message.getBuilder().of("Synchronisiert").color(ColorCode.DARK_AQUA).bold().advance().createComponent())
+                    .text(Message.getBuilder().of("Hausverbote synchronisiert.").color(ColorCode.AQUA).advance().createComponent())
+                    .build());
         });
     }
 
     private static Thread syncNaviPointEntryList() {
         return new Thread(() -> {
             NAVIPOINTLIST = getNaviPointEntryList();
-            NotificationCenter.send(NotificationCenter.SYNCED_NAVI_POINTS_NOTIFICATION);
+            UnicacityAddon.ADDON.labyAPI().notificationController().push(Notification.builder()
+                    .title(Message.getBuilder().of("Synchronisiert").color(ColorCode.DARK_AQUA).bold().advance().createComponent())
+                    .text(Message.getBuilder().of("Navi-Punkte synchronisiert.").color(ColorCode.AQUA).advance().createComponent())
+                    .build());
         });
     }
 
@@ -185,7 +196,6 @@ public class APIConverter {
     public static Map<PlayerGroup, String> getPlayerGroupEntryMap() {
         Map<PlayerGroup, String> playerGroupEntryMap = new HashMap<>();
         getPlayerGroupList().forEach(s -> getPlayerGroupEntryList(s).forEach(playerGroup -> playerGroupEntryMap.put(playerGroup, s)));
-        NotificationCenter.send(NotificationCenter.SYNCED_ADDON_GROUP_NOTIFICATION);
         return playerGroupEntryMap;
     }
 
