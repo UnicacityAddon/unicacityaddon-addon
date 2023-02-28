@@ -60,12 +60,11 @@ public class PatternHandler {
      * Pattern for service data
      *
      * @see com.rettichlp.unicacityaddon.events.faction.EmergencyServiceEventHandler
-     * @see com.rettichlp.unicacityaddon.events.faction.rettungsdienst.ServiceMessageEventHandler
      */
     public static final Pattern SERVICE_ARRIVED_PATTERN = Pattern.compile("^Ein Notruf von ((?:\\[UC])*\\w+) \\((\\d+)\\): \"(.*)\"$");
     public static final Pattern SERVICE_LOCATION_PATTERN = Pattern.compile("^Der näheste Punkt ist ([^.]+)\\.$");
-    public static final Pattern SERVICE_LOCATION_PATTERN_ONE_NEAREST = Pattern.compile("^Der näheste Punkt ist ([^.]+)\\. Die nähesten Personen sind ((?:\\[UC])*\\w+) \\(((\\d+)m)\\)\\.$");
-    public static final Pattern SERVICE_LOCATION_PATTERN_TWO_NEAREST = Pattern.compile("^Der näheste Punkt ist ([^.]+)\\. Die nähesten Personen sind ((?:\\[UC])*\\w+) \\(((\\d+)m)\\), ((?:\\[UC])*\\w+) \\(((\\d+)m)\\)\\.$");
+    public static final Pattern SERVICE_LOCATION_ONE_NEAREST_PATTERN = Pattern.compile("^Der näheste Punkt ist ([^.]+)\\. Die nähesten Personen sind ((?:\\[UC])*\\w+) \\(((\\d+)m)\\)\\.$");
+    public static final Pattern SERVICE_LOCATION_TWO_NEAREST_PATTERN = Pattern.compile("^Der näheste Punkt ist ([^.]+)\\. Die nähesten Personen sind ((?:\\[UC])*\\w+) \\(((\\d+)m)\\), ((?:\\[UC])*\\w+) \\(((\\d+)m)\\)\\.$");
     public static final Pattern SERVICE_DONE_PATTERN = Pattern.compile("^Du hast den Service von (?:\\[UC])*(\\w+) als 'Erledigt' markiert!$");
     public static final Pattern SERVICE_ACCEPTED_PATTERN = Pattern.compile("^((?:\\[UC])*\\w+) hat den Notruf von ((?:\\[UC])*\\w+) angenommen\\. \\((\\d+)m entfernt\\)$");
     public static final Pattern SERVICE_REQUEUED_PATTERN = Pattern.compile("^((?:\\[UC])*\\w+) hat den Notruf von ((?:\\[UC])*\\w+) \\((\\d+)\\) wieder geöffnet\\.$");
@@ -336,8 +335,8 @@ public class PatternHandler {
     public static final Pattern DRUG_VAULT_DROP_PATTERN = Pattern.compile("^HQ: (.+) (?:\\[UC])*(\\w+) hat (\\d+)g (Kokain|Methamphetamin|Marihuana|LSD) \\((Höchste Reinheit|Gute Reinheit|Mittlere Reinheit|Schlechte Reinheit)\\) in der Asservatenkammer verstaut\\.$");
     public static final Pattern DRUG_VAULT_GET_PATTERN = Pattern.compile("^HQ: (.+) (?:\\[UC])*(\\w+) hat (\\d+)g (Kokain|Methamphetamin|Marihuana|LSD) \\((Höchste Reinheit|Gute Reinheit|Mittlere Reinheit|Schlechte Reinheit)\\) aus der Asservatenkammer genommen\\.$");
     public static final Pattern DRUG_VAULT_INFOTITLE_PATTERN = Pattern.compile("^ ===== Asservatenkammer \\((\\w+)\\) =====$");
-    public static final Pattern DRUG_VAULT_INFO_PATTERN = Pattern.compile("^  » (Mittlere|Höchste|Gute|Schlechte) Reinheit: (\\d+)g  » (Mittlere|Höchste|Gute|Schlechte) Reinheit: (\\d+)g  » (Mittlere|Höchste|Gute|Schlechte) Reinheit: (\\d+)g  » (Mittlere|Höchste|Gute|Schlechte) Reinheit: (\\d+)g$");
-    public static final Pattern DRUG_VAULT_INFOLSD_PATTERN = Pattern.compile("^  » LSD: (\\d+) Stück$");
+    public static final Pattern DRUG_VAULT_INFO_PATTERN = Pattern.compile("^ {2}» (Mittlere|Höchste|Gute|Schlechte) Reinheit: (\\d+)g {2}» (Mittlere|Höchste|Gute|Schlechte) Reinheit: (\\d+)g {2}» (Mittlere|Höchste|Gute|Schlechte) Reinheit: (\\d+)g {2}» (Mittlere|Höchste|Gute|Schlechte) Reinheit: (\\d+)g$");
+    public static final Pattern DRUG_VAULT_INFOLSD_PATTERN = Pattern.compile("^ {2}» LSD: (\\d+) Stück$");
     public static final Pattern DRUG_VAULT_BURN_PATTERN = Pattern.compile("^HQ: (.+) (?:\\[UC])*(\\w+) hat (\\d+)g (Kokain|Methamphetamin|Marihuana|LSD) \\((Höchste Reinheit|Gute Reinheit|Mittlere Reinheit|Schlechte Reinheit)\\) vernichtet\\.$");
     public static final Pattern PLANT_BURN_PATTERN = Pattern.compile("^HQ: (.+) (?:\\[UC])*(\\w+) hat erfolgreich eine (Kokain|Marihuana) Plantage verbrannt, over\\.$");
 }
