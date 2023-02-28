@@ -48,10 +48,10 @@ public class NavigationEventHandler {
                 double distanceFromServiceAcceptPositionToHere = EmergencyServiceEventHandler.serviceAcceptPosition.getDistance(pos.getX(), pos.getY(), pos.getZ());
                 if (Math.abs(EmergencyServiceEventHandler.distanceToService - distanceFromServiceAcceptPositionToHere) <= 5) {
                     p.sendChatMessage("/doneservice");
-                    EmergencyServiceEventHandler.distanceToService = 0;
                 } else {
                     p.sendInfoMessage("Das Addon hat deinen Service nicht als erledigt markiert, da die Entfernung zum Zielpunkt nicht übereingestimmt hat.");
                 }
+                EmergencyServiceEventHandler.distanceToService = 0;
             }
         }
     }
