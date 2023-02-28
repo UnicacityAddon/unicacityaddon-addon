@@ -123,7 +123,7 @@ public class FileManager {
             File dataFile = FileManager.getDataFile();
             assert dataFile != null;
             String jsonData = FileUtils.readFileToString(dataFile, StandardCharsets.UTF_8.toString());
-            DATA = jsonData == null || jsonData.equals("") || jsonData.equals("null") ? new Data() : new Gson().fromJson(jsonData, Data.class);
+            DATA = jsonData == null || !jsonData.contains("timer") ? new Data() : new Gson().fromJson(jsonData, Data.class);
             Runtime.getRuntime().addShutdownHook(new Thread(FileManager::saveData));
         } catch (IOException e) {
             throw new RuntimeException(e);
