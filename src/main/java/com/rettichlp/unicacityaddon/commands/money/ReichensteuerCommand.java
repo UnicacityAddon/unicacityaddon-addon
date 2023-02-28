@@ -1,4 +1,4 @@
-package com.rettichlp.unicacityaddon.commands;
+package com.rettichlp.unicacityaddon.commands.money;
 
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
