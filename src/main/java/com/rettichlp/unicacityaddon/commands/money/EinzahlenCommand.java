@@ -1,4 +1,4 @@
-package com.rettichlp.unicacityaddon.commands;
+package com.rettichlp.unicacityaddon.commands.money;
 
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
@@ -15,28 +15,23 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * @author Dimiikou
  */
 @UCCommand
-public class ReichensteuerCommand implements IClientCommand {
-
-    public static int cashInATM = 0;
-    public static boolean isActive = false;
+public class EinzahlenCommand implements IClientCommand {
 
     @Override
     @Nonnull
     public String getName() {
-        return "reichensteuer";
+        return "einzahlen";
     }
 
     @Override
     @Nonnull
     public String getUsage(@Nonnull ICommandSender sender) {
-        return "/reichensteuer";
+        return "/einzahlen";
     }
 
     @Override
@@ -65,31 +60,10 @@ public class ReichensteuerCommand implements IClientCommand {
     public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
         UPlayer p = AbstractionLayer.getPlayer();
 
-        if (FileManager.DATA.getBankBalance() > 100000) {
-            if (isActive)
-                return;
-
-            p.sendChatMessage("/atminfo");
-            isActive = true;
-            int removeMoneyAmount = FileManager.DATA.getBankBalance() - 100000;
-
-            (new Timer()).schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    if (cashInATM < removeMoneyAmount) {
-                        p.sendChatMessage("/bank abbuchen " + (cashInATM));
-                        p.sendInfoMessage("Du musst noch " + (removeMoneyAmount - cashInATM) + " abbuchen.");
-                        isActive = false;
-                        return;
-                    }
-                    p.sendChatMessage("/bank abbuchen " + removeMoneyAmount);
-                    isActive = false;
-                }
-            }, 400);
-
-        } else {
-            p.sendErrorMessage("Dein Kontostand ist bereits unter 100.001$!");
-        }
+        if (FileManager.DATA.getCashBalance() > 0)
+            p.sendChatMessage("/bank einzahlen " + FileManager.DATA.getCashBalance());
+        else
+            p.sendErrorMessage("Du hast kein Geld auf der Hand!");
     }
 
     @Override

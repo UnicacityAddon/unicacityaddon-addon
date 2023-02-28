@@ -1,4 +1,4 @@
-package com.rettichlp.unicacityaddon.commands;
+package com.rettichlp.unicacityaddon.commands.money;
 
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
@@ -15,23 +15,28 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
- * @author Dimiikou
+ * @author RettichLP
  */
 @UCCommand
-public class EinzahlenCommand implements IClientCommand {
+public class ATMFillCommand implements IClientCommand {
+
+    public static int cashInATM = 0;
+    public static boolean isActive = false;
 
     @Override
     @Nonnull
     public String getName() {
-        return "einzahlen";
+        return "atmfill";
     }
 
     @Override
     @Nonnull
     public String getUsage(@Nonnull ICommandSender sender) {
-        return "/einzahlen";
+        return "/atmfill";
     }
 
     @Override
@@ -60,10 +65,26 @@ public class EinzahlenCommand implements IClientCommand {
     public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
         UPlayer p = AbstractionLayer.getPlayer();
 
-        if (FileManager.DATA.getCashBalance() > 0)
-            p.sendChatMessage("/bank einzahlen " + FileManager.DATA.getCashBalance());
-        else
-            p.sendErrorMessage("Du hast kein Geld auf der Hand!");
+        if (!isActive) {
+            p.sendChatMessage("/atminfo");
+            isActive = true;
+
+            new Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    int fillAmount = 100000 - cashInATM;
+                    int bankDepositAmount = Math.min(fillAmount, FileManager.DATA.getCashBalance());
+
+                    if (bankDepositAmount > 0) {
+                        p.sendChatMessage("/bank einzahlen " + bankDepositAmount);
+                    } else {
+                        p.sendInfoMessage("Der ATM ist bereits voll.");
+                    }
+
+                    isActive = false;
+                }
+            }, 400);
+        }
     }
 
     @Override
