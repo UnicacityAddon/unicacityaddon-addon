@@ -5,8 +5,10 @@ import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.base.utils.NavigationUtils;
+import com.rettichlp.unicacityaddon.events.faction.EmergencyServiceEventHandler;
 import com.rettichlp.unicacityaddon.events.job.FishermanEventHandler;
 import com.rettichlp.unicacityaddon.events.job.JobEventHandler;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -14,6 +16,7 @@ import java.util.regex.Matcher;
 
 /**
  * @author Dimiikou
+ * @author RettichLP
  */
 @UCEvent
 public class NavigationEventHandler {
@@ -37,6 +40,18 @@ public class NavigationEventHandler {
 
             if (JobEventHandler.isTabakJob) {
                 p.sendChatMessage("/droptabak");
+            }
+
+            if (EmergencyServiceEventHandler.distanceToService > 0) {
+                BlockPos pos = p.getPosition();
+
+                double distanceFromServiceAcceptPositionToHere = EmergencyServiceEventHandler.serviceAcceptPosition.getDistance(pos.getX(), pos.getY(), pos.getZ());
+                if (Math.abs(EmergencyServiceEventHandler.distanceToService - distanceFromServiceAcceptPositionToHere) <= 5) {
+                    p.sendChatMessage("/doneservice");
+                    EmergencyServiceEventHandler.distanceToService = 0;
+                } else {
+                    p.sendInfoMessage("Das Addon hat deinen Service nicht als erledigt markiert, da die Entfernung zum Zielpunkt nicht übereingestimmt hat.");
+                }
             }
         }
     }
