@@ -31,6 +31,7 @@ import java.util.regex.Matcher;
 @UCEvent
 public class EmergencyServiceEventHandler {
 
+    public static int openServices = 0;
     public static int distanceToService = 0;
     public static BlockPos serviceAcceptPosition;
 
@@ -45,7 +46,7 @@ public class EmergencyServiceEventHandler {
         Matcher serviceArrivedMatcher = PatternHandler.SERVICE_ARRIVED_PATTERN.matcher(unformattedMsg);
         if (serviceArrivedMatcher.find()) {
             p.playSound(SoundRegistry.SERVICE_SOUND, 1, 1);
-            FileManager.DATA.addServiceCount(1);
+            openServices++;
 
             if (ConfigElements.getServiceMessagesActivated()) {
                 ITextComponent hoverMessage = Message.getBuilder().of("Annehmen").color(ColorCode.RED).advance().createComponent();
@@ -78,7 +79,7 @@ public class EmergencyServiceEventHandler {
 
         Matcher serviceRequeuedMatcher = PatternHandler.SERVICE_REQUEUED_PATTERN.matcher(unformattedMsg);
         if (serviceRequeuedMatcher.find()) {
-            FileManager.DATA.addServiceCount(1);
+            openServices++;
 
             if (ConfigElements.getServiceMessagesActivated()) {
                 ITextComponent hoverMessage = Message.getBuilder().of("Annehmen").color(ColorCode.RED).advance().createComponent();
@@ -111,7 +112,7 @@ public class EmergencyServiceEventHandler {
 
         Matcher serviceAcceptedMatcher = PatternHandler.SERVICE_ACCEPTED_PATTERN.matcher(unformattedMsg);
         if (serviceAcceptedMatcher.find()) {
-            FileManager.DATA.removeServiceCount(1);
+            openServices = openServices > 0 ? openServices - 1 : 0;
 
             if (serviceAcceptedMatcher.group(1).equals(p.getName())) {
                 distanceToService = Integer.parseInt(serviceAcceptedMatcher.group(3));
@@ -133,7 +134,7 @@ public class EmergencyServiceEventHandler {
 
         Matcher serviceDeletedMatcher = PatternHandler.SERVICE_DELETED_PATTERN.matcher(unformattedMsg);
         if (serviceDeletedMatcher.find()) {
-            FileManager.DATA.removeServiceCount(1);
+            openServices = openServices > 0 ? openServices - 1 : 0;
 
             e.setMessage(Message.getBuilder().of("Gelöscht").color(ColorCode.BLUE).bold().advance().space()
                     .of("-").color(ColorCode.GRAY).advance().space()
@@ -145,8 +146,8 @@ public class EmergencyServiceEventHandler {
 
         Matcher serviceOverviewMatcher = PatternHandler.SERVICE_OVERVIEW_PATTERN.matcher(unformattedMsg);
         if (serviceOverviewMatcher.find()) {
-            String openServices = serviceOverviewMatcher.group(1);
-            FileManager.DATA.setServiceCount(Integer.parseInt(openServices));
+            String openServicesString = serviceOverviewMatcher.group(1);
+            openServices = Integer.parseInt(openServicesString);
             return;
         }
 
@@ -222,7 +223,7 @@ public class EmergencyServiceEventHandler {
         }
 
         if (PatternHandler.SERVICE_NO_SERVICE_PATTERN.matcher(unformattedMsg).find()) {
-            FileManager.DATA.setServiceCount(0);
+            openServices = 0;
             return;
         }
 
