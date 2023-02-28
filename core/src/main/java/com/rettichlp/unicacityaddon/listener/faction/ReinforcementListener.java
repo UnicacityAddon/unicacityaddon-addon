@@ -84,7 +84,7 @@ public class ReinforcementListener {
                 navipointString = navipoint.getName().replace("-", " ");
             }
 
-            p.sendMessage(unicacityAddon.configuration().reinforcementSetting().reinforcement().getOrDefault(DefaultReinforcementSetting.REINFORCEMENT)
+            p.sendMessage(this.unicacityAddon.configuration().reinforcementSetting().reinforcement().getOrDefault(DefaultReinforcementSetting.REINFORCEMENT)
                     .replace("&", "§")
                     .replace("%type%", type)
                     .replace("%sender%", fullName)
@@ -117,7 +117,7 @@ public class ReinforcementListener {
             String reinforcementSenderName = onTheWayMatcher.group(3);
             String distance = onTheWayMatcher.group(4);
 
-            p.sendMessage(unicacityAddon.configuration().reinforcementSetting().answer().getOrDefault(DefaultReinforcementSetting.ANSWER)
+            p.sendMessage(this.unicacityAddon.configuration().reinforcementSetting().answer().getOrDefault(DefaultReinforcementSetting.ANSWER)
                     .replace("&", "§")
                     .replace("%sender%", senderFullName)
                     .replace("%target%", reinforcementSenderName)
@@ -146,7 +146,7 @@ public class ReinforcementListener {
 
     @Subscribe
     public void onChatMessageSend(ChatMessageSendEvent e) {
-        if (unicacityAddon.configuration().reinforcementSetting().screen().get() && e.getMessage().toLowerCase().startsWith("/reinforcement ontheway "))
+        if (this.unicacityAddon.configuration().reinforcementSetting().screen().get() && e.getMessage().toLowerCase().startsWith("/reinforcement ontheway "))
             activeReinforcement = TickListener.currentTick;
     }
 

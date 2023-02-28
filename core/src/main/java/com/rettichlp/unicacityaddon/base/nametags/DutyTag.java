@@ -26,7 +26,7 @@ public class DutyTag extends NameTag {
 
     @Override
     protected @Nullable RenderableComponent getRenderableComponent() {
-        if (unicacityAddon.configuration().nameTagSetting().duty().get()) {
+        if (this.unicacityAddon.configuration().nameTagSetting().duty().get()) {
             Optional<Player> playerOptional = UnicacityAddon.PLAYER.getWorld().getPlayers().stream()
                     .filter(p -> p.gameUser().getUniqueId().equals(this.entity.getUniqueId()))
                     .findFirst();

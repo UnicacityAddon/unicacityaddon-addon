@@ -34,10 +34,10 @@ public class WaitingRoomListener {
         int clientID = e.getClientID();
         int targetChannelID = e.getTargetChannelID();
 
-        if (unicacityAddon.configuration().tsNotificationSupport().get() && targetChannelID == 41) {
+        if (this.unicacityAddon.configuration().tsNotificationSupport().get() && targetChannelID == 41) {
             handleEnterSupportChannel(p, clientID);
             // TODO: 09.12.2022 p.playSound("block.note.pling");
-        } else if (unicacityAddon.configuration().tsNotificationPublic().get() && targetChannelID == p.getFaction().getPublicChannelId()) {
+        } else if (this.unicacityAddon.configuration().tsNotificationPublic().get() && targetChannelID == p.getFaction().getPublicChannelId()) {
             handleEnterPublicChannel(p, clientID);
             // TODO: 09.12.2022 p.playSound("block.note.pling");
         }
@@ -83,7 +83,7 @@ public class WaitingRoomListener {
                             .advance()
                     .createComponent());
 
-            UnicacityAddon.LOGGER.info("Client joined public channel: " + name);
+            this.unicacityAddon.logger().info("Client joined public channel: " + name);
         }).start();
     }
 }

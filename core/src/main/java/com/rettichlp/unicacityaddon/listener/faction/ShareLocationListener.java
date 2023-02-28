@@ -66,7 +66,7 @@ public class ShareLocationListener {
             navipointString = doubleNaviPointEntry.getValue().getName().replace("-", " ");
         }
 
-        p.sendMessage(unicacityAddon.configuration().slocSetting().sloc().getOrDefault(DefaultSlocSetting.SLOC)
+        p.sendMessage(this.unicacityAddon.configuration().slocSetting().sloc().getOrDefault(DefaultSlocSetting.SLOC)
                 .replace("&", "§")
                 .replace("%sender%", senderName)
                 .replace("%navipoint%", navipointString)

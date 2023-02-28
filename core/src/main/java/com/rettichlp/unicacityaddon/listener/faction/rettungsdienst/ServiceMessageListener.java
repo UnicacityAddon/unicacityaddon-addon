@@ -30,7 +30,7 @@ public class ServiceMessageListener {
         String msg = e.chatMessage().getPlainText();
 
         Matcher m = PatternHandler.SERVICE_ARRIVED_PATTERN.matcher(msg);
-        if (unicacityAddon.configuration().factionMessageSetting().service().get()) {
+        if (this.unicacityAddon.configuration().factionMessageSetting().service().get()) {
             if (m.find()) {
                 Component hoverMessage = Message.getBuilder().of("Annehmen").color(ColorCode.RED).advance().createComponent();
 

@@ -83,7 +83,7 @@ public class DrugInteractionListener {
             DrugType drugType = DrugType.getDrugType(drugUseMatcher.group("drugType"));
             DrugPurity drugPurity = DrugPurity.BEST;
 
-            OwnUseSetting ownUseSetting = unicacityAddon.configuration().ownUseSetting();
+            OwnUseSetting ownUseSetting = this.unicacityAddon.configuration().ownUseSetting();
             if (drugType != null) {
                 switch (drugType) {
                     case COCAINE:

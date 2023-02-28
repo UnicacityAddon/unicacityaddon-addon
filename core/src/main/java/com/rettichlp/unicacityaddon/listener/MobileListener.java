@@ -141,7 +141,7 @@ public class MobileListener {
 //            if ((name.equals("record.cat") || name.equals("record.stal") || name.equals("entity.sheep.ambient")) && !whitelistSound) {
 //                e.setResult(null);
 //                e.setResultSound(null);
-//                UnicacityAddon.LOGGER.info("Sound event cancelled: " + name);
+//                this.unicacityAddon.logger().info("Sound event cancelled: " + name);
 //            } else whitelistSound = false;
 //        }
 //    }

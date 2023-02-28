@@ -25,7 +25,7 @@ public class FactionInfoTag extends NameTag {
 
     @Override
     protected @Nullable RenderableComponent getRenderableComponent() {
-        if (unicacityAddon.configuration().nameTagSetting().factionInfo().get()) {
+        if (this.unicacityAddon.configuration().nameTagSetting().factionInfo().get()) {
             Optional<Player> playerOptional = UnicacityAddon.PLAYER.getWorld().getPlayers().stream()
                     .filter(p -> p.gameUser().getUniqueId().equals(this.entity.getUniqueId()))
                     .findFirst();

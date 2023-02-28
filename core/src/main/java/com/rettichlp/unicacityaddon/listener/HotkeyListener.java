@@ -68,7 +68,7 @@ public class HotkeyListener {
         } else if (key.equals(hotkeySetting.acceptReport().getOrDefault(Key.NONE))) {
             p.sendServerMessage("/ar");
         } else if (key.equals(hotkeySetting.cancelReport().getOrDefault(Key.NONE))) {
-            String farewell = unicacityAddon.configuration().reportMessageSetting().farewell().getOrDefault("");
+            String farewell = this.unicacityAddon.configuration().reportMessageSetting().farewell().getOrDefault("");
             if (!farewell.isEmpty())
                 p.sendServerMessage(farewell);
             p.sendServerMessage("/cr");

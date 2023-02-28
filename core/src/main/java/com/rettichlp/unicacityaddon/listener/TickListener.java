@@ -81,7 +81,7 @@ public class TickListener {
                 File file = FileManager.getNewActivityImageFile("reinforcement");
                 //HotkeyListener.handleScreenshot(file);
             } catch (IOException e) {
-                UnicacityAddon.LOGGER.warn(e.getMessage());
+                this.unicacityAddon.logger().warn(e.getMessage());
             }
         }
     }

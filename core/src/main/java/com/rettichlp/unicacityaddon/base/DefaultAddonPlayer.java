@@ -14,9 +14,6 @@ import net.labymod.api.client.scoreboard.Scoreboard;
 import net.labymod.api.client.world.ClientWorld;
 import net.labymod.api.util.math.vector.FloatVector3;
 
-import java.awt.Toolkit;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.StringSelection;
 import java.util.AbstractMap;
 import java.util.UUID;
 
@@ -91,7 +88,7 @@ public class DefaultAddonPlayer implements AddonPlayer {
     @Override
     public void sendServerMessage(String message) {
         this.unicacityAddon.sendMessage(message);
-        UnicacityAddon.LOGGER.info("UPlayer sent chat message: " + message);
+        this.unicacityAddon.logger().info("UPlayer sent chat message: " + message);
     }
 
     @Override
@@ -163,9 +160,7 @@ public class DefaultAddonPlayer implements AddonPlayer {
 
     @Override
     public void copyToClipboard(String string) {
-        StringSelection stringSelection = new StringSelection(string);
-        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-        clipboard.setContents(stringSelection, null);
+        this.unicacityAddon.labyAPI().minecraft().setClipboard(string);
     }
 
     @Override

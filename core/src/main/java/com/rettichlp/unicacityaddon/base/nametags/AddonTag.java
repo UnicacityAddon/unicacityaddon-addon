@@ -25,7 +25,7 @@ public class AddonTag extends NameTag {
 
     @Override
     protected @Nullable RenderableComponent getRenderableComponent() {
-        if (unicacityAddon.configuration().addonTag().get()) {
+        if (this.unicacityAddon.configuration().addonTag().get()) {
             Optional<Player> playerOptional = UnicacityAddon.PLAYER.getWorld().getPlayers().stream()
                     .filter(p -> p.gameUser().getUniqueId().equals(this.entity.getUniqueId()))
                     .findFirst();

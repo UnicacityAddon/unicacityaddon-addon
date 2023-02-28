@@ -66,7 +66,7 @@ public class HouseDataListener {
         }
 
         if (PatternHandler.HOUSE_STORAGE_SUCCESSFUL_INTERACTION.matcher(msg).find() && !waitingCommand.isEmpty()) {
-            UnicacityAddon.LOGGER.info("HOUSE_STORAGE_SUCCESSFUL_INTERACTION found with waiting command: " + waitingCommand);
+            this.unicacityAddon.logger().info("HOUSE_STORAGE_SUCCESSFUL_INTERACTION found with waiting command: " + waitingCommand);
 
             Matcher drugStorageAddCommandMatcher = PatternHandler.HOUSE_STORAGE_ADD_COMMAND_PATTERN.matcher(waitingCommand);
             if (drugStorageAddCommandMatcher.find()) {

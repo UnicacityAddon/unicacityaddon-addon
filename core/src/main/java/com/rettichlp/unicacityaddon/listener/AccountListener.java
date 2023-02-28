@@ -62,7 +62,7 @@ public class AccountListener {
             return;
         }
 
-        if (PatternHandler.RESOURCEPACK_PATTERN.matcher(msg).find() && unicacityAddon.configuration().texturePack().get()) {
+        if (PatternHandler.RESOURCEPACK_PATTERN.matcher(msg).find() && this.unicacityAddon.configuration().texturePack().get()) {
             e.setCancelled(true);
             return;
         }
@@ -126,7 +126,7 @@ public class AccountListener {
     }
 
     private void handleUnlockAccount() {
-        PasswordSetting passwordSetting = unicacityAddon.configuration().passwordSetting();
+        PasswordSetting passwordSetting = this.unicacityAddon.configuration().passwordSetting();
         if (passwordSetting.enabled().get())
             UnicacityAddon.PLAYER.sendServerMessage("/passwort " + passwordSetting.password().getOrDefault(""));
     }

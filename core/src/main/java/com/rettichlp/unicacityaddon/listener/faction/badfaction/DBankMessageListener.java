@@ -30,7 +30,7 @@ public class DBankMessageListener {
     public void onChatReceive(ChatReceiveEvent e) {
         String msg = e.chatMessage().getPlainText();
 
-        if (!unicacityAddon.configuration().factionMessageSetting().dBank().get())
+        if (!this.unicacityAddon.configuration().factionMessageSetting().dBank().get())
             return;
 
         Matcher dropMatcher = PatternHandler.DBANK_GIVE_PATTERN.matcher(msg);

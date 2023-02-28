@@ -61,13 +61,13 @@ public class NameTagListener {
         if (FactionManager.getInstance().getFactionData().containsKey(playerName)) {
             Faction targetPlayerFaction = FactionManager.getInstance().getFactionData().getOrDefault(playerName, new AbstractMap.SimpleEntry<>(Faction.NULL, -1)).getKey();
 
-            FactionNameTagSetting factionNameTagSetting = unicacityAddon.configuration().nameTagSetting().factionNameTagSetting();
+            FactionNameTagSetting factionNameTagSetting = this.unicacityAddon.configuration().nameTagSetting().factionNameTagSetting();
             if (factionNameTagSetting.enabled().get()) {
                 if (targetPlayerFaction.equals(UnicacityAddon.PLAYER.getFaction()))
                     prefix.append(factionNameTagSetting.color().getOrDefault(ColorCode.BLUE).getCode());
             }
 
-            AllianceFactionNameTagSetting allianceFactionNameTagSetting = unicacityAddon.configuration().nameTagSetting().allianceFactionNameTagSetting();
+            AllianceFactionNameTagSetting allianceFactionNameTagSetting = this.unicacityAddon.configuration().nameTagSetting().allianceFactionNameTagSetting();
             if (allianceFactionNameTagSetting.enabled().get()) {
                 ColorCode allianceColor = allianceFactionNameTagSetting.color().getOrDefault(ColorCode.DARK_PURPLE);
                 Faction allianceFaction1 = allianceFactionNameTagSetting.faction1().getOrDefault(Faction.NULL);
@@ -76,7 +76,7 @@ public class NameTagListener {
                     prefix.append(allianceColor.getCode());
             }
 
-            StreetwarNameTagSetting streetwarNameTagSetting = unicacityAddon.configuration().nameTagSetting().streetwarNameTagSetting();
+            StreetwarNameTagSetting streetwarNameTagSetting = this.unicacityAddon.configuration().nameTagSetting().streetwarNameTagSetting();
             if (streetwarNameTagSetting.enabled().get()) {
                 ColorCode streetwarColor = streetwarNameTagSetting.color().getOrDefault(ColorCode.RED);
                 Faction streetwarFaction1 = streetwarNameTagSetting.faction1().getOrDefault(Faction.NULL);
@@ -86,7 +86,7 @@ public class NameTagListener {
             }
         }
 
-        SpecificNameTagSetting specificNameTagSetting = unicacityAddon.configuration().nameTagSetting().specificNameTagSetting();
+        SpecificNameTagSetting specificNameTagSetting = this.unicacityAddon.configuration().nameTagSetting().specificNameTagSetting();
         if (specificNameTagSetting.enabled().get()) {
             WantedListener.Wanted wanted = WantedListener.WANTED_MAP.get(playerName);
             if (wanted != null) {

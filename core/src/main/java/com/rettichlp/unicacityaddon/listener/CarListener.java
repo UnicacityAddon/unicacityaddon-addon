@@ -50,7 +50,7 @@ public class CarListener {
         }
 
         Matcher carPositionMatcher = PatternHandler.CAR_POSITION_PATTERN.matcher(msg);
-        if (carPositionMatcher.find() && unicacityAddon.configuration().carRoute().get()) {
+        if (carPositionMatcher.find() && this.unicacityAddon.configuration().carRoute().get()) {
             p.setNaviRoute(Integer.parseInt(carPositionMatcher.group(1)), Integer.parseInt(carPositionMatcher.group(2)), Integer.parseInt(carPositionMatcher.group(3)));
             return;
         }

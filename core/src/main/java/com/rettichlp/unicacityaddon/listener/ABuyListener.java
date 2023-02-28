@@ -101,7 +101,7 @@ public class ABuyListener {
 //        lastBuy = System.currentTimeMillis();
 //
 //        Container container = p.getOpenContainer();
-//        unicacityAddon.MINECRAFT.playerController.windowClick(container.windowId, slotIndex, 0, ClickType.PICKUP, unicacityAddon.MINECRAFT.player);
+//        this.unicacityAddon.MINECRAFT.playerController.windowClick(container.windowId, slotIndex, 0, ClickType.PICKUP, this.unicacityAddon.MINECRAFT.player);
 //
 //        container.detectAndSendChanges();
 //        p.getInventoryContainer().detectAndSendChanges();

@@ -62,7 +62,7 @@ public class MoneyListener {
         if (kontoauszugMatcher.find()) {
             FileManager.DATA.setBankBalance(Integer.parseInt(kontoauszugMatcher.group(1)));
 
-            ATMSetting atmSetting = unicacityAddon.configuration().atmSetting();
+            ATMSetting atmSetting = this.unicacityAddon.configuration().atmSetting();
             if (atmSetting.enabled().get()) {
                 if (atmSetting.fBank().get()) {
                     p.sendServerMessage("/fbank");

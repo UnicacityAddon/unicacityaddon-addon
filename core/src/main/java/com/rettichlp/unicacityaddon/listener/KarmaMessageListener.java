@@ -63,7 +63,7 @@ public class KarmaMessageListener {
 
         Matcher karmaMatcher = PatternHandler.KARMA_PATTERN.matcher(msg);
         if (karmaMatcher.find() && karmaCheck) {
-            if (karma < 0 && unicacityAddon.configuration().despawnTime().get()) {
+            if (karma < 0 && this.unicacityAddon.configuration().despawnTime().get()) {
                 Calendar cal = Calendar.getInstance();
                 cal.add(Calendar.MINUTE, 5);
                 Date date = cal.getTime();

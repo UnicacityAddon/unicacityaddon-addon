@@ -41,7 +41,7 @@ public class ReportListener {
     public void onChatReceive(ChatReceiveEvent e) {
         AddonPlayer p = UnicacityAddon.PLAYER;
         String unformattedMsg = e.chatMessage().getPlainText();
-        ReportMessageSetting reportMessageSetting = unicacityAddon.configuration().reportMessageSetting();
+        ReportMessageSetting reportMessageSetting = this.unicacityAddon.configuration().reportMessageSetting();
 
         if (PatternHandler.REPORT_ACCEPTED_PATTERN.matcher(unformattedMsg).find()) {
             isReport = true;
