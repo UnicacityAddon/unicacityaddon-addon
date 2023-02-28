@@ -79,60 +79,73 @@ public class HQMessageEventHandler {
             }
 
             m = PatternHandler.WANTEDS_TICKET_PATTERN.matcher(msg);
-            if (m.find())
+            if (m.find()) {
                 e.setMessage(Message.getBuilder().of("Ticket").color(ColorCode.RED).advance().space()
                         .of("-").color(ColorCode.GRAY).advance().space()
                         .of(m.group(1)).color(ColorCode.BLUE).advance().space()
                         .of("-").color(ColorCode.GRAY).advance().space()
                         .of(m.group(2)).color(ColorCode.BLUE).advance().createComponent());
+                return;
+            }
 
             m = PatternHandler.TAKE_DRIVING_LICENSE_PATTERN.matcher(msg);
-            if (m.find())
+            if (m.find()) {
                 e.setMessage(Message.getBuilder().of("Führerscheinabnahme").color(ColorCode.RED).advance().space()
                         .of("-").color(ColorCode.GRAY).advance().space()
                         .of(m.group(3)).color(ColorCode.BLUE).advance().space()
                         .of("-").color(ColorCode.GRAY).advance().space()
                         .of(m.group(2)).color(ColorCode.BLUE).advance().createComponent());
+                return;
+            }
 
             m = PatternHandler.GIVE_DRIVING_LICENSE_PATTERN.matcher(msg);
-            if (m.find())
+            if (m.find()) {
                 e.setMessage(Message.getBuilder().of("Führerscheinrückgabe").color(ColorCode.RED).advance().space()
                         .of("-").color(ColorCode.GRAY).advance().space()
                         .of(m.group(3)).color(ColorCode.BLUE).advance().space()
                         .of("-").color(ColorCode.GRAY).advance().space()
                         .of(m.group(2)).color(ColorCode.BLUE).advance().createComponent());
+                return;
+            }
 
             m = PatternHandler.TAKE_GUN_LICENSE_PATTERN.matcher(msg);
-            if (m.find())
+            if (m.find()) {
                 e.setMessage(Message.getBuilder().of("Waffenscheinabnahme").color(ColorCode.RED).advance().space()
                         .of("-").color(ColorCode.GRAY).advance().space()
                         .of(m.group(3)).color(ColorCode.BLUE).advance().space()
                         .of("-").color(ColorCode.GRAY).advance().space()
                         .of(m.group(2)).color(ColorCode.BLUE).advance().createComponent());
+                return;
+            }
 
             m = PatternHandler.GIVE_GUN_LICENSE_PATTERN.matcher(msg);
-            if (m.find())
+            if (m.find()) {
                 e.setMessage(Message.getBuilder().of("Waffenscheinrückgabe").color(ColorCode.RED).advance().space()
                         .of("-").color(ColorCode.GRAY).advance().space()
                         .of(m.group(3)).color(ColorCode.BLUE).advance().space()
                         .of("-").color(ColorCode.GRAY).advance().space()
                         .of(m.group(2)).color(ColorCode.BLUE).advance().createComponent());
+                return;
+            }
 
             m = PatternHandler.TAKE_DRUGS_PATTERN.matcher(msg);
-            if (m.find())
+            if (m.find()) {
                 e.setMessage(Message.getBuilder().of("Drogenabnahme").color(ColorCode.RED).advance().space()
                         .of("-").color(ColorCode.GRAY).advance().space()
                         .of(m.group(3)).color(ColorCode.BLUE).advance().space()
                         .of("-").color(ColorCode.GRAY).advance().space()
                         .of(m.group(2)).color(ColorCode.BLUE).advance().createComponent());
+                return;
+            }
 
             m = PatternHandler.TAKE_GUNS_PATTERN.matcher(msg);
-            if (m.find())
+            if (m.find()) {
                 e.setMessage(Message.getBuilder().of("Waffenabnahme").color(ColorCode.RED).advance().space()
                         .of("-").color(ColorCode.GRAY).advance().space()
                         .of(m.group(3)).color(ColorCode.BLUE).advance().space()
                         .of("-").color(ColorCode.GRAY).advance().space()
                         .of(m.group(2)).color(ColorCode.BLUE).advance().createComponent());
+            }
         }
     }
 }

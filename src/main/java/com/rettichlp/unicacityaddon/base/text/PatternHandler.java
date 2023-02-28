@@ -91,19 +91,19 @@ public class PatternHandler {
     public static final Pattern WANTED_GIVEN_REASON_PATTERN = Pattern.compile("^HQ: Gesuchter: (?:\\[UC])*(\\w+)\\. Grund: (.+)$");
     public static final Pattern WANTED_REASON = Pattern.compile("^HQ: Fahndungsgrund: (.+) \\| Fahndungszeit: (.+)\\.$");
     public static final Pattern WANTED_GIVEN_POINTS_PATTERN = Pattern.compile("^HQ: (?:\\[UC])*(\\w+)'s momentanes WantedLevel: (\\d+)$");
-    public static final Pattern WANTED_KILL = Pattern.compile("^HQ: (?:\\[UC])*([a-zA-Z0-9_]+) wurde von (?:\\[UC])*([a-zA-Z0-9_]+) getötet\\.$");
-    public static final Pattern WANTED_DELETE = Pattern.compile("^HQ: .+ (?:\\[UC])*([a-zA-Z0-9_]+) hat (?:\\[UC])*([a-zA-Z0-9_]+)'s Akten gelöscht, over\\.$");
-    public static final Pattern WANTED_JAIL = Pattern.compile("^HQ: (?:\\[UC])*([a-zA-Z0-9_]+) wurde von (?:\\[UC])*([a-zA-Z0-9_]+) eingesperrt\\.$");
-    public static final Pattern WANTEDS_TICKET_PATTERN = Pattern.compile("^HQ: .+ (?:\\[UC])*([a-zA-Z0-9_]+) hat (?:\\[UC])*([a-zA-Z0-9_]+)(?:'s)*(?: seine| ihre)* Akten gelöscht, over\\.$");
+    public static final Pattern WANTED_KILL = Pattern.compile("^HQ: (?:\\[UC])*(\\w+) wurde von (?:\\[UC])*([a-zA-Z0-9_]+) getötet\\.$");
+    public static final Pattern WANTED_DELETE = Pattern.compile("^HQ: .+ (?:\\[UC])*(\\w+) hat (?:\\[UC])*([a-zA-Z0-9_]+)'s Akten gelöscht, over\\.$");
+    public static final Pattern WANTED_JAIL = Pattern.compile("^HQ: (?:\\[UC])*(\\w+) wurde von (?:\\[UC])*([a-zA-Z0-9_]+) eingesperrt\\.$");
+    public static final Pattern WANTEDS_TICKET_PATTERN = Pattern.compile("^HQ: .+ (?:\\[UC])*(\\w+) hat (?:\\[UC])*([a-zA-Z0-9_]+)(?:'s)*(?: seine| ihre)* Akten gelöscht, over\\.$");
     public static final Pattern WANTED_DELETED_PATTERN = Pattern.compile("^HQ: (?:\\[UC])*(\\w+) wurde von (?:\\[UC])*\\w+ eingesperrt\\.$" +
             "|^HQ: (?:\\[UC])*(\\w+) wurde von (?:\\[UC])*\\w+ getötet\\.$" +
             "|^HQ: .+ (?:\\[UC])*\\w+ hat (?:\\[UC])*(\\w+)(?:'s)*(?: seine| ihre)* Akten gelöscht, over\\.$");
-    public static final Pattern TAKE_DRIVING_LICENSE_PATTERN = Pattern.compile("^(Agent|Beamter) (?:\\[UC])*([a-zA-Z0-9_]+) hat (?:\\[UC])*([a-zA-Z0-9_]+)(?:'s)* Führerschein abgenommen\\.$");
-    public static final Pattern GIVE_DRIVING_LICENSE_PATTERN = Pattern.compile("^(Agent|Beamter) (?:\\[UC])*([a-zA-Z0-9_]+) hat (?:\\[UC])*([a-zA-Z0-9_]+)(?:'s)* Führerschein zurückgegeben\\.$");
-    public static final Pattern TAKE_GUN_LICENSE_PATTERN = Pattern.compile("^(Agent|Beamter) (?:\\[UC])*([a-zA-Z0-9_]+) hat (?:\\[UC])*([a-zA-Z0-9_]+)(?:'s)* Waffenschein abgenommen\\.$");
-    public static final Pattern GIVE_GUN_LICENSE_PATTERN = Pattern.compile("^(Agent|Beamter) (?:\\[UC])*([a-zA-Z0-9_]+) hat (?:\\[UC])*([a-zA-Z0-9_]+)(?:'s)* Waffenschein zurückgegeben\\.$");
-    public static final Pattern TAKE_GUNS_PATTERN = Pattern.compile("^(Beamtin|Beamter) (?:\\[UC])*([a-zA-Z0-9_]+) hat (?:\\[UC])*([a-zA-Z0-9_]+) die Waffen abgenommen\\.$");
-    public static final Pattern TAKE_DRUGS_PATTERN = Pattern.compile("^(Beamtin|Beamter) (?:\\[UC])*([a-zA-Z0-9_]+) hat (?:\\[UC])*([a-zA-Z0-9_]+) (seine|ihre) Drogen abgenommen!$");
+    public static final Pattern TAKE_DRIVING_LICENSE_PATTERN = Pattern.compile("^(Agent|Beamter) (?:\\[UC])*(\\w+) hat (?:\\[UC])*([a-zA-Z0-9_]+)(?:'s)* Führerschein abgenommen\\.$");
+    public static final Pattern GIVE_DRIVING_LICENSE_PATTERN = Pattern.compile("^(Agent|Beamter) (?:\\[UC])*(\\w+) hat (?:\\[UC])*([a-zA-Z0-9_]+)(?:'s)* Führerschein zurückgegeben\\.$");
+    public static final Pattern TAKE_GUN_LICENSE_PATTERN = Pattern.compile("^(Agent|Beamter) (?:\\[UC])*(\\w+) hat (?:\\[UC])*([a-zA-Z0-9_]+)(?:'s)* Waffenschein abgenommen\\.$");
+    public static final Pattern GIVE_GUN_LICENSE_PATTERN = Pattern.compile("^(Agent|Beamter) (?:\\[UC])*(\\w+) hat (?:\\[UC])*([a-zA-Z0-9_]+)(?:'s)* Waffenschein zurückgegeben\\.$");
+    public static final Pattern TAKE_GUNS_PATTERN = Pattern.compile("^(Beamtin|Beamter) (?:\\[UC])*(\\w+) hat (?:\\[UC])*([a-zA-Z0-9_]+) die Waffen abgenommen\\.$");
+    public static final Pattern TAKE_DRUGS_PATTERN = Pattern.compile("^(Beamtin|Beamter) (?:\\[UC])*(\\w+) hat (?:\\[UC])*([a-zA-Z0-9_]+) (seine|ihre) Drogen abgenommen!$");
     public static final Pattern BLACKLIST_START_PATTERN = Pattern.compile("=== Blacklist .+ ===");
     public static final Pattern BLACKLIST_LIST_PATTERN = Pattern.compile("^ » (?:\\[UC])*(\\w+) \\| (.+) \\| (.+) \\| (\\d+) Kills \\| (\\d+)\\$(| \\(AFK\\))$");
     public static final Pattern BLACKLIST_ADDED_PATTERN = Pattern.compile("^\\[Blacklist] (?:\\[UC])*(\\w+) wurde von (?:\\[UC])*\\w+ auf die Blacklist gesetzt!$");
