@@ -12,6 +12,7 @@ import com.rettichlp.unicacityaddon.base.text.Message;
 import net.labymod.api.client.chat.command.Command;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author RettichLP
@@ -36,10 +37,13 @@ public class PlayerGroupCommand extends Command {
                     .of(arguments[1]).color(ColorCode.DARK_AQUA).advance()
                     .createComponent());
 
-            APIConverter.getPlayerGroupEntryList(arguments[1]).forEach(playerGroup -> p.sendMessage(Message.getBuilder()
-                    .of("»").color(ColorCode.GRAY).advance().space()
-                    .of(playerGroup.getName()).color(ColorCode.AQUA).advance()
-                    .createComponent()));
+            APIConverter.ADDONGROUPMAP.entrySet().stream()
+                    .filter(stringPlayerGroupEntry -> stringPlayerGroupEntry.getValue().equals(arguments[1]))
+                    .map(Map.Entry::getKey)
+                    .forEach(playerGroup -> p.sendMessage(Message.getBuilder()
+                            .of("»").color(ColorCode.GRAY).advance().space()
+                            .of(playerGroup.getName()).color(ColorCode.AQUA).advance()
+                            .createComponent()));
 
             p.sendEmptyMessage();
 

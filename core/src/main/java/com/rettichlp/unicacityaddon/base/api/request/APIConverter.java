@@ -1,10 +1,8 @@
 package com.rettichlp.unicacityaddon.base.api.request;
 
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.enums.api.AddonGroup;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.models.BlacklistReason;
 import com.rettichlp.unicacityaddon.base.models.Broadcast;
@@ -13,14 +11,18 @@ import com.rettichlp.unicacityaddon.base.models.HouseBanReason;
 import com.rettichlp.unicacityaddon.base.models.NaviPoint;
 import com.rettichlp.unicacityaddon.base.models.PlayerGroup;
 import com.rettichlp.unicacityaddon.base.models.WantedReason;
+import com.rettichlp.unicacityaddon.base.text.NotificationCenter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class APIConverter {
 
     public static List<HouseBan> HOUSEBANENTRYLIST = new ArrayList<>();
     public static List<NaviPoint> NAVIPOINTLIST = new ArrayList<>();
+    public static Map<PlayerGroup, String> ADDONGROUPMAP = new HashMap<>();
 
     public static void syncAll() {
         new Thread(() -> {
@@ -45,24 +47,23 @@ public class APIConverter {
 
     private static Thread syncPlayerAddonGroupMap() {
         return new Thread(() -> {
-            JsonObject response = APIRequest.sendPlayerRequest();
-            if (response != null) {
-                for (AddonGroup addonGroup : AddonGroup.values()) {
-                    addonGroup.getMemberList().clear();
-                    for (JsonElement jsonElement : response.getAsJsonArray(addonGroup.getApiName())) {
-                        addonGroup.getMemberList().add(jsonElement.getAsJsonObject().get("name").getAsString());
-                    }
-                }
-            }
+            ADDONGROUPMAP = getPlayerGroupEntryMap();
+            NotificationCenter.send(NotificationCenter.SYNCED_ADDON_GROUP_NOTIFICATION);
         });
     }
 
     private static Thread syncHousebanEntryList() {
-        return new Thread(() -> HOUSEBANENTRYLIST = getHouseBanEntryList());
+        return new Thread(() -> {
+            HOUSEBANENTRYLIST = getHouseBanEntryList();
+            NotificationCenter.send(NotificationCenter.SYNCED_HOUSE_BANS_NOTIFICATION);
+        });
     }
 
     private static Thread syncNaviPointEntryList() {
-        return new Thread(() -> NAVIPOINTLIST = getNaviPointEntryList());
+        return new Thread(() -> {
+            NAVIPOINTLIST = getNaviPointEntryList();
+            NotificationCenter.send(NotificationCenter.SYNCED_NAVI_POINTS_NOTIFICATION);
+        });
     }
 
     public static List<BlacklistReason> getBlacklistReasonEntryList() {
@@ -179,6 +180,13 @@ public class APIConverter {
             response.forEach(jsonElement -> playerGroupList.add(jsonElement.getAsString()));
         }
         return playerGroupList;
+    }
+
+    public static Map<PlayerGroup, String> getPlayerGroupEntryMap() {
+        Map<PlayerGroup, String> playerGroupEntryMap = new HashMap<>();
+        getPlayerGroupList().forEach(s -> getPlayerGroupEntryList(s).forEach(playerGroup -> playerGroupEntryMap.put(playerGroup, s)));
+        NotificationCenter.send(NotificationCenter.SYNCED_ADDON_GROUP_NOTIFICATION);
+        return playerGroupEntryMap;
     }
 
     public static List<PlayerGroup> getPlayerGroupEntryList(String group) {
