@@ -4,6 +4,8 @@ import com.rettichlp.unicacityaddon.base.config.atm.ATMSetting;
 import com.rettichlp.unicacityaddon.base.config.atm.DefaultATMSetting;
 import com.rettichlp.unicacityaddon.base.config.equip.DefaultEquipSetting;
 import com.rettichlp.unicacityaddon.base.config.equip.EquipSetting;
+import com.rettichlp.unicacityaddon.base.config.hotkey.DefaultHotkeySetting;
+import com.rettichlp.unicacityaddon.base.config.hotkey.HotkeySetting;
 import com.rettichlp.unicacityaddon.base.config.join.CommandSetting;
 import com.rettichlp.unicacityaddon.base.config.join.DefaultCommandSetting;
 import com.rettichlp.unicacityaddon.base.config.join.DefaultPasswordSetting;
@@ -32,6 +34,8 @@ public class DefaultUnicacityAddonConfiguration extends AddonConfig implements U
 
     @SwitchSetting
     private final ConfigProperty<Boolean> enabled = new ConfigProperty<>(true);
+
+    private final DefaultHotkeySetting hotkeySetting = new DefaultHotkeySetting();
 
     @SettingSection("nametags")
     private final DefaultNameTagSetting nameTagSetting = new DefaultNameTagSetting();
@@ -99,6 +103,11 @@ public class DefaultUnicacityAddonConfiguration extends AddonConfig implements U
     @Override
     public NameTagSetting nameTagSetting() {
         return this.nameTagSetting;
+    }
+
+    @Override
+    public HotkeySetting hotkeySetting() {
+        return this.hotkeySetting;
     }
 
     @Override

@@ -64,6 +64,49 @@
         "name": "Enabled",
         "description": "Aktiviert und deaktiviert das Addon"
       },
+      "hotkeySetting": {
+        "name": "Hotkeys",
+        "screenshot": {
+          "name": "Screenshot",
+          "description": "Erstellt einen Screenshot, lädt ihn auf Imgur hoch und kopiert den Link in die Zwischenablage."
+        },
+        "acceptAd": {
+          "name": "Werbung akzeptieren",
+          "description": "Akzeptiert die Werbung eines Spielers."
+        },
+        "declineAd": {
+          "name": "Werbung ablehnen",
+          "description": "Lehnt die Werbung eines Spielers ab, wenn gegen Richtlinien verstoßen wird."
+        },
+        "acceptReport": {
+          "name": "Report annehmen",
+          "description": "Nimmt einen Report an und sendet die Begrüßungsnachricht aus 'Report -> Begrüßung'."
+        },
+        "cancelReport": {
+          "name": "Report beenden",
+          "description": "Sendet die Verabschiedung aus 'Report -> Verabschiedung' und schließt den Report."
+        },
+        "aDuty": {
+          "name": "ADuty",
+          "description": "Führt den '/aduty' Befehl aus."
+        },
+        "aDutySilent": {
+          "name": "ADuty (ohne Nachricht)",
+          "description": "Führt den '/aduty -s' Befehl aus."
+        },
+        "reinforcementFaction": {
+          "name": "Reinforcement (Fraktion)",
+          "description": "Sendet einen Reinforcement an die eigene Fraktion."
+        },
+        "reinforcementAlliance": {
+          "name": "Reinforcement (Bündnis)",
+          "description": "Sendet einen Reinforcement an die eigene Fraktion und das Bündnis."
+        },
+        "publicChannel": {
+          "name": "Öffentlichen Channel betreten",
+          "description": "Bewegt den Spieler in den eigenen öffentlichen Channel auf dem Teamspeak."
+        }
+      },
       "nameTagSetting": {
         "name": "NameTags",
         "updateInterval": {

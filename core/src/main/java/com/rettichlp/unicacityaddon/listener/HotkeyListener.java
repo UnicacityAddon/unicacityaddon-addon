@@ -2,7 +2,9 @@ package com.rettichlp.unicacityaddon.listener;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
+import com.rettichlp.unicacityaddon.base.config.hotkey.HotkeySetting;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
+import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.teamspeak.CommandResponse;
 import com.rettichlp.unicacityaddon.base.teamspeak.TSUtils;
@@ -10,14 +12,16 @@ import com.rettichlp.unicacityaddon.base.teamspeak.commands.ClientMoveCommand;
 import com.rettichlp.unicacityaddon.base.teamspeak.objects.Channel;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
-import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.base.utils.ImageUploadUtils;
+import com.rettichlp.unicacityaddon.listener.team.AdListener;
+import net.labymod.api.Laby;
+import net.labymod.api.client.gui.screen.key.Key;
 import net.labymod.api.event.Subscribe;
-import net.labymod.api.event.client.chat.ChatReceiveEvent;
+import net.labymod.api.event.client.input.KeyEvent;
+import net.labymod.api.util.math.vector.FloatVector3;
 
 import java.io.File;
-import java.util.concurrent.TimeUnit;
-import java.util.regex.Matcher;
+import java.io.IOException;
 
 /**
  * @author RettichLP
@@ -26,87 +30,85 @@ import java.util.regex.Matcher;
 @UCEvent
 public class HotkeyListener {
 
-    private String adIssuer;
-    private long adTime;
-    private static long lastHotkeyUse = -1;
-
     private final UnicacityAddon unicacityAddon;
 
     public HotkeyListener(UnicacityAddon unicacityAddon) {
         this.unicacityAddon = unicacityAddon;
     }
 
-    //    @Subscribe
-//    public void onKey(KeyEvent e) {
-//        handleHotkey();
-//    }
-
     @Subscribe
-    public void onChatReceive(ChatReceiveEvent e)  {
-        Matcher matcher = PatternHandler.AD_CONTROL_PATTERN.matcher(e.chatMessage().getPlainText());
-        if (!matcher.find())
-            return;
-        adIssuer = matcher.group(1);
-        adTime = System.currentTimeMillis();
+    public void onKey(KeyEvent e) {
+        if (e.state().equals(KeyEvent.State.PRESS) && UnicacityAddon.ADDON.configuration().hotkeySetting().enabled().get()) {
+            handleHotkey(e.key());
+        }
     }
 
-//    private void handleHotkey() {
-//        if (System.currentTimeMillis() - lastHotkeyUse < TimeUnit.SECONDS.toMillis(1) || Keyboard.isKeyDown(0))
-//            return;
-//        AddonPlayer p = UnicacityAddon.PLAYER;
-//
-//        if (Keyboard.isKeyDown(KeyBindRegistry.addonScreenshot.getKeyCode())) {
-//            handleScreenshot();
-//            lastHotkeyUse = System.currentTimeMillis();
-//        }
-//
-//        if (UnicacityAddon.MINECRAFT.currentScreen != null)
-//            return;
-//
-//        if (Keyboard.isKeyDown(KeyBindRegistry.adFreigeben.getKeyCode())) {
-//            handleAd("freigeben");
-//            lastHotkeyUse = System.currentTimeMillis();
-//        } else if (Keyboard.isKeyDown(KeyBindRegistry.adBlockieren.getKeyCode())) {
-//            handleAd("blockieren");
-//            lastHotkeyUse = System.currentTimeMillis();
-//        } else if (Keyboard.isKeyDown(KeyBindRegistry.acceptReport.getKeyCode())) {
-//            p.sendServerMessage("/ar");
-//            lastHotkeyUse = System.currentTimeMillis();
-//        } else if (Keyboard.isKeyDown(KeyBindRegistry.cancelReport.getKeyCode())) {
-//            handleCancelReport();
-//            lastHotkeyUse = System.currentTimeMillis();
-//        } else if (Keyboard.isKeyDown(KeyBindRegistry.aDuty.getKeyCode())) {
-//            p.sendServerMessage("/aduty");
-//            lastHotkeyUse = System.currentTimeMillis();
-//        } else if (Keyboard.isKeyDown(KeyBindRegistry.aDutySilent.getKeyCode())) {
-//            p.sendServerMessage("/aduty -s");
-//            lastHotkeyUse = System.currentTimeMillis();
-//        } else if (Keyboard.isKeyDown(KeyBindRegistry.freinforcement.getKeyCode())) {
-//            BlockPos position = p.getPosition();
-//            p.sendServerMessage("/f Benötige Verstärkung! -> X: " + position.getX() + " | Y: " + position.getY() + " | Z: " + position.getZ());
-//            lastHotkeyUse = System.currentTimeMillis();
-//        } else if (Keyboard.isKeyDown(KeyBindRegistry.dreinforcement.getKeyCode())) {
-//            BlockPos position = p.getPosition();
-//            p.sendServerMessage("/d Benötige Verstärkung! -> X: " + position.getX() + " | Y: " + position.getY() + " | Z: " + position.getZ());
-//            lastHotkeyUse = System.currentTimeMillis();
-//        } else if (Keyboard.isKeyDown(KeyBindRegistry.publicChannelJoin.getKeyCode())) {
-//            handlePublicChannelJoin();
-//            lastHotkeyUse = System.currentTimeMillis();
-//        }
-//    }
+    private void handleHotkey(Key key) {
+        AddonPlayer p = UnicacityAddon.PLAYER;
+        HotkeySetting hotkeySetting = UnicacityAddon.ADDON.configuration().hotkeySetting();
 
-//    private void handleScreenshot() {
-//        File file;
-//        try {
-//            file = FileManager.getNewImageFile();
-//            handleScreenshotWithUpload(file);
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
+        if (key.equals(hotkeySetting.screenshot().getOrDefault(Key.NONE))) {
+            File file;
+            try {
+                file = FileManager.getNewImageFile();
+                handleScreenshotWithUpload(file);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
 
-//    public static File handleScreenshot(File file) {
-//        if (file != null) {
+        if (!UnicacityAddon.isUnicacity() || Laby.references().chatAccessor().isChatOpen()) {
+            return;
+        }
+
+        if (key.equals(hotkeySetting.acceptAd().getOrDefault(Key.NONE))) {
+            AdListener.handleAd("freigeben");
+        } else if (key.equals(hotkeySetting.declineAd().getOrDefault(Key.NONE))) {
+            AdListener.handleAd("blockieren");
+        } else if (key.equals(hotkeySetting.acceptReport().getOrDefault(Key.NONE))) {
+            p.sendServerMessage("/ar");
+        } else if (key.equals(hotkeySetting.cancelReport().getOrDefault(Key.NONE))) {
+            String farewell = unicacityAddon.configuration().reportMessageSetting().farewell().getOrDefault("");
+            if (!farewell.isEmpty())
+                p.sendServerMessage(farewell);
+            p.sendServerMessage("/cr");
+        } else if (key.equals(hotkeySetting.aDuty().getOrDefault(Key.NONE))) {
+            p.sendServerMessage("/aduty");
+        } else if (key.equals(hotkeySetting.aDutySilent().getOrDefault(Key.NONE))) {
+            p.sendServerMessage("/aduty -s");
+        } else if (key.equals(hotkeySetting.reinforcementFaction().getOrDefault(Key.NONE))) {
+            FloatVector3 position = p.getPosition();
+            p.sendServerMessage("/f Benötige Verstärkung! -> X: " + (int) position.getX() + " | Y: " + (int) position.getY() + " | Z: " + (int) position.getZ());
+        } else if (key.equals(hotkeySetting.reinforcementAlliance().getOrDefault(Key.NONE))) {
+            FloatVector3 position = p.getPosition();
+            p.sendServerMessage("/d Benötige Verstärkung! -> X: " + (int) position.getX() + " | Y: " + (int) position.getY() + " | Z: " + (int) position.getZ());
+        } else if (key.equals(hotkeySetting.publicChannel().getOrDefault(Key.NONE))) {
+            if (p.getFaction().equals(Faction.NULL)) {
+                p.sendErrorMessage("Du befindest dich in keiner Fraktion.");
+                return;
+            }
+
+            Channel foundChannel = new Channel(p.getFaction().getPublicChannelId(), "Öffentlich", 0, 0);
+            ClientMoveCommand clientMoveCommand = new ClientMoveCommand(foundChannel.getChannelID(), TSUtils.getMyClientID());
+
+            CommandResponse commandResponse = clientMoveCommand.getResponse();
+            if (!commandResponse.succeeded()) {
+                p.sendErrorMessage("Das Bewegen ist fehlgeschlagen.");
+                return;
+            }
+
+            p.sendMessage(Message.getBuilder()
+                    .prefix()
+                    .of("Du bist in deinen").color(ColorCode.GRAY).advance().space()
+                    .of("\"Öffentlich Channel\"").color(ColorCode.AQUA).advance()
+                    .of(" gegangen.").color(ColorCode.GRAY).advance()
+                    .createComponent());
+        }
+    }
+
+    public static File createScreenshot(File file) {
+        if (file != null) {
+            // TODO: 28.02.2023
 //            try {
 //                Framebuffer framebuffer = ReflectionUtils.getValue(UnicacityAddon.MINECRAFT, Framebuffer.class);
 //                assert framebuffer != null;
@@ -117,65 +119,26 @@ public class HotkeyListener {
 //            } catch (IOException e) {
 //                throw new RuntimeException(e);
 //            }
-//        }
+        }
 //        LabyMod.getInstance().notifyMessageRaw(ColorCode.RED.getCode() + "Fehler!", "Screenshot konnte nicht erstellt werden.");
-//        return null;
-//    }
+        return null;
+    }
 
-//    public static void handleScreenshotWithUpload(File file) {
-//        File screenFile = handleScreenshot(file);
-//        Thread thread = new Thread(() -> uploadScreenshot(screenFile));
-//        thread.start();
-//    }
+    public static void handleScreenshotWithoutUpload(File file) {
+        createScreenshot(file);
+    }
 
-//    public static void handleScreenshotWithoutUpload(File file) {
-//        handleScreenshot(file);
-//    }
+    public static void handleScreenshotWithUpload(File file) {
+        File screenFile = createScreenshot(file);
+        Thread thread = new Thread(() -> uploadScreenshot(screenFile));
+        thread.start();
+    }
 
-    private static void uploadScreenshot(AddonPlayer p, File screenshotFile) {
+    private static void uploadScreenshot(File screenshotFile) {
         if (screenshotFile == null)
             return;
         String link = ImageUploadUtils.uploadToLink(screenshotFile);
-        p.copyToClipboard(link);
+        UnicacityAddon.PLAYER.copyToClipboard(link);
 //        LabyMod.getInstance().notifyMessageRaw(ColorCode.GREEN.getCode() + "Screenshot hochgeladen!", "Link in Zwischenablage kopiert.");
-    }
-
-    private void handleAd(String type) {
-        if (adIssuer == null || System.currentTimeMillis() - adTime > TimeUnit.SECONDS.toMillis(20))
-            return;
-        UnicacityAddon.PLAYER.sendServerMessage("/adcontrol " + adIssuer + " " + type);
-        adIssuer = null;
-    }
-
-    private void handleCancelReport() {
-        AddonPlayer p = UnicacityAddon.PLAYER;
-        String farewell = unicacityAddon.configuration().reportMessageSetting().farewell().getOrDefault("");
-        if (!farewell.isEmpty())
-            p.sendServerMessage(farewell);
-        p.sendServerMessage("/cr");
-    }
-
-    private void handlePublicChannelJoin() {
-        AddonPlayer p = UnicacityAddon.PLAYER;
-        if (p.getFaction().equals(Faction.NULL)) {
-            p.sendErrorMessage("Du befindest dich in keiner Fraktion.");
-            return;
-        }
-
-        Channel foundChannel = new Channel(p.getFaction().getPublicChannelId(), "Öffentlich", 0, 0);
-        ClientMoveCommand clientMoveCommand = new ClientMoveCommand(foundChannel.getChannelID(), TSUtils.getMyClientID());
-
-        CommandResponse commandResponse = clientMoveCommand.getResponse();
-        if (!commandResponse.succeeded()) {
-            p.sendErrorMessage("Das Bewegen ist fehlgeschlagen.");
-            return;
-        }
-
-        p.sendMessage(Message.getBuilder()
-                .prefix()
-                .of("Du bist in deinen").color(ColorCode.GRAY).advance().space()
-                .of("\"Öffentlich Channel\"").color(ColorCode.AQUA).advance()
-                .of(" gegangen.").color(ColorCode.GRAY).advance()
-                .createComponent());
     }
 }

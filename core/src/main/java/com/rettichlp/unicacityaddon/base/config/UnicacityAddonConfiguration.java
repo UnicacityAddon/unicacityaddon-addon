@@ -2,6 +2,7 @@ package com.rettichlp.unicacityaddon.base.config;
 
 import com.rettichlp.unicacityaddon.base.config.atm.ATMSetting;
 import com.rettichlp.unicacityaddon.base.config.equip.EquipSetting;
+import com.rettichlp.unicacityaddon.base.config.hotkey.HotkeySetting;
 import com.rettichlp.unicacityaddon.base.config.join.CommandSetting;
 import com.rettichlp.unicacityaddon.base.config.join.PasswordSetting;
 import com.rettichlp.unicacityaddon.base.config.message.FactionMessageSetting;
@@ -13,6 +14,8 @@ import com.rettichlp.unicacityaddon.base.config.sloc.SlocSetting;
 import net.labymod.api.configuration.loader.property.ConfigProperty;
 
 public interface UnicacityAddonConfiguration {
+
+    HotkeySetting hotkeySetting();
 
     NameTagSetting nameTagSetting();
 
