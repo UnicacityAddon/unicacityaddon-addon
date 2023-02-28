@@ -91,6 +91,7 @@ public class DefaultAddonPlayer implements AddonPlayer {
     @Override
     public void sendServerMessage(String message) {
         this.unicacityAddon.sendMessage(message);
+        UnicacityAddon.LOGGER.info("UPlayer sent chat message: " + message);
     }
 
     @Override

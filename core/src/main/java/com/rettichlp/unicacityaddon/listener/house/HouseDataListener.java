@@ -95,7 +95,7 @@ public class HouseDataListener {
     }
 
     @Subscribe
-    public void onClientMessageSend(ChatMessageSendEvent e) {
+    public void onChatMessageSend(ChatMessageSendEvent e) {
         String msg = e.getMessage();
         if (msg.startsWith("/drogenlager ")) {
             lastCheck = System.currentTimeMillis();

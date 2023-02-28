@@ -46,7 +46,7 @@ public class HouseRenterListener {
     }
 
     @Subscribe
-    public void onClientMessageSend(ChatMessageSendEvent e) {
+    public void onChatMessageSend(ChatMessageSendEvent e) {
         String msg = e.getMessage();
         if (!msg.equals("/mieters"))
             return;
