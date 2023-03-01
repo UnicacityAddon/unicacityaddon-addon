@@ -40,12 +40,12 @@ public class CarEventHandler {
         String msg = e.getMessage().getUnformattedText();
 
         if (PatternHandler.CAR_OPEN_PATTERN.matcher(msg).find()) {
-            FileManager.DATA.setCarInfo(ColorCode.GREEN.getCode() + "offen");
+            FileManager.DATA.setCarOpen(true);
             return;
         }
 
         if (PatternHandler.CAR_CLOSE_PATTERN.matcher(msg).find()) {
-            FileManager.DATA.setCarInfo(ColorCode.RED.getCode() + "zu");
+            FileManager.DATA.setCarOpen(false);
             return;
         }
 

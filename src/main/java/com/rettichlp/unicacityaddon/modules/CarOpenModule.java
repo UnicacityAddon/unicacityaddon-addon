@@ -3,6 +3,7 @@ package com.rettichlp.unicacityaddon.modules;
 import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.ModuleRegistry;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCModule;
+import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import net.labymod.ingamegui.ModuleCategory;
 import net.labymod.ingamegui.moduletypes.SimpleModule;
 import net.labymod.settings.elements.ControlElement;
@@ -31,7 +32,7 @@ public class CarOpenModule extends SimpleModule {
 
     @Override
     public String getDisplayValue() {
-        return FileManager.DATA.getCarInfo();
+        return FileManager.DATA.isCarOpen() ? ColorCode.GREEN.getCode() + "offen" : ColorCode.RED.getCode() + "zu";
     }
 
     @Override
@@ -56,7 +57,7 @@ public class CarOpenModule extends SimpleModule {
 
     @Override
     public boolean isShown() {
-        return !FileManager.DATA.getCarInfo().isEmpty();
+        return true;
     }
 
     @Override
