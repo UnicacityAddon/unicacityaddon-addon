@@ -35,7 +35,7 @@ public class PlayerGroupCommand implements IClientCommand {
     @Override
     @Nonnull
     public String getUsage(@Nonnull ICommandSender sender) {
-        return "/playergroup [add|remove] [Spieler] [Gruppe]";
+        return "/playergroup [list|add|remove] [Gruppe] [Spieler]";
     }
 
     @Override
