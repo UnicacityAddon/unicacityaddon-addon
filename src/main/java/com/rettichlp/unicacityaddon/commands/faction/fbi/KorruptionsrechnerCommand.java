@@ -30,16 +30,19 @@ public class KorruptionsrechnerCommand implements IClientCommand {
     }
 
     @Override
+    @Nonnull
     public String getName() {
         return "korruptionsrechner";
     }
 
     @Override
+    @Nonnull
     public String getUsage(@Nonnull ICommandSender sender) {
         return "/korruptionsrechner [Spieler]";
     }
 
     @Override
+    @Nonnull
     public List<String> getAliases() {
         return Collections.emptyList();
     }

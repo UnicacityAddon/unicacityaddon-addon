@@ -51,13 +51,13 @@ public class DropDrugAllCommand implements IClientCommand {
     @Override
     @Nonnull
     public String getName() {
-        return "dropdrugall";
+        return "dbankdropall";
     }
 
     @Override
     @Nonnull
     public String getUsage(@Nonnull ICommandSender sender) {
-        return "/dropdrugall";
+        return "/dbankdropall";
     }
 
     @Override
