@@ -3,6 +3,7 @@ package com.rettichlp.unicacityaddon.base.models;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
+import com.rettichlp.unicacityaddon.base.enums.Weapon;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
 import com.rettichlp.unicacityaddon.base.enums.faction.Equip;
@@ -24,6 +25,7 @@ import java.util.Map;
 @Setter
 public class Data {
 
+    private List<Armament> armamentList;
     private Integer bankBalance;
     private String carInfo;
     private Integer cashBalance;
@@ -40,6 +42,10 @@ public class Data {
     private Integer serviceCount;
     private Integer timer;
     private List<TodolistEntry> todolist;
+
+    public List<Armament> getArmamentList() {
+        return armamentList != null ? armamentList : new ArrayList<>();
+    }
 
     public int getBankBalance() {
         return bankBalance != null ? bankBalance : 0;
@@ -103,6 +109,35 @@ public class Data {
 
     public List<TodolistEntry> getTodolist() {
         return todolist != null ? todolist : new ArrayList<>();
+    }
+
+    /**
+     * Adds a <code>Armament</code> object, created by the given values, to the <code>armamentList</code>
+     *
+     * @param name   name of the <code>Armament</code> pattern
+     * @param weapon {@link Weapon} of the <code>Armament</code> pattern
+     * @param amount amount of ammunition of the <code>Armament</code> pattern
+     * @see Armament
+     * @see Weapon
+     */
+    public void addArmamentPattern(String name, Weapon weapon, int amount) {
+        List<Armament> newArmamentList = getArmamentList();
+        newArmamentList.add(new Armament(name, weapon, amount));
+        armamentList = newArmamentList;
+    }
+
+    /**
+     * Removes the <code>Armament</code> object with the given name of the <code>armamentList</code>
+     *
+     * @param name name of the <code>Armament</code> pattern
+     * @see Armament
+     * @see Weapon
+     */
+    public boolean removeArmamentPattern(String name) {
+        List<Armament> newArmamentList = getArmamentList();
+        boolean success = newArmamentList.removeIf(armament -> armament.getName().equalsIgnoreCase(name));
+        armamentList = newArmamentList;
+        return success;
     }
 
     /**
