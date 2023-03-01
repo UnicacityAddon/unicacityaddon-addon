@@ -25,8 +25,4 @@ public class Armament {
     public int getAmount() {
         return amount;
     }
-
 }
-
-
-
