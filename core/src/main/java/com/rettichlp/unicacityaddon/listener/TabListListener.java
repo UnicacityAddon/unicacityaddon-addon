@@ -8,6 +8,7 @@ import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.TextColor;
 import net.labymod.api.client.network.NetworkPlayerInfo;
 import net.labymod.api.event.Subscribe;
+import net.labymod.api.event.client.scoreboard.ScoreboardTeamUpdateEvent;
 import net.labymod.api.event.client.scoreboard.TabListUpdateEvent;
 
 import java.util.Arrays;
@@ -29,11 +30,38 @@ public class TabListListener implements Comparator<NetworkPlayerInfo> {
     }
 
     @Subscribe
+    public void onScoreboardTeamUpdate(ScoreboardTeamUpdateEvent e) {
+        if (e.team().getEntries().size() > 0)
+            UnicacityAddon.debug("SCOREBOARDTEAM: " + e.team().getTeamName() + " (" + e.team().getEntries() + ")");
+    }
+
+    @Subscribe
     public void onTabListUpdate(TabListUpdateEvent e) {
+        UnicacityAddon.debug("TABLIST UPDATE");
+        if (this.unicacityAddon.configuration().orderedTablist().get()) {
+
+//            try {
+//                Field field = GuiPlayerTabOverlay.class.getDeclaredField("ENTRY_ORDERING");
+//                field.setAccessible(true);
+//
+//                Field modifiersField = Field.class.getDeclaredField("modifiers");
+//                modifiersField.setAccessible(true);
+//                modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
+//
+//                field.set(Ordering.class, Ordering.from(new TabListListener(this.unicacityAddon)));
+//            } catch (NoSuchFieldException | IllegalAccessException ex) {
+//                UnicacityAddon.LOGGER.warn(ex.getMessage());
+//            }
+
+//            ReflectionUtils.makeAccessible(PlayerTabOverlay.);
+//            ReflectionUtils.setValue(PlayerTabOverlay.class, Ordering.class, Ordering.from(new TabListListener(this.unicacityAddon)));
+//            ReflectionUtils.setValue(ModPlayerTabOverlay.class, Ordering.class, Ordering.from(new TabListListener()));
+        }
     }
 
     @Override
     public int compare(NetworkPlayerInfo o1, NetworkPlayerInfo o2) {
+        UnicacityAddon.debug("COMPARING: " + o1.displayName() + " " + o2.displayName());
         String stringOne = getTablistName(o1);
         String stringTwo = getTablistName(o2);
 
@@ -52,13 +80,6 @@ public class TabListListener implements Comparator<NetworkPlayerInfo> {
 
         return stringOne.compareTo(stringTwo);
     }
-
-//    @Override
-//    public void onUpdate(Type type, String s, String s1) {
-//        if (!ConfigElements.getEventTabList())
-//            return;
-//        ReflectionUtils.setValue(ModPlayerTabOverlay.class, Ordering.class, Ordering.from(new TabListListener()));
-//    }
 
     public static String getFormattedDisplayName(Component component) {
         StringBuilder formattedDisplayName = new StringBuilder();
