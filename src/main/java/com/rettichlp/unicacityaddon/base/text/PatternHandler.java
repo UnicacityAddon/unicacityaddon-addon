@@ -1,7 +1,6 @@
 package com.rettichlp.unicacityaddon.base.text;
 
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
-import com.rettichlp.unicacityaddon.events.faction.state.DrugMessageEventHandler;
 
 import java.util.regex.Pattern;
 
@@ -78,7 +77,6 @@ public class PatternHandler {
     /**
      * Pattern for name tag providing
      *
-     * @see com.rettichlp.unicacityaddon.events.DeathsKillsEventHandler
      * @see com.rettichlp.unicacityaddon.events.chatlog.ChatLogReceiveChatEventHandler
      * @see com.rettichlp.unicacityaddon.events.faction.ContractEventHandler
      * @see com.rettichlp.unicacityaddon.events.faction.badfaction.blacklist.BlacklistEventHandler
@@ -143,10 +141,10 @@ public class PatternHandler {
     /**
      * Pattern for medic interaction
      *
+     * @see com.rettichlp.unicacityaddon.events.DrugEventHandler
      * @see com.rettichlp.unicacityaddon.events.faction.rettungsdienst.FirstAidEventHandler
      * @see com.rettichlp.unicacityaddon.events.faction.rettungsdienst.MedicationEventHandler
      * @see com.rettichlp.unicacityaddon.events.faction.rettungsdienst.ReviveEventHandler
-     * @see com.rettichlp.unicacityaddon.events.faction.badfaction.DrugInteractionEventHandler
      */
     public static final Pattern RECIPE_ACCEPT_PATTERN = Pattern.compile("^((?:\\[UC])*\\w+) möchte dir ein Rezept für 200\\$ verkaufen\\.$");
     public static final Pattern RECIPE_GIVE_PATTERN = Pattern.compile("^Du hast ((?:\\[UC])*\\w+) ein Rezept für (Antibiotika|Hustensaft|Schmerzmittel) ausgestellt\\.$");
@@ -234,7 +232,6 @@ public class PatternHandler {
      * Pattern for account interaction
      *
      * @see com.rettichlp.unicacityaddon.events.AccountEventHandler
-     * @see com.rettichlp.unicacityaddon.events.DeathsKillsEventHandler
      */
     public static final Pattern ACCOUNT_WELCOME_BACK_PATTERN = Pattern.compile("^Willkommen zurück!$");
     public static final Pattern RESOURCEPACK_PATTERN = Pattern.compile("^Wir empfehlen dir unser Resourcepack zu nutzen\\.$|" +
@@ -331,7 +328,7 @@ public class PatternHandler {
     /**
      * Pattern for state messages
      *
-     * @see DrugMessageEventHandler
+     * @see com.rettichlp.unicacityaddon.events.DrugEventHandler
      */
     public static final Pattern DRUG_VAULT_DROP_PATTERN = Pattern.compile("^HQ: (.+) (?:\\[UC])*(\\w+) hat (\\d+)g (Kokain|Methamphetamin|Marihuana|LSD) \\((Höchste Reinheit|Gute Reinheit|Mittlere Reinheit|Schlechte Reinheit)\\) in der Asservatenkammer verstaut\\.$");
     public static final Pattern DRUG_VAULT_GET_PATTERN = Pattern.compile("^HQ: (.+) (?:\\[UC])*(\\w+) hat (\\d+)g (Kokain|Methamphetamin|Marihuana|LSD) \\((Höchste Reinheit|Gute Reinheit|Mittlere Reinheit|Schlechte Reinheit)\\) aus der Asservatenkammer genommen\\.$");

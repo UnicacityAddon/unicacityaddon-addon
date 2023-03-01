@@ -1,6 +1,9 @@
 package com.rettichlp.unicacityaddon.events.faction.state;
 
+import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
+import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
 import com.rettichlp.unicacityaddon.base.config.ConfigElements;
+import com.rettichlp.unicacityaddon.base.enums.api.StatisticType;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
@@ -32,6 +35,9 @@ public class HQMessageEventHandler {
 
             m = PatternHandler.WANTED_KILL.matcher(msg);
             if (m.find()) {
+                if (m.group(2).equals(AbstractionLayer.getPlayer().getName()))
+                    APIRequest.sendStatisticAddRequest(StatisticType.KILL);
+
                 e.setMessage(Message.getBuilder().of("Getötet").color(ColorCode.RED).advance().space()
                         .of("-").color(ColorCode.GRAY).advance().space()
                         .of(m.group(1)).color(ColorCode.BLUE).advance().space()
