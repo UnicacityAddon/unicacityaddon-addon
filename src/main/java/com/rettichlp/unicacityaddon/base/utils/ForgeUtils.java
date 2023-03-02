@@ -1,7 +1,6 @@
 package com.rettichlp.unicacityaddon.base.utils;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetHandlerPlayClient;
@@ -71,8 +70,6 @@ public class ForgeUtils {
 
     public static void shutdownPC() {
         String shutdownCommand;
-
-        FileManager.saveData();
 
         if (SystemUtils.IS_OS_AIX) {
             shutdownCommand = "shutdown -Fh now";

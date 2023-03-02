@@ -24,7 +24,7 @@ import java.util.TimerTask;
  * @author RettichLP
  */
 @UCCommand
-public class HouseBankGetCommand implements IClientCommand {
+public class HouseBankDropGetAllCommand implements IClientCommand {
 
     @Override
     @Nonnull
@@ -69,13 +69,34 @@ public class HouseBankGetCommand implements IClientCommand {
         if (args.length > 1 && args[1].equalsIgnoreCase("all")) {
             p.sendChatMessage("/hauskasse");
             HouseDataEventHandler.lastCheck = System.currentTimeMillis();
-            new Timer().schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    int houseBankBalance = FileManager.DATA.getHouseData(HouseDataEventHandler.lastCheckedHouseNumber).getHouseBank();
-                    p.sendChatMessage("/hauskasse get " + houseBankBalance);
-                }
-            }, 1000);
+            if (args[0].equalsIgnoreCase("get")) {
+                new Timer().schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        int houseBankBalance = FileManager.DATA.getHouseData(HouseDataEventHandler.lastCheckedHouseNumber).getHouseBank();
+                        if (houseBankBalance > 0) {
+                            p.sendChatMessage("/hauskasse get " + houseBankBalance);
+                        } else {
+                            p.sendErrorMessage("Deine Hauskasse ist leer.");
+                        }
+                    }
+                }, 1000);
+                return;
+            } else if (args[0].equalsIgnoreCase("drop")) {
+                new Timer().schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        int houseBankBalance = FileManager.DATA.getHouseData(HouseDataEventHandler.lastCheckedHouseNumber).getHouseBank();
+                        int toTransfer = Math.min(15000 - houseBankBalance, FileManager.DATA.getCashBalance());
+                        if (toTransfer > 0) {
+                            p.sendChatMessage("/hauskasse drop " + toTransfer);
+                        } else {
+                            p.sendErrorMessage("Deine Hauskasse ist voll oder du hast kein Geld auf der Hand.");
+                        }
+                    }
+                }, 1000);
+                return;
+            }
             return;
         }
 
