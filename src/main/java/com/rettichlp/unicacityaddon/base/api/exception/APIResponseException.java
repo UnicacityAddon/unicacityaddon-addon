@@ -1,6 +1,7 @@
 package com.rettichlp.unicacityaddon.base.api.exception;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.base.api.TokenManager;
 import org.apache.logging.log4j.Level;
 
 public class APIResponseException extends Throwable {
@@ -55,6 +56,6 @@ public class APIResponseException extends Throwable {
                 level = Level.WARN;
         }
 
-        UnicacityAddon.LOGGER.atLevel(level).log("APIResponseException - " + responseCode + " [" + urlString + "]: " + message);
+        UnicacityAddon.LOGGER.atLevel(level).log("APIResponseException - " + responseCode + " [" + urlString.replace(TokenManager.API_TOKEN, "TOKEN") + "]: " + message);
     }
 }
