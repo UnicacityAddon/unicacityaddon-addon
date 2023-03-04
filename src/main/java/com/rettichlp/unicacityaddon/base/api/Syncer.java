@@ -114,13 +114,11 @@ public class Syncer {
         response.forEach(jsonElement -> {
             JsonObject o = jsonElement.getAsJsonObject();
 
-            int kills = o.get("kills").getAsInt();
             String reason = o.get("reason").getAsString();
-            String issuerUUID = o.get("issuerUUID").getAsString();
+            int kills = o.get("kills").getAsInt();
             int price = o.get("price").getAsInt();
-            String issuerName = o.get("issuerName").getAsString();
 
-            blacklistReasonList.add(new BlacklistReason(kills, reason, issuerUUID, price, issuerName));
+            blacklistReasonList.add(new BlacklistReason(reason, kills, price));
         });
         return blacklistReasonList;
     }

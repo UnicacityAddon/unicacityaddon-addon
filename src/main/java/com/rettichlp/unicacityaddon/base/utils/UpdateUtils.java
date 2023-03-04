@@ -151,11 +151,11 @@ public class UpdateUtils {
 
     private static String getLatestVersion() {
         try {
-            URLConnection con = new URL("https://github.com/rettichlp/UnicacityAddon-1.12.2/releases/latest").openConnection();
+            URLConnection con = new URL("https://github.com/rettichlp/unicacityaddon-addon/releases/latest").openConnection();
             con.connect();
             InputStream is = con.getInputStream();
             is.close();
-            return con.getURL().toString().replace("https://github.com/rettichlp/UnicacityAddon-1.12.2/releases/tag/v", "");
+            return con.getURL().toString().replace("https://github.com/rettichlp/unicacityaddon-addon/releases/tag/v", "");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
