@@ -147,6 +147,13 @@ public class APIRequest {
                 .getAsJsonObject();
     }
 
+    public static JsonObject sendManagementRequest() {
+        return RequestBuilder.getBuilder()
+                .nonProd(NON_PROD)
+                .applicationPath(ApplicationPath.MANAGEMENT)
+                .getAsJsonObject();
+    }
+
     public static JsonArray sendNaviPointRequest() {
         return RequestBuilder.getBuilder()
                 .nonProd(NON_PROD)

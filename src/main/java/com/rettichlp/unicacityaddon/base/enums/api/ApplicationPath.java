@@ -7,6 +7,7 @@ public enum ApplicationPath {
     BROADCAST("/broadcast"),
     HOUSEBAN("/houseban"),
     HOUSEBANREASON("/housebanreason"),
+    MANAGEMENT("/mgmt"),
     NAVIPOINT("/navipoint"),
     PLAYER("/player"),
     STATISTIC("/statistic"),

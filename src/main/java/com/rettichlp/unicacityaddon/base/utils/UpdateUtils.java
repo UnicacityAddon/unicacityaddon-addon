@@ -1,8 +1,10 @@
 package com.rettichlp.unicacityaddon.base.utils;
 
+import com.google.gson.JsonObject;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
+import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
 import com.rettichlp.unicacityaddon.base.config.ConfigElements;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
@@ -14,9 +16,7 @@ import org.apache.commons.lang3.SystemUtils;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
-import java.net.URLConnection;
 import java.nio.charset.Charset;
 
 /**
@@ -150,14 +150,7 @@ public class UpdateUtils {
     }
 
     private static String getLatestVersion() {
-        try {
-            URLConnection con = new URL("https://github.com/rettichlp/unicacityaddon-addon/releases/latest").openConnection();
-            con.connect();
-            InputStream is = con.getInputStream();
-            is.close();
-            return con.getURL().toString().replace("https://github.com/rettichlp/unicacityaddon-addon/releases/tag/v", "");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        JsonObject response = APIRequest.sendManagementRequest();
+        return response != null ? response.get("latestVersion").getAsString() : UnicacityAddon.VERSION;
     }
 }
