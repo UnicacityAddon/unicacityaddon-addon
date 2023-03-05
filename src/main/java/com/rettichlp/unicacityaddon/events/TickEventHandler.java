@@ -128,8 +128,6 @@ public class TickEventHandler {
     private void handleTimer() {
         if (FileManager.DATA.getTimer() > 0) {
             FileManager.DATA.setTimer(FileManager.DATA.getTimer() - 1);
-        } else {
-            FileManager.DATA.setTimer(0);
         }
     }
 

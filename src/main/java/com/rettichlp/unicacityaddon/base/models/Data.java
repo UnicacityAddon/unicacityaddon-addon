@@ -23,8 +23,8 @@ public class Data {
     private Integer bankBalance;
     private Boolean carOpen;
     private Integer cashBalance;
-    private Map<DrugType, Map<DrugPurity, Integer>> drugInventoryMap;
     private List<CoordlistEntry> coordlist;
+    private Map<DrugType, Map<DrugPurity, Integer>> drugInventoryMap;
     private Map<Equip, Integer> equipMap;
     private Long firstAidDate;
     private Map<Integer, HouseData> houseDataMap;
@@ -36,6 +36,26 @@ public class Data {
     private Integer serviceCount;
     private Integer timer;
     private List<TodolistEntry> todolist;
+
+    public Data() {
+        this.armamentList = new ArrayList<>();
+        this.bankBalance = 0;
+        this.carOpen = false;
+        this.cashBalance = 0;
+        this.coordlist = new ArrayList<>();
+        this.drugInventoryMap = new HashMap<>();
+        this.equipMap = new HashMap<>();
+        this.firstAidDate = 0L;
+        this.houseDataMap = new HashMap<>();
+        this.jobBalance = 0;
+        this.jobExperience = 0;
+        this.payDayTime = 0;
+        this.plantFertilizeTime = 0L;
+        this.plantWaterTime = 0L;
+        this.serviceCount = 0;
+        this.timer = 0;
+        this.todolist = new ArrayList<>();
+    }
 
     public List<Armament> getArmamentList() {
         return armamentList != null ? armamentList : new ArrayList<>();
@@ -73,21 +93,21 @@ public class Data {
         save();
     }
 
-    public Map<DrugType, Map<DrugPurity, Integer>> getDrugInventoryMap() {
-        return drugInventoryMap != null ? drugInventoryMap : new HashMap<>();
-    }
-
-    public void setDrugInventoryMap(Map<DrugType, Map<DrugPurity, Integer>> drugInventoryMap) {
-        this.drugInventoryMap = drugInventoryMap;
-        save();
-    }
-
     public List<CoordlistEntry> getCoordlist() {
         return coordlist != null ? coordlist : new ArrayList<>();
     }
 
     public void setCoordlist(List<CoordlistEntry> coordlist) {
         this.coordlist = coordlist;
+        save();
+    }
+
+    public Map<DrugType, Map<DrugPurity, Integer>> getDrugInventoryMap() {
+        return drugInventoryMap != null ? drugInventoryMap : new HashMap<>();
+    }
+
+    public void setDrugInventoryMap(Map<DrugType, Map<DrugPurity, Integer>> drugInventoryMap) {
+        this.drugInventoryMap = drugInventoryMap;
         save();
     }
 
