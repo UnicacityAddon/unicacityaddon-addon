@@ -4,6 +4,7 @@ import com.google.common.collect.Maps;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.api.Syncer;
+import com.rettichlp.unicacityaddon.base.api.checks.BroadcastChecker;
 import com.rettichlp.unicacityaddon.base.config.ConfigElements;
 import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
@@ -65,6 +66,11 @@ public class TickEventHandler {
             if (currentTick % 100 == 0) {
                 handleScoreboardCheck();
                 HouseInteractionEventHandler.increaseProgress(0);
+            }
+
+            // 30 SECONDS
+            if (currentTick % 600 == 0) {
+                BroadcastChecker.checkForBroadcast();
             }
 
             // 60 SECONDS

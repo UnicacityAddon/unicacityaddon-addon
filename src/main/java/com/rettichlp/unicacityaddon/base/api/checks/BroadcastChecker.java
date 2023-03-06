@@ -12,23 +12,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.TimeUnit;
 
 public class BroadcastChecker {
 
     private static final Timer timer = new Timer();
     private static final List<Integer> receivedBroadcasts = new ArrayList<>();
 
-    public static void start() {
-        timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                checkForBroadcast();
-            }
-        }, TimeUnit.SECONDS.toMillis(30), TimeUnit.SECONDS.toMillis(30));
-    }
-
-    private static void checkForBroadcast() {
+    public static void checkForBroadcast() {
         for (Broadcast broadcast : Syncer.getBroadcastEntryList()) {
             if (broadcast.getSendTime() < System.currentTimeMillis())
                 continue;
