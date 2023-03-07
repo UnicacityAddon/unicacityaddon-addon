@@ -23,6 +23,7 @@ import net.minecraft.world.World;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
+import java.util.Arrays;
 import java.util.UUID;
 
 /**
@@ -202,5 +203,10 @@ public class UPlayerImpl implements UPlayer {
     public boolean isSuperUser() {
         String uuid = getUniqueID().toString().replace("-", "");
         return uuid.equals("25855f4d38744a7fa6ade9e4f3042e19") || uuid.equals("6e49e42eefca4d9389f9f395b887809e");
+    }
+
+    @Override
+    public boolean hasGangwar() {
+        return getWorldScoreboard().getObjectiveNames().containsAll(Arrays.asList("Angreifer", "Verteidiger"));
     }
 }

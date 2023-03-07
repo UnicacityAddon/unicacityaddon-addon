@@ -24,6 +24,7 @@ public class APIRequest {
     private static final String CREATE_SUB_PATH = "create";
     private static final String REVOKE_SUB_PATH = "revoke";
     private static final String DONE_SUB_PATH = "done";
+    private static final String USERS_SUB_PATH = "users";
 
     public static void sendBannerAddRequest(Faction faction, int x, int y, int z, String navipoint) {
         RequestBuilder.getBuilder()
@@ -85,6 +86,16 @@ public class APIRequest {
                         "message", message,
                         "sendTime", sendTime))
                 .getAsJsonObject();
+    }
+
+    public static void sendGangwarDataRequest(int attacker, int defender) {
+        RequestBuilder.getBuilder()
+                .nonProd(NON_PROD)
+                .applicationPath(ApplicationPath.GANGWAR)
+                .parameter(mapOf(
+                        "attacker", String.valueOf(attacker),
+                        "defender", String.valueOf(defender)))
+                .sendAsync();
     }
 
     public static JsonArray sendHouseBanRequest(boolean advanced) {
@@ -152,6 +163,14 @@ public class APIRequest {
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.MANAGEMENT)
                 .getAsJsonObject();
+    }
+
+    public static JsonArray sendManagementUserRequest() {
+        return RequestBuilder.getBuilder()
+                .nonProd(NON_PROD)
+                .applicationPath(ApplicationPath.MANAGEMENT)
+                .subPath(USERS_SUB_PATH)
+                .getAsJsonArray();
     }
 
     public static JsonArray sendNaviPointRequest() {

@@ -73,4 +73,6 @@ public interface UPlayer {
     void copyToClipboard(String string);
 
     boolean isSuperUser();
+
+    boolean hasGangwar();
 }

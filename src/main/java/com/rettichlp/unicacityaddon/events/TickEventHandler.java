@@ -71,6 +71,7 @@ public class TickEventHandler {
             // 30 SECONDS
             if (currentTick % 600 == 0) {
                 BroadcastChecker.checkForBroadcast();
+                GangwarEventHandler.sendData();
             }
 
             // 60 SECONDS
