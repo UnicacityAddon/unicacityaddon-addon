@@ -243,11 +243,9 @@ public class Syncer {
             JsonObject o = jsonElement.getAsJsonObject();
 
             String reason = o.get("reason").getAsString();
-            String creatorUUID = o.get("creatorUUID").getAsString();
-            String creatorName = o.get("creatorName").getAsString();
             int points = o.get("points").getAsInt();
 
-            wantedReasonList.add(new WantedReason(reason, creatorUUID, creatorName, points));
+            wantedReasonList.add(new WantedReason(reason, points));
         });
         return wantedReasonList;
     }

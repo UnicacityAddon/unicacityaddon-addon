@@ -89,7 +89,7 @@ public class BusCommand implements IClientCommand {
             return;
         }
 
-        NaviPoint naviPoint = NaviPoint.getNaviPointEntryByTabName(args[0]);
+        NaviPoint naviPoint = NaviPoint.getNaviPointByTabName(args[0]);
         if (naviPoint == null) {
             p.sendErrorMessage("Navipunkt nicht gefunden.");
             return;

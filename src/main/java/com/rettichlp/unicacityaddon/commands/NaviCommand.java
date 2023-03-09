@@ -62,7 +62,7 @@ public class NaviCommand implements IClientCommand {
             return;
         }
 
-        NaviPoint naviPoint = NaviPoint.getNaviPointEntryByTabName(args[0].trim());
+        NaviPoint naviPoint = NaviPoint.getNaviPointByTabName(args[0].trim());
         if (naviPoint == null) {
             p.sendChatMessage("/navi " + TextUtils.makeStringByArgs(args, " "));
             return;
