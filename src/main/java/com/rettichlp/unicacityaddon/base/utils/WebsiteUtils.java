@@ -34,13 +34,14 @@ public class WebsiteUtils {
 
         boolean isApiRequest = urlString.startsWith("http://rettichlp.de:8888/unicacityaddon/v1/") && FileManager.isValidJson(websiteSource);
 
-        if (responseCode != HttpURLConnection.HTTP_OK)
+        if (responseCode == HttpURLConnection.HTTP_OK) {
+            UnicacityAddon.LOGGER.info("APIResponse - " + responseCode + " [" + urlString.replace(TokenManager.API_TOKEN, "TOKEN") + "]");
+            return websiteSource;
+        } else {
             throw new APIResponseException(urlString, responseCode, isApiRequest
                     ? new JsonParser().parse(websiteSource).getAsJsonObject().get("info").getAsString()
                     : HttpResponseStatus.valueOf(responseCode).reasonPhrase());
-
-        UnicacityAddon.LOGGER.info("APIResponse - " + responseCode + " [" + urlString.replace(TokenManager.API_TOKEN, "TOKEN") + "]");
-        return websiteSource;
+        }
     }
 
     public static String createUrl(boolean nonProd, ApplicationPath applicationPath, String subPath, Map<String, String> parameter) {
