@@ -43,7 +43,7 @@ public class ConfigSubSettings {
         StringElement lightKevlarSettings = new StringElement(Equip.KEVLAR.getName(), unicacityAddon, new ControlElement.IconData(Material.LEATHER_CHESTPLATE), "EQUIP_LKEV_SETTING", ConfigElements.getLightKevlarPrice());
         settings.add(lightKevlarSettings);
 
-        StringElement heavyKevlarSettings = new StringElement(Equip.HEAVYKEVLAR.getName(), unicacityAddon, new ControlElement.IconData(Material.LEATHER_CHESTPLATE), "EQUIP_SKEV_SETTING", ConfigElements.getHeavyKevlarPrice());
+        StringElement heavyKevlarSettings = new StringElement(Equip.HEAVY_KEVLAR.getName(), unicacityAddon, new ControlElement.IconData(Material.LEATHER_CHESTPLATE), "EQUIP_SKEV_SETTING", ConfigElements.getHeavyKevlarPrice());
         settings.add(heavyKevlarSettings);
 
         StringElement pistolSettings = new StringElement(Equip.PISTOL.getName(), unicacityAddon, new ControlElement.IconData(Material.IRON_HOE), "EQUIP_PISTOLE_SETTING", ConfigElements.getPistolPrice());
@@ -61,7 +61,7 @@ public class ConfigSubSettings {
         StringElement lightKevlarSettings = new StringElement(Equip.KEVLAR.getName(), unicacityAddon, new ControlElement.IconData(Material.LEATHER_CHESTPLATE), "EQUIP_LKEV_SETTING", ConfigElements.getLightKevlarPrice());
         settings.add(lightKevlarSettings);
 
-        StringElement pepperSpraySettings = new StringElement(Equip.PEPPERSPRAY.getName(), unicacityAddon, new ControlElement.IconData(Material.LEVER), "EQUIP_PEPPERSPRAY_SETTING", ConfigElements.getPeppersprayPrice());
+        StringElement pepperSpraySettings = new StringElement(Equip.PEPPER_SPRAY.getName(), unicacityAddon, new ControlElement.IconData(Material.LEVER), "EQUIP_PEPPERSPRAY_SETTING", ConfigElements.getPeppersprayPrice());
         settings.add(pepperSpraySettings);
 
         StringElement mpSettings = new StringElement(Equip.MP5.getName(), unicacityAddon, new ControlElement.IconData(Material.GOLD_HOE), "EQUIP_MP5_SETTING", ConfigElements.getMP5Price());
@@ -85,10 +85,10 @@ public class ConfigSubSettings {
     static Settings getSWATEquipSettings(UnicacityAddon unicacityAddon) {
         Settings settings = new Settings();
 
-        StringElement heavyKevlarSettings = new StringElement(Equip.HEAVYKEVLAR.getName(), unicacityAddon, new ControlElement.IconData(Material.LEATHER_CHESTPLATE), "EQUIP_SKEV_SETTING", ConfigElements.getHeavyKevlarPrice());
+        StringElement heavyKevlarSettings = new StringElement(Equip.HEAVY_KEVLAR.getName(), unicacityAddon, new ControlElement.IconData(Material.LEATHER_CHESTPLATE), "EQUIP_SKEV_SETTING", ConfigElements.getHeavyKevlarPrice());
         settings.add(heavyKevlarSettings);
 
-        StringElement swatShieldSettings = new StringElement(Equip.SWATSHIELD.getName(), unicacityAddon, new ControlElement.IconData(Material.WOOD), "EQUIP_SWATSHIELD_SETTING", ConfigElements.getSwatShieldPrice());
+        StringElement swatShieldSettings = new StringElement(Equip.SWAT_SHIELD.getName(), unicacityAddon, new ControlElement.IconData(Material.WOOD), "EQUIP_SWATSHIELD_SETTING", ConfigElements.getSwatShieldPrice());
         settings.add(swatShieldSettings);
 
         StringElement flashBangSettings = new StringElement(Equip.FLASHBANG.getName(), unicacityAddon, new ControlElement.IconData(Material.SLIME_BALL), "EQUIP_FLASHBANG_SETTING", ConfigElements.getFlashBangPrice());
@@ -115,7 +115,7 @@ public class ConfigSubSettings {
         StringElement lightKevlarSettings = new StringElement(Equip.KEVLAR.getName(), unicacityAddon, new ControlElement.IconData(Material.LEATHER_CHESTPLATE), "EQUIP_LKEV_SETTING", ConfigElements.getLightKevlarPrice());
         settings.add(lightKevlarSettings);
 
-        StringElement pepperSpraySettings = new StringElement(Equip.PEPPERSPRAY.getName(), unicacityAddon, new ControlElement.IconData(Material.LEVER), "EQUIP_PEPPERSPRAY_SETTING", ConfigElements.getPeppersprayPrice());
+        StringElement pepperSpraySettings = new StringElement(Equip.PEPPER_SPRAY.getName(), unicacityAddon, new ControlElement.IconData(Material.LEVER), "EQUIP_PEPPERSPRAY_SETTING", ConfigElements.getPeppersprayPrice());
         settings.add(pepperSpraySettings);
 
         StringElement mpSettings = new StringElement(Equip.MP5.getName(), unicacityAddon, new ControlElement.IconData(Material.GOLD_HOE), "EQUIP_MP5_SETTING", ConfigElements.getMP5Price());
@@ -139,7 +139,7 @@ public class ConfigSubSettings {
     static Settings getHRTEquipSettings(UnicacityAddon unicacityAddon) {
         Settings settings = new Settings();
 
-        StringElement heavyKevlarSettings = new StringElement(Equip.HEAVYKEVLAR.getName(), unicacityAddon, new ControlElement.IconData(Material.LEATHER_CHESTPLATE), "EQUIP_SKEV_SETTING", ConfigElements.getHeavyKevlarPrice());
+        StringElement heavyKevlarSettings = new StringElement(Equip.HEAVY_KEVLAR.getName(), unicacityAddon, new ControlElement.IconData(Material.LEATHER_CHESTPLATE), "EQUIP_SKEV_SETTING", ConfigElements.getHeavyKevlarPrice());
         settings.add(heavyKevlarSettings);
 
         StringElement flashBangSettings = new StringElement(Equip.FLASHBANG.getName(), unicacityAddon, new ControlElement.IconData(Material.SLIME_BALL), "EQUIP_FLASHBANG_SETTING", ConfigElements.getFlashBangPrice());
@@ -154,7 +154,7 @@ public class ConfigSubSettings {
         StringElement sniperSettings = new StringElement(Equip.SNIPER.getName(), unicacityAddon, new ControlElement.IconData(Material.STONE_HOE), "EQUIP_SNIPER_SETTING", ConfigElements.getSniperPrice());
         settings.add(sniperSettings);
 
-        StringElement defuseKitSettings = new StringElement(Equip.DEFUSEKIT.getName(), unicacityAddon, new ControlElement.IconData(Material.GOLD_INGOT), "EQUIP_DEFUSEKIT_SETTING", ConfigElements.getDefuseKitPrice());
+        StringElement defuseKitSettings = new StringElement(Equip.DEFUSE_KIT.getName(), unicacityAddon, new ControlElement.IconData(Material.GOLD_INGOT), "EQUIP_DEFUSEKIT_SETTING", ConfigElements.getDefuseKitPrice());
         settings.add(defuseKitSettings);
 
         return settings;
@@ -169,7 +169,7 @@ public class ConfigSubSettings {
         StringElement painKillerSettings = new StringElement(Equip.PAINKILLER.getName(), unicacityAddon, new ControlElement.IconData(Material.BLAZE_ROD), "EQUIP_PAINKILLER_SETTING", ConfigElements.getBandagePrice());
         settings.add(painKillerSettings);
 
-        StringElement pepperSpraySettings = new StringElement(Equip.PEPPERSPRAY.getName(), unicacityAddon, new ControlElement.IconData(Material.LEVER), "EQUIP_PEPPERSPRAY_SETTING", ConfigElements.getPeppersprayPrice());
+        StringElement pepperSpraySettings = new StringElement(Equip.PEPPER_SPRAY.getName(), unicacityAddon, new ControlElement.IconData(Material.LEVER), "EQUIP_PEPPERSPRAY_SETTING", ConfigElements.getPeppersprayPrice());
         settings.add(pepperSpraySettings);
 
         StringElement syringeSettings = new StringElement(Equip.SYRINGE.getName(), unicacityAddon, new ControlElement.IconData(Material.IRON_FENCE), "EQUIP_SYRINGE_SETTING", ConfigElements.getSyringePrice());
@@ -241,7 +241,7 @@ public class ConfigSubSettings {
         StringElement lightKevlarSettings = new StringElement(Equip.KEVLAR.getName(), unicacityAddon, new ControlElement.IconData(Material.LEATHER_CHESTPLATE), "EQUIP_LKEV_SETTING", ConfigElements.getLightKevlarPrice());
         settings.add(lightKevlarSettings);
 
-        StringElement heavyKevlarSettings = new StringElement(Equip.HEAVYKEVLAR.getName(), unicacityAddon, new ControlElement.IconData(Material.LEATHER_CHESTPLATE), "EQUIP_SKEV_SETTING", ConfigElements.getHeavyKevlarPrice());
+        StringElement heavyKevlarSettings = new StringElement(Equip.HEAVY_KEVLAR.getName(), unicacityAddon, new ControlElement.IconData(Material.LEATHER_CHESTPLATE), "EQUIP_SKEV_SETTING", ConfigElements.getHeavyKevlarPrice());
         settings.add(heavyKevlarSettings);
 
         StringElement lockpickSettings = new StringElement(Equip.LOCKPICK.getName(), unicacityAddon, new ControlElement.IconData(Material.GOLD_SWORD), "EQUIP_LOCKPICK_SETTING", ConfigElements.getHeavyKevlarPrice());
@@ -259,7 +259,7 @@ public class ConfigSubSettings {
         StringElement lightKevlarSettings = new StringElement(Equip.KEVLAR.getName(), unicacityAddon, new ControlElement.IconData(Material.LEATHER_CHESTPLATE), "EQUIP_LKEV_SETTING", ConfigElements.getLightKevlarPrice());
         settings.add(lightKevlarSettings);
 
-        StringElement heavyKevlarSettings = new StringElement(Equip.HEAVYKEVLAR.getName(), unicacityAddon, new ControlElement.IconData(Material.LEATHER_CHESTPLATE), "EQUIP_SKEV_SETTING", ConfigElements.getHeavyKevlarPrice());
+        StringElement heavyKevlarSettings = new StringElement(Equip.HEAVY_KEVLAR.getName(), unicacityAddon, new ControlElement.IconData(Material.LEATHER_CHESTPLATE), "EQUIP_SKEV_SETTING", ConfigElements.getHeavyKevlarPrice());
         settings.add(heavyKevlarSettings);
 
         StringElement mpSettings = new StringElement(Equip.MP5.getName(), unicacityAddon, new ControlElement.IconData(Material.GOLD_HOE), "EQUIP_MP5_SETTING", ConfigElements.getMP5Price());

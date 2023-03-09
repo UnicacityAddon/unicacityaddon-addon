@@ -25,7 +25,7 @@ public class EquipEventHandler {
         Matcher trackerMatcher = PatternHandler.TRACKER_PATTERN.matcher(msg);
         if (equipMatcher.find() || trackerMatcher.find()) {
             Equip equip = Arrays.stream(Equip.values())
-                    .filter(equip1 -> msg.contains(equip1.getMessageName()))
+                    .filter(equip1 -> msg.toLowerCase().contains(equip1.getMessageName().toLowerCase()))
                     .findFirst()
                     .orElse(null);
 
