@@ -13,7 +13,7 @@ public class BlacklistReason {
     private final int price;
 
     public static BlacklistReason getBlacklistReasonEntryByReason(String reason) {
-        return Syncer.getBlacklistReasonEntryList().stream()
+        return Syncer.BLACKLISTREASONLIST.stream()
                 .filter(blacklistReasonEntry -> blacklistReasonEntry.getReason().equals(reason))
                 .findFirst()
                 .orElse(null);

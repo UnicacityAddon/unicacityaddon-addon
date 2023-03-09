@@ -71,7 +71,7 @@ public class BusCommand implements IClientCommand {
     @Nonnull
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
         return TabCompletionBuilder.getBuilder(args)
-                .addAtIndex(1, Syncer.getNaviPointEntryList().stream().map(NaviPoint::getTabName).collect(Collectors.toList()))
+                .addAtIndex(1, Syncer.NAVIPOINTLIST.stream().map(NaviPoint::getTabName).collect(Collectors.toList()))
                 .build();
     }
 

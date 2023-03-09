@@ -12,7 +12,6 @@ import com.rettichlp.unicacityaddon.base.models.Broadcast;
 import com.rettichlp.unicacityaddon.base.models.HouseBan;
 import com.rettichlp.unicacityaddon.base.models.HouseBanReason;
 import com.rettichlp.unicacityaddon.base.models.NaviPoint;
-import com.rettichlp.unicacityaddon.base.models.PlayerGroup;
 import com.rettichlp.unicacityaddon.base.models.WantedReason;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
@@ -28,15 +27,44 @@ public class Syncer {
 
     public static final Map<String, Faction> PLAYERFACTIONMAP = new HashMap<>();
     public static final Map<String, Integer> PLAYERRANKMAP = new HashMap<>();
-    public static List<HouseBan> HOUSEBANENTRYLIST = new ArrayList<>();
+    public static List<HouseBan> HOUSEBANLIST = new ArrayList<>();
+    public static List<HouseBanReason> HOUSEBANREASONLIST = new ArrayList<>();
     public static List<NaviPoint> NAVIPOINTLIST = new ArrayList<>();
+    public static List<BlacklistReason> BLACKLISTREASONLIST = new ArrayList<>();
+    public static List<WantedReason> WANTEDREASONLIST = new ArrayList<>();
 
     public static void syncAll() {
         new Thread(() -> {
             Thread t1 = syncPlayerAddonGroupMap();
             Thread t2 = syncPlayerFactionData();
-            Thread t3 = syncHousebanEntryList();
-            Thread t4 = syncNaviPointEntryList();
+
+            Thread t3 = new Thread(() -> {
+                HOUSEBANLIST = getHouseBanEntryList();
+                LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Hausverbote aktualisiert.");
+            });
+
+            Thread t4 = new Thread(() -> {
+                HOUSEBANREASONLIST = getHouseBanReasonEntryList();
+                LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Hausverbot-Gründe aktualisiert.");
+            });
+
+
+            Thread t5 = new Thread(() -> {
+                NAVIPOINTLIST = getNaviPointEntryList();
+                LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Navipunkte aktualisiert.");
+            });
+
+
+            Thread t6 = new Thread(() -> {
+                BLACKLISTREASONLIST = getBlacklistReasonEntryList();
+                LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Blacklist Gründe aktualisiert.");
+            });
+
+
+            Thread t7 = new Thread(() -> {
+                WANTEDREASONLIST = getWantedReasonEntryList();
+                LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Wanted-Gründe aktualisiert.");
+            });
 
             try {
                 t1.start();
@@ -50,13 +78,22 @@ public class Syncer {
 
                 t4.start();
                 t4.join();
+
+                t5.start();
+                t5.join();
+
+                t6.start();
+                t6.join();
+
+                t7.start();
+                t7.join();
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
         }).start();
     }
 
-    public static Thread syncPlayerAddonGroupMap() {
+    private static Thread syncPlayerAddonGroupMap() {
         return new Thread(() -> {
             JsonObject response = APIRequest.sendPlayerRequest();
             if (response != null) {
@@ -71,7 +108,7 @@ public class Syncer {
         });
     }
 
-    public static Thread syncPlayerFactionData() {
+    private static Thread syncPlayerFactionData() {
         return new Thread(() -> {
             PLAYERFACTIONMAP.clear();
             PLAYERRANKMAP.clear();
@@ -92,21 +129,7 @@ public class Syncer {
         });
     }
 
-    public static Thread syncHousebanEntryList() {
-        return new Thread(() -> {
-            HOUSEBANENTRYLIST = getHouseBanEntryList();
-            LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Hausverbote aktualisiert.");
-        });
-    }
-
-    public static Thread syncNaviPointEntryList() {
-        return new Thread(() -> {
-            NAVIPOINTLIST = getNaviPointEntryList();
-            LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Navipunkte aktualisiert.");
-        });
-    }
-
-    public static List<BlacklistReason> getBlacklistReasonEntryList() {
+    private static List<BlacklistReason> getBlacklistReasonEntryList() {
         JsonArray response = APIRequest.sendBlacklistReasonRequest();
         if (response == null)
             return new ArrayList<>();
@@ -143,7 +166,7 @@ public class Syncer {
         return broadcastList;
     }
 
-    public static List<HouseBan> getHouseBanEntryList() {
+    private static List<HouseBan> getHouseBanEntryList() {
         JsonArray response = APIRequest.sendHouseBanRequest(AbstractionLayer.getPlayer().getFaction().equals(Faction.RETTUNGSDIENST));
         if (response == null)
             return new ArrayList<>();
@@ -174,7 +197,7 @@ public class Syncer {
         return houseBanList;
     }
 
-    public static List<HouseBanReason> getHouseBanReasonEntryList() {
+    private static List<HouseBanReason> getHouseBanReasonEntryList() {
         JsonArray response = APIRequest.sendHouseBanReasonRequest();
         if (response == null)
             return new ArrayList<>();
@@ -192,7 +215,7 @@ public class Syncer {
         return houseBanReasonList;
     }
 
-    public static List<NaviPoint> getNaviPointEntryList() {
+    private static List<NaviPoint> getNaviPointEntryList() {
         JsonArray response = APIRequest.sendNaviPointRequest();
         if (response == null)
             return new ArrayList<>();
@@ -211,32 +234,7 @@ public class Syncer {
         return naviPointList;
     }
 
-    public static List<String> getPlayerGroupList() {
-        JsonArray response = APIRequest.sendPlayerGroupRequest();
-        List<String> playerGroupList = new ArrayList<>();
-        if (response != null) {
-            response.forEach(jsonElement -> playerGroupList.add(jsonElement.getAsString()));
-        }
-        return playerGroupList;
-    }
-
-    public static List<PlayerGroup> getPlayerGroupEntryList(String group) {
-        JsonObject response = APIRequest.sendPlayerRequest();
-        if (response == null || !response.has(group))
-            return new ArrayList<>();
-        List<PlayerGroup> playerGroupList = new ArrayList<>();
-        response.get(group).getAsJsonArray().forEach(jsonElement -> {
-            JsonObject o = jsonElement.getAsJsonObject();
-
-            String name = o.get("name").getAsString();
-            String uuid = o.get("uuid").getAsString();
-
-            playerGroupList.add(new PlayerGroup(name, uuid));
-        });
-        return playerGroupList;
-    }
-
-    public static List<WantedReason> getWantedReasonEntryList() {
+    private static List<WantedReason> getWantedReasonEntryList() {
         JsonArray response = APIRequest.sendWantedReasonRequest();
         if (response == null)
             return new ArrayList<>();

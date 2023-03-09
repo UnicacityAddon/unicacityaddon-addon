@@ -3,9 +3,9 @@ package com.rettichlp.unicacityaddon.commands.api;
 import com.google.gson.JsonObject;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
-import com.rettichlp.unicacityaddon.base.api.Syncer;
 import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
+import com.rettichlp.unicacityaddon.base.enums.api.AddonGroup;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
@@ -17,8 +17,10 @@ import net.minecraftforge.client.IClientCommand;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author RettichLP
@@ -53,16 +55,16 @@ public class PlayerGroupCommand implements IClientCommand {
     public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args) {
         UPlayer p = AbstractionLayer.getPlayer();
 
-        if (args.length == 2 && args[0].equalsIgnoreCase("list")) {
+        if (args.length == 2 && args[0].equalsIgnoreCase("list") && Arrays.stream(AddonGroup.values()).anyMatch(addonGroup -> addonGroup.name().equals(args[1]))) {
             p.sendEmptyMessage();
             p.sendMessage(Message.getBuilder()
                     .of("Spielergruppe:").color(ColorCode.DARK_AQUA).bold().advance().space()
                     .of(args[1]).color(ColorCode.DARK_AQUA).advance()
                     .createComponent());
 
-            Syncer.getPlayerGroupEntryList(args[1]).forEach(playerGroupEntry -> p.sendMessage(Message.getBuilder()
+            AddonGroup.valueOf(args[1]).getMemberList().forEach(s -> p.sendMessage(Message.getBuilder()
                     .of("»").color(ColorCode.GRAY).advance().space()
-                    .of(playerGroupEntry.getName()).color(ColorCode.AQUA).advance()
+                    .of(s).color(ColorCode.AQUA).advance()
                     .createComponent()));
 
             p.sendEmptyMessage();
@@ -87,7 +89,7 @@ public class PlayerGroupCommand implements IClientCommand {
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
         return TabCompletionBuilder.getBuilder(args)
                 .addAtIndex(1, "list", "add", "remove")
-                .addAtIndex(2, Syncer.getPlayerGroupList())
+                .addAtIndex(2, Arrays.stream(AddonGroup.values()).map(Enum::name).collect(Collectors.toList()))
                 .build();
     }
 

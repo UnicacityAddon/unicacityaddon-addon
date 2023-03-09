@@ -63,7 +63,7 @@ public class HousebanReasonCommand implements IClientCommand {
                     .of("Hausverbot-Gründe:").color(ColorCode.DARK_AQUA).bold().advance()
                     .createComponent());
 
-            Syncer.getHouseBanReasonEntryList().forEach(houseBanReason -> p.sendMessage(Message.getBuilder()
+            Syncer.HOUSEBANREASONLIST.forEach(houseBanReason -> p.sendMessage(Message.getBuilder()
                     .of("»").color(ColorCode.GRAY).advance().space()
                     .of(houseBanReason.getReason()).color(ColorCode.AQUA)
                             .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder()
@@ -101,7 +101,7 @@ public class HousebanReasonCommand implements IClientCommand {
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
         return TabCompletionBuilder.getBuilder(args)
                 .addAtIndex(1, "add", "remove")
-                .addAtIndex(2, Syncer.getHouseBanReasonEntryList().stream().map(HouseBanReason::getReason).sorted().collect(Collectors.toList()))
+                .addAtIndex(2, Syncer.HOUSEBANREASONLIST.stream().map(HouseBanReason::getReason).sorted().collect(Collectors.toList()))
                 .build();
     }
 

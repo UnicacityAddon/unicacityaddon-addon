@@ -73,7 +73,7 @@ public class WantedReasonCommand implements IClientCommand {
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
         return TabCompletionBuilder.getBuilder(args)
                 .addAtIndex(1, "add", "remove")
-                .addAtIndex(2, Syncer.getWantedReasonEntryList().stream().map(WantedReason::getReason).sorted().collect(Collectors.toList()))
+                .addAtIndex(2, Syncer.WANTEDREASONLIST.stream().map(WantedReason::getReason).sorted().collect(Collectors.toList()))
                 .build();
     }
 

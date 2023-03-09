@@ -117,7 +117,7 @@ public class ASUCommand implements IClientCommand {
     @Nonnull
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
         return TabCompletionBuilder.getBuilder(args)
-                .addToAllFromIndex(2, Syncer.getWantedReasonEntryList().stream().map(WantedReason::getReason).sorted().collect(Collectors.toList()))
+                .addToAllFromIndex(2, Syncer.WANTEDREASONLIST.stream().map(WantedReason::getReason).sorted().collect(Collectors.toList()))
                 .addToAllFromIndex(2, ForgeUtils.getOnlinePlayers())
                 .addToAllFromIndex(3, Arrays.stream(Flag.values()).map(Flag::getFlagArgument).sorted().collect(Collectors.toList()))
                 .build();

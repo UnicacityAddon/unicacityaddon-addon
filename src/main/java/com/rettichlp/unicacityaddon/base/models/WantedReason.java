@@ -14,7 +14,7 @@ public class WantedReason {
     private final int points;
 
     public static WantedReason getWantedReasonEntryByReason(String reason) {
-        return Syncer.getWantedReasonEntryList().stream()
+        return Syncer.WANTEDREASONLIST.stream()
                 .filter(wantedReason -> wantedReason.getReason().equals(reason))
                 .findFirst()
                 .orElse(null);
