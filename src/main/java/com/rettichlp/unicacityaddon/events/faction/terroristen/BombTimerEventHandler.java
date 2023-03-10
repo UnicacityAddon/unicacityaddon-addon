@@ -27,7 +27,7 @@ import java.util.regex.Matcher;
 public class BombTimerEventHandler {
 
     private static String location;
-    public static int activeBomb = 0;
+    public static int activeBomb = -1;
 
     @SubscribeEvent
     public void onClientChatReceived(ClientChatReceivedEvent e) {
