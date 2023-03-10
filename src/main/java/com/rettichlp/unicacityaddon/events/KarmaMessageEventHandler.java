@@ -1,5 +1,6 @@
 package com.rettichlp.unicacityaddon.events;
 
+import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
 import com.rettichlp.unicacityaddon.base.config.ConfigElements;
 import com.rettichlp.unicacityaddon.base.enums.api.StatisticType;
@@ -35,6 +36,10 @@ public class KarmaMessageEventHandler {
         Matcher karmaChangedMatcher = PatternHandler.KARMA_CHANGED_PATTERN.matcher(msg);
         if (karmaChangedMatcher.find()) {
             ReviveEventHandler.handleRevive();
+
+            karmaCheck = true;
+            AbstractionLayer.getPlayer().sendChatMessage("/karma");
+            e.setCanceled(true);
 
             karma = Integer.parseInt(karmaChangedMatcher.group(1));
             if (karma < 0 && karma > -9) {
