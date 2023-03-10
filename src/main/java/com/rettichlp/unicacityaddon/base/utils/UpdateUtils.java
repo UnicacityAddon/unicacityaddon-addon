@@ -1,5 +1,6 @@
 package com.rettichlp.unicacityaddon.base.utils;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
@@ -18,6 +19,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * @author RettichLP
@@ -152,5 +154,22 @@ public class UpdateUtils {
     private static String getLatestVersion() {
         JsonObject response = APIRequest.sendManagementRequest();
         return response != null ? response.get("latestVersion").getAsString() : UnicacityAddon.VERSION;
+    }
+
+    public static boolean hasPlayerLatestAddonVersion(String name) {
+        AtomicBoolean accept = new AtomicBoolean(false);
+        JsonArray response = APIRequest.sendManagementUserRequest();
+        if (response != null) {
+            response.forEach(jsonElement -> {
+                if (!accept.get()) {
+                    String uuid = UnicacityAddon.MINECRAFT.getConnection().getPlayerInfo(name).getGameProfile().getId().toString().replace("-", "");
+                    JsonObject jsonObject = jsonElement.getAsJsonObject();
+                    boolean hasAddon = jsonObject.get("uuid").getAsString().equals(uuid);
+                    boolean hasVersion = jsonObject.get("version").getAsString().equals(latestVersion) || jsonObject.get("version").getAsString().contains("dev");
+                    accept.set(hasAddon && hasVersion);
+                }
+            });
+        }
+        return accept.get();
     }
 }
