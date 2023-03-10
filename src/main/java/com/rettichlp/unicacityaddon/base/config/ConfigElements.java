@@ -408,7 +408,13 @@ public class ConfigElements {
 
     // BombScreenshot
     public static boolean getAutomatedBombScreenshot() {
-        return !UnicacityAddon.ADDON.getConfig().has("AUTOMATED_BOMB_SCREEN_SETTINGS") || UnicacityAddon.ADDON.getConfig().get("AUTOMATED_BOMB_SCREEN_SETTINGS")
+        return !UnicacityAddon.ADDON.getConfig().has("AUTOMATED_BOMB_SCREEN_SETTINGS") && UnicacityAddon.ADDON.getConfig().get("AUTOMATED_BOMB_SCREEN_SETTINGS")
+                .getAsBoolean(); // default = false
+    }
+
+    // Revive Screenshot
+    public static boolean getAutomatedReviveScreenshot() {
+        return !UnicacityAddon.ADDON.getConfig().has("AUTOMATED_REVIVE_SCREEN_SETTINGS") || UnicacityAddon.ADDON.getConfig().get("AUTOMATED_REVIVE_SCREEN_SETTINGS")
                 .getAsBoolean(); // default = true
     }
 
