@@ -20,7 +20,7 @@ public class BroadcastChecker {
 
     public static void checkForBroadcast() {
         new Thread(() -> {
-            for (Broadcast broadcast : Syncer.getBroadcastEntryList()) {
+            for (Broadcast broadcast : Syncer.getBroadcastList()) {
                 if (broadcast.getSendTime() < System.currentTimeMillis())
                     continue;
                 if (receivedBroadcasts.contains(broadcast.getId()))

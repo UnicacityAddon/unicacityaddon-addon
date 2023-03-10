@@ -1,12 +1,13 @@
 package com.rettichlp.unicacityaddon.base.utils;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
+import com.rettichlp.unicacityaddon.base.api.Syncer;
 import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
 import com.rettichlp.unicacityaddon.base.config.ConfigElements;
+import com.rettichlp.unicacityaddon.base.models.ManagementUser;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import net.labymod.main.LabyMod;
@@ -19,7 +20,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.Charset;
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.Optional;
 
 /**
  * @author RettichLP
@@ -157,19 +158,10 @@ public class UpdateUtils {
     }
 
     public static boolean hasPlayerLatestAddonVersion(String name) {
-        AtomicBoolean accept = new AtomicBoolean(false);
-        JsonArray response = APIRequest.sendManagementUserRequest();
-        if (response != null) {
-            response.forEach(jsonElement -> {
-                if (!accept.get()) {
-                    String uuid = UnicacityAddon.MINECRAFT.getConnection().getPlayerInfo(name).getGameProfile().getId().toString().replace("-", "");
-                    JsonObject jsonObject = jsonElement.getAsJsonObject();
-                    boolean hasAddon = jsonObject.get("uuid").getAsString().equals(uuid);
-                    boolean hasVersion = jsonObject.get("version").getAsString().equals(latestVersion) || jsonObject.get("version").getAsString().contains("dev");
-                    accept.set(hasAddon && hasVersion);
-                }
-            });
-        }
-        return accept.get();
+        Optional<ManagementUser> managementUserOptional = Syncer.MANAGEMENTUSERLIST.stream()
+                .filter(mu -> mu.getUuid().equals(UnicacityAddon.MINECRAFT.getConnection().getPlayerInfo(name).getGameProfile().getId().toString().replace("-", "")))
+                .findAny();
+
+        return managementUserOptional.isPresent() && (managementUserOptional.get().getVersion().equals(latestVersion) || managementUserOptional.get().getVersion().contains("dev"));
     }
 }
