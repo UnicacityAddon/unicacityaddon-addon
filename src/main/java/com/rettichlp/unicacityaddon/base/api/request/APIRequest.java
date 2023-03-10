@@ -19,7 +19,6 @@ public class APIRequest {
     private static final String REMOVE_SUB_PATH = "remove";
     private static final String QUEUE_SUB_PATH = "queue";
     private static final String SEND_SUB_PATH = "send";
-    private static final String GROUPS_SUB_PATH = "groups";
     private static final String TOP_SUB_PATH = "top";
     private static final String CREATE_SUB_PATH = "create";
     private static final String REVOKE_SUB_PATH = "revoke";
@@ -213,27 +212,11 @@ public class APIRequest {
                 .getAsJsonObject();
     }
 
-    public static JsonArray sendPlayerGroupRequest() {
-        return RequestBuilder.getBuilder()
-                .nonProd(NON_PROD)
-                .applicationPath(ApplicationPath.PLAYER)
-                .subPath(GROUPS_SUB_PATH)
-                .getAsJsonArray();
-    }
-
     public static JsonObject sendStatisticRequest() {
         return RequestBuilder.getBuilder()
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.STATISTIC)
                 .subPath(AbstractionLayer.getPlayer().getName())
-                .getAsJsonObject();
-    }
-
-    public static JsonObject sendStatisticRequest(String name) {
-        return RequestBuilder.getBuilder()
-                .nonProd(NON_PROD)
-                .applicationPath(ApplicationPath.STATISTIC)
-                .subPath(name)
                 .getAsJsonObject();
     }
 

@@ -39,31 +39,28 @@ public class Syncer {
             Thread t2 = syncPlayerFactionData();
 
             Thread t3 = new Thread(() -> {
-                HOUSEBANLIST = getHouseBanEntryList();
-                LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Hausverbote aktualisiert.");
+                if (!(HOUSEBANLIST = getHouseBanEntryList()).isEmpty())
+                    LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Hausverbote aktualisiert.");
             });
 
             Thread t4 = new Thread(() -> {
-                HOUSEBANREASONLIST = getHouseBanReasonEntryList();
-                LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Hausverbot-Gründe aktualisiert.");
+                if (!(HOUSEBANREASONLIST = getHouseBanReasonEntryList()).isEmpty())
+                    LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Hausverbot-Gründe aktualisiert.");
             });
-
 
             Thread t5 = new Thread(() -> {
-                NAVIPOINTLIST = getNaviPointEntryList();
-                LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Navipunkte aktualisiert.");
+                if (!(NAVIPOINTLIST = getNaviPointEntryList()).isEmpty())
+                    LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Navipunkte aktualisiert.");
             });
-
 
             Thread t6 = new Thread(() -> {
-                BLACKLISTREASONLIST = getBlacklistReasonEntryList();
-                LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Blacklist Gründe aktualisiert.");
+                if (!(BLACKLISTREASONLIST = getBlacklistReasonEntryList()).isEmpty())
+                    LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Blacklist-Gründe aktualisiert.");
             });
 
-
             Thread t7 = new Thread(() -> {
-                WANTEDREASONLIST = getWantedReasonEntryList();
-                LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Wanted-Gründe aktualisiert.");
+                if (!(WANTEDREASONLIST = getWantedReasonEntryList()).isEmpty())
+                    LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Wanted-Gründe aktualisiert.");
             });
 
             try {
@@ -104,7 +101,7 @@ public class Syncer {
                     }
                 }
             }
-            LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Addon Gruppen aktualisiert.");
+            LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Addon-Gruppen aktualisiert.");
         });
     }
 
