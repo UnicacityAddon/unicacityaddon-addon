@@ -93,7 +93,7 @@ public class WebsiteUtils {
                 websiteSource.append(scanner.nextLine()).append("\n\r");
             return websiteSource.toString();
         } catch (IOException e) {
-            throw new APIResponseException(httpURLConnection.getURL().toString(), HttpURLConnection.HTTP_INTERNAL_ERROR);
+            throw new APIResponseException(httpURLConnection.getURL().toString(), HttpURLConnection.HTTP_NOT_FOUND);
         }
     }
 }

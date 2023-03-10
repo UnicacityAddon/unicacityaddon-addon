@@ -25,6 +25,8 @@ public class APIRequest {
     private static final String REVOKE_SUB_PATH = "revoke";
     private static final String DONE_SUB_PATH = "done";
     private static final String USERS_SUB_PATH = "users";
+    private static final String BOMB_SUB_PATH = "bomb";
+    private static final String GANGWAR_SUB_PATH = "gangwar";
 
     public static void sendBannerAddRequest(Faction faction, int x, int y, int z, String navipoint) {
         RequestBuilder.getBuilder()
@@ -88,10 +90,21 @@ public class APIRequest {
                 .getAsJsonObject();
     }
 
-    public static void sendGangwarDataRequest(int attacker, int defender) {
+    public static void sendEventBombRequest(long startTime) {
         RequestBuilder.getBuilder()
                 .nonProd(NON_PROD)
-                .applicationPath(ApplicationPath.GANGWAR)
+                .applicationPath(ApplicationPath.EVENT)
+                .subPath(BOMB_SUB_PATH)
+                .parameter(mapOf(
+                        "startTime", String.valueOf(startTime)))
+                .sendAsync();
+    }
+
+    public static void sendEventGangwarRequest(int attacker, int defender) {
+        RequestBuilder.getBuilder()
+                .nonProd(NON_PROD)
+                .applicationPath(ApplicationPath.EVENT)
+                .subPath(GANGWAR_SUB_PATH)
                 .parameter(mapOf(
                         "attacker", String.valueOf(attacker),
                         "defender", String.valueOf(defender)))

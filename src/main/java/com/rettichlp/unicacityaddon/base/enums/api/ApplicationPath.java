@@ -5,7 +5,7 @@ public enum ApplicationPath {
     BANNER("/banner"),
     BLACKLISTREASON("/blacklistreason"),
     BROADCAST("/broadcast"),
-    GANGWAR("/gangwar"),
+    EVENT("/event"),
     HOUSEBAN("/houseban"),
     HOUSEBANREASON("/housebanreason"),
     MANAGEMENT("/mgmt"),

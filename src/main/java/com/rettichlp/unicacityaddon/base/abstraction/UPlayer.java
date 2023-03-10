@@ -75,4 +75,6 @@ public interface UPlayer {
     boolean isSuperUser();
 
     boolean hasGangwar();
+
+    boolean isPrioritizedMember();
 }
