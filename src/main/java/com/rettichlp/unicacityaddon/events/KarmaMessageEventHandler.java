@@ -34,7 +34,7 @@ public class KarmaMessageEventHandler {
             return;
 
         Matcher karmaChangedMatcher = PatternHandler.KARMA_CHANGED_PATTERN.matcher(msg);
-        if (karmaChangedMatcher.find()) {
+        if (karmaChangedMatcher.find() && !TimerEventHandler.isJail && !ReviveEventHandler.isDead) {
             ReviveEventHandler.handleRevive();
 
             karmaCheck = true;
