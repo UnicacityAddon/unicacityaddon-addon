@@ -65,11 +65,13 @@ public class RequestBuilder {
         }
 
         public JsonObject getAsJsonObject() {
-            return send().getAsJsonObject();
+            JsonElement jsonElement = send();
+            return jsonElement != null ? jsonElement.getAsJsonObject() : null;
         }
 
         public JsonArray getAsJsonArray() {
-            return send().getAsJsonArray();
+            JsonElement jsonElement = send();
+            return jsonElement != null ? jsonElement.getAsJsonArray() : null;
         }
     }
 }

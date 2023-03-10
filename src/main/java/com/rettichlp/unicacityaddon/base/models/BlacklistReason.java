@@ -8,14 +8,12 @@ import lombok.Getter;
 @Getter
 public class BlacklistReason {
 
-    private final int kills;
     private final String reason;
-    private final String issuerUUID;
+    private final int kills;
     private final int price;
-    private final String issuerName;
 
     public static BlacklistReason getBlacklistReasonEntryByReason(String reason) {
-        return Syncer.getBlacklistReasonEntryList().stream()
+        return Syncer.BLACKLISTREASONLIST.stream()
                 .filter(blacklistReasonEntry -> blacklistReasonEntry.getReason().equals(reason))
                 .findFirst()
                 .orElse(null);

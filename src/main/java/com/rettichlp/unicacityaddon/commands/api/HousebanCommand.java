@@ -64,7 +64,7 @@ public class HousebanCommand implements IClientCommand {
                     .of("Hausverbote:").color(ColorCode.DARK_AQUA).bold().advance()
                     .createComponent());
 
-            Syncer.HOUSEBANENTRYLIST.forEach(houseBanEntry -> {
+            Syncer.HOUSEBANLIST.forEach(houseBanEntry -> {
                 long durationInMillis = houseBanEntry.getExpirationTime() - System.currentTimeMillis();
 
                 String duration = Message.getBuilder()
@@ -131,7 +131,7 @@ public class HousebanCommand implements IClientCommand {
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
         return TabCompletionBuilder.getBuilder(args)
                 .addAtIndex(1, "add", "remove")
-                .addAtIndex(3, Syncer.getHouseBanReasonEntryList().stream().map(HouseBanReason::getReason).sorted().collect(Collectors.toList()))
+                .addAtIndex(3, Syncer.HOUSEBANREASONLIST.stream().map(HouseBanReason::getReason).sorted().collect(Collectors.toList()))
                 .build();
     }
 

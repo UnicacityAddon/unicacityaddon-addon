@@ -1,9 +1,13 @@
 package com.rettichlp.unicacityaddon.base.utils;
 
+import com.google.common.collect.Maps;
+import com.google.gson.JsonParser;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.api.TokenManager;
 import com.rettichlp.unicacityaddon.base.api.exception.APIResponseException;
 import com.rettichlp.unicacityaddon.base.enums.api.ApplicationPath;
+import com.rettichlp.unicacityaddon.base.manager.FileManager;
+import io.netty.handler.codec.http.HttpResponseStatus;
 import joptsimple.internal.Strings;
 
 import java.io.IOException;
@@ -22,34 +26,22 @@ import java.util.Scanner;
 public class WebsiteUtils {
 
     public static String sendRequest(String urlString) throws APIResponseException {
-        HttpURLConnection httpURLConnection;
+        Map.Entry<HttpURLConnection, Integer> httpURLConnection = getHttpURLConnection(urlString);
 
-        if (urlString == null || urlString.isEmpty())
-            throw new APIResponseException("URL is null or empty", HttpURLConnection.HTTP_NOT_FOUND);
+        String websiteSource = getWebsiteSource(httpURLConnection);
 
-        try {
-            httpURLConnection = (HttpURLConnection) new URL(urlString).openConnection();
-            httpURLConnection.addRequestProperty("User-Agent", "Mozilla/5.0 Gecko/20100101 Firefox/25.0");
+        int responseCode = httpURLConnection.getValue();
 
-            int statusCode = httpURLConnection.getResponseCode();
-            if (statusCode != HttpURLConnection.HTTP_OK)
-                throw new APIResponseException(urlString, statusCode);
-        } catch (IOException e) {
-            throw new APIResponseException(urlString, HttpURLConnection.HTTP_NOT_FOUND);
+        boolean isApiRequest = urlString.startsWith("http://rettichlp.de:8888/unicacityaddon/v1/") && FileManager.isValidJson(websiteSource);
+
+        if (responseCode == HttpURLConnection.HTTP_OK) {
+            UnicacityAddon.LOGGER.info("APIResponse - " + responseCode + " [" + urlString.replace(TokenManager.API_TOKEN, "TOKEN") + "]");
+            return websiteSource;
+        } else {
+            throw new APIResponseException(urlString, responseCode, isApiRequest
+                    ? new JsonParser().parse(websiteSource).getAsJsonObject().get("info").getAsString()
+                    : HttpResponseStatus.valueOf(responseCode).reasonPhrase());
         }
-
-        try {
-            StringBuilder websiteSource = new StringBuilder();
-            Scanner scanner = new Scanner(new InputStreamReader(httpURLConnection.getInputStream(), StandardCharsets.UTF_8));
-            while (scanner.hasNextLine())
-                websiteSource.append(scanner.nextLine()).append("\n\r");
-            UnicacityAddon.LOGGER.info("APIResponse - " + httpURLConnection.getResponseCode() + " [" + urlString.replace(TokenManager.API_TOKEN, "TOKEN") + "]");
-            return websiteSource.toString();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        throw new APIResponseException(urlString, HttpURLConnection.HTTP_NO_CONTENT);
     }
 
     public static String createUrl(boolean nonProd, ApplicationPath applicationPath, String subPath, Map<String, String> parameter) {
@@ -76,6 +68,34 @@ public class WebsiteUtils {
                     : resultString;
         } catch (UnsupportedEncodingException e) {
             return Strings.EMPTY;
+        }
+    }
+
+    private static Map.Entry<HttpURLConnection, Integer> getHttpURLConnection(String urlString) throws APIResponseException {
+        HttpURLConnection httpURLConnection;
+
+        if (urlString != null && !urlString.isEmpty()) {
+            try {
+                httpURLConnection = (HttpURLConnection) new URL(urlString).openConnection();
+                httpURLConnection.addRequestProperty("User-Agent", "Mozilla/5.0 Gecko/20100101 Firefox/25.0");
+                return Maps.immutableEntry(httpURLConnection, httpURLConnection.getResponseCode());
+            } catch (IOException e) {
+                throw new APIResponseException(urlString, HttpURLConnection.HTTP_NOT_FOUND);
+            }
+        } else
+            throw new APIResponseException("URL is null or empty", HttpURLConnection.HTTP_NOT_FOUND);
+    }
+
+    private static String getWebsiteSource(Map.Entry<HttpURLConnection, Integer> httpURLConnectionIntegerEntry) throws APIResponseException {
+        HttpURLConnection httpURLConnection = httpURLConnectionIntegerEntry.getKey();
+        try {
+            StringBuilder websiteSource = new StringBuilder();
+            Scanner scanner = new Scanner(new InputStreamReader(httpURLConnection.getInputStream(), StandardCharsets.UTF_8));
+            while (scanner.hasNextLine())
+                websiteSource.append(scanner.nextLine()).append("\n\r");
+            return websiteSource.toString();
+        } catch (IOException e) {
+            throw new APIResponseException(httpURLConnection.getURL().toString(), httpURLConnectionIntegerEntry.getValue());
         }
     }
 }

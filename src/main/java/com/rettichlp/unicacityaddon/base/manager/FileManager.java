@@ -1,6 +1,8 @@
 package com.rettichlp.unicacityaddon.base.manager;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.models.Data;
@@ -123,7 +125,7 @@ public class FileManager {
             File dataFile = FileManager.getDataFile();
             assert dataFile != null;
             String jsonData = FileUtils.readFileToString(dataFile, StandardCharsets.UTF_8.toString());
-            DATA = jsonData == null || !jsonData.contains("timer") ? new Data() : new Gson().fromJson(jsonData, Data.class);
+            DATA = jsonData == null || !isValidJson(jsonData) ? new Data() : new Gson().fromJson(jsonData, Data.class);
         } catch (IOException e) {
             DATA = new Data();
             UnicacityAddon.LOGGER.throwing(e);
@@ -143,5 +145,14 @@ public class FileManager {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static boolean isValidJson(String string) {
+        try {
+            new JsonParser().parse(string);
+        } catch (JsonSyntaxException e) {
+            return false;
+        }
+        return true;
     }
 }

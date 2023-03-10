@@ -9,10 +9,12 @@ import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.Arrays;
+import java.util.Optional;
 import java.util.regex.Matcher;
 
 /**
  * @author Dimiikou
+ * @author RettichLP
  */
 @UCEvent
 public class EquipEventHandler {
@@ -22,18 +24,24 @@ public class EquipEventHandler {
         String msg = e.getMessage().getUnformattedText();
 
         Matcher equipMatcher = PatternHandler.EQUIP_PATTERN.matcher(msg);
-        Matcher trackerMatcher = PatternHandler.TRACKER_PATTERN.matcher(msg);
-        if (equipMatcher.find() || trackerMatcher.find()) {
-            Equip equip = Arrays.stream(Equip.values())
-                    .filter(equip1 -> msg.contains(equip1.getMessageName()))
-                    .findFirst()
-                    .orElse(null);
+        if (equipMatcher.find()) {
+            String equipString = equipMatcher.group(1);
 
-            if (equip != null) {
-                FileManager.DATA.addEquipToEquipMap(equip);
+            Optional<Equip> equipOptional = Arrays.stream(Equip.values())
+                    .filter(eq -> eq.getMessageName().equalsIgnoreCase(equipString))
+                    .findAny();
+
+            if (equipOptional.isPresent()) {
+                FileManager.DATA.addEquipToEquipMap(equipOptional.get());
             } else {
                 AbstractionLayer.getPlayer().sendErrorMessage("Equip wurde nicht gefunden.");
             }
+            return;
+        }
+
+        Matcher trackerMatcher = PatternHandler.TRACKER_PATTERN.matcher(msg);
+        if (trackerMatcher.find()) {
+            FileManager.DATA.addEquipToEquipMap(Equip.TRACKER);
         }
     }
 }

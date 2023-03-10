@@ -9,7 +9,9 @@ import com.rettichlp.unicacityaddon.base.manager.FactionManager;
 import com.rettichlp.unicacityaddon.base.registry.SoundRegistry;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
+import com.rettichlp.unicacityaddon.base.utils.ForgeUtils;
 import com.rettichlp.unicacityaddon.base.utils.NavigationUtils;
+import com.rettichlp.unicacityaddon.base.utils.UpdateUtils;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.inventory.Container;
 import net.minecraft.scoreboard.Scoreboard;
@@ -23,7 +25,9 @@ import net.minecraft.world.World;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
+import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 /**
  * @author RettichLP
@@ -158,7 +162,9 @@ public class UPlayerImpl implements UPlayer {
     }
 
     @Override
-    public boolean inDuty() {return FactionManager.checkPlayerDuty(getName());}
+    public boolean inDuty() {
+        return FactionManager.checkPlayerDuty(getName());
+    }
 
     @Override
     public int getRank() {
@@ -202,5 +208,34 @@ public class UPlayerImpl implements UPlayer {
     public boolean isSuperUser() {
         String uuid = getUniqueID().toString().replace("-", "");
         return uuid.equals("25855f4d38744a7fa6ade9e4f3042e19") || uuid.equals("6e49e42eefca4d9389f9f395b887809e");
+    }
+
+    @Override
+    public boolean hasGangwar() {
+        return getWorldScoreboard().getObjectiveNames().stream()
+                .anyMatch(s -> s.contains("Angreifer") || s.contains("Verteidiger"));
+    }
+
+    @Override
+    public boolean isPrioritizedMember() {
+        Map<String, Integer> filteredPlayerMap = Syncer.PLAYERFACTIONMAP.entrySet().stream()
+                .filter(e -> e.getValue().equals(getFaction())) // name and faction from faction
+                .map(Map.Entry::getKey) // name of players from faction
+                .filter(s -> ForgeUtils.getOnlinePlayers().contains(s)) // is online
+                .filter(UpdateUtils::hasPlayerLatestAddonVersion) // has supported addon version
+                .collect(Collectors.toMap(s -> s, Syncer.PLAYERRANKMAP::get)); // collect name and rank of players from faction
+
+        boolean hasAnyPlayerHigherRank = filteredPlayerMap.entrySet().stream()
+                .anyMatch(stringIntegerEntry -> stringIntegerEntry.getValue() > getRank()); // has a higher rank than himself
+
+        boolean hasRankPriority = filteredPlayerMap.entrySet().stream()
+                .filter(stringIntegerEntry -> stringIntegerEntry.getValue().equals(getRank()))
+                .map(Map.Entry::getKey)
+                .sorted()
+                .collect(Collectors.toList())
+                .get(0)
+                .equals(getName());
+
+        return !hasAnyPlayerHigherRank && hasRankPriority;
     }
 }

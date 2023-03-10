@@ -27,7 +27,7 @@ public class NaviPoint {
         return new BlockPos(x, y, z);
     }
 
-    public static NaviPoint getNaviPointEntryByTabName(String tabName) {
+    public static NaviPoint getNaviPointByTabName(String tabName) {
         return Syncer.NAVIPOINTLIST.stream()
                 .filter(naviPointEntry -> naviPointEntry.getTabName().equals(tabName))
                 .findFirst()

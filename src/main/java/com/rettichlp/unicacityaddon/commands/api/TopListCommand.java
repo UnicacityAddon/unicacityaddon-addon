@@ -75,14 +75,8 @@ public class TopListCommand implements IClientCommand {
             kdJsonArray.forEach(jsonElement -> {
                 String name = jsonElement.getAsJsonObject().get("name").getAsString();
                 String kd = DECIMAL_FORMAT.format(jsonElement.getAsJsonObject().get("value").getAsFloat());
-
-                JsonObject statisticResponse = APIRequest.sendStatisticRequest(name);
-                if (statisticResponse == null)
-                    return;
-
-                JsonObject gameplayJsonObject = statisticResponse.getAsJsonObject("gameplay");
-                int deaths = gameplayJsonObject.get("deaths").getAsInt();
-                int kills = gameplayJsonObject.get("kills").getAsInt();
+                String deaths = String.valueOf(jsonElement.getAsJsonObject().get("deaths").getAsInt());
+                String kills = String.valueOf(jsonElement.getAsJsonObject().get("kills").getAsInt());
 
                 place.getAndIncrement();
                 p.sendMessage(Message.getBuilder()
@@ -91,9 +85,9 @@ public class TopListCommand implements IClientCommand {
                         .of(name).color(ColorCode.AQUA)
                                 .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder()
                                         .of("Tode:").color(ColorCode.GRAY).advance().space()
-                                        .of(String.valueOf(deaths)).color(ColorCode.RED).advance().newline()
+                                        .of(deaths).color(ColorCode.RED).advance().newline()
                                         .of("Kills:").color(ColorCode.GRAY).advance().space()
-                                        .of(String.valueOf(kills)).color(ColorCode.RED).advance()
+                                        .of(kills).color(ColorCode.RED).advance()
                                         .createComponent())
                                 .advance().space()
                         .of("-").color(ColorCode.GRAY).advance().space()

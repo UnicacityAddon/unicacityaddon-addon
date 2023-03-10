@@ -19,11 +19,13 @@ public class APIRequest {
     private static final String REMOVE_SUB_PATH = "remove";
     private static final String QUEUE_SUB_PATH = "queue";
     private static final String SEND_SUB_PATH = "send";
-    private static final String GROUPS_SUB_PATH = "groups";
     private static final String TOP_SUB_PATH = "top";
     private static final String CREATE_SUB_PATH = "create";
     private static final String REVOKE_SUB_PATH = "revoke";
     private static final String DONE_SUB_PATH = "done";
+    private static final String USERS_SUB_PATH = "users";
+    private static final String BOMB_SUB_PATH = "bomb";
+    private static final String GANGWAR_SUB_PATH = "gangwar";
 
     public static void sendBannerAddRequest(Faction faction, int x, int y, int z, String navipoint) {
         RequestBuilder.getBuilder()
@@ -87,6 +89,27 @@ public class APIRequest {
                 .getAsJsonObject();
     }
 
+    public static void sendEventBombRequest(long startTime) {
+        RequestBuilder.getBuilder()
+                .nonProd(NON_PROD)
+                .applicationPath(ApplicationPath.EVENT)
+                .subPath(BOMB_SUB_PATH)
+                .parameter(mapOf(
+                        "startTime", String.valueOf(startTime)))
+                .sendAsync();
+    }
+
+    public static void sendEventGangwarRequest(int attacker, int defender) {
+        RequestBuilder.getBuilder()
+                .nonProd(NON_PROD)
+                .applicationPath(ApplicationPath.EVENT)
+                .subPath(GANGWAR_SUB_PATH)
+                .parameter(mapOf(
+                        "attacker", String.valueOf(attacker),
+                        "defender", String.valueOf(defender)))
+                .sendAsync();
+    }
+
     public static JsonArray sendHouseBanRequest(boolean advanced) {
         return RequestBuilder.getBuilder()
                 .nonProd(NON_PROD)
@@ -145,6 +168,21 @@ public class APIRequest {
                 .subPath(REMOVE_SUB_PATH)
                 .parameter(mapOf("reason", reason))
                 .getAsJsonObject();
+    }
+
+    public static JsonObject sendManagementRequest() {
+        return RequestBuilder.getBuilder()
+                .nonProd(NON_PROD)
+                .applicationPath(ApplicationPath.MANAGEMENT)
+                .getAsJsonObject();
+    }
+
+    public static JsonArray sendManagementUserRequest() {
+        return RequestBuilder.getBuilder()
+                .nonProd(NON_PROD)
+                .applicationPath(ApplicationPath.MANAGEMENT)
+                .subPath(USERS_SUB_PATH)
+                .getAsJsonArray();
     }
 
     public static JsonArray sendNaviPointRequest() {
@@ -206,27 +244,11 @@ public class APIRequest {
                 .getAsJsonObject();
     }
 
-    public static JsonArray sendPlayerGroupRequest() {
-        return RequestBuilder.getBuilder()
-                .nonProd(NON_PROD)
-                .applicationPath(ApplicationPath.PLAYER)
-                .subPath(GROUPS_SUB_PATH)
-                .getAsJsonArray();
-    }
-
     public static JsonObject sendStatisticRequest() {
         return RequestBuilder.getBuilder()
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.STATISTIC)
                 .subPath(AbstractionLayer.getPlayer().getName())
-                .getAsJsonObject();
-    }
-
-    public static JsonObject sendStatisticRequest(String name) {
-        return RequestBuilder.getBuilder()
-                .nonProd(NON_PROD)
-                .applicationPath(ApplicationPath.STATISTIC)
-                .subPath(name)
                 .getAsJsonObject();
     }
 

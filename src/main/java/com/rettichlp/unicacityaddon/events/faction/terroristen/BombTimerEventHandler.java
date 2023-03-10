@@ -86,7 +86,7 @@ public class BombTimerEventHandler {
     }
 
     private String getLocationWithArticle(String location) {
-        NaviPoint naviPoint = NaviPoint.getNaviPointEntryByTabName(location.replace(" ", "-"));
+        NaviPoint naviPoint = NaviPoint.getNaviPointByTabName(location.replace(" ", "-"));
         String article = "der/die/das";
         if (naviPoint != null)
             article = naviPoint.getArticleFourthCase().replace("none", "");

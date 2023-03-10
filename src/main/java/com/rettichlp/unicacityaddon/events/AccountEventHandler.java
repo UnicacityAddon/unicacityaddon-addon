@@ -24,12 +24,15 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 
 /**
+ * @author RettichLP
  * @author Dimiikou
  */
 @UCEvent
 public class AccountEventHandler {
 
     public static boolean isAfk = false;
+
+    private long lastAfkTry = 0;
 
     @SubscribeEvent
     public void onClientChatReceived(ClientChatReceivedEvent e) {
@@ -74,13 +77,14 @@ public class AccountEventHandler {
             return;
         }
 
-        if (PatternHandler.ACCOUNT_AFK_FAILURE_PATTERN.matcher(msg).find()) {
+        if (PatternHandler.ACCOUNT_AFK_FAILURE_PATTERN.matcher(msg).find() && System.currentTimeMillis() - lastAfkTry > TimeUnit.SECONDS.toMillis(30)) {
             p.sendInfoMessage("Das Addon versucht dich anschließend in den AFK Modus zu setzen.");
             long lastDamageTime = TickEventHandler.lastTickDamage.getKey();
             new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {
                     p.sendChatMessage("/afk");
+                    lastAfkTry = System.currentTimeMillis();
                 }
             }, new Date(lastDamageTime + TimeUnit.SECONDS.toMillis(15)));
             return;

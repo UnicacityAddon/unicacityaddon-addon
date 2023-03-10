@@ -11,8 +11,8 @@ import com.rettichlp.unicacityaddon.base.models.BlacklistReason;
 import com.rettichlp.unicacityaddon.base.models.Broadcast;
 import com.rettichlp.unicacityaddon.base.models.HouseBan;
 import com.rettichlp.unicacityaddon.base.models.HouseBanReason;
+import com.rettichlp.unicacityaddon.base.models.ManagementUser;
 import com.rettichlp.unicacityaddon.base.models.NaviPoint;
-import com.rettichlp.unicacityaddon.base.models.PlayerGroup;
 import com.rettichlp.unicacityaddon.base.models.WantedReason;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
@@ -28,35 +28,59 @@ public class Syncer {
 
     public static final Map<String, Faction> PLAYERFACTIONMAP = new HashMap<>();
     public static final Map<String, Integer> PLAYERRANKMAP = new HashMap<>();
-    public static List<HouseBan> HOUSEBANENTRYLIST = new ArrayList<>();
+    public static List<BlacklistReason> BLACKLISTREASONLIST = new ArrayList<>();
+    public static List<HouseBan> HOUSEBANLIST = new ArrayList<>();
+    public static List<HouseBanReason> HOUSEBANREASONLIST = new ArrayList<>();
+    public static List<ManagementUser> MANAGEMENTUSERLIST = new ArrayList<>();
     public static List<NaviPoint> NAVIPOINTLIST = new ArrayList<>();
+    public static List<WantedReason> WANTEDREASONLIST = new ArrayList<>();
 
     public static void syncAll() {
+        Thread t1 = syncPlayerAddonGroupMap();
+        Thread t2 = syncPlayerFactionData();
+
+        try {
+            t1.start();
+            t1.join();
+
+            t2.start();
+            t2.join();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
         new Thread(() -> {
-            Thread t1 = syncPlayerAddonGroupMap();
-            Thread t2 = syncPlayerFactionData();
-            Thread t3 = syncHousebanEntryList();
-            Thread t4 = syncNaviPointEntryList();
+            if (!(HOUSEBANLIST = getHouseBanList()).isEmpty())
+                LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Hausverbote aktualisiert.");
+        }).start();
 
-            try {
-                t1.start();
-                t1.join();
+        new Thread(() -> {
+            if (!(HOUSEBANREASONLIST = getHouseBanReasonList()).isEmpty())
+                LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Hausverbot-Gründe aktualisiert.");
+        }).start();
 
-                t2.start();
-                t2.join();
+        new Thread(() -> {
+            if (!(MANAGEMENTUSERLIST = getManagementUserList()).isEmpty())
+                LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Management-User aktualisiert.");
+        }).start();
 
-                t3.start();
-                t3.join();
+        new Thread(() -> {
+            if (!(NAVIPOINTLIST = getNaviPointList()).isEmpty())
+                LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Navipunkte aktualisiert.");
+        }).start();
 
-                t4.start();
-                t4.join();
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
+        new Thread(() -> {
+            if (!(BLACKLISTREASONLIST = getBlacklistReasonList()).isEmpty())
+                LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Blacklist-Gründe aktualisiert.");
+        }).start();
+
+        new Thread(() -> {
+            if (!(WANTEDREASONLIST = getWantedReasonList()).isEmpty())
+                LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Wanted-Gründe aktualisiert.");
         }).start();
     }
 
-    public static Thread syncPlayerAddonGroupMap() {
+    private static Thread syncPlayerAddonGroupMap() {
         return new Thread(() -> {
             JsonObject response = APIRequest.sendPlayerRequest();
             if (response != null) {
@@ -67,11 +91,11 @@ public class Syncer {
                     }
                 }
             }
-            LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Addon Gruppen aktualisiert.");
+            LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Addon-Gruppen aktualisiert.");
         });
     }
 
-    public static Thread syncPlayerFactionData() {
+    private static Thread syncPlayerFactionData() {
         return new Thread(() -> {
             PLAYERFACTIONMAP.clear();
             PLAYERRANKMAP.clear();
@@ -92,21 +116,7 @@ public class Syncer {
         });
     }
 
-    public static Thread syncHousebanEntryList() {
-        return new Thread(() -> {
-            HOUSEBANENTRYLIST = getHouseBanEntryList();
-            LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Hausverbote aktualisiert.");
-        });
-    }
-
-    public static Thread syncNaviPointEntryList() {
-        return new Thread(() -> {
-            NAVIPOINTLIST = getNaviPointEntryList();
-            LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Navipunkte aktualisiert.");
-        });
-    }
-
-    public static List<BlacklistReason> getBlacklistReasonEntryList() {
+    private static List<BlacklistReason> getBlacklistReasonList() {
         JsonArray response = APIRequest.sendBlacklistReasonRequest();
         if (response == null)
             return new ArrayList<>();
@@ -114,18 +124,16 @@ public class Syncer {
         response.forEach(jsonElement -> {
             JsonObject o = jsonElement.getAsJsonObject();
 
-            int kills = o.get("kills").getAsInt();
             String reason = o.get("reason").getAsString();
-            String issuerUUID = o.get("issuerUUID").getAsString();
+            int kills = o.get("kills").getAsInt();
             int price = o.get("price").getAsInt();
-            String issuerName = o.get("issuerName").getAsString();
 
-            blacklistReasonList.add(new BlacklistReason(kills, reason, issuerUUID, price, issuerName));
+            blacklistReasonList.add(new BlacklistReason(reason, kills, price));
         });
         return blacklistReasonList;
     }
 
-    public static List<Broadcast> getBroadcastEntryList() {
+    public static List<Broadcast> getBroadcastList() {
         JsonArray response = APIRequest.sendBroadcastQueueRequest();
         if (response == null)
             return new ArrayList<>();
@@ -145,7 +153,7 @@ public class Syncer {
         return broadcastList;
     }
 
-    public static List<HouseBan> getHouseBanEntryList() {
+    private static List<HouseBan> getHouseBanList() {
         JsonArray response = APIRequest.sendHouseBanRequest(AbstractionLayer.getPlayer().getFaction().equals(Faction.RETTUNGSDIENST));
         if (response == null)
             return new ArrayList<>();
@@ -176,7 +184,7 @@ public class Syncer {
         return houseBanList;
     }
 
-    public static List<HouseBanReason> getHouseBanReasonEntryList() {
+    private static List<HouseBanReason> getHouseBanReasonList() {
         JsonArray response = APIRequest.sendHouseBanReasonRequest();
         if (response == null)
             return new ArrayList<>();
@@ -194,7 +202,24 @@ public class Syncer {
         return houseBanReasonList;
     }
 
-    public static List<NaviPoint> getNaviPointEntryList() {
+    private static List<ManagementUser> getManagementUserList() {
+        JsonArray response = APIRequest.sendManagementUserRequest();
+        if (response == null)
+            return new ArrayList<>();
+        List<ManagementUser> managementUserList = new ArrayList<>();
+        response.forEach(jsonElement -> {
+            JsonObject o = jsonElement.getAsJsonObject();
+
+            boolean active = o.get("active").getAsBoolean();
+            String uuid = o.get("uuid").getAsString();
+            String version = o.get("version").getAsString();
+
+            managementUserList.add(new ManagementUser(active, uuid, version));
+        });
+        return managementUserList;
+    }
+
+    private static List<NaviPoint> getNaviPointList() {
         JsonArray response = APIRequest.sendNaviPointRequest();
         if (response == null)
             return new ArrayList<>();
@@ -213,32 +238,7 @@ public class Syncer {
         return naviPointList;
     }
 
-    public static List<String> getPlayerGroupList() {
-        JsonArray response = APIRequest.sendPlayerGroupRequest();
-        List<String> playerGroupList = new ArrayList<>();
-        if (response != null) {
-            response.forEach(jsonElement -> playerGroupList.add(jsonElement.getAsString()));
-        }
-        return playerGroupList;
-    }
-
-    public static List<PlayerGroup> getPlayerGroupEntryList(String group) {
-        JsonObject response = APIRequest.sendPlayerRequest();
-        if (response == null || !response.has(group))
-            return new ArrayList<>();
-        List<PlayerGroup> playerGroupList = new ArrayList<>();
-        response.get(group).getAsJsonArray().forEach(jsonElement -> {
-            JsonObject o = jsonElement.getAsJsonObject();
-
-            String name = o.get("name").getAsString();
-            String uuid = o.get("uuid").getAsString();
-
-            playerGroupList.add(new PlayerGroup(name, uuid));
-        });
-        return playerGroupList;
-    }
-
-    public static List<WantedReason> getWantedReasonEntryList() {
+    private static List<WantedReason> getWantedReasonList() {
         JsonArray response = APIRequest.sendWantedReasonRequest();
         if (response == null)
             return new ArrayList<>();
@@ -247,11 +247,9 @@ public class Syncer {
             JsonObject o = jsonElement.getAsJsonObject();
 
             String reason = o.get("reason").getAsString();
-            String creatorUUID = o.get("creatorUUID").getAsString();
-            String creatorName = o.get("creatorName").getAsString();
             int points = o.get("points").getAsInt();
 
-            wantedReasonList.add(new WantedReason(reason, creatorUUID, creatorName, points));
+            wantedReasonList.add(new WantedReason(reason, points));
         });
         return wantedReasonList;
     }
