@@ -412,12 +412,6 @@ public class ConfigElements {
                 .getAsBoolean(); // default = false
     }
 
-    // Revive Screenshot
-    public static boolean getAutomatedReviveScreenshot() {
-        return !UnicacityAddon.ADDON.getConfig().has("AUTOMATED_REVIVE_SCREEN_SETTINGS") || UnicacityAddon.ADDON.getConfig().get("AUTOMATED_REVIVE_SCREEN_SETTINGS")
-                .getAsBoolean(); // default = true
-    }
-
     // BetterWantedList
     public static boolean getBetterWantedList() {
         return !UnicacityAddon.ADDON.getConfig().has("BETTER_WANTED_LIST_SETTINGS") || UnicacityAddon.ADDON.getConfig().get("BETTER_WANTED_LIST_SETTINGS")
