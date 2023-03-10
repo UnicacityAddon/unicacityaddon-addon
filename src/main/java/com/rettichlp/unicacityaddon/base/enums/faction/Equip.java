@@ -6,7 +6,7 @@ public enum Equip {
 
     BASI("Baseballschläger", "Baseballschläger", ConfigElements.getBaseballBatPrice()),
     DONUT("Donut", "Donuts", ConfigElements.getDonutPrice()),
-    KEVLAR("Leichte Kevlar", "leichte Kevlar", ConfigElements.getLightKevlarPrice()),
+    KEVLAR("Leichte Kevlar", "Kevlar", ConfigElements.getLightKevlarPrice()),
     HEAVY_KEVLAR("Schwere Kevlar", "schwere Kevlar", ConfigElements.getHeavyKevlarPrice()),
     PISTOL("Pistole", "Pistole", ConfigElements.getPistolPrice()),
     MP5("MP5", "MP5", ConfigElements.getMP5Price()),

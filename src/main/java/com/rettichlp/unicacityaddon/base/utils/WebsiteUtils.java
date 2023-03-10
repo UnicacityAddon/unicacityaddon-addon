@@ -28,7 +28,7 @@ public class WebsiteUtils {
     public static String sendRequest(String urlString) throws APIResponseException {
         Map.Entry<HttpURLConnection, Integer> httpURLConnection = getHttpURLConnection(urlString);
 
-        String websiteSource = getWebsiteSource(httpURLConnection.getKey());
+        String websiteSource = getWebsiteSource(httpURLConnection);
 
         int responseCode = httpURLConnection.getValue();
 
@@ -86,7 +86,8 @@ public class WebsiteUtils {
             throw new APIResponseException("URL is null or empty", HttpURLConnection.HTTP_NOT_FOUND);
     }
 
-    private static String getWebsiteSource(HttpURLConnection httpURLConnection) throws APIResponseException {
+    private static String getWebsiteSource(Map.Entry<HttpURLConnection, Integer> httpURLConnectionIntegerEntry) throws APIResponseException {
+        HttpURLConnection httpURLConnection = httpURLConnectionIntegerEntry.getKey();
         try {
             StringBuilder websiteSource = new StringBuilder();
             Scanner scanner = new Scanner(new InputStreamReader(httpURLConnection.getInputStream(), StandardCharsets.UTF_8));
@@ -94,7 +95,7 @@ public class WebsiteUtils {
                 websiteSource.append(scanner.nextLine()).append("\n\r");
             return websiteSource.toString();
         } catch (IOException e) {
-            throw new APIResponseException(httpURLConnection.getURL().toString(), HttpURLConnection.HTTP_NOT_FOUND);
+            throw new APIResponseException(httpURLConnection.getURL().toString(), httpURLConnectionIntegerEntry.getValue());
         }
     }
 }
