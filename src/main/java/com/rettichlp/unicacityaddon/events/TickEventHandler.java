@@ -14,6 +14,7 @@ import com.rettichlp.unicacityaddon.base.utils.TextUtils;
 import com.rettichlp.unicacityaddon.commands.BusCommand;
 import com.rettichlp.unicacityaddon.commands.faction.badfaction.DropDrugAllCommand;
 import com.rettichlp.unicacityaddon.events.faction.ReinforcementEventHandler;
+import com.rettichlp.unicacityaddon.events.faction.terroristen.BombTimerEventHandler;
 import com.rettichlp.unicacityaddon.events.house.HouseInteractionEventHandler;
 import com.rettichlp.unicacityaddon.modules.BombTimerModule;
 import net.minecraft.entity.item.EntityItem;
@@ -41,6 +42,7 @@ public class TickEventHandler {
 
             // EVERY TICK
             handleReinforcementScreenshot();
+            handleBombScreenshot();
             handleDamageTracker();
 
             // 0,25 SECONDS
@@ -85,6 +87,17 @@ public class TickEventHandler {
         if (ReinforcementEventHandler.activeReinforcement >= 0 && ReinforcementEventHandler.activeReinforcement + 15 == currentTick) {
             try {
                 File file = FileManager.getNewActivityImageFile("reinforcement");
+                HotkeyEventHandler.handleScreenshot(file);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    private void handleBombScreenshot() {
+        if (BombTimerEventHandler.activeBomb >= 0 && BombTimerEventHandler.activeBomb + 15 == currentTick) {
+            try {
+                File file = FileManager.getNewActivityImageFile("großeinsatz");
                 HotkeyEventHandler.handleScreenshot(file);
             } catch (IOException e) {
                 throw new RuntimeException(e);
