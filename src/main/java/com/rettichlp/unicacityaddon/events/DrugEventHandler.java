@@ -5,11 +5,14 @@ import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.config.ConfigElements;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
+import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
+import net.minecraft.util.text.event.ClickEvent;
+import net.minecraft.util.text.event.HoverEvent;
 import net.minecraftforge.client.event.ClientChatEvent;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -41,6 +44,26 @@ public class DrugEventHandler {
         if (drugGetMatcher.find()) {
             extractDrugData(drugGetMatcher);
             type = "ADD";
+
+            if (p.getFaction().equals(Faction.FBI) && p.getRank() > 1) {
+                String name = drugGetMatcher.group(1);
+                p.sendMessage(Message.getBuilder().of("Drogenabnahme?").color(ColorCode.DARK_AQUA).advance().space()
+                        .of("[DA5]").color(ColorCode.AQUA).bold()
+                                .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Gebe dem Spieler die Wantedmodifikation").color(ColorCode.GOLD).advance().createComponent())
+                                .clickEvent(ClickEvent.Action.RUN_COMMAND, "/mw " + name + " da5")
+                                .advance()
+                        .space()
+                        .of("[DA10]").color(ColorCode.AQUA).bold()
+                                .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Gebe dem Spieler die Wantedmodifikation").color(ColorCode.GOLD).advance().createComponent())
+                                .clickEvent(ClickEvent.Action.RUN_COMMAND, "/mw " + name + " da10")
+                                .advance()
+                        .space()
+                        .of("[DA15]").color(ColorCode.AQUA).bold()
+                                .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Gebe dem Spieler die Wantedmodifikation").color(ColorCode.GOLD).advance().createComponent())
+                                .clickEvent(ClickEvent.Action.RUN_COMMAND, "/mw " + name + " da15")
+                                .advance()
+                        .createComponent());
+            }
             return;
         }
 

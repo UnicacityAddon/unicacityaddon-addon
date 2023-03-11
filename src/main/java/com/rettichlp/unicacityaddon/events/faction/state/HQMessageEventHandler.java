@@ -66,6 +66,16 @@ public class HQMessageEventHandler {
                 return;
             }
 
+            m = PatternHandler.WANTED_UNARREST_PATTERN.matcher(msg);
+            if (m.find()) {
+                e.setMessage(Message.getBuilder().of("Entlassung").color(ColorCode.RED).advance().space()
+                        .of("-").color(ColorCode.GRAY).advance().space()
+                        .of(m.group(2)).color(ColorCode.BLUE).advance().space()
+                        .of("-").color(ColorCode.GRAY).advance().space()
+                        .of(m.group(1)).color(ColorCode.BLUE).advance().createComponent());
+                return;
+            }
+
             m = PatternHandler.WANTED_GIVEN_REASON_PATTERN.matcher(msg);
             if (m.find()) {
                 e.setMessage(Message.getBuilder().of("Gesucht").color(ColorCode.RED).advance().space()
@@ -151,6 +161,16 @@ public class HQMessageEventHandler {
                         .of(m.group(3)).color(ColorCode.BLUE).advance().space()
                         .of("-").color(ColorCode.GRAY).advance().space()
                         .of(m.group(2)).color(ColorCode.BLUE).advance().createComponent());
+                return;
+            }
+
+            m = PatternHandler.PEILSENDER_PATTERN.matcher(msg);
+            if (m.find()) {
+                e.setMessage(Message.getBuilder().of("Peilsender").color(ColorCode.RED).bold().advance().space()
+                        .of("-").color(ColorCode.GRAY).advance().space()
+                        .of(m.group(1)).color(ColorCode.DARK_AQUA).advance().space()
+                        .of("»").color(ColorCode.GRAY).advance().space()
+                        .of(m.group(2)).color(ColorCode.GOLD).advance().createComponent());
             }
         }
     }

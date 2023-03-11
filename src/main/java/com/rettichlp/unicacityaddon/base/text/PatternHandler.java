@@ -90,6 +90,8 @@ public class PatternHandler {
     public static final Pattern WANTED_GIVEN_POINTS_PATTERN = Pattern.compile("^HQ: (?:\\[UC])*(\\w+)'s momentanes WantedLevel: (\\d+)$");
     public static final Pattern WANTED_KILL = Pattern.compile("^HQ: (?:\\[UC])*(\\w+) wurde von (?:\\[UC])*([a-zA-Z0-9_]+) getötet\\.$");
     public static final Pattern WANTED_DELETE = Pattern.compile("^HQ: .+ (?:\\[UC])*(\\w+) hat (?:\\[UC])*([a-zA-Z0-9_]+)'s Akten gelöscht, over\\.$");
+    public static final Pattern WANTED_UNARREST_PATTERN = Pattern.compile("^HQ: .+ (?:\\[UC])*(\\w+) hat (?:\\[UC])*(\\w+) aus dem Gefängnis entlassen\\.$");
+    public static final Pattern PEILSENDER_PATTERN = Pattern.compile("^HQ: Agent (?:\\[UC])*(\\w+) hat ein Peilsender an (?:\\[UC])*(\\w+) befestigt, over\\.$");
     public static final Pattern WANTED_JAIL = Pattern.compile("^HQ: (?:\\[UC])*(\\w+) wurde von (?:\\[UC])*([a-zA-Z0-9_]+) eingesperrt\\.$");
     public static final Pattern WANTEDS_TICKET_PATTERN = Pattern.compile("^HQ: .+ (?:\\[UC])*(\\w+) hat (?:\\[UC])*([a-zA-Z0-9_]+)(?:'s)*(?: seine| ihre)* Akten gelöscht, over\\.$");
     public static final Pattern WANTED_DELETED_PATTERN = Pattern.compile("^HQ: (?:\\[UC])*(\\w+) wurde von (?:\\[UC])*\\w+ eingesperrt\\.$" +
