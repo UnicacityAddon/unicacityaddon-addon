@@ -5,6 +5,7 @@ import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.api.Syncer;
+import com.rettichlp.unicacityaddon.base.api.exception.APIResponseException;
 import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
 import com.rettichlp.unicacityaddon.base.config.ConfigElements;
 import com.rettichlp.unicacityaddon.base.models.ManagementUser;
@@ -153,8 +154,13 @@ public class UpdateUtils {
     }
 
     private static String getLatestVersion() {
-        JsonObject response = APIRequest.sendManagementRequest();
-        return response != null ? response.get("latestVersion").getAsString() : UnicacityAddon.VERSION;
+        try {
+            JsonObject response = APIRequest.sendManagementRequest();
+            return response.get("latestVersion").getAsString();
+        } catch (APIResponseException e) {
+            e.sendInfo();
+            return UnicacityAddon.VERSION;
+        }
     }
 
     public static boolean hasPlayerLatestAddonVersion(String name) {

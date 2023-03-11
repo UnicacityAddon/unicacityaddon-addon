@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
+import com.rettichlp.unicacityaddon.base.api.exception.APIResponseException;
 import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
 import com.rettichlp.unicacityaddon.base.config.ConfigElements;
 import com.rettichlp.unicacityaddon.base.manager.FileManager;
@@ -91,9 +92,8 @@ public class AccountEventHandler {
         }
 
         if (PatternHandler.ACCOUNT_TREUEBONUS_PATTERN.matcher(msg).find()) {
-            JsonObject response = APIRequest.sendStatisticRequest();
-            if (response != null) {
-                JsonObject gameplayJsonObject = response.getAsJsonObject("gameplay");
+            try {
+                JsonObject gameplayJsonObject = APIRequest.sendStatisticRequest().getAsJsonObject("gameplay");
                 int deaths = gameplayJsonObject.get("deaths").getAsInt();
                 int kills = gameplayJsonObject.get("kills").getAsInt();
                 float kd = gameplayJsonObject.get("kd").getAsFloat();
@@ -130,6 +130,8 @@ public class AccountEventHandler {
                         .of(":").color(ColorCode.DARK_GRAY).advance().space()
                         .of(playTime + (playTime == 1 ? " Stunde" : " Stunden")).color(ColorCode.RED).advance()
                         .createComponent());
+            } catch (APIResponseException ex) {
+                ex.sendInfo();
             }
             return;
         }

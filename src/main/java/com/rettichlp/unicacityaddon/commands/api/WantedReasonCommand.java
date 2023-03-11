@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.api.Syncer;
+import com.rettichlp.unicacityaddon.base.api.exception.APIResponseException;
 import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.models.WantedReason;
@@ -50,22 +51,28 @@ public class WantedReasonCommand implements IClientCommand {
     }
 
     @Override
-    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args) {
+    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
         UPlayer p = AbstractionLayer.getPlayer();
 
-        if (args.length == 3 && args[0].equalsIgnoreCase("add")) {
-            JsonObject response = APIRequest.sendWantedReasonAddRequest(args[1], args[2]);
-            if (response == null)
-                return;
-            p.sendAPIMessage(response.get("info").getAsString(), true);
-        } else if (args.length == 2 && args[0].equalsIgnoreCase("remove")) {
-            JsonObject response = APIRequest.sendWantedReasonRemoveRequest(args[1]);
-            if (response == null)
-                return;
-            p.sendAPIMessage(response.get("info").getAsString(), true);
-        } else {
-            p.sendSyntaxMessage(getUsage(sender));
-        }
+        new Thread(() -> {
+            if (args.length == 3 && args[0].equalsIgnoreCase("add")) {
+                try {
+                    JsonObject response = APIRequest.sendWantedReasonAddRequest(args[1], args[2]);
+                    p.sendAPIMessage(response.get("info").getAsString(), true);
+                } catch (APIResponseException e) {
+                    e.sendInfo();
+                }
+            } else if (args.length == 2 && args[0].equalsIgnoreCase("remove")) {
+                try {
+                    JsonObject response = APIRequest.sendWantedReasonRemoveRequest(args[1]);
+                    p.sendAPIMessage(response.get("info").getAsString(), true);
+                } catch (APIResponseException e) {
+                    e.sendInfo();
+                }
+            } else {
+                p.sendSyntaxMessage(getUsage(sender));
+            }
+        }).start();
     }
 
     @Override

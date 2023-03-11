@@ -1,9 +1,9 @@
 package com.rettichlp.unicacityaddon.base.api;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
+import com.rettichlp.unicacityaddon.base.api.exception.APIResponseException;
 import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
 import com.rettichlp.unicacityaddon.base.enums.api.AddonGroup;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
@@ -82,16 +82,18 @@ public class Syncer {
 
     private static Thread syncPlayerAddonGroupMap() {
         return new Thread(() -> {
-            JsonObject response = APIRequest.sendPlayerRequest();
-            if (response != null) {
+            try {
+                JsonObject response = APIRequest.sendPlayerRequest();
                 for (AddonGroup addonGroup : AddonGroup.values()) {
                     addonGroup.getMemberList().clear();
                     for (JsonElement jsonElement : response.getAsJsonArray(addonGroup.getApiName())) {
                         addonGroup.getMemberList().add(jsonElement.getAsJsonObject().get("name").getAsString());
                     }
                 }
+                LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Addon-Gruppen aktualisiert.");
+            } catch (APIResponseException e) {
+                e.sendInfo();
             }
-            LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Addon-Gruppen aktualisiert.");
         });
     }
 
@@ -116,141 +118,148 @@ public class Syncer {
         });
     }
 
-    private static List<BlacklistReason> getBlacklistReasonList() {
-        JsonArray response = APIRequest.sendBlacklistReasonRequest();
-        if (response == null)
-            return new ArrayList<>();
+    public static List<BlacklistReason> getBlacklistReasonList() {
         List<BlacklistReason> blacklistReasonList = new ArrayList<>();
-        response.forEach(jsonElement -> {
-            JsonObject o = jsonElement.getAsJsonObject();
+        try {
+            APIRequest.sendBlacklistReasonRequest().forEach(jsonElement -> {
+                JsonObject o = jsonElement.getAsJsonObject();
 
-            String reason = o.get("reason").getAsString();
-            int kills = o.get("kills").getAsInt();
-            int price = o.get("price").getAsInt();
+                String reason = o.get("reason").getAsString();
+                int kills = o.get("kills").getAsInt();
+                int price = o.get("price").getAsInt();
 
-            blacklistReasonList.add(new BlacklistReason(reason, kills, price));
-        });
+                blacklistReasonList.add(new BlacklistReason(reason, kills, price));
+            });
+        } catch (APIResponseException e) {
+            e.sendInfo();
+        }
         return blacklistReasonList;
     }
 
     public static List<Broadcast> getBroadcastList() {
-        JsonArray response = APIRequest.sendBroadcastQueueRequest();
-        if (response == null)
-            return new ArrayList<>();
         List<Broadcast> broadcastList = new ArrayList<>();
-        response.forEach(jsonElement -> {
-            JsonObject o = jsonElement.getAsJsonObject();
+        try {
+            APIRequest.sendBroadcastQueueRequest().forEach(jsonElement -> {
+                JsonObject o = jsonElement.getAsJsonObject();
 
-            String broadcast = o.get("broadcast").getAsString();
-            int id = o.get("id").getAsInt();
-            String issuerName = o.get("issuerName").getAsString();
-            String issuerUUID = o.get("issuerUUID").getAsString();
-            long sendTime = o.get("sendTime").getAsLong();
-            long time = o.get("time").getAsLong();
+                String broadcast = o.get("broadcast").getAsString();
+                int id = o.get("id").getAsInt();
+                String issuerName = o.get("issuerName").getAsString();
+                String issuerUUID = o.get("issuerUUID").getAsString();
+                long sendTime = o.get("sendTime").getAsLong();
+                long time = o.get("time").getAsLong();
 
-            broadcastList.add(new Broadcast(broadcast, id, issuerName, issuerUUID, sendTime, time));
-        });
+                broadcastList.add(new Broadcast(broadcast, id, issuerName, issuerUUID, sendTime, time));
+            });
+        } catch (APIResponseException e) {
+            e.sendInfo();
+        }
         return broadcastList;
     }
 
-    private static List<HouseBan> getHouseBanList() {
-        JsonArray response = APIRequest.sendHouseBanRequest(AbstractionLayer.getPlayer().getFaction().equals(Faction.RETTUNGSDIENST));
-        if (response == null)
-            return new ArrayList<>();
+    public static List<HouseBan> getHouseBanList() {
         List<HouseBan> houseBanList = new ArrayList<>();
-        response.forEach(jsonElement -> {
-            JsonObject o = jsonElement.getAsJsonObject();
+        try {
+            APIRequest.sendHouseBanRequest(AbstractionLayer.getPlayer().getFaction().equals(Faction.RETTUNGSDIENST)).forEach(jsonElement -> {
+                JsonObject o = jsonElement.getAsJsonObject();
 
-            long duration = o.get("duration").getAsLong();
-            List<HouseBanReason> houseBanReasonList = new ArrayList<>();
-            long expirationTime = o.get("expirationTime").getAsLong();
-            String name = o.get("name").getAsString();
-            long startTime = o.get("startTime").getAsLong();
-            String uuid = o.get("uuid").getAsString();
+                long duration = o.get("duration").getAsLong();
+                List<HouseBanReason> houseBanReasonList = new ArrayList<>();
+                long expirationTime = o.get("expirationTime").getAsLong();
+                String name = o.get("name").getAsString();
+                long startTime = o.get("startTime").getAsLong();
+                String uuid = o.get("uuid").getAsString();
 
-            o.get("houseBanReasonList").getAsJsonArray().forEach(jsonElement1 -> {
-                JsonObject o1 = jsonElement1.getAsJsonObject();
+                o.get("houseBanReasonList").getAsJsonArray().forEach(jsonElement1 -> {
+                    JsonObject o1 = jsonElement1.getAsJsonObject();
 
-                String reason = o1.get("reason").getAsString();
-                String issuerUUID = o1.has("issuerUUID") ? o1.get("issuerUUID").getAsString() : null;
-                String issuerName = o1.has("issuerName") ? o1.get("issuerName").getAsString() : null;
-                int days = o1.get("days").getAsInt();
+                    String reason = o1.get("reason").getAsString();
+                    String issuerUUID = o1.has("issuerUUID") ? o1.get("issuerUUID").getAsString() : null;
+                    String issuerName = o1.has("issuerName") ? o1.get("issuerName").getAsString() : null;
+                    int days = o1.get("days").getAsInt();
 
-                houseBanReasonList.add(new HouseBanReason(reason, issuerUUID, issuerName, days));
+                    houseBanReasonList.add(new HouseBanReason(reason, issuerUUID, issuerName, days));
+                });
+
+                houseBanList.add(new HouseBan(duration, houseBanReasonList, expirationTime, name, startTime, uuid));
             });
-
-            houseBanList.add(new HouseBan(duration, houseBanReasonList, expirationTime, name, startTime, uuid));
-        });
+        } catch (APIResponseException e) {
+            e.sendInfo();
+        }
         return houseBanList;
     }
 
-    private static List<HouseBanReason> getHouseBanReasonList() {
-        JsonArray response = APIRequest.sendHouseBanReasonRequest();
-        if (response == null)
-            return new ArrayList<>();
+    public static List<HouseBanReason> getHouseBanReasonList() {
         List<HouseBanReason> houseBanReasonList = new ArrayList<>();
-        response.forEach(jsonElement -> {
-            JsonObject o = jsonElement.getAsJsonObject();
+        try {
+            APIRequest.sendHouseBanReasonRequest().forEach(jsonElement -> {
+                JsonObject o = jsonElement.getAsJsonObject();
 
-            String reason = o.get("reason").getAsString();
-            String creatorUUID = o.has("creatorUUID") ? o.get("creatorUUID").getAsString() : null;
-            String creatorName = o.has("creatorName") ? o.get("creatorName").getAsString() : null;
-            int days = o.get("days").getAsInt();
+                String reason = o.get("reason").getAsString();
+                String creatorUUID = o.has("creatorUUID") ? o.get("creatorUUID").getAsString() : null;
+                String creatorName = o.has("creatorName") ? o.get("creatorName").getAsString() : null;
+                int days = o.get("days").getAsInt();
 
-            houseBanReasonList.add(new HouseBanReason(reason, creatorUUID, creatorName, days));
-        });
+                houseBanReasonList.add(new HouseBanReason(reason, creatorUUID, creatorName, days));
+            });
+        } catch (APIResponseException e) {
+            e.sendInfo();
+        }
         return houseBanReasonList;
     }
 
     private static List<ManagementUser> getManagementUserList() {
-        JsonArray response = APIRequest.sendManagementUserRequest();
-        if (response == null)
-            return new ArrayList<>();
         List<ManagementUser> managementUserList = new ArrayList<>();
-        response.forEach(jsonElement -> {
-            JsonObject o = jsonElement.getAsJsonObject();
+        try {
+            APIRequest.sendManagementUserRequest().forEach(jsonElement -> {
+                JsonObject o = jsonElement.getAsJsonObject();
 
-            boolean active = o.get("active").getAsBoolean();
-            String uuid = o.get("uuid").getAsString();
-            String version = o.get("version").getAsString();
+                boolean active = o.get("active").getAsBoolean();
+                String uuid = o.get("uuid").getAsString();
+                String version = o.get("version").getAsString();
 
-            managementUserList.add(new ManagementUser(active, uuid, version));
-        });
+                managementUserList.add(new ManagementUser(active, uuid, version));
+            });
+        } catch (APIResponseException e) {
+            e.sendInfo();
+        }
         return managementUserList;
     }
 
     private static List<NaviPoint> getNaviPointList() {
-        JsonArray response = APIRequest.sendNaviPointRequest();
-        if (response == null)
-            return new ArrayList<>();
         List<NaviPoint> naviPointList = new ArrayList<>();
-        response.forEach(jsonElement -> {
-            JsonObject o = jsonElement.getAsJsonObject();
+        try {
+            APIRequest.sendNaviPointRequest().forEach(jsonElement -> {
+                JsonObject o = jsonElement.getAsJsonObject();
 
-            String name = o.get("name").getAsString();
-            int x = o.get("x").getAsInt();
-            int y = o.get("y").getAsInt();
-            int z = o.get("z").getAsInt();
-            String article = o.get("article").getAsString();
+                String name = o.get("name").getAsString();
+                int x = o.get("x").getAsInt();
+                int y = o.get("y").getAsInt();
+                int z = o.get("z").getAsInt();
+                String article = o.get("article").getAsString();
 
-            naviPointList.add(new NaviPoint(name, x, y, z, article));
-        });
+                naviPointList.add(new NaviPoint(name, x, y, z, article));
+            });
+        } catch (APIResponseException e) {
+            e.sendInfo();
+        }
         return naviPointList;
     }
 
     private static List<WantedReason> getWantedReasonList() {
-        JsonArray response = APIRequest.sendWantedReasonRequest();
-        if (response == null)
-            return new ArrayList<>();
         List<WantedReason> wantedReasonList = new ArrayList<>();
-        response.forEach(jsonElement -> {
-            JsonObject o = jsonElement.getAsJsonObject();
+        try {
+            APIRequest.sendWantedReasonRequest().forEach(jsonElement -> {
+                JsonObject o = jsonElement.getAsJsonObject();
 
-            String reason = o.get("reason").getAsString();
-            int points = o.get("points").getAsInt();
+                String reason = o.get("reason").getAsString();
+                int points = o.get("points").getAsInt();
 
-            wantedReasonList.add(new WantedReason(reason, points));
-        });
+                wantedReasonList.add(new WantedReason(reason, points));
+            });
+        } catch (APIResponseException e) {
+            e.sendInfo();
+        }
         return wantedReasonList;
     }
 }

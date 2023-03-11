@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
+import com.rettichlp.unicacityaddon.base.api.exception.APIResponseException;
 import com.rettichlp.unicacityaddon.base.builder.RequestBuilder;
 import com.rettichlp.unicacityaddon.base.enums.api.ApplicationPath;
 import com.rettichlp.unicacityaddon.base.enums.api.StatisticType;
@@ -21,7 +22,6 @@ public class APIRequest {
     private static final String SEND_SUB_PATH = "send";
     private static final String TOP_SUB_PATH = "top";
     private static final String CREATE_SUB_PATH = "create";
-    private static final String REVOKE_SUB_PATH = "revoke";
     private static final String DONE_SUB_PATH = "done";
     private static final String USERS_SUB_PATH = "users";
     private static final String BOMB_SUB_PATH = "bomb";
@@ -41,7 +41,7 @@ public class APIRequest {
                 .sendAsync();
     }
 
-    public static JsonArray sendBlacklistReasonRequest() {
+    public static JsonArray sendBlacklistReasonRequest() throws APIResponseException {
         return RequestBuilder.getBuilder()
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.BLACKLISTREASON)
@@ -49,7 +49,7 @@ public class APIRequest {
                 .getAsJsonArray();
     }
 
-    public static JsonObject sendBlacklistReasonAddRequest(String reason, String price, String kills) {
+    public static JsonObject sendBlacklistReasonAddRequest(String reason, String price, String kills) throws APIResponseException {
         return RequestBuilder.getBuilder()
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.BLACKLISTREASON)
@@ -61,7 +61,7 @@ public class APIRequest {
                 .getAsJsonObject();
     }
 
-    public static JsonObject sendBlacklistReasonRemoveRequest(String reason) {
+    public static JsonObject sendBlacklistReasonRemoveRequest(String reason) throws APIResponseException {
         return RequestBuilder.getBuilder()
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.BLACKLISTREASON)
@@ -70,7 +70,7 @@ public class APIRequest {
                 .getAsJsonObject();
     }
 
-    public static JsonArray sendBroadcastQueueRequest() {
+    public static JsonArray sendBroadcastQueueRequest() throws APIResponseException {
         return RequestBuilder.getBuilder()
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.BROADCAST)
@@ -78,7 +78,7 @@ public class APIRequest {
                 .getAsJsonArray();
     }
 
-    public static JsonObject sendBroadcastSendRequest(String message, String sendTime) {
+    public static JsonObject sendBroadcastSendRequest(String message, String sendTime) throws APIResponseException {
         return RequestBuilder.getBuilder()
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.BROADCAST)
@@ -110,7 +110,7 @@ public class APIRequest {
                 .sendAsync();
     }
 
-    public static JsonArray sendHouseBanRequest(boolean advanced) {
+    public static JsonArray sendHouseBanRequest(boolean advanced) throws APIResponseException {
         return RequestBuilder.getBuilder()
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.HOUSEBAN)
@@ -118,7 +118,7 @@ public class APIRequest {
                 .getAsJsonArray();
     }
 
-    public static JsonObject sendHouseBanAddRequest(String name, String reason) {
+    public static JsonObject sendHouseBanAddRequest(String name, String reason) throws APIResponseException {
         return RequestBuilder.getBuilder()
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.HOUSEBAN)
@@ -129,7 +129,7 @@ public class APIRequest {
                 .getAsJsonObject();
     }
 
-    public static JsonObject sendHouseBanRemoveRequest(String name, String reason) {
+    public static JsonObject sendHouseBanRemoveRequest(String name, String reason) throws APIResponseException {
         return RequestBuilder.getBuilder()
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.HOUSEBAN)
@@ -143,14 +143,14 @@ public class APIRequest {
     /**
      * Quote: "Ich teste nicht, ich versage nur..." - RettichLP, 25.09.2022
      */
-    public static JsonArray sendHouseBanReasonRequest() {
+    public static JsonArray sendHouseBanReasonRequest() throws APIResponseException {
         return RequestBuilder.getBuilder()
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.HOUSEBANREASON)
                 .getAsJsonArray();
     }
 
-    public static JsonObject sendHouseBanReasonAddRequest(String reason, String days) {
+    public static JsonObject sendHouseBanReasonAddRequest(String reason, String days) throws APIResponseException {
         return RequestBuilder.getBuilder()
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.HOUSEBANREASON)
@@ -161,7 +161,7 @@ public class APIRequest {
                 .getAsJsonObject();
     }
 
-    public static JsonObject sendHouseBanReasonRemoveRequest(String reason) {
+    public static JsonObject sendHouseBanReasonRemoveRequest(String reason) throws APIResponseException {
         return RequestBuilder.getBuilder()
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.HOUSEBANREASON)
@@ -170,14 +170,14 @@ public class APIRequest {
                 .getAsJsonObject();
     }
 
-    public static JsonObject sendManagementRequest() {
+    public static JsonObject sendManagementRequest() throws APIResponseException {
         return RequestBuilder.getBuilder()
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.MANAGEMENT)
                 .getAsJsonObject();
     }
 
-    public static JsonArray sendManagementUserRequest() {
+    public static JsonArray sendManagementUserRequest() throws APIResponseException {
         return RequestBuilder.getBuilder()
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.MANAGEMENT)
@@ -185,14 +185,14 @@ public class APIRequest {
                 .getAsJsonArray();
     }
 
-    public static JsonArray sendNaviPointRequest() {
+    public static JsonArray sendNaviPointRequest() throws APIResponseException {
         return RequestBuilder.getBuilder()
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.NAVIPOINT)
                 .getAsJsonArray();
     }
 
-    public static JsonObject sendNaviPointAddRequest(String name, String x, String y, String z, String article) {
+    public static JsonObject sendNaviPointAddRequest(String name, String x, String y, String z, String article) throws APIResponseException {
         return RequestBuilder.getBuilder()
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.NAVIPOINT)
@@ -206,7 +206,7 @@ public class APIRequest {
                 .getAsJsonObject();
     }
 
-    public static JsonObject sendNaviPointRemoveRequest(String name) {
+    public static JsonObject sendNaviPointRemoveRequest(String name) throws APIResponseException {
         return RequestBuilder.getBuilder()
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.NAVIPOINT)
@@ -215,14 +215,14 @@ public class APIRequest {
                 .getAsJsonObject();
     }
 
-    public static JsonObject sendPlayerRequest() {
+    public static JsonObject sendPlayerRequest() throws APIResponseException {
         return RequestBuilder.getBuilder()
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.PLAYER)
                 .getAsJsonObject();
     }
 
-    public static JsonObject sendPlayerAddRequest(String name, String group) {
+    public static JsonObject sendPlayerAddRequest(String name, String group) throws APIResponseException {
         return RequestBuilder.getBuilder()
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.PLAYER)
@@ -233,7 +233,7 @@ public class APIRequest {
                 .getAsJsonObject();
     }
 
-    public static JsonObject sendPlayerRemoveRequest(String name, String group) {
+    public static JsonObject sendPlayerRemoveRequest(String name, String group) throws APIResponseException {
         return RequestBuilder.getBuilder()
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.PLAYER)
@@ -244,7 +244,7 @@ public class APIRequest {
                 .getAsJsonObject();
     }
 
-    public static JsonObject sendStatisticRequest() {
+    public static JsonObject sendStatisticRequest() throws APIResponseException {
         return RequestBuilder.getBuilder()
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.STATISTIC)
@@ -261,7 +261,7 @@ public class APIRequest {
                 .sendAsync();
     }
 
-    public static JsonObject sendStatisticTopRequest() {
+    public static JsonObject sendStatisticTopRequest() throws APIResponseException {
         return RequestBuilder.getBuilder()
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.STATISTIC)
@@ -269,7 +269,7 @@ public class APIRequest {
                 .getAsJsonObject();
     }
 
-    public static JsonObject sendTokenCreateRequest() {
+    public static JsonObject sendTokenCreateRequest() throws APIResponseException {
         return RequestBuilder.getBuilder()
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.TOKEN)
@@ -280,22 +280,14 @@ public class APIRequest {
                 .getAsJsonObject();
     }
 
-    public static JsonObject sendTokenRevokeRequest() {
-        return RequestBuilder.getBuilder()
-                .nonProd(NON_PROD)
-                .applicationPath(ApplicationPath.TOKEN)
-                .subPath(REVOKE_SUB_PATH)
-                .getAsJsonObject();
-    }
-
-    public static JsonArray sendWantedReasonRequest() {
+    public static JsonArray sendWantedReasonRequest() throws APIResponseException {
         return RequestBuilder.getBuilder()
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.WANTEDREASON)
                 .getAsJsonArray();
     }
 
-    public static JsonObject sendWantedReasonAddRequest(String reason, String points) {
+    public static JsonObject sendWantedReasonAddRequest(String reason, String points) throws APIResponseException {
         return RequestBuilder.getBuilder()
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.WANTEDREASON)
@@ -306,7 +298,7 @@ public class APIRequest {
                 .getAsJsonObject();
     }
 
-    public static JsonObject sendWantedReasonRemoveRequest(String reason) {
+    public static JsonObject sendWantedReasonRemoveRequest(String reason) throws APIResponseException {
         return RequestBuilder.getBuilder()
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.WANTEDREASON)
@@ -315,14 +307,14 @@ public class APIRequest {
                 .getAsJsonObject();
     }
 
-    public static JsonArray sendYasinRequest() {
+    public static JsonArray sendYasinRequest() throws APIResponseException {
         return RequestBuilder.getBuilder()
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.YASIN)
                 .getAsJsonArray();
     }
 
-    public static JsonObject sendYasinAddRequest(String name) {
+    public static JsonObject sendYasinAddRequest(String name) throws APIResponseException {
         return RequestBuilder.getBuilder()
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.YASIN)
@@ -331,7 +323,7 @@ public class APIRequest {
                 .getAsJsonObject();
     }
 
-    public static JsonObject sendYasinRemoveRequest(String name) {
+    public static JsonObject sendYasinRemoveRequest(String name) throws APIResponseException {
         return RequestBuilder.getBuilder()
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.YASIN)
@@ -340,7 +332,7 @@ public class APIRequest {
                 .getAsJsonObject();
     }
 
-    public static JsonObject sendYasinDoneRequest(String name) {
+    public static JsonObject sendYasinDoneRequest(String name) throws APIResponseException {
         return RequestBuilder.getBuilder()
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.YASIN)

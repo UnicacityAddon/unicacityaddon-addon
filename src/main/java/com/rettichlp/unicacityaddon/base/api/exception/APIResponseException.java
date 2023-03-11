@@ -24,7 +24,7 @@ public class APIResponseException extends Throwable {
         this.infoMessage = infoMessage;
     }
 
-    public void sendInfoMessage() {
+    public void sendInfo() {
         UnicacityAddon.LOGGER.warn("APIResponseException - " + responseCode + " [" + urlString.replace(TokenManager.API_TOKEN, "TOKEN") + "]: " + infoMessage);
         LabyMod.getInstance().notifyMessageRaw(ColorCode.RED.getCode() + "API Fehler - " + responseCode, infoMessage);
     }
