@@ -244,6 +244,29 @@ public class APIRequest {
                 .getAsJsonObject();
     }
 
+    public static JsonArray sendReviveRequest() throws APIResponseException {
+        return RequestBuilder.getBuilder()
+                .nonProd(NON_PROD)
+                .applicationPath(ApplicationPath.REVIVE)
+                .getAsJsonArray();
+    }
+
+    public static JsonArray sendReviveRankRequest(int rank) throws APIResponseException {
+        return RequestBuilder.getBuilder()
+                .nonProd(NON_PROD)
+                .applicationPath(ApplicationPath.REVIVE)
+                .subPath(String.valueOf(rank))
+                .getAsJsonArray();
+    }
+
+    public static JsonObject sendRevivePlayerRequest(String minecraftName) throws APIResponseException {
+        return RequestBuilder.getBuilder()
+                .nonProd(NON_PROD)
+                .applicationPath(ApplicationPath.REVIVE)
+                .subPath(minecraftName)
+                .getAsJsonObject();
+    }
+
     public static JsonObject sendStatisticRequest() throws APIResponseException {
         return RequestBuilder.getBuilder()
                 .nonProd(NON_PROD)
