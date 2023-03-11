@@ -54,7 +54,9 @@ public class YasinCommand implements IClientCommand {
     @Override
     @Nonnull
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
-        return TabCompletionBuilder.getBuilder(args).build();
+        return TabCompletionBuilder.getBuilder(args)
+                .addAtIndex(1, "add", "done", "remove")
+                .build();
     }
 
     @Override
