@@ -65,7 +65,7 @@ public class KorruptionsrechnerCommand implements IClientCommand {
         }
 
         int money = wanted.getAmount() * 150;
-        int drugs = money / 55;
+        int drugs = money / 45;
         int methDrugs0 = money / 110;
         int methDrugs1 = money / 100;
         int methDrugs2 = money / 50;
