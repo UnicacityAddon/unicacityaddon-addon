@@ -145,7 +145,7 @@ public class ReviveStatsCommand implements IClientCommand {
 
     private void sendList(List<Revive> reviveList) {
         reviveList.stream()
-                .sorted(Comparator.comparing(Revive::getCurrentWeekReviveAmount))
+                .sorted(Comparator.comparing(Revive::getCurrentWeekReviveAmount).reversed())
                 .forEach(revive -> {
                     int currentWeekReviveAmount = revive.getCurrentWeekReviveAmount();
                     int lastWeekReviveAmount = revive.getLastWeekReviveAmount();
