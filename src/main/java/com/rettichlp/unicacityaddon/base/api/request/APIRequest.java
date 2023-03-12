@@ -276,12 +276,14 @@ public class APIRequest {
     }
 
     public static void sendStatisticAddRequest(StatisticType statisticType) {
-        RequestBuilder.getBuilder()
-                .nonProd(NON_PROD)
-                .applicationPath(ApplicationPath.STATISTIC)
-                .subPath(AbstractionLayer.getPlayer().getName() + "/add")
-                .parameter(mapOf("type", statisticType.name()))
-                .sendAsync();
+        if (UnicacityAddon.isUnicacity()) {
+            RequestBuilder.getBuilder()
+                    .nonProd(NON_PROD)
+                    .applicationPath(ApplicationPath.STATISTIC)
+                    .subPath(AbstractionLayer.getPlayer().getName() + "/add")
+                    .parameter(mapOf("type", statisticType.name()))
+                    .sendAsync();
+        }
     }
 
     public static JsonObject sendStatisticTopRequest() throws APIResponseException {
