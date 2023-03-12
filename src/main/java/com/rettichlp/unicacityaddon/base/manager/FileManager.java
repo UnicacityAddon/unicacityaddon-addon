@@ -20,7 +20,7 @@ import java.util.Objects;
  */
 public class FileManager {
 
-    public static Data DATA;
+    public static Data DATA = new Data();
 
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
 
@@ -121,14 +121,23 @@ public class FileManager {
     }
 
     public static void loadData() {
+        String jsonData = "";
         try {
             File dataFile = FileManager.getDataFile();
             assert dataFile != null;
-            String jsonData = FileUtils.readFileToString(dataFile, StandardCharsets.UTF_8.toString());
-            DATA = jsonData == null || !isValidJson(jsonData) ? new Data() : new Gson().fromJson(jsonData, Data.class);
+            jsonData = FileUtils.readFileToString(dataFile, StandardCharsets.UTF_8.toString());
         } catch (IOException e) {
-            DATA = new Data();
             UnicacityAddon.LOGGER.throwing(e);
+        }
+
+        try {
+            new JsonParser().parse(jsonData); // validate check
+            DATA = jsonData.isEmpty() ? new Data() : new Gson().fromJson(jsonData, Data.class);
+        } catch (JsonSyntaxException e) {
+            UnicacityAddon.LOGGER.info("Data cannot be created because Json is invalid: " + jsonData);
+            UnicacityAddon.LOGGER.throwing(e);
+            UnicacityAddon.LOGGER.info("Creating default Data...");
+            saveData();
         }
     }
 
@@ -145,14 +154,5 @@ public class FileManager {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public static boolean isValidJson(String string) {
-        try {
-            new JsonParser().parse(string);
-        } catch (JsonSyntaxException e) {
-            return false;
-        }
-        return true;
     }
 }
