@@ -103,12 +103,14 @@ public class ReviveStatsCommand implements IClientCommand {
                 }
             } else {
                 List<Revive> reviveList = Syncer.getReviveList();
-                p.sendEmptyMessage();
-                p.sendMessage(Message.getBuilder()
-                        .of("Revivestats:").color(ColorCode.DARK_AQUA).bold().advance()
-                        .createComponent());
-                sendList(reviveList);
-                p.sendEmptyMessage();
+                if (!reviveList.isEmpty()) {
+                    p.sendEmptyMessage();
+                    p.sendMessage(Message.getBuilder()
+                            .of("Revivestats:").color(ColorCode.DARK_AQUA).bold().advance()
+                            .createComponent());
+                    sendList(reviveList);
+                    p.sendEmptyMessage();
+                }
             }
         }).start();
     }

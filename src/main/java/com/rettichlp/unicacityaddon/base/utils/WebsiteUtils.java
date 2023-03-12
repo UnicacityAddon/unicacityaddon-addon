@@ -6,7 +6,6 @@ import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.api.TokenManager;
 import com.rettichlp.unicacityaddon.base.api.exception.APIResponseException;
 import com.rettichlp.unicacityaddon.base.enums.api.ApplicationPath;
-import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import io.netty.handler.codec.http.HttpResponseStatus;
 import joptsimple.internal.Strings;
 
@@ -32,7 +31,7 @@ public class WebsiteUtils {
 
         int responseCode = httpURLConnection.getValue();
 
-        boolean isApiRequest = urlString.startsWith("http://rettichlp.de:8888/unicacityaddon/v1/") && FileManager.isValidJson(websiteSource);
+        boolean isApiRequest = urlString.startsWith("http://rettichlp.de:8888/unicacityaddon/v1/");
 
         if (responseCode == HttpURLConnection.HTTP_OK) {
             UnicacityAddon.LOGGER.info("APIResponse - " + responseCode + " [" + urlString.replace(TokenManager.API_TOKEN, "TOKEN") + "]");
