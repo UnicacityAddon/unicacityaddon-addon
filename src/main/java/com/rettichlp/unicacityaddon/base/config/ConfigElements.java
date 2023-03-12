@@ -406,6 +406,12 @@ public class ConfigElements {
                 .getAsBoolean(); // default = true
     }
 
+    // PlantBurnMessages
+    public static boolean getContractMessageActivated() {
+        return !UnicacityAddon.ADDON.getConfig().has("BETTER_CONTRACT_MESSAGE_SETTINGS") || UnicacityAddon.ADDON.getConfig().get("BETTER_CONTRACT_MESSAGE_SETTINGS")
+                .getAsBoolean(); // default = true
+    }
+
     // BombScreenshot
     public static boolean getAutomatedBombScreenshot() {
         return UnicacityAddon.ADDON.getConfig().has("AUTOMATED_BOMB_SCREEN_SETTINGS") && UnicacityAddon.ADDON.getConfig().get("AUTOMATED_BOMB_SCREEN_SETTINGS")
