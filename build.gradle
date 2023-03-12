@@ -14,7 +14,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'idea'
 apply plugin: 'maven-publish'
 
-version = '1.9.0'
+version = '1.10.0-dev'
 group = 'com.rettichlp' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'UnicacityAddon'
 
