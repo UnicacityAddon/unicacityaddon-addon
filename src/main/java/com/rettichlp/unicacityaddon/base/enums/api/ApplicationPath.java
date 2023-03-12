@@ -11,6 +11,7 @@ public enum ApplicationPath {
     MANAGEMENT("/mgmt"),
     NAVIPOINT("/navipoint"),
     PLAYER("/player"),
+    REVIVE("/revive"),
     STATISTIC("/statistic"),
     TOKEN(""),
     WANTEDREASON("/wantedreason"),

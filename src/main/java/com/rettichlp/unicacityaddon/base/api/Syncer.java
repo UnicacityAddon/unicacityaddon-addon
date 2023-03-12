@@ -13,6 +13,7 @@ import com.rettichlp.unicacityaddon.base.models.HouseBan;
 import com.rettichlp.unicacityaddon.base.models.HouseBanReason;
 import com.rettichlp.unicacityaddon.base.models.ManagementUser;
 import com.rettichlp.unicacityaddon.base.models.NaviPoint;
+import com.rettichlp.unicacityaddon.base.models.Revive;
 import com.rettichlp.unicacityaddon.base.models.WantedReason;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
@@ -244,6 +245,60 @@ public class Syncer {
             e.sendInfo();
         }
         return naviPointList;
+    }
+
+    public static List<Revive> getReviveList() {
+        List<Revive> reviveList = new ArrayList<>();
+        try {
+            APIRequest.sendReviveRequest().forEach(jsonElement -> {
+                JsonObject o = jsonElement.getAsJsonObject();
+
+                int currentWeekReviveAmount = o.get("currentWeekReviveAmount").getAsInt();
+                int lastWeekReviveAmount = o.get("lastWeekReviveAmount").getAsInt();
+                String minecraftName = o.get("minecraftName").getAsString();
+                String minecraftUuid = o.get("minecraftUuid").getAsString();
+
+                reviveList.add(new Revive(currentWeekReviveAmount, lastWeekReviveAmount, minecraftName, minecraftUuid));
+            });
+        } catch (APIResponseException e) {
+            e.sendInfo();
+        }
+        return reviveList;
+    }
+
+    public static List<Revive> getReviveRankList(int rank) {
+        List<Revive> reviveList = new ArrayList<>();
+        try {
+            APIRequest.sendReviveRankRequest(rank).forEach(jsonElement -> {
+                JsonObject o = jsonElement.getAsJsonObject();
+
+                int currentWeekReviveAmount = o.get("currentWeekReviveAmount").getAsInt();
+                int lastWeekReviveAmount = o.get("lastWeekReviveAmount").getAsInt();
+                String minecraftName = o.get("minecraftName").getAsString();
+                String minecraftUuid = o.get("minecraftUuid").getAsString();
+
+                reviveList.add(new Revive(currentWeekReviveAmount, lastWeekReviveAmount, minecraftName, minecraftUuid));
+            });
+        } catch (APIResponseException e) {
+            e.sendInfo();
+        }
+        return reviveList;
+    }
+
+    public static Revive getRevivePlayer(String minecraftNameString) {
+        try {
+            JsonObject jsonObject = APIRequest.sendRevivePlayerRequest(minecraftNameString);
+
+            int currentWeekReviveAmount = jsonObject.get("currentWeekReviveAmount").getAsInt();
+            int lastWeekReviveAmount = jsonObject.get("lastWeekReviveAmount").getAsInt();
+            String minecraftName = jsonObject.get("minecraftName").getAsString();
+            String minecraftUuid = jsonObject.get("minecraftUuid").getAsString();
+
+            return new Revive(currentWeekReviveAmount, lastWeekReviveAmount, minecraftName, minecraftUuid);
+        } catch (APIResponseException e) {
+            e.sendInfo();
+            return null;
+        }
     }
 
     private static List<WantedReason> getWantedReasonList() {
