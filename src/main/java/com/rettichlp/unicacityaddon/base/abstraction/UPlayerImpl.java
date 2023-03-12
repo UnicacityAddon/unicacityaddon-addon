@@ -25,6 +25,7 @@ import net.minecraft.world.World;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -228,13 +229,16 @@ public class UPlayerImpl implements UPlayer {
         boolean hasAnyPlayerHigherRank = filteredPlayerMap.entrySet().stream()
                 .anyMatch(stringIntegerEntry -> stringIntegerEntry.getValue() > getRank()); // has a higher rank than himself
 
-        boolean hasRankPriority = filteredPlayerMap.entrySet().stream()
+        List<String> rankPlayerList = filteredPlayerMap.entrySet().stream()
                 .filter(stringIntegerEntry -> stringIntegerEntry.getValue().equals(getRank()))
                 .map(Map.Entry::getKey)
                 .sorted()
-                .collect(Collectors.toList())
-                .get(0)
-                .equals(getName());
+                .collect(Collectors.toList());
+
+        boolean hasRankPriority = false;
+        if (!rankPlayerList.isEmpty()) {
+            hasRankPriority = rankPlayerList.get(0).equals(getName());
+        }
 
         return !hasAnyPlayerHigherRank && hasRankPriority;
     }
