@@ -4,6 +4,7 @@ import com.google.common.collect.Maps;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.api.Syncer;
+import com.rettichlp.unicacityaddon.base.api.checks.BroadcastChecker;
 import com.rettichlp.unicacityaddon.base.config.ConfigElements;
 import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
@@ -11,7 +12,9 @@ import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.utils.MathUtils;
 import com.rettichlp.unicacityaddon.base.utils.TextUtils;
 import com.rettichlp.unicacityaddon.commands.BusCommand;
+import com.rettichlp.unicacityaddon.commands.faction.badfaction.DropDrugAllCommand;
 import com.rettichlp.unicacityaddon.events.faction.ReinforcementEventHandler;
+import com.rettichlp.unicacityaddon.events.faction.terroristen.BombTimerEventHandler;
 import com.rettichlp.unicacityaddon.events.house.HouseInteractionEventHandler;
 import com.rettichlp.unicacityaddon.modules.BombTimerModule;
 import net.minecraft.entity.item.EntityItem;
@@ -39,8 +42,14 @@ public class TickEventHandler {
 
             // EVERY TICK
             handleReinforcementScreenshot();
+            handleBombScreenshot();
             handleDamageTracker();
-            handleBusTracker();
+
+            // 0,25 SECONDS
+            if (currentTick % 5 == 0) {
+                BusCommand.process();
+                DropDrugAllCommand.process();
+            }
 
             // 1 SECOND
             if (currentTick % 20 == 0) {
@@ -61,6 +70,12 @@ public class TickEventHandler {
                 HouseInteractionEventHandler.increaseProgress(0);
             }
 
+            // 30 SECONDS
+            if (currentTick % 600 == 0) {
+                BroadcastChecker.checkForBroadcast();
+                GangwarEventHandler.sendData();
+            }
+
             // 60 SECONDS
             if (currentTick % 1200 == 0) {
                 handlePayDay();
@@ -79,6 +94,17 @@ public class TickEventHandler {
         }
     }
 
+    private void handleBombScreenshot() {
+        if (BombTimerEventHandler.activeBomb >= 0 && BombTimerEventHandler.activeBomb + 15 == currentTick) {
+            try {
+                File file = FileManager.getNewActivityImageFile("großeinsatz");
+                HotkeyEventHandler.handleScreenshot(file);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
     private void handleDamageTracker() {
         float currentHeal = AbstractionLayer.getPlayer().getPlayer().getHealth();
         if (lastTickDamage.getValue() > currentHeal) {
@@ -86,10 +112,6 @@ public class TickEventHandler {
         } else if (lastTickDamage.getValue() < currentHeal) {
             lastTickDamage = Maps.immutableEntry(System.currentTimeMillis(), currentHeal);
         }
-    }
-
-    private void handleBusTracker() {
-        BusCommand.process();
     }
 
     private void handleNameTag() {
@@ -126,8 +148,6 @@ public class TickEventHandler {
     private void handleTimer() {
         if (FileManager.DATA.getTimer() > 0) {
             FileManager.DATA.setTimer(FileManager.DATA.getTimer() - 1);
-        } else {
-            FileManager.DATA.setTimer(0);
         }
     }
 
@@ -146,7 +166,6 @@ public class TickEventHandler {
     }
 
     private void handlePayDay() {
-        FileManager.saveData();
         if (UnicacityAddon.isUnicacity() && !AccountEventHandler.isAfk) {
             FileManager.DATA.addPayDayTime(1);
         }

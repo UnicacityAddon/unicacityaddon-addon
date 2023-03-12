@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.api.Syncer;
+import com.rettichlp.unicacityaddon.base.api.exception.APIResponseException;
 import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.models.BlacklistReason;
@@ -53,42 +54,50 @@ public class BlacklistReasonCommand implements IClientCommand {
     }
 
     @Override
-    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args) {
+    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
         UPlayer p = AbstractionLayer.getPlayer();
 
-        if (args.length < 1) {
-            p.sendEmptyMessage();
-            p.sendMessage(Message.getBuilder()
-                    .of("Blacklist-Gründe:").color(ColorCode.DARK_AQUA).bold().advance()
-                    .createComponent());
+        new Thread(() -> {
+            if (args.length < 1) {
+                Syncer.BLACKLISTREASONLIST = Syncer.getBlacklistReasonList();
 
-            Syncer.getBlacklistReasonEntryList().forEach(blacklistReasonEntry -> p.sendMessage(Message.getBuilder()
-                    .of("»").color(ColorCode.GRAY).advance().space()
-                    .of(blacklistReasonEntry.getReason()).color(ColorCode.AQUA)
-                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder()
-                                    .of("Preis:").color(ColorCode.RED).advance().space()
-                                    .of(String.valueOf(blacklistReasonEntry.getPrice())).color(ColorCode.DARK_RED).advance().space()
-                                    .of("Kills:").color(ColorCode.RED).advance().space()
-                                    .of(String.valueOf(blacklistReasonEntry.getKills())).color(ColorCode.DARK_RED).advance()
-                                    .createComponent())
-                            .advance()
-                    .createComponent()));
+                p.sendEmptyMessage();
+                p.sendMessage(Message.getBuilder()
+                        .of("Blacklist-Gründe:").color(ColorCode.DARK_AQUA).bold().advance()
+                        .createComponent());
 
-            p.sendEmptyMessage();
+                Syncer.BLACKLISTREASONLIST.forEach(blacklistReasonEntry -> p.sendMessage(Message.getBuilder()
+                        .of("»").color(ColorCode.GRAY).advance().space()
+                        .of(blacklistReasonEntry.getReason()).color(ColorCode.AQUA)
+                                .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder()
+                                        .of("Preis:").color(ColorCode.RED).advance().space()
+                                        .of(String.valueOf(blacklistReasonEntry.getPrice())).color(ColorCode.DARK_RED).advance().space()
+                                        .of("Kills:").color(ColorCode.RED).advance().space()
+                                        .of(String.valueOf(blacklistReasonEntry.getKills())).color(ColorCode.DARK_RED).advance()
+                                        .createComponent())
+                                .advance()
+                        .createComponent()));
 
-        } else if (args.length == 4 && args[0].equalsIgnoreCase("add")) {
-            JsonObject response = APIRequest.sendBlacklistReasonAddRequest(args[1], args[2], args[3]);
-            if (response == null)
-                return;
-            p.sendAPIMessage(response.get("info").getAsString(), true);
-        } else if (args.length == 2 && args[0].equalsIgnoreCase("remove")) {
-            JsonObject response = APIRequest.sendBlacklistReasonRemoveRequest(args[1]);
-            if (response == null)
-                return;
-            p.sendAPIMessage(response.get("info").getAsString(), true);
-        } else {
-            p.sendSyntaxMessage(getUsage(sender));
-        }
+                p.sendEmptyMessage();
+
+            } else if (args.length == 4 && args[0].equalsIgnoreCase("add")) {
+                try {
+                    JsonObject response = APIRequest.sendBlacklistReasonAddRequest(args[1], args[2], args[3]);
+                    p.sendAPIMessage(response.get("info").getAsString(), true);
+                } catch (APIResponseException e) {
+                    e.sendInfo();
+                }
+            } else if (args.length == 2 && args[0].equalsIgnoreCase("remove")) {
+                try {
+                    JsonObject response = APIRequest.sendBlacklistReasonRemoveRequest(args[1]);
+                    p.sendAPIMessage(response.get("info").getAsString(), true);
+                } catch (APIResponseException e) {
+                    e.sendInfo();
+                }
+            } else {
+                p.sendSyntaxMessage(getUsage(sender));
+            }
+        }).start();
     }
 
     @Override
@@ -96,7 +105,7 @@ public class BlacklistReasonCommand implements IClientCommand {
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
         return TabCompletionBuilder.getBuilder(args)
                 .addAtIndex(1, "add", "remove")
-                .addAtIndex(2, Syncer.getBlacklistReasonEntryList().stream().map(BlacklistReason::getReason).sorted().collect(Collectors.toList()))
+                .addAtIndex(2, Syncer.BLACKLISTREASONLIST.stream().map(BlacklistReason::getReason).sorted().collect(Collectors.toList()))
                 .build();
     }
 

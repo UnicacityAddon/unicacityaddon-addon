@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class TextUtils {
 
-    public static String parseTimer(int seconds) {
+    public static String parseTimer(long seconds) {
         return seconds >= 3600 ? String.format("%02d:%02d:%02d", seconds / 3600, seconds % 3600 / 60, seconds % 60) : String.format("%02d:%02d", seconds / 60, seconds % 60);
     }
 

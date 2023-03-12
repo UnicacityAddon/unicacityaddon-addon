@@ -1,8 +1,8 @@
 package com.rettichlp.unicacityaddon.modules;
 
-import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.ModuleRegistry;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCModule;
+import com.rettichlp.unicacityaddon.events.faction.EmergencyServiceEventHandler;
 import net.labymod.ingamegui.ModuleCategory;
 import net.labymod.ingamegui.moduletypes.SimpleModule;
 import net.labymod.settings.elements.ControlElement;
@@ -31,7 +31,7 @@ public class EmergencyServiceModule extends SimpleModule {
 
     @Override
     public String getDisplayValue() {
-        return String.valueOf(FileManager.DATA.getServiceCount());
+        return String.valueOf(EmergencyServiceEventHandler.openServices);
     }
 
     @Override
@@ -56,7 +56,7 @@ public class EmergencyServiceModule extends SimpleModule {
 
     @Override
     public boolean isShown() {
-        return !String.valueOf(FileManager.DATA.getServiceCount()).isEmpty();
+        return true;
     }
 
     @Override

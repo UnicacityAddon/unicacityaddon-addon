@@ -20,7 +20,7 @@ import java.util.regex.Matcher;
 @UCEvent
 public class TimerEventHandler {
 
-    private static boolean isJail = false;
+    public static boolean isJail = false;
 
     @SubscribeEvent
     public void onClientChatReceived(ClientChatReceivedEvent e) {

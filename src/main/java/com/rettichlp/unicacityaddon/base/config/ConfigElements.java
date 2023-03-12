@@ -394,6 +394,30 @@ public class ConfigElements {
                 .getAsBoolean(); // default = true
     }
 
+    // DrugVaultMessages
+    public static boolean getDrugVaultMessageActivated() {
+        return !UnicacityAddon.ADDON.getConfig().has("DRUG_VAULT_MESSAGE_SETTINGS") || UnicacityAddon.ADDON.getConfig().get("DRUG_VAULT_MESSAGE_SETTINGS")
+                .getAsBoolean(); // default = true
+    }
+
+    // PlantBurnMessages
+    public static boolean getPlantBurnMessageActivated() {
+        return !UnicacityAddon.ADDON.getConfig().has("PLANT_BURN_MESSAGE_SETTINGS") || UnicacityAddon.ADDON.getConfig().get("PLANT_BURN_MESSAGE_SETTINGS")
+                .getAsBoolean(); // default = true
+    }
+
+    // BombScreenshot
+    public static boolean getAutomatedBombScreenshot() {
+        return UnicacityAddon.ADDON.getConfig().has("AUTOMATED_BOMB_SCREEN_SETTINGS") && UnicacityAddon.ADDON.getConfig().get("AUTOMATED_BOMB_SCREEN_SETTINGS")
+                .getAsBoolean(); // default = false
+    }
+
+    // BetterWantedList
+    public static boolean getBetterWantedList() {
+        return !UnicacityAddon.ADDON.getConfig().has("BETTER_WANTED_LIST_SETTINGS") || UnicacityAddon.ADDON.getConfig().get("BETTER_WANTED_LIST_SETTINGS")
+                .getAsBoolean(); // default = true
+    }
+
     // EquipSettings
     public static String getBaseballBatPrice() {
         return UnicacityAddon.ADDON.getConfig().has("EQUIP_BASEBALLBAT_SETTING") && !UnicacityAddon.ADDON.getConfig().get("EQUIP_BASEBALLBAT_SETTING").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("EQUIP_BASEBALLBAT_SETTING").getAsString().startsWith("-")

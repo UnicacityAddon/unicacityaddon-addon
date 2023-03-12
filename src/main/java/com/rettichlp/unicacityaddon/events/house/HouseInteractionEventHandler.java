@@ -22,7 +22,7 @@ public class HouseInteractionEventHandler {
      *     <li>heal progress</li>
      * </ol>
      */
-    public static int[] progress = {-1, -1};
+    public static final int[] progress = {-1, -1};
 
     @SubscribeEvent
     public void onClientChatReceived(ClientChatReceivedEvent e) {

@@ -12,7 +12,7 @@ import com.rettichlp.unicacityaddon.base.text.FormattingCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.events.faction.ContractEventHandler;
 import com.rettichlp.unicacityaddon.events.faction.badfaction.blacklist.BlacklistEventHandler;
-import com.rettichlp.unicacityaddon.events.faction.polizei.WantedEventHandler;
+import com.rettichlp.unicacityaddon.events.faction.state.WantedEventHandler;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.scoreboard.ScorePlayerTeam;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -55,7 +55,7 @@ public class NameTagEventHandler {
         houseBan.append(FormattingCode.RESET.getCode());
 
         if (ConfigElements.getNameTagHouseBan()) {
-            if (Syncer.HOUSEBANENTRYLIST.stream().anyMatch(houseBanEntry -> houseBanEntry.getName().equals(playerName)))
+            if (Syncer.HOUSEBANLIST.stream().anyMatch(houseBanEntry -> houseBanEntry.getName().equals(playerName)))
                 houseBan.append(Message.getBuilder()
                         .of("[").color(ColorCode.DARK_GRAY).advance()
                         .of("HV").color(ColorCode.RED).advance()

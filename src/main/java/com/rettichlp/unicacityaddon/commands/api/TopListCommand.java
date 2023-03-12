@@ -1,9 +1,9 @@
 package com.rettichlp.unicacityaddon.commands.api;
 
 import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
+import com.rettichlp.unicacityaddon.base.api.exception.APIResponseException;
 import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
@@ -61,48 +61,43 @@ public class TopListCommand implements IClientCommand {
         UPlayer p = AbstractionLayer.getPlayer();
 
         new Thread(() -> {
-            JsonObject response = APIRequest.sendStatisticTopRequest();
-            if (response == null)
-                return;
-            JsonArray kdJsonArray = response.getAsJsonArray("kd");
+            try {
+                JsonArray kdJsonArray = APIRequest.sendStatisticTopRequest().getAsJsonArray("kd");
 
-            p.sendEmptyMessage();
-            p.sendMessage(Message.getBuilder()
-                    .of("Top 10 Spieler:").color(ColorCode.DARK_AQUA).bold().advance()
-                    .createComponent());
-
-            AtomicInteger place = new AtomicInteger();
-            kdJsonArray.forEach(jsonElement -> {
-                String name = jsonElement.getAsJsonObject().get("name").getAsString();
-                String kd = DECIMAL_FORMAT.format(jsonElement.getAsJsonObject().get("value").getAsFloat());
-
-                JsonObject statisticResponse = APIRequest.sendStatisticRequest(name);
-                if (statisticResponse == null)
-                    return;
-
-                JsonObject gameplayJsonObject = statisticResponse.getAsJsonObject("gameplay");
-                int deaths = gameplayJsonObject.get("deaths").getAsInt();
-                int kills = gameplayJsonObject.get("kills").getAsInt();
-
-                place.getAndIncrement();
+                p.sendEmptyMessage();
                 p.sendMessage(Message.getBuilder()
-                        .of(String.valueOf(place.get())).color(ColorCode.GOLD).advance()
-                        .of(".").color(ColorCode.GRAY).advance().space()
-                        .of(name).color(ColorCode.AQUA)
-                                .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder()
-                                        .of("Tode:").color(ColorCode.GRAY).advance().space()
-                                        .of(String.valueOf(deaths)).color(ColorCode.RED).advance().newline()
-                                        .of("Kills:").color(ColorCode.GRAY).advance().space()
-                                        .of(String.valueOf(kills)).color(ColorCode.RED).advance()
-                                        .createComponent())
-                                .advance().space()
-                        .of("-").color(ColorCode.GRAY).advance().space()
-                        .of(kd).color(ColorCode.AQUA).advance().space()
-                        .of("Punkte").color(ColorCode.AQUA).advance().space()
+                        .of("Top 10 Spieler:").color(ColorCode.DARK_AQUA).bold().advance()
                         .createComponent());
-            });
 
-            p.sendEmptyMessage();
+                AtomicInteger place = new AtomicInteger();
+                kdJsonArray.forEach(jsonElement -> {
+                    String name = jsonElement.getAsJsonObject().get("name").getAsString();
+                    String kd = DECIMAL_FORMAT.format(jsonElement.getAsJsonObject().get("value").getAsFloat());
+                    String deaths = String.valueOf(jsonElement.getAsJsonObject().get("deaths").getAsInt());
+                    String kills = String.valueOf(jsonElement.getAsJsonObject().get("kills").getAsInt());
+
+                    place.getAndIncrement();
+                    p.sendMessage(Message.getBuilder()
+                            .of(String.valueOf(place.get())).color(ColorCode.GOLD).advance()
+                            .of(".").color(ColorCode.GRAY).advance().space()
+                            .of(name).color(ColorCode.AQUA)
+                                    .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder()
+                                            .of("Tode:").color(ColorCode.GRAY).advance().space()
+                                            .of(deaths).color(ColorCode.RED).advance().newline()
+                                            .of("Kills:").color(ColorCode.GRAY).advance().space()
+                                            .of(kills).color(ColorCode.RED).advance()
+                                            .createComponent())
+                                    .advance().space()
+                            .of("-").color(ColorCode.GRAY).advance().space()
+                            .of(kd).color(ColorCode.AQUA).advance().space()
+                            .of("Punkte").color(ColorCode.AQUA).advance().space()
+                            .createComponent());
+                });
+
+                p.sendEmptyMessage();
+            } catch (APIResponseException e) {
+                e.sendInfo();
+            }
         }).start();
     }
 

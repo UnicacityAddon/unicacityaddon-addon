@@ -108,21 +108,21 @@ public class ChannelActivityCommand implements IClientCommand {
                     .of("»").color(ColorCode.GRAY).advance().space()
                     .of(playerName).color(isOnline ? ColorCode.GREEN : ColorCode.RED).advance().space()
                     .of(isOnline ? "[¡]" : "").color(ColorCode.BLUE)
-                    .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Finde " + playerName + " auf dem TS").color(ColorCode.RED).advance().createComponent())
-                    .clickEvent(ClickEvent.Action.RUN_COMMAND, "/tsfind " + playerName)
-                    .advance().space()
+                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Finde " + playerName + " auf dem TS").color(ColorCode.RED).advance().createComponent())
+                            .clickEvent(ClickEvent.Action.RUN_COMMAND, "/tsfind " + playerName)
+                            .advance().space()
                     .of(isOnline ? "[↓]" : "").color(ColorCode.BLUE)
-                    .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Move " + playerName + " zu dir").color(ColorCode.RED).advance().createComponent())
-                    .clickEvent(ClickEvent.Action.RUN_COMMAND, "/movehere " + playerName)
-                    .advance()
+                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Move " + playerName + " zu dir").color(ColorCode.RED).advance().createComponent())
+                            .clickEvent(ClickEvent.Action.RUN_COMMAND, "/movehere " + playerName)
+                            .advance()
                     .createComponent()));
 
             p.sendMessage(Message.getBuilder()
                     .of("➡").color(ColorCode.GRAY).advance().space()
                     .of("Nicht anwesende Spieler kopieren").color(ColorCode.GREEN)
-                    .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Nicht anwesende Spieler kopieren").color(ColorCode.RED).advance().createComponent())
-                    .clickEvent(ClickEvent.Action.RUN_COMMAND, "/channelactivity copy")
-                    .advance()
+                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Nicht anwesende Spieler kopieren").color(ColorCode.RED).advance().createComponent())
+                            .clickEvent(ClickEvent.Action.RUN_COMMAND, "/channelactivity copy")
+                            .advance()
                     .createComponent());
 
             p.sendEmptyMessage();

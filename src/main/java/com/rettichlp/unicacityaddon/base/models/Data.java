@@ -3,15 +3,13 @@ package com.rettichlp.unicacityaddon.base.models;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
+import com.rettichlp.unicacityaddon.base.enums.Weapon;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
 import com.rettichlp.unicacityaddon.base.enums.faction.Equip;
+import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
-import joptsimple.internal.Strings;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.ArrayList;
@@ -19,16 +17,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@NoArgsConstructor
-@Getter
-@Setter
 public class Data {
 
+    private List<Armament> armamentList;
     private Integer bankBalance;
-    private String carInfo;
+    private Boolean carOpen;
     private Integer cashBalance;
-    private Map<DrugType, Map<DrugPurity, Integer>> drugInventoryMap;
     private List<CoordlistEntry> coordlist;
+    private Map<DrugType, Map<DrugPurity, Integer>> drugInventoryMap;
     private Map<Equip, Integer> equipMap;
     private Long firstAidDate;
     private Map<Integer, HouseData> houseDataMap;
@@ -41,68 +37,208 @@ public class Data {
     private Integer timer;
     private List<TodolistEntry> todolist;
 
+    public Data() {
+        this.armamentList = new ArrayList<>();
+        this.bankBalance = 0;
+        this.carOpen = false;
+        this.cashBalance = 0;
+        this.coordlist = new ArrayList<>();
+        this.drugInventoryMap = new HashMap<>();
+        this.equipMap = new HashMap<>();
+        this.firstAidDate = 0L;
+        this.houseDataMap = new HashMap<>();
+        this.jobBalance = 0;
+        this.jobExperience = 0;
+        this.payDayTime = 0;
+        this.plantFertilizeTime = 0L;
+        this.plantWaterTime = 0L;
+        this.serviceCount = 0;
+        this.timer = 0;
+        this.todolist = new ArrayList<>();
+    }
+
+    public List<Armament> getArmamentList() {
+        return armamentList != null ? armamentList : new ArrayList<>();
+    }
+
+    public void setArmamentList(List<Armament> armamentList) {
+        this.armamentList = armamentList;
+        save();
+    }
+
     public int getBankBalance() {
         return bankBalance != null ? bankBalance : 0;
     }
 
-    public String getCarInfo() {
-        return carInfo != null ? carInfo : Strings.EMPTY;
+    public void setBankBalance(Integer bankBalance) {
+        this.bankBalance = bankBalance;
+        save();
+    }
+
+    public boolean isCarOpen() {
+        return carOpen != null ? carOpen : false;
+    }
+
+    public void setCarOpen(boolean carOpen) {
+        this.carOpen = carOpen;
+        save();
     }
 
     public int getCashBalance() {
         return cashBalance != null ? cashBalance : 0;
     }
 
-    public Map<DrugType, Map<DrugPurity, Integer>> getDrugInventoryMap() {
-        return drugInventoryMap != null ? drugInventoryMap : new HashMap<>();
+    public void setCashBalance(Integer cashBalance) {
+        this.cashBalance = cashBalance;
+        save();
     }
 
     public List<CoordlistEntry> getCoordlist() {
         return coordlist != null ? coordlist : new ArrayList<>();
     }
 
+    public void setCoordlist(List<CoordlistEntry> coordlist) {
+        this.coordlist = coordlist;
+        save();
+    }
+
+    public Map<DrugType, Map<DrugPurity, Integer>> getDrugInventoryMap() {
+        return drugInventoryMap != null ? drugInventoryMap : new HashMap<>();
+    }
+
+    public void setDrugInventoryMap(Map<DrugType, Map<DrugPurity, Integer>> drugInventoryMap) {
+        this.drugInventoryMap = drugInventoryMap;
+        save();
+    }
+
     public Map<Equip, Integer> getEquipMap() {
         return equipMap != null ? equipMap : new HashMap<>();
+    }
+
+    public void setEquipMap(Map<Equip, Integer> equipMap) {
+        this.equipMap = equipMap;
+        save();
     }
 
     public long getFirstAidDate() {
         return firstAidDate != null ? firstAidDate : 0;
     }
 
+    public void setFirstAidDate(Long firstAidDate) {
+        this.firstAidDate = firstAidDate;
+        save();
+    }
+
     public Map<Integer, HouseData> getHouseDataMap() {
         return houseDataMap != null ? houseDataMap : new HashMap<>();
+    }
+
+    public void setHouseDataMap(Map<Integer, HouseData> houseDataMap) {
+        this.houseDataMap = houseDataMap;
+        save();
     }
 
     public int getJobBalance() {
         return jobBalance != null ? jobBalance : 0;
     }
 
+    public void setJobBalance(Integer jobBalance) {
+        this.jobBalance = jobBalance;
+        save();
+    }
+
     public int getJobExperience() {
         return jobExperience != null ? jobExperience : 0;
+    }
+
+    public void setJobExperience(Integer jobExperience) {
+        this.jobExperience = jobExperience;
+        save();
     }
 
     public int getPayDayTime() {
         return payDayTime != null ? payDayTime : 0;
     }
 
+    public void setPayDayTime(Integer payDayTime) {
+        this.payDayTime = payDayTime;
+        save();
+    }
+
     public long getPlantFertilizeTime() {
         return plantFertilizeTime != null ? plantFertilizeTime : 0;
+    }
+
+    public void setPlantFertilizeTime(Long plantFertilizeTime) {
+        this.plantFertilizeTime = plantFertilizeTime;
+        save();
     }
 
     public long getPlantWaterTime() {
         return plantWaterTime != null ? plantWaterTime : 0;
     }
 
+    public void setPlantWaterTime(Long plantWaterTime) {
+        this.plantWaterTime = plantWaterTime;
+        save();
+    }
+
     public int getServiceCount() {
         return serviceCount != null ? serviceCount : 0;
+    }
+
+    public void setServiceCount(Integer serviceCount) {
+        this.serviceCount = serviceCount;
+        save();
     }
 
     public int getTimer() {
         return timer != null ? timer : 0;
     }
 
+    public void setTimer(Integer timer) {
+        this.timer = timer;
+        save();
+    }
+
     public List<TodolistEntry> getTodolist() {
         return todolist != null ? todolist : new ArrayList<>();
+    }
+
+    public void setTodolist(List<TodolistEntry> todolist) {
+        this.todolist = todolist;
+        save();
+    }
+
+    /**
+     * Adds a <code>Armament</code> object, created by the given values, to the <code>armamentList</code>
+     *
+     * @param name   name of the <code>Armament</code> pattern
+     * @param weapon {@link Weapon} of the <code>Armament</code> pattern
+     * @param amount amount of ammunition of the <code>Armament</code> pattern
+     * @see Armament
+     * @see Weapon
+     */
+    public void addArmamentPattern(String name, Weapon weapon, int amount) {
+        List<Armament> newArmamentList = getArmamentList();
+        newArmamentList.add(new Armament(name, weapon, amount));
+        armamentList = newArmamentList;
+        save();
+    }
+
+    /**
+     * Removes the <code>Armament</code> object with the given name of the <code>armamentList</code>
+     *
+     * @param name name of the <code>Armament</code> pattern
+     * @see Armament
+     * @see Weapon
+     */
+    public boolean removeArmamentPattern(String name) {
+        List<Armament> newArmamentList = getArmamentList();
+        boolean success = newArmamentList.removeIf(armament -> armament.getName().equalsIgnoreCase(name));
+        armamentList = newArmamentList;
+        save();
+        return success;
     }
 
     /**
@@ -112,6 +248,7 @@ public class Data {
      */
     public void addBankBalance(int i) {
         bankBalance = getBankBalance() + i;
+        save();
     }
 
     /**
@@ -121,6 +258,7 @@ public class Data {
      */
     public void removeBankBalance(int i) {
         bankBalance = getBankBalance() - i;
+        save();
     }
 
     /**
@@ -130,6 +268,7 @@ public class Data {
      */
     public void addCashBalance(int i) {
         cashBalance = getCashBalance() + i;
+        save();
     }
 
     /**
@@ -139,6 +278,7 @@ public class Data {
      */
     public void removeCashBalance(int i) {
         cashBalance = getCashBalance() - i;
+        save();
     }
 
     /**
@@ -153,6 +293,7 @@ public class Data {
         List<CoordlistEntry> newCoordlistEntryList = getCoordlist();
         newCoordlistEntryList.add(new CoordlistEntry(name, blockPos.getX(), blockPos.getY(), blockPos.getZ()));
         coordlist = newCoordlistEntryList;
+        save();
     }
 
     /**
@@ -164,6 +305,7 @@ public class Data {
         List<CoordlistEntry> newCoordlistEntryList = getCoordlist();
         boolean success = newCoordlistEntryList.removeIf(coordlistEntry -> coordlistEntry.getName().equalsIgnoreCase(name));
         coordlist = newCoordlistEntryList;
+        save();
         return success;
     }
 
@@ -185,6 +327,7 @@ public class Data {
             Map<DrugType, Map<DrugPurity, Integer>> newdrugInventoryMap = getDrugInventoryMap();
             newdrugInventoryMap.put(drugType, drugPurityIntegerMap);
             drugInventoryMap = newdrugInventoryMap;
+            save();
         }
     }
 
@@ -206,6 +349,7 @@ public class Data {
             Map<DrugType, Map<DrugPurity, Integer>> newdrugInventoryMap = getDrugInventoryMap();
             newdrugInventoryMap.put(drugType, drugPurityIntegerMap);
             drugInventoryMap = newdrugInventoryMap;
+            save();
         }
     }
 
@@ -219,6 +363,7 @@ public class Data {
         Map<Equip, Integer> newEquipMap = getEquipMap();
         newEquipMap.put(equip, newEquipMap.getOrDefault(equip, 0) + 1);
         equipMap = newEquipMap;
+        save();
     }
 
     /**
@@ -244,6 +389,7 @@ public class Data {
         Map<Integer, HouseData> newHouseDataMap = getHouseDataMap();
         newHouseDataMap.put(houseNumber, houseData);
         houseDataMap = newHouseDataMap;
+        save();
     }
 
     /**
@@ -256,6 +402,7 @@ public class Data {
         Map<Integer, HouseData> newHouseDataMap = getHouseDataMap();
         newHouseDataMap.remove(houseNumber);
         houseDataMap = newHouseDataMap;
+        save();
     }
 
     /**
@@ -301,6 +448,7 @@ public class Data {
      */
     public void addJobBalance(int i) {
         jobBalance = getJobBalance() + i;
+        save();
     }
 
     /**
@@ -310,6 +458,7 @@ public class Data {
      */
     public void addJobExperience(int i) {
         jobExperience = getJobExperience() + i;
+        save();
     }
 
     /**
@@ -331,6 +480,7 @@ public class Data {
                 p.sendInfoMessage("Du hast in 1 Minute deinen PayDay.");
                 break;
         }
+        save();
     }
 
     /**
@@ -340,6 +490,7 @@ public class Data {
      */
     public void addServiceCount(int i) {
         serviceCount = getServiceCount() + i;
+        save();
     }
 
     /**
@@ -350,5 +501,10 @@ public class Data {
     public void removeServiceCount(int i) {
         if (getServiceCount() > 0)
             serviceCount = getServiceCount() - i;
+        save();
+    }
+
+    private void save() {
+        FileManager.saveData();
     }
 }

@@ -3,8 +3,8 @@ package com.rettichlp.unicacityaddon.commands;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
-import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
+import com.rettichlp.unicacityaddon.base.utils.TextUtils;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
@@ -15,28 +15,26 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
 /**
- * @author Dimiikou
+ * @author RettichLP
  */
 @UCCommand
-public class ReichensteuerCommand implements IClientCommand {
+public class MaskInfoCommand implements IClientCommand {
 
-    public static int cashInATM = 0;
-    public static boolean isActive = false;
+    public static long startTime = 0;
 
     @Override
     @Nonnull
     public String getName() {
-        return "reichensteuer";
+        return "maskinfo";
     }
 
     @Override
     @Nonnull
     public String getUsage(@Nonnull ICommandSender sender) {
-        return "/reichensteuer";
+        return "/maskinfo";
     }
 
     @Override
@@ -65,30 +63,15 @@ public class ReichensteuerCommand implements IClientCommand {
     public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
         UPlayer p = AbstractionLayer.getPlayer();
 
-        if (FileManager.DATA.getBankBalance() > 100000) {
-            if (isActive)
-                return;
-
-            p.sendChatMessage("/atminfo");
-            isActive = true;
-            int removeMoneyAmount = FileManager.DATA.getBankBalance() - 100000;
-
-            (new Timer()).schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    if (cashInATM < removeMoneyAmount) {
-                        p.sendChatMessage("/bank abbuchen " + (cashInATM));
-                        p.sendInfoMessage("Du musst noch " + (removeMoneyAmount - cashInATM) + " abbuchen.");
-                        isActive = false;
-                        return;
-                    }
-                    p.sendChatMessage("/bank abbuchen " + removeMoneyAmount);
-                    isActive = false;
-                }
-            }, 400);
-
+        if (startTime > 0) {
+            long timeLeft = System.currentTimeMillis() - startTime;
+            String maskDuration = TextUtils.parseTimer(1200 - TimeUnit.MILLISECONDS.toSeconds(timeLeft));
+            String[] splittedMaskDurytion = maskDuration.split(":");
+            int minutes = Integer.parseInt(splittedMaskDurytion[0]);
+            int seconds = Integer.parseInt(splittedMaskDurytion[1]);
+            p.sendInfoMessage("Du bist noch " + minutes + " Minute" + (minutes != 1 ? "n" : "") + " und " + seconds + " Sekunde" + (seconds != 1 ? "n" : "") + " maskiert.");
         } else {
-            p.sendErrorMessage("Dein Kontostand ist bereits unter 100.001$!");
+            p.sendErrorMessage("Du bist nicht maskiert.");
         }
     }
 

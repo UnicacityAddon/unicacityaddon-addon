@@ -49,27 +49,30 @@ public class RequestBuilder {
             return this;
         }
 
-        public JsonElement send() {
-            try {
-                String urlString = WebsiteUtils.createUrl(this.nonProd, this.applicationPath, this.subPath, this.parameter);
-                String response = WebsiteUtils.sendRequest(urlString);
-                return new JsonParser().parse(response);
-            } catch (APIResponseException e) {
-                e.sendInfoMessage();
-                return null;
-            }
+        public JsonElement send() throws APIResponseException {
+            String urlString = WebsiteUtils.createUrl(this.nonProd, this.applicationPath, this.subPath, this.parameter);
+            String response = WebsiteUtils.sendRequest(urlString);
+            return new JsonParser().parse(response);
         }
 
         public void sendAsync() {
-            new Thread(this::send).start();
+            new Thread(() -> {
+                try {
+                    send();
+                } catch (APIResponseException e) {
+                    e.sendInfo();
+                }
+            }).start();
         }
 
-        public JsonObject getAsJsonObject() {
-            return send().getAsJsonObject();
+        public JsonObject getAsJsonObject() throws APIResponseException {
+            JsonElement jsonElement = send();
+            return jsonElement.getAsJsonObject();
         }
 
-        public JsonArray getAsJsonArray() {
-            return send().getAsJsonArray();
+        public JsonArray getAsJsonArray() throws APIResponseException {
+            JsonElement jsonElement = send();
+            return jsonElement.getAsJsonArray();
         }
     }
 }

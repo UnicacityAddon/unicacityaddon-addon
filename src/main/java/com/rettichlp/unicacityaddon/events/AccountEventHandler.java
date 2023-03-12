@@ -1,13 +1,20 @@
 package com.rettichlp.unicacityaddon.events;
 
+import com.google.gson.JsonObject;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
+import com.rettichlp.unicacityaddon.base.api.exception.APIResponseException;
+import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
 import com.rettichlp.unicacityaddon.base.config.ConfigElements;
 import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
+import com.rettichlp.unicacityaddon.base.text.ColorCode;
+import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
+import com.rettichlp.unicacityaddon.base.utils.MathUtils;
 import com.rettichlp.unicacityaddon.base.utils.UpdateUtils;
+import com.rettichlp.unicacityaddon.commands.MaskInfoCommand;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -18,12 +25,15 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 
 /**
+ * @author RettichLP
  * @author Dimiikou
  */
 @UCEvent
 public class AccountEventHandler {
 
     public static boolean isAfk = false;
+
+    private long lastAfkTry = 0;
 
     @SubscribeEvent
     public void onClientChatReceived(ClientChatReceivedEvent e) {
@@ -68,15 +78,71 @@ public class AccountEventHandler {
             return;
         }
 
-        if (PatternHandler.ACCOUNT_AFK_FAILURE_PATTERN.matcher(msg).find()) {
+        if (PatternHandler.ACCOUNT_AFK_FAILURE_PATTERN.matcher(msg).find() && System.currentTimeMillis() - lastAfkTry > TimeUnit.SECONDS.toMillis(30)) {
             p.sendInfoMessage("Das Addon versucht dich anschließend in den AFK Modus zu setzen.");
             long lastDamageTime = TickEventHandler.lastTickDamage.getKey();
             new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {
                     p.sendChatMessage("/afk");
+                    lastAfkTry = System.currentTimeMillis();
                 }
             }, new Date(lastDamageTime + TimeUnit.SECONDS.toMillis(15)));
+            return;
+        }
+
+        if (PatternHandler.ACCOUNT_TREUEBONUS_PATTERN.matcher(msg).find()) {
+            try {
+                JsonObject gameplayJsonObject = APIRequest.sendStatisticRequest().getAsJsonObject("gameplay");
+                int deaths = gameplayJsonObject.get("deaths").getAsInt();
+                int kills = gameplayJsonObject.get("kills").getAsInt();
+                float kd = gameplayJsonObject.get("kd").getAsFloat();
+                int playTime = gameplayJsonObject.get("playTime").getAsInt();
+
+                p.sendMessage(Message.getBuilder()
+                        .space().space()
+                        .of("-").color(ColorCode.DARK_GRAY).advance().space()
+                        .of("Tode").color(ColorCode.GOLD).advance()
+                        .of(":").color(ColorCode.DARK_GRAY).advance().space()
+                        .of(deaths + " Tode").color(ColorCode.RED).advance()
+                        .createComponent());
+
+                p.sendMessage(Message.getBuilder()
+                        .space().space()
+                        .of("-").color(ColorCode.DARK_GRAY).advance().space()
+                        .of("Kills").color(ColorCode.GOLD).advance()
+                        .of(":").color(ColorCode.DARK_GRAY).advance().space()
+                        .of(kills + " Kills").color(ColorCode.RED).advance()
+                        .createComponent());
+
+                p.sendMessage(Message.getBuilder()
+                        .space().space()
+                        .of("-").color(ColorCode.DARK_GRAY).advance().space()
+                        .of("K/D").color(ColorCode.GOLD).advance()
+                        .of(":").color(ColorCode.DARK_GRAY).advance().space()
+                        .of(MathUtils.DECIMAL_FORMAT.format(kd)).color(ColorCode.RED).advance()
+                        .createComponent());
+
+                p.sendMessage(Message.getBuilder()
+                        .space().space()
+                        .of("-").color(ColorCode.DARK_GRAY).advance().space()
+                        .of("Spielzeit").color(ColorCode.GOLD).advance()
+                        .of(":").color(ColorCode.DARK_GRAY).advance().space()
+                        .of(playTime + (playTime == 1 ? " Stunde" : " Stunden")).color(ColorCode.RED).advance()
+                        .createComponent());
+            } catch (APIResponseException ex) {
+                ex.sendInfo();
+            }
+            return;
+        }
+
+        if (PatternHandler.ACCOUNT_MASK_ON_PATTERN.matcher(msg).find()) {
+            MaskInfoCommand.startTime = System.currentTimeMillis();
+            return;
+        }
+
+        if (PatternHandler.ACCOUNT_MASK_OFF_PATTERN.matcher(msg).find()) {
+            MaskInfoCommand.startTime = 0;
             return;
         }
 

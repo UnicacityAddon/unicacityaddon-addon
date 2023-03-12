@@ -1,8 +1,8 @@
 package com.rettichlp.unicacityaddon;
 
+import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.api.Syncer;
 import com.rettichlp.unicacityaddon.base.api.TokenManager;
-import com.rettichlp.unicacityaddon.base.api.checks.BroadcastChecker;
 import com.rettichlp.unicacityaddon.base.config.Config;
 import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.CommandRegistry;
@@ -10,11 +10,13 @@ import com.rettichlp.unicacityaddon.base.registry.EventRegistry;
 import com.rettichlp.unicacityaddon.base.registry.KeyBindRegistry;
 import com.rettichlp.unicacityaddon.base.registry.ModuleRegistry;
 import com.rettichlp.unicacityaddon.base.teamspeak.TSClientQuery;
+import com.rettichlp.unicacityaddon.base.text.ColorCode;
+import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.utils.UpdateUtils;
-import com.rettichlp.unicacityaddon.events.chatlog.ChatLogReceiveChatEventHandler;
-import com.rettichlp.unicacityaddon.events.chatlog.ChatLogSendChatEventHandler;
 import com.rettichlp.unicacityaddon.events.RenderTagEventHandler;
 import com.rettichlp.unicacityaddon.events.TabListEventHandler;
+import com.rettichlp.unicacityaddon.events.chatlog.ChatLogReceiveChatEventHandler;
+import com.rettichlp.unicacityaddon.events.chatlog.ChatLogSendChatEventHandler;
 import net.labymod.api.LabyModAddon;
 import net.labymod.ingamegui.ModuleCategoryRegistry;
 import net.labymod.settings.elements.SettingsElement;
@@ -34,7 +36,7 @@ import java.util.List;
 @Mod(name = "UnicacityAddon", modid = "unicacityaddon", version = UnicacityAddon.VERSION, clientSideOnly = true, acceptedMinecraftVersions = "[1.12,1.12.2]")
 public class UnicacityAddon extends LabyModAddon {
 
-    public static final String VERSION = "1.8.4";
+    public static final String VERSION = "1.9.0";
     public static final Minecraft MINECRAFT = Minecraft.getMinecraft();
     public static UnicacityAddon ADDON;
     public static final Logger LOGGER = LogManager.getLogger();
@@ -60,7 +62,6 @@ public class UnicacityAddon extends LabyModAddon {
         ADDON.getApi().getEventManager().register(new ChatLogSendChatEventHandler());
         ADDON.getApi().getEventManager().register(new ChatLogReceiveChatEventHandler());
 
-        BroadcastChecker.start();
         TokenManager.createToken();
         Syncer.syncAll();
 
@@ -91,5 +92,14 @@ public class UnicacityAddon extends LabyModAddon {
             ip = ip.split(":")[0]; // strip unused port
 
         return ip.toLowerCase().endsWith("unicacity.de");
+    }
+
+    public static void debug(String debugMessage) {
+        AbstractionLayer.getPlayer().sendMessage(Message.getBuilder()
+                .of("[").color(ColorCode.DARK_GRAY).advance()
+                .of("DEBUG").color(ColorCode.YELLOW).advance()
+                .of("]").color(ColorCode.DARK_GRAY).advance().space()
+                .add(debugMessage)
+                .createComponent());
     }
 }

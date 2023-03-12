@@ -1,5 +1,6 @@
 package com.rettichlp.unicacityaddon.events;
 
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.config.ConfigElements;
@@ -8,11 +9,17 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
+import net.minecraft.client.Minecraft;
+import net.minecraft.inventory.ClickType;
+import net.minecraft.inventory.ContainerChest;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.scoreboard.Score;
 import net.minecraft.scoreboard.Scoreboard;
 import net.minecraft.util.text.event.ClickEvent;
 import net.minecraft.util.text.event.HoverEvent;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
+import net.minecraftforge.client.event.GuiContainerEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.ArrayList;
@@ -33,12 +40,12 @@ public class CarEventHandler {
         String msg = e.getMessage().getUnformattedText();
 
         if (PatternHandler.CAR_OPEN_PATTERN.matcher(msg).find()) {
-            FileManager.DATA.setCarInfo(ColorCode.GREEN.getCode() + "offen");
+            FileManager.DATA.setCarOpen(true);
             return;
         }
 
         if (PatternHandler.CAR_CLOSE_PATTERN.matcher(msg).find()) {
-            FileManager.DATA.setCarInfo(ColorCode.RED.getCode() + "zu");
+            FileManager.DATA.setCarOpen(false);
             return;
         }
 
@@ -81,6 +88,26 @@ public class CarEventHandler {
             if (name == null)
                 name = checkKFZMatcher.group(2);
             p.sendChatMessage("/memberinfo " + name);
+        }
+    }
+
+    @SubscribeEvent
+    public void onGuiOpen(GuiContainerEvent.DrawForeground e) {
+        if (e.getGuiContainer().inventorySlots instanceof ContainerChest) {
+            ContainerChest containerChest = (ContainerChest) e.getGuiContainer().inventorySlots;
+
+            if (containerChest.getLowerChestInventory().getDisplayName().getUnformattedText().equals("§6CarControl")) {
+                int numberOfCars = (int) containerChest.getInventory().stream()
+                        .filter(itemStack -> !itemStack.isEmpty() && itemStack.getDisplayName().startsWith(ColorCode.GOLD.getCode()))
+                        .map(ItemStack::getItem)
+                        .filter(item -> item.equals(Item.getItemById(328)) || item.equals(Item.getItemById(331)) || item.equals(Item.getItemById(388)))
+                        .count();
+
+                if (numberOfCars == 1) {
+                    UnicacityAddon.MINECRAFT.playerController.windowClick(containerChest.windowId, 0, 0, ClickType.PICKUP, UnicacityAddon.MINECRAFT.player);
+                    Minecraft.getMinecraft().player.closeScreen();
+                }
+            }
         }
     }
 

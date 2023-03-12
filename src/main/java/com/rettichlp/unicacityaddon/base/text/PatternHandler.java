@@ -59,12 +59,11 @@ public class PatternHandler {
      * Pattern for service data
      *
      * @see com.rettichlp.unicacityaddon.events.faction.EmergencyServiceEventHandler
-     * @see com.rettichlp.unicacityaddon.events.faction.rettungsdienst.ServiceMessageEventHandler
      */
     public static final Pattern SERVICE_ARRIVED_PATTERN = Pattern.compile("^Ein Notruf von ((?:\\[UC])*\\w+) \\((\\d+)\\): \"(.*)\"$");
     public static final Pattern SERVICE_LOCATION_PATTERN = Pattern.compile("^Der näheste Punkt ist ([^.]+)\\.$");
-    public static final Pattern SERVICE_LOCATION_PATTERN_ONE_NEAREST = Pattern.compile("^Der näheste Punkt ist ([^.]+)\\. Die nähesten Personen sind ((?:\\[UC])*\\w+) \\(((\\d+)m)\\)\\.$");
-    public static final Pattern SERVICE_LOCATION_PATTERN_TWO_NEAREST = Pattern.compile("^Der näheste Punkt ist ([^.]+)\\. Die nähesten Personen sind ((?:\\[UC])*\\w+) \\(((\\d+)m)\\), ((?:\\[UC])*\\w+) \\(((\\d+)m)\\)\\.$");
+    public static final Pattern SERVICE_LOCATION_ONE_NEAREST_PATTERN = Pattern.compile("^Der näheste Punkt ist ([^.]+)\\. Die nähesten Personen sind ((?:\\[UC])*\\w+) \\(((\\d+)m)\\)\\.$");
+    public static final Pattern SERVICE_LOCATION_TWO_NEAREST_PATTERN = Pattern.compile("^Der näheste Punkt ist ([^.]+)\\. Die nähesten Personen sind ((?:\\[UC])*\\w+) \\(((\\d+)m)\\), ((?:\\[UC])*\\w+) \\(((\\d+)m)\\)\\.$");
     public static final Pattern SERVICE_DONE_PATTERN = Pattern.compile("^Du hast den Service von (?:\\[UC])*(\\w+) als 'Erledigt' markiert!$");
     public static final Pattern SERVICE_ACCEPTED_PATTERN = Pattern.compile("^((?:\\[UC])*\\w+) hat den Notruf von ((?:\\[UC])*\\w+) angenommen\\. \\((\\d+)m entfernt\\)$");
     public static final Pattern SERVICE_REQUEUED_PATTERN = Pattern.compile("^((?:\\[UC])*\\w+) hat den Notruf von ((?:\\[UC])*\\w+) \\((\\d+)\\) wieder geöffnet\\.$");
@@ -78,25 +77,32 @@ public class PatternHandler {
     /**
      * Pattern for name tag providing
      *
-     * @see com.rettichlp.unicacityaddon.events.DeathsKillsEventHandler
      * @see com.rettichlp.unicacityaddon.events.chatlog.ChatLogReceiveChatEventHandler
      * @see com.rettichlp.unicacityaddon.events.faction.ContractEventHandler
      * @see com.rettichlp.unicacityaddon.events.faction.badfaction.blacklist.BlacklistEventHandler
      * @see com.rettichlp.unicacityaddon.events.faction.badfaction.blacklist.BlacklistModifyEventHandler
-     * @see com.rettichlp.unicacityaddon.events.faction.polizei.HQMessageEventHandler
-     * @see com.rettichlp.unicacityaddon.events.faction.polizei.WantedEventHandler
+     * @see com.rettichlp.unicacityaddon.events.faction.state.HQMessageEventHandler
+     * @see com.rettichlp.unicacityaddon.events.faction.state.WantedEventHandler
      */
     public static final Pattern WANTED_LIST_PATTERN = Pattern.compile("^ {2}- (?:\\[UC])*(\\w+) \\| (\\d+) WPS \\((.+)\\)(| \\| AFK)$");
     public static final Pattern WANTED_GIVEN_REASON_PATTERN = Pattern.compile("^HQ: Gesuchter: (?:\\[UC])*(\\w+)\\. Grund: (.+)$");
     public static final Pattern WANTED_REASON = Pattern.compile("^HQ: Fahndungsgrund: (.+) \\| Fahndungszeit: (.+)\\.$");
     public static final Pattern WANTED_GIVEN_POINTS_PATTERN = Pattern.compile("^HQ: (?:\\[UC])*(\\w+)'s momentanes WantedLevel: (\\d+)$");
-    public static final Pattern WANTED_KILL = Pattern.compile("^HQ: (?:\\[UC])*([a-zA-Z0-9_]+) wurde von (?:\\[UC])*([a-zA-Z0-9_]+) getötet\\.$");
-    public static final Pattern WANTED_DELETE = Pattern.compile("^HQ: .+ (?:\\[UC])*([a-zA-Z0-9_]+) hat (?:\\[UC])*([a-zA-Z0-9_]+)'s Akten gelöscht, over\\.$");
-    public static final Pattern WANTED_JAIL = Pattern.compile("^HQ: (?:\\[UC])*([a-zA-Z0-9_]+) wurde von (?:\\[UC])*([a-zA-Z0-9_]+) eingesperrt\\.$");
-    public static final Pattern WANTEDS_TICKET_PATTERN = Pattern.compile("^HQ: .+ (?:\\[UC])*([a-zA-Z0-9_]+) hat (?:\\[UC])*([a-zA-Z0-9_]+)(?:'s)*(?: seine| ihre)* Akten gelöscht, over\\.$");
+    public static final Pattern WANTED_KILL = Pattern.compile("^HQ: (?:\\[UC])*(\\w+) wurde von (?:\\[UC])*([a-zA-Z0-9_]+) getötet\\.$");
+    public static final Pattern WANTED_DELETE = Pattern.compile("^HQ: .+ (?:\\[UC])*(\\w+) hat (?:\\[UC])*([a-zA-Z0-9_]+)'s Akten gelöscht, over\\.$");
+    public static final Pattern WANTED_UNARREST_PATTERN = Pattern.compile("^HQ: .+ (?:\\[UC])*(\\w+) hat (?:\\[UC])*(\\w+) aus dem Gefängnis entlassen\\.$");
+    public static final Pattern PEILSENDER_PATTERN = Pattern.compile("^HQ: Agent (?:\\[UC])*(\\w+) hat ein Peilsender an (?:\\[UC])*(\\w+) befestigt, over\\.$");
+    public static final Pattern WANTED_JAIL = Pattern.compile("^HQ: (?:\\[UC])*(\\w+) wurde von (?:\\[UC])*([a-zA-Z0-9_]+) eingesperrt\\.$");
+    public static final Pattern WANTEDS_TICKET_PATTERN = Pattern.compile("^HQ: .+ (?:\\[UC])*(\\w+) hat (?:\\[UC])*([a-zA-Z0-9_]+)(?:'s)*(?: seine| ihre)* Akten gelöscht, over\\.$");
     public static final Pattern WANTED_DELETED_PATTERN = Pattern.compile("^HQ: (?:\\[UC])*(\\w+) wurde von (?:\\[UC])*\\w+ eingesperrt\\.$" +
             "|^HQ: (?:\\[UC])*(\\w+) wurde von (?:\\[UC])*\\w+ getötet\\.$" +
             "|^HQ: .+ (?:\\[UC])*\\w+ hat (?:\\[UC])*(\\w+)(?:'s)*(?: seine| ihre)* Akten gelöscht, over\\.$");
+    public static final Pattern TAKE_DRIVING_LICENSE_PATTERN = Pattern.compile("^(Agent|Beamter) (?:\\[UC])*(\\w+) hat (?:\\[UC])*([a-zA-Z0-9_]+)(?:'s)* Führerschein abgenommen\\.$");
+    public static final Pattern GIVE_DRIVING_LICENSE_PATTERN = Pattern.compile("^(Agent|Beamter) (?:\\[UC])*(\\w+) hat (?:\\[UC])*([a-zA-Z0-9_]+)(?:'s)* Führerschein zurückgegeben\\.$");
+    public static final Pattern TAKE_GUN_LICENSE_PATTERN = Pattern.compile("^(Agent|Beamter) (?:\\[UC])*(\\w+) hat (?:\\[UC])*([a-zA-Z0-9_]+)(?:'s)* Waffenschein abgenommen\\.$");
+    public static final Pattern GIVE_GUN_LICENSE_PATTERN = Pattern.compile("^(Agent|Beamter) (?:\\[UC])*(\\w+) hat (?:\\[UC])*([a-zA-Z0-9_]+)(?:'s)* Waffenschein zurückgegeben\\.$");
+    public static final Pattern TAKE_GUNS_PATTERN = Pattern.compile("^(Beamtin|Beamter) (?:\\[UC])*(\\w+) hat (?:\\[UC])*([a-zA-Z0-9_]+) die Waffen abgenommen\\.$");
+    public static final Pattern TAKE_DRUGS_PATTERN = Pattern.compile("^(Beamtin|Beamter) (?:\\[UC])*(\\w+) hat (?:\\[UC])*([a-zA-Z0-9_]+) (seine|ihre) Drogen abgenommen!$");
     public static final Pattern BLACKLIST_START_PATTERN = Pattern.compile("=== Blacklist .+ ===");
     public static final Pattern BLACKLIST_LIST_PATTERN = Pattern.compile("^ » (?:\\[UC])*(\\w+) \\| (.+) \\| (.+) \\| (\\d+) Kills \\| (\\d+)\\$(| \\(AFK\\))$");
     public static final Pattern BLACKLIST_ADDED_PATTERN = Pattern.compile("^\\[Blacklist] (?:\\[UC])*(\\w+) wurde von (?:\\[UC])*\\w+ auf die Blacklist gesetzt!$");
@@ -137,19 +143,19 @@ public class PatternHandler {
     /**
      * Pattern for medic interaction
      *
+     * @see com.rettichlp.unicacityaddon.events.DrugEventHandler
      * @see com.rettichlp.unicacityaddon.events.faction.rettungsdienst.FirstAidEventHandler
      * @see com.rettichlp.unicacityaddon.events.faction.rettungsdienst.MedicationEventHandler
      * @see com.rettichlp.unicacityaddon.events.faction.rettungsdienst.ReviveEventHandler
-     * @see com.rettichlp.unicacityaddon.events.faction.badfaction.DrugInteractionEventHandler
      */
     public static final Pattern RECIPE_ACCEPT_PATTERN = Pattern.compile("^((?:\\[UC])*\\w+) möchte dir ein Rezept für 200\\$ verkaufen\\.$");
     public static final Pattern RECIPE_GIVE_PATTERN = Pattern.compile("^Du hast ((?:\\[UC])*\\w+) ein Rezept für (Antibiotika|Hustensaft|Schmerzmittel) ausgestellt\\.$");
     public static final Pattern REVIVE_BY_MEDIC_START_PATTERN = Pattern.compile("^Du wirst von (?:\\[UC])*(\\w+) wiederbelebt\\.$");
-    // TODO: 22.01.2023 public static final Pattern REVIVE_BY_MEDIC_FINISH_PATTERN = Pattern.compile("^Du lebst nun wieder\\.$");
     public static final Pattern REVIVE_START_PATTERN = Pattern.compile("^Du beginnst mit der Wiederbelebung von ((?:\\[UC])*\\w+)\\.");
     public static final Pattern REVIVE_FAILURE_PATTERN = Pattern.compile("^Verdammt\\.\\. mein Kopf dröhnt so\\.\\.\\.$");
     public static final Pattern FIRST_AID_RECEIVE_PATTERN = Pattern.compile("^\\[Erste-Hilfe] Notarzt (?:\\[UC])*(\\w+) hat dir einen Erste-Hilfe-Schein für 14 Tage ausgestellt\\.$");
     public static final Pattern FIRST_AID_LICENCE_PATTERN = Pattern.compile("^ {2}- Erste-Hilfe-Schein: Vorhanden$");
+    public static final Pattern FIRST_AID_ISSUE_PATTERN = Pattern.compile("^\\[Erste-Hilfe] Du hast Erste-Hilfe bei (?:\\[UC])*(\\w+) geleistet\\.$");
     public static final Pattern FIRST_AID_USE_PATTERN = Pattern.compile("^ {2}Info: Du bist nun eine Minute länger auf dem Friedhof\\.$");
     public static final Pattern MEDICATION_GET_PATTERN = Pattern.compile("^\\[Apotheke] Du hast (?<amount>\\d+) (?<drugType>.+) erhalten, gute Besserung!$");
 
@@ -169,7 +175,6 @@ public class PatternHandler {
      * Pattern for bad faction interaction
      *
      * @see com.rettichlp.unicacityaddon.events.faction.badfaction.BannerEventHandler
-     * @see com.rettichlp.unicacityaddon.events.faction.badfaction.DBankMessageEventHandler
      * @see com.rettichlp.unicacityaddon.events.faction.badfaction.GiftEigenbedarfEventHandler
      * @see com.rettichlp.unicacityaddon.events.faction.badfaction.PlantEventHandler
      */
@@ -229,7 +234,6 @@ public class PatternHandler {
      * Pattern for account interaction
      *
      * @see com.rettichlp.unicacityaddon.events.AccountEventHandler
-     * @see com.rettichlp.unicacityaddon.events.DeathsKillsEventHandler
      */
     public static final Pattern ACCOUNT_WELCOME_BACK_PATTERN = Pattern.compile("^Willkommen zurück!$");
     public static final Pattern RESOURCEPACK_PATTERN = Pattern.compile("^Wir empfehlen dir unser Resourcepack zu nutzen\\.$|" +
@@ -244,6 +248,8 @@ public class PatternHandler {
     public static final Pattern ACCOUNT_TREUEBONUS_PATTERN = Pattern.compile("^ {2}- Treuebonus: (\\d+) Punkte$");
     public static final Pattern ACCOUNT_FRIEND_JOIN_PATTERN = Pattern.compile(" » Freundesliste: (?:\\[UC])*(?<name>\\w+) ist nun online\\.");
     public static final Pattern ACCOUNT_FRIEND_LEAVE_PATTERN = Pattern.compile(" » Freundesliste: (?:\\[UC])*(?<name>\\w+) ist nun offline\\.");
+    public static final Pattern ACCOUNT_MASK_ON_PATTERN = Pattern.compile("^\\[Masken] Du bist nun für 20 Minuten maskiert\\. \\[#\\d+]$");
+    public static final Pattern ACCOUNT_MASK_OFF_PATTERN = Pattern.compile("^\\[Masken] Du hast deine Maske abgenommen\\.$");
 
     /**
      * Pattern for timer interaction
@@ -271,6 +277,7 @@ public class PatternHandler {
     /**
      * Pattern for house interaction
      *
+     * @see com.rettichlp.unicacityaddon.events.WeaponEventHandler
      * @see com.rettichlp.unicacityaddon.events.house.HouseDataEventHandler
      * @see com.rettichlp.unicacityaddon.events.house.HouseInteractionEventHandler
      * @see com.rettichlp.unicacityaddon.events.house.HouseRenterEventHandler
@@ -286,6 +293,7 @@ public class PatternHandler {
     public static final Pattern HOUSE_STORAGE_REMOVE_COMMAND_PATTERN = Pattern.compile("^/drogenlager get (?<drugType>.+) (?<amount>\\d+) (?<drugPurity>\\d)$");
     public static final Pattern HOUSE_AKKU_PATTERN = Pattern.compile("^Du hast begonnen deinen Akku aufzuladen\\.\\.\\.$");
     public static final Pattern HOUSE_HEAL_PATTERN = Pattern.compile("^Du hast begonnen dich zu heilen\\.\\.\\.$");
+    public static final Pattern HOUSE_AMMUNITION_PATTERN = Pattern.compile("^\\[Waffenschrank] Du hast deine (?<weapon>.+) mit (?<amount>\\d+) Kugeln beladen\\.$");
 
     /**
      * Pattern for equip interaction
@@ -293,7 +301,7 @@ public class PatternHandler {
      * @see com.rettichlp.unicacityaddon.events.faction.EquipEventHandler
      */
     public static final Pattern TRACKER_PATTERN = Pattern.compile("^Du hast einen Peilsender an (?:\\[UC])*(\\w+) befestigt\\.$");
-    public static final Pattern EQUIP_PATTERN = Pattern.compile("^(|\\[Equip] )Du hast (dir|dich mit) (|ein |eine |einen |einem )([a-zA-Z-äöüßÄÖÜ ]+) equip(|p)t[!.]$");
+    public static final Pattern EQUIP_PATTERN = Pattern.compile("^(?:|\\[Equip] )Du hast (?:dir|dich mit) (?:|ein|eine|einen|einem) (.+) equip(?:|p)t[!.]$");
     public static final Pattern EQUIP_INTERRUPTED_PATTERN = Pattern.compile("^\\[Equip] Du bist nicht im Dienst\\.$");
 
     /**
@@ -311,4 +319,24 @@ public class PatternHandler {
      */
     public static final Pattern BUY_INTERRUPTED_PATTERN = Pattern.compile("^Verkäufer: (Tut (uns|mir) Leid|Verzeihung), unser Lager ist derzeit leer\\.$" +
             "|^Verkäufer: Dieses Produkt kostet \\d+\\$\\.$" + "|^Verkäufer: Du hast leider nicht genug Geld dabei\\.$");
+
+    /**
+     * Pattern for church interaction
+     *
+     * @see com.rettichlp.unicacityaddon.events.faction.kirche.PrayEventHandler
+     */
+    public static final Pattern PRAYING_START_PATTERN = Pattern.compile("^\\[Kirche] Du hast begonnen für (?:\\[UC])*(?<name>\\w+) zu beten\\.$");
+
+    /**
+     * Pattern for state messages
+     *
+     * @see com.rettichlp.unicacityaddon.events.DrugEventHandler
+     */
+    public static final Pattern DRUG_VAULT_DROP_PATTERN = Pattern.compile("^HQ: (.+) (?:\\[UC])*(\\w+) hat (\\d+)g (Kokain|Methamphetamin|Marihuana|LSD) \\((Höchste Reinheit|Gute Reinheit|Mittlere Reinheit|Schlechte Reinheit)\\) in der Asservatenkammer verstaut\\.$");
+    public static final Pattern DRUG_VAULT_GET_PATTERN = Pattern.compile("^HQ: (.+) (?:\\[UC])*(\\w+) hat (\\d+)g (Kokain|Methamphetamin|Marihuana|LSD) \\((Höchste Reinheit|Gute Reinheit|Mittlere Reinheit|Schlechte Reinheit)\\) aus der Asservatenkammer genommen\\.$");
+    public static final Pattern DRUG_VAULT_INFOTITLE_PATTERN = Pattern.compile("^ ===== Asservatenkammer \\((\\w+)\\) =====$");
+    public static final Pattern DRUG_VAULT_INFO_PATTERN = Pattern.compile("^ {2}» (Mittlere|Höchste|Gute|Schlechte) Reinheit: (\\d+)g {2}» (Mittlere|Höchste|Gute|Schlechte) Reinheit: (\\d+)g {2}» (Mittlere|Höchste|Gute|Schlechte) Reinheit: (\\d+)g {2}» (Mittlere|Höchste|Gute|Schlechte) Reinheit: (\\d+)g$");
+    public static final Pattern DRUG_VAULT_INFOLSD_PATTERN = Pattern.compile("^ {2}» LSD: (\\d+) Stück$");
+    public static final Pattern DRUG_VAULT_BURN_PATTERN = Pattern.compile("^HQ: (.+) (?:\\[UC])*(\\w+) hat (\\d+)g (Kokain|Methamphetamin|Marihuana|LSD) \\((Höchste Reinheit|Gute Reinheit|Mittlere Reinheit|Schlechte Reinheit)\\) vernichtet\\.$");
+    public static final Pattern PLANT_BURN_PATTERN = Pattern.compile("^HQ: (.+) (?:\\[UC])*(\\w+) hat erfolgreich eine (Kokain|Marihuana) Plantage verbrannt, over\\.$");
 }

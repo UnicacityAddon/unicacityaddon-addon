@@ -28,7 +28,7 @@ public class FireEventHandler {
      * Quote: "Meine Öffi-Nachricht geht nicht... oh... ich habe den Imgur-Link eingefügt..." - [UC]laaurin_, 02.10.2022
      */
     @SubscribeEvent
-    public void onReviveStart(ClientChatReceivedEvent e) {
+    public void onClientChatReceive(ClientChatReceivedEvent e) {
         UPlayer p = AbstractionLayer.getPlayer();
         String msg = e.getMessage().getUnformattedText();
 

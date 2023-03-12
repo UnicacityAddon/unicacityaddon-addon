@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.api.TokenManager;
+import com.rettichlp.unicacityaddon.base.api.exception.APIResponseException;
 import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
@@ -53,42 +54,41 @@ public class TokenCommand implements IClientCommand {
     }
 
     @Override
-    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args) {
+    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
         UPlayer p = AbstractionLayer.getPlayer();
 
-        if (args.length == 0) {
-            p.sendMessage(Message.getBuilder()
-                    .prefix()
-                    .of("Mit diesem").color(ColorCode.GRAY).advance().space()
-                    .of("Token").color(ColorCode.AQUA)
-                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of(TokenManager.API_TOKEN).color(ColorCode.RED).advance().createComponent())
-                            .clickEvent(ClickEvent.Action.RUN_COMMAND, "/token copy")
-                            .advance().space()
-                    .of("kann jeder in deinem Namen Anfragen an die API senden.").color(ColorCode.GRAY).advance()
-                    .createComponent());
-        } else if (args.length == 1 && args[0].equalsIgnoreCase("create")) {
-            JsonObject response = APIRequest.sendTokenCreateRequest();
-            if (response == null)
-                return;
-            p.sendAPIMessage(response.get("info").getAsString(), true);
-        } else if (args.length == 1 && args[0].equalsIgnoreCase("copy")) {
-            p.copyToClipboard(TokenManager.API_TOKEN);
-            LabyMod.getInstance().notifyMessageRaw(ColorCode.GREEN.getCode() + "Kopiert!", "Token in Zwischenablage kopiert.");
-        } else if (args.length == 1 && args[0].equalsIgnoreCase("revoke")) {
-            JsonObject response = APIRequest.sendTokenRevokeRequest();
-            if (response == null)
-                return;
-            p.sendAPIMessage(response.get("info").getAsString(), true);
-        } else {
-            p.sendSyntaxMessage(getUsage(sender));
-        }
+        new Thread(() -> {
+            if (args.length == 0) {
+                p.sendMessage(Message.getBuilder()
+                        .prefix()
+                        .of("Mit diesem").color(ColorCode.GRAY).advance().space()
+                        .of("Token").color(ColorCode.AQUA)
+                                .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of(TokenManager.API_TOKEN).color(ColorCode.RED).advance().createComponent())
+                                .clickEvent(ClickEvent.Action.RUN_COMMAND, "/token copy")
+                                .advance().space()
+                        .of("kann jeder in deinem Namen Anfragen an die API senden.").color(ColorCode.GRAY).advance()
+                        .createComponent());
+            } else if (args.length == 1 && args[0].equalsIgnoreCase("create")) {
+                try {
+                    JsonObject response = APIRequest.sendTokenCreateRequest();
+                    p.sendAPIMessage(response.get("info").getAsString(), true);
+                } catch (APIResponseException e) {
+                    e.sendInfo();
+                }
+            } else if (args.length == 1 && args[0].equalsIgnoreCase("copy")) {
+                p.copyToClipboard(TokenManager.API_TOKEN);
+                LabyMod.getInstance().notifyMessageRaw(ColorCode.GREEN.getCode() + "Kopiert!", "Token in Zwischenablage kopiert.");
+            } else {
+                p.sendSyntaxMessage(getUsage(sender));
+            }
+        }).start();
     }
 
     @Override
     @Nonnull
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
         return TabCompletionBuilder.getBuilder(args)
-                .addAtIndex(1, "create", "revoke")
+                .addAtIndex(1, "create")
                 .build();
     }
 

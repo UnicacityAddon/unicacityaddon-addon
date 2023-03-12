@@ -24,8 +24,9 @@ import java.util.regex.Matcher;
 @UCEvent
 public class HouseDataEventHandler {
 
-    private static int lastCheckedHouseNumber = 0;
-    private static long lastCheck = -1;
+    public static int lastCheckedHouseNumber = 0;
+    public static long lastCheck = -1;
+
     private static String waitingCommand = Strings.EMPTY;
 
     @SubscribeEvent

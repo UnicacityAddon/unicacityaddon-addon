@@ -61,7 +61,11 @@ public class ScreenCommand implements IClientCommand {
             return;
         }
 
-        ScreenshotType screenshotType = Arrays.stream(ScreenshotType.values()).filter(st -> st.getDisplayName().equals(args[0])).findFirst().orElse(null);
+        ScreenshotType screenshotType = Arrays.stream(ScreenshotType.values())
+                .filter(st -> st.getDirectoryName().equals(args[0]))
+                .findFirst()
+                .orElse(null);
+
         if (screenshotType == null) {
             p.sendSyntaxMessage(getUsage(sender));
             return;
@@ -82,7 +86,7 @@ public class ScreenCommand implements IClientCommand {
     @Nonnull
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
         return TabCompletionBuilder.getBuilder(args)
-                .addAtIndex(1, Arrays.stream(ScreenshotType.values()).map(ScreenshotType::getDisplayName).collect(Collectors.toList()))
+                .addAtIndex(1, Arrays.stream(ScreenshotType.values()).map(ScreenshotType::getDirectoryName).collect(Collectors.toList()))
                 .build();
     }
 

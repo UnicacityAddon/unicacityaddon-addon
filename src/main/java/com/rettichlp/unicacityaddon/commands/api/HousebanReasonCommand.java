@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.api.Syncer;
+import com.rettichlp.unicacityaddon.base.api.exception.APIResponseException;
 import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.models.HouseBanReason;
@@ -54,43 +55,51 @@ public class HousebanReasonCommand implements IClientCommand {
     }
 
     @Override
-    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args) {
+    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
         UPlayer p = AbstractionLayer.getPlayer();
 
-        if (args.length < 1) {
-            p.sendEmptyMessage();
-            p.sendMessage(Message.getBuilder()
-                    .of("Hausverbot-Gründe:").color(ColorCode.DARK_AQUA).bold().advance()
-                    .createComponent());
+        new Thread(() -> {
+            if (args.length < 1) {
+                Syncer.HOUSEBANREASONLIST = Syncer.getHouseBanReasonList();
 
-            Syncer.getHouseBanReasonEntryList().forEach(houseBanReason -> p.sendMessage(Message.getBuilder()
-                    .of("»").color(ColorCode.GRAY).advance().space()
-                    .of(houseBanReason.getReason()).color(ColorCode.AQUA)
-                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder()
-                                    .of("Hinzugefügt von").color(ColorCode.GRAY).advance().space()
-                                    .of(houseBanReason.getCreatorName()).color(ColorCode.RED).advance()
-                                    .createComponent())
-                            .advance().space()
-                    .of("-").color(ColorCode.GRAY).advance().space()
-                    .of(String.valueOf(houseBanReason.getDays())).color(ColorCode.AQUA).advance().space()
-                    .of(houseBanReason.getDays() == 1 ? "Tag" : "Tage").color(ColorCode.AQUA).advance()
-                    .createComponent()));
+                p.sendEmptyMessage();
+                p.sendMessage(Message.getBuilder()
+                        .of("Hausverbot-Gründe:").color(ColorCode.DARK_AQUA).bold().advance()
+                        .createComponent());
 
-            p.sendEmptyMessage();
+                Syncer.HOUSEBANREASONLIST.forEach(houseBanReason -> p.sendMessage(Message.getBuilder()
+                        .of("»").color(ColorCode.GRAY).advance().space()
+                        .of(houseBanReason.getReason()).color(ColorCode.AQUA)
+                                .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder()
+                                        .of("Hinzugefügt von").color(ColorCode.GRAY).advance().space()
+                                        .of(houseBanReason.getCreatorName()).color(ColorCode.RED).advance()
+                                        .createComponent())
+                                .advance().space()
+                        .of("-").color(ColorCode.GRAY).advance().space()
+                        .of(String.valueOf(houseBanReason.getDays())).color(ColorCode.AQUA).advance().space()
+                        .of(houseBanReason.getDays() == 1 ? "Tag" : "Tage").color(ColorCode.AQUA).advance()
+                        .createComponent()));
 
-        } else if (args.length == 3 && args[0].equalsIgnoreCase("add") && MathUtils.isInteger(args[2])) {
-            JsonObject response = APIRequest.sendHouseBanReasonAddRequest(args[1], args[2]);
-            if (response == null)
-                return;
-            p.sendAPIMessage(response.get("info").getAsString(), true);
-        } else if (args.length == 2 && args[0].equalsIgnoreCase("remove")) {
-            JsonObject response = APIRequest.sendHouseBanReasonRemoveRequest(args[1]);
-            if (response == null)
-                return;
-            p.sendAPIMessage(response.get("info").getAsString(), true);
-        } else {
-            p.sendSyntaxMessage(getUsage(sender));
-        }
+                p.sendEmptyMessage();
+
+            } else if (args.length == 3 && args[0].equalsIgnoreCase("add") && MathUtils.isInteger(args[2])) {
+                try {
+                    JsonObject response = APIRequest.sendHouseBanReasonAddRequest(args[1], args[2]);
+                    p.sendAPIMessage(response.get("info").getAsString(), true);
+                } catch (APIResponseException e) {
+                    e.sendInfo();
+                }
+            } else if (args.length == 2 && args[0].equalsIgnoreCase("remove")) {
+                try {
+                    JsonObject response = APIRequest.sendHouseBanReasonRemoveRequest(args[1]);
+                    p.sendAPIMessage(response.get("info").getAsString(), true);
+                } catch (APIResponseException e) {
+                    e.sendInfo();
+                }
+            } else {
+                p.sendSyntaxMessage(getUsage(sender));
+            }
+        }).start();
     }
 
     /**
@@ -101,7 +110,7 @@ public class HousebanReasonCommand implements IClientCommand {
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
         return TabCompletionBuilder.getBuilder(args)
                 .addAtIndex(1, "add", "remove")
-                .addAtIndex(2, Syncer.getHouseBanReasonEntryList().stream().map(HouseBanReason::getReason).sorted().collect(Collectors.toList()))
+                .addAtIndex(2, Syncer.HOUSEBANREASONLIST.stream().map(HouseBanReason::getReason).sorted().collect(Collectors.toList()))
                 .build();
     }
 

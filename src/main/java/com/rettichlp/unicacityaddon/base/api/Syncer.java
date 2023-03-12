@@ -1,9 +1,9 @@
 package com.rettichlp.unicacityaddon.base.api;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
+import com.rettichlp.unicacityaddon.base.api.exception.APIResponseException;
 import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
 import com.rettichlp.unicacityaddon.base.enums.api.AddonGroup;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
@@ -11,8 +11,9 @@ import com.rettichlp.unicacityaddon.base.models.BlacklistReason;
 import com.rettichlp.unicacityaddon.base.models.Broadcast;
 import com.rettichlp.unicacityaddon.base.models.HouseBan;
 import com.rettichlp.unicacityaddon.base.models.HouseBanReason;
+import com.rettichlp.unicacityaddon.base.models.ManagementUser;
 import com.rettichlp.unicacityaddon.base.models.NaviPoint;
-import com.rettichlp.unicacityaddon.base.models.PlayerGroup;
+import com.rettichlp.unicacityaddon.base.models.Revive;
 import com.rettichlp.unicacityaddon.base.models.WantedReason;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
@@ -28,50 +29,76 @@ public class Syncer {
 
     public static final Map<String, Faction> PLAYERFACTIONMAP = new HashMap<>();
     public static final Map<String, Integer> PLAYERRANKMAP = new HashMap<>();
-    public static List<HouseBan> HOUSEBANENTRYLIST = new ArrayList<>();
+    public static List<BlacklistReason> BLACKLISTREASONLIST = new ArrayList<>();
+    public static List<HouseBan> HOUSEBANLIST = new ArrayList<>();
+    public static List<HouseBanReason> HOUSEBANREASONLIST = new ArrayList<>();
+    public static List<ManagementUser> MANAGEMENTUSERLIST = new ArrayList<>();
     public static List<NaviPoint> NAVIPOINTLIST = new ArrayList<>();
+    public static List<WantedReason> WANTEDREASONLIST = new ArrayList<>();
 
     public static void syncAll() {
+        Thread t1 = syncPlayerAddonGroupMap();
+        Thread t2 = syncPlayerFactionData();
+
+        try {
+            t1.start();
+            t1.join();
+
+            t2.start();
+            t2.join();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
         new Thread(() -> {
-            Thread t1 = syncPlayerAddonGroupMap();
-            Thread t2 = syncPlayerFactionData();
-            Thread t3 = syncHousebanEntryList();
-            Thread t4 = syncNaviPointEntryList();
+            if (!(HOUSEBANLIST = getHouseBanList()).isEmpty())
+                LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Hausverbote aktualisiert.");
+        }).start();
 
-            try {
-                t1.start();
-                t1.join();
+        new Thread(() -> {
+            if (!(HOUSEBANREASONLIST = getHouseBanReasonList()).isEmpty())
+                LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Hausverbot-Gründe aktualisiert.");
+        }).start();
 
-                t2.start();
-                t2.join();
+        new Thread(() -> {
+            if (!(MANAGEMENTUSERLIST = getManagementUserList()).isEmpty())
+                LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Management-User aktualisiert.");
+        }).start();
 
-                t3.start();
-                t3.join();
+        new Thread(() -> {
+            if (!(NAVIPOINTLIST = getNaviPointList()).isEmpty())
+                LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Navipunkte aktualisiert.");
+        }).start();
 
-                t4.start();
-                t4.join();
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
+        new Thread(() -> {
+            if (!(BLACKLISTREASONLIST = getBlacklistReasonList()).isEmpty())
+                LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Blacklist-Gründe aktualisiert.");
+        }).start();
+
+        new Thread(() -> {
+            if (!(WANTEDREASONLIST = getWantedReasonList()).isEmpty())
+                LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Wanted-Gründe aktualisiert.");
         }).start();
     }
 
-    public static Thread syncPlayerAddonGroupMap() {
+    private static Thread syncPlayerAddonGroupMap() {
         return new Thread(() -> {
-            JsonObject response = APIRequest.sendPlayerRequest();
-            if (response != null) {
+            try {
+                JsonObject response = APIRequest.sendPlayerRequest();
                 for (AddonGroup addonGroup : AddonGroup.values()) {
                     addonGroup.getMemberList().clear();
                     for (JsonElement jsonElement : response.getAsJsonArray(addonGroup.getApiName())) {
                         addonGroup.getMemberList().add(jsonElement.getAsJsonObject().get("name").getAsString());
                     }
                 }
+                LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Addon-Gruppen aktualisiert.");
+            } catch (APIResponseException e) {
+                e.sendInfo();
             }
-            LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Addon Gruppen aktualisiert.");
         });
     }
 
-    public static Thread syncPlayerFactionData() {
+    private static Thread syncPlayerFactionData() {
         return new Thread(() -> {
             PLAYERFACTIONMAP.clear();
             PLAYERRANKMAP.clear();
@@ -92,167 +119,202 @@ public class Syncer {
         });
     }
 
-    public static Thread syncHousebanEntryList() {
-        return new Thread(() -> {
-            HOUSEBANENTRYLIST = getHouseBanEntryList();
-            LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Hausverbote aktualisiert.");
-        });
-    }
-
-    public static Thread syncNaviPointEntryList() {
-        return new Thread(() -> {
-            NAVIPOINTLIST = getNaviPointEntryList();
-            LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Navipunkte aktualisiert.");
-        });
-    }
-
-    public static List<BlacklistReason> getBlacklistReasonEntryList() {
-        JsonArray response = APIRequest.sendBlacklistReasonRequest();
-        if (response == null)
-            return new ArrayList<>();
+    public static List<BlacklistReason> getBlacklistReasonList() {
         List<BlacklistReason> blacklistReasonList = new ArrayList<>();
-        response.forEach(jsonElement -> {
-            JsonObject o = jsonElement.getAsJsonObject();
+        try {
+            APIRequest.sendBlacklistReasonRequest().forEach(jsonElement -> {
+                JsonObject o = jsonElement.getAsJsonObject();
 
-            int kills = o.get("kills").getAsInt();
-            String reason = o.get("reason").getAsString();
-            String issuerUUID = o.get("issuerUUID").getAsString();
-            int price = o.get("price").getAsInt();
-            String issuerName = o.get("issuerName").getAsString();
+                String reason = o.get("reason").getAsString();
+                int kills = o.get("kills").getAsInt();
+                int price = o.get("price").getAsInt();
 
-            blacklistReasonList.add(new BlacklistReason(kills, reason, issuerUUID, price, issuerName));
-        });
+                blacklistReasonList.add(new BlacklistReason(reason, kills, price));
+            });
+        } catch (APIResponseException e) {
+            e.sendInfo();
+        }
         return blacklistReasonList;
     }
 
-    public static List<Broadcast> getBroadcastEntryList() {
-        JsonArray response = APIRequest.sendBroadcastQueueRequest();
-        if (response == null)
-            return new ArrayList<>();
+    public static List<Broadcast> getBroadcastList() {
         List<Broadcast> broadcastList = new ArrayList<>();
-        response.forEach(jsonElement -> {
-            JsonObject o = jsonElement.getAsJsonObject();
+        try {
+            APIRequest.sendBroadcastQueueRequest().forEach(jsonElement -> {
+                JsonObject o = jsonElement.getAsJsonObject();
 
-            String broadcast = o.get("broadcast").getAsString();
-            int id = o.get("id").getAsInt();
-            String issuerName = o.get("issuerName").getAsString();
-            String issuerUUID = o.get("issuerUUID").getAsString();
-            long sendTime = o.get("sendTime").getAsLong();
-            long time = o.get("time").getAsLong();
+                String broadcast = o.get("broadcast").getAsString();
+                int id = o.get("id").getAsInt();
+                String issuerName = o.get("issuerName").getAsString();
+                String issuerUUID = o.get("issuerUUID").getAsString();
+                long sendTime = o.get("sendTime").getAsLong();
+                long time = o.get("time").getAsLong();
 
-            broadcastList.add(new Broadcast(broadcast, id, issuerName, issuerUUID, sendTime, time));
-        });
+                broadcastList.add(new Broadcast(broadcast, id, issuerName, issuerUUID, sendTime, time));
+            });
+        } catch (APIResponseException e) {
+            e.sendInfo();
+        }
         return broadcastList;
     }
 
-    public static List<HouseBan> getHouseBanEntryList() {
-        JsonArray response = APIRequest.sendHouseBanRequest(AbstractionLayer.getPlayer().getFaction().equals(Faction.RETTUNGSDIENST));
-        if (response == null)
-            return new ArrayList<>();
+    public static List<HouseBan> getHouseBanList() {
         List<HouseBan> houseBanList = new ArrayList<>();
-        response.forEach(jsonElement -> {
-            JsonObject o = jsonElement.getAsJsonObject();
+        try {
+            APIRequest.sendHouseBanRequest(AbstractionLayer.getPlayer().getFaction().equals(Faction.RETTUNGSDIENST)).forEach(jsonElement -> {
+                JsonObject o = jsonElement.getAsJsonObject();
 
-            long duration = o.get("duration").getAsLong();
-            List<HouseBanReason> houseBanReasonList = new ArrayList<>();
-            long expirationTime = o.get("expirationTime").getAsLong();
-            String name = o.get("name").getAsString();
-            long startTime = o.get("startTime").getAsLong();
-            String uuid = o.get("uuid").getAsString();
+                long duration = o.get("duration").getAsLong();
+                List<HouseBanReason> houseBanReasonList = new ArrayList<>();
+                long expirationTime = o.get("expirationTime").getAsLong();
+                String name = o.get("name").getAsString();
+                long startTime = o.get("startTime").getAsLong();
+                String uuid = o.get("uuid").getAsString();
 
-            o.get("houseBanReasonList").getAsJsonArray().forEach(jsonElement1 -> {
-                JsonObject o1 = jsonElement1.getAsJsonObject();
+                o.get("houseBanReasonList").getAsJsonArray().forEach(jsonElement1 -> {
+                    JsonObject o1 = jsonElement1.getAsJsonObject();
 
-                String reason = o1.get("reason").getAsString();
-                String issuerUUID = o1.has("issuerUUID") ? o1.get("issuerUUID").getAsString() : null;
-                String issuerName = o1.has("issuerName") ? o1.get("issuerName").getAsString() : null;
-                int days = o1.get("days").getAsInt();
+                    String reason = o1.get("reason").getAsString();
+                    String issuerUUID = o1.has("issuerUUID") ? o1.get("issuerUUID").getAsString() : null;
+                    String issuerName = o1.has("issuerName") ? o1.get("issuerName").getAsString() : null;
+                    int days = o1.get("days").getAsInt();
 
-                houseBanReasonList.add(new HouseBanReason(reason, issuerUUID, issuerName, days));
+                    houseBanReasonList.add(new HouseBanReason(reason, issuerUUID, issuerName, days));
+                });
+
+                houseBanList.add(new HouseBan(duration, houseBanReasonList, expirationTime, name, startTime, uuid));
             });
-
-            houseBanList.add(new HouseBan(duration, houseBanReasonList, expirationTime, name, startTime, uuid));
-        });
+        } catch (APIResponseException e) {
+            e.sendInfo();
+        }
         return houseBanList;
     }
 
-    public static List<HouseBanReason> getHouseBanReasonEntryList() {
-        JsonArray response = APIRequest.sendHouseBanReasonRequest();
-        if (response == null)
-            return new ArrayList<>();
+    public static List<HouseBanReason> getHouseBanReasonList() {
         List<HouseBanReason> houseBanReasonList = new ArrayList<>();
-        response.forEach(jsonElement -> {
-            JsonObject o = jsonElement.getAsJsonObject();
+        try {
+            APIRequest.sendHouseBanReasonRequest().forEach(jsonElement -> {
+                JsonObject o = jsonElement.getAsJsonObject();
 
-            String reason = o.get("reason").getAsString();
-            String creatorUUID = o.has("creatorUUID") ? o.get("creatorUUID").getAsString() : null;
-            String creatorName = o.has("creatorName") ? o.get("creatorName").getAsString() : null;
-            int days = o.get("days").getAsInt();
+                String reason = o.get("reason").getAsString();
+                String creatorUUID = o.has("creatorUUID") ? o.get("creatorUUID").getAsString() : null;
+                String creatorName = o.has("creatorName") ? o.get("creatorName").getAsString() : null;
+                int days = o.get("days").getAsInt();
 
-            houseBanReasonList.add(new HouseBanReason(reason, creatorUUID, creatorName, days));
-        });
+                houseBanReasonList.add(new HouseBanReason(reason, creatorUUID, creatorName, days));
+            });
+        } catch (APIResponseException e) {
+            e.sendInfo();
+        }
         return houseBanReasonList;
     }
 
-    public static List<NaviPoint> getNaviPointEntryList() {
-        JsonArray response = APIRequest.sendNaviPointRequest();
-        if (response == null)
-            return new ArrayList<>();
+    private static List<ManagementUser> getManagementUserList() {
+        List<ManagementUser> managementUserList = new ArrayList<>();
+        try {
+            APIRequest.sendManagementUserRequest().forEach(jsonElement -> {
+                JsonObject o = jsonElement.getAsJsonObject();
+
+                boolean active = o.get("active").getAsBoolean();
+                String uuid = o.get("uuid").getAsString();
+                String version = o.get("version").getAsString();
+
+                managementUserList.add(new ManagementUser(active, uuid, version));
+            });
+        } catch (APIResponseException e) {
+            e.sendInfo();
+        }
+        return managementUserList;
+    }
+
+    private static List<NaviPoint> getNaviPointList() {
         List<NaviPoint> naviPointList = new ArrayList<>();
-        response.forEach(jsonElement -> {
-            JsonObject o = jsonElement.getAsJsonObject();
+        try {
+            APIRequest.sendNaviPointRequest().forEach(jsonElement -> {
+                JsonObject o = jsonElement.getAsJsonObject();
 
-            String name = o.get("name").getAsString();
-            int x = o.get("x").getAsInt();
-            int y = o.get("y").getAsInt();
-            int z = o.get("z").getAsInt();
-            String article = o.get("article").getAsString();
+                String name = o.get("name").getAsString();
+                int x = o.get("x").getAsInt();
+                int y = o.get("y").getAsInt();
+                int z = o.get("z").getAsInt();
+                String article = o.get("article").getAsString();
 
-            naviPointList.add(new NaviPoint(name, x, y, z, article));
-        });
+                naviPointList.add(new NaviPoint(name, x, y, z, article));
+            });
+        } catch (APIResponseException e) {
+            e.sendInfo();
+        }
         return naviPointList;
     }
 
-    public static List<String> getPlayerGroupList() {
-        JsonArray response = APIRequest.sendPlayerGroupRequest();
-        List<String> playerGroupList = new ArrayList<>();
-        if (response != null) {
-            response.forEach(jsonElement -> playerGroupList.add(jsonElement.getAsString()));
+    public static List<Revive> getReviveList() {
+        List<Revive> reviveList = new ArrayList<>();
+        try {
+            APIRequest.sendReviveRequest().forEach(jsonElement -> {
+                JsonObject o = jsonElement.getAsJsonObject();
+
+                int currentWeekReviveAmount = o.get("currentWeekReviveAmount").getAsInt();
+                int lastWeekReviveAmount = o.get("lastWeekReviveAmount").getAsInt();
+                String minecraftName = o.get("minecraftName").getAsString();
+                String minecraftUuid = o.get("minecraftUuid").getAsString();
+
+                reviveList.add(new Revive(currentWeekReviveAmount, lastWeekReviveAmount, minecraftName, minecraftUuid));
+            });
+        } catch (APIResponseException e) {
+            e.sendInfo();
         }
-        return playerGroupList;
+        return reviveList;
     }
 
-    public static List<PlayerGroup> getPlayerGroupEntryList(String group) {
-        JsonObject response = APIRequest.sendPlayerRequest();
-        if (response == null || !response.has(group))
-            return new ArrayList<>();
-        List<PlayerGroup> playerGroupList = new ArrayList<>();
-        response.get(group).getAsJsonArray().forEach(jsonElement -> {
-            JsonObject o = jsonElement.getAsJsonObject();
+    public static List<Revive> getReviveRankList(int rank) {
+        List<Revive> reviveList = new ArrayList<>();
+        try {
+            APIRequest.sendReviveRankRequest(rank).forEach(jsonElement -> {
+                JsonObject o = jsonElement.getAsJsonObject();
 
-            String name = o.get("name").getAsString();
-            String uuid = o.get("uuid").getAsString();
+                int currentWeekReviveAmount = o.get("currentWeekReviveAmount").getAsInt();
+                int lastWeekReviveAmount = o.get("lastWeekReviveAmount").getAsInt();
+                String minecraftName = o.get("minecraftName").getAsString();
+                String minecraftUuid = o.get("minecraftUuid").getAsString();
 
-            playerGroupList.add(new PlayerGroup(name, uuid));
-        });
-        return playerGroupList;
+                reviveList.add(new Revive(currentWeekReviveAmount, lastWeekReviveAmount, minecraftName, minecraftUuid));
+            });
+        } catch (APIResponseException e) {
+            e.sendInfo();
+        }
+        return reviveList;
     }
 
-    public static List<WantedReason> getWantedReasonEntryList() {
-        JsonArray response = APIRequest.sendWantedReasonRequest();
-        if (response == null)
-            return new ArrayList<>();
+    public static Revive getRevivePlayer(String minecraftNameString) {
+        try {
+            JsonObject jsonObject = APIRequest.sendRevivePlayerRequest(minecraftNameString);
+
+            int currentWeekReviveAmount = jsonObject.get("currentWeekReviveAmount").getAsInt();
+            int lastWeekReviveAmount = jsonObject.get("lastWeekReviveAmount").getAsInt();
+            String minecraftName = jsonObject.get("minecraftName").getAsString();
+            String minecraftUuid = jsonObject.get("minecraftUuid").getAsString();
+
+            return new Revive(currentWeekReviveAmount, lastWeekReviveAmount, minecraftName, minecraftUuid);
+        } catch (APIResponseException e) {
+            e.sendInfo();
+            return null;
+        }
+    }
+
+    private static List<WantedReason> getWantedReasonList() {
         List<WantedReason> wantedReasonList = new ArrayList<>();
-        response.forEach(jsonElement -> {
-            JsonObject o = jsonElement.getAsJsonObject();
+        try {
+            APIRequest.sendWantedReasonRequest().forEach(jsonElement -> {
+                JsonObject o = jsonElement.getAsJsonObject();
 
-            String reason = o.get("reason").getAsString();
-            String creatorUUID = o.get("creatorUUID").getAsString();
-            String creatorName = o.get("creatorName").getAsString();
-            int points = o.get("points").getAsInt();
+                String reason = o.get("reason").getAsString();
+                int points = o.get("points").getAsInt();
 
-            wantedReasonList.add(new WantedReason(reason, creatorUUID, creatorName, points));
-        });
+                wantedReasonList.add(new WantedReason(reason, points));
+            });
+        } catch (APIResponseException e) {
+            e.sendInfo();
+        }
         return wantedReasonList;
     }
 }
