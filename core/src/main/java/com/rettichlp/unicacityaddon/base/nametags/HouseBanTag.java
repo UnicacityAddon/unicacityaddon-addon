@@ -46,7 +46,7 @@ public class HouseBanTag extends NameTag {
                 .of("]").color(ColorCode.DARK_GRAY).advance()
                 .createComponent();
 
-        boolean hasHouseBan = APIConverter.HOUSEBANENTRYLIST.stream()
+        boolean hasHouseBan = APIConverter.HOUSEBANLIST.stream()
                 .anyMatch(houseBanEntry -> houseBanEntry.getName().equals(playerName));
 
         return hasHouseBan ? RenderableComponent.of(component) : null;

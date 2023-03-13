@@ -11,6 +11,8 @@ import net.labymod.api.client.component.event.HoverEvent;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -46,6 +48,16 @@ public class FirstAidListener {
                             .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of(TextUtils.parseTimerWithTimeUnit(timeLeft)).color(ColorCode.RED).advance().createComponent())
                             .advance()
                     .createComponent());
+            return;
+        }
+
+        if (PatternHandler.FIRST_AID_ISSUE_PATTERN.matcher(msg).find()) {
+            new Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    UnicacityAddon.PLAYER.sendInfoMessage("Du kannst wieder Erste Hilfe leisten.");
+                }
+            }, TimeUnit.SECONDS.toMillis(90));
         }
     }
 }

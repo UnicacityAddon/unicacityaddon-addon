@@ -48,7 +48,7 @@ public class ASetBlacklistCommand extends Command {
     public List<String> complete(String[] arguments) {
         return TabCompletionBuilder.getBuilder(arguments)
                 .addToAllFromIndex(2, ForgeUtils.getOnlinePlayers())
-                .addToAllFromIndex(2, APIConverter.getBlacklistReasonEntryList().stream().map(BlacklistReason::getReason).sorted().collect(Collectors.toList()))
+                .addToAllFromIndex(2, APIConverter.BLACKLISTREASONLIST.stream().map(BlacklistReason::getReason).sorted().collect(Collectors.toList()))
                 .build();
     }
 }

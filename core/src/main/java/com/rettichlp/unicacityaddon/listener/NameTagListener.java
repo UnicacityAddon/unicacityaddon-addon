@@ -13,7 +13,7 @@ import com.rettichlp.unicacityaddon.base.text.FormattingCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.listener.faction.ContractListener;
 import com.rettichlp.unicacityaddon.listener.faction.badfaction.blacklist.BlacklistListener;
-import com.rettichlp.unicacityaddon.listener.faction.polizei.WantedListener;
+import com.rettichlp.unicacityaddon.listener.faction.state.WantedListener;
 import net.labymod.api.client.component.format.TextDecoration;
 import net.labymod.api.client.network.NetworkPlayerInfo;
 import net.labymod.api.event.Subscribe;

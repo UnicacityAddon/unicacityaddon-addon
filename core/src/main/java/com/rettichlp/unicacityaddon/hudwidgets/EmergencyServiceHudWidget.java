@@ -1,5 +1,6 @@
 package com.rettichlp.unicacityaddon.hudwidgets;
 
+import com.rettichlp.unicacityaddon.listener.faction.EmergencyServiceListener;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidget;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidgetConfig;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextLine;
@@ -19,7 +20,7 @@ public class EmergencyServiceHudWidget extends TextHudWidget<TextHudWidgetConfig
     @Override
     public void load(TextHudWidgetConfig config) {
         super.load(config);
-        textLine = super.createLine("Notrufe", 0);
+        textLine = super.createLine("Notrufe", EmergencyServiceListener.openServices);
         this.setIcon(this.hudWidgetIcon);
     }
 }

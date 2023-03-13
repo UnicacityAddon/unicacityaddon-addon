@@ -2,6 +2,7 @@ package com.rettichlp.unicacityaddon.base.models;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
+import com.rettichlp.unicacityaddon.base.enums.Weapon;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
 import com.rettichlp.unicacityaddon.base.enums.faction.Equip;
@@ -18,11 +19,12 @@ import java.util.Map;
 
 public class Data {
 
+    private List<Armament> armamentList;
     private Integer bankBalance;
-    private String carInfo;
+    private Boolean carOpen;
     private Integer cashBalance;
-    private Map<DrugType, Map<DrugPurity, Integer>> drugInventoryMap;
     private List<CoordlistEntry> coordlist;
+    private Map<DrugType, Map<DrugPurity, Integer>> drugInventoryMap;
     private Map<Equip, Integer> equipMap;
     private Long firstAidDate;
     private Map<Integer, HouseData> houseDataMap;
@@ -35,6 +37,35 @@ public class Data {
     private Integer timer;
     private List<TodolistEntry> todolist;
 
+    public Data() {
+        this.armamentList = new ArrayList<>();
+        this.bankBalance = 0;
+        this.carOpen = false;
+        this.cashBalance = 0;
+        this.coordlist = new ArrayList<>();
+        this.drugInventoryMap = new HashMap<>();
+        this.equipMap = new HashMap<>();
+        this.firstAidDate = 0L;
+        this.houseDataMap = new HashMap<>();
+        this.jobBalance = 0;
+        this.jobExperience = 0;
+        this.payDayTime = 0;
+        this.plantFertilizeTime = 0L;
+        this.plantWaterTime = 0L;
+        this.serviceCount = 0;
+        this.timer = 0;
+        this.todolist = new ArrayList<>();
+    }
+
+    public List<Armament> getArmamentList() {
+        return armamentList != null ? armamentList : new ArrayList<>();
+    }
+
+    public void setArmamentList(List<Armament> armamentList) {
+        this.armamentList = armamentList;
+        saveAndFireEvent();
+    }
+
     public int getBankBalance() {
         return bankBalance != null ? bankBalance : 0;
     }
@@ -44,12 +75,12 @@ public class Data {
         saveAndFireEvent();
     }
 
-    public String getCarInfo() {
-        return carInfo != null ? carInfo : "";
+    public boolean isCarOpen() {
+        return carOpen != null ? carOpen : false;
     }
 
-    public void setCarInfo(String carInfo) {
-        this.carInfo = carInfo;
+    public void setCarOpen(boolean carOpen) {
+        this.carOpen = carOpen;
         saveAndFireEvent();
     }
 
@@ -62,21 +93,21 @@ public class Data {
         saveAndFireEvent();
     }
 
-    public Map<DrugType, Map<DrugPurity, Integer>> getDrugInventoryMap() {
-        return drugInventoryMap != null ? drugInventoryMap : new HashMap<>();
-    }
-
-    public void setDrugInventoryMap(Map<DrugType, Map<DrugPurity, Integer>> drugInventoryMap) {
-        this.drugInventoryMap = drugInventoryMap;
-        saveAndFireEvent();
-    }
-
     public List<CoordlistEntry> getCoordlist() {
         return coordlist != null ? coordlist : new ArrayList<>();
     }
 
     public void setCoordlist(List<CoordlistEntry> coordlist) {
         this.coordlist = coordlist;
+        saveAndFireEvent();
+    }
+
+    public Map<DrugType, Map<DrugPurity, Integer>> getDrugInventoryMap() {
+        return drugInventoryMap != null ? drugInventoryMap : new HashMap<>();
+    }
+
+    public void setDrugInventoryMap(Map<DrugType, Map<DrugPurity, Integer>> drugInventoryMap) {
+        this.drugInventoryMap = drugInventoryMap;
         saveAndFireEvent();
     }
 
@@ -177,6 +208,37 @@ public class Data {
     public void setTodolist(List<TodolistEntry> todolist) {
         this.todolist = todolist;
         saveAndFireEvent();
+    }
+
+    /**
+     * Adds a <code>Armament</code> object, created by the given values, to the <code>armamentList</code>
+     *
+     * @param name   name of the <code>Armament</code> pattern
+     * @param weapon {@link Weapon} of the <code>Armament</code> pattern
+     * @param amount amount of ammunition of the <code>Armament</code> pattern
+     * @see Armament
+     * @see Weapon
+     */
+    public void addArmamentPattern(String name, Weapon weapon, int amount) {
+        List<Armament> newArmamentList = getArmamentList();
+        newArmamentList.add(new Armament(name, weapon, amount));
+        armamentList = newArmamentList;
+        saveAndFireEvent();
+    }
+
+    /**
+     * Removes the <code>Armament</code> object with the given name of the <code>armamentList</code>
+     *
+     * @param name name of the <code>Armament</code> pattern
+     * @see Armament
+     * @see Weapon
+     */
+    public boolean removeArmamentPattern(String name) {
+        List<Armament> newArmamentList = getArmamentList();
+        boolean success = newArmamentList.removeIf(armament -> armament.getName().equalsIgnoreCase(name));
+        armamentList = newArmamentList;
+        saveAndFireEvent();
+        return success;
     }
 
     /**

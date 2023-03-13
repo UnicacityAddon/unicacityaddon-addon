@@ -4,42 +4,30 @@ import com.rettichlp.unicacityaddon.base.api.request.APIConverter;
 
 public class BlacklistReason {
 
-    private final int kills;
     private final String reason;
-    private final String issuerUUID;
+    private final int kills;
     private final int price;
-    private final String issuerName;
 
-    public BlacklistReason(int kills, String reason, String issuerUUID, int price, String issuerName) {
-        this.kills = kills;
+    public BlacklistReason(String reason, int kills, int price) {
         this.reason = reason;
-        this.issuerUUID = issuerUUID;
+        this.kills = kills;
         this.price = price;
-        this.issuerName = issuerName;
-    }
-
-    public int getKills() {
-        return kills;
     }
 
     public String getReason() {
         return reason;
     }
 
-    public String getIssuerUUID() {
-        return issuerUUID;
+    public int getKills() {
+        return kills;
     }
 
     public int getPrice() {
         return price;
     }
 
-    public String getIssuerName() {
-        return issuerName;
-    }
-
     public static BlacklistReason getBlacklistReasonEntryByReason(String reason) {
-        return APIConverter.getBlacklistReasonEntryList().stream()
+        return APIConverter.BLACKLISTREASONLIST.stream()
                 .filter(blacklistReasonEntry -> blacklistReasonEntry.getReason().equals(reason))
                 .findFirst()
                 .orElse(null);

@@ -3,6 +3,7 @@ package com.rettichlp.unicacityaddon.commands.api;
 import com.google.gson.JsonObject;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
+import com.rettichlp.unicacityaddon.base.api.exception.APIResponseException;
 import com.rettichlp.unicacityaddon.base.api.request.APIConverter;
 import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
@@ -33,40 +34,48 @@ public class HousebanReasonCommand extends Command {
     public boolean execute(String prefix, String[] arguments) {
         AddonPlayer p = UnicacityAddon.PLAYER;
 
-        if (arguments.length < 1) {
-            p.sendEmptyMessage();
-            p.sendMessage(Message.getBuilder()
-                    .of("Hausverbot-Gründe:").color(ColorCode.DARK_AQUA).bold().advance()
-                    .createComponent());
+        new Thread(() -> {
+            if (arguments.length < 1) {
+                APIConverter.HOUSEBANREASONLIST = APIConverter.getHouseBanReasonList();
 
-            APIConverter.getHouseBanReasonEntryList().forEach(houseBanReason -> p.sendMessage(Message.getBuilder()
-                    .of("»").color(ColorCode.GRAY).advance().space()
-                    .of(houseBanReason.getReason()).color(ColorCode.AQUA)
-                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder()
-                                    .of("Hinzugefügt von").color(ColorCode.GRAY).advance().space()
-                                    .of(houseBanReason.getCreatorName()).color(ColorCode.RED).advance()
-                                    .createComponent())
-                            .advance().space()
-                    .of("-").color(ColorCode.GRAY).advance().space()
-                    .of(String.valueOf(houseBanReason.getDays())).color(ColorCode.AQUA).advance().space()
-                    .of(houseBanReason.getDays() == 1 ? "Tag" : "Tage").color(ColorCode.AQUA).advance()
-                    .createComponent()));
+                p.sendEmptyMessage();
+                p.sendMessage(Message.getBuilder()
+                        .of("Hausverbot-Gründe:").color(ColorCode.DARK_AQUA).bold().advance()
+                        .createComponent());
 
-            p.sendEmptyMessage();
+                APIConverter.HOUSEBANREASONLIST.forEach(houseBanReason -> p.sendMessage(Message.getBuilder()
+                        .of("»").color(ColorCode.GRAY).advance().space()
+                        .of(houseBanReason.getReason()).color(ColorCode.AQUA)
+                        .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder()
+                                .of("Hinzugefügt von").color(ColorCode.GRAY).advance().space()
+                                .of(houseBanReason.getCreatorName()).color(ColorCode.RED).advance()
+                                .createComponent())
+                        .advance().space()
+                        .of("-").color(ColorCode.GRAY).advance().space()
+                        .of(String.valueOf(houseBanReason.getDays())).color(ColorCode.AQUA).advance().space()
+                        .of(houseBanReason.getDays() == 1 ? "Tag" : "Tage").color(ColorCode.AQUA).advance()
+                        .createComponent()));
 
-        } else if (arguments.length == 3 && arguments[0].equalsIgnoreCase("add") && MathUtils.isInteger(arguments[2])) {
-            JsonObject response = APIRequest.sendHouseBanReasonAddRequest(arguments[1], arguments[2]);
-            if (response == null)
-                return true;
-            p.sendAPIMessage(response.get("info").getAsString(), true);
-        } else if (arguments.length == 2 && arguments[0].equalsIgnoreCase("remove")) {
-            JsonObject response = APIRequest.sendHouseBanReasonRemoveRequest(arguments[1]);
-            if (response == null)
-                return true;
-            p.sendAPIMessage(response.get("info").getAsString(), true);
-        } else {
-            p.sendSyntaxMessage(usage);
-        }
+                p.sendEmptyMessage();
+
+            } else if (arguments.length == 3 && arguments[0].equalsIgnoreCase("add") && MathUtils.isInteger(arguments[2])) {
+                try {
+                    JsonObject response = APIRequest.sendHouseBanReasonAddRequest(arguments[1], arguments[2]);
+                    p.sendAPIMessage(response.get("info").getAsString(), true);
+                } catch (APIResponseException e) {
+                    e.sendInfo();
+                }
+            } else if (arguments.length == 2 && arguments[0].equalsIgnoreCase("remove")) {
+                try {
+                    JsonObject response = APIRequest.sendHouseBanReasonRemoveRequest(arguments[1]);
+                    p.sendAPIMessage(response.get("info").getAsString(), true);
+                } catch (APIResponseException e) {
+                    e.sendInfo();
+                }
+            } else {
+                p.sendSyntaxMessage(usage);
+            }
+        }).start();
         return true;
     }
 
@@ -77,7 +86,7 @@ public class HousebanReasonCommand extends Command {
     public List<String> complete(String[] arguments) {
         return TabCompletionBuilder.getBuilder(arguments)
                 .addAtIndex(1, "add", "remove")
-                .addAtIndex(2, APIConverter.getHouseBanReasonEntryList().stream().map(HouseBanReason::getReason).sorted().collect(Collectors.toList()))
+                .addAtIndex(2, APIConverter.HOUSEBANREASONLIST.stream().map(HouseBanReason::getReason).sorted().collect(Collectors.toList()))
                 .build();
     }
 }

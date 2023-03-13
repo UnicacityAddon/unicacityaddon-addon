@@ -40,12 +40,12 @@ public class CarListener {
         String msg = e.chatMessage().getPlainText();
 
         if (PatternHandler.CAR_OPEN_PATTERN.matcher(msg).find()) {
-            FileManager.DATA.setCarInfo(ColorCode.GREEN.getCode() + "offen");
+            FileManager.DATA.setCarOpen(true);
             return;
         }
 
         if (PatternHandler.CAR_CLOSE_PATTERN.matcher(msg).find()) {
-            FileManager.DATA.setCarInfo(ColorCode.RED.getCode() + "zu");
+            FileManager.DATA.setCarOpen(false);
             return;
         }
 
@@ -90,6 +90,26 @@ public class CarListener {
             p.sendServerMessage("/memberinfo " + name);
         }
     }
+
+//    @SubscribeEvent
+//    public void onGuiOpen(GuiContainerEvent.DrawForeground e) {
+//        if (e.getGuiContainer().inventorySlots instanceof ContainerChest) {
+//            ContainerChest containerChest = (ContainerChest) e.getGuiContainer().inventorySlots;
+//
+//            if (containerChest.getLowerChestInventory().getDisplayName().getUnformattedText().equals("§6CarControl")) {
+//                int numberOfCars = (int) containerChest.getInventory().stream()
+//                        .filter(itemStack -> !itemStack.isEmpty() && itemStack.getDisplayName().startsWith(ColorCode.GOLD.getCode()))
+//                        .map(ItemStack::getItem)
+//                        .filter(item -> item.equals(Item.getItemById(328)) || item.equals(Item.getItemById(331)) || item.equals(Item.getItemById(388)))
+//                        .count();
+//
+//                if (numberOfCars == 1) {
+//                    UnicacityAddon.MINECRAFT.playerController.windowClick(containerChest.windowId, 0, 0, ClickType.PICKUP, UnicacityAddon.MINECRAFT.player);
+//                    Minecraft.getMinecraft().player.closeScreen();
+//                }
+//            }
+//        }
+//    }
 
     @Subscribe
     public void onUnicacityAddonTick(UnicacityAddonTickEvent e) {

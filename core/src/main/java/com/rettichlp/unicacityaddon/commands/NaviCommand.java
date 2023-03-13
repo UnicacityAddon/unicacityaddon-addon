@@ -36,7 +36,7 @@ public class NaviCommand extends Command {
             return true;
         }
 
-        NaviPoint naviPoint = NaviPoint.getNaviPointEntryByTabName(arguments[0].trim());
+        NaviPoint naviPoint = NaviPoint.getNaviPointByTabName(arguments[0].trim());
         if (naviPoint == null) {
             p.sendServerMessage("/navi " + TextUtils.makeStringByArgs(arguments, " "));
             return true;

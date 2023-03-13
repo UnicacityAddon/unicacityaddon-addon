@@ -1,4 +1,4 @@
-package com.rettichlp.unicacityaddon.commands;
+package com.rettichlp.unicacityaddon.commands.money;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
@@ -12,46 +12,43 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * @author Dimiikou
+ * @author RettichLP
  */
 @UCCommand
-public class ReichensteuerCommand extends Command {
+public class ATMFillCommand extends Command {
 
-    public static boolean isActive = false;
     public static int cashInATM = 0;
+    public static boolean isActive = false;
 
-    public ReichensteuerCommand() {
-        super("reichensteuer");
+    private static final String usage = "/atmfill";
+
+    public ATMFillCommand() {
+        super("atmfill");
     }
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
         AddonPlayer p = UnicacityAddon.PLAYER;
 
-        if (FileManager.DATA.getBankBalance() > 100000) {
-            if (isActive)
-                return true;
-
+        if (!isActive) {
             p.sendServerMessage("/atminfo");
             isActive = true;
-            int removeMoneyAmount = FileManager.DATA.getBankBalance() - 100000;
 
-            (new Timer()).schedule(new TimerTask() {
+            new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    if (cashInATM < removeMoneyAmount) {
-                        p.sendServerMessage("/bank abbuchen " + (cashInATM));
-                        p.sendInfoMessage("Du musst noch " + (removeMoneyAmount - cashInATM) + " abbuchen.");
-                        isActive = false;
-                        return;
+                    int fillAmount = 100000 - cashInATM;
+                    int bankDepositAmount = Math.min(fillAmount, FileManager.DATA.getCashBalance());
+
+                    if (bankDepositAmount > 0) {
+                        p.sendServerMessage("/bank einzahlen " + bankDepositAmount);
+                    } else {
+                        p.sendInfoMessage("Der ATM ist bereits voll.");
                     }
-                    p.sendServerMessage("/bank abbuchen " + removeMoneyAmount);
+
                     isActive = false;
                 }
             }, 400);
-
-        } else {
-            p.sendErrorMessage("Dein Kontostand ist bereits unter 100.001$!");
         }
         return true;
     }

@@ -23,7 +23,7 @@ import java.util.regex.Pattern;
  * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/commands/faction/CheckActiveMembersCommand.java">UCUtils by paulzhng</a>
  */
 @UCEvent
-public class FactionInfoListener {
+public class MemberInfoListener {
 
     private static final Timer TIMER = new Timer();
     private static final Pattern FACTION_MEMBERS_PATTERN = Pattern.compile("^ {2}=== Fraktionsmitglieder \\[(.+)] ===$");
@@ -33,7 +33,7 @@ public class FactionInfoListener {
 
     private final UnicacityAddon unicacityAddon;
 
-    public FactionInfoListener(UnicacityAddon unicacityAddon) {
+    public MemberInfoListener(UnicacityAddon unicacityAddon) {
         this.unicacityAddon = unicacityAddon;
     }
 

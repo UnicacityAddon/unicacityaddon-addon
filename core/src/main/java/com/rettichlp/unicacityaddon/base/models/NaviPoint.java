@@ -51,7 +51,7 @@ public class NaviPoint {
         return new FloatVector3(x, y, z);
     }
 
-    public static NaviPoint getNaviPointEntryByTabName(String tabName) {
+    public static NaviPoint getNaviPointByTabName(String tabName) {
         return APIConverter.NAVIPOINTLIST.stream()
                 .filter(naviPointEntry -> naviPointEntry.getTabName().equals(tabName))
                 .findFirst()

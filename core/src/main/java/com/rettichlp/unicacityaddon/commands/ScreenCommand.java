@@ -35,7 +35,11 @@ public class ScreenCommand extends Command {
             return true;
         }
 
-        ScreenshotType screenshotType = Arrays.stream(ScreenshotType.values()).filter(st -> st.getDisplayName().equals(arguments[0])).findFirst().orElse(null);
+        ScreenshotType screenshotType = Arrays.stream(ScreenshotType.values())
+                .filter(st -> st.getDirectoryName().equals(arguments[0]))
+                .findFirst()
+                .orElse(null);
+
         if (screenshotType == null) {
             p.sendSyntaxMessage(usage);
             return true;
@@ -57,7 +61,7 @@ public class ScreenCommand extends Command {
     @Override
     public List<String> complete(String[] arguments) {
         return TabCompletionBuilder.getBuilder(arguments)
-                .addAtIndex(1, Arrays.stream(ScreenshotType.values()).map(ScreenshotType::getDisplayName).collect(Collectors.toList()))
+                .addAtIndex(1, Arrays.stream(ScreenshotType.values()).map(ScreenshotType::getDirectoryName).collect(Collectors.toList()))
                 .build();
     }
 }

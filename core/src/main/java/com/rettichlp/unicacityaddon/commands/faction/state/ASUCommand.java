@@ -1,4 +1,4 @@
-package com.rettichlp.unicacityaddon.commands.faction.polizei;
+package com.rettichlp.unicacityaddon.commands.faction.state;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
@@ -92,7 +92,7 @@ public class ASUCommand extends Command {
     @Override
     public List<String> complete(String[] arguments) {
         return TabCompletionBuilder.getBuilder(arguments)
-                .addToAllFromIndex(2, APIConverter.getWantedReasonEntryList().stream().map(WantedReason::getReason).sorted().collect(Collectors.toList()))
+                .addToAllFromIndex(2, APIConverter.WANTEDREASONLIST.stream().map(WantedReason::getReason).sorted().collect(Collectors.toList()))
                 .addToAllFromIndex(2, ForgeUtils.getOnlinePlayers())
                 .addToAllFromIndex(3, Arrays.stream(WantedFlag.values()).map(WantedFlag::getFlagArgument).sorted().collect(Collectors.toList()))
                 .build();

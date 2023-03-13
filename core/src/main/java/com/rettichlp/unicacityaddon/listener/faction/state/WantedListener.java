@@ -1,7 +1,9 @@
-package com.rettichlp.unicacityaddon.listener.faction.polizei;
+package com.rettichlp.unicacityaddon.listener.faction.state;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
+import com.rettichlp.unicacityaddon.base.text.ColorCode;
+import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
@@ -69,11 +71,26 @@ public class WantedListener {
 
         Matcher wantedListEntryMatcher = PatternHandler.WANTED_LIST_PATTERN.matcher(msg);
         if (wantedListEntryMatcher.find() && System.currentTimeMillis() - wantedsShown < 1000L) {
-            String name = wantedListEntryMatcher.group(1);
-            int wantedPoints = Integer.parseInt(wantedListEntryMatcher.group(2));
-            String reason = wantedListEntryMatcher.group(3);
+            String playerName = wantedListEntryMatcher.group(1);
+            String wpReason = wantedListEntryMatcher.group(3);
+            int wpAmount = Integer.parseInt(wantedListEntryMatcher.group(2));
+            boolean isAfk = wantedListEntryMatcher.group(4).contains("AFK");
 
-            WANTED_MAP.put(name, new Wanted(reason, wantedPoints));
+            ColorCode colorCode = getWpColorCode(wpAmount);
+
+            e.setMessage(Message.getBuilder().space().space()
+                    .of("»").color(ColorCode.DARK_GRAY).advance().space()
+                    .of(playerName).color(colorCode).advance().space()
+                    .of("|").color(ColorCode.DARK_GRAY).advance().space()
+                    .of(wpReason).color(colorCode).advance().space()
+                    .of("(").color(ColorCode.GRAY).advance()
+                    .of(String.valueOf(wpAmount)).color(ColorCode.BLUE).advance()
+                    .of(")").color(ColorCode.GRAY).advance().space()
+                    .of(isAfk ? "|" : "").color(ColorCode.DARK_GRAY).advance().space()
+                    .of(isAfk ? "AFK" : "").color(ColorCode.GRAY).advance()
+                    .createComponent());
+
+            WANTED_MAP.put(playerName, new Wanted(wpReason, wpAmount));
             return;
         }
 
@@ -108,5 +125,23 @@ public class WantedListener {
         public void setAmount(int amount) {
             this.amount = amount;
         }
+    }
+
+    private ColorCode getWpColorCode(int wpAmount) {
+        ColorCode colorCode;
+        if (wpAmount > 60) {
+            colorCode = ColorCode.DARK_RED;
+        } else if (wpAmount > 50) {
+            colorCode = ColorCode.RED;
+        } else if (wpAmount > 25) {
+            colorCode = ColorCode.GOLD;
+        } else if (wpAmount > 15) {
+            colorCode = ColorCode.YELLOW;
+        } else if (wpAmount > 1) {
+            colorCode = ColorCode.GREEN;
+        } else {
+            colorCode = ColorCode.DARK_GREEN;
+        }
+        return colorCode;
     }
 }

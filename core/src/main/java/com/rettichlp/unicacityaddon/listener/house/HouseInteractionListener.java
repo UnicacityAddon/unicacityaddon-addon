@@ -23,7 +23,7 @@ public class HouseInteractionListener {
      *     <li>heal progress</li>
      * </ol>
      */
-    public static int[] progress = {-1, -1};
+    public static final int[] progress = {-1, -1};
 
     private final UnicacityAddon unicacityAddon;
 

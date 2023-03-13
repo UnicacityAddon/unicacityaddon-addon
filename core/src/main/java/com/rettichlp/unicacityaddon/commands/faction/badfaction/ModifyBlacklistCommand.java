@@ -63,7 +63,7 @@ public class ModifyBlacklistCommand extends Command {
     @Override
     public List<String> complete(String[] arguments) {
         return TabCompletionBuilder.getBuilder(arguments)
-                .addAtIndex(2, APIConverter.getBlacklistReasonEntryList().stream().map(BlacklistReason::getReason).sorted().collect(Collectors.toList()))
+                .addAtIndex(2, APIConverter.BLACKLISTREASONLIST.stream().map(BlacklistReason::getReason).sorted().collect(Collectors.toList()))
                 .addAtIndex(2, "-v")
                 .build();
     }

@@ -1,10 +1,8 @@
 package com.rettichlp.unicacityaddon.listener;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
 import com.rettichlp.unicacityaddon.base.enums.api.StatisticType;
-import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
@@ -35,23 +33,18 @@ public class KarmaMessageListener {
 
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
         String msg = e.chatMessage().getPlainText();
 
         if (AccountListener.isAfk)
             return;
 
         Matcher karmaChangedMatcher = PatternHandler.KARMA_CHANGED_PATTERN.matcher(msg);
-        if (karmaChangedMatcher.find()) {
+        if (karmaChangedMatcher.find() && !TimerListener.isJail && !ReviveListener.isDead) {
             ReviveListener.handleRevive();
 
-            // WORKAROUND START (for medics because ✨UCMDMOD✨) TODO: Remove later
-            if (!p.getFaction().equals(Faction.RETTUNGSDIENST) && !ReviveListener.isDead) {
-                p.sendServerMessage("/karma");
-                karmaCheck = true;
-                e.setCancelled(true);
-            }
-            // WORKAROUND END
+            karmaCheck = true;
+            UnicacityAddon.PLAYER.sendServerMessage("/karma");
+            e.setCancelled(true);
 
             karma = Integer.parseInt(karmaChangedMatcher.group(1));
             if (karma < 0 && karma > -9) {

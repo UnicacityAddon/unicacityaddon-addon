@@ -35,6 +35,8 @@ public interface UnicacityAddonConfiguration {
 
     ATMSetting atmSetting();
 
+    ConfigProperty<Boolean> bombScreenshot();
+
     ConfigProperty<Boolean> carRoute();
 
     ConfigProperty<Boolean> screenUpload();

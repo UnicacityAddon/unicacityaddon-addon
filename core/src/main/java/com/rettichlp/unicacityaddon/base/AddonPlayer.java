@@ -71,4 +71,8 @@ public interface AddonPlayer {
     void copyToClipboard(String string);
 
     boolean isSuperUser();
+
+    boolean hasGangwar();
+
+    boolean isPrioritizedMember();
 }

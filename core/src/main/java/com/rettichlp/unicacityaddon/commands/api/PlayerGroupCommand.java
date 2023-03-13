@@ -3,16 +3,18 @@ package com.rettichlp.unicacityaddon.commands.api;
 import com.google.gson.JsonObject;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
-import com.rettichlp.unicacityaddon.base.api.request.APIConverter;
+import com.rettichlp.unicacityaddon.base.api.exception.APIResponseException;
 import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
+import com.rettichlp.unicacityaddon.base.enums.api.AddonGroup;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import net.labymod.api.client.chat.command.Command;
 
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author RettichLP
@@ -20,7 +22,7 @@ import java.util.Map;
 @UCCommand
 public class PlayerGroupCommand extends Command {
 
-    private static final String usage = "/playergroup [add|remove] [Spieler] [Gruppe]";
+    private static final String usage = "/playergroup [list|add|remove] [Gruppe] [Spieler]";
 
     public PlayerGroupCommand() {
         super("playergroup");
@@ -30,36 +32,39 @@ public class PlayerGroupCommand extends Command {
     public boolean execute(String prefix, String[] arguments) {
         AddonPlayer p = UnicacityAddon.PLAYER;
 
-        if (arguments.length == 2 && arguments[0].equalsIgnoreCase("list")) {
-            p.sendEmptyMessage();
-            p.sendMessage(Message.getBuilder()
-                    .of("Spielergruppe:").color(ColorCode.DARK_AQUA).bold().advance().space()
-                    .of(arguments[1]).color(ColorCode.DARK_AQUA).advance()
-                    .createComponent());
+        new Thread(() -> {
+            if (arguments.length == 2 && arguments[0].equalsIgnoreCase("list") && Arrays.stream(AddonGroup.values()).anyMatch(addonGroup -> addonGroup.name().equals(arguments[1]))) {
+                p.sendEmptyMessage();
+                p.sendMessage(Message.getBuilder()
+                        .of("Spielergruppe:").color(ColorCode.DARK_AQUA).bold().advance().space()
+                        .of(arguments[1]).color(ColorCode.DARK_AQUA).advance()
+                        .createComponent());
 
-            APIConverter.ADDONGROUPMAP.entrySet().stream()
-                    .filter(stringPlayerGroupEntry -> stringPlayerGroupEntry.getValue().equals(arguments[1]))
-                    .map(Map.Entry::getKey)
-                    .forEach(playerGroup -> p.sendMessage(Message.getBuilder()
-                            .of("»").color(ColorCode.GRAY).advance().space()
-                            .of(playerGroup.getName()).color(ColorCode.AQUA).advance()
-                            .createComponent()));
+                AddonGroup.valueOf(arguments[1]).getMemberList().forEach(s -> p.sendMessage(Message.getBuilder()
+                                .of("»").color(ColorCode.GRAY).advance().space()
+                                .of(s).color(ColorCode.AQUA).advance()
+                                .createComponent()));
 
-            p.sendEmptyMessage();
+                p.sendEmptyMessage();
 
-        } else if (arguments.length == 3 && arguments[0].equalsIgnoreCase("add")) {
-            JsonObject response = APIRequest.sendPlayerAddRequest(arguments[2], arguments[1]);
-            if (response == null)
-                return true;
-            p.sendAPIMessage(response.get("info").getAsString(), true);
-        } else if (arguments.length == 3 && arguments[0].equalsIgnoreCase("remove")) {
-            JsonObject response = APIRequest.sendPlayerRemoveRequest(arguments[2], arguments[1]);
-            if (response == null)
-                return true;
-            p.sendAPIMessage(response.get("info").getAsString(), true);
-        } else {
-            p.sendSyntaxMessage(usage);
-        }
+            } else if (arguments.length == 3 && arguments[0].equalsIgnoreCase("add")) {
+                try {
+                    JsonObject response = APIRequest.sendPlayerAddRequest(arguments[2], arguments[1]);
+                    p.sendAPIMessage(response.get("info").getAsString(), true);
+                } catch (APIResponseException e) {
+                    e.sendInfo();
+                }
+            } else if (arguments.length == 3 && arguments[0].equalsIgnoreCase("remove")) {
+                try {
+                    JsonObject response = APIRequest.sendPlayerRemoveRequest(arguments[2], arguments[1]);
+                    p.sendAPIMessage(response.get("info").getAsString(), true);
+                } catch (APIResponseException e) {
+                    e.sendInfo();
+                }
+            } else {
+                p.sendSyntaxMessage(usage);
+            }
+        }).start();
         return true;
     }
 
@@ -67,7 +72,7 @@ public class PlayerGroupCommand extends Command {
     public List<String> complete(String[] arguments) {
         return TabCompletionBuilder.getBuilder(arguments)
                 .addAtIndex(1, "list", "add", "remove")
-                .addAtIndex(2, APIConverter.getPlayerGroupList())
+                .addAtIndex(2, Arrays.stream(AddonGroup.values()).map(Enum::name).collect(Collectors.toList()))
                 .build();
     }
 }

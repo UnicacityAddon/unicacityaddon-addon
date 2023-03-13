@@ -42,7 +42,7 @@ public class BusCommand extends Command {
             return true;
         }
 
-        NaviPoint naviPoint = NaviPoint.getNaviPointEntryByTabName(arguments[0]);
+        NaviPoint naviPoint = NaviPoint.getNaviPointByTabName(arguments[0]);
         if (naviPoint == null) {
             p.sendErrorMessage("Navipunkt nicht gefunden.");
             return true;
@@ -59,7 +59,7 @@ public class BusCommand extends Command {
     @Override
     public List<String> complete(String[] arguments) {
         return TabCompletionBuilder.getBuilder(arguments)
-                .addAtIndex(1, APIConverter.getNaviPointEntryList().stream().map(NaviPoint::getTabName).collect(Collectors.toList()))
+                .addAtIndex(1, APIConverter.NAVIPOINTLIST.stream().map(NaviPoint::getTabName).collect(Collectors.toList()))
                 .build();
     }
 

@@ -1,11 +1,14 @@
 package com.rettichlp.unicacityaddon.listener;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.base.api.checks.BroadcastChecker;
 import com.rettichlp.unicacityaddon.base.events.UnicacityAddonTickEvent;
 import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.commands.BusCommand;
+import com.rettichlp.unicacityaddon.commands.faction.DropDrugAllCommand;
 import com.rettichlp.unicacityaddon.listener.faction.ReinforcementListener;
+import com.rettichlp.unicacityaddon.listener.faction.terroristen.BombListener;
 import net.labymod.api.event.Phase;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.lifecycle.GameTickEvent;
@@ -35,6 +38,11 @@ public class TickListener {
 
             this.unicacityAddon.labyAPI().eventBus().fire(new UnicacityAddonTickEvent(UnicacityAddonTickEvent.Phase.TICK));
 
+            // 0,25 SECONDS
+            if (currentTick % 5 == 0) {
+                this.unicacityAddon.labyAPI().eventBus().fire(new UnicacityAddonTickEvent(UnicacityAddonTickEvent.Phase.TICK_5));
+            }
+
             // 1 SECOND
             if (currentTick % 20 == 0) {
                 this.unicacityAddon.labyAPI().eventBus().fire(new UnicacityAddonTickEvent(UnicacityAddonTickEvent.Phase.SECOND));
@@ -50,6 +58,11 @@ public class TickListener {
                 this.unicacityAddon.labyAPI().eventBus().fire(new UnicacityAddonTickEvent(UnicacityAddonTickEvent.Phase.SECOND_5));
             }
 
+            // 30 SECONDS
+            if (currentTick % 600 == 0) {
+                this.unicacityAddon.labyAPI().eventBus().fire(new UnicacityAddonTickEvent(UnicacityAddonTickEvent.Phase.SECOND_30));
+            }
+
             // 1 MINUTE
             if (currentTick % 1200 == 0) {
                 this.unicacityAddon.labyAPI().eventBus().fire(new UnicacityAddonTickEvent(UnicacityAddonTickEvent.Phase.MINUTE));
@@ -61,13 +74,23 @@ public class TickListener {
     public void onUnicacityAddonTick(UnicacityAddonTickEvent e) {
         if (e.isIngame() && e.isPhase(UnicacityAddonTickEvent.Phase.TICK)) {
             handleReinforcementScreenshot();
+            handleBombScreenshot();
             handleDamageTracker();
-            handleBusTracker();
+        }
+
+        if (e.isPhase(UnicacityAddonTickEvent.Phase.TICK_5)) {
+            BusCommand.process();
+            DropDrugAllCommand.process();
         }
 
         if (e.isPhase(UnicacityAddonTickEvent.Phase.SECOND)) {
             handleNameTag();
             handleTimer();
+        }
+
+        if (e.isPhase(UnicacityAddonTickEvent.Phase.SECOND_30)) {
+            BroadcastChecker.checkForBroadcast();
+            EventListener.sendData();
         }
 
         if (e.isPhase(UnicacityAddonTickEvent.Phase.MINUTE)) {
@@ -86,6 +109,17 @@ public class TickListener {
         }
     }
 
+    private void handleBombScreenshot() {
+        if (BombListener.activeBomb >= 0 && BombListener.activeBomb + 15 == currentTick) {
+            try {
+                File file = FileManager.getNewActivityImageFile("großeinsatz");
+                //HotkeyEventHandler.handleScreenshot(file);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
     private void handleDamageTracker() {
         float currentHeal = UnicacityAddon.PLAYER.getPlayer().getHealth();
         if (lastTickDamage.getValue() > currentHeal) {
@@ -93,10 +127,6 @@ public class TickListener {
         } else if (lastTickDamage.getValue() < currentHeal) {
             lastTickDamage = Maps.immutableEntry(System.currentTimeMillis(), currentHeal);
         }
-    }
-
-    private void handleBusTracker() {
-        BusCommand.process();
     }
 
     private void handleNameTag() {
@@ -122,8 +152,6 @@ public class TickListener {
     private void handleTimer() {
         if (FileManager.DATA.getTimer() > 0) {
             FileManager.DATA.setTimer(FileManager.DATA.getTimer() - 1);
-        } else {
-            FileManager.DATA.setTimer(0);
         }
     }
 

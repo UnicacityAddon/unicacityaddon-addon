@@ -62,6 +62,9 @@ public class DefaultUnicacityAddonConfiguration extends AddonConfig implements U
     private final DefaultATMSetting atmSetting = new DefaultATMSetting();
 
     @SwitchSetting
+    private final ConfigProperty<Boolean> bombScreenshot = new ConfigProperty<>(true);
+
+    @SwitchSetting
     private final ConfigProperty<Boolean> carRoute = new ConfigProperty<>(true);
 
     @SwitchSetting
@@ -148,6 +151,11 @@ public class DefaultUnicacityAddonConfiguration extends AddonConfig implements U
     @Override
     public ATMSetting atmSetting() {
         return this.atmSetting;
+    }
+
+    @Override
+    public ConfigProperty<Boolean> bombScreenshot() {
+        return this.bombScreenshot;
     }
 
     @Override

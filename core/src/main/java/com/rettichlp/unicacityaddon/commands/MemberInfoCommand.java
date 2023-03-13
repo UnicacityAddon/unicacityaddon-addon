@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 @UCCommand
 public class MemberInfoCommand extends Command {
 
-    private static final String usage = "/memberinfo [Fraktion]";
+    private static final String usage = "/memberinfo (Fraktion)";
 
     public MemberInfoCommand() {
         super("memberinfo", "mi");

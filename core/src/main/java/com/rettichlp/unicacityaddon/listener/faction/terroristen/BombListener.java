@@ -8,7 +8,9 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
+import com.rettichlp.unicacityaddon.base.utils.TextUtils;
 import com.rettichlp.unicacityaddon.hudwidgets.BombHudWidget;
+import com.rettichlp.unicacityaddon.listener.TickListener;
 import net.labymod.api.client.chat.ChatMessage;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.event.HoverEvent;
@@ -21,13 +23,14 @@ import java.util.regex.Matcher;
  * @author RettichLP
  */
 @UCEvent
-public class BombTimerListener {
+public class BombListener {
 
     private static String location;
+    public static int activeBomb = -1;
 
     private final UnicacityAddon unicacityAddon;
 
-    public BombTimerListener(UnicacityAddon unicacityAddon) {
+    public BombListener(UnicacityAddon unicacityAddon) {
         this.unicacityAddon = unicacityAddon;
     }
 
@@ -64,27 +67,32 @@ public class BombTimerListener {
         if (m.find()) {
             String state = m.group(1);
 
-//            String time = BombTimerModule.timer.startsWith(ColorCode.RED.getCode()) ? BombTimerModule.timer.substring(2) : BombTimerModule.timer;
-//            e.setMessage(Message.getBuilder()
-//                    .add(formattedMsg)
-//                    .space()
-//                    .of(time.isEmpty() ? "" : "(").color(ColorCode.DARK_GRAY).advance()
-//                    .of(time).color(state.equals("nicht") ? ColorCode.RED : ColorCode.GREEN).advance()
-//                    .of(time.isEmpty() ? "" : ")").color(ColorCode.DARK_GRAY).advance()
-//                    .space()
-//                    .of(location != null ? "[" : "").color(ColorCode.DARK_GRAY).advance()
-//                    .of(location != null ? "Sperrgebiet aufheben" : "").color(ColorCode.RED)
-//                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Sperrgebiet aufheben").color(ColorCode.RED).advance().createComponent())
-//                            .clickEvent(ClickEvent.Action.SUGGEST_COMMAND, location != null ? "/removesperrgebiet " + getLocationWithArticle(location) : "")
-//                            .advance()
-//                    .of(location != null ? "]" : "").color(ColorCode.DARK_GRAY).advance()
-//                    .createComponent());
-//            BombTimerModule.stopBombTimer();
+            String timeString = BombHudWidget.timer > -1 ? TextUtils.parseTimer(BombHudWidget.timer) : "";
+            BombHudWidget.timer = -1;
+
+            e.setMessage(Message.getBuilder()
+                    .add(formattedMsg)
+                    .space()
+                    .of(timeString.isEmpty() ? "" : "(").color(ColorCode.DARK_GRAY).advance()
+                    .of(timeString).color(state.equals("nicht") ? ColorCode.RED : ColorCode.GREEN).advance()
+                    .of(timeString.isEmpty() ? "" : ")").color(ColorCode.DARK_GRAY).advance()
+                    .space()
+                    .of(location != null ? "[" : "").color(ColorCode.DARK_GRAY).advance()
+                    .of(location != null ? "Sperrgebiet aufheben" : "").color(ColorCode.RED)
+                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Sperrgebiet aufheben").color(ColorCode.RED).advance().createComponent())
+                            .clickEvent(ClickEvent.Action.SUGGEST_COMMAND, location != null ? "/removesperrgebiet " + getLocationWithArticle(location) : "")
+                            .advance()
+                    .of(location != null ? "]" : "").color(ColorCode.DARK_GRAY).advance()
+                    .createComponent());
+
+            if (this.unicacityAddon.configuration().bombScreenshot().get()) {
+                activeBomb = TickListener.currentTick;
+            }
         }
     }
 
     private String getLocationWithArticle(String location) {
-        NaviPoint naviPoint = NaviPoint.getNaviPointEntryByTabName(location.replace(" ", "-"));
+        NaviPoint naviPoint = NaviPoint.getNaviPointByTabName(location.replace(" ", "-"));
         String article = "der/die/das";
         if (naviPoint != null)
             article = naviPoint.getArticleFourthCase().replace("none", "");

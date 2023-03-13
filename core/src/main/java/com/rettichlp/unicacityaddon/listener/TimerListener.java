@@ -21,7 +21,7 @@ import java.util.regex.Matcher;
 @UCEvent
 public class TimerListener {
 
-    private static boolean isJail = false;
+    public static boolean isJail = false;
 
     private final UnicacityAddon unicacityAddon;
 

@@ -1,11 +1,17 @@
 package com.rettichlp.unicacityaddon.base;
 
+import com.google.gson.JsonObject;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.base.api.exception.APIResponseException;
+import com.rettichlp.unicacityaddon.base.api.request.APIConverter;
+import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.manager.FactionManager;
+import com.rettichlp.unicacityaddon.base.models.ManagementUser;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
+import com.rettichlp.unicacityaddon.base.utils.ForgeUtils;
 import com.rettichlp.unicacityaddon.listener.NavigationListener;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.entity.player.ClientPlayer;
@@ -15,10 +21,14 @@ import net.labymod.api.client.world.ClientWorld;
 import net.labymod.api.util.math.vector.FloatVector3;
 
 import java.util.AbstractMap;
+import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class DefaultAddonPlayer implements AddonPlayer {
 
+    private static String latestVersion = null;
     private final UnicacityAddon unicacityAddon;
 
     public DefaultAddonPlayer(UnicacityAddon unicacityAddon) {
@@ -27,7 +37,7 @@ public class DefaultAddonPlayer implements AddonPlayer {
 
     @Override
     public ClientPlayer getPlayer() {
-        return this.unicacityAddon.labyAPI().minecraft().clientPlayer();
+        return this.unicacityAddon.labyAPI().minecraft().getClientPlayer();
     }
 
     @Override
@@ -167,5 +177,58 @@ public class DefaultAddonPlayer implements AddonPlayer {
     public boolean isSuperUser() {
         String uuid = getUniqueId().toString().replace("-", "");
         return uuid.equals("25855f4d38744a7fa6ade9e4f3042e19") || uuid.equals("6e49e42eefca4d9389f9f395b887809e");
+    }
+
+    @Override
+    public boolean hasGangwar() {
+//        return getScoreboard().getObjectiveNames().stream()
+//                .anyMatch(s -> s.contains("Angreifer") || s.contains("Verteidiger"));
+        return false; // TODO: 13.03.2023
+    }
+
+    @Override
+    public boolean isPrioritizedMember() {
+        Map<String, Integer> filteredPlayerMap = APIConverter.PLAYERFACTIONMAP.entrySet().stream()
+                .filter(e -> e.getValue().equals(getFaction())) // name and faction from faction
+                .map(Map.Entry::getKey) // name of players from faction
+                .filter(s -> ForgeUtils.getOnlinePlayers().contains(s)) // is online
+                .filter(this::hasPlayerLatestAddonVersion) // has supported addon version
+                .collect(Collectors.toMap(s -> s, APIConverter.PLAYERRANKMAP::get)); // collect name and rank of players from faction
+
+        boolean hasAnyPlayerHigherRank = filteredPlayerMap.entrySet().stream()
+                .anyMatch(stringIntegerEntry -> stringIntegerEntry.getValue() > getRank()); // has a higher rank than himself
+
+        boolean hasRankPriority = filteredPlayerMap.entrySet().stream()
+                .filter(stringIntegerEntry -> stringIntegerEntry.getValue().equals(getRank()))
+                .map(Map.Entry::getKey)
+                .sorted()
+                .collect(Collectors.toList())
+                .get(0)
+                .equals(getName());
+
+        return !hasAnyPlayerHigherRank && hasRankPriority;
+    }
+
+    public boolean hasPlayerLatestAddonVersion(String name) {
+        Optional<ManagementUser> managementUserOptional = APIConverter.MANAGEMENTUSERLIST.stream()
+                .filter(mu -> mu.getUuid().equals(UnicacityAddon.ADDON.labyAPI().minecraft().getClientPacketListener().getNetworkPlayerInfo(name).profile().getUniqueId().toString().replace("-", "")))
+                .findAny();
+
+        return managementUserOptional.isPresent() && (managementUserOptional.get().getVersion().equals(getLatestVersion()) || managementUserOptional.get().getVersion().contains("dev"));
+    }
+
+    private static String getLatestVersion() {
+        if (latestVersion == null) {
+            String mgmtVersion;
+            try {
+                JsonObject response = APIRequest.sendManagementRequest();
+                mgmtVersion = response.get("latestVersion").getAsString();
+            } catch (APIResponseException e) {
+                e.sendInfo();
+                mgmtVersion = UnicacityAddon.VERSION;
+            }
+            latestVersion = mgmtVersion;
+        }
+        return latestVersion;
     }
 }

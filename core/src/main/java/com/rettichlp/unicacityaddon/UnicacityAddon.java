@@ -3,7 +3,6 @@ package com.rettichlp.unicacityaddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.DefaultAddonPlayer;
 import com.rettichlp.unicacityaddon.base.api.TokenManager;
-import com.rettichlp.unicacityaddon.base.api.checks.BroadcastChecker;
 import com.rettichlp.unicacityaddon.base.api.request.APIConverter;
 import com.rettichlp.unicacityaddon.base.config.DefaultUnicacityAddonConfiguration;
 import com.rettichlp.unicacityaddon.base.manager.FileManager;
@@ -25,12 +24,10 @@ import com.rettichlp.unicacityaddon.commands.CoordlistCommand;
 import com.rettichlp.unicacityaddon.commands.CountdownCommand;
 import com.rettichlp.unicacityaddon.commands.DiscordCommand;
 import com.rettichlp.unicacityaddon.commands.DyavolCommand;
-import com.rettichlp.unicacityaddon.commands.EinzahlenCommand;
 import com.rettichlp.unicacityaddon.commands.MemberInfoCommand;
 import com.rettichlp.unicacityaddon.commands.NaviCommand;
 import com.rettichlp.unicacityaddon.commands.NearestATMCommand;
 import com.rettichlp.unicacityaddon.commands.NearestJobCommand;
-import com.rettichlp.unicacityaddon.commands.ReichensteuerCommand;
 import com.rettichlp.unicacityaddon.commands.ScreenCommand;
 import com.rettichlp.unicacityaddon.commands.ShutdownGraveyardCommand;
 import com.rettichlp.unicacityaddon.commands.ShutdownJailCommand;
@@ -38,7 +35,6 @@ import com.rettichlp.unicacityaddon.commands.SyncPlayerDataCommand;
 import com.rettichlp.unicacityaddon.commands.TimerCommand;
 import com.rettichlp.unicacityaddon.commands.TodoListCommand;
 import com.rettichlp.unicacityaddon.commands.UpdateAddonCommand;
-import com.rettichlp.unicacityaddon.commands.YasinCommand;
 import com.rettichlp.unicacityaddon.commands.api.BlacklistReasonCommand;
 import com.rettichlp.unicacityaddon.commands.api.BroadcastCommand;
 import com.rettichlp.unicacityaddon.commands.api.HousebanCommand;
@@ -48,6 +44,7 @@ import com.rettichlp.unicacityaddon.commands.api.PlayerGroupCommand;
 import com.rettichlp.unicacityaddon.commands.api.TokenCommand;
 import com.rettichlp.unicacityaddon.commands.api.TopListCommand;
 import com.rettichlp.unicacityaddon.commands.api.WantedReasonCommand;
+import com.rettichlp.unicacityaddon.commands.api.YasinCommand;
 import com.rettichlp.unicacityaddon.commands.faction.AEquipCommand;
 import com.rettichlp.unicacityaddon.commands.faction.AFbankEinzahlenCommand;
 import com.rettichlp.unicacityaddon.commands.faction.EquipListCommand;
@@ -68,10 +65,10 @@ import com.rettichlp.unicacityaddon.commands.faction.badfaction.SellDrugCommand;
 import com.rettichlp.unicacityaddon.commands.faction.chat.DForceCommand;
 import com.rettichlp.unicacityaddon.commands.faction.chat.FForceCommand;
 import com.rettichlp.unicacityaddon.commands.faction.chat.SFForceCommand;
-import com.rettichlp.unicacityaddon.commands.faction.polizei.ASUCommand;
-import com.rettichlp.unicacityaddon.commands.faction.polizei.ModifyWantedsCommand;
 import com.rettichlp.unicacityaddon.commands.faction.rettungsdienst.ARezeptAnnehmenCommand;
 import com.rettichlp.unicacityaddon.commands.faction.rettungsdienst.ARezeptCommand;
+import com.rettichlp.unicacityaddon.commands.faction.state.ASUCommand;
+import com.rettichlp.unicacityaddon.commands.faction.state.ModifyWantedsCommand;
 import com.rettichlp.unicacityaddon.commands.faction.terroristen.ExplosiveBeltCommand;
 import com.rettichlp.unicacityaddon.commands.house.HouseBankCommand;
 import com.rettichlp.unicacityaddon.commands.house.HouseStorageCommand;
@@ -81,6 +78,8 @@ import com.rettichlp.unicacityaddon.commands.mobile.ASMSCommand;
 import com.rettichlp.unicacityaddon.commands.mobile.BlockCommand;
 import com.rettichlp.unicacityaddon.commands.mobile.ReplyCommand;
 import com.rettichlp.unicacityaddon.commands.mobile.StummCommand;
+import com.rettichlp.unicacityaddon.commands.money.EinzahlenCommand;
+import com.rettichlp.unicacityaddon.commands.money.ReichensteuerCommand;
 import com.rettichlp.unicacityaddon.commands.supporter.PunishCommand;
 import com.rettichlp.unicacityaddon.commands.teamspeak.ChannelActivityCommand;
 import com.rettichlp.unicacityaddon.commands.teamspeak.MoveCommand;
@@ -102,8 +101,7 @@ import com.rettichlp.unicacityaddon.hudwidgets.TimerHudWidget;
 import com.rettichlp.unicacityaddon.listener.ABuyListener;
 import com.rettichlp.unicacityaddon.listener.AccountListener;
 import com.rettichlp.unicacityaddon.listener.CarListener;
-import com.rettichlp.unicacityaddon.listener.DeathsKillsListener;
-import com.rettichlp.unicacityaddon.listener.FriendJoinListener;
+import com.rettichlp.unicacityaddon.listener.DrugListener;
 import com.rettichlp.unicacityaddon.listener.HotkeyListener;
 import com.rettichlp.unicacityaddon.listener.KarmaMessageListener;
 import com.rettichlp.unicacityaddon.listener.MobileListener;
@@ -124,25 +122,22 @@ import com.rettichlp.unicacityaddon.listener.faction.EmergencyServiceListener;
 import com.rettichlp.unicacityaddon.listener.faction.EquipListener;
 import com.rettichlp.unicacityaddon.listener.faction.FDSFChatListener;
 import com.rettichlp.unicacityaddon.listener.faction.FDoorListener;
-import com.rettichlp.unicacityaddon.listener.faction.FactionInfoListener;
+import com.rettichlp.unicacityaddon.listener.faction.MemberInfoListener;
 import com.rettichlp.unicacityaddon.listener.faction.ReinforcementListener;
 import com.rettichlp.unicacityaddon.listener.faction.ShareLocationListener;
 import com.rettichlp.unicacityaddon.listener.faction.badfaction.BannerListener;
-import com.rettichlp.unicacityaddon.listener.faction.badfaction.DBankMessageListener;
-import com.rettichlp.unicacityaddon.listener.faction.badfaction.DrugInteractionListener;
 import com.rettichlp.unicacityaddon.listener.faction.badfaction.GaggedListener;
 import com.rettichlp.unicacityaddon.listener.faction.badfaction.GiftEigenbedarfListener;
 import com.rettichlp.unicacityaddon.listener.faction.badfaction.PlantListener;
 import com.rettichlp.unicacityaddon.listener.faction.badfaction.blacklist.BlacklistListener;
 import com.rettichlp.unicacityaddon.listener.faction.badfaction.blacklist.BlacklistModifyListener;
-import com.rettichlp.unicacityaddon.listener.faction.polizei.HQMessageListener;
-import com.rettichlp.unicacityaddon.listener.faction.polizei.WantedListener;
 import com.rettichlp.unicacityaddon.listener.faction.rettungsdienst.FireListener;
 import com.rettichlp.unicacityaddon.listener.faction.rettungsdienst.FirstAidListener;
 import com.rettichlp.unicacityaddon.listener.faction.rettungsdienst.MedicationListener;
 import com.rettichlp.unicacityaddon.listener.faction.rettungsdienst.ReviveListener;
-import com.rettichlp.unicacityaddon.listener.faction.rettungsdienst.ServiceMessageListener;
-import com.rettichlp.unicacityaddon.listener.faction.terroristen.BombTimerListener;
+import com.rettichlp.unicacityaddon.listener.faction.state.HQMessageListener;
+import com.rettichlp.unicacityaddon.listener.faction.state.WantedListener;
+import com.rettichlp.unicacityaddon.listener.faction.terroristen.BombListener;
 import com.rettichlp.unicacityaddon.listener.house.HouseDataListener;
 import com.rettichlp.unicacityaddon.listener.house.HouseInteractionListener;
 import com.rettichlp.unicacityaddon.listener.house.HouseRenterListener;
@@ -168,6 +163,7 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
     public static UnicacityAddon ADDON;
     public static AddonPlayer PLAYER;
     public static Logging LOGGER;
+    public static final Icon ICON = Icon.texture(ResourceLocation.create("unicacityaddon", "textures/uc.png")).resolution(64, 64);
 
     @Override
     public void load() {
@@ -189,7 +185,6 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
         this.logger().info("Enabled UnicacityAddon");
 
         TokenManager.createToken(this.labyAPI().minecraft().sessionAccessor().session());
-        BroadcastChecker.start();
         APIConverter.syncAll();
     }
 
@@ -202,8 +197,7 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
         this.registerListener(new ABuyListener(this));
         this.registerListener(new AccountListener(this));
         this.registerListener(new CarListener(this));
-        this.registerListener(new DeathsKillsListener(this));
-        this.registerListener(new FriendJoinListener(this));
+        this.registerListener(new DrugListener(this));
         this.registerListener(new HotkeyListener(this));
         this.registerListener(new KarmaMessageListener(this));
         this.registerListener(new MobileListener(this));
@@ -226,13 +220,11 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
         this.registerListener(new EquipListener(this));
         this.registerListener(new FDSFChatListener(this));
         this.registerListener(new FDoorListener(this));
-        this.registerListener(new FactionInfoListener(this));
+        this.registerListener(new MemberInfoListener(this));
         this.registerListener(new ReinforcementListener(this));
         this.registerListener(new ShareLocationListener(this));
         // faction - badfaction
         this.registerListener(new BannerListener(this));
-        this.registerListener(new DBankMessageListener(this));
-        this.registerListener(new DrugInteractionListener(this));
         this.registerListener(new GaggedListener(this));
         this.registerListener(new GiftEigenbedarfListener(this));
         this.registerListener(new PlantListener(this));
@@ -247,9 +239,8 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
         this.registerListener(new FirstAidListener(this));
         this.registerListener(new MedicationListener(this));
         this.registerListener(new ReviveListener(this));
-        this.registerListener(new ServiceMessageListener(this));
         // faction - terroristen
-        this.registerListener(new BombTimerListener(this));
+        this.registerListener(new BombListener(this));
         // house
         this.registerListener(new HouseDataListener(this));
         this.registerListener(new HouseInteractionListener(this));
@@ -352,19 +343,18 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
     }
 
     private void registerHudWidgets() {
-        Icon hudIcon = Icon.texture(ResourceLocation.create("unicacityaddon", "textures/uc.png")).resolution(64, 64);
         HudWidgetRegistry registry = this.labyAPI().hudWidgetRegistry();
-        registry.register(new AmmunitionHudWidget("ammunition", hudIcon));
-        registry.register(new BombHudWidget("bomb", hudIcon));
-        registry.register(new CarHudWidget("car", hudIcon));
-        registry.register(new EmergencyServiceHudWidget("service", hudIcon));
-        registry.register(new HearthHudWidget("hearth", hudIcon));
-        registry.register(new InventoryHudWidget("inventory", hudIcon));
-        registry.register(new JobHudWidget("job", hudIcon));
-        registry.register(new MoneyHudWidget("money", hudIcon));
-        registry.register(new PayDayHudWidget("payday", hudIcon));
-        registry.register(new PlantHudWidget("plant", hudIcon));
-        registry.register(new TimerHudWidget("timer", hudIcon));
+        registry.register(new AmmunitionHudWidget("ammunition", ICON));
+        registry.register(new BombHudWidget("bomb", ICON));
+        registry.register(new CarHudWidget("car", ICON));
+        registry.register(new EmergencyServiceHudWidget("service", ICON));
+        registry.register(new HearthHudWidget("hearth", ICON));
+        registry.register(new InventoryHudWidget("inventory", ICON));
+        registry.register(new JobHudWidget("job", ICON));
+        registry.register(new MoneyHudWidget("money", ICON));
+        registry.register(new PayDayHudWidget("payday", ICON));
+        registry.register(new PlantHudWidget("plant", ICON));
+        registry.register(new TimerHudWidget("timer", ICON));
     }
 
     private void registerTags() {

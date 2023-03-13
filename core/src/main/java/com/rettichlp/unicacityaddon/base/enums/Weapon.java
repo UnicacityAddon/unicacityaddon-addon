@@ -22,6 +22,13 @@ public enum Weapon {
         return "&8" + name;
     }
 
+    public static Weapon getWeaponByName(String name) {
+        return Arrays.stream(Weapon.values())
+                .filter(weapon -> name.equalsIgnoreCase(weapon.getName()))
+                .findFirst()
+                .orElse(null);
+    }
+
     public static Weapon getWeaponByItemName(String displayName) {
         return Arrays.stream(Weapon.values())
                 .filter(weapon -> displayName.equalsIgnoreCase(weapon.getItemName()))

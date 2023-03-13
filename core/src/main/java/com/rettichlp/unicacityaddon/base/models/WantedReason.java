@@ -5,14 +5,10 @@ import com.rettichlp.unicacityaddon.base.api.request.APIConverter;
 public class WantedReason {
 
     private final String reason;
-    private final String creatorUUID;
-    private final String creatorName;
     private final int points;
 
-    public WantedReason(String reason, String creatorUUID, String creatorName, int points) {
+    public WantedReason(String reason, int points) {
         this.reason = reason;
-        this.creatorUUID = creatorUUID;
-        this.creatorName = creatorName;
         this.points = points;
     }
 
@@ -20,20 +16,12 @@ public class WantedReason {
         return reason;
     }
 
-    public String getCreatorUUID() {
-        return creatorUUID;
-    }
-
-    public String getCreatorName() {
-        return creatorName;
-    }
-
     public int getPoints() {
         return points;
     }
 
     public static WantedReason getWantedReasonEntryByReason(String reason) {
-        return APIConverter.getWantedReasonEntryList().stream()
+        return APIConverter.WANTEDREASONLIST.stream()
                 .filter(wantedReason -> wantedReason.getReason().equals(reason))
                 .findFirst()
                 .orElse(null);

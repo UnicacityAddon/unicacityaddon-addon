@@ -24,8 +24,10 @@ import java.util.regex.Pattern;
 @UCEvent
 public class WeaponClickListener {
 
-    private static boolean tazerLoaded = false;
+    public static boolean tazerLoaded = false;
+
     private long tazerLastWarningSend = 0;
+    private int lastWindowId = 0;
 
     private final UnicacityAddon unicacityAddon;
 
@@ -76,4 +78,25 @@ public class WeaponClickListener {
             tazerLoaded = false;
         }
     }
+
+    // TODO: 13.03.2023 gun pattern
+//    @Subscribe
+//    public void onGuiOpen(GuiContainerEvent.DrawForeground e) {
+//        GuiContainer guiContainer = e.getGuiContainer();
+//        Armament armament = GetGunCommand.armament;
+//        if (armament != null && lastWindowId != guiContainer.inventorySlots.windowId) {
+//            lastWindowId = guiContainer.inventorySlots.windowId;
+//
+//            Slot slot = guiContainer.inventorySlots.inventorySlots.stream()
+//                    .filter(s -> s.getStack().getDisplayName().contains(armament.getWeapon().getName()))
+//                    .findFirst()
+//                    .orElse(null);
+//
+//            if (slot != null) {
+//                UnicacityAddon.MINECRAFT.playerController.windowClick(lastWindowId, slot.slotNumber, 0, ClickType.PICKUP, UnicacityAddon.MINECRAFT.player);
+//                GetGunCommand.armament = null;
+//                AbstractionLayer.getPlayer().sendChatMessage("/getammo " + armament.getWeapon().getName() + " " + armament.getAmount());
+//            }
+//        }
+//    }
 }

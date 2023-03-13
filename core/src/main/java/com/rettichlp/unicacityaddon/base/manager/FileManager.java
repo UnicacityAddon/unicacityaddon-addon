@@ -1,6 +1,9 @@
 package com.rettichlp.unicacityaddon.base.manager;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.models.Data;
 import org.apache.commons.io.FileUtils;
 
@@ -41,11 +44,6 @@ public class FileManager {
             return null;
         File addonScreenshotDir = new File(getAddonScreenshotDir().getAbsolutePath() + "/" + type);
         return addonScreenshotDir.exists() || addonScreenshotDir.mkdir() ? addonScreenshotDir : null;
-    }
-
-    public static File getOptionsFile() {
-        File optionsFile = new File(getMinecraftDir().getAbsolutePath() + "/options.txt");
-        return optionsFile.exists() ? optionsFile : null;
     }
 
     public static File getDataFile() throws IOException {
@@ -96,9 +94,10 @@ public class FileManager {
             File dataFile = FileManager.getDataFile();
             assert dataFile != null;
             String jsonData = FileUtils.readFileToString(dataFile, StandardCharsets.UTF_8);
-            DATA = jsonData.contains("payDayTime") ? new Gson().fromJson(jsonData, Data.class) : new Data();
+            DATA = jsonData == null || !isValidJson(jsonData) ? new Data() : new Gson().fromJson(jsonData, Data.class);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            DATA = new Data();
+            UnicacityAddon.LOGGER.error(e.getMessage());
         }
     }
 
@@ -115,5 +114,14 @@ public class FileManager {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static boolean isValidJson(String string) {
+        try {
+            JsonParser.parseString(string);
+        } catch (JsonSyntaxException e) {
+            return false;
+        }
+        return true;
     }
 }

@@ -7,7 +7,7 @@ import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
-import com.rettichlp.unicacityaddon.listener.faction.FactionInfoListener;
+import com.rettichlp.unicacityaddon.listener.faction.MemberInfoListener;
 import net.labymod.api.client.chat.command.Command;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.event.HoverEvent;
@@ -83,18 +83,18 @@ public class FactionInfoCommand extends Command {
     }
 
     private Map<Boolean, Integer> getMembers(Faction faction) {
-        FactionInfoListener.future = new CompletableFuture<>();
+        MemberInfoListener.future = new CompletableFuture<>();
         UnicacityAddon.PLAYER.sendServerMessage("/memberinfo " + faction.getFactionKey());
 
         return new HashMap<>();
 
 //        TODO: 11.12.2022
 //        try {
-//            return Uninterruptibles.getUninterruptibly(FactionInfoListener.future);
+//            return Uninterruptibles.getUninterruptibly(MemberInfoListener.future);
 //        } catch (ExecutionException e) {
 //            throw new IllegalStateException(e);
 //        } finally {
-//            FactionInfoListener.future = null;
+//            MemberInfoListener.future = null;
 //        }
     }
 }

@@ -24,17 +24,17 @@ public class FDSFChatListener {
         AddonPlayer p = UnicacityAddon.PLAYER;
         String msg = e.getMessage();
 
-        if (msg.startsWith("/f ") && !MobileListener.hasCommunications) {
+        if (msg.startsWith("/f ") && !MobileListener.hasCommunications && UnicacityAddon.isUnicacity()) {
             p.sendErrorMessage("Du hast keine Kommunikationsmittel!");
             p.sendInfoMessage("Wenn du die Nachricht trotzdem senden möchtest, nutze /fforce [Nachricht]. Die Nachricht ist in der Zwischenablage.");
             p.copyToClipboard(msg.replace("/f ", ""));
             e.setCancelled(true);
-        } else if (msg.startsWith("/d ") && !MobileListener.hasCommunications) {
+        } else if (msg.startsWith("/d ") && !MobileListener.hasCommunications && UnicacityAddon.isUnicacity()) {
             p.sendErrorMessage("Du hast keine Kommunikationsmittel!");
             p.sendInfoMessage("Wenn du die Nachricht trotzdem senden möchtest, nutze /dforce [Nachricht]. Die Nachricht ist in der Zwischenablage.");
             p.copyToClipboard(msg.replace("/d ", ""));
             e.setCancelled(true);
-        } else if (msg.startsWith("/sf ") && !MobileListener.hasCommunications) {
+        } else if (msg.startsWith("/sf ") && !MobileListener.hasCommunications && UnicacityAddon.isUnicacity()) {
             p.sendErrorMessage("Du hast keine Kommunikationsmittel!");
             p.sendInfoMessage("Wenn du die Nachricht trotzdem senden möchtest, nutze /sfforce [Nachricht]. Die Nachricht ist in der Zwischenablage.");
             p.copyToClipboard(msg.replace("/sf ", ""));

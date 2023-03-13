@@ -1,9 +1,13 @@
 package com.rettichlp.unicacityaddon.listener.faction;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.base.AddonPlayer;
+import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
+import com.rettichlp.unicacityaddon.base.enums.api.StatisticType;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.base.utils.ForgeUtils;
+import com.rettichlp.unicacityaddon.commands.faction.AFbankEinzahlenCommand;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
@@ -29,6 +33,7 @@ public class ContractListener {
 
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {
+        AddonPlayer p = UnicacityAddon.PLAYER;
         String msg = e.chatMessage().getPlainText();
         long currentTime = System.currentTimeMillis();
 
@@ -53,6 +58,11 @@ public class ContractListener {
 
             // TODO: 10.12.2022 p.playSound(SoundRegistry.CONTRACT_FULFILLED_SOUND, 1, 1);
             CONTRACT_LIST.remove(name);
+
+            if (msg.contains("getötet") && msg.contains(p.getName())) {
+                APIRequest.sendStatisticAddRequest(StatisticType.KILL);
+                AFbankEinzahlenCommand.sendClockMessage();
+            }
             return;
         }
 
