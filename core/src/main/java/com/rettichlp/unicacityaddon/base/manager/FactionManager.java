@@ -42,19 +42,8 @@ public class FactionManager {
 
     public static void generateFactionData() {
         new Thread(() -> {
-
-            Future<Map<String, Map.Entry<Faction, Integer>>> factionDataFuture = getFutureFactionData();
-
-            while (!factionDataFuture.isDone()) {
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-
             try {
-                factionData = factionDataFuture.get();
+                factionData = getFutureFactionData().get();
             } catch (InterruptedException | ExecutionException e) {
                 throw new RuntimeException(e);
             }

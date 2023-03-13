@@ -16,7 +16,9 @@ import com.rettichlp.unicacityaddon.listener.NavigationListener;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.entity.player.ClientPlayer;
 import net.labymod.api.client.entity.player.Inventory;
+import net.labymod.api.client.scoreboard.DisplaySlot;
 import net.labymod.api.client.scoreboard.Scoreboard;
+import net.labymod.api.client.scoreboard.ScoreboardScore;
 import net.labymod.api.client.world.ClientWorld;
 import net.labymod.api.util.math.vector.FloatVector3;
 
@@ -181,9 +183,9 @@ public class DefaultAddonPlayer implements AddonPlayer {
 
     @Override
     public boolean hasGangwar() {
-//        return getScoreboard().getObjectiveNames().stream()
-//                .anyMatch(s -> s.contains("Angreifer") || s.contains("Verteidiger"));
-        return false; // TODO: 13.03.2023
+        return getScoreboard().getScores(getScoreboard().getObjective(DisplaySlot.SIDEBAR)).stream()
+                .map(ScoreboardScore::getName)
+                .anyMatch(s -> s.contains("Angreifer") || s.contains("Verteidiger"));
     }
 
     @Override

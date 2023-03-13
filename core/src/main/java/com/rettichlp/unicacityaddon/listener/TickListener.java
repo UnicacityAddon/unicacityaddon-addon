@@ -90,7 +90,6 @@ public class TickListener {
 
         if (e.isPhase(UnicacityAddonTickEvent.Phase.SECOND_30)) {
             BroadcastChecker.checkForBroadcast();
-            EventListener.sendData();
         }
 
         if (e.isPhase(UnicacityAddonTickEvent.Phase.MINUTE)) {

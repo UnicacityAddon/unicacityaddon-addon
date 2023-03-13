@@ -35,17 +35,15 @@ public class SchmarzmarktLocationsCommand extends Command {
                 .of("Positionen aller möglichen Schwarzmärkte").color(ColorCode.GRAY).advance()
                 .createComponent());
 
-        Arrays.stream(BlackMarketLocation.values()).forEach(blackMarketLocation -> {
-            p.sendMessage(Message.getBuilder()
-                    .of("» ").color(ColorCode.DARK_GRAY).advance()
-                    .of(blackMarketLocation.getDisplayName()).color(ColorCode.GRAY).advance().space()
-                    .of("-").color(ColorCode.DARK_GRAY).advance().space()
-                    .of("Route anzeigen").color(ColorCode.RED).bold()
-                            .clickEvent(ClickEvent.Action.RUN_COMMAND, blackMarketLocation.getNaviCommand())
-                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Route anzeigen").color(ColorCode.RED).advance().createComponent())
-                            .advance()
-                    .createComponent());
-        });
+        Arrays.stream(BlackMarketLocation.values()).forEach(blackMarketLocation -> p.sendMessage(Message.getBuilder()
+                .of("» ").color(ColorCode.DARK_GRAY).advance()
+                .of(blackMarketLocation.getDisplayName()).color(ColorCode.GRAY).advance().space()
+                .of("-").color(ColorCode.DARK_GRAY).advance().space()
+                .of("Route anzeigen").color(ColorCode.RED).bold()
+                        .clickEvent(ClickEvent.Action.RUN_COMMAND, blackMarketLocation.getNaviCommand())
+                        .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Route anzeigen").color(ColorCode.RED).advance().createComponent())
+                        .advance()
+                .createComponent()));
         return true;
     }
 
