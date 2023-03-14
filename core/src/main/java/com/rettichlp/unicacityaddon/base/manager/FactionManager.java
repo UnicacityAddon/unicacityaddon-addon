@@ -5,7 +5,7 @@ import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.base.utils.ForgeUtils;
 import com.rettichlp.unicacityaddon.base.utils.ListUtils;
-import com.rettichlp.unicacityaddon.listener.TabListListener;
+import com.rettichlp.unicacityaddon.base.utils.TextUtils;
 
 import java.util.AbstractMap;
 import java.util.HashMap;
@@ -54,7 +54,7 @@ public class FactionManager {
         if (UnicacityAddon.ADDON.labyAPI().minecraft().isSingleplayer())
             return false;
         return UnicacityAddon.ADDON.labyAPI().minecraft().getClientPacketListener().getNetworkPlayerInfos().stream()
-                .map(TabListListener::getTablistName)
+                .map(networkPlayerInfo -> TextUtils.legacy(networkPlayerInfo.displayName()))
                 .filter(s -> s.startsWith("§1[UC]") || s.startsWith("§1") || s.startsWith("§9[UC]") || s.startsWith("§9") || s.startsWith("§4[UC]") || s.startsWith("§4") || s.startsWith("§6[UC]") || s.startsWith("§6"))
                 .collect(Collectors.toList()).stream()
                 .map(ForgeUtils::stripColor)

@@ -97,6 +97,8 @@ import com.rettichlp.unicacityaddon.commands.teamspeak.MoveHereCommand;
 import com.rettichlp.unicacityaddon.commands.teamspeak.MoveToCommand;
 import com.rettichlp.unicacityaddon.commands.teamspeak.TSFindCommand;
 import com.rettichlp.unicacityaddon.commands.teamspeak.TSJoinCommand;
+import com.rettichlp.unicacityaddon.controller.TabListController;
+import com.rettichlp.unicacityaddon.core.generated.DefaultReferenceStorage;
 import com.rettichlp.unicacityaddon.hudwidgets.AmmunitionHudWidget;
 import com.rettichlp.unicacityaddon.hudwidgets.BombHudWidget;
 import com.rettichlp.unicacityaddon.hudwidgets.CarHudWidget;
@@ -208,6 +210,9 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
     }
 
     private void registerListeners() {
+        DefaultReferenceStorage referenceStorage = this.getReferenceStorageAccessor();
+        TabListController tabListController = referenceStorage.getTabListController();
+
         this.registerListener(new ABuyListener(this));
         this.registerListener(new AccountListener(this));
         this.registerListener(new AdListener(this));
@@ -253,7 +258,7 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
         this.registerListener(new ReviveListener(this));
         this.registerListener(new ServerLoginListener(this));
         this.registerListener(new ShareLocationListener(this));
-        this.registerListener(new TabListListener(this));
+        this.registerListener(new TabListListener(this, tabListController));
         this.registerListener(new TickListener(this));
         this.registerListener(new TimerListener(this));
         this.registerListener(new WaitingRoomListener(this));

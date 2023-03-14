@@ -17,6 +17,8 @@ import java.util.stream.Collectors;
  */
 public class ForgeUtils {
 
+    // TODO: 14.03.2023 rename class or migrate
+
     public static List<String> getOnlinePlayers() {
         ClientPacketListener clientPacketListener = UnicacityAddon.ADDON.labyAPI().minecraft().getClientPacketListener();
         if (clientPacketListener == null)
