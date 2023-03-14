@@ -16,6 +16,12 @@ import net.labymod.api.event.Subscribe;
 @UCEvent
 public class EventListener {
 
+    private final UnicacityAddon unicacityAddon;
+
+    public EventListener(UnicacityAddon unicacityAddon) {
+        this.unicacityAddon = unicacityAddon;
+    }
+
     @Subscribe
     public void onUnicacityAddonTick(UnicacityAddonTickEvent e) {
         if (e.isPhase(UnicacityAddonTickEvent.Phase.SECOND_30)) {
