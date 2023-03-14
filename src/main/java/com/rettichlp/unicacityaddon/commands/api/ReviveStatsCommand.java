@@ -22,7 +22,6 @@ import net.minecraftforge.client.IClientCommand;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -63,54 +62,16 @@ public class ReviveStatsCommand implements IClientCommand {
         UnicacityAddon.MINECRAFT.ingameGUI.setOverlayMessage(ColorCode.AQUA.getCode() + FormattingCode.BOLD.getCode() + "Revivestats werden geladen...", true);
 
         new Thread(() -> {
-            if (args.length > 0 && MathUtils.isInteger(args[0])) {
-                List<Revive> reviveList = Syncer.getReviveRankList(Integer.parseInt(args[0]));
-                p.sendEmptyMessage();
-                p.sendMessage(Message.getBuilder()
-                        .of("Revivestats (Rang " + args[0] + "):").color(ColorCode.DARK_AQUA).bold().advance()
-                        .createComponent());
-                sendList(reviveList);
-                p.sendEmptyMessage();
-            } else if (args.length > 0) {
-                Revive revive = Syncer.getRevivePlayer(args[0]);
-
-                if (revive != null) {
-                    int currentWeekReviveAmount = revive.getCurrentWeekReviveAmount();
-                    int lastWeekReviveAmount = revive.getLastWeekReviveAmount();
-
-                    int difference = currentWeekReviveAmount - lastWeekReviveAmount;
-                    String differenceString = ColorCode.GREEN.getCode() + (difference > 0 ? "+" : "") + difference;
-
-                    p.sendEmptyMessage();
-                    p.sendMessage(Message.getBuilder()
-                            .of("Revivestats von").color(ColorCode.DARK_AQUA).advance().space()
-                            .of(args[0]).color(ColorCode.AQUA).advance()
-                            .of(":").color(ColorCode.DARK_AQUA).advance().space()
-                            .of(String.valueOf(currentWeekReviveAmount)).color(ColorCode.AQUA).advance().space()
-                            .of("(").color(ColorCode.DARK_GRAY).advance()
-                            .of(differenceString).color(difference >= 0 ? ColorCode.GREEN : ColorCode.RED)
-                                    .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder()
-                                            .of("Diese Woche:").color(ColorCode.GRAY).advance().space()
-                                            .of(String.valueOf(currentWeekReviveAmount)).color(ColorCode.RED).advance().newline()
-                                            .of("Letzte Woche:").color(ColorCode.GRAY).advance().space()
-                                            .of(String.valueOf(lastWeekReviveAmount)).color(ColorCode.RED).advance()
-                                            .createComponent())
-                                    .advance()
-                            .of(")").color(ColorCode.DARK_GRAY).advance()
-                            .createComponent());
-
-                    p.sendEmptyMessage();
-                }
+            if (args.length == 0) {
+                sendRevivestatsPlayer(p, p.getName());
+            } else if (MathUtils.isInteger(args[0])) {
+                sendRevivestatsRank(p, Integer.parseInt(args[0]));
+            } else if (args[0].equalsIgnoreCase("all")) {
+                sendRevivestatsAll(p);
+            } else if (args[0].equalsIgnoreCase("old")) {
+                sendRevivestatsOld(p);
             } else {
-                List<Revive> reviveList = Syncer.getReviveList();
-                if (!reviveList.isEmpty()) {
-                    p.sendEmptyMessage();
-                    p.sendMessage(Message.getBuilder()
-                            .of("Revivestats:").color(ColorCode.DARK_AQUA).bold().advance()
-                            .createComponent());
-                    sendList(reviveList);
-                    p.sendEmptyMessage();
-                }
+                sendRevivestatsPlayer(p, args[0]);
             }
         }).start();
     }
@@ -119,12 +80,12 @@ public class ReviveStatsCommand implements IClientCommand {
     @Nonnull
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
         return TabCompletionBuilder.getBuilder(args)
+                .addAtIndex(1, "all", "old", "0", "1", "2", "3", "4", "5", "6")
                 .addAtIndex(1, Syncer.PLAYERFACTIONMAP.entrySet().stream()
                         .filter(stringFactionEntry -> stringFactionEntry.getValue().equals(Faction.RETTUNGSDIENST))
                         .map(Map.Entry::getKey)
                         .sorted()
                         .collect(Collectors.toList()))
-                .addAtIndex(1, "0", "1", "2", "3", "4", "5", "6")
                 .build();
     }
 
@@ -143,31 +104,152 @@ public class ReviveStatsCommand implements IClientCommand {
         return 0;
     }
 
-    private void sendList(List<Revive> reviveList) {
-        reviveList.stream()
-                .sorted(Comparator.comparing(Revive::getCurrentWeekReviveAmount).reversed())
-                .forEach(revive -> {
-                    int currentWeekReviveAmount = revive.getCurrentWeekReviveAmount();
-                    int lastWeekReviveAmount = revive.getLastWeekReviveAmount();
+    private void sendRevivestatsPlayer(UPlayer p, String name) {
+        Revive revive = Syncer.getRevivePlayer(name);
 
-                    int difference = currentWeekReviveAmount - lastWeekReviveAmount;
-                    String differenceString = ColorCode.GREEN.getCode() + (difference > 0 ? "+" : "") + difference;
+        if (revive != null) {
+            int currentWeekReviveAmount = revive.getCurrentWeekReviveAmount();
+            int lastWeekReviveAmount = revive.getLastWeekReviveAmount();
 
-                    AbstractionLayer.getPlayer().sendMessage(Message.getBuilder()
-                            .of("»").color(ColorCode.GRAY).advance().space()
-                            .of(revive.getMinecraftName() + ":").color(ColorCode.GRAY).advance().space()
-                            .of(String.valueOf(currentWeekReviveAmount)).color(ColorCode.AQUA).advance().space()
-                            .of("(").color(ColorCode.DARK_GRAY).advance()
-                            .of(differenceString).color(difference >= 0 ? ColorCode.GREEN : ColorCode.RED)
-                                    .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder()
-                                            .of("Diese Woche:").color(ColorCode.GRAY).advance().space()
-                                            .of(String.valueOf(currentWeekReviveAmount)).color(ColorCode.RED).advance().newline()
-                                            .of("Letzte Woche:").color(ColorCode.GRAY).advance().space()
-                                            .of(String.valueOf(lastWeekReviveAmount)).color(ColorCode.RED).advance()
-                                            .createComponent())
-                                    .advance()
-                            .of(")").color(ColorCode.DARK_GRAY).advance()
-                            .createComponent());
-                });
+            int difference = currentWeekReviveAmount - lastWeekReviveAmount;
+            String differenceString = ColorCode.GREEN.getCode() + (difference > 0 ? "+" : "") + difference;
+
+            p.sendEmptyMessage();
+            p.sendMessage(Message.getBuilder()
+                    .of("Revivestats von").color(ColorCode.DARK_AQUA).advance().space()
+                    .of(name).color(ColorCode.AQUA).advance()
+                    .of(":").color(ColorCode.GRAY).advance().space()
+                    .of(String.valueOf(currentWeekReviveAmount)).color(ColorCode.AQUA).advance().space()
+                    .of("(").color(ColorCode.DARK_GRAY).advance()
+                    .of(differenceString).color(difference >= 0 ? ColorCode.GREEN : ColorCode.RED)
+                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder()
+                                    .of("Diese Woche:").color(ColorCode.GRAY).advance().space()
+                                    .of(String.valueOf(currentWeekReviveAmount)).color(ColorCode.RED).advance().newline()
+                                    .of("Letzte Woche:").color(ColorCode.GRAY).advance().space()
+                                    .of(String.valueOf(lastWeekReviveAmount)).color(ColorCode.RED).advance()
+                                    .createComponent())
+                            .advance()
+                    .of(")").color(ColorCode.DARK_GRAY).advance()
+                    .createComponent());
+
+            p.sendEmptyMessage();
+        }
+    }
+
+    private void sendRevivestatsRank(UPlayer p, int i) {
+        List<Revive> reviveList = Syncer.getReviveRankList(i);
+
+        p.sendEmptyMessage();
+        p.sendMessage(Message.getBuilder()
+                .of("Revivestats").color(ColorCode.DARK_AQUA).bold().advance().space()
+                .of("(").color(ColorCode.GRAY).bold().advance()
+                .of(String.valueOf(i)).color(ColorCode.AQUA).bold().advance()
+                .of(")").color(ColorCode.GRAY).bold().advance()
+                .of(":").color(ColorCode.DARK_AQUA).bold().advance()
+                .createComponent());
+
+        reviveList.forEach(revive -> {
+            int currentWeekReviveAmount = revive.getCurrentWeekReviveAmount();
+            int lastWeekReviveAmount = revive.getLastWeekReviveAmount();
+
+            int difference = currentWeekReviveAmount - lastWeekReviveAmount;
+            String differenceString = ColorCode.GREEN.getCode() + (difference > 0 ? "+" : "") + difference;
+
+            p.sendMessage(Message.getBuilder()
+                    .of("»").color(ColorCode.GRAY).advance().space()
+                    .of(revive.getMinecraftName() + ":").color(ColorCode.GRAY).advance().space()
+                    .of(String.valueOf(currentWeekReviveAmount)).color(ColorCode.AQUA).advance().space()
+                    .of("(").color(ColorCode.DARK_GRAY).advance()
+                    .of(differenceString).color(difference >= 0 ? ColorCode.GREEN : ColorCode.RED)
+                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder()
+                                    .of("Diese Woche:").color(ColorCode.GRAY).advance().space()
+                                    .of(String.valueOf(currentWeekReviveAmount)).color(ColorCode.RED).advance().newline()
+                                    .of("Letzte Woche:").color(ColorCode.GRAY).advance().space()
+                                    .of(String.valueOf(lastWeekReviveAmount)).color(ColorCode.RED).advance()
+                                    .createComponent())
+                            .advance()
+                    .of(")").color(ColorCode.DARK_GRAY).advance()
+                    .createComponent());
+        });
+
+        p.sendEmptyMessage();
+    }
+
+    private void sendRevivestatsAll(UPlayer p) {
+        List<Revive> reviveList = Syncer.getReviveList();
+        if (!reviveList.isEmpty()) {
+            p.sendEmptyMessage();
+            p.sendMessage(Message.getBuilder()
+                    .of("Revivestats:").color(ColorCode.DARK_AQUA).bold().advance()
+                    .createComponent());
+            sendList(p, reviveList, false);
+            p.sendEmptyMessage();
+        }
+    }
+
+    private void sendRevivestatsOld(UPlayer p) {
+        List<Revive> reviveList = Syncer.getReviveList();
+        if (!reviveList.isEmpty()) {
+            p.sendEmptyMessage();
+            p.sendMessage(Message.getBuilder()
+                    .of("Revivestats:").color(ColorCode.DARK_AQUA).bold().advance()
+                    .createComponent());
+            sendList(p, reviveList, true);
+            p.sendEmptyMessage();
+        }
+    }
+
+    private void sendList(UPlayer p, List<Revive> reviveList, boolean onlyOld) {
+        Message.Builder overAllMessage = Message.getBuilder();
+
+        int allReviveAmount = 0;
+        for (int i = 6; i >= 0; i--) {
+            ColorCode colorCode = i % 2 == 0 ? ColorCode.WHITE : ColorCode.YELLOW;
+
+            int finalI = i;
+            List<Revive> rankReviveList = reviveList.stream()
+                    .filter(revive -> Syncer.PLAYERRANKMAP.getOrDefault(revive.getMinecraftName(), -1).equals(finalI))
+                    .collect(Collectors.toList());
+
+            int rankReviveAmount = onlyOld ? rankReviveList.stream().map(Revive::getLastWeekReviveAmount).reduce(0, Integer::sum) : rankReviveList.stream().map(Revive::getCurrentWeekReviveAmount).reduce(0, Integer::sum);
+            allReviveAmount += rankReviveAmount;
+            overAllMessage
+                    .of("Rang " + i + ":").color(ColorCode.GRAY).advance().space()
+                    .of(String.valueOf(rankReviveAmount)).color(ColorCode.RED).advance().newline();
+
+            rankReviveList.forEach(revive -> {
+                int currentWeekReviveAmount = revive.getCurrentWeekReviveAmount();
+                int lastWeekReviveAmount = revive.getLastWeekReviveAmount();
+
+                int difference = currentWeekReviveAmount - lastWeekReviveAmount;
+                String differenceString = ColorCode.GREEN.getCode() + (difference > 0 ? "+" : "") + difference;
+
+                p.sendMessage(Message.getBuilder()
+                        .of("»").color(ColorCode.GRAY).advance().space()
+                        .of(revive.getMinecraftName() + ":").color(colorCode).advance().space()
+                        .of(String.valueOf(onlyOld ? lastWeekReviveAmount : currentWeekReviveAmount)).color(ColorCode.AQUA).advance().space()
+                        .of(onlyOld ? "" : "(").color(ColorCode.DARK_GRAY).advance()
+                        .of(onlyOld ? "" : differenceString).color(difference >= 0 ? ColorCode.GREEN : ColorCode.RED)
+                                .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder()
+                                        .of("Diese Woche:").color(ColorCode.GRAY).advance().space()
+                                        .of(String.valueOf(currentWeekReviveAmount)).color(ColorCode.RED).advance().newline()
+                                        .of("Letzte Woche:").color(ColorCode.GRAY).advance().space()
+                                        .of(String.valueOf(lastWeekReviveAmount)).color(ColorCode.RED).advance()
+                                        .createComponent())
+                                .advance()
+                        .of(onlyOld ? "" : ")").color(ColorCode.DARK_GRAY).advance()
+                        .createComponent());
+            });
+        }
+
+        p.sendMessage(Message.getBuilder()
+                .of("➡").color(ColorCode.GRAY).advance().space()
+                .of("Gesamt:").color(ColorCode.DARK_AQUA)
+                        .hoverEvent(HoverEvent.Action.SHOW_TEXT, overAllMessage.createComponent())
+                        .advance().space()
+                .of(String.valueOf(allReviveAmount)).color(ColorCode.AQUA)
+                        .hoverEvent(HoverEvent.Action.SHOW_TEXT, overAllMessage.createComponent())
+                        .advance()
+                .createComponent());
     }
 }
