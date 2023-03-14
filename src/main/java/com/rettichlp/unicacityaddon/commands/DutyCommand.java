@@ -63,6 +63,7 @@ public class DutyCommand implements IClientCommand {
                 .of(args[0]).color(ColorCode.AQUA).advance().space()
                 .of("befindet sich für das UnicacityAddon").color(ColorCode.GRAY).advance().space()
                 .of((isDuty ? "" : "nicht ") + "im Dienst").color(isDuty ? ColorCode.GREEN : ColorCode.RED).advance()
+                .of(".").color(ColorCode.GRAY).advance()
                 .createComponent());
     }
 
