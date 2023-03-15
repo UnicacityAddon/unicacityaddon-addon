@@ -92,47 +92,49 @@ public class AccountEventHandler {
         }
 
         if (PatternHandler.ACCOUNT_TREUEBONUS_PATTERN.matcher(msg).find()) {
-            try {
-                JsonObject gameplayJsonObject = APIRequest.sendStatisticRequest().getAsJsonObject("gameplay");
-                int deaths = gameplayJsonObject.get("deaths").getAsInt();
-                int kills = gameplayJsonObject.get("kills").getAsInt();
-                float kd = gameplayJsonObject.get("kd").getAsFloat();
-                int playTime = gameplayJsonObject.get("playTime").getAsInt();
+            new Thread(() -> {
+                try {
+                    JsonObject gameplayJsonObject = APIRequest.sendStatisticRequest().getAsJsonObject("gameplay");
+                    int deaths = gameplayJsonObject.get("deaths").getAsInt();
+                    int kills = gameplayJsonObject.get("kills").getAsInt();
+                    float kd = gameplayJsonObject.get("kd").getAsFloat();
+                    int playTime = gameplayJsonObject.get("playTime").getAsInt();
 
-                p.sendMessage(Message.getBuilder()
-                        .space().space()
-                        .of("-").color(ColorCode.DARK_GRAY).advance().space()
-                        .of("Tode").color(ColorCode.GOLD).advance()
-                        .of(":").color(ColorCode.DARK_GRAY).advance().space()
-                        .of(deaths + " Tode").color(ColorCode.RED).advance()
-                        .createComponent());
+                    p.sendMessage(Message.getBuilder()
+                            .space().space()
+                            .of("-").color(ColorCode.DARK_GRAY).advance().space()
+                            .of("Tode").color(ColorCode.GOLD).advance()
+                            .of(":").color(ColorCode.DARK_GRAY).advance().space()
+                            .of(deaths + " Tode").color(ColorCode.RED).advance()
+                            .createComponent());
 
-                p.sendMessage(Message.getBuilder()
-                        .space().space()
-                        .of("-").color(ColorCode.DARK_GRAY).advance().space()
-                        .of("Kills").color(ColorCode.GOLD).advance()
-                        .of(":").color(ColorCode.DARK_GRAY).advance().space()
-                        .of(kills + " Kills").color(ColorCode.RED).advance()
-                        .createComponent());
+                    p.sendMessage(Message.getBuilder()
+                            .space().space()
+                            .of("-").color(ColorCode.DARK_GRAY).advance().space()
+                            .of("Kills").color(ColorCode.GOLD).advance()
+                            .of(":").color(ColorCode.DARK_GRAY).advance().space()
+                            .of(kills + " Kills").color(ColorCode.RED).advance()
+                            .createComponent());
 
-                p.sendMessage(Message.getBuilder()
-                        .space().space()
-                        .of("-").color(ColorCode.DARK_GRAY).advance().space()
-                        .of("K/D").color(ColorCode.GOLD).advance()
-                        .of(":").color(ColorCode.DARK_GRAY).advance().space()
-                        .of(MathUtils.DECIMAL_FORMAT.format(kd)).color(ColorCode.RED).advance()
-                        .createComponent());
+                    p.sendMessage(Message.getBuilder()
+                            .space().space()
+                            .of("-").color(ColorCode.DARK_GRAY).advance().space()
+                            .of("K/D").color(ColorCode.GOLD).advance()
+                            .of(":").color(ColorCode.DARK_GRAY).advance().space()
+                            .of(MathUtils.DECIMAL_FORMAT.format(kd)).color(ColorCode.RED).advance()
+                            .createComponent());
 
-                p.sendMessage(Message.getBuilder()
-                        .space().space()
-                        .of("-").color(ColorCode.DARK_GRAY).advance().space()
-                        .of("Spielzeit").color(ColorCode.GOLD).advance()
-                        .of(":").color(ColorCode.DARK_GRAY).advance().space()
-                        .of(playTime + (playTime == 1 ? " Stunde" : " Stunden")).color(ColorCode.RED).advance()
-                        .createComponent());
-            } catch (APIResponseException ex) {
-                ex.sendInfo();
-            }
+                    p.sendMessage(Message.getBuilder()
+                            .space().space()
+                            .of("-").color(ColorCode.DARK_GRAY).advance().space()
+                            .of("Spielzeit").color(ColorCode.GOLD).advance()
+                            .of(":").color(ColorCode.DARK_GRAY).advance().space()
+                            .of(playTime + (playTime == 1 ? " Stunde" : " Stunden")).color(ColorCode.RED).advance()
+                            .createComponent());
+                } catch (APIResponseException ex) {
+                    ex.sendInfo();
+                }
+            }).start();
             return;
         }
 
