@@ -37,7 +37,7 @@ public class UpdateUtils {
 
     public static void updateChecker() {
         latestVersion = getLatestVersion();
-        if (latestVersion.equals(UnicacityAddon.VERSION))
+        if (latestVersion.equals(UnicacityAddon.VERSION) || UnicacityAddon.VERSION.contains("dev"))
             return;
 
         if (!ConfigElements.getAutomatedUpdate()) {
@@ -153,7 +153,7 @@ public class UpdateUtils {
         }
     }
 
-    private static String getLatestVersion() {
+    public static String getLatestVersion() {
         try {
             JsonObject response = APIRequest.sendManagementRequest();
             return response.get("latestVersion").getAsString();

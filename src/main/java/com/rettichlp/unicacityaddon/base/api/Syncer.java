@@ -37,18 +37,20 @@ public class Syncer {
     public static List<WantedReason> WANTEDREASONLIST = new ArrayList<>();
 
     public static void syncAll() {
-        Thread t1 = syncPlayerAddonGroupMap();
-        Thread t2 = syncPlayerFactionData();
+        new Thread(() -> {
+            try {
+                Thread t1 = syncPlayerAddonGroupMap();
+                Thread t2 = syncPlayerFactionData();
 
-        try {
-            t1.start();
-            t1.join();
+                t1.start();
+                t1.join();
 
-            t2.start();
-            t2.join();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+                t2.start();
+                t2.join();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }).start();
 
         new Thread(() -> {
             if (!(HOUSEBANLIST = getHouseBanList()).isEmpty())

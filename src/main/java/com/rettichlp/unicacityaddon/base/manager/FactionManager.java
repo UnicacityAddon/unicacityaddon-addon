@@ -4,7 +4,6 @@ import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.utils.ForgeUtils;
 import com.rettichlp.unicacityaddon.events.TabListEventHandler;
 
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -21,7 +20,7 @@ public class FactionManager {
                     .collect(Collectors.toList()).stream()
                     .map(ForgeUtils::stripColor)
                     .map(ForgeUtils::stripPrefix)
-                    .anyMatch(s -> Objects.equals(s.substring(0, Math.min(s.length(), 13)), playerName.substring(0, Math.min(playerName.length(), 13))));
+                    .anyMatch(playerName::startsWith);
         }
         return duty;
     }
