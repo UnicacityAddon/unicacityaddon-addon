@@ -5,6 +5,8 @@ import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
+import com.rettichlp.unicacityaddon.base.text.ColorCode;
+import com.rettichlp.unicacityaddon.base.text.FormattingCode;
 import com.rettichlp.unicacityaddon.base.utils.UpdateUtils;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
@@ -61,13 +63,20 @@ public class UpdateAddonCommand implements IClientCommand {
     @Override
     public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) {
         UPlayer p = AbstractionLayer.getPlayer();
-        if (!UpdateUtils.latestVersion.equals(UnicacityAddon.VERSION)) {
-            if (SystemUtils.IS_OS_WINDOWS || SystemUtils.IS_OS_UNIX) {
-                UpdateUtils.update();
+
+        UnicacityAddon.MINECRAFT.ingameGUI.setOverlayMessage(ColorCode.AQUA.getCode() + FormattingCode.BOLD.getCode() + "Es wird nach einem Update gesucht...", true);
+
+        new Thread(() -> {
+            String latestVersion = UpdateUtils.getLatestVersion();
+            if (!latestVersion.equals(UnicacityAddon.VERSION)) {
+                UnicacityAddon.MINECRAFT.ingameGUI.setOverlayMessage(ColorCode.AQUA.getCode() + FormattingCode.BOLD.getCode() + "Ein Update wird installiert...", true);
+                if (SystemUtils.IS_OS_WINDOWS || SystemUtils.IS_OS_UNIX) {
+                    UpdateUtils.update();
+                } else
+                    p.sendErrorMessage("Dieser Befehl wird nur unter Windows unterstützt.");
             } else
-                p.sendErrorMessage("Dieser Befehl wird nur unter Windows unterstützt.");
-        } else
-            p.sendInfoMessage("Du spielst bereits mit der neusten Version.");
+                p.sendInfoMessage("Du spielst bereits mit der neusten Version.");
+        }).start();
     }
 
     @Override
