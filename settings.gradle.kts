@@ -1,7 +1,7 @@
 rootProject.name = "unicacityaddon"
 
 pluginManagement {
-    val labyGradlePluginVersion = "0.3.11"
+    val labyGradlePluginVersion = "0.3.19"
     plugins {
         id("net.labymod.gradle") version (labyGradlePluginVersion)
     }

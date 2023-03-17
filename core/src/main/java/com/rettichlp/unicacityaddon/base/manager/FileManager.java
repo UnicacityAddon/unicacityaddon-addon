@@ -15,6 +15,12 @@ import java.util.Date;
 import java.util.Objects;
 
 /**
+ * <h3>File storage access</h3>
+ * The addon uses data that is not important for all players. That's why they are not stored on my server via the API, but locally on the player's computer.<br>
+ * This data contains, for example, the current account balance or the time until the next payday. This is used to be able to display Hudwidgets
+ * immediately after joining the server and not to wait until a specific message is in the chat or to execute a command that supplies the said data.<br>
+ * The data is saved in the Minecraft folder under an extra folder called <code>unicacityaddon</code>.
+ *
  * @author RettichLP
  */
 public class FileManager {
