@@ -2,6 +2,7 @@ package com.rettichlp.unicacityaddon.listener;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
+import com.rettichlp.unicacityaddon.base.builder.ScreenshotBuilder;
 import com.rettichlp.unicacityaddon.base.config.hotkey.HotkeySetting;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.manager.FileManager;
@@ -12,13 +13,12 @@ import com.rettichlp.unicacityaddon.base.teamspeak.commands.ClientMoveCommand;
 import com.rettichlp.unicacityaddon.base.teamspeak.objects.Channel;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
-import com.rettichlp.unicacityaddon.base.utils.ImageUploadUtils;
+import com.rettichlp.unicacityaddon.controller.ScreenshotController;
 import com.rettichlp.unicacityaddon.listener.team.AdListener;
 import net.labymod.api.Laby;
 import net.labymod.api.client.gui.screen.key.Key;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.input.KeyEvent;
-import net.labymod.api.notification.Notification;
 import net.labymod.api.util.math.vector.FloatVector3;
 
 import java.io.File;
@@ -32,9 +32,11 @@ import java.io.IOException;
 public class HotkeyListener {
 
     private final UnicacityAddon unicacityAddon;
+    private final ScreenshotController screenshotController;
 
-    public HotkeyListener(UnicacityAddon unicacityAddon) {
+    public HotkeyListener(UnicacityAddon unicacityAddon, ScreenshotController screenshotController) {
         this.unicacityAddon = unicacityAddon;
+        this.screenshotController = screenshotController;
     }
 
     @Subscribe
@@ -49,10 +51,9 @@ public class HotkeyListener {
         HotkeySetting hotkeySetting = UnicacityAddon.ADDON.configuration().hotkeySetting();
 
         if (key.equals(hotkeySetting.screenshot().getOrDefault(Key.NONE))) {
-            File file;
             try {
-                file = FileManager.getNewImageFile();
-                handleScreenshotWithUpload(file);
+                File file = FileManager.getNewImageFile();
+                ScreenshotBuilder.getBuilder(this.screenshotController).file(file).upload();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -105,50 +106,5 @@ public class HotkeyListener {
                     .of(" gegangen.").color(ColorCode.GRAY).advance()
                     .createComponent());
         }
-    }
-
-    public File createScreenshot(File file) {
-        if (file != null) {
-            // TODO: 28.02.2023
-//            try {
-//                Framebuffer framebuffer = ReflectionUtils.getValue(UnicacityAddon.MINECRAFT, Framebuffer.class);
-//                assert framebuffer != null;
-//                BufferedImage image = ScreenShotHelper.createScreenshot(UnicacityAddon.MINECRAFT.displayWidth, UnicacityAddon.MINECRAFT.displayHeight, framebuffer);
-//                ImageIO.write(image, "jpg", file);
-                this.unicacityAddon.labyAPI().notificationController().push(Notification.builder()
-                        .title(Message.getBuilder().of("Screenshot erstellt!").color(ColorCode.GREEN).bold().advance().createComponent())
-                        .text(Message.getBuilder().of("Wird gespeichert...").color(ColorCode.WHITE).advance().createComponent())
-                        .build());
-                return file;
-//            } catch (IOException e) {
-//                throw new RuntimeException(e);
-//            }
-        }
-        this.unicacityAddon.labyAPI().notificationController().push(Notification.builder()
-                .title(Message.getBuilder().of("Fehler!").color(ColorCode.RED).bold().advance().createComponent())
-                .text(Message.getBuilder().of("Screenshot konnte nicht erstellt werden.").color(ColorCode.WHITE).advance().createComponent())
-                .build());
-        return null;
-    }
-
-    public void handleScreenshotWithoutUpload(File file) {
-        createScreenshot(file);
-    }
-
-    public void handleScreenshotWithUpload(File file) {
-        File screenFile = createScreenshot(file);
-        Thread thread = new Thread(() -> uploadScreenshot(screenFile));
-        thread.start();
-    }
-
-    private void uploadScreenshot(File screenshotFile) {
-        if (screenshotFile == null)
-            return;
-        String link = ImageUploadUtils.uploadToLink(screenshotFile);
-        UnicacityAddon.PLAYER.copyToClipboard(link);
-        this.unicacityAddon.labyAPI().notificationController().push(Notification.builder()
-                .title(Message.getBuilder().of("Screenshot hochgeladen!").color(ColorCode.GREEN).bold().advance().createComponent())
-                .text(Message.getBuilder().of("Link in Zwischenablage kopiert.").color(ColorCode.WHITE).advance().createComponent())
-                .build());
     }
 }

@@ -1,5 +1,6 @@
 package com.rettichlp.unicacityaddon.base.enums.faction;
 
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.api.exception.APIResponseException;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
@@ -94,7 +95,7 @@ public enum Faction {
     }
 
     public String getNameTagSuffix() {
-        return this.nameTagSuffix;
+        return UnicacityAddon.ADDON.configuration().nameTagSetting().factionInfo().get() ? this.nameTagSuffix : "";
     }
 
     public String getWebsiteUrl() {

@@ -1,12 +1,13 @@
 package com.rettichlp.unicacityaddon.listener;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.api.checks.BroadcastChecker;
+import com.rettichlp.unicacityaddon.base.builder.ScreenshotBuilder;
 import com.rettichlp.unicacityaddon.base.events.UnicacityAddonTickEvent;
 import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
-import com.rettichlp.unicacityaddon.commands.BusCommand;
-import com.rettichlp.unicacityaddon.commands.faction.DropDrugAllCommand;
+import com.rettichlp.unicacityaddon.controller.BusController;
+import com.rettichlp.unicacityaddon.controller.DeadBodyController;
+import com.rettichlp.unicacityaddon.controller.ScreenshotController;
 import com.rettichlp.unicacityaddon.listener.faction.ReinforcementListener;
 import com.rettichlp.unicacityaddon.listener.faction.terroristen.BombListener;
 import net.labymod.api.event.Phase;
@@ -18,6 +19,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 
+/**
+ * @author RettichLP
+ */
 @UCEvent
 public class TickListener {
 
@@ -26,9 +30,15 @@ public class TickListener {
     public static Map.Entry<Long, Float> lastTickDamage = Maps.immutableEntry(0L, 0F);
 
     private final UnicacityAddon unicacityAddon;
+    private final ScreenshotController screenshotController;
+    private final DeadBodyController deadBodyController;
+    private final BusController busController;
 
-    public TickListener(UnicacityAddon unicacityAddon) {
+    public TickListener(UnicacityAddon unicacityAddon, ScreenshotController screenshotController, DeadBodyController deadBodyController, BusController busController) {
         this.unicacityAddon = unicacityAddon;
+        this.screenshotController = screenshotController;
+        this.deadBodyController = deadBodyController;
+        this.busController = busController;
     }
 
     @Subscribe
@@ -73,48 +83,33 @@ public class TickListener {
     @Subscribe
     public void onUnicacityAddonTick(UnicacityAddonTickEvent e) {
         if (e.isIngame() && e.isPhase(UnicacityAddonTickEvent.Phase.TICK)) {
-            handleReinforcementScreenshot();
-            handleBombScreenshot();
+            handleActivityScreenshot(ReinforcementListener.activeReinforcement, "reinforcement");
+            handleActivityScreenshot(BombListener.activeBomb, "großeinsatz");
             handleDamageTracker();
         }
 
         if (e.isPhase(UnicacityAddonTickEvent.Phase.TICK_5)) {
-            BusCommand.process();
-            DropDrugAllCommand.process();
+            this.busController.processBusRouting();
+            // TODO: 17.03.2023 BusCommand.process();
+            // TODO: 17.03.2023 DropDrugAllCommand.process();
         }
 
         if (e.isPhase(UnicacityAddonTickEvent.Phase.SECOND)) {
-            handleNameTag();
             handleTimer();
         }
 
-        if (e.isPhase(UnicacityAddonTickEvent.Phase.SECOND_30)) {
-            BroadcastChecker.checkForBroadcast();
-        }
-
-        if (e.isPhase(UnicacityAddonTickEvent.Phase.MINUTE)) {
-            handlePayDay();
+        if (e.isUnicacity() && e.isPhase(UnicacityAddonTickEvent.Phase.SECOND)) {
+            this.deadBodyController.updateDisplayName();
         }
     }
 
-    private void handleReinforcementScreenshot() {
-        if (ReinforcementListener.activeReinforcement >= 0 && ReinforcementListener.activeReinforcement + 15 == currentTick) {
+    private void handleActivityScreenshot(long activityMillis, String activityType) {
+        if (activityMillis >= 0 && activityMillis + 15 == currentTick) {
             try {
-                File file = FileManager.getNewActivityImageFile("reinforcement");
-                //HotkeyListener.handleScreenshot(file);
+                File file = FileManager.getNewActivityImageFile(activityType);
+                ScreenshotBuilder.getBuilder(this.screenshotController).file(file).save();
             } catch (IOException e) {
                 this.unicacityAddon.logger().warn(e.getMessage());
-            }
-        }
-    }
-
-    private void handleBombScreenshot() {
-        if (BombListener.activeBomb >= 0 && BombListener.activeBomb + 15 == currentTick) {
-            try {
-                File file = FileManager.getNewActivityImageFile("großeinsatz");
-                //HotkeyEventHandler.handleScreenshot(file);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
             }
         }
     }
@@ -128,35 +123,9 @@ public class TickListener {
         }
     }
 
-    private void handleNameTag() {
-//        List<EntityItem> items = UnicacityAddon.MINECRAFT.world.getEntities(EntityItem.class, (ent) -> ent != null && ent.hasCustomName() && ent.getItem().getItem() instanceof ItemSkull);
-//        items.forEach(entityItem -> {
-//            String name = entityItem.getCustomNameTag();
-//            String playerName = name.substring(3);
-//
-//            if (Syncer.getPlayerfactionMap().containsKey(playerName) && !name.contains("◤")) {
-//                String prefix = NameTagListener.getPrefix(playerName, true);
-//                String factionInfo = NameTagListener.getFactionInfo(playerName);
-//
-//                if (name.startsWith(ColorCode.DARK_GRAY.getCode())) { // non-revivable
-//                    entityItem.setCustomNameTag(ColorCode.DARK_GRAY.getCode() + "✟" + playerName + factionInfo);
-//                    return;
-//                }
-//
-//                entityItem.setCustomNameTag(prefix + "✟" + playerName + factionInfo);
-//            }
-//        });
-    }
-
     private void handleTimer() {
         if (FileManager.DATA.getTimer() > 0) {
             FileManager.DATA.setTimer(FileManager.DATA.getTimer() - 1);
-        }
-    }
-
-    private void handlePayDay() {
-        if (UnicacityAddon.isUnicacity() && !AccountListener.isAfk) {
-            FileManager.DATA.addPayDayTime(1);
         }
     }
 }

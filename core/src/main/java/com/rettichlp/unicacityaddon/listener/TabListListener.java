@@ -29,6 +29,6 @@ public class TabListListener {
     @Subscribe
     public void onTabListUpdate(TabListUpdateEvent e) {
         UnicacityAddon.debug("TABLIST UPDATE");
-        this.tabListController.orderTabList();
+//        this.tabListController.orderTabList();
     }
 }

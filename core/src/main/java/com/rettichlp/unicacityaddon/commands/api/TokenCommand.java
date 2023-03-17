@@ -46,6 +46,7 @@ public class TokenCommand extends Command {
                         .createComponent());
             } else if (arguments.length == 1 && arguments[0].equalsIgnoreCase("create")) {
                 try {
+                    TokenManager.createToken(UnicacityAddon.ADDON.labyAPI().minecraft().sessionAccessor().session());
                     JsonObject response = APIRequest.sendTokenCreateRequest();
                     p.sendAPIMessage(response.get("info").getAsString(), true);
                 } catch (APIResponseException e) {

@@ -1,11 +1,13 @@
-package com.rettichlp.unicacityaddon.base.api.checks;
+package com.rettichlp.unicacityaddon.listener;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.api.request.APIConverter;
+import com.rettichlp.unicacityaddon.base.events.UnicacityAddonTickEvent;
 import com.rettichlp.unicacityaddon.base.models.Broadcast;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
+import net.labymod.api.event.Subscribe;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,12 +15,25 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class BroadcastChecker {
+public class BroadcastListener {
 
     private static final Timer timer = new Timer();
     private static final List<Integer> receivedBroadcasts = new ArrayList<>();
 
-    public static void checkForBroadcast() {
+    private final UnicacityAddon unicacityAddon;
+
+    public BroadcastListener(UnicacityAddon unicacityAddon) {
+        this.unicacityAddon = unicacityAddon;
+    }
+
+    @Subscribe
+    public void onUnicacityAddonTick(UnicacityAddonTickEvent e) {
+        if (e.isPhase(UnicacityAddonTickEvent.Phase.SECOND_30)) {
+            checkForBroadcast();
+        }
+    }
+
+    private void checkForBroadcast() {
         new Thread(() -> {
             for (Broadcast broadcast : APIConverter.getBroadcastList()) {
                 if (broadcast.getSendTime() < System.currentTimeMillis())
