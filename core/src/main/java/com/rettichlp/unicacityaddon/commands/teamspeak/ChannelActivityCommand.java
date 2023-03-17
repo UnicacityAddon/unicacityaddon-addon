@@ -2,8 +2,8 @@ package com.rettichlp.unicacityaddon.commands.teamspeak;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
+import com.rettichlp.unicacityaddon.base.api.request.APIConverter;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
-import com.rettichlp.unicacityaddon.base.manager.FactionManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.teamspeak.TSClientQuery;
 import com.rettichlp.unicacityaddon.base.teamspeak.TSUtils;
@@ -56,10 +56,8 @@ public class ChannelActivityCommand extends Command {
                 return;
             }
 
-            List<String> factionPlayers = FactionManager.getInstance().getFactionData()
-                    .entrySet()
-                    .stream()
-                    .filter(stringEntryEntry -> stringEntryEntry.getValue().getKey().equals(p.getFaction()))
+            List<String> factionPlayers = APIConverter.PLAYERFACTIONMAP.entrySet().stream()
+                    .filter(stringFactionEntry -> stringFactionEntry.getValue().equals(p.getFaction()))
                     .map(Map.Entry::getKey)
                     .collect(Collectors.toList());
 

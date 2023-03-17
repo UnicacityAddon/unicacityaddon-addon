@@ -22,7 +22,6 @@ import net.labymod.api.client.scoreboard.ScoreboardScore;
 import net.labymod.api.client.world.ClientWorld;
 import net.labymod.api.util.math.vector.FloatVector3;
 
-import java.util.AbstractMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
@@ -130,12 +129,12 @@ public class DefaultAddonPlayer implements AddonPlayer {
 
     @Override
     public Faction getFaction() {
-        return FactionManager.getInstance().getFactionData().getOrDefault(getName(), new AbstractMap.SimpleEntry<>(Faction.NULL, -1)).getKey();
+        return APIConverter.PLAYERFACTIONMAP.getOrDefault(getName(), Faction.NULL);
     }
 
     @Override
     public int getRank() {
-        return FactionManager.getInstance().getFactionData().getOrDefault(getName(), new AbstractMap.SimpleEntry<>(Faction.NULL, -1)).getValue();
+        return APIConverter.PLAYERRANKMAP.getOrDefault(getName(), -1);
     }
 
     @Override

@@ -1,8 +1,8 @@
 package com.rettichlp.unicacityaddon.base.nametags;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.base.api.request.APIConverter;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
-import com.rettichlp.unicacityaddon.base.manager.FactionManager;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.entity.player.Player;
 import net.labymod.api.client.entity.player.tag.tags.NameTag;
@@ -39,11 +39,7 @@ public class FactionInfoTag extends NameTag {
     }
 
     private RenderableComponent getComponent(String playerName) {
-        Faction targetFaction = Faction.NULL;
-
-        if (FactionManager.getInstance().getFactionData().containsKey(playerName))
-            targetFaction = FactionManager.getInstance().getFactionData().get(playerName).getKey();
-
-        return !targetFaction.equals(Faction.NULL) ? RenderableComponent.of(Component.text(targetFaction.getNameTagSuffix())) : null;
+        String nameTagSuffix = APIConverter.PLAYERFACTIONMAP.getOrDefault(playerName, Faction.NULL).getNameTagSuffix();
+        return !nameTagSuffix.isEmpty() ? RenderableComponent.of(Component.text(nameTagSuffix)) : null;
     }
 }

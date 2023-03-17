@@ -1,7 +1,6 @@
 package com.rettichlp.unicacityaddon.listener;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.manager.FactionManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import net.labymod.api.client.network.server.ServerData;
 import net.labymod.api.event.Subscribe;
@@ -24,7 +23,6 @@ public class ServerLoginListener {
         ServerData serverData = e.serverData();
         if (serverData.address().matches("unicacity.de", 25565, true)) {
             MobileListener.activeCommunicationsCheck = true;
-            FactionManager.getInstance().getFactionData();
         }
     }
 }

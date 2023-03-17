@@ -1,12 +1,12 @@
 package com.rettichlp.unicacityaddon.listener;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.base.api.request.APIConverter;
 import com.rettichlp.unicacityaddon.base.config.nametag.setting.AllianceFactionNameTagSetting;
 import com.rettichlp.unicacityaddon.base.config.nametag.setting.FactionNameTagSetting;
 import com.rettichlp.unicacityaddon.base.config.nametag.setting.SpecificNameTagSetting;
 import com.rettichlp.unicacityaddon.base.config.nametag.setting.StreetwarNameTagSetting;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
-import com.rettichlp.unicacityaddon.base.manager.FactionManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.FormattingCode;
@@ -18,8 +18,6 @@ import net.labymod.api.client.component.format.TextDecoration;
 import net.labymod.api.client.network.NetworkPlayerInfo;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.render.PlayerNameTagRenderEvent;
-
-import java.util.AbstractMap;
 
 /**
  * @author RettichLP
@@ -62,8 +60,8 @@ public class NameTagListener {
         if (isCorpse)
             prefix.append(ColorCode.GRAY.getCode());
 
-        if (FactionManager.getInstance().getFactionData().containsKey(playerName)) {
-            Faction targetPlayerFaction = FactionManager.getInstance().getFactionData().getOrDefault(playerName, new AbstractMap.SimpleEntry<>(Faction.NULL, -1)).getKey();
+        if (APIConverter.PLAYERFACTIONMAP.containsKey(playerName)) {
+            Faction targetPlayerFaction = APIConverter.PLAYERFACTIONMAP.getOrDefault(playerName, Faction.NULL);
 
             FactionNameTagSetting factionNameTagSetting = this.unicacityAddon.configuration().nameTagSetting().factionNameTagSetting();
             if (factionNameTagSetting.enabled().get()) {

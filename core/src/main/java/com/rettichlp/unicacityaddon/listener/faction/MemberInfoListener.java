@@ -1,15 +1,14 @@
 package com.rettichlp.unicacityaddon.listener.faction;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.base.api.request.APIConverter;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
-import com.rettichlp.unicacityaddon.base.manager.FactionManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
-import java.util.AbstractMap;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
@@ -69,8 +68,8 @@ public class MemberInfoListener {
                     .of(factionString).color(ColorCode.DARK_AQUA).advance()
                     .of("]").color(ColorCode.DARK_GRAY).advance().space()
                     .of("(").color(ColorCode.DARK_GRAY).advance()
-                    .of(String.valueOf(FactionManager.getInstance().getFactionData().entrySet().stream()
-                            .filter(stringEntryEntry -> stringEntryEntry.getValue().getKey().equals(faction))
+                    .of(String.valueOf(APIConverter.PLAYERFACTIONMAP.entrySet().stream()
+                            .filter(stringFactionEntry -> stringFactionEntry.getKey().equals(faction))
                             .count())).color(ColorCode.AQUA).advance()
                     .of(")").color(ColorCode.DARK_GRAY).advance().space()
                     .of("===").color(ColorCode.DARK_GRAY).advance()
@@ -85,7 +84,7 @@ public class MemberInfoListener {
 
         if (future == null) {
             String name = msg.substring(3).split(" ")[0];
-            Integer rank = FactionManager.getInstance().getFactionData().getOrDefault(name.replace("[UC]", ""), new AbstractMap.SimpleEntry<>(Faction.NULL, -1)).getValue();
+            Integer rank = APIConverter.PLAYERRANKMAP.getOrDefault(name.replace("[UC]", ""), -1);
 
             String formattedMessage = ColorCode.GRAY.getCode() + msg
                     .replace(" » ", "")

@@ -12,7 +12,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.stream.Collectors;
@@ -21,34 +20,6 @@ import java.util.stream.Collectors;
  * @author RettichLP
  */
 public class FactionManager {
-
-    private static FactionManager instance;
-    private static Map<String, Map.Entry<Faction, Integer>> factionData = new HashMap<>();
-
-    private FactionManager() {
-        generateFactionData();
-    }
-
-    public static FactionManager getInstance() {
-        if (instance == null) {
-            instance = new FactionManager();
-        }
-        return instance;
-    }
-
-    public Map<String, Map.Entry<Faction, Integer>> getFactionData() {
-        return factionData;
-    }
-
-    public static void generateFactionData() {
-        new Thread(() -> {
-            try {
-                factionData = getFutureFactionData().get();
-            } catch (InterruptedException | ExecutionException e) {
-                throw new RuntimeException(e);
-            }
-        }).start();
-    }
 
     public static boolean checkPlayerDuty(String playerName) {
         if (UnicacityAddon.ADDON.labyAPI().minecraft().isSingleplayer())
