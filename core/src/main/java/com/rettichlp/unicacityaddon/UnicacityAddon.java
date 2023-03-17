@@ -97,6 +97,10 @@ import com.rettichlp.unicacityaddon.commands.teamspeak.MoveHereCommand;
 import com.rettichlp.unicacityaddon.commands.teamspeak.MoveToCommand;
 import com.rettichlp.unicacityaddon.commands.teamspeak.TSFindCommand;
 import com.rettichlp.unicacityaddon.commands.teamspeak.TSJoinCommand;
+import com.rettichlp.unicacityaddon.controller.BusController;
+import com.rettichlp.unicacityaddon.controller.DeadBodyController;
+import com.rettichlp.unicacityaddon.controller.OverlayMessageController;
+import com.rettichlp.unicacityaddon.controller.ScreenshotController;
 import com.rettichlp.unicacityaddon.controller.TabListController;
 import com.rettichlp.unicacityaddon.core.generated.DefaultReferenceStorage;
 import com.rettichlp.unicacityaddon.hudwidgets.AmmunitionHudWidget;
@@ -112,6 +116,7 @@ import com.rettichlp.unicacityaddon.hudwidgets.PlantHudWidget;
 import com.rettichlp.unicacityaddon.hudwidgets.TimerHudWidget;
 import com.rettichlp.unicacityaddon.listener.ABuyListener;
 import com.rettichlp.unicacityaddon.listener.AccountListener;
+import com.rettichlp.unicacityaddon.listener.BroadcastListener;
 import com.rettichlp.unicacityaddon.listener.CarListener;
 import com.rettichlp.unicacityaddon.listener.DrugListener;
 import com.rettichlp.unicacityaddon.listener.EventListener;
@@ -212,6 +217,10 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
     private void registerListeners() {
         DefaultReferenceStorage referenceStorage = this.getReferenceStorageAccessor();
         TabListController tabListController = referenceStorage.getTabListController();
+        OverlayMessageController overlayMessageController = referenceStorage.getOverlayMessageController();
+        ScreenshotController screenshotController = referenceStorage.getScreenshotController();
+        DeadBodyController deadBodyController = referenceStorage.getDeadBodyController();
+        BusController busController = referenceStorage.getBusController();
 
         this.registerListener(new ABuyListener(this));
         this.registerListener(new AccountListener(this));
@@ -222,6 +231,7 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
         this.registerListener(new BlacklistListener(this));
         this.registerListener(new BlacklistModifyListener(this));
         this.registerListener(new BombListener(this));
+        this.registerListener(new BroadcastListener(this));
         this.registerListener(new CarListener(this));
         this.registerListener(new ChatLogReceiveChatListener(this));
         this.registerListener(new ChatLogSendChatListener(this));
@@ -238,7 +248,7 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
         this.registerListener(new FriendJoinListener(this));
         this.registerListener(new GaggedListener(this));
         this.registerListener(new GiftEigenbedarfListener(this));
-        this.registerListener(new HotkeyListener(this));
+        this.registerListener(new HotkeyListener(this, screenshotController));
         this.registerListener(new HouseDataListener(this));
         this.registerListener(new HouseInteractionListener(this, overlayMessageController));
         this.registerListener(new HouseRenterListener(this));
@@ -259,7 +269,7 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
         this.registerListener(new ServerLoginListener(this));
         this.registerListener(new ShareLocationListener(this));
         this.registerListener(new TabListListener(this, tabListController));
-        this.registerListener(new TickListener(this));
+        this.registerListener(new TickListener(this, screenshotController, deadBodyController, busController));
         this.registerListener(new TimerListener(this));
         this.registerListener(new WaitingRoomListener(this));
         this.registerListener(new WantedListener(this));
