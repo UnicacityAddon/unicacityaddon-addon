@@ -5,6 +5,7 @@ import com.rettichlp.unicacityaddon.base.events.UnicacityAddonTickEvent;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
+import com.rettichlp.unicacityaddon.controller.OverlayMessageController;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
@@ -26,9 +27,11 @@ public class HouseInteractionListener {
     public static final int[] progress = {-1, -1};
 
     private final UnicacityAddon unicacityAddon;
+    private final OverlayMessageController overlayMessageController;
 
-    public HouseInteractionListener(UnicacityAddon unicacityAddon) {
+    public HouseInteractionListener(UnicacityAddon unicacityAddon, OverlayMessageController overlayMessageController) {
         this.unicacityAddon = unicacityAddon;
+        this.overlayMessageController = overlayMessageController;
     }
 
     @Subscribe
@@ -59,7 +62,7 @@ public class HouseInteractionListener {
         }
     }
 
-    public static void increaseProgress(int progressIndex) {
+    public void increaseProgress(int progressIndex) {
         switch (progress[progressIndex]) {
             case 0:
             case 1:
@@ -80,13 +83,13 @@ public class HouseInteractionListener {
         }
     }
 
-    private static void setMessage(int progress) {
+    private void setMessage(int progress) {
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < 10; i++) {
             stringBuilder
                     .append(i < progress ? ColorCode.GREEN.getCode() : ColorCode.GRAY.getCode())
                     .append("█");
         }
-        // TODO: 08.02.2023 UnicacityAddon.MINECRAFT.ingameGUI.setOverlayMessage(stringBuilder.toString(), true);
+        this.overlayMessageController.sendOverlayMessage(stringBuilder.toString());
     }
 }

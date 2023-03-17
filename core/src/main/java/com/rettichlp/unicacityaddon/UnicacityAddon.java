@@ -240,7 +240,7 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
         this.registerListener(new GiftEigenbedarfListener(this));
         this.registerListener(new HotkeyListener(this));
         this.registerListener(new HouseDataListener(this));
-        this.registerListener(new HouseInteractionListener(this));
+        this.registerListener(new HouseInteractionListener(this, overlayMessageController));
         this.registerListener(new HouseRenterListener(this));
         this.registerListener(new HQMessageListener(this));
         this.registerListener(new JobListener(this));
