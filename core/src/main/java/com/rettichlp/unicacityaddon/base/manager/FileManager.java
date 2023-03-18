@@ -128,6 +128,6 @@ public class FileManager {
         } catch (JsonSyntaxException e) {
             return false;
         }
-        return true;
+        return !string.isEmpty();
     }
 }

@@ -200,7 +200,6 @@ import net.labymod.api.util.logging.Logging;
  *     <li>wanted reasons <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/wantedreason">API</a></li>
  *     <li>yasin <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/yasin">API</a></li>
  * </ul>
- * <p>
  * This data can change constantly and can therefore not be entered statically in the code.<br>
  * <br>
  * For example, the number of revives should only be seen by medics, as well as the name of the

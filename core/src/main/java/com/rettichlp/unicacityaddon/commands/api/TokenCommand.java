@@ -1,11 +1,8 @@
 package com.rettichlp.unicacityaddon.commands.api;
 
-import com.google.gson.JsonObject;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.api.TokenManager;
-import com.rettichlp.unicacityaddon.base.api.exception.APIResponseException;
-import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
@@ -45,13 +42,7 @@ public class TokenCommand extends Command {
                         .of("kann jeder in deinem Namen Anfragen an die API senden.").color(ColorCode.GRAY).advance()
                         .createComponent());
             } else if (arguments.length == 1 && arguments[0].equalsIgnoreCase("create")) {
-                try {
-                    TokenManager.createToken(UnicacityAddon.ADDON.labyAPI().minecraft().sessionAccessor().session());
-                    JsonObject response = APIRequest.sendTokenCreateRequest();
-                    p.sendAPIMessage(response.get("info").getAsString(), true);
-                } catch (APIResponseException e) {
-                    e.sendInfo();
-                }
+                TokenManager.createToken(UnicacityAddon.ADDON.labyAPI().minecraft().sessionAccessor().session());
             } else if (arguments.length == 1 && arguments[0].equalsIgnoreCase("copy")) {
                 p.copyToClipboard(TokenManager.API_TOKEN);
                 UnicacityAddon.ADDON.labyAPI().notificationController().push(Notification.builder()
