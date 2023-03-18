@@ -37,14 +37,13 @@ public class BusCommand extends Command {
         AddonPlayer p = UnicacityAddon.PLAYER;
 
         if (arguments.length < 1) {
-            p.sendServerMessage("/bus");
-            return true;
+            return false;
         }
 
         NaviPoint naviPoint = NaviPoint.getNaviPointByTabName(arguments[0]);
         if (naviPoint == null) {
             p.sendErrorMessage("Navipunkt nicht gefunden.");
-            return true;
+            return false;
         }
 
         start = NavigationUtils.getNearestBus().getValue();

@@ -1,10 +1,11 @@
-package com.rettichlp.unicacityaddon.v1_16_5;
+package com.rettichlp.unicacityaddon.v1_17_1;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.enums.location.Bus;
 import com.rettichlp.unicacityaddon.commands.BusCommand;
 import com.rettichlp.unicacityaddon.controller.BusController;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMaps;
 import net.labymod.api.models.Implements;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
@@ -30,9 +31,7 @@ public class VersionedBusController extends BusController {
     @Override
     public void processBusRouting() {
         Screen screen = Minecraft.getInstance().screen;
-        if (screen instanceof HopperScreen && BusCommand.active) {
-            HopperScreen hopperScreen = (HopperScreen) screen;
-
+        if (screen instanceof HopperScreen hopperScreen && BusCommand.active) {
             HopperMenu hopperMenu = hopperScreen.getMenu();
             if (hopperMenu.containerId != BusCommand.lastWindowId) {
                 AddonPlayer p = UnicacityAddon.PLAYER;
@@ -55,11 +54,11 @@ public class VersionedBusController extends BusController {
                 assert localPlayer != null;
 
                 if (nearestBusToDestination.equals(BusCommand.destination)) {
-                    ServerboundContainerClickPacket serverboundContainerClickPacket = new ServerboundContainerClickPacket(hopperMenu.containerId, slot.index, 0, ClickType.PICKUP, localPlayer.inventory.getSelected(), (short) 0);
+                    ServerboundContainerClickPacket serverboundContainerClickPacket = new ServerboundContainerClickPacket(hopperMenu.containerId, 0, slot.index, 0, ClickType.PICKUP, localPlayer.containerMenu.getCarried(), Int2ObjectMaps.emptyMap());
                     localPlayer.connection.send(serverboundContainerClickPacket);
                     BusCommand.active = false;
                 } else if (BusCommand.limiter < 15) {
-                    ServerboundContainerClickPacket serverboundContainerClickPacket = new ServerboundContainerClickPacket(hopperMenu.containerId, slot.index, 1, ClickType.PICKUP, localPlayer.inventory.getSelected(), (short) 0);
+                    ServerboundContainerClickPacket serverboundContainerClickPacket = new ServerboundContainerClickPacket(hopperMenu.containerId, 0, slot.index, 1, ClickType.PICKUP, localPlayer.containerMenu.getCarried(), Int2ObjectMaps.emptyMap());
                     localPlayer.connection.send(serverboundContainerClickPacket);
                     BusCommand.limiter++;
                 } else {
