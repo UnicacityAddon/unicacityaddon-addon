@@ -38,7 +38,7 @@ public class BombListener {
     public void onChatReceive(ChatReceiveEvent e) {
         AddonPlayer p = UnicacityAddon.PLAYER;
         ChatMessage chatMessage = e.chatMessage();
-        String formattedMsg = chatMessage.getFormattedText();
+        String formattedMsg = e.chatMessage().getFormattedText();
         String msg = chatMessage.getPlainText();
 
         Matcher bombPlacedMatcher = PatternHandler.BOMB_PLACED_PATTERN.matcher(msg);
