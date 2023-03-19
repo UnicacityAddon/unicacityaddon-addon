@@ -98,6 +98,7 @@ import com.rettichlp.unicacityaddon.commands.teamspeak.MoveToCommand;
 import com.rettichlp.unicacityaddon.commands.teamspeak.TSFindCommand;
 import com.rettichlp.unicacityaddon.commands.teamspeak.TSJoinCommand;
 import com.rettichlp.unicacityaddon.controller.BusController;
+import com.rettichlp.unicacityaddon.controller.CarController;
 import com.rettichlp.unicacityaddon.controller.DeadBodyController;
 import com.rettichlp.unicacityaddon.controller.OverlayMessageController;
 import com.rettichlp.unicacityaddon.controller.ScreenshotController;
@@ -260,11 +261,12 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
 
     private void registerListeners() {
         DefaultReferenceStorage referenceStorage = this.getReferenceStorageAccessor();
-        TabListController tabListController = referenceStorage.getTabListController();
+        BusController busController = referenceStorage.getBusController();
+        CarController carController = referenceStorage.getCarController();
+        DeadBodyController deadBodyController = referenceStorage.getDeadBodyController();
         OverlayMessageController overlayMessageController = referenceStorage.getOverlayMessageController();
         ScreenshotController screenshotController = referenceStorage.getScreenshotController();
-        DeadBodyController deadBodyController = referenceStorage.getDeadBodyController();
-        BusController busController = referenceStorage.getBusController();
+        TabListController tabListController = referenceStorage.getTabListController();
 
         this.registerListener(new ABuyListener(this));
         this.registerListener(new AccountListener(this));
@@ -276,7 +278,7 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
         this.registerListener(new BlacklistModifyListener(this));
         this.registerListener(new BombListener(this));
         this.registerListener(new BroadcastListener(this));
-        this.registerListener(new CarListener(this));
+        this.registerListener(new CarListener(this, carController));
         this.registerListener(new ChatLogReceiveChatListener(this));
         this.registerListener(new ChatLogSendChatListener(this));
         this.registerListener(new ContractListener(this));

@@ -90,7 +90,6 @@ public class TickListener {
 
         if (e.isPhase(UnicacityAddonTickEvent.Phase.TICK_5)) {
             this.busController.processBusRouting();
-            // TODO: 17.03.2023 BusCommand.process();
             // TODO: 17.03.2023 DropDrugAllCommand.process();
         }
 

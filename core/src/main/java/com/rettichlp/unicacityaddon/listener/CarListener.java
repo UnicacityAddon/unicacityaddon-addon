@@ -8,6 +8,7 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
+import com.rettichlp.unicacityaddon.controller.CarController;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.event.HoverEvent;
 import net.labymod.api.client.scoreboard.DisplaySlot;
@@ -15,6 +16,7 @@ import net.labymod.api.client.scoreboard.Scoreboard;
 import net.labymod.api.client.scoreboard.ScoreboardScore;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
+import net.labymod.api.event.client.render.ScreenRenderEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,9 +31,11 @@ public class CarListener {
     private static final List<Integer> sentTankWarnings = new ArrayList<>();
 
     private final UnicacityAddon unicacityAddon;
+    private final CarController carController;
 
-    public CarListener(UnicacityAddon unicacityAddon) {
+    public CarListener(UnicacityAddon unicacityAddon, CarController carController) {
         this.unicacityAddon = unicacityAddon;
+        this.carController = carController;
     }
 
     @Subscribe
@@ -91,25 +95,10 @@ public class CarListener {
         }
     }
 
-//    @SubscribeEvent
-//    public void onGuiOpen(GuiContainerEvent.DrawForeground e) {
-//        if (e.getGuiContainer().inventorySlots instanceof ContainerChest) {
-//            ContainerChest containerChest = (ContainerChest) e.getGuiContainer().inventorySlots;
-//
-//            if (containerChest.getLowerChestInventory().getDisplayName().getUnformattedText().equals("§6CarControl")) {
-//                int numberOfCars = (int) containerChest.getInventory().stream()
-//                        .filter(itemStack -> !itemStack.isEmpty() && itemStack.getDisplayName().startsWith(ColorCode.GOLD.getCode()))
-//                        .map(ItemStack::getItem)
-//                        .filter(item -> item.equals(Item.getItemById(328)) || item.equals(Item.getItemById(331)) || item.equals(Item.getItemById(388)))
-//                        .count();
-//
-//                if (numberOfCars == 1) {
-//                    UnicacityAddon.MINECRAFT.playerController.windowClick(containerChest.windowId, 0, 0, ClickType.PICKUP, UnicacityAddon.MINECRAFT.player);
-//                    Minecraft.getMinecraft().player.closeScreen();
-//                }
-//            }
-//        }
-//    }
+    @Subscribe
+    public void onScreenRender(ScreenRenderEvent e) {
+        this.carController.interact();
+    }
 
     @Subscribe
     public void onUnicacityAddonTick(UnicacityAddonTickEvent e) {
