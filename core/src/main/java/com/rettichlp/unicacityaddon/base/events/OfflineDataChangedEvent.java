@@ -3,6 +3,9 @@ package com.rettichlp.unicacityaddon.base.events;
 import com.rettichlp.unicacityaddon.base.models.Data;
 import net.labymod.api.event.Event;
 
+/**
+ * @author RettichLP
+ */
 public class OfflineDataChangedEvent implements Event {
 
     private Data data;

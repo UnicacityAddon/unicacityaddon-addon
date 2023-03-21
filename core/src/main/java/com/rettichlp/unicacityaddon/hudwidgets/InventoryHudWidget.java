@@ -10,6 +10,9 @@ import net.labymod.api.event.Subscribe;
 
 import java.util.Map;
 
+/**
+ * @author RettichLP
+ */
 public class InventoryHudWidget extends TextHudWidget<TextHudWidgetConfig> {
 
     private TextLine textLine;

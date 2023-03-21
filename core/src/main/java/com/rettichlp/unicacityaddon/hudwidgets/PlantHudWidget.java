@@ -12,6 +12,9 @@ import net.labymod.api.event.Subscribe;
 
 import java.util.concurrent.TimeUnit;
 
+/**
+ * @author RettichLP
+ */
 public class PlantHudWidget extends TextHudWidget<TextHudWidgetConfig> {
 
     private TextLine fertilize;

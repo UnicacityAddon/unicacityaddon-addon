@@ -8,6 +8,9 @@ import com.rettichlp.unicacityaddon.base.config.ownUse.setting.MarihuanaSetting;
 import com.rettichlp.unicacityaddon.base.config.ownUse.setting.MethamphetaminSetting;
 import net.labymod.api.configuration.loader.Config;
 
+/**
+ * @author RettichLP
+ */
 public class DefaultOwnUseSetting extends Config implements OwnUseSetting {
 
     private final DefaultKokainSetting kokainSetting = new DefaultKokainSetting();

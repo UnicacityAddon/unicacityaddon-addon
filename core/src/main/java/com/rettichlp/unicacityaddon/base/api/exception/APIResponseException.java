@@ -7,6 +7,9 @@ import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import net.labymod.api.notification.Notification;
 
+/**
+ * @author RettichLP
+ */
 public class APIResponseException extends Throwable {
 
     private final String urlString;

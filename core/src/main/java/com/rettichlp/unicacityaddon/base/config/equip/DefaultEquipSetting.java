@@ -17,6 +17,9 @@ import net.labymod.api.configuration.loader.Config;
 import net.labymod.api.configuration.loader.property.ConfigProperty;
 import net.labymod.api.configuration.settings.annotation.SettingSection;
 
+/**
+ * @author RettichLP
+ */
 public class DefaultEquipSetting extends Config implements EquipSetting {
 
     @SettingSection("global")

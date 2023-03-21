@@ -2,6 +2,9 @@ package com.rettichlp.unicacityaddon.base.models;
 
 import java.util.List;
 
+/**
+ * @author RettichLP
+ */
 public class HouseBan {
 
     private final long duration;

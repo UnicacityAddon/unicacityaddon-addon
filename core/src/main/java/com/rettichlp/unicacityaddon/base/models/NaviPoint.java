@@ -3,6 +3,9 @@ package com.rettichlp.unicacityaddon.base.models;
 import com.rettichlp.unicacityaddon.base.api.request.APIConverter;
 import net.labymod.api.util.math.vector.FloatVector3;
 
+/**
+ * @author RettichLP
+ */
 public class NaviPoint {
 
     private final String name;

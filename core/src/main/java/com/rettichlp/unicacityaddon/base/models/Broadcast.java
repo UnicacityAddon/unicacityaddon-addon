@@ -1,5 +1,8 @@
 package com.rettichlp.unicacityaddon.base.models;
 
+/**
+ * @author RettichLP
+ */
 public class Broadcast {
 
     private final String broadcast;

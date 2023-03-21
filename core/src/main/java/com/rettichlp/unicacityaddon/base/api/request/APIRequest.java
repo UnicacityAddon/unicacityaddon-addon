@@ -12,6 +12,9 @@ import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @author RettichLP
+ */
 public class APIRequest {
 
     private static final boolean NON_PROD = false;

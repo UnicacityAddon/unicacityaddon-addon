@@ -8,6 +8,9 @@ import net.labymod.api.client.gui.hud.hudwidget.text.TextLine;
 import net.labymod.api.client.gui.icon.Icon;
 import net.labymod.api.event.Subscribe;
 
+/**
+ * @author RettichLP
+ */
 public class JobHudWidget extends TextHudWidget<TextHudWidgetConfig> {
 
     private TextLine textLine;

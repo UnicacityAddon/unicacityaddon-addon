@@ -4,6 +4,9 @@ import net.labymod.api.client.gui.screen.widget.widgets.input.SwitchWidget.Switc
 import net.labymod.api.configuration.loader.Config;
 import net.labymod.api.configuration.loader.property.ConfigProperty;
 
+/**
+ * @author RettichLP
+ */
 public class DefaultFactionMessageSetting extends Config implements FactionMessageSetting {
 
     @SwitchSetting

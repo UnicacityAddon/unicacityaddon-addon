@@ -17,6 +17,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author RettichLP
+ */
 public class Data {
 
     private List<Armament> armamentList;

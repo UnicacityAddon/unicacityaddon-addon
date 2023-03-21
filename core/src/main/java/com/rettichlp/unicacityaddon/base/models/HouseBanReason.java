@@ -1,5 +1,8 @@
 package com.rettichlp.unicacityaddon.base.models;
 
+/**
+ * @author RettichLP
+ */
 public class HouseBanReason {
 
     private final String reason;

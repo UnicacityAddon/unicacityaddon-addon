@@ -11,6 +11,9 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * @author RettichLP
+ */
 public class AddonTag extends NameTag {
 
     private final UnicacityAddon unicacityAddon;

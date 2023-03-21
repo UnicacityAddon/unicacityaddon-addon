@@ -6,6 +6,9 @@ import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidgetConfig;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextLine;
 import net.labymod.api.client.gui.icon.Icon;
 
+/**
+ * @author RettichLP
+ */
 public class EmergencyServiceHudWidget extends TextHudWidget<TextHudWidgetConfig> {
 
     public static TextLine textLine;

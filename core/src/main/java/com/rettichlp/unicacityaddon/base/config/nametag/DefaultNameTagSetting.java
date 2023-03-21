@@ -13,6 +13,9 @@ import net.labymod.api.client.gui.screen.widget.widgets.input.SwitchWidget.Switc
 import net.labymod.api.configuration.loader.Config;
 import net.labymod.api.configuration.loader.property.ConfigProperty;
 
+/**
+ * @author RettichLP
+ */
 public class DefaultNameTagSetting extends Config implements NameTagSetting {
 
     @SliderSetting(min = 1, max = 60)

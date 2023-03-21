@@ -5,6 +5,9 @@ import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import net.labymod.api.event.Event;
 
+/**
+ * @author RettichLP
+ */
 public class WeaponShotEvent implements Event {
 
     private final Weapon weapon;

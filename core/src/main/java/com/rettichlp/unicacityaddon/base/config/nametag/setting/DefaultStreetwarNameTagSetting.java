@@ -8,6 +8,9 @@ import net.labymod.api.configuration.loader.Config;
 import net.labymod.api.configuration.loader.annotation.ParentSwitch;
 import net.labymod.api.configuration.loader.property.ConfigProperty;
 
+/**
+ * @author RettichLP
+ */
 public class DefaultStreetwarNameTagSetting extends Config implements StreetwarNameTagSetting {
 
     @SwitchSetting

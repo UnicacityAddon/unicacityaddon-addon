@@ -12,6 +12,9 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
+/**
+ * @author RettichLP
+ */
 public class DutyTag extends NameTag {
 
     private final UnicacityAddon unicacityAddon;

@@ -28,6 +28,9 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+/**
+ * @author RettichLP
+ */
 public class DefaultAddonPlayer implements AddonPlayer {
 
     private static String latestVersion = null;

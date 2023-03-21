@@ -12,6 +12,9 @@ import net.labymod.api.client.gui.icon.Icon;
 import net.labymod.api.client.world.item.ItemStack;
 import net.labymod.api.event.Subscribe;
 
+/**
+ * @author RettichLP
+ */
 public class AmmunitionHudWidget extends TextHudWidget<TextHudWidgetConfig> {
 
     private TextLine textLine;

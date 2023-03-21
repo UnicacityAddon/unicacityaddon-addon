@@ -14,6 +14,9 @@ import net.labymod.api.event.Subscribe;
 
 import static com.rettichlp.unicacityaddon.base.utils.MathUtils.HEART_DECIMAL_FORMAT;
 
+/**
+ * @author RettichLP
+ */
 public class HearthHudWidget extends TextHudWidget<TextHudWidgetConfig> {
 
     private TextLine textLine;

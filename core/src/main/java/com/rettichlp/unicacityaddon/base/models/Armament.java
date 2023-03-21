@@ -2,6 +2,9 @@ package com.rettichlp.unicacityaddon.base.models;
 
 import com.rettichlp.unicacityaddon.base.enums.Weapon;
 
+/**
+ * @author RettichLP
+ */
 public class Armament {
 
     private final String name;

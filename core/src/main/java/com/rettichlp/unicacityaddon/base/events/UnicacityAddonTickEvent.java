@@ -3,6 +3,9 @@ package com.rettichlp.unicacityaddon.base.events;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import net.labymod.api.event.Event;
 
+/**
+ * @author RettichLP
+ */
 public class UnicacityAddonTickEvent implements Event {
 
     private final Phase phase;

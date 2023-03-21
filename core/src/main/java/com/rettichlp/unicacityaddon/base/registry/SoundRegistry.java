@@ -1,5 +1,8 @@
 package com.rettichlp.unicacityaddon.base.registry;
 
+/**
+ * @author RettichLP
+ */
 public class SoundRegistry {
 
 //    public static final SoundEvent BOMB_SOUND = register("bomb_sound");

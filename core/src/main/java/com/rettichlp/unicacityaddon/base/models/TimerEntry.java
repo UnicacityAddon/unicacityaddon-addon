@@ -10,6 +10,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * @author RettichLP
+ */
 public class TimerEntry {
 
     public static Map<Long, TimerEntry> ACTIVE_TIMERS;

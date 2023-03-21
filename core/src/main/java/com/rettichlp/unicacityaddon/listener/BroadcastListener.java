@@ -15,6 +15,9 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * @author RettichLP
+ */
 public class BroadcastListener {
 
     private static final Timer timer = new Timer();

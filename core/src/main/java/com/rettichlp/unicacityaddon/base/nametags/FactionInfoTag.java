@@ -11,6 +11,9 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
+/**
+ * @author RettichLP
+ */
 public class FactionInfoTag extends NameTag {
 
     private final UnicacityAddon unicacityAddon;

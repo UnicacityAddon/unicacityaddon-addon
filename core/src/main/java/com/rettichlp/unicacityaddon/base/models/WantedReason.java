@@ -2,6 +2,9 @@ package com.rettichlp.unicacityaddon.base.models;
 
 import com.rettichlp.unicacityaddon.base.api.request.APIConverter;
 
+/**
+ * @author RettichLP
+ */
 public class WantedReason {
 
     private final String reason;
