@@ -5,6 +5,7 @@ import net.labymod.api.models.Implements;
 import net.labymod.api.util.math.vector.FloatVector3;
 import net.minecraft.client.Minecraft;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityBanner;
 import net.minecraft.tileentity.TileEntitySign;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
@@ -38,5 +39,15 @@ public class VersionedWorldInteractionController extends WorldInteractionControl
         }
 
         return false;
+    }
+
+    @Override
+    public boolean isBanner(FloatVector3 pos) {
+        World world = Minecraft.getMinecraft().world;
+
+        TileEntity tileEntity = world.getTileEntity(new BlockPos(pos.getX(), pos.getY(), pos.getZ()));
+
+        System.out.println("1.12.2: " + (tileEntity instanceof TileEntityBanner));
+        return tileEntity instanceof TileEntityBanner;
     }
 }

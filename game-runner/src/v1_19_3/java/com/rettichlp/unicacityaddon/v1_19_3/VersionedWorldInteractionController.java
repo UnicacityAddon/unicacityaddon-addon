@@ -7,6 +7,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.SignBlock;
+import net.minecraft.world.level.block.WallBannerBlock;
 import net.minecraft.world.level.block.entity.SignBlockEntity;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
@@ -44,5 +45,14 @@ public class VersionedWorldInteractionController extends WorldInteractionControl
             }
         }
         return false;
+    }
+
+    @Override
+    public boolean isBanner(FloatVector3 pos) {
+        ClientLevel clientLevel = Minecraft.getInstance().level;
+        BlockPos blockPos = new BlockPos(pos.getX(), pos.getY(), pos.getZ());
+
+        assert clientLevel != null;
+        return clientLevel.getBlockState(blockPos).getBlock() instanceof WallBannerBlock;
     }
 }

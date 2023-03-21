@@ -277,7 +277,7 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
         this.registerListener(new AdListener(this));
         this.registerListener(new AEquipListener(this));
         this.registerListener(new AFbankEinzahlenListener(this));
-        this.registerListener(new BannerListener(this));
+        this.registerListener(new BannerListener(this, worldInteractionController));
         this.registerListener(new BlacklistListener(this));
         this.registerListener(new BlacklistModifyListener(this));
         this.registerListener(new BombListener(this));
