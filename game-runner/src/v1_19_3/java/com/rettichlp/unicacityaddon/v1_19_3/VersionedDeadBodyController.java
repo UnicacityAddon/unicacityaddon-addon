@@ -62,7 +62,7 @@ public class VersionedDeadBodyController extends DeadBodyController {
 
                 String ndn = Message.getBuilder()
                         .of("✟").color(nonRevivable ? ColorCode.DARK_GRAY : ColorCode.GRAY).advance()
-                        .of((nonRevivable ? ColorCode.DARK_GRAY.getCode() : prefix) + playerName).color(ColorCode.GRAY).advance().space()
+                        .of((nonRevivable ? ColorCode.DARK_GRAY.getCode() : prefix) + playerName).advance().space()
                         .of(factionInfo).advance()
                         .create();
 
