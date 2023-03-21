@@ -3,6 +3,9 @@ package com.rettichlp.unicacityaddon.base.config.hotkey;
 import net.labymod.api.client.gui.screen.key.Key;
 import net.labymod.api.configuration.loader.property.ConfigProperty;
 
+/**
+ * @author RettichLP
+ */
 public interface HotkeySetting {
 
     ConfigProperty<Boolean> enabled();

@@ -2,6 +2,9 @@ package com.rettichlp.unicacityaddon.base.api;
 
 import java.util.Arrays;
 
+/**
+ * @author RettichLP
+ */
 public enum HttpStatus {
     CONTINUE(100, "Continue"),
     SWITCHING_PROTOCOLS(101, "Switching Protocols"),

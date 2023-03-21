@@ -8,6 +8,9 @@ import com.rettichlp.unicacityaddon.base.config.equip.setting.StateSetting;
 import com.rettichlp.unicacityaddon.base.config.equip.setting.TerrorSetting;
 import net.labymod.api.configuration.loader.property.ConfigProperty;
 
+/**
+ * @author RettichLP
+ */
 public interface EquipSetting {
 
     ConfigProperty<String> water();

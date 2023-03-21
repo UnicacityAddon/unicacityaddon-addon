@@ -4,6 +4,9 @@ import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import net.labymod.api.configuration.loader.property.ConfigProperty;
 
+/**
+ * @author RettichLP
+ */
 public interface AllianceFactionNameTagSetting {
 
     ConfigProperty<Boolean> enabled();

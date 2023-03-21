@@ -1,5 +1,8 @@
 package com.rettichlp.unicacityaddon.base.text;
 
+/**
+ * @author RettichLP
+ */
 public enum ChatType {
 
     ADMIN("Serverweit", "o"),

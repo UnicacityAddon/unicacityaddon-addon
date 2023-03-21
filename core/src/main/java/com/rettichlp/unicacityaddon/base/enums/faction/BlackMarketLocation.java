@@ -2,6 +2,9 @@ package com.rettichlp.unicacityaddon.base.enums.faction;
 
 import net.labymod.api.util.math.vector.FloatVector3;
 
+/**
+ * @author RettichLP
+ */
 public enum BlackMarketLocation {
     PSYCHIATRIE("Psychiatrie", new FloatVector3(1689, 66, -390)),
     HAFEN_CHINA("Hafen (Chinatown)", new FloatVector3(1172, 69, -464)),

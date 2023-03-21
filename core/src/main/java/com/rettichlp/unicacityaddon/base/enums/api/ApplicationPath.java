@@ -1,5 +1,8 @@
 package com.rettichlp.unicacityaddon.base.enums.api;
 
+/**
+ * @author RettichLP
+ */
 public enum ApplicationPath {
 
     BANNER("/banner"),

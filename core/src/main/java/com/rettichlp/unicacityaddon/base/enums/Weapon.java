@@ -2,6 +2,9 @@ package com.rettichlp.unicacityaddon.base.enums;
 
 import java.util.Arrays;
 
+/**
+ * @author RettichLP
+ */
 public enum Weapon {
     M4("M4"),
     MP5("MP5"),

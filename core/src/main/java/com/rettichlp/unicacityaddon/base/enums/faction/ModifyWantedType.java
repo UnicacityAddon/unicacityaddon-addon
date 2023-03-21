@@ -2,6 +2,9 @@ package com.rettichlp.unicacityaddon.base.enums.faction;
 
 import com.rettichlp.unicacityaddon.base.utils.MathUtils;
 
+/**
+ * @author RettichLP
+ */
 public enum ModifyWantedType {
     SURRENDER("s", " + Stellung", "x-5"),
     GOOD_CONDUCT("gf", " + Gute Führung", "x-5"),

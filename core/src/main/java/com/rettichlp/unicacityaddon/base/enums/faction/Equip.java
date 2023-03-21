@@ -6,6 +6,9 @@ import com.rettichlp.unicacityaddon.base.utils.MathUtils;
 
 import java.util.function.Function;
 
+/**
+ * @author RettichLP
+ */
 public enum Equip {
 
     BASI("Baseballschläger", "Baseballschläger", (configuration) -> configuration.equipSetting().badFactionSetting().baseballBat().getOrDefault("0")),

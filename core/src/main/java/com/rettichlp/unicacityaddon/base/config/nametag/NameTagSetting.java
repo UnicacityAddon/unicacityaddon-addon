@@ -6,6 +6,9 @@ import com.rettichlp.unicacityaddon.base.config.nametag.setting.SpecificNameTagS
 import com.rettichlp.unicacityaddon.base.config.nametag.setting.StreetwarNameTagSetting;
 import net.labymod.api.configuration.loader.property.ConfigProperty;
 
+/**
+ * @author RettichLP
+ */
 public interface NameTagSetting {
 
     ConfigProperty<Integer> updateInterval();

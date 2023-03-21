@@ -5,6 +5,9 @@ import com.rettichlp.unicacityaddon.base.text.ChatType;
 
 import java.util.regex.Pattern;
 
+/**
+ * @author RettichLP
+ */
 public enum ReinforcementType {
     DEFAULT("-f", ChatType.FCHAT, null),
     D_CHAT("-d", ChatType.DCHAT, null),

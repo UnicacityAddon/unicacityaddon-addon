@@ -2,6 +2,9 @@ package com.rettichlp.unicacityaddon.base.enums.faction;
 
 import java.util.Arrays;
 
+/**
+ * @author RettichLP
+ */
 public enum DrugType {
 
     COCAINE("Kokain", "Koks", false),

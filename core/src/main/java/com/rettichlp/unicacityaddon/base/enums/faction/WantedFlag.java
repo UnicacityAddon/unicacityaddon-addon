@@ -2,6 +2,9 @@ package com.rettichlp.unicacityaddon.base.enums.faction;
 
 import com.rettichlp.unicacityaddon.base.utils.MathUtils;
 
+/**
+ * @author RettichLP
+ */
 public enum WantedFlag {
     TRIED("-v", "Versuchte/r/s ", "", "x/2"),
     SUBSIDY("-b", "Beihilfe bei der/dem ", "", "x-10"),

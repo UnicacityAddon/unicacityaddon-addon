@@ -4,6 +4,9 @@ import com.rettichlp.unicacityaddon.base.utils.MathUtils;
 
 import java.util.Arrays;
 
+/**
+ * @author RettichLP
+ */
 public enum DrugPurity {
 
     BEST("Höchste", 0), GOOD("Gute", 1), MEDIUM("Mittlere", 2), BAD("Schlechte", 3);

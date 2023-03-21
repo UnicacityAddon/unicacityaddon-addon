@@ -2,6 +2,9 @@ package com.rettichlp.unicacityaddon.base.enums.location;
 
 import net.labymod.api.util.math.vector.FloatVector3;
 
+/**
+ * @author RettichLP
+ */
 public enum ServiceCallBox {
 
     ALTSTADT("Altstadt", 267, 69, 603),

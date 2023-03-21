@@ -2,6 +2,9 @@ package com.rettichlp.unicacityaddon.base.config.reinforcement;
 
 import net.labymod.api.configuration.loader.property.ConfigProperty;
 
+/**
+ * @author RettichLP
+ */
 public interface ReinforcementSetting {
 
     ConfigProperty<String> reinforcement();

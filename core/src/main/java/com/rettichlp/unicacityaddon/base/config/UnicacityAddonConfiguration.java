@@ -13,6 +13,9 @@ import com.rettichlp.unicacityaddon.base.config.reinforcement.ReinforcementSetti
 import com.rettichlp.unicacityaddon.base.config.sloc.SlocSetting;
 import net.labymod.api.configuration.loader.property.ConfigProperty;
 
+/**
+ * @author RettichLP
+ */
 public interface UnicacityAddonConfiguration {
 
     HotkeySetting hotkeySetting();

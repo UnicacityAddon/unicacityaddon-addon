@@ -1,5 +1,8 @@
 package com.rettichlp.unicacityaddon.base.enums.teamspeak;
 
+/**
+ * @author RettichLP
+ */
 public enum TSChannelCategory {
     UNICACITY_TEAM("UnicaCity Team", 2),
     SERVER_TEAM("Serverteams", 15),

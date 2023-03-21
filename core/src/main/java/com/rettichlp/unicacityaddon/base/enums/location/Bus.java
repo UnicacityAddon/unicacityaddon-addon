@@ -4,6 +4,9 @@ import net.labymod.api.util.math.vector.FloatVector3;
 
 import java.util.Arrays;
 
+/**
+ * @author RettichLP
+ */
 public enum Bus {
     ALTSTADT("Altstadt", 263, 70, 596),
     ASIA_PARK("Asia Park", 1278, 70, -74),

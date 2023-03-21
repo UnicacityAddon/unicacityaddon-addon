@@ -1,5 +1,8 @@
 package com.rettichlp.unicacityaddon.base.enums;
 
+/**
+ * @author RettichLP
+ */
 public enum DropPosition {
     GLAS(885, 67, 350),
     WASTE(906, 66, 361),

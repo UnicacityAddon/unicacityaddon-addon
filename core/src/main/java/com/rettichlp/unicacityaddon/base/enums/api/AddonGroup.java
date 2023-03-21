@@ -7,6 +7,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * @author RettichLP
+ */
 public enum AddonGroup {
     CEO("CEO", "UCAddon CEO", ColorCode.RED, new ArrayList<>()),
     DEV("DEV", "UCAddon Developer", ColorCode.AQUA, new ArrayList<>()),
