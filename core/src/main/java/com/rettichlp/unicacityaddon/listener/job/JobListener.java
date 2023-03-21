@@ -5,8 +5,10 @@ import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.enums.DropPosition;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
+import com.rettichlp.unicacityaddon.controller.WorldInteractionController;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
+import net.labymod.api.event.client.entity.player.ClientPlayerInteractEvent;
 import net.labymod.api.util.math.vector.FloatVector3;
 
 import java.util.Timer;
@@ -29,33 +31,35 @@ public class JobListener {
     private final Timer timer = new Timer();
 
     private final UnicacityAddon unicacityAddon;
+    private final WorldInteractionController worldInteractionController;
 
-    public JobListener(UnicacityAddon unicacityAddon) {
+    public JobListener(UnicacityAddon unicacityAddon, WorldInteractionController worldInteractionController) {
         this.unicacityAddon = unicacityAddon;
+        this.worldInteractionController = worldInteractionController;
     }
 
-    //    @Subscribe
-//    public void onPlayerInteract(PlayerInteractEvent e) {
-//        if (!(e instanceof PlayerInteractEvent.RightClickBlock) || !UnicacityAddon.isUnicacity())
-//            return;
-//
-//        World world = e.getWorld();
-//        BlockPos blockPos = e.getPos();
-//
-//        if (isDropState && System.currentTimeMillis() - lastUse > 1000 && onDump(blockPos)) {
-//            lastUse = System.currentTimeMillis();
-//            p.sendServerMessage("/dropwaste");
-//            return;
-//        }
-//
-//        TileEntity tileEntity = world.getTileEntity(blockPos);
-//        if (!(tileEntity instanceof TileEntitySign))
-//            return;
-//        ITextComponent[] lines = ((TileEntitySign) tileEntity).signText;
-//        Matcher matcher = Pattern.compile("^== (\\d+) ==$").matcher(lines[1].getUnformattedText());
-//        if (matcher.find())
-//            drop();
-//    }
+    @Subscribe
+    public void onClientPlayerInteract(ClientPlayerInteractEvent e) {
+        ClientPlayerInteractEvent.InteractionType interactionType = e.type();
+
+        if (interactionType.equals(ClientPlayerInteractEvent.InteractionType.INTERACT) && UnicacityAddon.isUnicacity()) {
+            AddonPlayer p = UnicacityAddon.PLAYER;
+
+            FloatVector3 pos = this.worldInteractionController.getClickedBlockLocation();
+
+            if (isDropState && System.currentTimeMillis() - lastUse > 1000 && pos != null && onDump(pos)) {
+                lastUse = System.currentTimeMillis();
+                p.sendServerMessage("/dropwaste");
+                return;
+            }
+
+            boolean isHouseNumberSign = pos != null && this.worldInteractionController.isHouseNumberSign(pos);
+
+            if (isHouseNumberSign) {
+                drop();
+            }
+        }
+    }
 
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {
@@ -137,11 +141,11 @@ public class JobListener {
             }, TimeUnit.SECONDS.toMillis(3));
     }
 
-    private boolean onDump(FloatVector3 blockPos) {
-        return blockPos.distance(new FloatVector3(DropPosition.GLAS.getX(), DropPosition.GLAS.getY(), DropPosition.GLAS.getZ())) < 3 ||
-                blockPos.distance(new FloatVector3(DropPosition.WASTE.getX(), DropPosition.WASTE.getY(), DropPosition.WASTE.getZ())) < 3 ||
-                blockPos.distance(new FloatVector3(DropPosition.METAL.getX(), DropPosition.METAL.getY(), DropPosition.METAL.getZ())) < 3 ||
-                blockPos.distance(new FloatVector3(DropPosition.WOOD.getX(), DropPosition.WOOD.getY(), DropPosition.WOOD.getZ())) < 3;
+    private boolean onDump(FloatVector3 pos) {
+        return pos.distance(new FloatVector3(DropPosition.GLAS.getX(), DropPosition.GLAS.getY(), DropPosition.GLAS.getZ())) < 3 ||
+                pos.distance(new FloatVector3(DropPosition.WASTE.getX(), DropPosition.WASTE.getY(), DropPosition.WASTE.getZ())) < 3 ||
+                pos.distance(new FloatVector3(DropPosition.METAL.getX(), DropPosition.METAL.getY(), DropPosition.METAL.getZ())) < 3 ||
+                pos.distance(new FloatVector3(DropPosition.WOOD.getX(), DropPosition.WOOD.getY(), DropPosition.WOOD.getZ())) < 3;
     }
 
     private void drop() {

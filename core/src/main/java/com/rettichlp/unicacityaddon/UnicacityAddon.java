@@ -103,6 +103,7 @@ import com.rettichlp.unicacityaddon.controller.DeadBodyController;
 import com.rettichlp.unicacityaddon.controller.OverlayMessageController;
 import com.rettichlp.unicacityaddon.controller.ScreenshotController;
 import com.rettichlp.unicacityaddon.controller.TabListController;
+import com.rettichlp.unicacityaddon.controller.WorldInteractionController;
 import com.rettichlp.unicacityaddon.core.generated.DefaultReferenceStorage;
 import com.rettichlp.unicacityaddon.hudwidgets.AmmunitionHudWidget;
 import com.rettichlp.unicacityaddon.hudwidgets.BombHudWidget;
@@ -267,6 +268,7 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
         OverlayMessageController overlayMessageController = referenceStorage.getOverlayMessageController();
         ScreenshotController screenshotController = referenceStorage.getScreenshotController();
         TabListController tabListController = referenceStorage.getTabListController();
+        WorldInteractionController worldInteractionController = referenceStorage.getWorldInteractionController();
 
         this.registerListener(new ABuyListener(this));
         this.registerListener(new AccountListener(this));
@@ -299,7 +301,7 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
         this.registerListener(new HouseInteractionListener(this, overlayMessageController));
         this.registerListener(new HouseRenterListener(this));
         this.registerListener(new HQMessageListener(this));
-        this.registerListener(new JobListener(this));
+        this.registerListener(new JobListener(this, worldInteractionController));
         this.registerListener(new KarmaMessageListener(this));
         this.registerListener(new MedicationListener(this));
         this.registerListener(new MemberInfoListener(this));
