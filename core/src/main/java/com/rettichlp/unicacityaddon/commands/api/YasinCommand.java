@@ -44,13 +44,13 @@ public class YasinCommand extends Command {
 
                         p.sendMessage(Message.getBuilder()
                                 .of("»").color(ColorCode.GRAY).advance().space()
-                                .of(done ? FormattingCode.STRIKETHROUGH.getCode() : "" + name).color(ColorCode.AQUA).advance().space()
+                                .of((done ? FormattingCode.STRIKETHROUGH.getCode() : "") + name).color(ColorCode.AQUA).advance().space()
                                 .of(!done ? "[✔] " : "").color(ColorCode.GREEN)
-                                .clickEvent(ClickEvent.Action.RUN_COMMAND, "/yasin done " + name)
-                                .advance()
+                                        .clickEvent(ClickEvent.Action.RUN_COMMAND, "/yasin done " + name)
+                                        .advance()
                                 .of("[✕]").color(ColorCode.RED)
-                                .clickEvent(ClickEvent.Action.RUN_COMMAND, "/yasin remove " + name)
-                                .advance()
+                                        .clickEvent(ClickEvent.Action.RUN_COMMAND, "/yasin remove " + name)
+                                        .advance()
                                 .createComponent());
                     });
 

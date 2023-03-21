@@ -25,7 +25,7 @@ public class PatternHandler {
      */
     public static final Pattern NAME_PATTERN = Pattern.compile("<h4 class=\"h5 g-mb-5\"><strong>(\\w+)");
     public static final Pattern RANK_PATTERN = Pattern.compile("<strong>Rang (\\d)( \\(Leader\\))*</strong>");
-    public static final Pattern STRIP_COLOR_PATTERN = Pattern.compile("(?i)§[A-FK-OR0-9]");
+    public static final Pattern STRIP_COLOR_PATTERN = Pattern.compile("(?i)[§&][A-FK-OR0-9]");
     public static final Pattern STRIP_PREFIX_PATTERN = Pattern.compile("\\[[a-zA-Z0-9]+]");
 
     /**

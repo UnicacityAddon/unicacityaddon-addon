@@ -24,6 +24,7 @@ import com.rettichlp.unicacityaddon.commands.ClockCommand;
 import com.rettichlp.unicacityaddon.commands.CoordlistCommand;
 import com.rettichlp.unicacityaddon.commands.CountdownCommand;
 import com.rettichlp.unicacityaddon.commands.DiscordCommand;
+import com.rettichlp.unicacityaddon.commands.DutyCommand;
 import com.rettichlp.unicacityaddon.commands.DyavolCommand;
 import com.rettichlp.unicacityaddon.commands.GetGunCommand;
 import com.rettichlp.unicacityaddon.commands.MaskInfoCommand;
@@ -245,8 +246,10 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
     protected void enable() {
         this.registerSettingCategory();
 
-        this.registerListeners();
-        this.registerCommands();
+        DefaultReferenceStorage referenceStorage = this.getReferenceStorageAccessor();
+
+        this.registerListeners(referenceStorage);
+        this.registerCommands(referenceStorage);
         this.registerHudWidgets();
         this.registerTags();
         this.logger().info("Enabled UnicacityAddon");
@@ -260,8 +263,7 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
         return DefaultUnicacityAddonConfiguration.class;
     }
 
-    private void registerListeners() {
-        DefaultReferenceStorage referenceStorage = this.getReferenceStorageAccessor();
+    private void registerListeners(DefaultReferenceStorage referenceStorage) {
         BusController busController = referenceStorage.getBusController();
         CarController carController = referenceStorage.getCarController();
         DeadBodyController deadBodyController = referenceStorage.getDeadBodyController();
@@ -324,7 +326,9 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
         this.registerListener(new WeaponClickListener(this));
     }
 
-    private void registerCommands() {
+    private void registerCommands(DefaultReferenceStorage referenceStorage) {
+        OverlayMessageController overlayMessageController = referenceStorage.getOverlayMessageController();
+
         this.registerCommand(new ABuyCommand());
         this.registerCommand(new ActivityCommand());
         this.registerCommand(new ATMFillCommand());
@@ -337,6 +341,7 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
         this.registerCommand(new CoordlistCommand());
         this.registerCommand(new CountdownCommand());
         this.registerCommand(new DiscordCommand());
+        this.registerCommand(new DutyCommand());
         this.registerCommand(new DropDrugAllCommand());
         this.registerCommand(new DyavolCommand());
         this.registerCommand(new EinzahlenCommand());
@@ -350,7 +355,7 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
         this.registerCommand(new NearestATMCommand());
         this.registerCommand(new NearestJobCommand());
         this.registerCommand(new ReichensteuerCommand());
-        this.registerCommand(new ReviveStatsCommand());
+        this.registerCommand(new ReviveStatsCommand(overlayMessageController));
         this.registerCommand(new ScreenCommand());
         this.registerCommand(new ShutdownGraveyardCommand());
         this.registerCommand(new ShutdownJailCommand());

@@ -22,6 +22,7 @@ import net.labymod.api.client.scoreboard.ScoreboardScore;
 import net.labymod.api.client.world.ClientWorld;
 import net.labymod.api.util.math.vector.FloatVector3;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
@@ -199,13 +200,13 @@ public class DefaultAddonPlayer implements AddonPlayer {
         boolean hasAnyPlayerHigherRank = filteredPlayerMap.entrySet().stream()
                 .anyMatch(stringIntegerEntry -> stringIntegerEntry.getValue() > getRank()); // has a higher rank than himself
 
-        boolean hasRankPriority = filteredPlayerMap.entrySet().stream()
+        List<String> rankPlayerList = filteredPlayerMap.entrySet().stream()
                 .filter(stringIntegerEntry -> stringIntegerEntry.getValue().equals(getRank()))
                 .map(Map.Entry::getKey)
                 .sorted()
-                .collect(Collectors.toList())
-                .get(0)
-                .equals(getName());
+                .collect(Collectors.toList());
+
+        boolean hasRankPriority = !rankPlayerList.isEmpty() && rankPlayerList.get(0).equals(getName());
 
         return !hasAnyPlayerHigherRank && hasRankPriority;
     }

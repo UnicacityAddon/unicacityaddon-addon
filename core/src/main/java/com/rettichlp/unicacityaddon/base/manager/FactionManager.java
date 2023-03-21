@@ -22,11 +22,9 @@ import java.util.stream.Collectors;
 public class FactionManager {
 
     public static boolean checkPlayerDuty(String playerName) {
-        if (UnicacityAddon.ADDON.labyAPI().minecraft().isSingleplayer())
-            return false;
-        return UnicacityAddon.ADDON.labyAPI().minecraft().getClientPacketListener().getNetworkPlayerInfos().stream()
+        return UnicacityAddon.isUnicacity() && UnicacityAddon.ADDON.labyAPI().minecraft().getClientPacketListener().getNetworkPlayerInfos().stream()
                 .map(networkPlayerInfo -> TextUtils.legacy(networkPlayerInfo.displayName()))
-                .filter(s -> s.startsWith("§1[UC]") || s.startsWith("§1") || s.startsWith("§9[UC]") || s.startsWith("§9") || s.startsWith("§4[UC]") || s.startsWith("§4") || s.startsWith("§6[UC]") || s.startsWith("§6"))
+                .filter(s -> s.startsWith("&1[UC]") || s.startsWith("&1") || s.startsWith("&9[UC]") || s.startsWith("&9") || s.startsWith("&4[UC]") || s.startsWith("&4") || s.startsWith("&6[UC]") || s.startsWith("&6"))
                 .collect(Collectors.toList()).stream()
                 .map(ForgeUtils::stripColor)
                 .map(ForgeUtils::stripPrefix)
