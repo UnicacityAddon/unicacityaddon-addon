@@ -97,7 +97,7 @@ public class TickListener {
             handleTimer();
         }
 
-        if (e.isUnicacity() && e.isPhase(UnicacityAddonTickEvent.Phase.SECOND)) {
+        if (e.isUnicacity() && e.isPhase(UnicacityAddonTickEvent.Phase.SECOND) && this.unicacityAddon.configuration().nameTagSetting().corpse().get()) {
             this.deadBodyController.updateDisplayName();
         }
     }

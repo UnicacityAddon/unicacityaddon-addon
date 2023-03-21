@@ -23,4 +23,6 @@ public interface NameTagSetting {
     ConfigProperty<Boolean> duty();
 
     SpecificNameTagSetting specificNameTagSetting();
+
+    ConfigProperty<Boolean> corpse();
 }

@@ -38,6 +38,9 @@ public class DefaultNameTagSetting extends Config implements NameTagSetting {
 
     private final DefaultSpecificNameTagSetting factionSpecificNameTagSetting = new DefaultSpecificNameTagSetting();
 
+    @SwitchSetting
+    private final ConfigProperty<Boolean> corpse = new ConfigProperty<>(true);
+
     @Override
     public ConfigProperty<Integer> updateInterval() {
         return this.updateInterval;
@@ -76,5 +79,10 @@ public class DefaultNameTagSetting extends Config implements NameTagSetting {
     @Override
     public SpecificNameTagSetting specificNameTagSetting() {
         return this.factionSpecificNameTagSetting;
+    }
+
+    @Override
+    public ConfigProperty<Boolean> corpse() {
+        return this.corpse;
     }
 }
