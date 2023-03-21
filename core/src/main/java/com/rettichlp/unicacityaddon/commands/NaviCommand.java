@@ -7,7 +7,6 @@ import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.models.NaviPoint;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.utils.MathUtils;
-import com.rettichlp.unicacityaddon.base.utils.TextUtils;
 import net.labymod.api.client.chat.command.Command;
 
 import java.util.List;
@@ -27,8 +26,7 @@ public class NaviCommand extends Command {
     public boolean execute(String prefix, String[] arguments) {
         AddonPlayer p = UnicacityAddon.PLAYER;
         if (arguments.length < 1) {
-            p.sendServerMessage("/navi");
-            return true;
+            return false;
         }
 
         if (MathUtils.isInteger(arguments[0])) {
@@ -38,8 +36,7 @@ public class NaviCommand extends Command {
 
         NaviPoint naviPoint = NaviPoint.getNaviPointByTabName(arguments[0].trim());
         if (naviPoint == null) {
-            p.sendServerMessage("/navi " + TextUtils.makeStringByArgs(arguments, " "));
-            return true;
+            return false;
         }
 
         p.setNaviRoute(naviPoint.getBlockPos());
