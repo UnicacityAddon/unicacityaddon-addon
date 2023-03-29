@@ -6,15 +6,19 @@ import com.rettichlp.unicacityaddon.base.enums.location.Bus;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.utils.ForgeUtils;
 import com.rettichlp.unicacityaddon.commands.BusCommand;
-import com.rettichlp.unicacityaddon.controller.BusController;
+import com.rettichlp.unicacityaddon.controller.TransportController;
 import net.labymod.api.models.Implements;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiHopper;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Container;
+import net.minecraft.inventory.ContainerChest;
 import net.minecraft.inventory.ContainerHopper;
 import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemStack;
 
 import javax.inject.Singleton;
 import java.util.Map;
@@ -24,8 +28,8 @@ import java.util.stream.Collectors;
  * @author RettichLP
  */
 @Singleton
-@Implements(BusController.class)
-public class VersionedBusController extends BusController {
+@Implements(TransportController.class)
+public class VersionedTransportController extends TransportController {
 
     @Override
     public void processBusRouting() {
@@ -61,6 +65,26 @@ public class VersionedBusController extends BusController {
                 } else {
                     p.sendErrorMessage("Es konnte keine Route gefunden werden.");
                     BusCommand.active = false;
+                }
+            }
+        }
+    }
+
+    @Override
+    public void carInteract() {
+        GuiScreen guiScreen = Minecraft.getMinecraft().currentScreen;
+        if (guiScreen instanceof GuiContainer && ((GuiContainer) guiScreen).inventorySlots instanceof ContainerChest) {
+            ContainerChest containerChest = (ContainerChest) ((GuiContainer) guiScreen).inventorySlots;
+
+            if (containerChest.getLowerChestInventory().getDisplayName().getUnformattedText().equals("§6CarControl")) {
+                int numberOfCars = (int) containerChest.getInventory().stream()
+                        .filter(itemStack -> !itemStack.isEmpty() && itemStack.getDisplayName().startsWith(ColorCode.GOLD.getCode()))
+                        .map(ItemStack::getItem)
+                        .filter(item -> item.equals(Items.MINECART) || item.equals(Items.EMERALD) || item.equals(Items.REDSTONE))
+                        .count();
+
+                if (numberOfCars == 1) {
+                    Minecraft.getMinecraft().playerController.windowClick(containerChest.windowId, 0, 0, ClickType.PICKUP, Minecraft.getMinecraft().player);
                 }
             }
         }

@@ -8,7 +8,9 @@ import org.jetbrains.annotations.Nullable;
  */
 @Nullable
 @Referenceable
-public abstract class CarController {
+public abstract class TransportController {
 
-    public abstract void interact();
+    public abstract void processBusRouting();
+
+    public abstract void carInteract();
 }

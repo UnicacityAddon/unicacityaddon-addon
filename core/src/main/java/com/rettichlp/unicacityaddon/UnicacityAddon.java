@@ -98,12 +98,11 @@ import com.rettichlp.unicacityaddon.commands.teamspeak.MoveHereCommand;
 import com.rettichlp.unicacityaddon.commands.teamspeak.MoveToCommand;
 import com.rettichlp.unicacityaddon.commands.teamspeak.TSFindCommand;
 import com.rettichlp.unicacityaddon.commands.teamspeak.TSJoinCommand;
-import com.rettichlp.unicacityaddon.controller.BusController;
-import com.rettichlp.unicacityaddon.controller.CarController;
 import com.rettichlp.unicacityaddon.controller.DeadBodyController;
 import com.rettichlp.unicacityaddon.controller.OverlayMessageController;
 import com.rettichlp.unicacityaddon.controller.ScreenshotController;
 import com.rettichlp.unicacityaddon.controller.TabListController;
+import com.rettichlp.unicacityaddon.controller.TransportController;
 import com.rettichlp.unicacityaddon.controller.WorldInteractionController;
 import com.rettichlp.unicacityaddon.core.generated.DefaultReferenceStorage;
 import com.rettichlp.unicacityaddon.hudwidgets.AmmunitionHudWidget;
@@ -264,8 +263,7 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
     }
 
     private void registerListeners(DefaultReferenceStorage referenceStorage) {
-        BusController busController = referenceStorage.getBusController();
-        CarController carController = referenceStorage.getCarController();
+        TransportController transportController = referenceStorage.getCarController();
         DeadBodyController deadBodyController = referenceStorage.getDeadBodyController();
         OverlayMessageController overlayMessageController = referenceStorage.getOverlayMessageController();
         ScreenshotController screenshotController = referenceStorage.getScreenshotController();
@@ -282,7 +280,7 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
         this.registerListener(new BlacklistModifyListener(this));
         this.registerListener(new BombListener(this));
         this.registerListener(new BroadcastListener(this));
-        this.registerListener(new CarListener(this, carController));
+        this.registerListener(new CarListener(this, transportController));
         this.registerListener(new ChatLogReceiveChatListener(this));
         this.registerListener(new ChatLogSendChatListener(this));
         this.registerListener(new ContractListener(this));
@@ -319,7 +317,7 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
         this.registerListener(new ServerLoginListener(this));
         this.registerListener(new ShareLocationListener(this));
         this.registerListener(new TabListListener(this, tabListController));
-        this.registerListener(new TickListener(this, screenshotController, deadBodyController, busController));
+        this.registerListener(new TickListener(this, screenshotController, deadBodyController, transportController));
         this.registerListener(new TimerListener(this));
         this.registerListener(new WaitingRoomListener(this));
         this.registerListener(new WantedListener(this));

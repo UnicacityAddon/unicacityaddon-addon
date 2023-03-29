@@ -5,9 +5,9 @@ import com.rettichlp.unicacityaddon.base.builder.ScreenshotBuilder;
 import com.rettichlp.unicacityaddon.base.events.UnicacityAddonTickEvent;
 import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
-import com.rettichlp.unicacityaddon.controller.BusController;
 import com.rettichlp.unicacityaddon.controller.DeadBodyController;
 import com.rettichlp.unicacityaddon.controller.ScreenshotController;
+import com.rettichlp.unicacityaddon.controller.TransportController;
 import com.rettichlp.unicacityaddon.listener.faction.ReinforcementListener;
 import com.rettichlp.unicacityaddon.listener.faction.terroristen.BombListener;
 import net.labymod.api.event.Phase;
@@ -32,13 +32,13 @@ public class TickListener {
     private final UnicacityAddon unicacityAddon;
     private final ScreenshotController screenshotController;
     private final DeadBodyController deadBodyController;
-    private final BusController busController;
+    private final TransportController transportController;
 
-    public TickListener(UnicacityAddon unicacityAddon, ScreenshotController screenshotController, DeadBodyController deadBodyController, BusController busController) {
+    public TickListener(UnicacityAddon unicacityAddon, ScreenshotController screenshotController, DeadBodyController deadBodyController, TransportController transportController) {
         this.unicacityAddon = unicacityAddon;
         this.screenshotController = screenshotController;
         this.deadBodyController = deadBodyController;
-        this.busController = busController;
+        this.transportController = transportController;
     }
 
     @Subscribe
@@ -89,7 +89,7 @@ public class TickListener {
         }
 
         if (e.isPhase(UnicacityAddonTickEvent.Phase.TICK_5)) {
-            this.busController.processBusRouting();
+            this.transportController.processBusRouting();
             // TODO: 17.03.2023 DropDrugAllCommand.process();
         }
 
