@@ -52,7 +52,7 @@ public class RequestBuilder {
         public JsonElement send() throws APIResponseException {
             String urlString = WebsiteUtils.createUrl(this.nonProd, this.applicationPath, this.subPath, this.parameter);
             String response = WebsiteUtils.sendRequest(urlString);
-            return JsonParser.parseString(response);
+            return new JsonParser().parse(response);
         }
 
         public void sendAsync() {

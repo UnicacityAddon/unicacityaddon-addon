@@ -106,7 +106,7 @@ public class FileManager {
         }
 
         try {
-            JsonParser.parseString(jsonData); // validate check
+            new JsonParser().parse(jsonData); // validate check
             DATA = jsonData.isEmpty() ? new Data() : new Gson().fromJson(jsonData, Data.class);
         } catch (JsonSyntaxException e) {
             UnicacityAddon.LOGGER.info("Data cannot be created because Json is invalid: " + jsonData);

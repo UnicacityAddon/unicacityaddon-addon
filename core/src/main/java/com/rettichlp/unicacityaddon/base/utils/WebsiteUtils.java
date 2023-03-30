@@ -38,7 +38,7 @@ public class WebsiteUtils {
             return websiteSource;
         } else {
             throw new APIResponseException(urlString, responseCode, isApiRequest
-                    ? JsonParser.parseString(websiteSource).getAsJsonObject().get("info").getAsString()
+                    ? new JsonParser().parse(websiteSource).getAsJsonObject().get("info").getAsString()
                     : HttpStatus.valueOf(responseCode).getReasonPhrase());
         }
     }
