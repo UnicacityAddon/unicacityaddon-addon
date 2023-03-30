@@ -1,22 +1,18 @@
 package com.rettichlp.unicacityaddon.v1_16_5;
 
-import com.google.common.collect.Ordering;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.FormattingCode;
-import com.rettichlp.unicacityaddon.base.utils.ReflectionUtils;
 import com.rettichlp.unicacityaddon.base.utils.TextUtils;
 import com.rettichlp.unicacityaddon.controller.TabListController;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.TextColor;
 import net.labymod.api.client.network.NetworkPlayerInfo;
 import net.labymod.api.models.Implements;
-import net.minecraft.client.gui.components.PlayerTabOverlay;
-
-import javax.inject.Inject;
-import javax.inject.Singleton;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
 
 /**
  * @author RettichLP
@@ -33,7 +29,36 @@ public class VersionedTabListController extends TabListController implements Com
 
     @Override
     public void orderTabList() {
-        ReflectionUtils.setValue(PlayerTabOverlay.class, Ordering.class, Ordering.from(new VersionedTabListController()));
+
+//        System.out.println("execute tab");
+//        // Get the scoreboard object from the Minecraft client
+//        Scoreboard scoreboard = Minecraft.getInstance().level.getScoreboard();
+//
+//        // Get the objective that the PlayerTabOverlay uses
+//        Objective objective = scoreboard.getObjective("list");
+//
+//        System.out.println("obs: " + scoreboard.getObjectives());
+//
+//
+//        assert objective != null;
+//        System.out.println("objective: " + objective.getName());
+//
+//
+//        System.out.println("objective b: " + scoreboard.getPlayerScores(objective).toString());
+//
+//        Collection<Score> scores = scoreboard.getPlayerScores(objective);
+//
+//        scores.forEach(score -> {
+//            System.out.println(Objects.requireNonNull(score.getObjective()).getName());
+//        });
+//
+//        System.out.println("objective a: " + scoreboard.getPlayerScores(objective).toString());
+//
+//
+//
+//        // Remove all existing scores from the objective
+//
+//        scoreboard.removeObjective(objective);
     }
 
     @Override

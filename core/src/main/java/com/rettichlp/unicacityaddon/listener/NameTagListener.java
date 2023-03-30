@@ -40,8 +40,9 @@ public class NameTagListener {
         if (e.context().equals(PlayerNameTagRenderEvent.Context.PLAYER_RENDER)) {
             NetworkPlayerInfo networkPlayerInfo = e.playerInfo();
 
-            if (e.nameTag().toString().contains("§k") || e.nameTag().toString().contains("&k"))
-                UnicacityAddon.debug("NAMETAG: " + e.nameTag() + " " + networkPlayerInfo.profile().getUsername());
+            // TODO: 30.03.2023
+            // if (e.nameTag().toString().contains("§k") || e.nameTag().toString().contains("&k"))
+            //     UnicacityAddon.debug("NAMETAG: " + e.nameTag() + " " + networkPlayerInfo.profile().getUsername());
 
             if (networkPlayerInfo != null && !e.nameTag().style().isDecorationSet(TextDecoration.OBFUSCATED)) {
                 String playerName = networkPlayerInfo.profile().getUsername();

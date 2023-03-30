@@ -33,8 +33,6 @@ public class VersionedDeadBodyController extends DeadBodyController {
 
     @Override
     public void updateDisplayName() {
-        System.out.println("start update display name");
-
         FloatVector3 position = UnicacityAddon.PLAYER.getPosition();
 
         AABB aabb = new AABB(
