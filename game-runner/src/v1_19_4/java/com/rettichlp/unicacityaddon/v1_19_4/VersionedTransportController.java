@@ -6,9 +6,6 @@ import com.rettichlp.unicacityaddon.base.enums.location.Bus;
 import com.rettichlp.unicacityaddon.commands.BusCommand;
 import com.rettichlp.unicacityaddon.controller.TransportController;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMaps;
-import java.util.Map;
-import java.util.stream.Collectors;
-import javax.inject.Singleton;
 import net.labymod.api.models.Implements;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
@@ -21,6 +18,10 @@ import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.HopperMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.Items;
+
+import javax.inject.Singleton;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author RettichLP

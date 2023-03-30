@@ -4,15 +4,16 @@ import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.FormattingCode;
 import com.rettichlp.unicacityaddon.base.utils.TextUtils;
 import com.rettichlp.unicacityaddon.controller.TabListController;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.TextColor;
 import net.labymod.api.client.network.NetworkPlayerInfo;
 import net.labymod.api.models.Implements;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * @author RettichLP

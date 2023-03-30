@@ -1,8 +1,6 @@
 package com.rettichlp.unicacityaddon.v1_19_4;
 
 import com.rettichlp.unicacityaddon.controller.WorldInteractionController;
-import java.util.regex.Pattern;
-import javax.inject.Singleton;
 import net.labymod.api.models.Implements;
 import net.labymod.api.util.math.vector.FloatVector3;
 import net.minecraft.client.Minecraft;
@@ -13,6 +11,9 @@ import net.minecraft.world.level.block.WallBannerBlock;
 import net.minecraft.world.level.block.entity.SignBlockEntity;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+
+import javax.inject.Singleton;
+import java.util.regex.Pattern;
 
 /**
  * @author RettichLP

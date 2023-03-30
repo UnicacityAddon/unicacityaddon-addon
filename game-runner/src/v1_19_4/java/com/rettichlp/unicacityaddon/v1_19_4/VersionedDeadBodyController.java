@@ -7,9 +7,6 @@ import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.controller.DeadBodyController;
 import com.rettichlp.unicacityaddon.listener.NameTagListener;
-import java.util.Objects;
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import net.labymod.api.models.Implements;
 import net.labymod.api.util.math.vector.FloatVector3;
 import net.minecraft.ChatFormatting;
@@ -19,6 +16,10 @@ import net.minecraft.network.chat.TextColor;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.phys.AABB;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import java.util.Objects;
 
 /**
  * @author RettichLP
