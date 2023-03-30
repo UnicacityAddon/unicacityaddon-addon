@@ -226,7 +226,7 @@ import net.labymod.api.util.logging.Logging;
 @AddonMain
 public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration> {
 
-    public static final String VERSION = "2.0.0-alpha";
+    public static final String VERSION = "2.0.0-alpha.1";
     public static UnicacityAddon ADDON;
     public static AddonPlayer PLAYER;
     public static Logging LOGGER;
@@ -263,7 +263,7 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
     }
 
     private void registerListeners(DefaultReferenceStorage referenceStorage) {
-        TransportController transportController = referenceStorage.getCarController();
+        TransportController transportController = referenceStorage.getTransportController();
         DeadBodyController deadBodyController = referenceStorage.getDeadBodyController();
         OverlayMessageController overlayMessageController = referenceStorage.getOverlayMessageController();
         ScreenshotController screenshotController = referenceStorage.getScreenshotController();

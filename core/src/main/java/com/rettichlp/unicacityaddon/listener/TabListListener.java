@@ -22,13 +22,13 @@ public class TabListListener {
 
     @Subscribe
     public void onScoreboardTeamUpdate(ScoreboardTeamUpdateEvent e) {
-        if (e.team().getEntries().size() > 0)
-            UnicacityAddon.debug("SCOREBOARDTEAM: " + e.team().getTeamName() + " (" + e.team().getEntries() + ")");
+        // if (e.team().getEntries().size() > 0)
+        // TODO: 30.03.2023 UnicacityAddon.debug("SCOREBOARDTEAM: " + e.team().getTeamName() + " (" + e.team().getEntries() + ")");
     }
 
     @Subscribe
     public void onTabListUpdate(TabListUpdateEvent e) {
-        UnicacityAddon.debug("TABLIST UPDATE");
+        // TODO: 30.03.2023 UnicacityAddon.debug("TABLIST UPDATE");
 //        this.tabListController.orderTabList();
     }
 }

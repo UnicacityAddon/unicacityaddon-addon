@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "com.rettichlp.unicacityaddon"
-version = "2.0.0-alpha"
+version = "2.0.0-alpha.1"
 
 java.toolchain.languageVersion.set(JavaLanguageVersion.of(17))
 
@@ -17,7 +17,7 @@ labyMod {
         author = "RettichLP & Dimiikou"
         description = "This addon is a modification for UnicaCity providing specialized and nice-to-have features and utilities for everyday gameplay."
         minecraftVersion = "*"
-        version = System.getenv().getOrDefault("VERSION", "2.0.0-alpha")
+        version = System.getenv().getOrDefault("VERSION", "2.0.0-alpha.1")
     }
 
     minecraft {
