@@ -21,9 +21,11 @@ public enum ReinforcementType {
     CONTRACT("-ct", ChatType.FCHAT, "Contract!"),
     PLANT("-p", ChatType.DCHAT, "Plant!"),
     BOMB("-b", ChatType.DCHAT, "Bombe!"),
-    HOSTAGE_TAKING("-gn", ChatType.DCHAT, "Geiselnahme!"),
+    HOSTAGE_TAKING("-gn", ChatType.FCHAT, "Geiselnahme!"),
+    HOSTAGE_TAKING_D("-gnd", ChatType.DCHAT, "Geiselnahme!"),
     TRAINING("-t", ChatType.FCHAT, "Training!"),
-    TRAINING_D("-td", ChatType.DCHAT, "Training!");
+    TRAINING_D("-td", ChatType.DCHAT, "Training!"),
+    TEST("-test", ChatType.FCHAT, "Test!");
 
     private final String argument;
     private final ChatType chatType;
