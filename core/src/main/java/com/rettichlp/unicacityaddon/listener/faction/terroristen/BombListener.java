@@ -34,6 +34,9 @@ public class BombListener {
         this.unicacityAddon = unicacityAddon;
     }
 
+    /**
+     * Quote: Rettich: *tiefe Erzähler-Stimme* "Enhanced Conduit!" - RettichLP als Nick ihm Enhanced Energy Conduits gab, 21.03.2023
+     */
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {
         AddonPlayer p = UnicacityAddon.PLAYER;
