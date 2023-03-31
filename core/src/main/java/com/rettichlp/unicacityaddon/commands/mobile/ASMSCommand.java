@@ -23,13 +23,16 @@ public class ASMSCommand extends Command {
     private static final String usage = "/asms [Spielername] [Nachricht]";
     private final Timer timer = new Timer();
 
-    public ASMSCommand() {
+    private final UnicacityAddon unicacityAddon;
+
+    public ASMSCommand(UnicacityAddon unicacityAddon) {
         super("asms");
+        this.unicacityAddon = unicacityAddon;
     }
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
 
         if (arguments.length < 2) {
             p.sendSyntaxMessage(usage);
@@ -57,6 +60,6 @@ public class ASMSCommand extends Command {
 
     @Override
     public List<String> complete(String[] arguments) {
-        return TabCompletionBuilder.getBuilder(arguments).build();
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments).build();
     }
 }

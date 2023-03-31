@@ -25,7 +25,7 @@ public class GiftEigenbedarfListener {
 
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
         String msg = e.chatMessage().getPlainText();
 
         Matcher drugDealEndedMatcher = PatternHandler.DRUG_DEAL_ENDED.matcher(msg);

@@ -2,7 +2,6 @@ package com.rettichlp.unicacityaddon.commands.api;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
-import com.rettichlp.unicacityaddon.base.api.request.APIConverter;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.models.Revive;
@@ -11,7 +10,6 @@ import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.FormattingCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.utils.MathUtils;
-import com.rettichlp.unicacityaddon.controller.OverlayMessageController;
 import net.labymod.api.client.chat.command.Command;
 import net.labymod.api.client.component.event.HoverEvent;
 
@@ -27,18 +25,18 @@ public class ReviveStatsCommand extends Command {
 
     private static final String usage = "/revivestats (all|old|Spieler|Rang)";
 
-    private final OverlayMessageController overlayMessageController;
+    private UnicacityAddon unicacityAddon;
 
-    public ReviveStatsCommand(OverlayMessageController overlayMessageController) {
+    public ReviveStatsCommand(UnicacityAddon unicacityAddon) {
         super("revivestats", "rstats");
-        this.overlayMessageController = overlayMessageController;
+        this.unicacityAddon = unicacityAddon;
     }
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
 
-        this.overlayMessageController.sendOverlayMessage(ColorCode.AQUA.getCode() + FormattingCode.BOLD.getCode() + "Revivestats werden geladen...");
+        this.unicacityAddon.getDefaultReferenceStorage().getOverlayMessageController().sendOverlayMessage(ColorCode.AQUA.getCode() + FormattingCode.BOLD.getCode() + "Revivestats werden geladen...");
 
         new Thread(() -> {
             if (arguments.length == 0) {
@@ -58,9 +56,9 @@ public class ReviveStatsCommand extends Command {
 
     @Override
     public List<String> complete(String[] arguments) {
-        return TabCompletionBuilder.getBuilder(arguments)
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments)
                 .addAtIndex(1, "all", "old", "0", "1", "2", "3", "4", "5", "6")
-                .addAtIndex(1, APIConverter.PLAYERFACTIONMAP.entrySet().stream()
+                .addAtIndex(1, this.unicacityAddon.api().getPlayerFactionMap().entrySet().stream()
                         .filter(stringFactionEntry -> stringFactionEntry.getValue().equals(Faction.RETTUNGSDIENST))
                         .map(Map.Entry::getKey)
                         .sorted()
@@ -69,7 +67,7 @@ public class ReviveStatsCommand extends Command {
     }
 
     private void sendRevivestatsPlayer(AddonPlayer p, String name) {
-        Revive revive = APIConverter.getRevivePlayer(name);
+        Revive revive = this.unicacityAddon.api().loadRevivePlayer(name);
 
         if (revive != null) {
             int currentWeekReviveAmount = revive.getCurrentWeekReviveAmount();
@@ -100,14 +98,14 @@ public class ReviveStatsCommand extends Command {
         }
     }
 
-    private void sendRevivestatsRank(AddonPlayer p, int i) {
-        List<Revive> reviveList = APIConverter.getReviveRankList(i);
+    private void sendRevivestatsRank(AddonPlayer p, int rank) {
+        List<Revive> reviveList = this.unicacityAddon.api().loadReviveRankList(rank);
 
         p.sendEmptyMessage();
         p.sendMessage(Message.getBuilder()
                 .of("Revivestats").color(ColorCode.DARK_AQUA).bold().advance().space()
                 .of("(").color(ColorCode.GRAY).bold().advance()
-                .of(String.valueOf(i)).color(ColorCode.AQUA).bold().advance()
+                .of(String.valueOf(rank)).color(ColorCode.AQUA).bold().advance()
                 .of(")").color(ColorCode.GRAY).bold().advance()
                 .of(":").color(ColorCode.DARK_AQUA).bold().advance()
                 .createComponent());
@@ -140,7 +138,7 @@ public class ReviveStatsCommand extends Command {
     }
 
     private void sendRevivestatsAll(AddonPlayer p) {
-        List<Revive> reviveList = APIConverter.getReviveList();
+        List<Revive> reviveList = this.unicacityAddon.api().loadReviveList();
         if (!reviveList.isEmpty()) {
             p.sendEmptyMessage();
             p.sendMessage(Message.getBuilder()
@@ -152,7 +150,7 @@ public class ReviveStatsCommand extends Command {
     }
 
     private void sendRevivestatsOld(AddonPlayer p) {
-        List<Revive> reviveList = APIConverter.getReviveList();
+        List<Revive> reviveList = this.unicacityAddon.api().loadReviveList();
         if (!reviveList.isEmpty()) {
             p.sendEmptyMessage();
             p.sendMessage(Message.getBuilder()
@@ -172,7 +170,7 @@ public class ReviveStatsCommand extends Command {
 
             int finalI = i;
             List<Revive> rankReviveList = reviveList.stream()
-                    .filter(revive -> APIConverter.PLAYERRANKMAP.getOrDefault(revive.getMinecraftName(), -1).equals(finalI))
+                    .filter(revive -> this.unicacityAddon.api().getPlayerRankMap().getOrDefault(revive.getMinecraftName(), -1).equals(finalI))
                     .collect(Collectors.toList());
 
             int rankReviveAmount = onlyOld ? rankReviveList.stream().map(Revive::getLastWeekReviveAmount).reduce(0, Integer::sum) : rankReviveList.stream().map(Revive::getCurrentWeekReviveAmount).reduce(0, Integer::sum);

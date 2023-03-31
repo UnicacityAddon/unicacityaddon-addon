@@ -30,13 +30,16 @@ public class AFbankEinzahlenCommand extends Command {
 
     private static final String usage = "/afbank [einzahlen/auszahlen] [Betrag]";
 
-    public AFbankEinzahlenCommand() {
+    private final UnicacityAddon unicacityAddon;
+
+    public AFbankEinzahlenCommand(UnicacityAddon unicacityAddon) {
         super("afbank");
+        this.unicacityAddon = unicacityAddon;
     }
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
         if (arguments.length != 2 || !MathUtils.isInteger(arguments[1])) {
             p.sendSyntaxMessage(usage);
             return true;
@@ -76,7 +79,7 @@ public class AFbankEinzahlenCommand extends Command {
                     // send clock command
                     timer.schedule(new TimerTask() {
                         public void run() {
-                            sendClockMessage();
+                            sendClockMessage(AFbankEinzahlenCommand.this.unicacityAddon);
                         }
                     }, 200L);
                 }
@@ -87,12 +90,12 @@ public class AFbankEinzahlenCommand extends Command {
 
     @Override
     public List<String> complete(String[] arguments) {
-        return TabCompletionBuilder.getBuilder(arguments)
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments)
                 .addAtIndex(1, "einzahlen", "auszahlen")
                 .build();
     }
 
-    public static void sendClockMessage() {
+    public static void sendClockMessage(UnicacityAddon unicacityAddon) {
         SimpleDateFormat dayFormat = new SimpleDateFormat("EEEE", Locale.GERMAN);
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd. MMMM yyyy", Locale.GERMAN);
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss 'Uhr'");
@@ -103,7 +106,7 @@ public class AFbankEinzahlenCommand extends Command {
         String dateString = dateFormat.format(date);
         String timeString = timeFormat.format(date);
 
-        UnicacityAddon.PLAYER.sendMessage(Message.getBuilder()
+        unicacityAddon.player().sendMessage(Message.getBuilder()
                 .prefix()
                 .of("Heute ist ").color(ColorCode.GRAY).advance()
                 .of(dayString).color(ColorCode.BLUE).advance()

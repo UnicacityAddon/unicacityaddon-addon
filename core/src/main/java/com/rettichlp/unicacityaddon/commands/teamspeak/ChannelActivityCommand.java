@@ -2,7 +2,6 @@ package com.rettichlp.unicacityaddon.commands.teamspeak;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
-import com.rettichlp.unicacityaddon.base.api.request.APIConverter;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.teamspeak.TSClientQuery;
@@ -33,18 +32,21 @@ public class ChannelActivityCommand extends Command {
 
     private static final String usage = "/channelactivity";
 
-    public ChannelActivityCommand() {
+    private UnicacityAddon unicacityAddon;
+
+    public ChannelActivityCommand(UnicacityAddon unicacityAddon) {
         super("channelactivity");
+        this.unicacityAddon = unicacityAddon;
     }
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
         new Thread(() -> {
-            AddonPlayer p = UnicacityAddon.PLAYER;
+            AddonPlayer p = this.unicacityAddon.player();
 
             if (!TSClientQuery.clientQueryConnected) {
                 p.sendErrorMessage("Keine Verbindung zur TeamSpeak ClientQuery!");
-                TSClientQuery.reconnect();
+                TSClientQuery.reconnect(this.unicacityAddon);
                 return;
             }
 
@@ -56,7 +58,7 @@ public class ChannelActivityCommand extends Command {
                 return;
             }
 
-            List<String> factionPlayers = APIConverter.PLAYERFACTIONMAP.entrySet().stream()
+            List<String> factionPlayers = this.unicacityAddon.api().getPlayerFactionMap().entrySet().stream()
                     .filter(stringFactionEntry -> stringFactionEntry.getValue().equals(p.getFaction()))
                     .map(Map.Entry::getKey)
                     .collect(Collectors.toList());
@@ -107,19 +109,19 @@ public class ChannelActivityCommand extends Command {
 
     @Override
     public List<String> complete(String[] arguments) {
-        return TabCompletionBuilder.getBuilder(arguments).build();
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments).build();
     }
 
 
     public List<String> getPlayersInChannel() {
-        ChannelClientListCommand.Response channelClientListCommandResponse = new ChannelClientListCommand(TSUtils.getMyChannelID()).getResponse();
+        ChannelClientListCommand.Response channelClientListCommandResponse = new ChannelClientListCommand(this.unicacityAddon, this.unicacityAddon.tsUtils().getMyChannelID()).getResponse();
         if (!channelClientListCommandResponse.succeeded())
             return Collections.emptyList();
 
         List<Client> clients = channelClientListCommandResponse.getClients();
         List<String> descriptions = new ArrayList<>();
         for (Client client : clients) {
-            ClientVariableCommand.Response clientVariableCommandResponse = new ClientVariableCommand(client).getResponse();
+            ClientVariableCommand.Response clientVariableCommandResponse = new ClientVariableCommand(this.unicacityAddon, client).getResponse();
             String minecraftName = clientVariableCommandResponse.getMinecraftName();
 
             if (minecraftName == null)
@@ -132,7 +134,7 @@ public class ChannelActivityCommand extends Command {
 
     private Map<String, Boolean> getOnlineStateOfPlayers(List<String> factionPlayers) {
         List<Boolean> onlineStates = factionPlayers.stream()
-                .map(s -> !TSUtils.getClientsByName(Collections.singletonList(s)).isEmpty()).collect(Collectors.toList());
+                .map(s -> !this.unicacityAddon.tsUtils().getClientsByName(Collections.singletonList(s)).isEmpty()).collect(Collectors.toList());
 
         return IntStream.range(0, factionPlayers.size())
                 .boxed()

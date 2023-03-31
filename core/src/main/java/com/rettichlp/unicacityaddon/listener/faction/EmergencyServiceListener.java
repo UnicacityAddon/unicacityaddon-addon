@@ -2,10 +2,8 @@ package com.rettichlp.unicacityaddon.listener.faction;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
-import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
 import com.rettichlp.unicacityaddon.base.enums.api.StatisticType;
 import com.rettichlp.unicacityaddon.base.enums.location.ServiceCallBox;
-import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
@@ -45,7 +43,7 @@ public class EmergencyServiceListener {
 
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
         ChatMessage chatMessage = e.chatMessage();
         String msg = chatMessage.getPlainText();
 
@@ -243,8 +241,8 @@ public class EmergencyServiceListener {
         }
 
         if (PatternHandler.SERVICE_DONE_PATTERN.matcher(msg).find()) {
-            FileManager.DATA.setServiceCount(FileManager.DATA.getServiceCount() + 1);
-            APIRequest.sendStatisticAddRequest(StatisticType.SERVICE);
+            this.unicacityAddon.data().setServiceCount(this.unicacityAddon.data().getServiceCount() + 1);
+            this.unicacityAddon.api().sendStatisticAddRequest(StatisticType.SERVICE);
         }
     }
 
@@ -256,7 +254,7 @@ public class EmergencyServiceListener {
 
         if (serviceCallBoxOptional.isPresent()) {
             ServiceCallBox serviceCallBox = serviceCallBoxOptional.get();
-            UnicacityAddon.PLAYER.sendServerMessage("/f ➡ Unterwegs zur Notrufsäule (" + serviceCallBox.getLocationName() + ")");
+            this.unicacityAddon.player().sendServerMessage("/f ➡ Unterwegs zur Notrufsäule (" + serviceCallBox.getLocationName() + ")");
             activeEmergencyCallBoxList.remove(serviceCallBox);
         }
     }

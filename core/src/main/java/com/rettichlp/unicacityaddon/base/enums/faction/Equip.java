@@ -1,7 +1,6 @@
 package com.rettichlp.unicacityaddon.base.enums.faction;
 
-import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.config.DefaultUnicacityAddonConfiguration;
+import com.rettichlp.unicacityaddon.base.config.UnicacityAddonConfiguration;
 import com.rettichlp.unicacityaddon.base.utils.MathUtils;
 
 import java.util.function.Function;
@@ -44,9 +43,9 @@ public enum Equip {
 
     private final String equipName;
     private final String messageName;
-    private final Function<? super DefaultUnicacityAddonConfiguration, ? extends String> priceFunction;
+    private final Function<? super UnicacityAddonConfiguration, ? extends String> priceFunction;
 
-    Equip(String equipName, String messageName, Function<? super DefaultUnicacityAddonConfiguration, ? extends String> function) {
+    Equip(String equipName, String messageName, Function<? super UnicacityAddonConfiguration, ? extends String> function) {
         this.equipName = equipName;
         this.messageName = messageName;
         this.priceFunction = function;
@@ -60,8 +59,8 @@ public enum Equip {
         return messageName;
     }
 
-    public int getPrice() {
-        String priceString = priceFunction.apply(UnicacityAddon.ADDON.configuration());
+    public int getPrice(UnicacityAddonConfiguration unicacityAddonConfiguration) {
+        String priceString = priceFunction.apply(unicacityAddonConfiguration);
         return MathUtils.isInteger(priceString) ? Integer.parseInt(priceString) : 0;
     }
 }

@@ -19,8 +19,8 @@ public class ForgeUtils {
 
     // TODO: 14.03.2023 rename class or migrate
 
-    public static List<String> getOnlinePlayers() {
-        ClientPacketListener clientPacketListener = UnicacityAddon.ADDON.labyAPI().minecraft().getClientPacketListener();
+    public static List<String> getOnlinePlayers(UnicacityAddon unicacityAddon) {
+        ClientPacketListener clientPacketListener = unicacityAddon.labyAPI().minecraft().getClientPacketListener();
         if (clientPacketListener == null)
             return Collections.emptyList();
 
@@ -89,7 +89,7 @@ public class ForgeUtils {
 //        try {
 //            Runtime.getRuntime().exec(shutdownCommand);
 //        } catch (IOException e) {
-//            UnicacityAddon.LOGGER.throwing(e);
+//            this.unicacityAddon.logger().throwing(e);
 //        }
     }
 }

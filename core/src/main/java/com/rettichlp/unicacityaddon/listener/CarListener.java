@@ -3,7 +3,6 @@ package com.rettichlp.unicacityaddon.listener;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.events.UnicacityAddonTickEvent;
-import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
@@ -40,16 +39,16 @@ public class CarListener {
 
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
         String msg = e.chatMessage().getPlainText();
 
         if (PatternHandler.CAR_OPEN_PATTERN.matcher(msg).find()) {
-            FileManager.DATA.setCarOpen(true);
+            this.unicacityAddon.data().setCarOpen(true);
             return;
         }
 
         if (PatternHandler.CAR_CLOSE_PATTERN.matcher(msg).find()) {
-            FileManager.DATA.setCarOpen(false);
+            this.unicacityAddon.data().setCarOpen(false);
             return;
         }
 
@@ -63,7 +62,7 @@ public class CarListener {
         if (carTicketMatcher.find()) {
             int fine = Integer.parseInt(carTicketMatcher.group(2));
 
-            if (FileManager.DATA.getCashBalance() >= fine) {
+            if (this.unicacityAddon.data().getCashBalance() >= fine) {
                 e.setMessage(Message.getBuilder()
                         .of("[").color(ColorCode.DARK_GRAY).advance()
                         .of("Car").color(ColorCode.GOLD).advance()
@@ -103,7 +102,7 @@ public class CarListener {
     @Subscribe
     public void onUnicacityAddonTick(UnicacityAddonTickEvent e) {
         if (e.isUnicacity() && e.isPhase(UnicacityAddonTickEvent.Phase.SECOND_5)) {
-            AddonPlayer p = UnicacityAddon.PLAYER;
+            AddonPlayer p = this.unicacityAddon.player();
             Scoreboard scoreboard = p.getScoreboard();
             ScoreboardScore scoreboardScore = scoreboard.getScores(scoreboard.getObjective(DisplaySlot.SIDEBAR))
                     .stream()

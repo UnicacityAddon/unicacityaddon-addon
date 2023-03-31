@@ -30,8 +30,8 @@ public class TSEventHandler {
         EVENT_LISTENERS.add(tsListener);
     }
 
-    static void fireEvent(TSEvent event) {
-        UnicacityAddon.ADDON.labyAPI().eventBus().fire(event);
+    static void fireEvent(UnicacityAddon unicacityAddon, TSEvent event) {
+        unicacityAddon.labyAPI().eventBus().fire(event);
 
         try {
             for (TSListener listener : EVENT_LISTENERS) {

@@ -1,5 +1,6 @@
 package com.rettichlp.unicacityaddon.base.teamspeak;
 
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.teamspeak.commands.ClientListCommand;
 import com.rettichlp.unicacityaddon.base.teamspeak.commands.ClientVariableCommand;
 import com.rettichlp.unicacityaddon.base.teamspeak.commands.WhoAmICommand;
@@ -16,23 +17,29 @@ import java.util.Map;
  */
 public class TSUtils {
 
-    public static int getMyClientID() {
-        return new WhoAmICommand().getResponse().getClientID();
+    private UnicacityAddon unicacityAddon;
+
+    public TSUtils(UnicacityAddon unicacityAddon) {
+        this.unicacityAddon = unicacityAddon;
     }
 
-    public static int getMyChannelID() {
-        return new WhoAmICommand().getResponse().getChannelID();
+    public int getMyClientID() {
+        return new WhoAmICommand(this.unicacityAddon).getResponse().getClientID();
     }
 
-    public static List<Client> getClients() {
-        return new ClientListCommand().getResponse().getClientList();
+    public int getMyChannelID() {
+        return new WhoAmICommand(this.unicacityAddon).getResponse().getChannelID();
     }
 
-    public static List<Client> getClientsByName(String minecraftName) {
+    public List<Client> getClients() {
+        return new ClientListCommand(this.unicacityAddon).getResponse().getClientList();
+    }
+
+    public List<Client> getClientsByName(String minecraftName) {
         return getClientsByName(Collections.singletonList(minecraftName));
     }
 
-    public static List<Client> getClientsByName(List<String> minecraftNames) {
+    public List<Client> getClientsByName(List<String> minecraftNames) {
         if (minecraftNames.isEmpty())
             return Collections.emptyList();
 
@@ -41,7 +48,7 @@ public class TSUtils {
         for (Client client : getClients()) {
             int clientID = client.getClientID();
 
-            CommandFuture<ClientVariableCommand.Response> future = new ClientVariableCommand(clientID, "client_description", "client_nickname").execute().getResponseFuture();
+            CommandFuture<ClientVariableCommand.Response> future = new ClientVariableCommand(this.unicacityAddon, clientID, "client_description", "client_nickname").execute().getResponseFuture();
             futures.put(client, future);
         }
 

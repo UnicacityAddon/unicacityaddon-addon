@@ -23,35 +23,38 @@ public class MoveCommand extends Command {
 
     private static final String usage = "/move [Spieler] [Ziel]";
 
-    public MoveCommand() {
+    private UnicacityAddon unicacityAddon;
+
+    public MoveCommand(UnicacityAddon unicacityAddon) {
         super("move");
+        this.unicacityAddon = unicacityAddon;
     }
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
 
         if (arguments.length < 2) {
             p.sendSyntaxMessage(usage);
             return true;
         }
 
-        if (!UnicacityAddon.ADDON.configuration().tsApiKey().getOrDefault("").matches("([A-Z0-9]{4}(-*)){6}")) {
+        if (!this.unicacityAddon.configuration().tsApiKey().getOrDefault("").matches("([A-Z0-9]{4}(-*)){6}")) {
             p.sendErrorMessage("Teamspeak API Key ist nicht gültig!");
             return true;
         }
 
         if (!TSClientQuery.clientQueryConnected) {
             p.sendErrorMessage("Keine Verbindung zur TeamSpeak ClientQuery!");
-            TSClientQuery.reconnect();
+            TSClientQuery.reconnect(this.unicacityAddon);
             return true;
         }
 
         String name = arguments[0];
         String target = arguments[1];
 
-        List<Client> clientsMoved = TSUtils.getClientsByName(Collections.singletonList(name));
-        List<Client> clientsMoveTo = TSUtils.getClientsByName(Collections.singletonList(target));
+        List<Client> clientsMoved = this.unicacityAddon.tsUtils().getClientsByName(Collections.singletonList(name));
+        List<Client> clientsMoveTo = this.unicacityAddon.tsUtils().getClientsByName(Collections.singletonList(target));
 
         if (clientsMoved.isEmpty() || clientsMoveTo.isEmpty()) {
             p.sendErrorMessage("Einer der Spieler befindet sich nicht auf dem TeamSpeak.");
@@ -59,7 +62,7 @@ public class MoveCommand extends Command {
         }
 
         Client moveToClient = clientsMoveTo.get(0);
-        CommandResponse response = new ClientMoveCommand(moveToClient.getChannelID(), clientsMoved).getResponse();
+        CommandResponse response = new ClientMoveCommand(this.unicacityAddon, moveToClient.getChannelID(), clientsMoved).getResponse();
         if (!response.succeeded()) {
             p.sendErrorMessage("Das Moven ist fehlgeschlagen.");
             return true;
@@ -71,6 +74,6 @@ public class MoveCommand extends Command {
 
     @Override
     public List<String> complete(String[] arguments) {
-        return TabCompletionBuilder.getBuilder(arguments).build();
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments).build();
     }
 }

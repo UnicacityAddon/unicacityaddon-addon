@@ -18,13 +18,16 @@ public class ADropMoneyCommand extends Command {
 
     private int step = 0;
 
-    public ADropMoneyCommand() {
+    private final UnicacityAddon unicacityAddon;
+
+    public ADropMoneyCommand(UnicacityAddon unicacityAddon) {
         super("adropmoney");
+        this.unicacityAddon = unicacityAddon;
     }
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
 
         new Timer().scheduleAtFixedRate(new TimerTask() {
             @Override
@@ -49,6 +52,6 @@ public class ADropMoneyCommand extends Command {
 
     @Override
     public List<String> complete(String[] arguments) {
-        return TabCompletionBuilder.getBuilder(arguments).build();
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments).build();
     }
 }

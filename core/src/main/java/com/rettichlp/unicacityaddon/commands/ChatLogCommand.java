@@ -39,16 +39,18 @@ public class ChatLogCommand extends Command {
     public static final Map<Long, String> chatLogMap = new HashMap<>();
 
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("[yyyy-MM-dd] [HH:mm:ss]");
-
     private static final String usage = "/chatlog (Uhrzeit)";
 
-    public ChatLogCommand() {
+    private final UnicacityAddon unicacityAddon;
+
+    public ChatLogCommand(UnicacityAddon unicacityAddon) {
         super("chatlog");
+        this.unicacityAddon = unicacityAddon;
     }
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
 
         String chatlog;
         if (arguments.length > 0 && MathUtils.isInteger(arguments[0])) {
@@ -79,7 +81,7 @@ public class ChatLogCommand extends Command {
 
     @Override
     public List<String> complete(String[] arguments) {
-        return TabCompletionBuilder.getBuilder(arguments).build();
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments).build();
     }
 
     private String createChatLog(int i) {
@@ -119,14 +121,14 @@ public class ChatLogCommand extends Command {
             jsonReader.setLenient(true);
             JsonElement jsonElement = new JsonParser().parse(jsonReader);
             if (!jsonElement.getAsJsonObject().has("key")) {
-                UnicacityAddon.LOGGER.error("Error while uploading chatlog");
+                this.unicacityAddon.logger().error("Error while uploading chatlog");
                 return null;
             } else {
                 String key = jsonElement.getAsJsonObject().get("key").getAsString();
                 return "https://paste.labymod.net/" + key;
             }
         } catch (IOException e) {
-            UnicacityAddon.LOGGER.warn(e.getMessage());
+            this.unicacityAddon.logger().warn(e.getMessage());
             return null;
         }
     }

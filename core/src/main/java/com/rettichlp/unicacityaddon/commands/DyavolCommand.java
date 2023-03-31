@@ -18,13 +18,16 @@ import java.util.List;
 @UCCommand
 public class DyavolCommand extends Command {
 
-    public DyavolCommand() {
+    private UnicacityAddon unicacityAddon;
+
+    public DyavolCommand(UnicacityAddon unicacityAddon) {
         super("dyavol");
+        this.unicacityAddon = unicacityAddon;
     }
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
 
         p.sendEmptyMessage();
         p.sendMessage(Message.getBuilder()
@@ -32,7 +35,7 @@ public class DyavolCommand extends Command {
                 .createComponent());
 
         AddonGroup.DYAVOL.getMemberList().forEach(s -> {
-            boolean online = ForgeUtils.getOnlinePlayers().contains(s);
+            boolean online = ForgeUtils.getOnlinePlayers(this.unicacityAddon).contains(s); // TODO: 31.03.2023 rework forgeutils
             p.sendMessage(Message.getBuilder()
                     .of("»").color(ColorCode.GRAY).advance().space()
                     .of(s).color(online ? ColorCode.GREEN : ColorCode.RED).advance()
@@ -46,6 +49,6 @@ public class DyavolCommand extends Command {
 
     @Override
     public List<String> complete(String[] arguments) {
-        return TabCompletionBuilder.getBuilder(arguments).build();
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments).build();
     }
 }

@@ -1,7 +1,6 @@
 package com.rettichlp.unicacityaddon.listener;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
 import com.rettichlp.unicacityaddon.base.enums.api.StatisticType;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
@@ -40,15 +39,15 @@ public class KarmaMessageListener {
 
         Matcher karmaChangedMatcher = PatternHandler.KARMA_CHANGED_PATTERN.matcher(msg);
         if (karmaChangedMatcher.find() && !TimerListener.isJail && !ReviveListener.isDead) {
-            ReviveListener.handleRevive();
+            ReviveListener.handleRevive(this.unicacityAddon);
 
             karmaCheck = true;
-            UnicacityAddon.PLAYER.sendServerMessage("/karma");
+            this.unicacityAddon.player().sendServerMessage("/karma");
             e.setCancelled(true);
 
             karma = Integer.parseInt(karmaChangedMatcher.group(1));
             if (karma < 0 && karma > -9) {
-                APIRequest.sendStatisticAddRequest(StatisticType.KILL);
+                this.unicacityAddon.api().sendStatisticAddRequest(StatisticType.KILL);
             }
 
             return;

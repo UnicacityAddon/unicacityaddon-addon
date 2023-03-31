@@ -19,13 +19,16 @@ public class KorruptionsrechnerCommand extends Command {
 
     private static final String usage = "/korruptionsrechner [Spieler]";
 
-    public KorruptionsrechnerCommand() {
+    private UnicacityAddon unicacityAddon;
+
+    public KorruptionsrechnerCommand(UnicacityAddon unicacityAddon) {
         super("korruptionsrechner");
+        this.unicacityAddon = unicacityAddon;
     }
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
 
         if (arguments.length < 1) {
             p.sendSyntaxMessage(usage);
@@ -80,6 +83,6 @@ public class KorruptionsrechnerCommand extends Command {
 
     @Override
     public List<String> complete(String[] arguments) {
-        return TabCompletionBuilder.getBuilder(arguments).build();
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments).build();
     }
 }

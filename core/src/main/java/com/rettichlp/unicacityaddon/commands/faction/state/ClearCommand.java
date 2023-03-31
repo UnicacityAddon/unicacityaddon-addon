@@ -17,13 +17,16 @@ public class ClearCommand extends Command {
 
     private static final String usage = "/clear [Spieler...]";
 
-    public ClearCommand() {
+    private UnicacityAddon unicacityAddon;
+
+    public ClearCommand(UnicacityAddon unicacityAddon) {
         super("clear");
+        this.unicacityAddon = unicacityAddon;
     }
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
 
         if (arguments.length < 1) {
             p.sendSyntaxMessage(usage);
@@ -36,6 +39,6 @@ public class ClearCommand extends Command {
 
     @Override
     public List<String> complete(String[] arguments) {
-        return TabCompletionBuilder.getBuilder(arguments).build();
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments).build();
     }
 }

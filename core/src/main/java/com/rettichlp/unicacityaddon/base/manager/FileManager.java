@@ -25,9 +25,38 @@ import java.util.Objects;
  */
 public class FileManager {
 
-    public static Data DATA = new Data();
-
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+
+    private Data data;
+
+    private UnicacityAddon unicacityAddon;
+
+    public FileManager(UnicacityAddon unicacityAddon) {
+        this.unicacityAddon = unicacityAddon;
+        this.data = new Data(); // fallback if data cannot be loaded
+
+        String jsonData = "";
+        try {
+            File dataFile = FileManager.getDataFile();
+            assert dataFile != null;
+            jsonData = FileUtils.readFileToString(dataFile, StandardCharsets.UTF_8.toString());
+        } catch (IOException e) {
+            this.unicacityAddon.logger().error(e.getMessage());
+        }
+
+        try {
+            new JsonParser().parse(jsonData); // validate check
+            this.data = jsonData.isEmpty() ? new Data() : new Gson().fromJson(jsonData, Data.class);
+        } catch (JsonSyntaxException e) {
+            this.unicacityAddon.logger().info("Data cannot be created because Json is invalid: " + jsonData);
+            this.unicacityAddon.logger().error(e.getMessage());
+            this.unicacityAddon.logger().info("Creating default Data...");
+        }
+    }
+
+    public Data getData() {
+        return data;
+    }
 
     public static File getMinecraftDir() {
         return new File(System.getenv("APPDATA") + "/.minecraft");
@@ -95,36 +124,15 @@ public class FileManager {
         return newImageFile.createNewFile() ? newImageFile : null;
     }
 
-    public static void loadData() {
-        String jsonData = "";
-        try {
-            File dataFile = FileManager.getDataFile();
-            assert dataFile != null;
-            jsonData = FileUtils.readFileToString(dataFile, StandardCharsets.UTF_8.toString());
-        } catch (IOException e) {
-            UnicacityAddon.LOGGER.error(e.getMessage());
-        }
-
-        try {
-            new JsonParser().parse(jsonData); // validate check
-            DATA = jsonData.isEmpty() ? new Data() : new Gson().fromJson(jsonData, Data.class);
-        } catch (JsonSyntaxException e) {
-            UnicacityAddon.LOGGER.info("Data cannot be created because Json is invalid: " + jsonData);
-            UnicacityAddon.LOGGER.error(e.getMessage());
-            UnicacityAddon.LOGGER.info("Creating default Data...");
-            saveData();
-        }
-    }
-
     /**
      * Quote: "Wenn du keine Brüste hast, rede ich nicht mehr mit dir!" - Dimiikou, 25.09.2022
      */
-    public static void saveData() {
+    public void saveData() {
         try {
             File dataFile = FileManager.getDataFile();
-            if (dataFile != null && DATA != null) {
+            if (dataFile != null && this.data != null) {
                 Gson g = new Gson();
-                FileUtils.writeStringToFile(dataFile, g.toJson(DATA), StandardCharsets.UTF_8);
+                FileUtils.writeStringToFile(dataFile, g.toJson(this.data), StandardCharsets.UTF_8);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);

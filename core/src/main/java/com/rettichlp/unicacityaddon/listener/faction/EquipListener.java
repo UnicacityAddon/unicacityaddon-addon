@@ -2,7 +2,6 @@ package com.rettichlp.unicacityaddon.listener.faction;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.enums.faction.Equip;
-import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import net.labymod.api.event.Subscribe;
@@ -38,16 +37,16 @@ public class EquipListener {
                     .findAny();
 
             if (equipOptional.isPresent()) {
-                FileManager.DATA.addEquipToEquipMap(equipOptional.get());
+                this.unicacityAddon.data().addEquipToEquipMap(equipOptional.get());
             } else {
-                UnicacityAddon.PLAYER.sendErrorMessage("Equip wurde nicht gefunden.");
+                this.unicacityAddon.player().sendErrorMessage("Equip wurde nicht gefunden.");
             }
             return;
         }
 
         Matcher trackerMatcher = PatternHandler.TRACKER_PATTERN.matcher(msg);
         if (trackerMatcher.find()) {
-            FileManager.DATA.addEquipToEquipMap(Equip.TRACKER);
+            this.unicacityAddon.data().addEquipToEquipMap(Equip.TRACKER);
         }
     }
 }

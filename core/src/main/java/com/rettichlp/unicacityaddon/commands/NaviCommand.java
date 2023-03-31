@@ -2,7 +2,6 @@ package com.rettichlp.unicacityaddon.commands;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
-import com.rettichlp.unicacityaddon.base.api.request.APIConverter;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.models.NaviPoint;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
@@ -18,13 +17,16 @@ import java.util.stream.Collectors;
 @UCCommand
 public class NaviCommand extends Command {
 
-    public NaviCommand() {
+    private UnicacityAddon unicacityAddon;
+
+    public NaviCommand(UnicacityAddon unicacityAddon) {
         super("navi");
+        this.unicacityAddon = unicacityAddon;
     }
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
         if (arguments.length < 1) {
             return false;
         }
@@ -34,7 +36,7 @@ public class NaviCommand extends Command {
             return true;
         }
 
-        NaviPoint naviPoint = NaviPoint.getNaviPointByTabName(arguments[0].trim());
+        NaviPoint naviPoint = NaviPoint.getNaviPointByTabName(arguments[0].trim(), this.unicacityAddon);
         if (naviPoint == null) {
             return false;
         }
@@ -45,8 +47,8 @@ public class NaviCommand extends Command {
 
     @Override
     public List<String> complete(String[] arguments) {
-        return TabCompletionBuilder.getBuilder(arguments)
-                .addAtIndex(1, APIConverter.NAVIPOINTLIST.stream().map(NaviPoint::getName).sorted().collect(Collectors.toList()))
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments)
+                .addAtIndex(1, this.unicacityAddon.api().getNaviPointList().stream().map(NaviPoint::getName).sorted().collect(Collectors.toList()))
                 .build();
     }
 }

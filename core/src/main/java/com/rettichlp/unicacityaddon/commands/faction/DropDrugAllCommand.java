@@ -6,7 +6,6 @@ import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
-import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import net.labymod.api.client.chat.command.Command;
 
@@ -33,16 +32,19 @@ public class DropDrugAllCommand extends Command {
 
     private static final String usage = "/dbankdropall bzw. /asservatenkammerdropall";
 
-    public DropDrugAllCommand() {
+    private UnicacityAddon unicacityAddon;
+
+    public DropDrugAllCommand(UnicacityAddon unicacityAddon) {
         super("dbankdropall", "dda", "asservatenkammerdropall", "ada");
+        this.unicacityAddon = unicacityAddon;
     }
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
 
         if (arguments.length > 0 && arguments[0].equalsIgnoreCase("reset")) {
-            FileManager.DATA.setDrugInventoryMap(new HashMap<>());
+            this.unicacityAddon.data().setDrugInventoryMap(new HashMap<>());
             return true;
         }
 
@@ -53,7 +55,7 @@ public class DropDrugAllCommand extends Command {
 
     @Override
     public List<String> complete(String[] arguments) {
-        return TabCompletionBuilder.getBuilder(arguments)
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments)
                 .addAtIndex(1, "reset")
                 .build();
     }
@@ -142,32 +144,32 @@ public class DropDrugAllCommand extends Command {
 //            UnicacityAddon.MINECRAFT.playerController.windowClick(guiHopper.inventorySlots.windowId, 4, 0, ClickType.PICKUP, UnicacityAddon.MINECRAFT.player);
 //        }
     }
-
-    private static void dropCommandExecution() {
-        AddonPlayer p = UnicacityAddon.PLAYER;
-//        p.getPlayer().closeScreen();
-
-        List<String> commandQueue = new ArrayList<>();
-        drugInventoryMap.entrySet().stream()
-                .filter(drugTypeMapEntry -> drugTypeMapEntry.getKey().equals(DrugType.COCAINE) || drugTypeMapEntry.getKey().equals(DrugType.MARIJUANA) || drugTypeMapEntry.getKey().equals(DrugType.METH) || drugTypeMapEntry.getKey().equals(DrugType.LSD))
-                .forEach(drugTypeMapEntry -> drugTypeMapEntry.getValue().forEach((drugPurity, integer) -> {
-                    if (integer > 0) {
-                        String type = p.getFaction().equals(Faction.FBI) ? "asservatenkammer" : "dbank";
-                        commandQueue.add("/" + type + " drop " + drugTypeMapEntry.getKey().getShortName() + " " + integer + " " + drugPurity.getPurity());
-                    }
-                }));
-
-        Timer timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                if (commandQueue.isEmpty()) {
-                    timer.cancel();
-                } else {
-                    p.sendServerMessage(commandQueue.get(0));
-                    commandQueue.remove(0);
-                }
-            }
-        }, 0, TimeUnit.SECONDS.toMillis(1));
-    }
+// TODO: 31.03.2023  
+//    private static void dropCommandExecution() {
+//        AddonPlayer p = this.unicacityAddon.player();
+////        p.getPlayer().closeScreen();
+//
+//        List<String> commandQueue = new ArrayList<>();
+//        drugInventoryMap.entrySet().stream()
+//                .filter(drugTypeMapEntry -> drugTypeMapEntry.getKey().equals(DrugType.COCAINE) || drugTypeMapEntry.getKey().equals(DrugType.MARIJUANA) || drugTypeMapEntry.getKey().equals(DrugType.METH) || drugTypeMapEntry.getKey().equals(DrugType.LSD))
+//                .forEach(drugTypeMapEntry -> drugTypeMapEntry.getValue().forEach((drugPurity, integer) -> {
+//                    if (integer > 0) {
+//                        String type = p.getFaction().equals(Faction.FBI) ? "asservatenkammer" : "dbank";
+//                        commandQueue.add("/" + type + " drop " + drugTypeMapEntry.getKey().getShortName() + " " + integer + " " + drugPurity.getPurity());
+//                    }
+//                }));
+//
+//        Timer timer = new Timer();
+//        timer.scheduleAtFixedRate(new TimerTask() {
+//            @Override
+//            public void run() {
+//                if (commandQueue.isEmpty()) {
+//                    timer.cancel();
+//                } else {
+//                    p.sendServerMessage(commandQueue.get(0));
+//                    commandQueue.remove(0);
+//                }
+//            }
+//        }, 0, TimeUnit.SECONDS.toMillis(1));
+//    }
 }

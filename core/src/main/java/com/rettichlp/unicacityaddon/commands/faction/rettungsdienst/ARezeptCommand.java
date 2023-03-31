@@ -25,13 +25,16 @@ public class ARezeptCommand extends Command {
 
     private static final String usage = "/arezept [Spieler] [Rezept] [Anzahl]";
 
-    public ARezeptCommand() {
+    private UnicacityAddon unicacityAddon;
+
+    public ARezeptCommand(UnicacityAddon unicacityAddon) {
         super("arezept");
+        this.unicacityAddon = unicacityAddon;
     }
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
 
         if (arguments.length < 3) {
             p.sendSyntaxMessage(usage);
@@ -46,13 +49,13 @@ public class ARezeptCommand extends Command {
         if (!MathUtils.isInteger(arguments[2]))
             return true;
         amount = Integer.parseInt(arguments[2]);
-        MedicationListener.giveRecipe();
+        MedicationListener.giveRecipe(this.unicacityAddon);
         return true;
     }
 
     @Override
     public List<String> complete(String[] arguments) {
-        return TabCompletionBuilder.getBuilder(arguments)
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments)
                 .addAtIndex(2, Arrays.stream(DrugType.values()).filter(DrugType::isLegal).map(DrugType::getDrugName).sorted().collect(Collectors.toList()))
                 .build();
     }

@@ -24,13 +24,16 @@ import java.util.stream.Collectors;
 @UCCommand
 public class ActivityCommand extends Command {
 
-    public ActivityCommand() {
+    private final UnicacityAddon unicacityAddon;
+
+    public ActivityCommand(UnicacityAddon unicacityAddon) {
         super("activity");
+        this.unicacityAddon = unicacityAddon;
     }
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
 
         List<ScreenshotType> screenshotTypeList = arguments.length < 1 ?
                 new ArrayList<>(Arrays.asList(ScreenshotType.values())) :
@@ -77,7 +80,7 @@ public class ActivityCommand extends Command {
 
     @Override
     public List<String> complete(String[] arguments) {
-        return TabCompletionBuilder.getBuilder(arguments)
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments)
                 .addAtIndex(1, Arrays.stream(ScreenshotType.values()).map(ScreenshotType::getDirectoryName).collect(Collectors.toList()))
                 .build();
     }

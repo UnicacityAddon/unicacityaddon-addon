@@ -54,7 +54,7 @@ public class HouseRenterListener {
         TIMER.schedule(new TimerTask() {
             @Override
             public void run() {
-                AddonPlayer p = UnicacityAddon.PLAYER;
+                AddonPlayer p = HouseRenterListener.this.unicacityAddon.player();
                 p.sendEmptyMessage();
 
                 HOUSE_RENTER_MAP.put(lastHouseNumber, Maps.immutableEntry(lastRenterAmount, lastRenterOnlineAmount));

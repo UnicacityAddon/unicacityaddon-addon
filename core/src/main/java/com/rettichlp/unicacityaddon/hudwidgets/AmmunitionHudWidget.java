@@ -8,7 +8,6 @@ import com.rettichlp.unicacityaddon.base.utils.TextUtils;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidget;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidgetConfig;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextLine;
-import net.labymod.api.client.gui.icon.Icon;
 import net.labymod.api.client.world.item.ItemStack;
 import net.labymod.api.event.Subscribe;
 
@@ -18,23 +17,24 @@ import net.labymod.api.event.Subscribe;
 public class AmmunitionHudWidget extends TextHudWidget<TextHudWidgetConfig> {
 
     private TextLine textLine;
-    private final Icon hudWidgetIcon;
 
-    public AmmunitionHudWidget(String id, Icon icon) {
+    private UnicacityAddon unicacityAddon;
+
+    public AmmunitionHudWidget(String id, UnicacityAddon unicacityAddon) {
         super(id);
-        this.hudWidgetIcon = icon;
+        this.unicacityAddon = unicacityAddon;
     }
 
     @Override
     public void load(TextHudWidgetConfig config) {
         super.load(config);
         this.textLine = super.createLine("Munition", ColorCode.RED.getCode() + "0" + ColorCode.DARK_GRAY.getCode() + "/" + ColorCode.GOLD.getCode() + "0");
-        this.setIcon(this.hudWidgetIcon);
+        this.setIcon(this.unicacityAddon.getIcon());
     }
 
     @Override
     public boolean isVisibleInGame() {
-        ItemStack mainHandItemStack = UnicacityAddon.ADDON.labyAPI().minecraft().clientPlayer().getMainHandItemStack();
+        ItemStack mainHandItemStack = this.unicacityAddon.labyAPI().minecraft().clientPlayer().getMainHandItemStack();
         String displayName = TextUtils.legacy(mainHandItemStack.getDisplayName());
         return Weapon.getWeaponByItemName(displayName) != null;
     }

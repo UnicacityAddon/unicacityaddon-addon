@@ -6,7 +6,7 @@ import com.rettichlp.unicacityaddon.base.enums.location.Job;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
-import com.rettichlp.unicacityaddon.base.utils.NavigationUtils;
+import com.rettichlp.unicacityaddon.base.utils.Navigation;
 import net.labymod.api.client.chat.command.Command;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.event.HoverEvent;
@@ -20,15 +20,18 @@ import java.util.Map;
 @UCCommand
 public class NearestJobCommand extends Command {
 
-    public NearestJobCommand() {
+    private UnicacityAddon unicacityAddon;
+
+    public NearestJobCommand(UnicacityAddon unicacityAddon) {
         super("nearestjob", "njob");
+        this.unicacityAddon = unicacityAddon;
     }
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        Map.Entry<Double, Job> nearestJob = NavigationUtils.getNearestJob();
+        Map.Entry<Double, Job> nearestJob = this.unicacityAddon.navigation().getNearestJob();
 
-        UnicacityAddon.PLAYER.sendMessage(Message.getBuilder()
+        this.unicacityAddon.player().sendMessage(Message.getBuilder()
                 .prefix()
                 .of("Job").color(ColorCode.GRAY).advance().space()
                 .of(nearestJob.getValue().getName()).color(ColorCode.AQUA).bold().advance().space()
@@ -47,6 +50,6 @@ public class NearestJobCommand extends Command {
 
     @Override
     public List<String> complete(String[] arguments) {
-        return TabCompletionBuilder.getBuilder(arguments).build();
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments).build();
     }
 }

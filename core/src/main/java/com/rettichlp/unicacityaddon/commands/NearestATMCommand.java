@@ -6,7 +6,7 @@ import com.rettichlp.unicacityaddon.base.enums.location.ATM;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
-import com.rettichlp.unicacityaddon.base.utils.NavigationUtils;
+import com.rettichlp.unicacityaddon.base.utils.Navigation;
 import net.labymod.api.client.chat.command.Command;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.event.HoverEvent;
@@ -20,15 +20,18 @@ import java.util.Map;
 @UCCommand
 public class NearestATMCommand extends Command {
 
-    public NearestATMCommand() {
+    private UnicacityAddon unicacityAddon;
+
+    public NearestATMCommand(UnicacityAddon unicacityAddon) {
         super("nearestatm", "natm");
+        this.unicacityAddon = unicacityAddon;
     }
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        Map.Entry<Double, ATM> nearestATM = NavigationUtils.getNearestATM();
+        Map.Entry<Double, ATM> nearestATM = this.unicacityAddon.navigation().getNearestATM();
 
-        UnicacityAddon.PLAYER.sendMessage(Message.getBuilder()
+        this.unicacityAddon.player().sendMessage(Message.getBuilder()
                 .prefix()
                 .of("ATM").color(ColorCode.GRAY).advance().space()
                 .of(String.valueOf(nearestATM.getValue().getID())).color(ColorCode.AQUA).bold().advance().space()
@@ -47,6 +50,6 @@ public class NearestATMCommand extends Command {
 
     @Override
     public List<String> complete(String[] arguments) {
-        return TabCompletionBuilder.getBuilder(arguments).build();
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments).build();
     }
 }

@@ -29,13 +29,16 @@ public class FactionInfoCommand extends Command {
 
     private static final String usage = "/checkactivemembers [Fraktion]";
 
-    public FactionInfoCommand() {
+    private UnicacityAddon unicacityAddon;
+
+    public FactionInfoCommand(UnicacityAddon unicacityAddon) {
         super("checkactivemembers", "cam");
+        this.unicacityAddon = unicacityAddon;
     }
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
         List<Faction> chosenFactions = new ArrayList<>();
 
         for (String s : arguments) {
@@ -77,14 +80,14 @@ public class FactionInfoCommand extends Command {
 
     @Override
     public List<String> complete(String[] arguments) {
-        return TabCompletionBuilder.getBuilder(arguments)
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments)
                 .addToAllFromIndex(1, Arrays.stream(Faction.values()).map(Faction::getFactionKey).sorted().collect(Collectors.toList()))
                 .build();
     }
 
     private Map<Boolean, Integer> getMembers(Faction faction) {
         MemberInfoListener.future = new CompletableFuture<>();
-        UnicacityAddon.PLAYER.sendServerMessage("/memberinfo " + faction.getFactionKey());
+        this.unicacityAddon.player().sendServerMessage("/memberinfo " + faction.getFactionKey());
 
         return new HashMap<>();
 

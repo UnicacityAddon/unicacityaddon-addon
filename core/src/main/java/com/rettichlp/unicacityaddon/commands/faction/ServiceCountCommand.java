@@ -3,7 +3,6 @@ package com.rettichlp.unicacityaddon.commands.faction;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
-import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
@@ -17,22 +16,25 @@ import java.util.List;
 @UCCommand
 public class ServiceCountCommand extends Command {
 
-    public ServiceCountCommand() {
+    private UnicacityAddon unicacityAddon;
+
+    public ServiceCountCommand(UnicacityAddon unicacityAddon) {
         super("servicecount", "YXZ");
+        this.unicacityAddon = unicacityAddon;
     }
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
         if (arguments.length > 0 && arguments[0].equalsIgnoreCase("reset")) {
-            FileManager.DATA.setServiceCount(0);
+            this.unicacityAddon.data().setServiceCount(0);
             p.sendInfoMessage("Servicecount wurde zurückgesetzt.");
             return true;
         }
 
         p.sendMessage(Message.getBuilder().prefix()
                 .of("Du hast bereits").color(ColorCode.GRAY).advance().space()
-                .of(String.valueOf(FileManager.DATA.getServiceCount())).color(ColorCode.DARK_AQUA).advance().space()
+                .of(String.valueOf(this.unicacityAddon.data().getServiceCount())).color(ColorCode.DARK_AQUA).advance().space()
                 .of("Notrufe bearbeitet.").color(ColorCode.GRAY).advance()
                 .createComponent());
         return true;
@@ -40,7 +42,7 @@ public class ServiceCountCommand extends Command {
 
     @Override
     public List<String> complete(String[] arguments) {
-        return TabCompletionBuilder.getBuilder(arguments)
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments)
                 .addAtIndex(1, "reset")
                 .build();
     }

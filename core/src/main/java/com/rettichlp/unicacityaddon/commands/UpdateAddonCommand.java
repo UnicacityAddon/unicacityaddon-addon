@@ -16,13 +16,16 @@ public class UpdateAddonCommand extends Command {
 
     private static final String usage = "/updateunicacityaddon";
 
-    public UpdateAddonCommand() {
+    private UnicacityAddon unicacityAddon;
+
+    public UpdateAddonCommand(UnicacityAddon unicacityAddon) {
         super("updateunicacityaddon");
+        this.unicacityAddon = unicacityAddon;
     }
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
 //        if (!UpdateUtils.latestVersion.equals(UnicacityAddon.VERSION)) {
 //            if (SystemUtils.IS_OS_WINDOWS || SystemUtils.IS_OS_UNIX) {
 //                UpdateUtils.update();
@@ -35,6 +38,6 @@ public class UpdateAddonCommand extends Command {
 
     @Override
     public List<String> complete(String[] arguments) {
-        return TabCompletionBuilder.getBuilder(arguments).build();
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments).build();
     }
 }

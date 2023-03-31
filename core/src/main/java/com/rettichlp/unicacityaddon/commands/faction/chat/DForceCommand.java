@@ -17,13 +17,16 @@ public class DForceCommand extends Command {
 
     private static final String usage = "/dforce [Nachricht]";
 
-    public DForceCommand() {
+    private UnicacityAddon unicacityAddon;
+
+    public DForceCommand(UnicacityAddon unicacityAddon) {
         super("dforce");
+        this.unicacityAddon = unicacityAddon;
     }
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
 
         if (arguments.length == 0) {
             p.sendSyntaxMessage(usage);
@@ -37,6 +40,6 @@ public class DForceCommand extends Command {
 
     @Override
     public List<String> complete(String[] arguments) {
-        return TabCompletionBuilder.getBuilder(arguments).build();
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments).build();
     }
 }

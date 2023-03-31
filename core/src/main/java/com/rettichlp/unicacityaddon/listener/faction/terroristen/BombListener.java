@@ -39,7 +39,7 @@ public class BombListener {
      */
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
         ChatMessage chatMessage = e.chatMessage();
         String formattedMsg = e.chatMessage().getFormattedText();
         String msg = chatMessage.getPlainText();
@@ -95,7 +95,7 @@ public class BombListener {
     }
 
     private String getLocationWithArticle(String location) {
-        NaviPoint naviPoint = NaviPoint.getNaviPointByTabName(location.replace(" ", "-"));
+        NaviPoint naviPoint = NaviPoint.getNaviPointByTabName(location.replace(" ", "-"), this.unicacityAddon);
         String article = "der/die/das";
         if (naviPoint != null)
             article = naviPoint.getArticleFourthCase().replace("none", "");

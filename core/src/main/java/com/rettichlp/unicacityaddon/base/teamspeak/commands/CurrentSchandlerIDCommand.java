@@ -1,5 +1,6 @@
 package com.rettichlp.unicacityaddon.base.teamspeak.commands;
 
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.teamspeak.CommandResponse;
 
 /**
@@ -7,8 +8,8 @@ import com.rettichlp.unicacityaddon.base.teamspeak.CommandResponse;
  */
 public class CurrentSchandlerIDCommand extends BaseCommand<CurrentSchandlerIDCommand.Response> {
 
-    public CurrentSchandlerIDCommand() {
-        super("currentschandlerid");
+    public CurrentSchandlerIDCommand(UnicacityAddon unicacityAddon) {
+        super(unicacityAddon, "currentschandlerid");
     }
 
     public static class Response extends CommandResponse {

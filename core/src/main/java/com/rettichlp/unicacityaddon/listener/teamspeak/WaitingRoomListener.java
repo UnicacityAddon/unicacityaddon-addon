@@ -26,9 +26,9 @@ public class WaitingRoomListener {
 
     @Subscribe
     public void onClientMoved(ClientMovedEvent e) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
 
-        if (!UnicacityAddon.isUnicacity())
+        if (!this.unicacityAddon.isUnicacity())
             return;
 
         int clientID = e.getClientID();
@@ -45,7 +45,7 @@ public class WaitingRoomListener {
 
     private void handleEnterSupportChannel(AddonPlayer p, int clientID) {
         new Thread(() -> {
-            ClientVariableCommand.Response response = new ClientVariableCommand(clientID).getResponse();
+            ClientVariableCommand.Response response = new ClientVariableCommand(this.unicacityAddon, clientID).getResponse();
             String name = response.getDescription();
 
             p.sendMessage(Message.getBuilder()
@@ -64,7 +64,7 @@ public class WaitingRoomListener {
 
     private void handleEnterPublicChannel(AddonPlayer p, int clientID) {
         new Thread(() -> {
-            ClientVariableCommand.Response response = new ClientVariableCommand(clientID).getResponse();
+            ClientVariableCommand.Response response = new ClientVariableCommand(this.unicacityAddon, clientID).getResponse();
             String name = response.getDescription();
 
             p.sendMessage(Message.getBuilder()

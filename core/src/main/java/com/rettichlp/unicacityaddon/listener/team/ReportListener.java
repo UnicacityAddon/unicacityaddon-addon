@@ -39,7 +39,7 @@ public class ReportListener {
 
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
         String unformattedMsg = e.chatMessage().getPlainText();
         ReportMessageSetting reportMessageSetting = this.unicacityAddon.configuration().reportMessageSetting();
 

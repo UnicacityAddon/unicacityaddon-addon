@@ -2,7 +2,7 @@ package com.rettichlp.unicacityaddon.commands.api;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
-import com.rettichlp.unicacityaddon.base.api.TokenManager;
+import com.rettichlp.unicacityaddon.base.manager.TokenManager;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
@@ -22,13 +22,16 @@ public class TokenCommand extends Command {
 
     private static final String usage = "/token (create|revoke)";
 
-    public TokenCommand() {
+    private final UnicacityAddon unicacityAddon;
+
+    public TokenCommand(UnicacityAddon unicacityAddon) {
         super("token");
+        this.unicacityAddon = unicacityAddon;
     }
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
 
         new Thread(() -> {
             if (arguments.length == 0) {
@@ -42,10 +45,10 @@ public class TokenCommand extends Command {
                         .of("kann jeder in deinem Namen Anfragen an die API senden.").color(ColorCode.GRAY).advance()
                         .createComponent());
             } else if (arguments.length == 1 && arguments[0].equalsIgnoreCase("create")) {
-                TokenManager.createToken(UnicacityAddon.ADDON.labyAPI().minecraft().sessionAccessor().session());
+                this.unicacityAddon.tokenManager().createToken();
             } else if (arguments.length == 1 && arguments[0].equalsIgnoreCase("copy")) {
                 p.copyToClipboard(TokenManager.API_TOKEN);
-                UnicacityAddon.ADDON.labyAPI().notificationController().push(Notification.builder()
+                this.unicacityAddon.labyAPI().notificationController().push(Notification.builder()
                         .title(Message.getBuilder().of("Kopiert!").color(ColorCode.GREEN).bold().advance().createComponent())
                         .text(Message.getBuilder().of("Token in Zwischenablage kopiert.").color(ColorCode.WHITE).advance().createComponent())
                         .build());
@@ -58,7 +61,7 @@ public class TokenCommand extends Command {
 
     @Override
     public List<String> complete(String[] arguments) {
-        return TabCompletionBuilder.getBuilder(arguments)
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments)
                 .addAtIndex(1, "create")
                 .build();
     }

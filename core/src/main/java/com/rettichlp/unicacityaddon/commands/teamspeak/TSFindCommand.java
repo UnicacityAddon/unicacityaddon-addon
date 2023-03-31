@@ -27,34 +27,37 @@ public class TSFindCommand extends Command {
 
     private static final String usage = "/tsfind [Spieler]";
 
-    public TSFindCommand() {
+    private UnicacityAddon unicacityAddon;
+
+    public TSFindCommand(UnicacityAddon unicacityAddon) {
         super("tsfind");
+        this.unicacityAddon = unicacityAddon;
     }
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
         new Thread(() -> {
-            AddonPlayer p = UnicacityAddon.PLAYER;
+            AddonPlayer p = this.unicacityAddon.player();
 
             if (arguments.length < 1) {
                 p.sendSyntaxMessage(usage);
                 return;
             }
 
-            if (!UnicacityAddon.ADDON.configuration().tsApiKey().getOrDefault("").matches("([A-Z0-9]{4}(-*)){6}")) {
+            if (!this.unicacityAddon.configuration().tsApiKey().getOrDefault("").matches("([A-Z0-9]{4}(-*)){6}")) {
                 p.sendErrorMessage("Teamspeak API Key ist nicht gültig!");
                 return;
             }
 
             if (!TSClientQuery.clientQueryConnected) {
                 p.sendErrorMessage("Keine Verbindung zur TeamSpeak ClientQuery!");
-                TSClientQuery.reconnect();
+                TSClientQuery.reconnect(this.unicacityAddon);
                 return;
             }
 
             String name = arguments[0];
 
-            List<Client> clients = TSUtils.getClientsByName(Collections.singletonList(name));
+            List<Client> clients = this.unicacityAddon.tsUtils().getClientsByName(Collections.singletonList(name));
             if (clients.isEmpty()) {
                 p.sendErrorMessage("Es wurde kein Spieler auf dem TeamSpeak mit diesem Namen gefunden.");
                 return;
@@ -62,7 +65,7 @@ public class TSFindCommand extends Command {
 
             Client client = clients.get(0);
 
-            ChannelListCommand.Response channelListResponse = new ChannelListCommand().getResponse();
+            ChannelListCommand.Response channelListResponse = new ChannelListCommand(this.unicacityAddon).getResponse();
             Channel channel = channelListResponse.getChannels().stream()
                     .filter(channelIter -> client.getChannelID() == channelIter.getChannelID())
                     .findFirst()
@@ -85,7 +88,7 @@ public class TSFindCommand extends Command {
 
     @Override
     public List<String> complete(String[] arguments) {
-        return TabCompletionBuilder.getBuilder(arguments).build();
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments).build();
     }
 
     private String getChannelCategoryString(int pid) {

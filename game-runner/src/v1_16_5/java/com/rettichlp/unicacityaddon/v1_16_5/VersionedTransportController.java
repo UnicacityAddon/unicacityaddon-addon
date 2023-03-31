@@ -30,14 +30,13 @@ import java.util.stream.Collectors;
 public class VersionedTransportController extends TransportController {
 
     @Override
-    public void processBusRouting() {
+    public void processBusRouting(AddonPlayer p) {
         Screen screen = Minecraft.getInstance().screen;
         if (screen instanceof HopperScreen && BusCommand.active) {
             HopperScreen hopperScreen = (HopperScreen) screen;
 
             HopperMenu hopperMenu = hopperScreen.getMenu();
             if (hopperMenu.containerId != BusCommand.lastWindowId) {
-                AddonPlayer p = UnicacityAddon.PLAYER;
                 BusCommand.lastWindowId = hopperMenu.containerId;
 
                 Map<Bus, Slot> busSlotMap = hopperMenu.slots.stream()

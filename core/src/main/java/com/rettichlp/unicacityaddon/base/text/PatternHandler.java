@@ -1,7 +1,6 @@
 package com.rettichlp.unicacityaddon.base.text;
 
 
-import com.rettichlp.unicacityaddon.base.api.request.APIConverter;
 import com.rettichlp.unicacityaddon.listener.faction.terroristen.BombListener;
 
 import java.util.regex.Pattern;
@@ -20,7 +19,7 @@ public class PatternHandler {
      *
      * Pattern for faction and util data
      *
-     * @see APIConverter
+     * @see com.rettichlp.unicacityaddon.base.api.request.API
      * @see com.rettichlp.unicacityaddon.base.utils.ForgeUtils
      */
     public static final Pattern NAME_PATTERN = Pattern.compile("<h4 class=\"h5 g-mb-5\"><strong>(\\w+)");

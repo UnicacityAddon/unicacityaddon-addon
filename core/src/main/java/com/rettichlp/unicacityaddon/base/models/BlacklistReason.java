@@ -1,6 +1,6 @@
 package com.rettichlp.unicacityaddon.base.models;
 
-import com.rettichlp.unicacityaddon.base.api.request.APIConverter;
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 
 /**
  * @author RettichLP
@@ -29,8 +29,8 @@ public class BlacklistReason {
         return price;
     }
 
-    public static BlacklistReason getBlacklistReasonEntryByReason(String reason) {
-        return APIConverter.BLACKLISTREASONLIST.stream()
+    public static BlacklistReason getBlacklistReasonEntryByReason(String reason, UnicacityAddon unicacityAddon) {
+        return unicacityAddon.api().getBlacklistReasonList().stream()
                 .filter(blacklistReasonEntry -> blacklistReasonEntry.getReason().equals(reason))
                 .findFirst()
                 .orElse(null);

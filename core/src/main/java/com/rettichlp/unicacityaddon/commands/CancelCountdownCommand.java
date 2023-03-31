@@ -13,19 +13,22 @@ import java.util.List;
 @UCCommand
 public class CancelCountdownCommand extends Command {
 
-    public CancelCountdownCommand() {
+    private final UnicacityAddon unicacityAddon;
+
+    public CancelCountdownCommand(UnicacityAddon unicacityAddon) {
         super("cancelcountdown");
+        this.unicacityAddon = unicacityAddon;
     }
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
         CountdownCommand.countdown = -1;
-        UnicacityAddon.PLAYER.sendInfoMessage("Der Countdown wurde abgebrochen.");
+        this.unicacityAddon.player().sendInfoMessage("Der Countdown wurde abgebrochen.");
         return true;
     }
 
     @Override
     public List<String> complete(String[] arguments) {
-        return TabCompletionBuilder.getBuilder(arguments).build();
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments).build();
     }
 }

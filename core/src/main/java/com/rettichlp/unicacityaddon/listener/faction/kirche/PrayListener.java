@@ -26,7 +26,7 @@ public class PrayListener {
 
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
 
         Matcher prayingStartMatcher = PatternHandler.PRAYING_START_PATTERN.matcher(e.chatMessage().getPlainText());
         if (prayingStartMatcher.find()) {

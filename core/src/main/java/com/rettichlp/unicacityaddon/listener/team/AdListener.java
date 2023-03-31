@@ -33,9 +33,9 @@ public class AdListener {
         }
     }
 
-    public static void handleAd(String type) {
+    public static void handleAd(String type, UnicacityAddon unicacityAddon) {
         if (adIssuer != null && System.currentTimeMillis() - adTime < TimeUnit.SECONDS.toMillis(20)) {
-            UnicacityAddon.PLAYER.sendServerMessage("/adcontrol " + adIssuer + " " + type);
+            unicacityAddon.player().sendServerMessage("/adcontrol " + adIssuer + " " + type);
             adIssuer = null;
         }
     }

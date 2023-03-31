@@ -20,13 +20,16 @@ public class CalculateCommand extends Command {
 
     private static final String usage = "/calculate [mathematischer Ausdruck]";
 
-    public CalculateCommand() {
-    super("calculate", "calc", "rechner");
+    private final UnicacityAddon unicacityAddon;
+
+    public CalculateCommand(UnicacityAddon unicacityAddon) {
+        super("calculate", "calc", "rechner");
+        this.unicacityAddon = unicacityAddon;
     }
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
         if (arguments.length < 1) {
             p.sendSyntaxMessage(usage);
             return true;
@@ -51,6 +54,6 @@ public class CalculateCommand extends Command {
 
     @Override
     public List<String> complete(String[] arguments) {
-        return TabCompletionBuilder.getBuilder(arguments).build();
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments).build();
     }
 }

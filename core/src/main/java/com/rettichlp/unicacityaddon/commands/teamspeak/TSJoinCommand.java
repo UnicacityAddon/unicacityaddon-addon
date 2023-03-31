@@ -31,33 +31,36 @@ public class TSJoinCommand extends Command {
 
     private static final String usage = "/tsjoin [Channel]";
 
-    public TSJoinCommand() {
+    private UnicacityAddon unicacityAddon;
+
+    public TSJoinCommand(UnicacityAddon unicacityAddon) {
         super("tsjoin");
+        this.unicacityAddon = unicacityAddon;
     }
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
 
         if (arguments.length < 1) {
             p.sendSyntaxMessage(usage);
             return true;
         }
 
-        if (!UnicacityAddon.ADDON.configuration().tsApiKey().getOrDefault("").matches("([A-Z0-9]{4}(-*)){6}")) {
+        if (!this.unicacityAddon.configuration().tsApiKey().getOrDefault("").matches("([A-Z0-9]{4}(-*)){6}")) {
             p.sendErrorMessage("Teamspeak API Key ist nicht gültig!");
             return true;
         }
 
         if (!TSClientQuery.clientQueryConnected) {
             p.sendErrorMessage("Keine Verbindung zur TeamSpeak ClientQuery!");
-            TSClientQuery.reconnect();
+            TSClientQuery.reconnect(this.unicacityAddon);
             return true;
         }
 
         String channelName = TextUtils.makeStringByArgs(arguments, "-");
 
-        ChannelListCommand.Response channelListResponse = new ChannelListCommand().getResponse();
+        ChannelListCommand.Response channelListResponse = new ChannelListCommand(this.unicacityAddon).getResponse();
         if (!channelListResponse.succeeded()) {
             p.sendErrorMessage("Das Bewegen ist fehlgeschlagen.");
             return true;
@@ -88,7 +91,7 @@ public class TSJoinCommand extends Command {
             return true;
         }
 
-        ClientMoveCommand clientMoveCommand = new ClientMoveCommand(foundChannel.getChannelID(), TSUtils.getMyClientID());
+        ClientMoveCommand clientMoveCommand = new ClientMoveCommand(this.unicacityAddon, foundChannel.getChannelID(), this.unicacityAddon.tsUtils().getMyClientID());
 
         CommandResponse commandResponse = clientMoveCommand.getResponse();
         if (!commandResponse.succeeded()) {
@@ -107,8 +110,8 @@ public class TSJoinCommand extends Command {
 
     @Override
     public List<String> complete(String[] arguments) {
-        return TabCompletionBuilder.getBuilder(arguments)
-                .addAtIndex(1, new ChannelListCommand().getResponse().getChannels().stream()
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments)
+                .addAtIndex(1, new ChannelListCommand(this.unicacityAddon).getResponse().getChannels().stream()
                         .map(Channel::getName)
                         .filter(s -> !s.startsWith("[cspacer") || !s.startsWith("[spacer"))
                         .map(this::modifyChannelName)

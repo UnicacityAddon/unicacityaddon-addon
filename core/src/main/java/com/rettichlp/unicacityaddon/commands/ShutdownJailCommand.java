@@ -18,13 +18,16 @@ public class ShutdownJailCommand extends Command {
 
     public static boolean shutdownJail = false;
 
-    public ShutdownJailCommand() {
+    private UnicacityAddon unicacityAddon;
+
+    public ShutdownJailCommand(UnicacityAddon unicacityAddon) {
         super("shutdownjail", "shutdowngefängnis");
+        this.unicacityAddon = unicacityAddon;
     }
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
         shutdownJail = !shutdownJail;
 
         if (shutdownJail)
@@ -44,6 +47,6 @@ public class ShutdownJailCommand extends Command {
 
     @Override
     public List<String> complete(String[] arguments) {
-        return TabCompletionBuilder.getBuilder(arguments).build();
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments).build();
     }
 }

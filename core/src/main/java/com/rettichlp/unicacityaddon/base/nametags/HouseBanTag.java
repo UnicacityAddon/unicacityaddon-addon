@@ -1,7 +1,6 @@
 package com.rettichlp.unicacityaddon.base.nametags;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.api.request.APIConverter;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import net.labymod.api.client.component.Component;
@@ -30,7 +29,7 @@ public class HouseBanTag extends NameTag {
     @Override
     protected @Nullable RenderableComponent getRenderableComponent() {
         if (this.unicacityAddon.configuration().nameTagSetting().houseBan().get()) {
-            Optional<Player> playerOptional = UnicacityAddon.PLAYER.getWorld().getPlayers().stream()
+            Optional<Player> playerOptional = this.unicacityAddon.player().getWorld().getPlayers().stream()
                     .filter(p -> p.gameUser().getUniqueId().equals(this.entity.getUniqueId()))
                     .findFirst();
 
@@ -49,7 +48,7 @@ public class HouseBanTag extends NameTag {
                 .of("]").color(ColorCode.DARK_GRAY).advance()
                 .createComponent();
 
-        boolean hasHouseBan = APIConverter.HOUSEBANLIST.stream()
+        boolean hasHouseBan = this.unicacityAddon.api().getHouseBanList().stream()
                 .anyMatch(houseBanEntry -> houseBanEntry.getName().equals(playerName));
 
         return hasHouseBan ? RenderableComponent.of(component) : null;

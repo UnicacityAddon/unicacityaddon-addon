@@ -1,6 +1,5 @@
 package com.rettichlp.unicacityaddon.base.builder;
 
-import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.utils.ImageUploadUtils;
@@ -53,18 +52,18 @@ public class ScreenshotBuilder {
 
         public void upload() {
             save();
-            new Thread(() -> uploadScreenshot(this.file)).start();
+//            new Thread(() -> uploadScreenshot(this.file)).start();
         }
-
-        private static void uploadScreenshot(File screenshotFile) {
-            if (screenshotFile != null) {
-                String link = ImageUploadUtils.uploadToLink(screenshotFile);
-                UnicacityAddon.PLAYER.copyToClipboard(link);
-                Laby.references().notificationController().push(Notification.builder()
-                        .title(Message.getBuilder().of("Screenshot hochgeladen!").color(ColorCode.GREEN).bold().advance().createComponent())
-                        .text(Message.getBuilder().of("Link in Zwischenablage kopiert.").color(ColorCode.WHITE).advance().createComponent())
-                        .build());
-            }
-        }
+// TODO: 31.03.2023
+//        private static void uploadScreenshot(File screenshotFile) {
+//            if (screenshotFile != null) {
+//                String link = ImageUploadUtils.uploadToLink(screenshotFile);
+//                this.unicacityAddon.player.copyToClipboard(link);
+//                Laby.references().notificationController().push(Notification.builder()
+//                        .title(Message.getBuilder().of("Screenshot hochgeladen!").color(ColorCode.GREEN).bold().advance().createComponent())
+//                        .text(Message.getBuilder().of("Link in Zwischenablage kopiert.").color(ColorCode.WHITE).advance().createComponent())
+//                        .build());
+//            }
+//        }
     }
 }

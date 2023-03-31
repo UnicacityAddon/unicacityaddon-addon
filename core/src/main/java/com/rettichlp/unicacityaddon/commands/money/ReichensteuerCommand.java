@@ -3,7 +3,6 @@ package com.rettichlp.unicacityaddon.commands.money;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
-import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import net.labymod.api.client.chat.command.Command;
 
@@ -20,21 +19,24 @@ public class ReichensteuerCommand extends Command {
     public static boolean isActive = false;
     public static int cashInATM = 0;
 
-    public ReichensteuerCommand() {
+    private final UnicacityAddon unicacityAddon;
+
+    public ReichensteuerCommand(UnicacityAddon unicacityAddon) {
         super("reichensteuer");
+        this.unicacityAddon = unicacityAddon;
     }
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
 
-        if (FileManager.DATA.getBankBalance() > 100000) {
+        if (this.unicacityAddon.data().getBankBalance() > 100000) {
             if (isActive)
                 return true;
 
             p.sendServerMessage("/atminfo");
             isActive = true;
-            int removeMoneyAmount = FileManager.DATA.getBankBalance() - 100000;
+            int removeMoneyAmount = this.unicacityAddon.data().getBankBalance() - 100000;
 
             (new Timer()).schedule(new TimerTask() {
                 @Override
@@ -58,6 +60,6 @@ public class ReichensteuerCommand extends Command {
 
     @Override
     public List<String> complete(String[] arguments) {
-        return TabCompletionBuilder.getBuilder(arguments).build();
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments).build();
     }
 }

@@ -3,7 +3,6 @@ package com.rettichlp.unicacityaddon.commands.faction.badfaction;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
-import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import net.labymod.api.client.chat.command.Command;
 
@@ -20,22 +19,25 @@ import java.util.concurrent.TimeUnit;
 @UCCommand
 public class DBankDropAllCommand extends Command {
 
-    public DBankDropAllCommand() {
+    private UnicacityAddon unicacityAddon;
+
+    public DBankDropAllCommand(UnicacityAddon unicacityAddon) {
         super("dbankdropall");
+        this.unicacityAddon = unicacityAddon;
     }
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
 
         // reset drug inventory tracker
         if (arguments.length > 0 && arguments[0].equalsIgnoreCase("reset")) {
-            FileManager.DATA.setDrugInventoryMap(new HashMap<>());
+            this.unicacityAddon.data().setDrugInventoryMap(new HashMap<>());
             return true;
         }
 
         List<String> commandQueue = new ArrayList<>();
-        FileManager.DATA.getDrugInventoryMap()
+        this.unicacityAddon.data().getDrugInventoryMap()
                 .forEach((drugType, drugPurityIntegerMap) -> drugPurityIntegerMap
                         .forEach((drugPurity, integer) -> {
                             if (integer > 0)
@@ -60,7 +62,7 @@ public class DBankDropAllCommand extends Command {
 
     @Override
     public List<String> complete(String[] arguments) {
-        return TabCompletionBuilder.getBuilder(arguments)
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments)
                 .addAtIndex(1, "reset")
                 .build();
     }

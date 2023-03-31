@@ -24,13 +24,16 @@ public class ShareLocationCommand extends Command {
 
     private static final String usage = "/sharelocation [Player...] (-d)";
 
-    public ShareLocationCommand() {
+    private UnicacityAddon unicacityAddon;
+
+    public ShareLocationCommand(UnicacityAddon unicacityAddon) {
         super("sharelocation", "sloc", "shareloc");
+        this.unicacityAddon = unicacityAddon;
     }
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
 
         if (!MobileListener.hasCommunications) {
             p.sendErrorMessage("Du hast keine Kommunikationsmittel!");
@@ -45,7 +48,7 @@ public class ShareLocationCommand extends Command {
                 allianceChat = true;
                 break;
             }
-            if (ForgeUtils.getOnlinePlayers().contains(argument))
+            if (ForgeUtils.getOnlinePlayers(this.unicacityAddon).contains(argument))
                 playerNames.add(argument);
         }
 
@@ -75,6 +78,6 @@ public class ShareLocationCommand extends Command {
 
     @Override
     public List<String> complete(String[] arguments) {
-        return TabCompletionBuilder.getBuilder(arguments).build();
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments).build();
     }
 }

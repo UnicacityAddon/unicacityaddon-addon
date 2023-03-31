@@ -23,13 +23,16 @@ public class TimerCommand extends Command {
 
     private static final String usage = "/timer (start|stop) (Name|ID) (Zeit<h/m/s>)";
 
-    public TimerCommand() {
+    private UnicacityAddon unicacityAddon;
+
+    public TimerCommand(UnicacityAddon unicacityAddon) {
         super("timer");
+        this.unicacityAddon = unicacityAddon;
     }
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
         if (TimerEntry.ACTIVE_TIMERS == null)
             TimerEntry.ACTIVE_TIMERS = new HashMap<>();
 
@@ -54,7 +57,7 @@ public class TimerCommand extends Command {
             });
             p.sendEmptyMessage();
         } else if (arguments.length == 3 && arguments[0].equalsIgnoreCase("start")) {
-            new TimerEntry(arguments[1], arguments[2]).start();
+            new TimerEntry(arguments[1], arguments[2]).start(this.unicacityAddon);
             p.sendInfoMessage("Timer gestartet.");
         } else if (arguments.length == 2 && arguments[0].equalsIgnoreCase("stop") && MathUtils.isInteger(arguments[1])) {
             TimerEntry.ACTIVE_TIMERS.get(Long.parseLong(arguments[1])).stop();
@@ -67,7 +70,7 @@ public class TimerCommand extends Command {
 
     @Override
     public List<String> complete(String[] arguments) {
-        return TabCompletionBuilder.getBuilder(arguments)
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments)
                 .addAtIndex(1, "start", "stop")
                 .build();
     }

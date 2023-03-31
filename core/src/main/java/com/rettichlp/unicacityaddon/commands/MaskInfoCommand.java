@@ -18,13 +18,16 @@ public class MaskInfoCommand extends Command {
 
     public static long startTime = 0;
 
-    public MaskInfoCommand() {
+    private final UnicacityAddon unicacityAddon;
+
+    public MaskInfoCommand(UnicacityAddon unicacityAddon) {
         super("maskinfo");
+        this.unicacityAddon = unicacityAddon;
     }
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
 
         if (startTime > 0) {
             long timeLeft = System.currentTimeMillis() - startTime;
@@ -41,6 +44,6 @@ public class MaskInfoCommand extends Command {
 
     @Override
     public List<String> complete(String[] arguments) {
-        return TabCompletionBuilder.getBuilder(arguments).build();
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments).build();
     }
 }

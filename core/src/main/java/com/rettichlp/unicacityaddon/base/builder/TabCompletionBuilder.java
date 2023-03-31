@@ -1,5 +1,6 @@
 package com.rettichlp.unicacityaddon.base.builder;
 
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.utils.ForgeUtils;
 
 import java.util.ArrayList;
@@ -17,8 +18,8 @@ public class TabCompletionBuilder {
     private TabCompletionBuilder() {
     }
 
-    public static Builder getBuilder(String[] arguments) {
-        return new Builder(arguments);
+    public static Builder getBuilder(UnicacityAddon unicacityAddon, String[] arguments) {
+        return new Builder(unicacityAddon, arguments);
     }
 
     public static class Builder {
@@ -27,7 +28,10 @@ public class TabCompletionBuilder {
         private final Map<Integer, List<String>> tabCompletionMap;
         private final Map<Integer, List<String>> tabCompletionFromIndexMap;
 
-        public Builder(String[] arguments) {
+        private final UnicacityAddon unicacityAddon;
+
+        public Builder(UnicacityAddon unicacityAddon, String[] arguments) {
+            this.unicacityAddon = unicacityAddon;
             this.arguments = arguments;
             this.tabCompletionMap = new HashMap<>();
             this.tabCompletionFromIndexMap = new HashMap<>();
@@ -57,7 +61,7 @@ public class TabCompletionBuilder {
 
         public List<String> build() {
             int length = this.arguments.length;
-            List<String> tabCompletionList = this.tabCompletionMap.getOrDefault(length, ForgeUtils.getOnlinePlayers());
+            List<String> tabCompletionList = this.tabCompletionMap.getOrDefault(length, ForgeUtils.getOnlinePlayers(this.unicacityAddon));
 
             // add tabCompletionFromIndexMap entry to tab completion
             this.tabCompletionFromIndexMap.entrySet().stream()

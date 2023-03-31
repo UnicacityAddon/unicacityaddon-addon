@@ -10,16 +10,19 @@ public class UnicacityAddonTickEvent implements Event {
 
     private final Phase phase;
 
-    public UnicacityAddonTickEvent(Phase phase) {
+    private UnicacityAddon unicacityAddon;
+
+    public UnicacityAddonTickEvent(UnicacityAddon unicacityAddon, Phase phase) {
+        this.unicacityAddon = unicacityAddon;
         this.phase = phase;
     }
 
     public boolean isIngame() {
-        return UnicacityAddon.ADDON.labyAPI().minecraft().isIngame();
+        return this.unicacityAddon.labyAPI().minecraft().isIngame();
     }
 
     public boolean isUnicacity() {
-        return UnicacityAddon.isUnicacity();
+        return this.unicacityAddon.isUnicacity();
     }
 
     public boolean isPhase(Phase phase) {

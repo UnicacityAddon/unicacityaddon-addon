@@ -20,13 +20,16 @@ public class ARezeptAnnehmenCommand extends Command {
 
     private static final String usage = "/arezeptannehmen [Anzahl]";
 
-    public ARezeptAnnehmenCommand() {
+    private UnicacityAddon unicacityAddon;
+
+    public ARezeptAnnehmenCommand(UnicacityAddon unicacityAddon) {
         super("arezeptannehmen", "arannehmen");
+        this.unicacityAddon = unicacityAddon;
     }
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
 
         if (arguments.length < 1) {
             p.sendSyntaxMessage(usage);
@@ -36,12 +39,12 @@ public class ARezeptAnnehmenCommand extends Command {
         if (!MathUtils.isInteger(arguments[0]))
             return true;
         amount = Integer.parseInt(arguments[0]);
-        MedicationListener.acceptRecipe();
+        MedicationListener.acceptRecipe(this.unicacityAddon);
         return true;
     }
 
     @Override
     public List<String> complete(String[] arguments) {
-        return TabCompletionBuilder.getBuilder(arguments).build();
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments).build();
     }
 }

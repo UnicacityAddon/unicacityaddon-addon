@@ -2,7 +2,6 @@ package com.rettichlp.unicacityaddon.commands.faction.state;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
-import com.rettichlp.unicacityaddon.base.api.request.APIConverter;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.enums.faction.WantedFlag;
 import com.rettichlp.unicacityaddon.base.models.WantedReason;
@@ -29,13 +28,16 @@ public class ASUCommand extends Command {
     private static final String usage = "/asu [Spieler...] [Grund] (-v/-b/-fsa/-wsa)";
     private final Timer timer = new Timer();
 
-    public ASUCommand() {
+    private UnicacityAddon unicacityAddon;
+
+    public ASUCommand(UnicacityAddon unicacityAddon) {
         super("asu");
+        this.unicacityAddon = unicacityAddon;
     }
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
         if (arguments.length < 2) {
             p.sendSyntaxMessage(usage);
             return true;
@@ -45,7 +47,7 @@ public class ASUCommand extends Command {
         int reasonIndex = arguments.length - wantedFlags.size() - 1;
         List<String> players = Arrays.asList(arguments).subList(0, reasonIndex);
 
-        WantedReason wantedReasonEntry = WantedReason.getWantedReasonEntryByReason(arguments[reasonIndex]);
+        WantedReason wantedReasonEntry = WantedReason.getWantedReasonEntryByReason(arguments[reasonIndex], this.unicacityAddon);
         if (wantedReasonEntry == null) {
             p.sendErrorMessage("Der Wantedgrund wurde nicht gefunden!");
             return true;
@@ -91,9 +93,9 @@ public class ASUCommand extends Command {
 
     @Override
     public List<String> complete(String[] arguments) {
-        return TabCompletionBuilder.getBuilder(arguments)
-                .addToAllFromIndex(2, APIConverter.WANTEDREASONLIST.stream().map(WantedReason::getReason).sorted().collect(Collectors.toList()))
-                .addToAllFromIndex(2, ForgeUtils.getOnlinePlayers())
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments)
+                .addToAllFromIndex(2, this.unicacityAddon.api().getWantedReasonList().stream().map(WantedReason::getReason).sorted().collect(Collectors.toList()))
+                .addToAllFromIndex(2, ForgeUtils.getOnlinePlayers(this.unicacityAddon))
                 .addToAllFromIndex(3, Arrays.stream(WantedFlag.values()).map(WantedFlag::getFlagArgument).sorted().collect(Collectors.toList()))
                 .build();
     }

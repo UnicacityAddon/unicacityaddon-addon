@@ -7,7 +7,6 @@ import com.rettichlp.unicacityaddon.base.config.ownUse.OwnUseSetting;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
-import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
@@ -44,7 +43,7 @@ public class DrugListener {
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {
         String msg = e.chatMessage().getPlainText();
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
 
         boolean hqMessageSetting = this.unicacityAddon.configuration().factionMessageSetting().hq().get();
 
@@ -89,7 +88,7 @@ public class DrugListener {
             DrugPurity drugPurity = DrugPurity.getDrugPurity(dbankGetMatcher.group("drugPurity"));
 
             if (msg.contains(p.getName())) {
-                FileManager.DATA.addDrugToInventory(drugType, drugPurity, amount);
+                this.unicacityAddon.data().addDrugToInventory(drugType, drugPurity, amount);
             }
 
             if (hqMessageSetting) {
@@ -118,7 +117,7 @@ public class DrugListener {
             DrugPurity drugPurity = DrugPurity.getDrugPurity(dbankGiveMatcher.group("drugPurity"));
 
             if (msg.contains(p.getName())) {
-                FileManager.DATA.removeDrugFromInventory(drugType, drugPurity, amount);
+                this.unicacityAddon.data().removeDrugFromInventory(drugType, drugPurity, amount);
             }
 
             if (hqMessageSetting) {
@@ -144,7 +143,7 @@ public class DrugListener {
         if (medicationGetMatcher.find()) {
             int amount = Integer.parseInt(medicationGetMatcher.group("amount"));
             DrugType drugType = DrugType.getDrugType(medicationGetMatcher.group("drugType"));
-            FileManager.DATA.addDrugToInventory(drugType, DrugPurity.BEST, amount);
+            this.unicacityAddon.data().addDrugToInventory(drugType, DrugPurity.BEST, amount);
             return;
         }
 
@@ -154,7 +153,7 @@ public class DrugListener {
             DrugPurity drugPurity = DrugPurity.BEST;
 
             if (drugType != null) {
-                OwnUseSetting ownUseSetting = UnicacityAddon.ADDON.configuration().ownUseSetting();
+                OwnUseSetting ownUseSetting = this.unicacityAddon.configuration().ownUseSetting();
                 switch (drugType) {
                     case COCAINE:
                         drugPurity = ownUseSetting.kokainSetting().purity().get();
@@ -168,7 +167,7 @@ public class DrugListener {
                 }
             }
 
-            FileManager.DATA.removeDrugFromInventory(drugType, drugPurity, 1);
+            this.unicacityAddon.data().removeDrugFromInventory(drugType, drugPurity, 1);
             return;
         }
 
@@ -176,9 +175,9 @@ public class DrugListener {
         Matcher trunkInteractionAcceptedMatcher = PatternHandler.TRUNK_INTERACTION_ACCEPTED_PATTERN.matcher(msg);
         if ((drugDealAcceptedMatcher.find() || trunkInteractionAcceptedMatcher.find()) && System.currentTimeMillis() - time < TimeUnit.MINUTES.toMillis(3)) {
             if (type.equals("ADD")) {
-                FileManager.DATA.addDrugToInventory(lastDrugType, lastDrugPurity, amount);
+                this.unicacityAddon.data().addDrugToInventory(lastDrugType, lastDrugPurity, amount);
             } else if (type.equals("REMOVE")) {
-                FileManager.DATA.removeDrugFromInventory(lastDrugType, lastDrugPurity, amount);
+                this.unicacityAddon.data().removeDrugFromInventory(lastDrugType, lastDrugPurity, amount);
             }
             return;
         }
@@ -326,7 +325,7 @@ public class DrugListener {
         if (drugUseMatcher.find()) {
             DrugType drugType = DrugType.getDrugType(drugUseMatcher.group("drugType"));
             DrugPurity drugPurity = DrugPurity.getDrugPurity(drugUseMatcher.group("drugPurity"));
-            FileManager.DATA.removeDrugFromInventory(drugType, drugPurity, 1);
+            this.unicacityAddon.data().removeDrugFromInventory(drugType, drugPurity, 1);
         }
     }
 

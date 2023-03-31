@@ -23,15 +23,18 @@ public class EigenbedarfCommand extends Command {
 
     private static List<String> scheduledTasks = new ArrayList<>();
 
-    public EigenbedarfCommand() {
+    private UnicacityAddon unicacityAddon;
+
+    public EigenbedarfCommand(UnicacityAddon unicacityAddon) {
         super("eigenbedarf");
+        this.unicacityAddon = unicacityAddon;
     }
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        KokainSetting kokainSetting = UnicacityAddon.ADDON.configuration().ownUseSetting().kokainSetting();
-        MarihuanaSetting marihuanaSetting = UnicacityAddon.ADDON.configuration().ownUseSetting().marihuanaSetting();
-        MethamphetaminSetting methamphetaminSetting = UnicacityAddon.ADDON.configuration().ownUseSetting().methamphetaminSetting();
+        KokainSetting kokainSetting = this.unicacityAddon.configuration().ownUseSetting().kokainSetting();
+        MarihuanaSetting marihuanaSetting = this.unicacityAddon.configuration().ownUseSetting().marihuanaSetting();
+        MethamphetaminSetting methamphetaminSetting = this.unicacityAddon.configuration().ownUseSetting().methamphetaminSetting();
 
         if (kokainSetting.enabled().get()) {
             DrugPurity drugPurity = kokainSetting.purity().getOrDefault(DrugPurity.BEST);
@@ -52,11 +55,11 @@ public class EigenbedarfCommand extends Command {
         }
 
         new Thread(() -> scheduledTasks.forEach(s -> {
-            UnicacityAddon.PLAYER.sendServerMessage(s);
+            this.unicacityAddon.player().sendServerMessage(s);
             try {
                 Thread.sleep(TimeUnit.SECONDS.toMillis(1));
             } catch (InterruptedException e) {
-                UnicacityAddon.LOGGER.warn(e.getMessage());
+                this.unicacityAddon.logger().warn(e.getMessage());
             }
         })).start();
 
@@ -65,6 +68,6 @@ public class EigenbedarfCommand extends Command {
 
     @Override
     public List<String> complete(String[] arguments) {
-        return TabCompletionBuilder.getBuilder(arguments).build();
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments).build();
     }
 }

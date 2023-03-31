@@ -30,7 +30,7 @@ public class DutyTag extends NameTag {
     @Override
     protected @Nullable RenderableComponent getRenderableComponent() {
         if (this.unicacityAddon.configuration().nameTagSetting().duty().get()) {
-            Optional<Player> playerOptional = UnicacityAddon.PLAYER.getWorld().getPlayers().stream()
+            Optional<Player> playerOptional = this.unicacityAddon.player().getWorld().getPlayers().stream()
                     .filter(p -> p.gameUser().getUniqueId().equals(this.entity.getUniqueId()))
                     .findFirst();
 
@@ -47,6 +47,6 @@ public class DutyTag extends NameTag {
                 .of("●").color(ColorCode.GREEN).advance().space()
                 .createComponent();
 
-        return FactionManager.checkPlayerDuty(playerName) ? RenderableComponent.of(component) : null;
+        return this.unicacityAddon.factionManager().checkPlayerDuty(playerName) ? RenderableComponent.of(component) : null;
     }
 }

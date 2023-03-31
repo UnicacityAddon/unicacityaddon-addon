@@ -36,8 +36,8 @@ public class AFbankEinzahlenListener {
             // send clock command
             AFbankEinzahlenCommand.timer.schedule(new TimerTask() {
                 public void run() {
-                    AFbankEinzahlenCommand.sendClockMessage();
-                    UnicacityAddon.PLAYER.sendMessage(Message.getBuilder()
+                    AFbankEinzahlenCommand.sendClockMessage(AFbankEinzahlenListener.this.unicacityAddon);
+                    AFbankEinzahlenListener.this.unicacityAddon.player().sendMessage(Message.getBuilder()
                             .prefix()
                             .of("Nicht eingezahlt wurden: ").color(ColorCode.GRAY).advance()
                             .of(AFbankEinzahlenCommand.amount + "$").color(ColorCode.BLUE).advance()

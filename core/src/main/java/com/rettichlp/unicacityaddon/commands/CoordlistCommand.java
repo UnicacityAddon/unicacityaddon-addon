@@ -3,7 +3,6 @@ package com.rettichlp.unicacityaddon.commands;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
-import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.models.CoordlistEntry;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
@@ -24,23 +23,26 @@ public class CoordlistCommand extends Command {
 
     private static final String usage = "/coordlist [add|remove] [Ort]";
 
-    public CoordlistCommand() {
+    private final UnicacityAddon unicacityAddon;
+
+    public CoordlistCommand(UnicacityAddon unicacityAddon) {
         super("coordlist");
+        this.unicacityAddon = unicacityAddon;
     }
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
 
         if (arguments.length == 0) {
             listCoords(p);
         } else if (arguments.length > 1 && arguments[0].equalsIgnoreCase("add")) {
             String name = TextUtils.makeStringByArgs(arguments, "-").replace("add-", "");
-            FileManager.DATA.addCoordToCoordlist(name, p.getPosition());
+            this.unicacityAddon.data().addCoordToCoordlist(name, p.getPosition());
             p.sendInfoMessage("Koordinaten gespeichert.");
         } else if (arguments.length > 1 && arguments[0].equalsIgnoreCase("remove")) {
             String name = TextUtils.makeStringByArgs(arguments, "-").replace("remove-", "");
-            if (FileManager.DATA.removeCoordFromCoordlist(name)) {
+            if (this.unicacityAddon.data().removeCoordFromCoordlist(name)) {
                 p.sendInfoMessage("Koordinaten gelöscht.");
             }
         } else {
@@ -51,10 +53,10 @@ public class CoordlistCommand extends Command {
 
     @Override
     public List<String> complete(String[] arguments) {
-        return TabCompletionBuilder.getBuilder(arguments)
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments)
                 .addAtIndex(1, "add")
                 .addAtIndex(1, "remove")
-                .addAtIndex(2, FileManager.DATA.getCoordlist().stream().map(CoordlistEntry::getName).collect(Collectors.toList()))
+                .addAtIndex(2, this.unicacityAddon.data().getCoordlist().stream().map(CoordlistEntry::getName).collect(Collectors.toList()))
                 .build();
     }
 
@@ -64,7 +66,7 @@ public class CoordlistCommand extends Command {
                 .of("Koordinaten:").color(ColorCode.DARK_AQUA).bold().advance()
                 .createComponent());
 
-        FileManager.DATA.getCoordlist().forEach(coordlistEntry -> p.sendMessage(Message.getBuilder()
+        this.unicacityAddon.data().getCoordlist().forEach(coordlistEntry -> p.sendMessage(Message.getBuilder()
                 .of("»").color(ColorCode.GRAY).advance().space()
                 .of(coordlistEntry.getName().replace("-", " ")).color(ColorCode.AQUA).advance().space()
                 .of("-").color(ColorCode.GRAY).advance().space()

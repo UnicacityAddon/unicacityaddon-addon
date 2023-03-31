@@ -3,7 +3,6 @@ package com.rettichlp.unicacityaddon.listener.house;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
-import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.models.HouseData;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
@@ -49,8 +48,8 @@ public class HouseDataListener {
         if (houseBankValueMatcher.find()) {
             if (System.currentTimeMillis() - lastCheck < 500)
                 e.setCancelled(true);
-            HouseData houseData = FileManager.DATA.getHouseData(lastCheckedHouseNumber).setHouseBank(Integer.parseInt(houseBankValueMatcher.group(1)));
-            FileManager.DATA.updateHouseData(lastCheckedHouseNumber, houseData);
+            HouseData houseData = this.unicacityAddon.data().getHouseData(lastCheckedHouseNumber).setHouseBank(Integer.parseInt(houseBankValueMatcher.group(1)));
+            this.unicacityAddon.data().updateHouseData(lastCheckedHouseNumber, houseData);
             return;
         }
 
@@ -61,7 +60,7 @@ public class HouseDataListener {
                 @Override
                 public void run() {
                     lastCheck = System.currentTimeMillis();
-                    UnicacityAddon.PLAYER.sendServerMessage("/hkasse");
+                    HouseDataListener.this.unicacityAddon.player().sendServerMessage("/hkasse");
                 }
             }, 1000);
         }
@@ -75,10 +74,10 @@ public class HouseDataListener {
                 DrugType drugType = DrugType.getDrugType(drugStorageAddCommandMatcher.group("drugType"));
                 DrugPurity drugPurity = DrugPurity.getDrugPurity(drugStorageAddCommandMatcher.group("drugPurity"));
 
-                HouseData houseData = FileManager.DATA.getHouseData(lastCheckedHouseNumber).addToStorage(drugType, drugPurity, amount);
-                FileManager.DATA.updateHouseData(lastCheckedHouseNumber, houseData);
+                HouseData houseData = this.unicacityAddon.data().getHouseData(lastCheckedHouseNumber).addToStorage(drugType, drugPurity, amount);
+                this.unicacityAddon.data().updateHouseData(lastCheckedHouseNumber, houseData);
 
-                FileManager.DATA.removeDrugFromInventory(drugType, drugPurity, amount);
+                this.unicacityAddon.data().removeDrugFromInventory(drugType, drugPurity, amount);
             }
 
             Matcher drugStorageRemoveCommandMatcher = PatternHandler.HOUSE_STORAGE_REMOVE_COMMAND_PATTERN.matcher(waitingCommand);
@@ -87,10 +86,10 @@ public class HouseDataListener {
                 DrugType drugType = DrugType.getDrugType(drugStorageRemoveCommandMatcher.group("drugType"));
                 DrugPurity drugPurity = DrugPurity.getDrugPurity(drugStorageRemoveCommandMatcher.group("drugPurity"));
 
-                HouseData houseData = FileManager.DATA.getHouseData(lastCheckedHouseNumber).removeFromStorage(drugType, drugPurity, amount);
-                FileManager.DATA.updateHouseData(lastCheckedHouseNumber, houseData);
+                HouseData houseData = this.unicacityAddon.data().getHouseData(lastCheckedHouseNumber).removeFromStorage(drugType, drugPurity, amount);
+                this.unicacityAddon.data().updateHouseData(lastCheckedHouseNumber, houseData);
 
-                FileManager.DATA.addDrugToInventory(drugType, drugPurity, amount);
+                this.unicacityAddon.data().addDrugToInventory(drugType, drugPurity, amount);
             }
         }
     }
@@ -100,7 +99,7 @@ public class HouseDataListener {
         String msg = e.getMessage();
         if (msg.startsWith("/drogenlager ")) {
             lastCheck = System.currentTimeMillis();
-            UnicacityAddon.PLAYER.sendServerMessage("/hkasse");
+            this.unicacityAddon.player().sendServerMessage("/hkasse");
             waitingCommand = msg;
         }
     }

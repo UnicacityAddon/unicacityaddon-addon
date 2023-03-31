@@ -19,20 +19,23 @@ public class DutyCommand extends Command {
 
     private static final String usage = "/checkduty [Spieler]";
 
-    public DutyCommand() {
+    private final UnicacityAddon unicacityAddon;
+
+    public DutyCommand(UnicacityAddon unicacityAddon) {
         super("checkduty");
+        this.unicacityAddon = unicacityAddon;
     }
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
 
         if (arguments.length == 0) {
             p.sendSyntaxMessage(usage);
             return true;
         }
 
-        boolean isDuty = FactionManager.checkPlayerDuty(arguments[0]);
+        boolean isDuty = this.unicacityAddon.factionManager().checkPlayerDuty(arguments[0]);
 
         p.sendMessage(Message.getBuilder()
                 .of("Der Spieler").color(ColorCode.GRAY).advance().space()
@@ -47,6 +50,6 @@ public class DutyCommand extends Command {
 
     @Override
     public List<String> complete(String[] arguments) {
-        return TabCompletionBuilder.getBuilder(arguments).build();
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments).build();
     }
 }

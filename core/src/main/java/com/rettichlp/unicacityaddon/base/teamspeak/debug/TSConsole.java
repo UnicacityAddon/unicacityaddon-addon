@@ -19,23 +19,24 @@ import java.util.Scanner;
  */
 public class TSConsole implements TSListener {
 
-    public static void main(String[] args) throws IOException {
-        new TSAPIKeyLoader().load();
-        TSClientQuery.getInstance();
-
-        TSEventHandler.registerListener(new TSConsole());
-
-        try (Scanner scanner = new Scanner(System.in)) {
-            while (scanner.hasNext()) {
-                String line = scanner.nextLine();
-
-                CommandResponse response = new BaseCommand<CommandResponse>(line) {
-                }.getResponse();
-
-                // TODO Logger.LOGGER.info(response.getRawResponse());
-            }
-        }
-    }
+// TODO: 31.03.2023
+//    public static void main(String[] args) throws IOException {
+//        new TSAPIKeyLoader().load();
+//        TSClientQuery.getInstance();
+//
+//        TSEventHandler.registerListener(new TSConsole());
+//
+//        try (Scanner scanner = new Scanner(System.in)) {
+//            while (scanner.hasNext()) {
+//                String line = scanner.nextLine();
+//
+//                CommandResponse response = new BaseCommand<CommandResponse>(line) {
+//                }.getResponse();
+//
+//                // TODO Logger.LOGGER.info(response.getRawResponse());
+//            }
+//        }
+//    }
 
     @EventHandler
     public void onClientMoved(ClientMovedEvent e) {

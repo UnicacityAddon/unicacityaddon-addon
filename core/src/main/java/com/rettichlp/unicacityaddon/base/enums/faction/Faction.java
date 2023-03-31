@@ -1,11 +1,7 @@
 package com.rettichlp.unicacityaddon.base.enums.faction;
 
-import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.api.exception.APIResponseException;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
-import com.rettichlp.unicacityaddon.base.utils.WebsiteUtils;
-import jdk.internal.joptsimple.internal.Strings;
 
 /**
  * @author RettichLP
@@ -94,22 +90,16 @@ public enum Faction {
         return this.factionKey;
     }
 
+    public int getPublicChannelId() {
+        return publicChannelId;
+    }
+
     public String getNameTagSuffix() {
-        return UnicacityAddon.ADDON.configuration().nameTagSetting().factionInfo().get() ? this.nameTagSuffix : "";
+        return nameTagSuffix;
     }
 
     public String getWebsiteUrl() {
-        if (this.equals(Faction.NULL))
-            return null;
-        return "https://unicacity.de/fraktionen/" + getApiName();
-    }
-
-    public String getWebsiteSource() {
-        try {
-            return WebsiteUtils.sendRequest(this.getWebsiteUrl());
-        } catch (APIResponseException e) {
-            return Strings.EMPTY;
-        }
+        return this.equals(NULL) ? null : "https://unicacity.de/fraktionen/" + getApiName();
     }
 
     public static Faction getFactionByDisplayName(String s) {
@@ -126,9 +116,5 @@ public enum Faction {
                 return faction;
         }
         return null;
-    }
-
-    public int getPublicChannelId() {
-        return publicChannelId;
     }
 }

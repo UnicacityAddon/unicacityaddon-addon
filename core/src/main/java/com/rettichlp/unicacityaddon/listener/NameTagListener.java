@@ -1,7 +1,6 @@
 package com.rettichlp.unicacityaddon.listener;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.api.request.APIConverter;
 import com.rettichlp.unicacityaddon.base.config.nametag.setting.AllianceFactionNameTagSetting;
 import com.rettichlp.unicacityaddon.base.config.nametag.setting.FactionNameTagSetting;
 import com.rettichlp.unicacityaddon.base.config.nametag.setting.SpecificNameTagSetting;
@@ -46,7 +45,7 @@ public class NameTagListener {
 
             if (networkPlayerInfo != null && !e.nameTag().style().isDecorationSet(TextDecoration.OBFUSCATED)) {
                 String playerName = networkPlayerInfo.profile().getUsername();
-                String prefix = getPrefix(playerName, false);
+                String prefix = getPrefix(playerName, false, this.unicacityAddon);
 
                 if (!prefix.equals(FormattingCode.RESET.getCode())) {
                     e.setNameTag(Message.getBuilder().add(prefix + playerName).createComponent());
@@ -55,22 +54,22 @@ public class NameTagListener {
         }
     }
 
-    public static String getPrefix(String playerName, boolean isCorpse) {
+    public static String getPrefix(String playerName, boolean isCorpse, UnicacityAddon unicacityAddon) {
         StringBuilder prefix = new StringBuilder();
         prefix.append(FormattingCode.RESET.getCode());
         if (isCorpse)
             prefix.append(ColorCode.GRAY.getCode());
 
-        if (APIConverter.PLAYERFACTIONMAP.containsKey(playerName)) {
-            Faction targetPlayerFaction = APIConverter.PLAYERFACTIONMAP.getOrDefault(playerName, Faction.NULL);
+        if (unicacityAddon.api().getPlayerFactionMap().containsKey(playerName)) {
+            Faction targetPlayerFaction = unicacityAddon.api().getPlayerFactionMap().getOrDefault(playerName, Faction.NULL);
 
-            FactionNameTagSetting factionNameTagSetting = UnicacityAddon.ADDON.configuration().nameTagSetting().factionNameTagSetting();
+            FactionNameTagSetting factionNameTagSetting = unicacityAddon.configuration().nameTagSetting().factionNameTagSetting();
             if (factionNameTagSetting.enabled().get()) {
-                if (targetPlayerFaction.equals(UnicacityAddon.PLAYER.getFaction()))
+                if (targetPlayerFaction.equals(unicacityAddon.player().getFaction()))
                     prefix.append(factionNameTagSetting.color().getOrDefault(ColorCode.BLUE).getCode());
             }
 
-            AllianceFactionNameTagSetting allianceFactionNameTagSetting = UnicacityAddon.ADDON.configuration().nameTagSetting().allianceFactionNameTagSetting();
+            AllianceFactionNameTagSetting allianceFactionNameTagSetting = unicacityAddon.configuration().nameTagSetting().allianceFactionNameTagSetting();
             if (allianceFactionNameTagSetting.enabled().get()) {
                 ColorCode allianceColor = allianceFactionNameTagSetting.color().getOrDefault(ColorCode.DARK_PURPLE);
                 Faction allianceFaction1 = allianceFactionNameTagSetting.faction1().getOrDefault(Faction.NULL);
@@ -79,7 +78,7 @@ public class NameTagListener {
                     prefix.append(allianceColor.getCode());
             }
 
-            StreetwarNameTagSetting streetwarNameTagSetting = UnicacityAddon.ADDON.configuration().nameTagSetting().streetwarNameTagSetting();
+            StreetwarNameTagSetting streetwarNameTagSetting = unicacityAddon.configuration().nameTagSetting().streetwarNameTagSetting();
             if (streetwarNameTagSetting.enabled().get()) {
                 ColorCode streetwarColor = streetwarNameTagSetting.color().getOrDefault(ColorCode.RED);
                 Faction streetwarFaction1 = streetwarNameTagSetting.faction1().getOrDefault(Faction.NULL);
@@ -89,7 +88,7 @@ public class NameTagListener {
             }
         }
 
-        SpecificNameTagSetting specificNameTagSetting = UnicacityAddon.ADDON.configuration().nameTagSetting().specificNameTagSetting();
+        SpecificNameTagSetting specificNameTagSetting = unicacityAddon.configuration().nameTagSetting().specificNameTagSetting();
         if (specificNameTagSetting.enabled().get()) {
             WantedListener.Wanted wanted = WantedListener.WANTED_MAP.get(playerName);
             if (wanted != null) {

@@ -9,7 +9,6 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
-import com.rettichlp.unicacityaddon.base.utils.NavigationUtils;
 import com.rettichlp.unicacityaddon.listener.TickListener;
 import net.labymod.api.client.chat.ChatMessage;
 import net.labymod.api.client.component.Component;
@@ -42,7 +41,7 @@ public class ReinforcementListener {
 
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e)  {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
         ChatMessage chatMessage = e.chatMessage();
         String unformattedMsg = chatMessage.getPlainText();
 
@@ -73,7 +72,7 @@ public class ReinforcementListener {
                     .of("" + posZ).color(ColorCode.AQUA).advance()
                     .createComponent();
 
-            Map.Entry<Double, NaviPoint> nearestNaviPoint = NavigationUtils.getNearestNaviPoint(posX, posY, posZ);
+            Map.Entry<Double, NaviPoint> nearestNaviPoint = this.unicacityAddon.navigation().getNearestNaviPoint(posX, posY, posZ);
             NaviPoint navipoint = nearestNaviPoint.getValue();
 
             String navipointString;

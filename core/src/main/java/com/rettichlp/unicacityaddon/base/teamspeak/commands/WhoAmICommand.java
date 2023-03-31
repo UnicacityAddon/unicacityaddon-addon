@@ -1,5 +1,6 @@
 package com.rettichlp.unicacityaddon.base.teamspeak.commands;
 
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.teamspeak.CommandResponse;
 
 import java.util.Map;
@@ -9,8 +10,8 @@ import java.util.Map;
  */
 public class WhoAmICommand extends BaseCommand<WhoAmICommand.Response> {
 
-    public WhoAmICommand() {
-        super("whoami");
+    public WhoAmICommand(UnicacityAddon unicacityAddon) {
+        super(unicacityAddon, "whoami");
     }
 
     public static class Response extends CommandResponse {

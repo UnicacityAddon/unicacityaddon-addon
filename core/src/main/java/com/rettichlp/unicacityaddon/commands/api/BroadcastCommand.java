@@ -4,7 +4,6 @@ import com.google.gson.JsonObject;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.api.exception.APIResponseException;
-import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
@@ -28,8 +27,11 @@ public class BroadcastCommand extends Command {
 
     private static final String usage = "/broadcast [queue|send] (dd.MM.yyyy) (HH:mm:ss) (Nachricht)";
 
-    public BroadcastCommand() {
+    private final UnicacityAddon unicacityAddon;
+
+    public BroadcastCommand(UnicacityAddon unicacityAddon) {
         super("broadcast");
+        this.unicacityAddon = unicacityAddon;
     }
 
     /**
@@ -37,7 +39,7 @@ public class BroadcastCommand extends Command {
      */
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
 
         new Thread(() -> {
             if (arguments.length == 1 && arguments[0].equalsIgnoreCase("queue")) {
@@ -47,7 +49,7 @@ public class BroadcastCommand extends Command {
                             .of("Aktive Broadcasts:").color(ColorCode.DARK_AQUA).bold().advance()
                             .createComponent());
 
-                    APIRequest.sendBroadcastQueueRequest().forEach(jsonElement -> {
+                    this.unicacityAddon.api().sendBroadcastQueueRequest().forEach(jsonElement -> {
                         JsonObject o = jsonElement.getAsJsonObject();
                         String broadcast = o.get("broadcast").getAsString();
                         String issuerName = o.get("issuerName").getAsString();
@@ -77,7 +79,7 @@ public class BroadcastCommand extends Command {
                 long sendTime = localDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
 
                 try {
-                    JsonObject response = APIRequest.sendBroadcastSendRequest(message, String.valueOf(sendTime));
+                    JsonObject response = this.unicacityAddon.api().sendBroadcastSendRequest(message, String.valueOf(sendTime));
                     p.sendAPIMessage(response.get("info").getAsString(), true);
                 } catch (APIResponseException e) {
                     e.sendInfo();
@@ -92,7 +94,7 @@ public class BroadcastCommand extends Command {
     @Override
     public List<String> complete(String[] arguments) {
         Date now = new Date();
-        return TabCompletionBuilder.getBuilder(arguments)
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments)
                 .addAtIndex(1, "queue", "send")
                 .addAtIndex(2, new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN).format(now))
                 .addAtIndex(3, new SimpleDateFormat("HH:mm:ss", Locale.GERMAN).format(now))

@@ -46,7 +46,7 @@ public class MobileListener {
      */
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
         String msg = e.chatMessage().getPlainText();
 
         // blocks next SMS message (because SMS messages has two independent message parts)

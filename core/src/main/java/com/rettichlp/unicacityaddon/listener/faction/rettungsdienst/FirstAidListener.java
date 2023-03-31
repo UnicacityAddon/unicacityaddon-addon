@@ -1,7 +1,6 @@
 package com.rettichlp.unicacityaddon.listener.faction.rettungsdienst;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
@@ -32,12 +31,12 @@ public class FirstAidListener {
         String msg = e.chatMessage().getPlainText();
 
         if (PatternHandler.FIRST_AID_RECEIVE_PATTERN.matcher(msg).find()) {
-            FileManager.DATA.setFirstAidDate(System.currentTimeMillis());
+            this.unicacityAddon.data().setFirstAidDate(System.currentTimeMillis());
             return;
         }
 
         if (PatternHandler.FIRST_AID_LICENCE_PATTERN.matcher(msg).find()) {
-            long expirationTime = FileManager.DATA.getFirstAidDate() + TimeUnit.DAYS.toMillis(14); // Erhaltsdatum + 14 Tage = Auslaufdatum
+            long expirationTime = this.unicacityAddon.data().getFirstAidDate() + TimeUnit.DAYS.toMillis(14); // Erhaltsdatum + 14 Tage = Auslaufdatum
             long timeLeft = expirationTime - System.currentTimeMillis(); // Auslaufdatum - aktuelle Datum = Dauer des Scheins
             e.setMessage(Message.getBuilder()
                     .space().space()
@@ -55,7 +54,7 @@ public class FirstAidListener {
             new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    UnicacityAddon.PLAYER.sendInfoMessage("Du kannst wieder Erste Hilfe leisten.");
+                    FirstAidListener.this.unicacityAddon.player().sendInfoMessage("Du kannst wieder Erste Hilfe leisten.");
                 }
             }, TimeUnit.SECONDS.toMillis(90));
         }

@@ -2,7 +2,6 @@ package com.rettichlp.unicacityaddon.listener;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
-import com.rettichlp.unicacityaddon.base.api.request.APIConverter;
 import com.rettichlp.unicacityaddon.base.events.UnicacityAddonTickEvent;
 import com.rettichlp.unicacityaddon.base.models.Broadcast;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
@@ -38,14 +37,14 @@ public class BroadcastListener {
 
     private void checkForBroadcast() {
         new Thread(() -> {
-            for (Broadcast broadcast : APIConverter.getBroadcastList()) {
+            for (Broadcast broadcast : this.unicacityAddon.api().loadBroadcastList()) {
                 if (broadcast.getSendTime() < System.currentTimeMillis())
                     continue;
                 if (receivedBroadcasts.contains(broadcast.getId()))
                     continue;
                 receivedBroadcasts.add(broadcast.getId());
 
-                AddonPlayer p = UnicacityAddon.PLAYER;
+                AddonPlayer p = this.unicacityAddon.player();
 
                 timer.schedule(new TimerTask() {
                     @Override

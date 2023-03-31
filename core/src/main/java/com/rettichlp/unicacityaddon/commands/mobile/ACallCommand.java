@@ -22,13 +22,16 @@ public class ACallCommand extends Command {
     private static final String usage = "/acall [Spielername]";
     private final Timer timer = new Timer();
 
-    public ACallCommand() {
+    private final UnicacityAddon unicacityAddon;
+
+    public ACallCommand(UnicacityAddon unicacityAddon) {
         super("acall");
+        this.unicacityAddon = unicacityAddon;
     }
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
         if (arguments.length < 1) {
             p.sendSyntaxMessage(usage);
             return true;
@@ -54,6 +57,6 @@ public class ACallCommand extends Command {
 
     @Override
     public List<String> complete(String[] arguments) {
-        return TabCompletionBuilder.getBuilder(arguments).build();
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments).build();
     }
 }

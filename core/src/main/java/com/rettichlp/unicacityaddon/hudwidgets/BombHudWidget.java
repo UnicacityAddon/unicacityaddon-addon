@@ -1,12 +1,12 @@
 package com.rettichlp.unicacityaddon.hudwidgets;
 
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.events.UnicacityAddonTickEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.utils.TextUtils;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidget;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidgetConfig;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextLine;
-import net.labymod.api.client.gui.icon.Icon;
 import net.labymod.api.event.Subscribe;
 
 /**
@@ -17,18 +17,18 @@ public class BombHudWidget extends TextHudWidget<TextHudWidgetConfig> {
     public static int timer = -1;
     public static TextLine textLine;
 
-    private final Icon hudWidgetIcon;
+    private UnicacityAddon unicacityAddon;
 
-    public BombHudWidget(String id, Icon icon) {
+    public BombHudWidget(String id, UnicacityAddon unicacityAddon) {
         super(id);
-        this.hudWidgetIcon = icon;
+        this.unicacityAddon = unicacityAddon;
     }
 
     @Override
     public void load(TextHudWidgetConfig config) {
         super.load(config);
         textLine = super.createLine("Bombe", "");
-        this.setIcon(this.hudWidgetIcon);
+        this.setIcon(this.unicacityAddon.getIcon());
     }
 
     @Override

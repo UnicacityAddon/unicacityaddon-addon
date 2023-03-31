@@ -1,5 +1,6 @@
 package com.rettichlp.unicacityaddon.base.teamspeak.commands;
 
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.teamspeak.CommandResponse;
 import com.rettichlp.unicacityaddon.base.teamspeak.objects.Client;
 
@@ -12,8 +13,8 @@ import java.util.Map;
  */
 public class ClientListCommand extends BaseCommand<ClientListCommand.Response> {
 
-    public ClientListCommand() {
-        super("clientlist");
+    public ClientListCommand(UnicacityAddon unicacityAddon) {
+        super(unicacityAddon, "clientlist");
     }
 
     public static class Response extends CommandResponse {

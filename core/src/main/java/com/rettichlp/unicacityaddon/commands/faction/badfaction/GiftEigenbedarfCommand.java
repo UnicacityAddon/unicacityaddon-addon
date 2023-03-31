@@ -25,22 +25,25 @@ public class GiftEigenbedarfCommand extends Command {
 
     private static final String usage = "/gifteigenbedarf [Spieler]";
 
-    public GiftEigenbedarfCommand() {
+    private UnicacityAddon unicacityAddon;
+
+    public GiftEigenbedarfCommand(UnicacityAddon unicacityAddon) {
         super("gifteigenbedarf");
+        this.unicacityAddon = unicacityAddon;
     }
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
 
         if (arguments.length < 1) {
             p.sendSyntaxMessage(usage);
             return true;
         }
 
-        KokainSetting kokainSetting = UnicacityAddon.ADDON.configuration().ownUseSetting().kokainSetting();
-        MarihuanaSetting marihuanaSetting = UnicacityAddon.ADDON.configuration().ownUseSetting().marihuanaSetting();
-        MethamphetaminSetting methamphetaminSetting = UnicacityAddon.ADDON.configuration().ownUseSetting().methamphetaminSetting();
+        KokainSetting kokainSetting = this.unicacityAddon.configuration().ownUseSetting().kokainSetting();
+        MarihuanaSetting marihuanaSetting = this.unicacityAddon.configuration().ownUseSetting().marihuanaSetting();
+        MethamphetaminSetting methamphetaminSetting = this.unicacityAddon.configuration().ownUseSetting().methamphetaminSetting();
 
         if (kokainSetting.enabled().get()) {
             DrugPurity drugPurity = kokainSetting.purity().getOrDefault(DrugPurity.BEST);
@@ -64,6 +67,6 @@ public class GiftEigenbedarfCommand extends Command {
 
     @Override
     public List<String> complete(String[] arguments) {
-        return TabCompletionBuilder.getBuilder(arguments).build();
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments).build();
     }
 }

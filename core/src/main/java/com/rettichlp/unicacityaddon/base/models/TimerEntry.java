@@ -45,12 +45,12 @@ public class TimerEntry {
         return id;
     }
 
-    public void start() {
+    public void start(UnicacityAddon unicacityAddon) {
         ACTIVE_TIMERS.put(id, this);
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                AddonPlayer p = UnicacityAddon.PLAYER;
+                AddonPlayer p = unicacityAddon.player();
                 // TODO: 10.12.2022 p.playSound("ui.toast.challenge_complete");
                 p.sendEmptyMessage();
                 p.sendMessage(Message.getBuilder()

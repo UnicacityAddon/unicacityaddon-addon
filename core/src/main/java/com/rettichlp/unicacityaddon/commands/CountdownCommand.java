@@ -25,13 +25,16 @@ public class CountdownCommand extends Command {
     private static final String usage = "/countdown [Sekunden] [Chat]";
     private static boolean active = false;
 
-    public CountdownCommand() {
+    private final UnicacityAddon unicacityAddon;
+
+    public CountdownCommand(UnicacityAddon unicacityAddon) {
         super("countdown");
+        this.unicacityAddon = unicacityAddon;
     }
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
 
         if (active) {
             p.sendErrorMessage("Es ist gerade schon ein Countdown aktiv!");
@@ -85,7 +88,7 @@ public class CountdownCommand extends Command {
 
     @Override
     public List<String> complete(String[] arguments) {
-        return TabCompletionBuilder.getBuilder(arguments)
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments)
                 .addAtIndex(2, Arrays.stream(ChatType.values()).map(ChatType::getDisplayName).sorted().collect(Collectors.toList()))
                 .build();
     }

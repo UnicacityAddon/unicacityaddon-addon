@@ -1,5 +1,6 @@
 package com.rettichlp.unicacityaddon.controller;
 
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 import net.labymod.api.reference.annotation.Referenceable;
 import org.jetbrains.annotations.Nullable;
 
@@ -10,5 +11,5 @@ import org.jetbrains.annotations.Nullable;
 @Referenceable
 public abstract class DeadBodyController {
 
-    public abstract void updateDisplayName();
+    public abstract void updateDisplayName(UnicacityAddon unicacityAddon);
 }

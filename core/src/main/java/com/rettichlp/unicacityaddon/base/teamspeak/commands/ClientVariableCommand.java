@@ -1,5 +1,6 @@
 package com.rettichlp.unicacityaddon.base.teamspeak.commands;
 
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.teamspeak.CommandResponse;
 import com.rettichlp.unicacityaddon.base.teamspeak.objects.Client;
 import com.rettichlp.unicacityaddon.base.utils.ForgeUtils;
@@ -14,16 +15,16 @@ import java.util.stream.Collectors;
  */
 public class ClientVariableCommand extends BaseCommand<ClientVariableCommand.Response> {
 
-    public ClientVariableCommand(Client client) {
-        this(client.getClientID());
+    public ClientVariableCommand(UnicacityAddon unicacityAddon, Client client) {
+        this(unicacityAddon, client.getClientID());
     }
 
-    public ClientVariableCommand(Client client, String... properties) {
-        this(client.getClientID(), properties);
+    public ClientVariableCommand(UnicacityAddon unicacityAddon, Client client, String... properties) {
+        this(unicacityAddon, client.getClientID(), properties);
     }
 
-    public ClientVariableCommand(int clientID) {
-        this(clientID, "client_unique_identifier", "client_unique_identifier", "client_nickname", "client_input_muted", "client_output_muted", "client_outputonly_muted",
+    public ClientVariableCommand(UnicacityAddon unicacityAddon, int clientID) {
+        this(unicacityAddon, clientID, "client_unique_identifier", "client_unique_identifier", "client_nickname", "client_input_muted", "client_output_muted", "client_outputonly_muted",
                 "client_input_hardware", "client_output_hardware", "client_meta_data", "client_is_recording", "client_database_id", "client_channel_group_id", "client_servergroups",
                 "client_away", "client_away_message", "client_type", "client_flag_avatar", "client_talk_power", "client_talk_request", "client_talk_request_msg", "client_description",
                 "client_is_talker", "client_is_priority_speaker", "client_unread_messages", "client_nickname_phonetic", "client_needed_serverquery_view_power", "client_icon_id",
@@ -32,8 +33,8 @@ public class ClientVariableCommand extends BaseCommand<ClientVariableCommand.Res
                 "client_month_bytes_downloaded", "client_total_bytes_uploaded", "client_total_bytes_downloaded", "client_input_deactivated");
     }
 
-    public ClientVariableCommand(int clientID, String... properties) {
-        super("clientvariable clid=" + clientID + " " + String.join(" ", properties));
+    public ClientVariableCommand(UnicacityAddon unicacityAddon, int clientID, String... properties) {
+        super(unicacityAddon, "clientvariable clid=" + clientID + " " + String.join(" ", properties));
     }
 
     public static class Response extends CommandResponse {

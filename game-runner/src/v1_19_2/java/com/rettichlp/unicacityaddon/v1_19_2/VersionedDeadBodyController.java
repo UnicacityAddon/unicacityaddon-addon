@@ -1,7 +1,6 @@
 package com.rettichlp.unicacityaddon.v1_19_2;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.api.request.APIConverter;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
@@ -33,8 +32,8 @@ public class VersionedDeadBodyController extends DeadBodyController {
     }
 
     @Override
-    public void updateDisplayName() {
-        FloatVector3 position = UnicacityAddon.PLAYER.getPosition();
+    public void updateDisplayName(UnicacityAddon unicacityAddon) {
+        FloatVector3 position = unicacityAddon.player().getPosition();
 
         AABB aabb = new AABB(
                 position.getX() - 50,
@@ -53,8 +52,8 @@ public class VersionedDeadBodyController extends DeadBodyController {
             if (!customName.getString().contains("§")) { // not already formatted
                 String playerName = customName.getString().substring(1);
 
-                String prefix = NameTagListener.getPrefix(playerName, true);
-                String factionInfo = APIConverter.PLAYERFACTIONMAP.getOrDefault(playerName, Faction.NULL).getNameTagSuffix();
+                String prefix = NameTagListener.getPrefix(playerName, true, unicacityAddon);
+                String factionInfo = unicacityAddon.api().getPlayerFactionMap().getOrDefault(playerName, Faction.NULL).getNameTagSuffix();
 
                 boolean nonRevivable = Objects.equals(customName.getStyle().getColor(), TextColor.fromLegacyFormat(ChatFormatting.DARK_GRAY));
 

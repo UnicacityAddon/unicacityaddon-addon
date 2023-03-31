@@ -8,7 +8,7 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
-import com.rettichlp.unicacityaddon.base.utils.NavigationUtils;
+import com.rettichlp.unicacityaddon.base.utils.Navigation;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.event.HoverEvent;
@@ -34,7 +34,7 @@ public class ShareLocationListener {
 
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e)  {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
         Matcher shareLocationMatcher = PatternHandler.SHARE_LOCATION_PATTERN.matcher(e.chatMessage ().getPlainText());
 
         if (!shareLocationMatcher.find())
@@ -56,7 +56,7 @@ public class ShareLocationListener {
                 .of("" + posZ).color(ColorCode.AQUA).advance()
                 .createComponent();
 
-        Map.Entry<Double, NaviPoint> doubleNaviPointEntry = NavigationUtils.getNearestNaviPoint(posX, posY, posZ);
+        Map.Entry<Double, NaviPoint> doubleNaviPointEntry = this.unicacityAddon.navigation().getNearestNaviPoint(posX, posY, posZ);
 
         String navipointString;
         if (doubleNaviPointEntry.getValue() == null) {

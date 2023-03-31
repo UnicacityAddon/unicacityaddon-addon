@@ -41,7 +41,7 @@ public class FishermanListener {
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e)  {
         String msg = e.chatMessage().getPlainText();
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
 
         if (PatternHandler.FISHER_START.matcher(msg).find()) {
             fisherManJob = canCatchFish = true;
@@ -95,7 +95,7 @@ public class FishermanListener {
 
     private void catchFish() {
         if (canCatchFish && onTargetLocation && count < 5) {
-            UnicacityAddon.PLAYER.sendServerMessage("/catchfish");
+            this.unicacityAddon.player().sendServerMessage("/catchfish");
             onTargetLocation = canCatchFish = false;
         }
     }

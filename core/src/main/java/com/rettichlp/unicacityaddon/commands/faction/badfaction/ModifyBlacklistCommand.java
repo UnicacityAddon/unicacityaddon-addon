@@ -2,7 +2,6 @@ package com.rettichlp.unicacityaddon.commands.faction.badfaction;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
-import com.rettichlp.unicacityaddon.base.api.request.APIConverter;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.enums.faction.ModifyBlacklistType;
 import com.rettichlp.unicacityaddon.base.models.BlacklistReason;
@@ -25,13 +24,16 @@ public class ModifyBlacklistCommand extends Command {
 
     private static final String usage = "/modifyblacklist [Spieler] [Grund/-v]";
 
-    public ModifyBlacklistCommand() {
+    private UnicacityAddon unicacityAddon;
+
+    public ModifyBlacklistCommand(UnicacityAddon unicacityAddon) {
         super("modifyblacklist", "mbl");
+        this.unicacityAddon = unicacityAddon;
     }
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
 
         if (arguments.length != 2) {
             p.sendSyntaxMessage(usage);
@@ -40,7 +42,7 @@ public class ModifyBlacklistCommand extends Command {
 
         String reason = arguments[1];
 
-        BlacklistReason blacklistReason = BlacklistReason.getBlacklistReasonEntryByReason(reason);
+        BlacklistReason blacklistReason = BlacklistReason.getBlacklistReasonEntryByReason(reason, this.unicacityAddon);
         if (!reason.equalsIgnoreCase("-v") && blacklistReason == null) {
             p.sendErrorMessage("Blacklistgrund wurde nicht gefunden!");
             return true;
@@ -62,8 +64,8 @@ public class ModifyBlacklistCommand extends Command {
 
     @Override
     public List<String> complete(String[] arguments) {
-        return TabCompletionBuilder.getBuilder(arguments)
-                .addAtIndex(2, APIConverter.BLACKLISTREASONLIST.stream().map(BlacklistReason::getReason).sorted().collect(Collectors.toList()))
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments)
+                .addAtIndex(2, this.unicacityAddon.api().getBlacklistReasonList().stream().map(BlacklistReason::getReason).sorted().collect(Collectors.toList()))
                 .addAtIndex(2, "-v")
                 .build();
     }

@@ -38,7 +38,7 @@ public class MedicationListener {
             TIMER.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    acceptRecipe();
+                    acceptRecipe(MedicationListener.this.unicacityAddon);
                 }
             }, delay);
             return;
@@ -50,21 +50,21 @@ public class MedicationListener {
             TIMER.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    giveRecipe();
+                    giveRecipe(MedicationListener.this.unicacityAddon);
                 }
             }, delay);
         }
     }
 
-    public static void acceptRecipe() {
+    public static void acceptRecipe(UnicacityAddon unicacityAddon) {
         --ARezeptAnnehmenCommand.amount;
         lastExecution = System.currentTimeMillis();
-        UnicacityAddon.PLAYER.acceptOffer();
+        unicacityAddon.player().acceptOffer();
     }
 
-    public static void giveRecipe() {
+    public static void giveRecipe(UnicacityAddon unicacityAddon) {
         --ARezeptCommand.amount;
         lastExecution = System.currentTimeMillis();
-        UnicacityAddon.PLAYER.sellMedication(ARezeptCommand.target, ARezeptCommand.medication);
+        unicacityAddon.player().sellMedication(ARezeptCommand.target, ARezeptCommand.medication);
     }
 }

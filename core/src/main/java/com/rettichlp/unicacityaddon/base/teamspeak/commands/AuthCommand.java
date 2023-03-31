@@ -1,5 +1,6 @@
 package com.rettichlp.unicacityaddon.base.teamspeak.commands;
 
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.teamspeak.CommandResponse;
 
 /**
@@ -7,7 +8,7 @@ import com.rettichlp.unicacityaddon.base.teamspeak.CommandResponse;
  */
 public class AuthCommand extends BaseCommand<CommandResponse> {
 
-    public AuthCommand(String apiKey) {
-        super("auth apikey=" + apiKey);
+    public AuthCommand(UnicacityAddon unicacityAddon, String apiKey) {
+        super(unicacityAddon, "auth apikey=" + apiKey);
     }
 }

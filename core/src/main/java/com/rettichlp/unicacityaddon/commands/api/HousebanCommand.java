@@ -4,9 +4,8 @@ import com.google.gson.JsonObject;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.api.exception.APIResponseException;
-import com.rettichlp.unicacityaddon.base.api.request.APIConverter;
-import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
+import com.rettichlp.unicacityaddon.base.models.HouseBan;
 import com.rettichlp.unicacityaddon.base.models.HouseBanReason;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
@@ -27,24 +26,28 @@ public class HousebanCommand extends Command {
 
     private static final String usage = "/houseban (add|remove) (Spieler) (Grund)";
 
-    public HousebanCommand() {
+    private final UnicacityAddon unicacityAddon;
+
+    public HousebanCommand(UnicacityAddon unicacityAddon) {
         super("houseban");
+        this.unicacityAddon = unicacityAddon;
     }
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
 
         new Thread(() -> {
             if (arguments.length < 1) {
-                APIConverter.HOUSEBANLIST = APIConverter.getHouseBanList();
+                List<HouseBan> houseBanList = this.unicacityAddon.api().loadHouseBanList();
+                this.unicacityAddon.api().setHouseBanList(houseBanList);
 
                 p.sendEmptyMessage();
                 p.sendMessage(Message.getBuilder()
                         .of("Hausverbote:").color(ColorCode.DARK_AQUA).bold().advance()
                         .createComponent());
 
-                APIConverter.HOUSEBANLIST.forEach(houseBanEntry -> {
+                houseBanList.forEach(houseBanEntry -> {
                     long durationInMillis = houseBanEntry.getExpirationTime() - System.currentTimeMillis();
 
                     String duration = Message.getBuilder()
@@ -93,14 +96,14 @@ public class HousebanCommand extends Command {
 
             } else if (arguments.length == 3 && arguments[0].equalsIgnoreCase("add")) {
                 try {
-                    JsonObject response = APIRequest.sendHouseBanAddRequest(arguments[1], arguments[2]);
+                    JsonObject response = this.unicacityAddon.api().sendHouseBanAddRequest(arguments[1], arguments[2]);
                     p.sendAPIMessage(response.get("info").getAsString(), true);
                 } catch (APIResponseException e) {
                     e.sendInfo();
                 }
             } else if (arguments.length == 3 && arguments[0].equalsIgnoreCase("remove")) {
                 try {
-                    JsonObject response = APIRequest.sendHouseBanRemoveRequest(arguments[1], arguments[2]);
+                    JsonObject response = this.unicacityAddon.api().sendHouseBanRemoveRequest(arguments[1], arguments[2]);
                     p.sendAPIMessage(response.get("info").getAsString(), true);
                 } catch (APIResponseException e) {
                     e.sendInfo();
@@ -114,9 +117,9 @@ public class HousebanCommand extends Command {
 
     @Override
     public List<String> complete(String[] arguments) {
-        return TabCompletionBuilder.getBuilder(arguments)
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments)
                 .addAtIndex(1, "add", "remove")
-                .addAtIndex(3, APIConverter.HOUSEBANREASONLIST.stream().map(HouseBanReason::getReason).sorted().collect(Collectors.toList()))
+                .addAtIndex(3, this.unicacityAddon.api().getHouseBanReasonList().stream().map(HouseBanReason::getReason).sorted().collect(Collectors.toList()))
                 .build();
     }
 }

@@ -7,11 +7,11 @@ import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
 import com.rettichlp.unicacityaddon.base.enums.faction.Equip;
 import com.rettichlp.unicacityaddon.base.events.OfflineDataChangedEvent;
-import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import net.labymod.api.util.math.vector.FloatVector3;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +21,9 @@ import java.util.Map;
  * @author RettichLP
  */
 public class Data {
+
+    @Inject
+    private UnicacityAddon unicacityAddon;
 
     private List<Armament> armamentList;
     private Integer bankBalance;
@@ -322,7 +325,7 @@ public class Data {
      * @see DrugPurity
      */
     public void addDrugToInventory(DrugType drugType, DrugPurity drugPurity, int amount) {
-        UnicacityAddon.LOGGER.info("DrugInventoryInteraction: Added amount {} of DrugType {} with DrugPurity {} to inventory", amount, drugType, drugPurity);
+        this.unicacityAddon.logger().info("DrugInventoryInteraction: Added amount {} of DrugType {} with DrugPurity {} to inventory", amount, drugType, drugPurity);
         if (drugType != null) {
             Map<DrugPurity, Integer> drugPurityIntegerMap = getDrugInventoryMap().getOrDefault(drugType, new HashMap<>());
             int oldAmount = drugPurityIntegerMap.getOrDefault(drugPurity, 0);
@@ -344,7 +347,7 @@ public class Data {
      * @see DrugPurity
      */
     public void removeDrugFromInventory(DrugType drugType, DrugPurity drugPurity, int amount) {
-        UnicacityAddon.LOGGER.info("DrugInventoryInteraction: Removed amount {} of DrugType {} with DrugPurity {} from inventory", amount, drugType, drugPurity);
+        this.unicacityAddon.logger().info("DrugInventoryInteraction: Removed amount {} of DrugType {} with DrugPurity {} from inventory", amount, drugType, drugPurity);
         if (drugType != null) {
             Map<DrugPurity, Integer> drugPurityIntegerMap = getDrugInventoryMap().getOrDefault(drugType, new HashMap<>());
             int oldAmount = drugPurityIntegerMap.getOrDefault(drugPurity, 0);
@@ -416,7 +419,7 @@ public class Data {
      * @see Message
      */
     public void sendAllHouseBankMessage() {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
 
         p.sendEmptyMessage();
         p.sendMessage(Message.getBuilder()
@@ -434,7 +437,7 @@ public class Data {
      * @see Message
      */
     public void sendAllDrugStorageMessage() {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
 
         p.sendEmptyMessage();
         p.sendMessage(Message.getBuilder()
@@ -496,7 +499,7 @@ public class Data {
     }
 
     private void saveAndFireEvent() {
-        UnicacityAddon.ADDON.labyAPI().eventBus().fire(new OfflineDataChangedEvent(FileManager.DATA));
-        FileManager.saveData();
+        this.unicacityAddon.labyAPI().eventBus().fire(new OfflineDataChangedEvent(this.unicacityAddon.data()));
+        this.unicacityAddon.fileManager().saveData();
     }
 }

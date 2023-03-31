@@ -2,10 +2,8 @@ package com.rettichlp.unicacityaddon.listener;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
-import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
 import com.rettichlp.unicacityaddon.base.config.atm.ATMSetting;
 import com.rettichlp.unicacityaddon.base.enums.api.StatisticType;
-import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
@@ -37,12 +35,12 @@ public class MoneyListener {
 
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
         String msg = e.chatMessage().getPlainText();
 
         Matcher jobSalaryMatcher = PatternHandler.JOB_SALARY_PATTERN.matcher(msg);
         if (jobSalaryMatcher.find()) {
-            FileManager.DATA.addJobBalance(Integer.parseInt(jobSalaryMatcher.group(1)));
+            this.unicacityAddon.data().addJobBalance(Integer.parseInt(jobSalaryMatcher.group(1)));
             return;
         }
 
@@ -52,16 +50,16 @@ public class MoneyListener {
 
             if (jobExperienceMatcher.group(3) != null) {
                 int multiplier = Integer.parseInt(jobExperienceMatcher.group(3));
-                FileManager.DATA.addJobExperience(experience * multiplier);
+                this.unicacityAddon.data().addJobExperience(experience * multiplier);
                 return;
             }
 
-            FileManager.DATA.addJobExperience(experience);
+            this.unicacityAddon.data().addJobExperience(experience);
         }
 
         Matcher kontoauszugMatcher = PatternHandler.BANK_STATEMENT_PATTERN.matcher(msg);
         if (kontoauszugMatcher.find()) {
-            FileManager.DATA.setBankBalance(Integer.parseInt(kontoauszugMatcher.group(1)));
+            this.unicacityAddon.data().setBankBalance(Integer.parseInt(kontoauszugMatcher.group(1)));
 
             ATMSetting atmSetting = this.unicacityAddon.configuration().atmSetting();
             if (atmSetting.enabled().get()) {
@@ -83,11 +81,11 @@ public class MoneyListener {
 
         Matcher bankPayDayMatcher = PatternHandler.BANK_STATS_PATTERN.matcher(msg);
         if (bankPayDayMatcher.find()) {
-            APIRequest.sendStatisticAddRequest(StatisticType.PLAYTIME);
-            FileManager.DATA.setBankBalance(Integer.parseInt(bankPayDayMatcher.group(1)));
-            FileManager.DATA.setJobBalance(0);
-            FileManager.DATA.setJobExperience(0);
-            FileManager.DATA.setPayDayTime(0);
+            this.unicacityAddon.api().sendStatisticAddRequest(StatisticType.PLAYTIME);
+            this.unicacityAddon.data().setBankBalance(Integer.parseInt(bankPayDayMatcher.group(1)));
+            this.unicacityAddon.data().setJobBalance(0);
+            this.unicacityAddon.data().setJobExperience(0);
+            this.unicacityAddon.data().setPayDayTime(0);
             return;
         }
 
@@ -97,55 +95,55 @@ public class MoneyListener {
                 isGRBankCommand = false;
                 return;
             }
-            FileManager.DATA.setBankBalance(Integer.parseInt(bankNewBalanceMatcher.group(1)));
+            this.unicacityAddon.data().setBankBalance(Integer.parseInt(bankNewBalanceMatcher.group(1)));
             return;
         }
 
         Matcher bankTransferToMatcher = PatternHandler.BANK_TRANSFER_TO_PATTERN.matcher(msg);
         if (bankTransferToMatcher.find()) {
-            FileManager.DATA.removeBankBalance(Integer.parseInt(bankTransferToMatcher.group(2)));
+            this.unicacityAddon.data().removeBankBalance(Integer.parseInt(bankTransferToMatcher.group(2)));
             return;
         }
 
         Matcher bankTransferGetMatcher = PatternHandler.BANK_TRANSFER_GET_PATTERN.matcher(msg);
         if (bankTransferGetMatcher.find()) {
-            FileManager.DATA.addBankBalance(Integer.parseInt(bankTransferGetMatcher.group(2)));
+            this.unicacityAddon.data().addBankBalance(Integer.parseInt(bankTransferGetMatcher.group(2)));
             return;
         }
 
         Matcher lottoWinMatcher = PatternHandler.LOTTO_WIN.matcher(msg);
         if (lottoWinMatcher.find()) {
-            FileManager.DATA.addBankBalance(Integer.parseInt(lottoWinMatcher.group(1)));
+            this.unicacityAddon.data().addBankBalance(Integer.parseInt(lottoWinMatcher.group(1)));
             return;
         }
 
         Matcher cashGiveMatcher = PatternHandler.CASH_GIVE_PATTERN.matcher(msg);
         if (cashGiveMatcher.find()) {
-            FileManager.DATA.removeCashBalance(Integer.parseInt(cashGiveMatcher.group(2)));
+            this.unicacityAddon.data().removeCashBalance(Integer.parseInt(cashGiveMatcher.group(2)));
             return;
         }
 
         Matcher cashTakeMatcher = PatternHandler.CASH_TAKE_PATTERN.matcher(msg);
         if (cashTakeMatcher.find()) {
-            FileManager.DATA.addCashBalance(Integer.parseInt(cashTakeMatcher.group(2)));
+            this.unicacityAddon.data().addCashBalance(Integer.parseInt(cashTakeMatcher.group(2)));
             return;
         }
 
         Matcher cashToFBankMatcher = PatternHandler.CASH_TO_FBANK_PATTERN.matcher(msg);
         if (cashToFBankMatcher.find() && msg.contains(p.getName())) {
-            FileManager.DATA.removeCashBalance(Integer.parseInt(cashToFBankMatcher.group(1)));
+            this.unicacityAddon.data().removeCashBalance(Integer.parseInt(cashToFBankMatcher.group(1)));
             return;
         }
 
         Matcher cashFromFBankMatcher = PatternHandler.CASH_FROM_FBANK_PATTERN.matcher(msg);
         if (cashFromFBankMatcher.find() && msg.contains(p.getName())) {
-            FileManager.DATA.addCashBalance(Integer.parseInt(cashFromFBankMatcher.group(1)));
+            this.unicacityAddon.data().addCashBalance(Integer.parseInt(cashFromFBankMatcher.group(1)));
             return;
         }
 
         Matcher cashToBankMatcher = PatternHandler.CASH_TO_BANK_PATTERN.matcher(msg);
         if (cashToBankMatcher.find()) {
-            FileManager.DATA.removeCashBalance(Integer.parseInt(cashToBankMatcher.group(1)));
+            this.unicacityAddon.data().removeCashBalance(Integer.parseInt(cashToBankMatcher.group(1)));
             return;
         }
 
@@ -153,25 +151,25 @@ public class MoneyListener {
         if (cashFromBankMatcher.find()) {
             if (isGRBankCommand)
                 return;
-            FileManager.DATA.addCashBalance(Integer.parseInt(cashFromBankMatcher.group(1)));
+            this.unicacityAddon.data().addCashBalance(Integer.parseInt(cashFromBankMatcher.group(1)));
             return;
         }
 
         Matcher cashGetMatcher = PatternHandler.CASH_GET_PATTERN.matcher(msg);
         if (cashGetMatcher.find()) {
-            FileManager.DATA.addCashBalance(Integer.parseInt(cashGetMatcher.group(1)));
+            this.unicacityAddon.data().addCashBalance(Integer.parseInt(cashGetMatcher.group(1)));
             return;
         }
 
         Matcher cashRemoveMatcher = PatternHandler.CASH_REMOVE_PATTERN.matcher(msg);
         if (cashRemoveMatcher.find()) {
-            FileManager.DATA.removeCashBalance(Integer.parseInt(cashRemoveMatcher.group(1)));
+            this.unicacityAddon.data().removeCashBalance(Integer.parseInt(cashRemoveMatcher.group(1)));
             return;
         }
 
         Matcher cashStatsMatcher = PatternHandler.CASH_STATS_PATTERN.matcher(msg);
         if (cashStatsMatcher.find()) {
-            FileManager.DATA.setCashBalance(Integer.parseInt(cashStatsMatcher.group(1)));
+            this.unicacityAddon.data().setCashBalance(Integer.parseInt(cashStatsMatcher.group(1)));
             return;
         }
 

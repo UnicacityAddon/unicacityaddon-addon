@@ -2,12 +2,10 @@ package com.rettichlp.unicacityaddon.commands;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
-import com.rettichlp.unicacityaddon.base.api.request.APIConverter;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.enums.location.Bus;
 import com.rettichlp.unicacityaddon.base.models.NaviPoint;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
-import com.rettichlp.unicacityaddon.base.utils.NavigationUtils;
 import net.labymod.api.client.chat.command.Command;
 import net.labymod.api.util.math.vector.FloatVector3;
 
@@ -28,26 +26,29 @@ public class BusCommand extends Command {
     public static int lastWindowId = 0;
     public static int limiter = 0;
 
-    public BusCommand() {
+    private final UnicacityAddon unicacityAddon;
+
+    public BusCommand(UnicacityAddon unicacityAddon) {
         super("bus");
+        this.unicacityAddon = unicacityAddon;
     }
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
 
         if (arguments.length < 1) {
             return false;
         }
 
-        NaviPoint naviPoint = NaviPoint.getNaviPointByTabName(arguments[0]);
+        NaviPoint naviPoint = NaviPoint.getNaviPointByTabName(arguments[0], this.unicacityAddon);
         if (naviPoint == null) {
             p.sendErrorMessage("Navipunkt nicht gefunden.");
             return false;
         }
 
-        start = NavigationUtils.getNearestBus().getValue();
-        destination = NavigationUtils.getNearestBus(naviPoint.getBlockPos()).getValue();
+        start = this.unicacityAddon.navigation().getNearestBus().getValue();
+        destination = this.unicacityAddon.navigation().getNearestBus(naviPoint.getBlockPos()).getValue();
 
         limiter = 0;
         p.sendServerMessage("/bus");
@@ -56,8 +57,8 @@ public class BusCommand extends Command {
 
     @Override
     public List<String> complete(String[] arguments) {
-        return TabCompletionBuilder.getBuilder(arguments)
-                .addAtIndex(1, APIConverter.NAVIPOINTLIST.stream().map(NaviPoint::getTabName).collect(Collectors.toList()))
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments)
+                .addAtIndex(1, this.unicacityAddon.api().getNaviPointList().stream().map(NaviPoint::getTabName).collect(Collectors.toList()))
                 .build();
     }
 

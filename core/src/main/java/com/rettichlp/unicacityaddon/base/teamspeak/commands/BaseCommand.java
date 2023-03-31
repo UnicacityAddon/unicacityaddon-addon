@@ -1,5 +1,6 @@
 package com.rettichlp.unicacityaddon.base.teamspeak.commands;
 
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.teamspeak.CommandFuture;
 import com.rettichlp.unicacityaddon.base.teamspeak.CommandResponse;
 import com.rettichlp.unicacityaddon.base.teamspeak.TSClientQuery;
@@ -14,13 +15,16 @@ public abstract class BaseCommand<T extends CommandResponse> {
     private final String command;
     private final CommandFuture<T> future;
 
-    protected BaseCommand(String command) {
+    private final UnicacityAddon unicacityAddon;
+
+    protected BaseCommand(UnicacityAddon unicacityAddon, String command) {
+        this.unicacityAddon = unicacityAddon;
         this.command = command;
         this.future = new CommandFuture<>();
     }
 
     public BaseCommand<T> execute() {
-        return execute(TSClientQuery.getInstance());
+        return execute(TSClientQuery.getInstance(unicacityAddon));
     }
 
     public BaseCommand<T> execute(TSClientQuery clientQuery) {

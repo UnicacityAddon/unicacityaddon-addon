@@ -22,13 +22,16 @@ public class SchmarzmarktLocationsCommand extends Command {
 
     private static final String usage = "/schwarzmarktlocations";
 
-    public SchmarzmarktLocationsCommand() {
+    private UnicacityAddon unicacityAddon;
+
+    public SchmarzmarktLocationsCommand(UnicacityAddon unicacityAddon) {
         super("schwarzmarktlocations", "schwarzmarktlocs", "smarktlocs");
+        this.unicacityAddon = unicacityAddon;
     }
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
 
         p.sendMessage(Message.getBuilder()
                 .of("» ").color(ColorCode.DARK_GRAY).advance()
@@ -49,6 +52,6 @@ public class SchmarzmarktLocationsCommand extends Command {
 
     @Override
     public List<String> complete(String[] arguments) {
-        return TabCompletionBuilder.getBuilder(arguments).build();
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments).build();
     }
 }

@@ -18,13 +18,16 @@ public class ReplyCommand extends Command {
 
     private static final String usage = "/reply [Nachricht]";
 
-    public ReplyCommand() {
+    private UnicacityAddon unicacityAddon;
+
+    public ReplyCommand(UnicacityAddon unicacityAddon) {
     super("reply", "r");
+        this.unicacityAddon = unicacityAddon;
     }
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
         if (arguments.length < 1) {
             p.sendSyntaxMessage(usage);
             return true;
@@ -37,6 +40,6 @@ public class ReplyCommand extends Command {
 
     @Override
     public List<String> complete(String[] arguments) {
-        return TabCompletionBuilder.getBuilder(arguments).build();
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments).build();
     }
 }

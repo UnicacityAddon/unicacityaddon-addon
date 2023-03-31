@@ -42,8 +42,8 @@ public class JobListener {
     public void onClientPlayerInteract(ClientPlayerInteractEvent e) {
         ClientPlayerInteractEvent.InteractionType interactionType = e.type();
 
-        if (interactionType.equals(ClientPlayerInteractEvent.InteractionType.INTERACT) && UnicacityAddon.isUnicacity()) {
-            AddonPlayer p = UnicacityAddon.PLAYER;
+        if (interactionType.equals(ClientPlayerInteractEvent.InteractionType.INTERACT) && this.unicacityAddon.isUnicacity()) {
+            AddonPlayer p = this.unicacityAddon.player();
 
             FloatVector3 pos = this.worldInteractionController.getClickedBlockLocation();
 
@@ -63,7 +63,7 @@ public class JobListener {
 
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
         String msg = e.chatMessage().getPlainText();
 
         if (PatternHandler.WASTE_JOB_START_PATTERN.matcher(msg).find()) {
@@ -150,8 +150,8 @@ public class JobListener {
 
     private void drop() {
         if (isNewspaperJob)
-            UnicacityAddon.PLAYER.sendServerMessage("/dropzeitung");
+            this.unicacityAddon.player().sendServerMessage("/dropzeitung");
         else if (isWasteJob)
-            UnicacityAddon.PLAYER.sendServerMessage("/getwaste");
+            this.unicacityAddon.player().sendServerMessage("/getwaste");
     }
 }

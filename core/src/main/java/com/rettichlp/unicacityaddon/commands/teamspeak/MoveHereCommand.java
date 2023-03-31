@@ -23,41 +23,44 @@ public class MoveHereCommand extends Command {
 
     private static final String usage = "/movehere [Spieler]";
 
-    public MoveHereCommand() {
+    private UnicacityAddon unicacityAddon;
+
+    public MoveHereCommand(UnicacityAddon unicacityAddon) {
         super("movehere");
+        this.unicacityAddon = unicacityAddon;
     }
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
 
         if (arguments.length < 1) {
             p.sendSyntaxMessage(usage);
             return true;
         }
 
-        if (!UnicacityAddon.ADDON.configuration().tsApiKey().getOrDefault("").matches("([A-Z0-9]{4}(-*)){6}")) {
+        if (!this.unicacityAddon.configuration().tsApiKey().getOrDefault("").matches("([A-Z0-9]{4}(-*)){6}")) {
             p.sendErrorMessage("Teamspeak API Key ist nicht gültig!");
             return true;
         }
 
         if (!TSClientQuery.clientQueryConnected) {
             p.sendErrorMessage("Keine Verbindung zur TeamSpeak ClientQuery!");
-            TSClientQuery.reconnect();
+            TSClientQuery.reconnect(this.unicacityAddon);
             return true;
         }
 
         String name = arguments[0];
 
-        int channelID = TSUtils.getMyChannelID();
+        int channelID = this.unicacityAddon.tsUtils().getMyChannelID();
 
-        List<Client> clients = TSUtils.getClientsByName(Collections.singletonList(name));
+        List<Client> clients = this.unicacityAddon.tsUtils().getClientsByName(Collections.singletonList(name));
         if (clients.isEmpty()) {
             p.sendErrorMessage("Es wurde kein Spieler auf dem TeamSpeak mit diesem Namen gefunden.");
             return true;
         }
 
-        CommandResponse response = new ClientMoveCommand(channelID, clients).getResponse();
+        CommandResponse response = new ClientMoveCommand(this.unicacityAddon, channelID, clients).getResponse();
         if (!response.succeeded()) {
             p.sendErrorMessage("Das Moven ist fehlgeschlagen.");
             return true;
@@ -69,6 +72,6 @@ public class MoveHereCommand extends Command {
 
     @Override
     public List<String> complete(String[] arguments) {
-        return TabCompletionBuilder.getBuilder(arguments).build();
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments).build();
     }
 }

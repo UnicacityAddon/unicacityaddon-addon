@@ -41,14 +41,14 @@ public class HotkeyListener {
 
     @Subscribe
     public void onKey(KeyEvent e) {
-        if (e.state().equals(KeyEvent.State.PRESS) && UnicacityAddon.ADDON.configuration().hotkeySetting().enabled().get()) {
+        if (e.state().equals(KeyEvent.State.PRESS) && this.unicacityAddon.configuration().hotkeySetting().enabled().get()) {
             handleHotkey(e.key());
         }
     }
 
     private void handleHotkey(Key key) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
-        HotkeySetting hotkeySetting = UnicacityAddon.ADDON.configuration().hotkeySetting();
+        AddonPlayer p = this.unicacityAddon.player();
+        HotkeySetting hotkeySetting = this.unicacityAddon.configuration().hotkeySetting();
 
         if (key.equals(hotkeySetting.screenshot().getOrDefault(Key.NONE))) {
             try {
@@ -59,14 +59,14 @@ public class HotkeyListener {
             }
         }
 
-        if (!UnicacityAddon.isUnicacity() || Laby.references().chatAccessor().isChatOpen()) {
+        if (!this.unicacityAddon.isUnicacity() || Laby.references().chatAccessor().isChatOpen()) {
             return;
         }
 
         if (key.equals(hotkeySetting.acceptAd().getOrDefault(Key.NONE))) {
-            AdListener.handleAd("freigeben");
+            AdListener.handleAd("freigeben", this.unicacityAddon);
         } else if (key.equals(hotkeySetting.declineAd().getOrDefault(Key.NONE))) {
-            AdListener.handleAd("blockieren");
+            AdListener.handleAd("blockieren", this.unicacityAddon);
         } else if (key.equals(hotkeySetting.acceptReport().getOrDefault(Key.NONE))) {
             p.sendServerMessage("/ar");
         } else if (key.equals(hotkeySetting.cancelReport().getOrDefault(Key.NONE))) {
@@ -91,7 +91,7 @@ public class HotkeyListener {
             }
 
             Channel foundChannel = new Channel(p.getFaction().getPublicChannelId(), "Öffentlich", 0, 0);
-            ClientMoveCommand clientMoveCommand = new ClientMoveCommand(foundChannel.getChannelID(), TSUtils.getMyClientID());
+            ClientMoveCommand clientMoveCommand = new ClientMoveCommand(this.unicacityAddon, foundChannel.getChannelID(), this.unicacityAddon.tsUtils().getMyClientID());
 
             CommandResponse commandResponse = clientMoveCommand.getResponse();
             if (!commandResponse.succeeded()) {

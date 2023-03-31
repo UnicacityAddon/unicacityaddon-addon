@@ -1,7 +1,6 @@
 package com.rettichlp.unicacityaddon.listener.faction.badfaction;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import net.labymod.api.event.Subscribe;
@@ -25,7 +24,7 @@ public class PlantListener {
 
     //    @Subscribe
 //    public void onPlayerInteract(PlayerInteractEvent e) {
-//        if (!(e instanceof PlayerInteractEvent.RightClickBlock) || e.getHand().equals(EnumHand.OFF_HAND) || !UnicacityAddon.isUnicacity()) return;
+//        if (!(e instanceof PlayerInteractEvent.RightClickBlock) || e.getHand().equals(EnumHand.OFF_HAND) || !this.unicacityAddon.isUnicacity()) return;
 //
 //        World world = e.getWorld();
 //        BlockPos clickedBlockPos = e.getPos();
@@ -44,17 +43,17 @@ public class PlantListener {
         String msg = e.chatMessage().getPlainText();
 
         if (PatternHandler.PLANT_HARVEST_PATTERN.matcher(msg).find()) {
-            FileManager.DATA.setPlantFertilizeTime(0L);
-            FileManager.DATA.setPlantWaterTime(0L);
+            this.unicacityAddon.data().setPlantFertilizeTime(0L);
+            this.unicacityAddon.data().setPlantWaterTime(0L);
             return;
         }
 
         Matcher plantUseMatcher = PatternHandler.PLANT_USE_PATTERN.matcher(msg);
-        if (plantUseMatcher.find() && msg.contains(UnicacityAddon.PLAYER.getName())) {
-            if (msg.contains("gewässert") && System.currentTimeMillis() - TimeUnit.MINUTES.toMillis(10) > FileManager.DATA.getPlantWaterTime()) {
-                FileManager.DATA.setPlantWaterTime(System.currentTimeMillis());
-            } else if (msg.contains("gedüngt") && System.currentTimeMillis() - TimeUnit.MINUTES.toMillis(10) > FileManager.DATA.getPlantFertilizeTime()) {
-                FileManager.DATA.setPlantFertilizeTime(System.currentTimeMillis());
+        if (plantUseMatcher.find() && msg.contains(this.unicacityAddon.player().getName())) {
+            if (msg.contains("gewässert") && System.currentTimeMillis() - TimeUnit.MINUTES.toMillis(10) > this.unicacityAddon.data().getPlantWaterTime()) {
+                this.unicacityAddon.data().setPlantWaterTime(System.currentTimeMillis());
+            } else if (msg.contains("gedüngt") && System.currentTimeMillis() - TimeUnit.MINUTES.toMillis(10) > this.unicacityAddon.data().getPlantFertilizeTime()) {
+                this.unicacityAddon.data().setPlantFertilizeTime(System.currentTimeMillis());
             }
         }
     }

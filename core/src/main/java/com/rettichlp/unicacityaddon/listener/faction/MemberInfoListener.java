@@ -1,7 +1,6 @@
 package com.rettichlp.unicacityaddon.listener.faction;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.api.request.APIConverter;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
@@ -68,7 +67,7 @@ public class MemberInfoListener {
                     .of(factionString).color(ColorCode.DARK_AQUA).advance()
                     .of("]").color(ColorCode.DARK_GRAY).advance().space()
                     .of("(").color(ColorCode.DARK_GRAY).advance()
-                    .of(String.valueOf(APIConverter.PLAYERFACTIONMAP.entrySet().stream()
+                    .of(String.valueOf(this.unicacityAddon.api().getPlayerFactionMap().entrySet().stream()
                             .filter(stringFactionEntry -> stringFactionEntry.getKey().equals(faction))
                             .count())).color(ColorCode.AQUA).advance()
                     .of(")").color(ColorCode.DARK_GRAY).advance().space()
@@ -84,7 +83,7 @@ public class MemberInfoListener {
 
         if (future == null) {
             String name = msg.substring(3).split(" ")[0];
-            Integer rank = APIConverter.PLAYERRANKMAP.getOrDefault(name.replace("[UC]", ""), -1);
+            Integer rank = this.unicacityAddon.api().getPlayerRankMap().getOrDefault(name.replace("[UC]", ""), -1);
 
             String formattedMessage = ColorCode.GRAY.getCode() + msg
                     .replace(" » ", "")

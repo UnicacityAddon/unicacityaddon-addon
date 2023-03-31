@@ -19,8 +19,8 @@ public class TSAPIKeyLoader {
     private final String[] teamSpeakClientNames = new String[]{"TS3Client", "TeamSpeak 3 Client", "TeamSpeak", "TeamSpeak 3", "ts3"};
     private final List<File> possibleConfigDirectories = new ArrayList<>();
 
-    public void load() throws IOException {
-        if (!UnicacityAddon.ADDON.configuration().tsApiKey().getOrDefault(Strings.EMPTY).isEmpty())
+    public void load(UnicacityAddon unicacityAddon) throws IOException {
+        if (!unicacityAddon.configuration().tsApiKey().getOrDefault(Strings.EMPTY).isEmpty())
             return;
 
         loadPossibleConfigDirectories();
@@ -33,7 +33,7 @@ public class TSAPIKeyLoader {
             if (apiKey == null)
                 continue;
 
-            UnicacityAddon.ADDON.configuration().tsApiKey().set(apiKey);
+            unicacityAddon.configuration().tsApiKey().set(apiKey);
             return;
         }
     }

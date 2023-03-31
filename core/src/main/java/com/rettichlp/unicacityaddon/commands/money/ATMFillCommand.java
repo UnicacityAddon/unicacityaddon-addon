@@ -3,7 +3,6 @@ package com.rettichlp.unicacityaddon.commands.money;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
-import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import net.labymod.api.client.chat.command.Command;
 
@@ -22,13 +21,16 @@ public class ATMFillCommand extends Command {
 
     private static final String usage = "/atmfill";
 
-    public ATMFillCommand() {
+    private UnicacityAddon unicacityAddon;
+
+    public ATMFillCommand(UnicacityAddon unicacityAddon) {
         super("atmfill");
+        this.unicacityAddon = unicacityAddon;
     }
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
 
         if (!isActive) {
             p.sendServerMessage("/atminfo");
@@ -38,7 +40,7 @@ public class ATMFillCommand extends Command {
                 @Override
                 public void run() {
                     int fillAmount = 100000 - cashInATM;
-                    int bankDepositAmount = Math.min(fillAmount, FileManager.DATA.getCashBalance());
+                    int bankDepositAmount = Math.min(fillAmount, ATMFillCommand.this.unicacityAddon.data().getCashBalance());
 
                     if (bankDepositAmount > 0) {
                         p.sendServerMessage("/bank einzahlen " + bankDepositAmount);
@@ -55,6 +57,6 @@ public class ATMFillCommand extends Command {
 
     @Override
     public List<String> complete(String[] arguments) {
-        return TabCompletionBuilder.getBuilder(arguments).build();
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments).build();
     }
 }

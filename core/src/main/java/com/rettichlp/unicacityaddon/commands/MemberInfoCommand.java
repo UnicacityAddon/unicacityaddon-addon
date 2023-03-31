@@ -20,13 +20,16 @@ public class MemberInfoCommand extends Command {
 
     private static final String usage = "/memberinfo (Fraktion)";
 
-    public MemberInfoCommand() {
+    private UnicacityAddon unicacityAddon;
+
+    public MemberInfoCommand(UnicacityAddon unicacityAddon) {
         super("memberinfo", "mi");
+        this.unicacityAddon = unicacityAddon;
     }
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
 
         String faction = arguments.length < 1 ? p.getFaction().getFactionKey() : arguments[0];
         p.sendServerMessage("/memberinfo " + faction);
@@ -35,7 +38,7 @@ public class MemberInfoCommand extends Command {
 
     @Override
     public List<String> complete(String[] arguments) {
-        return TabCompletionBuilder.getBuilder(arguments)
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments)
                 .addAtIndex(1, Arrays.stream(Faction.values()).map(Faction::getFactionKey).sorted().collect(Collectors.toList()))
                 .build();
     }

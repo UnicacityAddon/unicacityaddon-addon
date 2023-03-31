@@ -17,13 +17,16 @@ public class FForceCommand extends Command {
 
     private static final String usage = "/fforce [Nachricht]";
 
-    public FForceCommand() {
+    private UnicacityAddon unicacityAddon;
+
+    public FForceCommand(UnicacityAddon unicacityAddon) {
         super("fforce");
+        this.unicacityAddon = unicacityAddon;
     }
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
 
         if (arguments.length == 0) {
             p.sendSyntaxMessage(usage);
@@ -37,6 +40,6 @@ public class FForceCommand extends Command {
 
     @Override
     public List<String> complete(String[] arguments) {
-        return TabCompletionBuilder.getBuilder(arguments).build();
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments).build();
     }
 }

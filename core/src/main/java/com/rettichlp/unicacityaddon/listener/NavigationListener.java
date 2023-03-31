@@ -30,7 +30,7 @@ public class NavigationListener {
 
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
         String msg = e.chatMessage().getPlainText();
 
         Matcher routeMatcher = PatternHandler.ROUTE_PATTERNS.matcher(msg);

@@ -1,5 +1,6 @@
 package com.rettichlp.unicacityaddon.base.teamspeak.commands;
 
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.teamspeak.CommandResponse;
 import com.rettichlp.unicacityaddon.base.teamspeak.objects.Channel;
 
@@ -13,8 +14,8 @@ import java.util.Map;
  */
 public class ChannelListCommand extends BaseCommand<ChannelListCommand.Response> {
 
-    public ChannelListCommand() {
-        super("channellist");
+    public ChannelListCommand(UnicacityAddon unicacityAddon) {
+        super(unicacityAddon, "channellist");
     }
 
     public static class Response extends CommandResponse {

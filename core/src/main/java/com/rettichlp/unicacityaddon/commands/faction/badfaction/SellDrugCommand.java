@@ -19,13 +19,16 @@ public class SellDrugCommand extends Command {
 
     private static final String usage = "/selldrug [Spieler] [Droge] [Reinheit] [Menge] [Preis]";
 
-    public SellDrugCommand() {
+    private UnicacityAddon unicacityAddon;
+
+    public SellDrugCommand(UnicacityAddon unicacityAddon) {
         super("selldrug");
+        this.unicacityAddon = unicacityAddon;
     }
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
         if (arguments.length < 5) {
             p.sendSyntaxMessage(usage);
             return true;
@@ -37,7 +40,7 @@ public class SellDrugCommand extends Command {
 
     @Override
     public List<String> complete(String[] arguments) {
-        return TabCompletionBuilder.getBuilder(arguments)
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments)
                 .addAtIndex(2, Arrays.stream(DrugType.values()).map(DrugType::getDrugName).sorted().collect(Collectors.toList()))
                 .addAtIndex(3, "0", "1", "2", "3")
                 .build();

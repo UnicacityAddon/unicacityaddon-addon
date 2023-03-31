@@ -27,11 +27,9 @@ public class HouseInteractionListener {
     public static final int[] progress = {-1, -1};
 
     private final UnicacityAddon unicacityAddon;
-    private final OverlayMessageController overlayMessageController;
 
-    public HouseInteractionListener(UnicacityAddon unicacityAddon, OverlayMessageController overlayMessageController) {
+    public HouseInteractionListener(UnicacityAddon unicacityAddon) {
         this.unicacityAddon = unicacityAddon;
-        this.overlayMessageController = overlayMessageController;
     }
 
     @Subscribe
@@ -90,6 +88,6 @@ public class HouseInteractionListener {
                     .append(i < progress ? ColorCode.GREEN.getCode() : ColorCode.GRAY.getCode())
                     .append("█");
         }
-        this.overlayMessageController.sendOverlayMessage(stringBuilder.toString());
+        this.unicacityAddon.getDefaultReferenceStorage().getOverlayMessageController().sendOverlayMessage(stringBuilder.toString());
     }
 }

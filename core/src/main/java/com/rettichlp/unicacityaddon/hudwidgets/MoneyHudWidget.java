@@ -1,11 +1,10 @@
 package com.rettichlp.unicacityaddon.hudwidgets;
 
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.events.OfflineDataChangedEvent;
-import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidget;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidgetConfig;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextLine;
-import net.labymod.api.client.gui.icon.Icon;
 import net.labymod.api.event.Subscribe;
 
 /**
@@ -15,19 +14,20 @@ public class MoneyHudWidget extends TextHudWidget<TextHudWidgetConfig> {
 
     private TextLine bank;
     private TextLine cash;
-    private final Icon hudWidgetIcon;
 
-    public MoneyHudWidget(String id, Icon icon) {
+    private UnicacityAddon unicacityAddon;
+
+    public MoneyHudWidget(String id, UnicacityAddon unicacityAddon) {
         super(id);
-        this.hudWidgetIcon = icon;
+        this.unicacityAddon = unicacityAddon;
     }
 
     @Override
     public void load(TextHudWidgetConfig config) {
         super.load(config);
-        this.bank = super.createLine("Bank", FileManager.DATA.getBankBalance() + "$");
-        this.cash = super.createLine("Bargeld", FileManager.DATA.getCashBalance() + "$");
-        this.setIcon(this.hudWidgetIcon);
+        this.bank = super.createLine("Bank", this.unicacityAddon.data().getBankBalance() + "$");
+        this.cash = super.createLine("Bargeld", this.unicacityAddon.data().getCashBalance() + "$");
+        this.setIcon(this.unicacityAddon.getIcon());
     }
 
     @Subscribe

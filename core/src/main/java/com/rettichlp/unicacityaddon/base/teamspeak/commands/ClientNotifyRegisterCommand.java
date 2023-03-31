@@ -1,5 +1,6 @@
 package com.rettichlp.unicacityaddon.base.teamspeak.commands;
 
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.teamspeak.CommandResponse;
 
 /**
@@ -7,7 +8,7 @@ import com.rettichlp.unicacityaddon.base.teamspeak.CommandResponse;
  */
 public class ClientNotifyRegisterCommand extends BaseCommand<CommandResponse> {
 
-    public ClientNotifyRegisterCommand(int schandlerID, String eventName) {
-        super("clientnotifyregister schandlerid=" + schandlerID + " event=" + eventName);
+    public ClientNotifyRegisterCommand(UnicacityAddon unicacityAddon, int schandlerID, String eventName) {
+        super(unicacityAddon, "clientnotifyregister schandlerid=" + schandlerID + " event=" + eventName);
     }
 }

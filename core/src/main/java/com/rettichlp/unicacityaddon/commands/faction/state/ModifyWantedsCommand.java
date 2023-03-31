@@ -21,13 +21,16 @@ public class ModifyWantedsCommand extends Command {
 
     private static final String usage = "/mw [Spieler] [GF/SF/SSF/S/DA5/DA10/DA15/FSA/WSA/WGV]";
 
-    public ModifyWantedsCommand() {
+    private UnicacityAddon unicacityAddon;
+
+    public ModifyWantedsCommand(UnicacityAddon unicacityAddon) {
         super("modifywanteds", "mw");
+        this.unicacityAddon = unicacityAddon;
     }
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
 
         if (arguments.length < 2)
             return true;
@@ -86,7 +89,7 @@ public class ModifyWantedsCommand extends Command {
     @Override
     public List<String> complete(String[] arguments) {
         if (arguments.length == 1) {
-            List<String> tabCompletions = ForgeUtils.getOnlinePlayers();
+            List<String> tabCompletions = ForgeUtils.getOnlinePlayers(this.unicacityAddon);
             String input = arguments[arguments.length - 1].toLowerCase();
             tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
             return tabCompletions;

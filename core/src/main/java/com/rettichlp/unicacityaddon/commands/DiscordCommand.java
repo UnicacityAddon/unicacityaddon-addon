@@ -20,15 +20,18 @@ public class DiscordCommand extends Command {
 
     private static final String usage = "/discord";
 
-    public DiscordCommand() {
+    private final UnicacityAddon unicacityAddon;
+
+    public DiscordCommand(UnicacityAddon unicacityAddon) {
         super("discord");
+        this.unicacityAddon = unicacityAddon;
     }
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        if (!UnicacityAddon.isUnicacity())
+        if (!this.unicacityAddon.isUnicacity())
             return true;
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
 
         p.sendEmptyMessage();
         p.sendMessage(Message.getBuilder()
@@ -47,6 +50,6 @@ public class DiscordCommand extends Command {
 
     @Override
     public List<String> complete(String[] arguments) {
-        return TabCompletionBuilder.getBuilder(arguments).build();
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments).build();
     }
 }

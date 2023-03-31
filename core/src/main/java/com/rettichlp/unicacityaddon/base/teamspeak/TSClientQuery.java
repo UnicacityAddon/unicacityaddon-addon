@@ -34,12 +34,15 @@ public class TSClientQuery implements Closeable {
     private volatile boolean authenticated;
     private volatile int schandlerID;
 
-    private TSClientQuery() {
+    private UnicacityAddon unicacityAddon;
+
+    private TSClientQuery(UnicacityAddon unicacityAddon) {
+        this.unicacityAddon = unicacityAddon;
     }
 
-    public static TSClientQuery getInstance() {
+    public static TSClientQuery getInstance(UnicacityAddon unicacityAddon) {
         if (instance == null) {
-            instance = new TSClientQuery();
+            instance = new TSClientQuery(unicacityAddon);
             try {
                 instance.connect();
             } catch (IOException e) {
@@ -52,15 +55,15 @@ public class TSClientQuery implements Closeable {
         return instance;
     }
 
-    public static void reconnect() {
-        disconnect();
-        getInstance();
-        UnicacityAddon.PLAYER.sendInfoMessage("TeamSpeak ClientQuery Wiederherstellung abgeschlossen.");
+    public static void reconnect(UnicacityAddon unicacityAddon) {
+        disconnect(unicacityAddon);
+        getInstance(unicacityAddon);
+        unicacityAddon.player().sendInfoMessage("TeamSpeak ClientQuery Wiederherstellung abgeschlossen.");
     }
 
-    public static void disconnect() {
+    public static void disconnect(UnicacityAddon unicacityAddon) {
         if (instance != null) {
-            UnicacityAddon.LOGGER.info("Closing the TeamSpeak Client Query Connection...");
+            unicacityAddon.logger().info("Closing the TeamSpeak Client Query Connection...");
             instance.close();
         }
     }
@@ -70,7 +73,7 @@ public class TSClientQuery implements Closeable {
     }
 
     private void connect() throws IOException {
-        UnicacityAddon.LOGGER.info("Setting up the TeamSpeak Client Query Connection...");
+        this.unicacityAddon.logger().info("Setting up the TeamSpeak Client Query Connection...");
 
         setupConnection();
         authenticate();
@@ -85,7 +88,7 @@ public class TSClientQuery implements Closeable {
         socket.setSoTimeout(4000);
 
         writer = new ClientQueryWriter(this, new PrintWriter(socket.getOutputStream(), true));
-        reader = new ClientQueryReader(new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8)));
+        reader = new ClientQueryReader(this.unicacityAddon, new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8)));
 
         // welcome messages
         while (reader.getReader().ready()) {
@@ -95,12 +98,12 @@ public class TSClientQuery implements Closeable {
         writer.start();
         reader.start();
 
-        keepAliveThread = new KeepAliveThread(this);
+        keepAliveThread = new KeepAliveThread(this.unicacityAddon, this);
         keepAliveThread.start();
     }
 
     private void authenticate() {
-        AuthCommand authCommand = new AuthCommand(UnicacityAddon.ADDON.configuration().tsApiKey().getOrDefault(Strings.EMPTY));
+        AuthCommand authCommand = new AuthCommand(this.unicacityAddon, this.unicacityAddon.configuration().tsApiKey().getOrDefault(Strings.EMPTY));
         authCommand.execute(this);
 
         CommandResponse response = authCommand.getResponse();
@@ -111,14 +114,14 @@ public class TSClientQuery implements Closeable {
     }
 
     private void setupSchandlerID() {
-        CurrentSchandlerIDCommand.Response response = new CurrentSchandlerIDCommand().getResponse();
+        CurrentSchandlerIDCommand.Response response = new CurrentSchandlerIDCommand(this.unicacityAddon).getResponse();
         this.schandlerID = response.getSchandlerID();
     }
 
     private void registerEvents() {
-        int schandlerID = TSClientQuery.getInstance().getSchandlerID();
+        int schandlerID = TSClientQuery.getInstance(this.unicacityAddon).getSchandlerID();
         for (String eventName : TSEventHandler.TEAMSPEAK_EVENTS.keySet()) {
-            new ClientNotifyRegisterCommand(schandlerID, eventName).execute();
+            new ClientNotifyRegisterCommand(this.unicacityAddon, schandlerID, eventName).execute();
         }
     }
 

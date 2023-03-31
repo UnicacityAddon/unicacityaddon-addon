@@ -19,13 +19,16 @@ public class PunishCommand extends Command {
 
     private static final String usage = "/punish [Spielername] [Grund]";
 
-    public PunishCommand() {
+    private UnicacityAddon unicacityAddon;
+
+    public PunishCommand(UnicacityAddon unicacityAddon) {
         super("punish");
+        this.unicacityAddon = unicacityAddon;
     }
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
 
         if (arguments.length < 2) {
             p.sendSyntaxMessage(usage);
@@ -67,7 +70,7 @@ public class PunishCommand extends Command {
 
     @Override
     public List<String> complete(String[] arguments) {
-        return TabCompletionBuilder.getBuilder(arguments)
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments)
                 .addAtIndex(2, Arrays.stream(Punishment.values()).map(Punishment::getTabReason).sorted().collect(Collectors.toList()))
                 .build();
     }

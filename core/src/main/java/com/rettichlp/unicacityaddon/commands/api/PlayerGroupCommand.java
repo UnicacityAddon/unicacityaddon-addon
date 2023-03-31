@@ -4,7 +4,6 @@ import com.google.gson.JsonObject;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.api.exception.APIResponseException;
-import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.enums.api.AddonGroup;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
@@ -24,13 +23,16 @@ public class PlayerGroupCommand extends Command {
 
     private static final String usage = "/playergroup [list|add|remove] [Gruppe] [Spieler]";
 
-    public PlayerGroupCommand() {
+    private final UnicacityAddon unicacityAddon;
+
+    public PlayerGroupCommand(UnicacityAddon unicacityAddon) {
         super("playergroup");
+        this.unicacityAddon = unicacityAddon;
     }
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
 
         new Thread(() -> {
             if (arguments.length == 2 && arguments[0].equalsIgnoreCase("list") && Arrays.stream(AddonGroup.values()).anyMatch(addonGroup -> addonGroup.name().equals(arguments[1]))) {
@@ -49,14 +51,14 @@ public class PlayerGroupCommand extends Command {
 
             } else if (arguments.length == 3 && arguments[0].equalsIgnoreCase("add")) {
                 try {
-                    JsonObject response = APIRequest.sendPlayerAddRequest(arguments[2], arguments[1]);
+                    JsonObject response = this.unicacityAddon.api().sendPlayerAddRequest(arguments[2], arguments[1]);
                     p.sendAPIMessage(response.get("info").getAsString(), true);
                 } catch (APIResponseException e) {
                     e.sendInfo();
                 }
             } else if (arguments.length == 3 && arguments[0].equalsIgnoreCase("remove")) {
                 try {
-                    JsonObject response = APIRequest.sendPlayerRemoveRequest(arguments[2], arguments[1]);
+                    JsonObject response = this.unicacityAddon.api().sendPlayerRemoveRequest(arguments[2], arguments[1]);
                     p.sendAPIMessage(response.get("info").getAsString(), true);
                 } catch (APIResponseException e) {
                     e.sendInfo();
@@ -70,7 +72,7 @@ public class PlayerGroupCommand extends Command {
 
     @Override
     public List<String> complete(String[] arguments) {
-        return TabCompletionBuilder.getBuilder(arguments)
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments)
                 .addAtIndex(1, "list", "add", "remove")
                 .addAtIndex(2, Arrays.stream(AddonGroup.values()).map(Enum::name).collect(Collectors.toList()))
                 .build();

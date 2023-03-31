@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.api.exception.APIResponseException;
 import com.rettichlp.unicacityaddon.base.enums.api.ApplicationPath;
 import com.rettichlp.unicacityaddon.base.utils.WebsiteUtils;
@@ -18,8 +19,8 @@ public class RequestBuilder {
     private RequestBuilder() {
     }
 
-    public static Builder getBuilder() {
-        return new Builder();
+    public static Builder getBuilder(UnicacityAddon unicacityAddon) {
+        return new Builder(unicacityAddon);
     }
 
     public static class Builder {
@@ -28,6 +29,12 @@ public class RequestBuilder {
         private ApplicationPath applicationPath;
         private String subPath;
         private Map<String, String> parameter;
+
+        private UnicacityAddon unicacityAddon;
+
+        public Builder(UnicacityAddon unicacityAddon) {
+            this.unicacityAddon = unicacityAddon;
+        }
 
         public Builder nonProd(boolean nonProd) {
             this.nonProd = nonProd;
@@ -51,7 +58,7 @@ public class RequestBuilder {
 
         public JsonElement send() throws APIResponseException {
             String urlString = WebsiteUtils.createUrl(this.nonProd, this.applicationPath, this.subPath, this.parameter);
-            String response = WebsiteUtils.sendRequest(urlString);
+            String response = WebsiteUtils.sendRequest(urlString, this.unicacityAddon);
             return new JsonParser().parse(response);
         }
 

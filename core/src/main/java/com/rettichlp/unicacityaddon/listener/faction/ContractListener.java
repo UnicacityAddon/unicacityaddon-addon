@@ -2,7 +2,6 @@ package com.rettichlp.unicacityaddon.listener.faction;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
-import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
 import com.rettichlp.unicacityaddon.base.enums.api.StatisticType;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
@@ -33,7 +32,7 @@ public class ContractListener {
 
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
         String msg = e.chatMessage().getPlainText();
         long currentTime = System.currentTimeMillis();
 
@@ -60,8 +59,8 @@ public class ContractListener {
             CONTRACT_LIST.remove(name);
 
             if (msg.contains("getötet") && msg.contains(p.getName())) {
-                APIRequest.sendStatisticAddRequest(StatisticType.KILL);
-                AFbankEinzahlenCommand.sendClockMessage();
+                this.unicacityAddon.api().sendStatisticAddRequest(StatisticType.KILL);
+                AFbankEinzahlenCommand.sendClockMessage(this.unicacityAddon);
             }
             return;
         }

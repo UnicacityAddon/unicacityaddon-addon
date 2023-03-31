@@ -26,7 +26,10 @@ public class ClientQueryReader extends Thread implements Closeable {
     private final BufferedReader reader;
     private volatile boolean closed;
 
-    ClientQueryReader(BufferedReader reader) {
+    private final UnicacityAddon unicacityAddon;
+
+    ClientQueryReader(UnicacityAddon unicacityAddon, BufferedReader reader) {
+        this.unicacityAddon = unicacityAddon;
         this.reader = reader;
 
         setName("UnicacityAddon-TSClientQuery-ClientQueryReader");
@@ -44,7 +47,7 @@ public class ClientQueryReader extends Thread implements Closeable {
                     if (line.startsWith("notify")) {
                         TSEvent event = TSEventHandler.getEvent(line);
                         if (event != null) {
-                            TSEventHandler.fireEvent(event);
+                            TSEventHandler.fireEvent(unicacityAddon, event);
                             continue;
                         }
                     }
@@ -78,7 +81,7 @@ public class ClientQueryReader extends Thread implements Closeable {
                     }
                 }
             } catch (IOException | IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException | ClassNotFoundException e) {
-                UnicacityAddon.LOGGER.error(e.getMessage());
+                // TODO: 31.03.2023  UnicacityAddon.LOGGER.error(e.getMessage());
             }
 
             Uninterruptibles.sleepUninterruptibly(100, TimeUnit.MILLISECONDS);

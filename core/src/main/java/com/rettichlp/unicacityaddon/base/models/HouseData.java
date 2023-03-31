@@ -10,7 +10,7 @@ import net.labymod.api.client.component.event.HoverEvent;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.rettichlp.unicacityaddon.base.api.request.APIRequest.mapOf;
+import static com.rettichlp.unicacityaddon.base.api.request.API.mapOf;
 
 /**
  * @author RettichLP

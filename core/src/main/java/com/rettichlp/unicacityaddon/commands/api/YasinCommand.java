@@ -4,7 +4,6 @@ import com.google.gson.JsonObject;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.api.exception.APIResponseException;
-import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
@@ -21,13 +20,16 @@ import java.util.List;
 @UCCommand
 public class YasinCommand extends Command {
 
-    public YasinCommand() {
+    private UnicacityAddon unicacityAddon;
+
+    public YasinCommand(UnicacityAddon unicacityAddon) {
         super("yasin");
+        this.unicacityAddon = unicacityAddon;
     }
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
 
         new Thread(() -> {
             if (arguments.length == 0) {
@@ -37,7 +39,7 @@ public class YasinCommand extends Command {
                             .of("Yasin's Liste:").color(ColorCode.DARK_AQUA).bold().advance()
                             .createComponent());
 
-                    APIRequest.sendYasinRequest().getAsJsonArray().forEach(jsonElement -> {
+                    this.unicacityAddon.api().sendYasinRequest().getAsJsonArray().forEach(jsonElement -> {
                         JsonObject jsonObject = jsonElement.getAsJsonObject();
                         String name = jsonObject.get("name").getAsString();
                         boolean done = jsonObject.get("done").getAsBoolean();
@@ -60,21 +62,21 @@ public class YasinCommand extends Command {
                 }
             } else if (arguments.length == 2 && arguments[0].equalsIgnoreCase("add")) {
                 try {
-                    JsonObject response = APIRequest.sendYasinAddRequest(arguments[1]);
+                    JsonObject response = this.unicacityAddon.api().sendYasinAddRequest(arguments[1]);
                     p.sendAPIMessage(response.get("info").getAsString(), true);
                 } catch (APIResponseException e) {
                     e.sendInfo();
                 }
             } else if (arguments.length == 2 && arguments[0].equalsIgnoreCase("remove")) {
                 try {
-                    JsonObject response = APIRequest.sendYasinRemoveRequest(arguments[1]);
+                    JsonObject response = this.unicacityAddon.api().sendYasinRemoveRequest(arguments[1]);
                     p.sendAPIMessage(response.get("info").getAsString(), true);
                 } catch (APIResponseException e) {
                     e.sendInfo();
                 }
             } else if (arguments.length > 1 && arguments[0].equalsIgnoreCase("done")) {
                 try {
-                    JsonObject response = APIRequest.sendYasinDoneRequest(arguments[1]);
+                    JsonObject response = this.unicacityAddon.api().sendYasinDoneRequest(arguments[1]);
                     p.sendAPIMessage(response.get("info").getAsString(), true);
                 } catch (APIResponseException e) {
                     e.sendInfo();
@@ -86,7 +88,7 @@ public class YasinCommand extends Command {
 
     @Override
     public List<String> complete(String[] arguments) {
-        return TabCompletionBuilder.getBuilder(arguments)
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments)
                 .addAtIndex(1, "add", "done", "remove")
                 .build();
     }

@@ -20,8 +20,11 @@ public class ACaptureCommand extends Command {
 
     private static final String usage = "/capture";
 
-    public ACaptureCommand() {
+    private final UnicacityAddon unicacityAddon;
+
+    public ACaptureCommand(UnicacityAddon unicacityAddon) {
         super("capture");
+        this.unicacityAddon = unicacityAddon;
     }
 
     @Override
@@ -29,14 +32,14 @@ public class ACaptureCommand extends Command {
         if (isActive)
             return true;
 
-        UnicacityAddon.PLAYER.sendServerMessage("/capture");
+        this.unicacityAddon.player().sendServerMessage("/capture");
         isActive = true;
 
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                UnicacityAddon.PLAYER.sendServerMessage("/capture");
+                ACaptureCommand.this.unicacityAddon.player().sendServerMessage("/capture");
                 isActive = false;
             }
         }, TimeUnit.SECONDS.toMillis(15));
@@ -45,6 +48,6 @@ public class ACaptureCommand extends Command {
 
     @Override
     public List<String> complete(String[] arguments) {
-        return TabCompletionBuilder.getBuilder(arguments).build();
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments).build();
     }
 }

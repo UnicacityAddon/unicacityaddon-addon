@@ -1,7 +1,7 @@
-package com.rettichlp.unicacityaddon.base.api;
+package com.rettichlp.unicacityaddon.base.manager;
 
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.api.exception.APIResponseException;
-import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
 import net.labymod.api.client.session.Session;
 
 import java.math.BigInteger;
@@ -46,20 +46,27 @@ public class TokenManager {
 
     public static String API_TOKEN;
 
-    public static void createToken(Session session) {
+    private UnicacityAddon unicacityAddon;
+
+    public TokenManager(UnicacityAddon unicacityAddon) {
+        this.unicacityAddon = unicacityAddon;
+    }
+
+    public void createToken() {
+        Session session = this.unicacityAddon.labyAPI().minecraft().sessionAccessor().session();
         String uuid = session.getUniqueId().toString().replace("-", "");
         String salt = "423WhKRMTfRv4mn6u8hLcPj7bYesKh4Ex4yRErYuW4KsgYjpo35nSU11QYj3OINAJwcd0TPDD6AkqhSq";
         String authToken = session.getAccessToken();
         API_TOKEN = hash(uuid + salt + authToken);
 
         try {
-            APIRequest.sendTokenCreateRequest();
+            this.unicacityAddon.api().sendTokenCreateRequest();
         } catch (APIResponseException e) {
             e.sendInfo();
         }
     }
 
-    public static String hash(String input) {
+    public String hash(String input) {
         try {
             // getInstance() method is called with algorithm SHA-1
             MessageDigest md = MessageDigest.getInstance("SHA-1");

@@ -22,13 +22,16 @@ public class ScreenCommand extends Command {
 
     private static final String usage = "/screen [Typ]";
 
-    public ScreenCommand() {
+    private UnicacityAddon unicacityAddon;
+
+    public ScreenCommand(UnicacityAddon unicacityAddon) {
         super("screen", "activitytest");
+        this.unicacityAddon = unicacityAddon;
     }
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
 
         if (arguments.length < 1) {
             p.sendSyntaxMessage(usage);
@@ -48,7 +51,7 @@ public class ScreenCommand extends Command {
         try {
             File file = FileManager.getNewActivityImageFile(arguments[0]);
             // TODO: 08.02.2023
-//            if (UnicacityAddon.ADDON.configuration().screenUpload().get())
+//            if (this.unicacityAddon.configuration().screenUpload().get())
 //                HotkeyListener.handleScreenshotWithUpload(file);
 //            else
 //                HotkeyListener.handleScreenshotWithoutUpload(file);
@@ -60,7 +63,7 @@ public class ScreenCommand extends Command {
 
     @Override
     public List<String> complete(String[] arguments) {
-        return TabCompletionBuilder.getBuilder(arguments)
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments)
                 .addAtIndex(1, Arrays.stream(ScreenshotType.values()).map(ScreenshotType::getDirectoryName).collect(Collectors.toList()))
                 .build();
     }

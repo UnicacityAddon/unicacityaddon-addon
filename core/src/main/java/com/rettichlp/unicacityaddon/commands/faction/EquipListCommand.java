@@ -3,7 +3,6 @@ package com.rettichlp.unicacityaddon.commands.faction;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
-import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
@@ -22,7 +21,9 @@ public class EquipListCommand extends Command {
 
     private static final String usage = "/equiplist (reset)";
 
-    public EquipListCommand() {
+    private UnicacityAddon unicacityAddon;
+
+    public EquipListCommand(UnicacityAddon unicacityAddon) {
         super("equiplist");
     }
 
@@ -31,9 +32,9 @@ public class EquipListCommand extends Command {
      */
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
         if (arguments.length == 1 && arguments[0].equalsIgnoreCase("reset")) {
-            FileManager.DATA.setEquipMap(new HashMap<>());
+            this.unicacityAddon.data().setEquipMap(new HashMap<>());
             p.sendInfoMessage("Equipliste gelöscht.");
         } else
             equipList(p);
@@ -42,7 +43,7 @@ public class EquipListCommand extends Command {
 
     @Override
     public List<String> complete(String[] arguments) {
-        return TabCompletionBuilder.getBuilder(arguments)
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments)
                 .addAtIndex(1, "reset")
                 .build();
     }
@@ -53,13 +54,13 @@ public class EquipListCommand extends Command {
         p.sendMessage(Message.getBuilder()
                 .of("Equip:").color(ColorCode.DARK_AQUA).bold().advance()
                 .createComponent());
-        FileManager.DATA.getEquipMap().forEach((equip, integer) -> p.sendMessage(Message.getBuilder()
+        this.unicacityAddon.data().getEquipMap().forEach((equip, integer) -> p.sendMessage(Message.getBuilder()
                 .of("» " + integer + "x " + equip.getName() + ": ").color(ColorCode.GRAY).advance()
-                .of(numberFormat.format(equip.getPrice()) + "$").color(ColorCode.AQUA).advance()
+                .of(numberFormat.format(equip.getPrice(this.unicacityAddon.configuration())) + "$").color(ColorCode.AQUA).advance()
                 .createComponent()));
 
-        int totalAmount = FileManager.DATA.getEquipMap().entrySet().stream()
-                .map(equipIntegerEntry -> equipIntegerEntry.getKey().getPrice() * equipIntegerEntry.getValue())
+        int totalAmount = this.unicacityAddon.data().getEquipMap().entrySet().stream()
+                .map(equipIntegerEntry -> equipIntegerEntry.getKey().getPrice(this.unicacityAddon.configuration()) * equipIntegerEntry.getValue())
                 .reduce(0, Integer::sum);
 
         p.sendMessage(Message.getBuilder()

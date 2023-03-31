@@ -1,6 +1,6 @@
 package com.rettichlp.unicacityaddon.base.models;
 
-import com.rettichlp.unicacityaddon.base.api.request.APIConverter;
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 
 /**
  * @author RettichLP
@@ -23,8 +23,8 @@ public class WantedReason {
         return points;
     }
 
-    public static WantedReason getWantedReasonEntryByReason(String reason) {
-        return APIConverter.WANTEDREASONLIST.stream()
+    public static WantedReason getWantedReasonEntryByReason(String reason, UnicacityAddon unicacityAddon) {
+        return unicacityAddon.api().getWantedReasonList().stream()
                 .filter(wantedReason -> wantedReason.getReason().equals(reason))
                 .findFirst()
                 .orElse(null);

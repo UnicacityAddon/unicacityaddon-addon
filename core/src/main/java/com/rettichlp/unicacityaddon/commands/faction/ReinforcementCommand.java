@@ -25,13 +25,16 @@ public class ReinforcementCommand extends Command {
 
     private static final String usage = "/reinforcement (-d/-r/-rd/-e/-ed/-m/-lb/-da/-ct/-p/-b/-gn/-t)";
 
-    public ReinforcementCommand() {
+    private UnicacityAddon unicacityAddon;
+
+    public ReinforcementCommand(UnicacityAddon unicacityAddon) {
         super("reinforcement", "callreinforcement", "reinf", "verstärkung");
+        this.unicacityAddon = unicacityAddon;
     }
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
 
         if (!MobileListener.hasCommunications) {
             p.sendErrorMessage("Du hast keine Kommunikationsmittel!");
@@ -42,7 +45,7 @@ public class ReinforcementCommand extends Command {
         if (arguments.length == 1 || arguments.length == 6)
             firstType = ReinforcementType.getByArgument(arguments[arguments.length - 1]);
 
-        ChatType chatType = firstType.getChatType();
+        ChatType chatType = firstType.getChatType(this.unicacityAddon.configuration().nameTagSetting());
 
         if ((arguments.length >= 5) && arguments[0].equalsIgnoreCase("ontheway")) {
             if ((p.getFaction() == Faction.FBI || p.getFaction() == Faction.RETTUNGSDIENST || p.getFaction() == Faction.POLIZEI) && !p.inDuty()) {
@@ -77,7 +80,7 @@ public class ReinforcementCommand extends Command {
 
     @Override
     public List<String> complete(String[] arguments) {
-        return TabCompletionBuilder.getBuilder(arguments)
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments)
                 .addAtIndex(1, Arrays.stream(ReinforcementType.values()).map(ReinforcementType::getArgument).sorted().collect(Collectors.toList()))
                 .addAtIndex(1, "ontheway")
                 .build();

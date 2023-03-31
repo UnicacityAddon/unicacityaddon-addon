@@ -4,12 +4,10 @@ import com.google.gson.JsonObject;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.api.exception.APIResponseException;
-import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
 import com.rettichlp.unicacityaddon.base.config.join.CommandSetting;
 import com.rettichlp.unicacityaddon.base.config.join.PasswordSetting;
 import com.rettichlp.unicacityaddon.base.events.OfflineDataChangedEvent;
 import com.rettichlp.unicacityaddon.base.events.UnicacityAddonTickEvent;
-import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
@@ -44,10 +42,10 @@ public class AccountListener {
 
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
         String msg = e.chatMessage().getPlainText();
 
-        if (!UnicacityAddon.isUnicacity())
+        if (!this.unicacityAddon.isUnicacity())
             return;
 
         if (PatternHandler.ACCOUNT_WELCOME_BACK_PATTERN.matcher(msg).find()) {
@@ -102,7 +100,7 @@ public class AccountListener {
         if (PatternHandler.ACCOUNT_TREUEBONUS_PATTERN.matcher(msg).find()) {
             new Thread(() -> {
                 try {
-                    JsonObject gameplayJsonObject = APIRequest.sendStatisticRequest().getAsJsonObject("gameplay");
+                    JsonObject gameplayJsonObject = this.unicacityAddon.api().sendStatisticRequest().getAsJsonObject("gameplay");
                     int deaths = gameplayJsonObject.get("deaths").getAsInt();
                     int kills = gameplayJsonObject.get("kills").getAsInt();
                     float kd = gameplayJsonObject.get("kd").getAsFloat();
@@ -158,12 +156,12 @@ public class AccountListener {
 
         Matcher accountPayDayMatcher = PatternHandler.ACCOUNT_PAYDAY_PATTERN.matcher(msg);
         if (accountPayDayMatcher.find())
-            FileManager.DATA.setPayDayTime(Integer.parseInt(accountPayDayMatcher.group(1)));
+            this.unicacityAddon.data().setPayDayTime(Integer.parseInt(accountPayDayMatcher.group(1)));
     }
 
     @Subscribe
     public void onOfflineDataChanged(OfflineDataChangedEvent e) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
 
         switch (e.getData().getPayDayTime()) {
             case 0:
@@ -195,18 +193,18 @@ public class AccountListener {
     @Subscribe
     public void onUnicacityAddonTick(UnicacityAddonTickEvent e) {
         if (e.isUnicacity() && e.isPhase(UnicacityAddonTickEvent.Phase.MINUTE) && !isAfk) {
-            FileManager.DATA.addPayDayTime(1);
+            this.unicacityAddon.data().addPayDayTime(1);
         }
     }
 
     private void handleUnlockAccount() {
         PasswordSetting passwordSetting = this.unicacityAddon.configuration().passwordSetting();
         if (passwordSetting.enabled().get())
-            UnicacityAddon.PLAYER.sendServerMessage("/passwort " + passwordSetting.password().getOrDefault(""));
+            this.unicacityAddon.player().sendServerMessage("/passwort " + passwordSetting.password().getOrDefault(""));
     }
 
     private void handleJoin() {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
 
         new Timer().schedule(new TimerTask() {
             @Override

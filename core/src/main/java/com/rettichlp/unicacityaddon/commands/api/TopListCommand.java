@@ -4,7 +4,6 @@ import com.google.gson.JsonArray;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.api.exception.APIResponseException;
-import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
@@ -25,8 +24,11 @@ public class TopListCommand extends Command {
 
     private static final String usage = "/toplist";
 
-    public TopListCommand() {
+    private UnicacityAddon unicacityAddon;
+
+    public TopListCommand(UnicacityAddon unicacityAddon) {
         super("toplist");
+        this.unicacityAddon = unicacityAddon;
     }
 
     /**
@@ -34,11 +36,11 @@ public class TopListCommand extends Command {
      */
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
 
         new Thread(() -> {
             try {
-                JsonArray kdJsonArray = APIRequest.sendStatisticTopRequest().getAsJsonArray("kd");
+                JsonArray kdJsonArray = this.unicacityAddon.api().sendStatisticTopRequest().getAsJsonArray("kd");
 
                 p.sendEmptyMessage();
                 p.sendMessage(Message.getBuilder()
@@ -80,6 +82,6 @@ public class TopListCommand extends Command {
 
     @Override
     public List<String> complete(String[] arguments) {
-        return TabCompletionBuilder.getBuilder(arguments).build();
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments).build();
     }
 }

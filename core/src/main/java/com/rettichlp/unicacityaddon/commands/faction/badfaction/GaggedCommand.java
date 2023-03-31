@@ -15,13 +15,16 @@ import java.util.List;
 @UCCommand
 public class GaggedCommand extends Command {
 
-    public GaggedCommand() {
+    private UnicacityAddon unicacityAddon;
+
+    public GaggedCommand(UnicacityAddon unicacityAddon) {
         super("geknebelt");
+        this.unicacityAddon = unicacityAddon;
     }
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
         GaggedListener.toggleGagged();
 
         if (GaggedListener.isGagged())
@@ -33,6 +36,6 @@ public class GaggedCommand extends Command {
 
     @Override
     public List<String> complete(String[] arguments) {
-        return TabCompletionBuilder.getBuilder(arguments).build();
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments).build();
     }
 }

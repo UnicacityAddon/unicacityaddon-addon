@@ -2,7 +2,6 @@ package com.rettichlp.unicacityaddon.commands;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
-import com.rettichlp.unicacityaddon.base.api.request.APIConverter;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
@@ -23,22 +22,25 @@ import java.util.stream.Collectors;
 @UCCommand
 public class MemberInfoAllCommand extends Command {
 
-    public MemberInfoAllCommand() {
+    private UnicacityAddon unicacityAddon;
+
+    public MemberInfoAllCommand(UnicacityAddon unicacityAddon) {
         super("memberinfoall", "miall");
+        this.unicacityAddon = unicacityAddon;
     }
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        AddonPlayer p = UnicacityAddon.PLAYER;
+        AddonPlayer p = this.unicacityAddon.player();
 
         String factionString = arguments.length < 1 ? p.getFaction().getFactionKey() : arguments[0];
         Faction faction = Faction.getFactionByFactionKey(factionString);
         if (faction != null) {
 
-            Map<String, Integer> factionMemberList = APIConverter.PLAYERFACTIONMAP.entrySet().stream()
+            Map<String, Integer> factionMemberList = this.unicacityAddon.api().getPlayerFactionMap().entrySet().stream()
                     .filter(stringFactionEntry -> stringFactionEntry.getValue().equals(faction))
                     .map(Map.Entry::getKey)
-                    .collect(Collectors.toMap(s -> s, APIConverter.PLAYERRANKMAP::get));
+                    .collect(Collectors.toMap(s -> s, this.unicacityAddon.api().getPlayerRankMap()::get));
 
             p.sendMessage(Message.getBuilder().space().space()
                     .of("===").color(ColorCode.DARK_GRAY).advance().space()
@@ -62,7 +64,7 @@ public class MemberInfoAllCommand extends Command {
                                 .of("» Rang:").color(ColorCode.GRAY).advance().space()
                                 .of(rank != null ? String.valueOf(rank) : "X").color(ColorCode.AQUA).advance().space()
                                 .of("|").color(ColorCode.DARK_GRAY).advance().space()
-                                .of(playername).color(ForgeUtils.getOnlinePlayers().contains(playername) ? ColorCode.GREEN : ColorCode.RED).advance()
+                                .of(playername).color(ForgeUtils.getOnlinePlayers(this.unicacityAddon).contains(playername) ? ColorCode.GREEN : ColorCode.RED).advance()
                                 .createComponent());
                     });
         } else {
@@ -73,7 +75,7 @@ public class MemberInfoAllCommand extends Command {
 
     @Override
     public List<String> complete(String[] arguments) {
-        return TabCompletionBuilder.getBuilder(arguments)
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments)
                 .addAtIndex(1, Arrays.stream(Faction.values()).map(Faction::getFactionKey).sorted().collect(Collectors.toList()))
                 .build();
     }

@@ -59,7 +59,7 @@ public class WeaponClickListener {
                 }
             }
         } else if (interactionType.equals(ClientPlayerInteractEvent.InteractionType.ATTACK) && tazerLoaded && System.currentTimeMillis() - tazerLastWarningSend > TimeUnit.SECONDS.toMillis(5)) {
-            UnicacityAddon.PLAYER.sendInfoMessage("Achtung! Dein Tazer ist geladen!");
+            this.unicacityAddon.player().sendInfoMessage("Achtung! Dein Tazer ist geladen!");
             tazerLastWarningSend = System.currentTimeMillis();
         }
     }

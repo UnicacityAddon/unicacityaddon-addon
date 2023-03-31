@@ -46,36 +46,36 @@ public class TickListener {
         if (e.phase().equals(Phase.POST)) {
             currentTick++;
 
-            this.unicacityAddon.labyAPI().eventBus().fire(new UnicacityAddonTickEvent(UnicacityAddonTickEvent.Phase.TICK));
+            this.unicacityAddon.labyAPI().eventBus().fire(new UnicacityAddonTickEvent(this.unicacityAddon, UnicacityAddonTickEvent.Phase.TICK));
 
             // 0,25 SECONDS
             if (currentTick % 5 == 0) {
-                this.unicacityAddon.labyAPI().eventBus().fire(new UnicacityAddonTickEvent(UnicacityAddonTickEvent.Phase.TICK_5));
+                this.unicacityAddon.labyAPI().eventBus().fire(new UnicacityAddonTickEvent(this.unicacityAddon, UnicacityAddonTickEvent.Phase.TICK_5));
             }
 
             // 1 SECOND
             if (currentTick % 20 == 0) {
-                this.unicacityAddon.labyAPI().eventBus().fire(new UnicacityAddonTickEvent(UnicacityAddonTickEvent.Phase.SECOND));
+                this.unicacityAddon.labyAPI().eventBus().fire(new UnicacityAddonTickEvent(this.unicacityAddon, UnicacityAddonTickEvent.Phase.SECOND));
             }
 
             // 3 SECONDS
             if (currentTick % 60 == 0) {
-                this.unicacityAddon.labyAPI().eventBus().fire(new UnicacityAddonTickEvent(UnicacityAddonTickEvent.Phase.SECOND_3));
+                this.unicacityAddon.labyAPI().eventBus().fire(new UnicacityAddonTickEvent(this.unicacityAddon, UnicacityAddonTickEvent.Phase.SECOND_3));
             }
 
             // 5 SECONDS
             if (currentTick % 100 == 0) {
-                this.unicacityAddon.labyAPI().eventBus().fire(new UnicacityAddonTickEvent(UnicacityAddonTickEvent.Phase.SECOND_5));
+                this.unicacityAddon.labyAPI().eventBus().fire(new UnicacityAddonTickEvent(this.unicacityAddon, UnicacityAddonTickEvent.Phase.SECOND_5));
             }
 
             // 30 SECONDS
             if (currentTick % 600 == 0) {
-                this.unicacityAddon.labyAPI().eventBus().fire(new UnicacityAddonTickEvent(UnicacityAddonTickEvent.Phase.SECOND_30));
+                this.unicacityAddon.labyAPI().eventBus().fire(new UnicacityAddonTickEvent(this.unicacityAddon, UnicacityAddonTickEvent.Phase.SECOND_30));
             }
 
             // 1 MINUTE
             if (currentTick % 1200 == 0) {
-                this.unicacityAddon.labyAPI().eventBus().fire(new UnicacityAddonTickEvent(UnicacityAddonTickEvent.Phase.MINUTE));
+                this.unicacityAddon.labyAPI().eventBus().fire(new UnicacityAddonTickEvent(this.unicacityAddon, UnicacityAddonTickEvent.Phase.MINUTE));
             }
         }
     }
@@ -89,7 +89,7 @@ public class TickListener {
         }
 
         if (e.isPhase(UnicacityAddonTickEvent.Phase.TICK_5)) {
-            this.transportController.processBusRouting();
+            this.transportController.processBusRouting(this.unicacityAddon.player());
             // TODO: 17.03.2023 DropDrugAllCommand.process();
         }
 
@@ -98,7 +98,7 @@ public class TickListener {
         }
 
         if (e.isUnicacity() && e.isPhase(UnicacityAddonTickEvent.Phase.SECOND) && this.unicacityAddon.configuration().nameTagSetting().corpse().get()) {
-            this.deadBodyController.updateDisplayName();
+            this.deadBodyController.updateDisplayName(this.unicacityAddon);
         }
     }
 
@@ -114,7 +114,7 @@ public class TickListener {
     }
 
     private void handleDamageTracker() {
-        float currentHeal = UnicacityAddon.PLAYER.getPlayer().getHealth();
+        float currentHeal = this.unicacityAddon.player().getPlayer().getHealth();
         if (lastTickDamage.getValue() > currentHeal) {
             lastTickDamage = Maps.immutableEntry(System.currentTimeMillis(), currentHeal);
         } else if (lastTickDamage.getValue() < currentHeal) {
@@ -123,8 +123,8 @@ public class TickListener {
     }
 
     private void handleTimer() {
-        if (FileManager.DATA.getTimer() > 0) {
-            FileManager.DATA.setTimer(FileManager.DATA.getTimer() - 1);
+        if (this.unicacityAddon.data().getTimer() > 0) {
+            this.unicacityAddon.data().setTimer(this.unicacityAddon.data().getTimer() - 1);
         }
     }
 }
