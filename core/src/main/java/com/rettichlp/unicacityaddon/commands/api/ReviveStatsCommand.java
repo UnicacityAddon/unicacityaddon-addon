@@ -36,7 +36,7 @@ public class ReviveStatsCommand extends Command {
     public boolean execute(String prefix, String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
 
-        this.unicacityAddon.getDefaultReferenceStorage().getOverlayMessageController().sendOverlayMessage(ColorCode.AQUA.getCode() + FormattingCode.BOLD.getCode() + "Revivestats werden geladen...");
+        this.unicacityAddon.overlayMessageController().sendOverlayMessage(ColorCode.AQUA.getCode() + FormattingCode.BOLD.getCode() + "Revivestats werden geladen...");
 
         new Thread(() -> {
             if (arguments.length == 0) {

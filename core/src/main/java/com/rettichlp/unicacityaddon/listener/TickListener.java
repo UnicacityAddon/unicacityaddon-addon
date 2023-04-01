@@ -3,11 +3,7 @@ package com.rettichlp.unicacityaddon.listener;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.builder.ScreenshotBuilder;
 import com.rettichlp.unicacityaddon.base.events.UnicacityAddonTickEvent;
-import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
-import com.rettichlp.unicacityaddon.controller.DeadBodyController;
-import com.rettichlp.unicacityaddon.controller.ScreenshotController;
-import com.rettichlp.unicacityaddon.controller.TransportController;
 import com.rettichlp.unicacityaddon.listener.faction.ReinforcementListener;
 import com.rettichlp.unicacityaddon.listener.faction.terroristen.BombListener;
 import net.labymod.api.event.Phase;
@@ -30,15 +26,9 @@ public class TickListener {
     public static Map.Entry<Long, Float> lastTickDamage = Maps.immutableEntry(0L, 0F);
 
     private final UnicacityAddon unicacityAddon;
-    private final ScreenshotController screenshotController;
-    private final DeadBodyController deadBodyController;
-    private final TransportController transportController;
 
-    public TickListener(UnicacityAddon unicacityAddon, ScreenshotController screenshotController, DeadBodyController deadBodyController, TransportController transportController) {
+    public TickListener(UnicacityAddon unicacityAddon) {
         this.unicacityAddon = unicacityAddon;
-        this.screenshotController = screenshotController;
-        this.deadBodyController = deadBodyController;
-        this.transportController = transportController;
     }
 
     @Subscribe
@@ -89,7 +79,7 @@ public class TickListener {
         }
 
         if (e.isPhase(UnicacityAddonTickEvent.Phase.TICK_5)) {
-            this.transportController.processBusRouting(this.unicacityAddon.player());
+            this.unicacityAddon.transportController().processBusRouting(this.unicacityAddon.player());
             // TODO: 17.03.2023 DropDrugAllCommand.process();
         }
 
@@ -98,15 +88,15 @@ public class TickListener {
         }
 
         if (e.isUnicacity() && e.isPhase(UnicacityAddonTickEvent.Phase.SECOND) && this.unicacityAddon.configuration().nameTagSetting().corpse().get()) {
-            this.deadBodyController.updateDisplayName(this.unicacityAddon);
+            this.unicacityAddon.deadBodyController().updateDisplayName(this.unicacityAddon);
         }
     }
 
     private void handleActivityScreenshot(long activityMillis, String activityType) {
         if (activityMillis >= 0 && activityMillis + 15 == currentTick) {
             try {
-                File file = FileManager.getNewActivityImageFile(activityType);
-                ScreenshotBuilder.getBuilder(this.screenshotController).file(file).save();
+                File file = this.unicacityAddon.fileManager().getNewActivityImageFile(activityType);
+                ScreenshotBuilder.getBuilder(this.unicacityAddon.screenshotController()).file(file).save();
             } catch (IOException e) {
                 this.unicacityAddon.logger().warn(e.getMessage());
             }
@@ -123,8 +113,8 @@ public class TickListener {
     }
 
     private void handleTimer() {
-        if (this.unicacityAddon.data().getTimer() > 0) {
-            this.unicacityAddon.data().setTimer(this.unicacityAddon.data().getTimer() - 1);
+        if (this.unicacityAddon.fileManager().data().getTimer() > 0) {
+            this.unicacityAddon.fileManager().data().setTimer(this.unicacityAddon.fileManager().data().getTimer() - 1);
         }
     }
 }

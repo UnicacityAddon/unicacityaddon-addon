@@ -5,7 +5,6 @@ import com.rettichlp.unicacityaddon.base.events.UnicacityAddonTickEvent;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
-import com.rettichlp.unicacityaddon.controller.OverlayMessageController;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
@@ -88,6 +87,6 @@ public class HouseInteractionListener {
                     .append(i < progress ? ColorCode.GREEN.getCode() : ColorCode.GRAY.getCode())
                     .append("█");
         }
-        this.unicacityAddon.getDefaultReferenceStorage().getOverlayMessageController().sendOverlayMessage(stringBuilder.toString());
+        this.unicacityAddon.overlayMessageController().sendOverlayMessage(stringBuilder.toString());
     }
 }

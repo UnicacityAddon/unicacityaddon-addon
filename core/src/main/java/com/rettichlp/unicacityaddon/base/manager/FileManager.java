@@ -33,11 +33,11 @@ public class FileManager {
 
     public FileManager(UnicacityAddon unicacityAddon) {
         this.unicacityAddon = unicacityAddon;
-        this.data = new Data(); // fallback if data cannot be loaded
+        this.data = new Data(unicacityAddon); // fallback if data cannot be loaded
 
         String jsonData = "";
         try {
-            File dataFile = FileManager.getDataFile();
+            File dataFile = getDataFile();
             assert dataFile != null;
             jsonData = FileUtils.readFileToString(dataFile, StandardCharsets.UTF_8.toString());
         } catch (IOException e) {
@@ -46,7 +46,9 @@ public class FileManager {
 
         try {
             new JsonParser().parse(jsonData); // validate check
-            this.data = jsonData.isEmpty() ? new Data() : new Gson().fromJson(jsonData, Data.class);
+            if (!jsonData.isEmpty()) {
+                this.data = new Gson().fromJson(jsonData, Data.class);
+            }
         } catch (JsonSyntaxException e) {
             this.unicacityAddon.logger().info("Data cannot be created because Json is invalid: " + jsonData);
             this.unicacityAddon.logger().error(e.getMessage());
@@ -54,41 +56,44 @@ public class FileManager {
         }
     }
 
-    public Data getData() {
+    public Data data() {
         return data;
     }
 
-    public static File getMinecraftDir() {
-        return new File(System.getenv("APPDATA") + "/.minecraft");
+    public File getMinecraftDir() {
+        File minecraftDir = new File(System.getenv("APPDATA") + "/.minecraft");
+        return minecraftDir.exists() || minecraftDir.mkdir() ? minecraftDir : null;
     }
 
-    public static File getUnicacityAddonDir() {
+    public File getUnicacityAddonDir() {
+        if (getMinecraftDir() == null)
+            return null;
         File unicacityAddonDir = new File(getMinecraftDir().getAbsolutePath() + "/unicacityAddon/");
         return unicacityAddonDir.exists() || unicacityAddonDir.mkdir() ? unicacityAddonDir : null;
     }
 
-    public static File getAddonScreenshotDir() {
+    public File getAddonScreenshotDir() {
         if (getUnicacityAddonDir() == null)
             return null;
         File addonScreenshotDir = new File(getUnicacityAddonDir().getAbsolutePath() + "/screenshots/");
         return addonScreenshotDir.exists() || addonScreenshotDir.mkdir() ? addonScreenshotDir : null;
     }
 
-    public static File getAddonActivityScreenDir(String type) {
+    public File getAddonActivityScreenDir(String type) {
         if (getAddonScreenshotDir() == null)
             return null;
         File addonScreenshotDir = new File(getAddonScreenshotDir().getAbsolutePath() + "/" + type);
         return addonScreenshotDir.exists() || addonScreenshotDir.mkdir() ? addonScreenshotDir : null;
     }
 
-    public static File getDataFile() throws IOException {
+    public File getDataFile() throws IOException {
         if (getUnicacityAddonDir() == null)
             return null;
         File dataFile = new File(getUnicacityAddonDir().getAbsolutePath() + "/data.json");
         return dataFile.exists() || dataFile.createNewFile() ? dataFile : null;
     }
 
-    public static File getNewImageFile() throws IOException {
+    public File getNewImageFile() throws IOException {
         if (getAddonScreenshotDir() == null)
             return null;
 
@@ -106,7 +111,7 @@ public class FileManager {
         return newImageFile.createNewFile() ? newImageFile : null;
     }
 
-    public static File getNewActivityImageFile(String type) throws IOException {
+    public File getNewActivityImageFile(String type) throws IOException {
         if (getAddonActivityScreenDir(type) == null)
             return null;
 
@@ -129,7 +134,7 @@ public class FileManager {
      */
     public void saveData() {
         try {
-            File dataFile = FileManager.getDataFile();
+            File dataFile = getDataFile();
             if (dataFile != null && this.data != null) {
                 Gson g = new Gson();
                 FileUtils.writeStringToFile(dataFile, g.toJson(this.data), StandardCharsets.UTF_8);

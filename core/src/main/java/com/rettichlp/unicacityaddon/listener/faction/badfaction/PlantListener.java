@@ -22,7 +22,7 @@ public class PlantListener {
         this.unicacityAddon = unicacityAddon;
     }
 
-    //    @Subscribe
+    // todo    @Subscribe
 //    public void onPlayerInteract(PlayerInteractEvent e) {
 //        if (!(e instanceof PlayerInteractEvent.RightClickBlock) || e.getHand().equals(EnumHand.OFF_HAND) || !this.unicacityAddon.isUnicacity()) return;
 //
@@ -43,17 +43,17 @@ public class PlantListener {
         String msg = e.chatMessage().getPlainText();
 
         if (PatternHandler.PLANT_HARVEST_PATTERN.matcher(msg).find()) {
-            this.unicacityAddon.data().setPlantFertilizeTime(0L);
-            this.unicacityAddon.data().setPlantWaterTime(0L);
+            this.unicacityAddon.fileManager().data().setPlantFertilizeTime(0L);
+            this.unicacityAddon.fileManager().data().setPlantWaterTime(0L);
             return;
         }
 
         Matcher plantUseMatcher = PatternHandler.PLANT_USE_PATTERN.matcher(msg);
         if (plantUseMatcher.find() && msg.contains(this.unicacityAddon.player().getName())) {
-            if (msg.contains("gewässert") && System.currentTimeMillis() - TimeUnit.MINUTES.toMillis(10) > this.unicacityAddon.data().getPlantWaterTime()) {
-                this.unicacityAddon.data().setPlantWaterTime(System.currentTimeMillis());
-            } else if (msg.contains("gedüngt") && System.currentTimeMillis() - TimeUnit.MINUTES.toMillis(10) > this.unicacityAddon.data().getPlantFertilizeTime()) {
-                this.unicacityAddon.data().setPlantFertilizeTime(System.currentTimeMillis());
+            if (msg.contains("gewässert") && System.currentTimeMillis() - TimeUnit.MINUTES.toMillis(10) > this.unicacityAddon.fileManager().data().getPlantWaterTime()) {
+                this.unicacityAddon.fileManager().data().setPlantWaterTime(System.currentTimeMillis());
+            } else if (msg.contains("gedüngt") && System.currentTimeMillis() - TimeUnit.MINUTES.toMillis(10) > this.unicacityAddon.fileManager().data().getPlantFertilizeTime()) {
+                this.unicacityAddon.fileManager().data().setPlantFertilizeTime(System.currentTimeMillis());
             }
         }
     }

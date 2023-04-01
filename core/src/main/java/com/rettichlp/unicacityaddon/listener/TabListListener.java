@@ -1,7 +1,6 @@
 package com.rettichlp.unicacityaddon.listener;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.controller.TabListController;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.scoreboard.ScoreboardTeamUpdateEvent;
 import net.labymod.api.event.client.scoreboard.TabListUpdateEvent;
@@ -13,11 +12,9 @@ import net.labymod.api.event.client.scoreboard.TabListUpdateEvent;
 public class TabListListener {
 
     private final UnicacityAddon unicacityAddon;
-    private final TabListController tabListController;
 
-    public TabListListener(UnicacityAddon unicacityAddon, TabListController tabListController) {
+    public TabListListener(UnicacityAddon unicacityAddon) {
         this.unicacityAddon = unicacityAddon;
-        this.tabListController = tabListController;
     }
 
     @Subscribe

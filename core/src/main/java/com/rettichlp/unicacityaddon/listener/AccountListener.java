@@ -54,12 +54,7 @@ public class AccountListener {
             return;
         }
 
-        if (PatternHandler.ACCOUNT_PASSWORD_UNPROTECTED_PATTERN.matcher(msg).find()) {
-            handleJoin();
-            return;
-        }
-
-        if (PatternHandler.ACCOUNT_PASSWORD_UNLOCKED_PATTERN.matcher(msg).find()) {
+        if (PatternHandler.ACCOUNT_PASSWORD_UNPROTECTED_PATTERN.matcher(msg).find() || PatternHandler.ACCOUNT_PASSWORD_UNLOCKED_PATTERN.matcher(msg).find()) {
             handleJoin();
             return;
         }
@@ -156,7 +151,7 @@ public class AccountListener {
 
         Matcher accountPayDayMatcher = PatternHandler.ACCOUNT_PAYDAY_PATTERN.matcher(msg);
         if (accountPayDayMatcher.find())
-            this.unicacityAddon.data().setPayDayTime(Integer.parseInt(accountPayDayMatcher.group(1)));
+            this.unicacityAddon.fileManager().data().setPayDayTime(Integer.parseInt(accountPayDayMatcher.group(1)));
     }
 
     @Subscribe
@@ -193,7 +188,7 @@ public class AccountListener {
     @Subscribe
     public void onUnicacityAddonTick(UnicacityAddonTickEvent e) {
         if (e.isUnicacity() && e.isPhase(UnicacityAddonTickEvent.Phase.MINUTE) && !isAfk) {
-            this.unicacityAddon.data().addPayDayTime(1);
+            this.unicacityAddon.fileManager().data().addPayDayTime(1);
         }
     }
 
@@ -222,7 +217,7 @@ public class AccountListener {
                             if (!commandSetting.first().getOrDefault("").isEmpty())
                                 p.sendServerMessage(commandSetting.first().get());
                         }
-                    }, 500);
+                    }, 1500);
 
                     // AUTOMATE_COMMAND_SECOND_SETTINGS
                     new Timer().schedule(new TimerTask() {
@@ -231,7 +226,7 @@ public class AccountListener {
                             if (!commandSetting.second().getOrDefault("").isEmpty())
                                 p.sendServerMessage(commandSetting.second().get());
                         }
-                    }, 1000);
+                    }, 2000);
 
                     // AUTOMATE_COMMAND_THIRD_SETTINGS
                     new Timer().schedule(new TimerTask() {
@@ -240,7 +235,7 @@ public class AccountListener {
                             if (!commandSetting.third().getOrDefault("").isEmpty())
                                 p.sendServerMessage(commandSetting.third().get());
                         }
-                    }, 1500);
+                    }, 2500);
                 }
             }
         }, 1000);

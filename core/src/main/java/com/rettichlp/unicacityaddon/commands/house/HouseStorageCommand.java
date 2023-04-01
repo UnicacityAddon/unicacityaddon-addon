@@ -24,11 +24,11 @@ public class HouseStorageCommand extends Command {
     @Override
     public boolean execute(String prefix, String[] arguments) {
         if (arguments.length > 1 && arguments[0].equalsIgnoreCase("delete") && MathUtils.isInteger(arguments[1])) {
-            this.unicacityAddon.data().removeHouseData(Integer.parseInt(arguments[1]));
+            this.unicacityAddon.fileManager().data().removeHouseData(Integer.parseInt(arguments[1]));
             return true;
         }
 
-        this.unicacityAddon.data().sendAllDrugStorageMessage();
+        this.unicacityAddon.fileManager().data().sendAllDrugStorageMessage();
         return true;
     }
 

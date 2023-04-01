@@ -25,7 +25,7 @@ public class CarHudWidget extends TextHudWidget<TextHudWidgetConfig> {
     @Override
     public void load(TextHudWidgetConfig config) {
         super.load(config);
-        this.textLine = super.createLine("Auto", this.unicacityAddon.data().isCarOpen() ? ColorCode.GREEN.getCode() + "offen" : ColorCode.RED.getCode() + "zu");
+        this.textLine = super.createLine("Auto", this.unicacityAddon.fileManager().data().isCarOpen() ? ColorCode.GREEN.getCode() + "offen" : ColorCode.RED.getCode() + "zu");
         this.setIcon(this.unicacityAddon.getIcon());
     }
 

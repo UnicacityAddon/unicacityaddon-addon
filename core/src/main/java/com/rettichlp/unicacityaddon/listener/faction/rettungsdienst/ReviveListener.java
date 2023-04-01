@@ -45,8 +45,8 @@ public class ReviveListener {
         if (reviveFailureMatcher.find()) {
             isDead = false;
 
-            this.unicacityAddon.data().setTimer(0);
-            this.unicacityAddon.data().setCashBalance(0);
+            this.unicacityAddon.fileManager().data().setTimer(0);
+            this.unicacityAddon.fileManager().data().setCashBalance(0);
 
             if (ShutdownGraveyardCommand.shutdownGraveyard)
                 ForgeUtils.shutdownPC();
@@ -55,7 +55,7 @@ public class ReviveListener {
 
         Matcher firstAidUseMatcher = PatternHandler.FIRST_AID_USE_PATTERN.matcher(msg);
         if (firstAidUseMatcher.find()) {
-            this.unicacityAddon.data().setTimer(this.unicacityAddon.data().getTimer() + 60);
+            this.unicacityAddon.fileManager().data().setTimer(this.unicacityAddon.fileManager().data().getTimer() + 60);
             return;
         }
 

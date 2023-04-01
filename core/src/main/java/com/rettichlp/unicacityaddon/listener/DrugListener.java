@@ -88,7 +88,7 @@ public class DrugListener {
             DrugPurity drugPurity = DrugPurity.getDrugPurity(dbankGetMatcher.group("drugPurity"));
 
             if (msg.contains(p.getName())) {
-                this.unicacityAddon.data().addDrugToInventory(drugType, drugPurity, amount);
+                this.unicacityAddon.fileManager().data().addDrugToInventory(drugType, drugPurity, amount);
             }
 
             if (hqMessageSetting) {
@@ -117,7 +117,7 @@ public class DrugListener {
             DrugPurity drugPurity = DrugPurity.getDrugPurity(dbankGiveMatcher.group("drugPurity"));
 
             if (msg.contains(p.getName())) {
-                this.unicacityAddon.data().removeDrugFromInventory(drugType, drugPurity, amount);
+                this.unicacityAddon.fileManager().data().removeDrugFromInventory(drugType, drugPurity, amount);
             }
 
             if (hqMessageSetting) {
@@ -143,7 +143,7 @@ public class DrugListener {
         if (medicationGetMatcher.find()) {
             int amount = Integer.parseInt(medicationGetMatcher.group("amount"));
             DrugType drugType = DrugType.getDrugType(medicationGetMatcher.group("drugType"));
-            this.unicacityAddon.data().addDrugToInventory(drugType, DrugPurity.BEST, amount);
+            this.unicacityAddon.fileManager().data().addDrugToInventory(drugType, DrugPurity.BEST, amount);
             return;
         }
 
@@ -167,7 +167,7 @@ public class DrugListener {
                 }
             }
 
-            this.unicacityAddon.data().removeDrugFromInventory(drugType, drugPurity, 1);
+            this.unicacityAddon.fileManager().data().removeDrugFromInventory(drugType, drugPurity, 1);
             return;
         }
 
@@ -175,9 +175,9 @@ public class DrugListener {
         Matcher trunkInteractionAcceptedMatcher = PatternHandler.TRUNK_INTERACTION_ACCEPTED_PATTERN.matcher(msg);
         if ((drugDealAcceptedMatcher.find() || trunkInteractionAcceptedMatcher.find()) && System.currentTimeMillis() - time < TimeUnit.MINUTES.toMillis(3)) {
             if (type.equals("ADD")) {
-                this.unicacityAddon.data().addDrugToInventory(lastDrugType, lastDrugPurity, amount);
+                this.unicacityAddon.fileManager().data().addDrugToInventory(lastDrugType, lastDrugPurity, amount);
             } else if (type.equals("REMOVE")) {
-                this.unicacityAddon.data().removeDrugFromInventory(lastDrugType, lastDrugPurity, amount);
+                this.unicacityAddon.fileManager().data().removeDrugFromInventory(lastDrugType, lastDrugPurity, amount);
             }
             return;
         }
@@ -325,7 +325,7 @@ public class DrugListener {
         if (drugUseMatcher.find()) {
             DrugType drugType = DrugType.getDrugType(drugUseMatcher.group("drugType"));
             DrugPurity drugPurity = DrugPurity.getDrugPurity(drugUseMatcher.group("drugPurity"));
-            this.unicacityAddon.data().removeDrugFromInventory(drugType, drugPurity, 1);
+            this.unicacityAddon.fileManager().data().removeDrugFromInventory(drugType, drugPurity, 1);
         }
     }
 

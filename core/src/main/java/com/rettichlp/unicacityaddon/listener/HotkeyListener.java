@@ -5,15 +5,12 @@ import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.builder.ScreenshotBuilder;
 import com.rettichlp.unicacityaddon.base.config.hotkey.HotkeySetting;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
-import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.teamspeak.CommandResponse;
-import com.rettichlp.unicacityaddon.base.teamspeak.TSUtils;
 import com.rettichlp.unicacityaddon.base.teamspeak.commands.ClientMoveCommand;
 import com.rettichlp.unicacityaddon.base.teamspeak.objects.Channel;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
-import com.rettichlp.unicacityaddon.controller.ScreenshotController;
 import com.rettichlp.unicacityaddon.listener.team.AdListener;
 import net.labymod.api.Laby;
 import net.labymod.api.client.gui.screen.key.Key;
@@ -32,11 +29,9 @@ import java.io.IOException;
 public class HotkeyListener {
 
     private final UnicacityAddon unicacityAddon;
-    private final ScreenshotController screenshotController;
 
-    public HotkeyListener(UnicacityAddon unicacityAddon, ScreenshotController screenshotController) {
+    public HotkeyListener(UnicacityAddon unicacityAddon) {
         this.unicacityAddon = unicacityAddon;
-        this.screenshotController = screenshotController;
     }
 
     @Subscribe
@@ -52,8 +47,8 @@ public class HotkeyListener {
 
         if (key.equals(hotkeySetting.screenshot().getOrDefault(Key.NONE))) {
             try {
-                File file = FileManager.getNewImageFile();
-                ScreenshotBuilder.getBuilder(this.screenshotController).file(file).upload();
+                File file = this.unicacityAddon.fileManager().getNewImageFile();
+                ScreenshotBuilder.getBuilder(this.unicacityAddon.screenshotController()).file(file).upload();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

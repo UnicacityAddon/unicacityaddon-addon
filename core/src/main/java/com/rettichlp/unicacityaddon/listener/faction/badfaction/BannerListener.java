@@ -5,8 +5,6 @@ import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.models.NaviPoint;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
-import com.rettichlp.unicacityaddon.base.utils.Navigation;
-import com.rettichlp.unicacityaddon.controller.WorldInteractionController;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 import net.labymod.api.event.client.entity.player.ClientPlayerInteractEvent;
@@ -23,19 +21,17 @@ public class BannerListener {
     private FloatVector3 lastClickedBannerPosition;
 
     private final UnicacityAddon unicacityAddon;
-    private final WorldInteractionController worldInteractionController;
 
-    public BannerListener(UnicacityAddon unicacityAddon, WorldInteractionController worldInteractionController) {
+    public BannerListener(UnicacityAddon unicacityAddon) {
         this.unicacityAddon = unicacityAddon;
-        this.worldInteractionController = worldInteractionController;
     }
 
     @Subscribe
     public void onClientPlayerInteract(ClientPlayerInteractEvent e) {
         if (e.type().equals(ClientPlayerInteractEvent.InteractionType.INTERACT) && this.unicacityAddon.isUnicacity()) {
-            FloatVector3 pos = this.worldInteractionController.getClickedBlockLocation();
+            FloatVector3 pos = this.unicacityAddon.worldInteractionController().getClickedBlockLocation();
 
-            if (this.worldInteractionController.isBanner(pos)) {
+            if (this.unicacityAddon.worldInteractionController().isBanner(pos)) {
                 lastClickedBannerPosition = pos;
             }
         }

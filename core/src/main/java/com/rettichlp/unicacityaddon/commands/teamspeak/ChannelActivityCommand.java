@@ -5,7 +5,6 @@ import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.teamspeak.TSClientQuery;
-import com.rettichlp.unicacityaddon.base.teamspeak.TSUtils;
 import com.rettichlp.unicacityaddon.base.teamspeak.commands.ChannelClientListCommand;
 import com.rettichlp.unicacityaddon.base.teamspeak.commands.ClientVariableCommand;
 import com.rettichlp.unicacityaddon.base.teamspeak.objects.Client;

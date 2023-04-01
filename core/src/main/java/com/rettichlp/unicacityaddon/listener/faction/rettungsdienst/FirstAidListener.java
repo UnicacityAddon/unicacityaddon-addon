@@ -31,12 +31,12 @@ public class FirstAidListener {
         String msg = e.chatMessage().getPlainText();
 
         if (PatternHandler.FIRST_AID_RECEIVE_PATTERN.matcher(msg).find()) {
-            this.unicacityAddon.data().setFirstAidDate(System.currentTimeMillis());
+            this.unicacityAddon.fileManager().data().setFirstAidDate(System.currentTimeMillis());
             return;
         }
 
         if (PatternHandler.FIRST_AID_LICENCE_PATTERN.matcher(msg).find()) {
-            long expirationTime = this.unicacityAddon.data().getFirstAidDate() + TimeUnit.DAYS.toMillis(14); // Erhaltsdatum + 14 Tage = Auslaufdatum
+            long expirationTime = this.unicacityAddon.fileManager().data().getFirstAidDate() + TimeUnit.DAYS.toMillis(14); // Erhaltsdatum + 14 Tage = Auslaufdatum
             long timeLeft = expirationTime - System.currentTimeMillis(); // Auslaufdatum - aktuelle Datum = Dauer des Scheins
             e.setMessage(Message.getBuilder()
                     .space().space()

@@ -11,7 +11,6 @@ import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import net.labymod.api.util.math.vector.FloatVector3;
 
-import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,9 +20,6 @@ import java.util.Map;
  * @author RettichLP
  */
 public class Data {
-
-    @Inject
-    private UnicacityAddon unicacityAddon;
 
     private List<Armament> armamentList;
     private Integer bankBalance;
@@ -43,7 +39,12 @@ public class Data {
     private Integer timer;
     private List<TodolistEntry> todolist;
 
-    public Data() {
+    // has to be static, so it will not be overwritten by gson data loading
+    private static UnicacityAddon unicacityAddon;
+
+    public Data(UnicacityAddon unicacityAddon) {
+        Data.unicacityAddon = unicacityAddon;
+
         this.armamentList = new ArrayList<>();
         this.bankBalance = 0;
         this.carOpen = false;
@@ -325,7 +326,7 @@ public class Data {
      * @see DrugPurity
      */
     public void addDrugToInventory(DrugType drugType, DrugPurity drugPurity, int amount) {
-        this.unicacityAddon.logger().info("DrugInventoryInteraction: Added amount {} of DrugType {} with DrugPurity {} to inventory", amount, drugType, drugPurity);
+        unicacityAddon.logger().info("DrugInventoryInteraction: Added amount {} of DrugType {} with DrugPurity {} to inventory", amount, drugType, drugPurity);
         if (drugType != null) {
             Map<DrugPurity, Integer> drugPurityIntegerMap = getDrugInventoryMap().getOrDefault(drugType, new HashMap<>());
             int oldAmount = drugPurityIntegerMap.getOrDefault(drugPurity, 0);
@@ -347,7 +348,7 @@ public class Data {
      * @see DrugPurity
      */
     public void removeDrugFromInventory(DrugType drugType, DrugPurity drugPurity, int amount) {
-        this.unicacityAddon.logger().info("DrugInventoryInteraction: Removed amount {} of DrugType {} with DrugPurity {} from inventory", amount, drugType, drugPurity);
+        unicacityAddon.logger().info("DrugInventoryInteraction: Removed amount {} of DrugType {} with DrugPurity {} from inventory", amount, drugType, drugPurity);
         if (drugType != null) {
             Map<DrugPurity, Integer> drugPurityIntegerMap = getDrugInventoryMap().getOrDefault(drugType, new HashMap<>());
             int oldAmount = drugPurityIntegerMap.getOrDefault(drugPurity, 0);
@@ -499,7 +500,7 @@ public class Data {
     }
 
     private void saveAndFireEvent() {
-        this.unicacityAddon.labyAPI().eventBus().fire(new OfflineDataChangedEvent(this.unicacityAddon.data()));
-        this.unicacityAddon.fileManager().saveData();
+        unicacityAddon.labyAPI().eventBus().fire(new OfflineDataChangedEvent(unicacityAddon.fileManager().data()));
+        unicacityAddon.fileManager().saveData();
     }
 }

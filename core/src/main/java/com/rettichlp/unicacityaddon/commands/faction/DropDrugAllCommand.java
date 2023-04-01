@@ -5,17 +5,12 @@ import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
-import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import net.labymod.api.client.chat.command.Command;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author RettichLP
@@ -44,7 +39,7 @@ public class DropDrugAllCommand extends Command {
         AddonPlayer p = this.unicacityAddon.player();
 
         if (arguments.length > 0 && arguments[0].equalsIgnoreCase("reset")) {
-            this.unicacityAddon.data().setDrugInventoryMap(new HashMap<>());
+            this.unicacityAddon.fileManager().data().setDrugInventoryMap(new HashMap<>());
             return true;
         }
 

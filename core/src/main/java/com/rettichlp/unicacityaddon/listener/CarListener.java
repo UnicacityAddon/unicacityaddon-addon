@@ -7,7 +7,6 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
-import com.rettichlp.unicacityaddon.controller.TransportController;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.event.HoverEvent;
 import net.labymod.api.client.scoreboard.DisplaySlot;
@@ -30,11 +29,9 @@ public class CarListener {
     private static final List<Integer> sentTankWarnings = new ArrayList<>();
 
     private final UnicacityAddon unicacityAddon;
-    private final TransportController transportController;
 
-    public CarListener(UnicacityAddon unicacityAddon, TransportController transportController) {
+    public CarListener(UnicacityAddon unicacityAddon) {
         this.unicacityAddon = unicacityAddon;
-        this.transportController = transportController;
     }
 
     @Subscribe
@@ -43,12 +40,12 @@ public class CarListener {
         String msg = e.chatMessage().getPlainText();
 
         if (PatternHandler.CAR_OPEN_PATTERN.matcher(msg).find()) {
-            this.unicacityAddon.data().setCarOpen(true);
+            this.unicacityAddon.fileManager().data().setCarOpen(true);
             return;
         }
 
         if (PatternHandler.CAR_CLOSE_PATTERN.matcher(msg).find()) {
-            this.unicacityAddon.data().setCarOpen(false);
+            this.unicacityAddon.fileManager().data().setCarOpen(false);
             return;
         }
 
@@ -62,7 +59,7 @@ public class CarListener {
         if (carTicketMatcher.find()) {
             int fine = Integer.parseInt(carTicketMatcher.group(2));
 
-            if (this.unicacityAddon.data().getCashBalance() >= fine) {
+            if (this.unicacityAddon.fileManager().data().getCashBalance() >= fine) {
                 e.setMessage(Message.getBuilder()
                         .of("[").color(ColorCode.DARK_GRAY).advance()
                         .of("Car").color(ColorCode.GOLD).advance()
@@ -96,7 +93,7 @@ public class CarListener {
 
     @Subscribe
     public void onScreenRender(ScreenRenderEvent e) {
-        this.transportController.carInteract();
+        this.unicacityAddon.transportController().carInteract();
     }
 
     @Subscribe

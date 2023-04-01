@@ -1,6 +1,5 @@
 package com.rettichlp.unicacityaddon.base.enums.faction;
 
-import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.config.nametag.NameTagSetting;
 import com.rettichlp.unicacityaddon.base.text.ChatType;
 

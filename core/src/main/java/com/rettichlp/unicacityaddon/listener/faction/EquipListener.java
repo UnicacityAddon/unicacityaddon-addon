@@ -37,7 +37,7 @@ public class EquipListener {
                     .findAny();
 
             if (equipOptional.isPresent()) {
-                this.unicacityAddon.data().addEquipToEquipMap(equipOptional.get());
+                this.unicacityAddon.fileManager().data().addEquipToEquipMap(equipOptional.get());
             } else {
                 this.unicacityAddon.player().sendErrorMessage("Equip wurde nicht gefunden.");
             }
@@ -46,7 +46,7 @@ public class EquipListener {
 
         Matcher trackerMatcher = PatternHandler.TRACKER_PATTERN.matcher(msg);
         if (trackerMatcher.find()) {
-            this.unicacityAddon.data().addEquipToEquipMap(Equip.TRACKER);
+            this.unicacityAddon.fileManager().data().addEquipToEquipMap(Equip.TRACKER);
         }
     }
 }

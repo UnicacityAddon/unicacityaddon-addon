@@ -4,7 +4,6 @@ import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.enums.ScreenshotType;
-import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import net.labymod.api.client.chat.command.Command;
 
@@ -49,7 +48,7 @@ public class ScreenCommand extends Command {
         }
 
         try {
-            File file = FileManager.getNewActivityImageFile(arguments[0]);
+            File file = this.unicacityAddon.fileManager().getNewActivityImageFile(arguments[0]);
             // TODO: 08.02.2023
 //            if (this.unicacityAddon.configuration().screenUpload().get())
 //                HotkeyListener.handleScreenshotWithUpload(file);

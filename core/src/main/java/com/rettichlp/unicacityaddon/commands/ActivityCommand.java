@@ -4,7 +4,6 @@ import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.enums.ScreenshotType;
-import com.rettichlp.unicacityaddon.base.manager.FileManager;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
@@ -48,7 +47,7 @@ public class ActivityCommand extends Command {
 
         AtomicInteger overallCount = new AtomicInteger();
         screenshotTypeList.stream().map(ScreenshotType::getDirectoryName).sorted().forEach(s -> {
-            int entryCount = FileManager.getAddonActivityScreenDir(s)
+            int entryCount = this.unicacityAddon.fileManager().getAddonActivityScreenDir(s)
                     .listFiles((dir, name) -> name.endsWith("-" + s + ".jpg"))
                     .length;
 
@@ -61,7 +60,7 @@ public class ActivityCommand extends Command {
                         .of(String.valueOf(entryCount)).color(ColorCode.AQUA).advance().space()
                         .of("[↗]").color(ColorCode.BLUE)
                         .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Ordner öffnen").color(ColorCode.RED).advance().createComponent())
-                        .clickEvent(ClickEvent.Action.OPEN_FILE, FileManager.getAddonActivityScreenDir(s).getAbsolutePath())
+                        .clickEvent(ClickEvent.Action.OPEN_FILE, this.unicacityAddon.fileManager().getAddonActivityScreenDir(s).getAbsolutePath())
                         .advance()
                         .createComponent());
             }

@@ -5,7 +5,6 @@ import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.enums.DropPosition;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
-import com.rettichlp.unicacityaddon.controller.WorldInteractionController;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 import net.labymod.api.event.client.entity.player.ClientPlayerInteractEvent;
@@ -31,11 +30,9 @@ public class JobListener {
     private final Timer timer = new Timer();
 
     private final UnicacityAddon unicacityAddon;
-    private final WorldInteractionController worldInteractionController;
 
-    public JobListener(UnicacityAddon unicacityAddon, WorldInteractionController worldInteractionController) {
+    public JobListener(UnicacityAddon unicacityAddon) {
         this.unicacityAddon = unicacityAddon;
-        this.worldInteractionController = worldInteractionController;
     }
 
     @Subscribe
@@ -45,7 +42,7 @@ public class JobListener {
         if (interactionType.equals(ClientPlayerInteractEvent.InteractionType.INTERACT) && this.unicacityAddon.isUnicacity()) {
             AddonPlayer p = this.unicacityAddon.player();
 
-            FloatVector3 pos = this.worldInteractionController.getClickedBlockLocation();
+            FloatVector3 pos = this.unicacityAddon.worldInteractionController().getClickedBlockLocation();
 
             if (isDropState && System.currentTimeMillis() - lastUse > 1000 && pos != null && onDump(pos)) {
                 lastUse = System.currentTimeMillis();
@@ -53,7 +50,7 @@ public class JobListener {
                 return;
             }
 
-            boolean isHouseNumberSign = pos != null && this.worldInteractionController.isHouseNumberSign(pos);
+            boolean isHouseNumberSign = pos != null && this.unicacityAddon.worldInteractionController().isHouseNumberSign(pos);
 
             if (isHouseNumberSign) {
                 drop();

@@ -36,16 +36,16 @@ public class PlantHudWidget extends TextHudWidget<TextHudWidgetConfig> {
 
     @Override
     public boolean isVisibleInGame() {
-        boolean showFertilize = System.currentTimeMillis() - this.unicacityAddon.data().getPlantFertilizeTime() < TimeUnit.MINUTES.toMillis(90);
-        boolean showWater = System.currentTimeMillis() - this.unicacityAddon.data().getPlantWaterTime() < TimeUnit.MINUTES.toMillis(70);
+        boolean showFertilize = System.currentTimeMillis() - this.unicacityAddon.fileManager().data().getPlantFertilizeTime() < TimeUnit.MINUTES.toMillis(90);
+        boolean showWater = System.currentTimeMillis() - this.unicacityAddon.fileManager().data().getPlantWaterTime() < TimeUnit.MINUTES.toMillis(70);
         return showFertilize || showWater;
     }
 
     @Subscribe
     public void onUnicacityAddonTick(UnicacityAddonTickEvent e) {
         if (e.isPhase(UnicacityAddonTickEvent.Phase.SECOND)) {
-            long timeSinceLastFertilizeInteraction = System.currentTimeMillis() - this.unicacityAddon.data().getPlantFertilizeTime();
-            long timeSinceLastWaterInteraction = System.currentTimeMillis() - this.unicacityAddon.data().getPlantWaterTime();
+            long timeSinceLastFertilizeInteraction = System.currentTimeMillis() - this.unicacityAddon.fileManager().data().getPlantFertilizeTime();
+            long timeSinceLastWaterInteraction = System.currentTimeMillis() - this.unicacityAddon.fileManager().data().getPlantWaterTime();
 
             long fertilizeTimeLeft = TimeUnit.MINUTES.toMillis(70) - timeSinceLastFertilizeInteraction;
             long waterTimeLeft = TimeUnit.MINUTES.toMillis(50) - timeSinceLastWaterInteraction;

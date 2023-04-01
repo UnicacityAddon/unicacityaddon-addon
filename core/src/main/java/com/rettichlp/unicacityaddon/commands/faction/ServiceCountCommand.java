@@ -27,14 +27,14 @@ public class ServiceCountCommand extends Command {
     public boolean execute(String prefix, String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
         if (arguments.length > 0 && arguments[0].equalsIgnoreCase("reset")) {
-            this.unicacityAddon.data().setServiceCount(0);
+            this.unicacityAddon.fileManager().data().setServiceCount(0);
             p.sendInfoMessage("Servicecount wurde zurückgesetzt.");
             return true;
         }
 
         p.sendMessage(Message.getBuilder().prefix()
                 .of("Du hast bereits").color(ColorCode.GRAY).advance().space()
-                .of(String.valueOf(this.unicacityAddon.data().getServiceCount())).color(ColorCode.DARK_AQUA).advance().space()
+                .of(String.valueOf(this.unicacityAddon.fileManager().data().getServiceCount())).color(ColorCode.DARK_AQUA).advance().space()
                 .of("Notrufe bearbeitet.").color(ColorCode.GRAY).advance()
                 .createComponent());
         return true;
