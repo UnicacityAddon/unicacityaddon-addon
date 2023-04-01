@@ -3,12 +3,11 @@ package com.rettichlp.unicacityaddon;
 import com.google.common.reflect.ClassPath;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.DefaultAddonPlayer;
-import com.rettichlp.unicacityaddon.base.manager.TokenManager;
 import com.rettichlp.unicacityaddon.base.api.request.API;
 import com.rettichlp.unicacityaddon.base.config.DefaultUnicacityAddonConfiguration;
 import com.rettichlp.unicacityaddon.base.manager.FactionManager;
 import com.rettichlp.unicacityaddon.base.manager.FileManager;
-import com.rettichlp.unicacityaddon.base.models.Data;
+import com.rettichlp.unicacityaddon.base.manager.TokenManager;
 import com.rettichlp.unicacityaddon.base.nametags.AddonTag;
 import com.rettichlp.unicacityaddon.base.nametags.DutyTag;
 import com.rettichlp.unicacityaddon.base.nametags.FactionInfoTag;
@@ -21,6 +20,12 @@ import com.rettichlp.unicacityaddon.base.teamspeak.TSUtils;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.utils.Navigation;
+import com.rettichlp.unicacityaddon.controller.DeadBodyController;
+import com.rettichlp.unicacityaddon.controller.OverlayMessageController;
+import com.rettichlp.unicacityaddon.controller.ScreenshotController;
+import com.rettichlp.unicacityaddon.controller.TabListController;
+import com.rettichlp.unicacityaddon.controller.TransportController;
+import com.rettichlp.unicacityaddon.controller.WorldInteractionController;
 import com.rettichlp.unicacityaddon.core.generated.DefaultReferenceStorage;
 import com.rettichlp.unicacityaddon.hudwidgets.AmmunitionHudWidget;
 import com.rettichlp.unicacityaddon.hudwidgets.BombHudWidget;
@@ -41,7 +46,6 @@ import net.labymod.api.client.gui.hud.HudWidgetRegistry;
 import net.labymod.api.client.gui.icon.Icon;
 import net.labymod.api.client.network.server.ServerData;
 import net.labymod.api.client.resources.ResourceLocation;
-import net.labymod.api.generated.ReferenceStorage;
 import net.labymod.api.models.addon.annotation.AddonMain;
 
 import java.io.IOException;
@@ -97,22 +101,48 @@ import java.util.stream.Collectors;
 @AddonMain
 public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration> {
 
-    private static final String version = "2.0.0-alpha.1";
-    private DefaultReferenceStorage referenceStorage;
+    private final String version = "2.0.0-alpha.1";
     private AddonPlayer player;
-    private Data data;
-    private API api;
     private FileManager fileManager;
     private TokenManager tokenManager;
     private FactionManager factionManager;
+    private API api;
     private Navigation navigation;
     private TSUtils tsUtils;
 
     public UnicacityAddon() {
     }
 
-    public DefaultReferenceStorage getDefaultReferenceStorage() {
-        return referenceStorage;
+    @Override
+    public void load() {
+        this.player = new DefaultAddonPlayer(this);
+        this.fileManager = new FileManager(this);
+        this.tokenManager = new TokenManager(this);
+        this.factionManager = new FactionManager(this);
+        this.api = new API(this);
+        this.navigation = new Navigation(this);
+        this.tsUtils = new TSUtils(this);
+
+        this.logger().info("Enabled UnicacityAddon");
+    }
+
+    @Override
+    protected void enable() {
+        this.tokenManager.createToken();
+        this.api.syncAll();
+
+        this.registerSettingCategory();
+        this.registerTags();
+        this.registerHudWidgets();
+        this.registerListeners();
+        this.registerCommands();
+
+        new Thread(() -> TSClientQuery.getInstance(this)).start();
+    }
+
+    @Override
+    protected Class<DefaultUnicacityAddonConfiguration> configurationClass() {
+        return DefaultUnicacityAddonConfiguration.class;
     }
 
     public String version() {
@@ -121,14 +151,6 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
 
     public AddonPlayer player() {
         return player;
-    }
-
-    public Data data() {
-        return data;
-    }
-
-    public API api() {
-        return api;
     }
 
     public FileManager fileManager() {
@@ -143,12 +165,40 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
         return factionManager;
     }
 
+    public API api() {
+        return api;
+    }
+
     public Navigation navigation() {
         return navigation;
     }
 
     public TSUtils tsUtils() {
         return tsUtils;
+    }
+
+    public DeadBodyController deadBodyController() {
+        return controller().getDeadBodyController();
+    }
+
+    public OverlayMessageController overlayMessageController() {
+        return controller().getOverlayMessageController();
+    }
+
+    public ScreenshotController screenshotController() {
+        return controller().getScreenshotController();
+    }
+
+    public TabListController tabListController() {
+        return controller().getTabListController();
+    }
+
+    public TransportController transportController() {
+        return controller().getTransportController();
+    }
+
+    public WorldInteractionController worldInteractionController() {
+        return controller().getWorldInteractionController();
     }
 
     public Icon getIcon() {
@@ -172,39 +222,8 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
                 .createComponent());
     }
 
-    @Override
-    public void load() {
-        this.player = new DefaultAddonPlayer(this);
-        this.data = this.fileManager.getData();
-        this.api = new API(this);
-        this.fileManager = new FileManager(this);
-        this.tokenManager = new TokenManager(this);
-        this.factionManager = new FactionManager(this);
-        this.navigation = new Navigation(this);
-
-        this.tsUtils = new TSUtils(this);
-        new Thread(() -> TSClientQuery.getInstance(this)).start();
-    }
-
-    @Override
-    protected void enable() {
-        this.registerSettingCategory();
-
-        this.referenceStorage = this.getReferenceStorageAccessor();
-
-        this.registerTags();
-        this.registerHudWidgets();
-        this.registerListeners();
-        this.registerCommands();
-        this.logger().info("Enabled UnicacityAddon");
-
-        this.tokenManager.createToken();
-        this.api.syncAll();
-    }
-
-    @Override
-    protected Class<DefaultUnicacityAddonConfiguration> configurationClass() {
-        return DefaultUnicacityAddonConfiguration.class;
+    private DefaultReferenceStorage controller() {
+        return this.getReferenceStorageAccessor();
     }
 
     private void registerTags() {
