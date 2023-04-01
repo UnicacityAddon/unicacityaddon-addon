@@ -57,7 +57,7 @@ public class RequestBuilder {
         }
 
         public JsonElement send() throws APIResponseException {
-            String urlString = WebsiteUtils.createUrl(this.nonProd, this.applicationPath, this.subPath, this.parameter);
+            String urlString = WebsiteUtils.createUrl(this.unicacityAddon, this.nonProd, this.applicationPath, this.subPath, this.parameter);
             String response = WebsiteUtils.sendRequest(urlString, this.unicacityAddon);
             return new JsonParser().parse(response);
         }

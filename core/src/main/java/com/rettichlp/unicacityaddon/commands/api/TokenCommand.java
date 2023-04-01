@@ -2,7 +2,6 @@ package com.rettichlp.unicacityaddon.commands.api;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
-import com.rettichlp.unicacityaddon.base.manager.TokenManager;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
@@ -39,7 +38,7 @@ public class TokenCommand extends Command {
                         .prefix()
                         .of("Mit diesem").color(ColorCode.GRAY).advance().space()
                         .of("Token").color(ColorCode.AQUA)
-                        .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of(TokenManager.API_TOKEN).color(ColorCode.RED).advance().createComponent())
+                        .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of(this.unicacityAddon.tokenManager().getApiToken()).color(ColorCode.RED).advance().createComponent())
                         .clickEvent(ClickEvent.Action.RUN_COMMAND, "/token copy")
                         .advance().space()
                         .of("kann jeder in deinem Namen Anfragen an die API senden.").color(ColorCode.GRAY).advance()
@@ -47,7 +46,7 @@ public class TokenCommand extends Command {
             } else if (arguments.length == 1 && arguments[0].equalsIgnoreCase("create")) {
                 this.unicacityAddon.tokenManager().createToken();
             } else if (arguments.length == 1 && arguments[0].equalsIgnoreCase("copy")) {
-                p.copyToClipboard(TokenManager.API_TOKEN);
+                p.copyToClipboard(this.unicacityAddon.tokenManager().getApiToken());
                 this.unicacityAddon.labyAPI().notificationController().push(Notification.builder()
                         .title(Message.getBuilder().of("Kopiert!").color(ColorCode.GREEN).bold().advance().createComponent())
                         .text(Message.getBuilder().of("Token in Zwischenablage kopiert.").color(ColorCode.WHITE).advance().createComponent())

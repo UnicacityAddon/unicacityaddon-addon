@@ -44,7 +44,7 @@ import java.security.NoSuchAlgorithmException;
  */
 public class TokenManager {
 
-    public static String API_TOKEN;
+    private String apiToken;
 
     private UnicacityAddon unicacityAddon;
 
@@ -52,12 +52,16 @@ public class TokenManager {
         this.unicacityAddon = unicacityAddon;
     }
 
+    public String getApiToken() {
+        return apiToken;
+    }
+
     public void createToken() {
         Session session = this.unicacityAddon.labyAPI().minecraft().sessionAccessor().session();
         String uuid = session.getUniqueId().toString().replace("-", "");
         String salt = "423WhKRMTfRv4mn6u8hLcPj7bYesKh4Ex4yRErYuW4KsgYjpo35nSU11QYj3OINAJwcd0TPDD6AkqhSq";
         String authToken = session.getAccessToken();
-        API_TOKEN = hash(uuid + salt + authToken);
+        apiToken = hash(uuid + salt + authToken);
 
         try {
             this.unicacityAddon.api().sendTokenCreateRequest();

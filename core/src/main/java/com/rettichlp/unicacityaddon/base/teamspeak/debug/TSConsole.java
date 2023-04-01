@@ -1,16 +1,8 @@
 package com.rettichlp.unicacityaddon.base.teamspeak.debug;
 
-import com.rettichlp.unicacityaddon.base.teamspeak.CommandResponse;
 import com.rettichlp.unicacityaddon.base.teamspeak.EventHandler;
-import com.rettichlp.unicacityaddon.base.teamspeak.TSAPIKeyLoader;
-import com.rettichlp.unicacityaddon.base.teamspeak.TSClientQuery;
-import com.rettichlp.unicacityaddon.base.teamspeak.TSEventHandler;
 import com.rettichlp.unicacityaddon.base.teamspeak.TSListener;
-import com.rettichlp.unicacityaddon.base.teamspeak.commands.BaseCommand;
 import com.rettichlp.unicacityaddon.base.teamspeak.events.ClientMovedEvent;
-
-import java.io.IOException;
-import java.util.Scanner;
 
 /**
  * Console used for debugging

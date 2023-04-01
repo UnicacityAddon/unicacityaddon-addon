@@ -4,7 +4,6 @@ import com.google.common.collect.Maps;
 import com.google.gson.JsonParser;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.api.HttpStatus;
-import com.rettichlp.unicacityaddon.base.manager.TokenManager;
 import com.rettichlp.unicacityaddon.base.api.exception.APIResponseException;
 import com.rettichlp.unicacityaddon.base.enums.api.ApplicationPath;
 import jdk.internal.joptsimple.internal.Strings;
@@ -36,7 +35,7 @@ public class WebsiteUtils {
         boolean isApiRequest = urlString.startsWith("http://rettichlp.de:8888/unicacityaddon/v1/");
 
         if (responseCode == HttpURLConnection.HTTP_OK) {
-            unicacityAddon.logger().info("APIResponse - " + responseCode + " [" + urlString.replace(TokenManager.API_TOKEN, "TOKEN") + "]");
+            unicacityAddon.logger().info("APIResponse - " + responseCode + " [" + urlString.replace(unicacityAddon.tokenManager().getApiToken(), "TOKEN") + "]");
             return websiteSource;
         } else {
             throw new APIResponseException(unicacityAddon, urlString, responseCode, isApiRequest
@@ -45,9 +44,9 @@ public class WebsiteUtils {
         }
     }
 
-    public static String createUrl(boolean nonProd, ApplicationPath applicationPath, String subPath, Map<String, String> parameter) {
+    public static String createUrl(UnicacityAddon unicacityAddon, boolean nonProd, ApplicationPath applicationPath, String subPath, Map<String, String> parameter) {
         return (nonProd ? "http://localhost:8888/unicacityaddon/v1/" : "http://rettichlp.de:8888/unicacityaddon/v1/")
-                + TokenManager.API_TOKEN
+                + unicacityAddon.tokenManager().getApiToken()
                 + applicationPath.getApplicationPath()
                 + (subPath == null ? Strings.EMPTY : "/" + subPath)
                 + (parameter == null || parameter.isEmpty() ? Strings.EMPTY : getParamsString(parameter));
