@@ -101,7 +101,7 @@ import java.util.stream.Collectors;
 @AddonMain
 public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration> {
 
-    private final String version = "2.0.0-alpha.1";
+    private final String version = "2.0.0-alpha.2";
     private AddonPlayer player;
     private FileManager fileManager;
     private TokenManager tokenManager;
@@ -285,7 +285,7 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
                         throw new RuntimeException(e);
                     }
 
-                    System.out.println("Registered Listener " + listenerClass.getSimpleName());
+                    System.out.println("Registered listener " + listenerClass.getSimpleName());
                 });
     }
 
