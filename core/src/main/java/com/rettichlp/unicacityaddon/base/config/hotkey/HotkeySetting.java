@@ -10,8 +10,6 @@ public interface HotkeySetting {
 
     ConfigProperty<Boolean> enabled();
 
-    ConfigProperty<Key> screenshot();
-
     ConfigProperty<Key> acceptAd();
 
     ConfigProperty<Key> declineAd();

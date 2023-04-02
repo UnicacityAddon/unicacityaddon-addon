@@ -45,15 +45,6 @@ public class HotkeyListener {
         AddonPlayer p = this.unicacityAddon.player();
         HotkeySetting hotkeySetting = this.unicacityAddon.configuration().hotkeySetting();
 
-        if (key.equals(hotkeySetting.screenshot().getOrDefault(Key.NONE))) {
-            try {
-                File file = this.unicacityAddon.fileManager().getNewImageFile();
-                ScreenshotBuilder.getBuilder(this.unicacityAddon).file(file).upload();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
         if (!this.unicacityAddon.isUnicacity() || Laby.references().chatAccessor().isChatOpen()) {
             return;
         }

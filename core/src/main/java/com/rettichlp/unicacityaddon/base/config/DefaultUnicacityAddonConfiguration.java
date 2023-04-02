@@ -68,9 +68,6 @@ public class DefaultUnicacityAddonConfiguration extends AddonConfig implements U
     private final ConfigProperty<Boolean> carRoute = new ConfigProperty<>(true);
 
     @SwitchSetting
-    private final ConfigProperty<Boolean> screenUpload = new ConfigProperty<>(true);
-
-    @SwitchSetting
     private final ConfigProperty<Boolean> update = new ConfigProperty<>(true);
 
     @SettingSection("teamspeak")
@@ -161,11 +158,6 @@ public class DefaultUnicacityAddonConfiguration extends AddonConfig implements U
     @Override
     public ConfigProperty<Boolean> carRoute() {
         return this.carRoute;
-    }
-
-    @Override
-    public ConfigProperty<Boolean> screenUpload() {
-        return this.screenUpload;
     }
 
     @Override

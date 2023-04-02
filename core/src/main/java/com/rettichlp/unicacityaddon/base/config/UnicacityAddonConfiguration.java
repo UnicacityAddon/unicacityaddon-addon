@@ -42,8 +42,6 @@ public interface UnicacityAddonConfiguration {
 
     ConfigProperty<Boolean> carRoute();
 
-    ConfigProperty<Boolean> screenUpload();
-
     ConfigProperty<Boolean> update();
 
     ConfigProperty<String> tsApiKey();

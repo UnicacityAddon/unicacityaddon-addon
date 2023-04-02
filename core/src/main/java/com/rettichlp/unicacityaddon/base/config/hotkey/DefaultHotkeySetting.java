@@ -17,9 +17,6 @@ public class DefaultHotkeySetting extends Config implements HotkeySetting {
     private final ConfigProperty<Boolean> enabled = new ConfigProperty<>(true);
 
     @KeyBindSetting
-    private final ConfigProperty<Key> screenshot = new ConfigProperty<>(Key.NONE);
-
-    @KeyBindSetting
     private final ConfigProperty<Key> acceptAd = new ConfigProperty<>(Key.NONE);
 
     @KeyBindSetting
@@ -49,11 +46,6 @@ public class DefaultHotkeySetting extends Config implements HotkeySetting {
     @Override
     public ConfigProperty<Boolean> enabled() {
         return this.enabled;
-    }
-
-    @Override
-    public ConfigProperty<Key> screenshot() {
-        return this.screenshot;
     }
 
     @Override

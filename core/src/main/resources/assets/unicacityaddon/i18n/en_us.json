@@ -66,10 +66,6 @@
       },
       "hotkeySetting": {
         "name": "Hotkeys",
-        "screenshot": {
-          "name": "Screenshot",
-          "description": "Erstellt einen Screenshot, lädt ihn auf Imgur hoch und kopiert den Link in die Zwischenablage."
-        },
         "acceptAd": {
           "name": "Werbung akzeptieren",
           "description": "Akzeptiert die Werbung eines Spielers."
@@ -264,10 +260,6 @@
       "carRoute": {
         "name": "Automatisch die Route zum Auto anzeigen",
         "description": "Nach Ausführung des '/car find' Commands wird direkt die Route angezeigt"
-      },
-      "screenUpload": {
-        "name": "Screenshots automatisch hochladen",
-        "description": "Screenshots werden auf Imgur hochgeladen und der Link in die Zwischenablage kopiert"
       },
       "update": {
         "name": "Automatisches Update des Addons",
