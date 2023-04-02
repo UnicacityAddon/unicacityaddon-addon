@@ -2,6 +2,7 @@ package com.rettichlp.unicacityaddon.commands;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
+import com.rettichlp.unicacityaddon.base.builder.ScreenshotBuilder;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.enums.ScreenshotType;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
@@ -49,11 +50,7 @@ public class ScreenCommand extends Command {
 
         try {
             File file = this.unicacityAddon.fileManager().getNewActivityImageFile(arguments[0]);
-            // TODO: 08.02.2023
-//            if (this.unicacityAddon.configuration().screenUpload().get())
-//                HotkeyListener.handleScreenshotWithUpload(file);
-//            else
-//                HotkeyListener.handleScreenshotWithoutUpload(file);
+            ScreenshotBuilder.getBuilder(this.unicacityAddon).file(file).save();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

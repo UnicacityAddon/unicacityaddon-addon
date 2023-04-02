@@ -96,7 +96,7 @@ public class TickListener {
         if (activityMillis >= 0 && activityMillis + 15 == currentTick) {
             try {
                 File file = this.unicacityAddon.fileManager().getNewActivityImageFile(activityType);
-                ScreenshotBuilder.getBuilder(this.unicacityAddon.screenshotController()).file(file).save();
+                ScreenshotBuilder.getBuilder(this.unicacityAddon).file(file).save();
             } catch (IOException e) {
                 this.unicacityAddon.logger().warn(e.getMessage());
             }

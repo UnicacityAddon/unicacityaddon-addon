@@ -48,7 +48,7 @@ public class HotkeyListener {
         if (key.equals(hotkeySetting.screenshot().getOrDefault(Key.NONE))) {
             try {
                 File file = this.unicacityAddon.fileManager().getNewImageFile();
-                ScreenshotBuilder.getBuilder(this.unicacityAddon.screenshotController()).file(file).upload();
+                ScreenshotBuilder.getBuilder(this.unicacityAddon).file(file).upload();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
