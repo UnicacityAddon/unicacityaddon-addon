@@ -38,9 +38,7 @@ public class VersionedScreenshotController extends ScreenshotController {
                     nativeImage.close();
                 }
             });
-
-            return file;
         }
-        return null;
+        return file;
     }
 }

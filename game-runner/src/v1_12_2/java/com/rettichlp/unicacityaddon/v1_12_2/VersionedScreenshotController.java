@@ -34,11 +34,10 @@ public class VersionedScreenshotController extends ScreenshotController {
                 BufferedImage bufferedImage = ScreenShotHelper.createScreenshot(minecraft.displayWidth, minecraft.displayHeight, framebuffer);
 
                 ImageIO.write(bufferedImage, "jpg", file);
-                return file;
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
-        return null;
+        return file;
     }
 }
