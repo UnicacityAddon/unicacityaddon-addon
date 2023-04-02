@@ -16,4 +16,6 @@ public abstract class WorldInteractionController {
     public abstract boolean isHouseNumberSign(FloatVector3 pos);
 
     public abstract boolean isBanner(FloatVector3 pos);
+
+    public abstract boolean isPlant(FloatVector3 clickedBlock);
 }

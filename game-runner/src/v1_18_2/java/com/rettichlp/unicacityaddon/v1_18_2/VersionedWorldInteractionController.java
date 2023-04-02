@@ -6,6 +6,7 @@ import net.labymod.api.util.math.vector.FloatVector3;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SignBlock;
 import net.minecraft.world.level.block.WallBannerBlock;
 import net.minecraft.world.level.block.entity.SignBlockEntity;
@@ -54,5 +55,16 @@ public class VersionedWorldInteractionController extends WorldInteractionControl
 
         assert clientLevel != null;
         return clientLevel.getBlockState(blockPos).getBlock() instanceof WallBannerBlock;
+    }
+
+    @Override
+    public boolean isPlant(FloatVector3 pos) {
+        ClientLevel clientLevel = Minecraft.getInstance().level;
+
+        assert clientLevel != null;
+        boolean isFern = clientLevel.getBlockState(new BlockPos(pos.getX(), pos.getY(), pos.getZ())).getBlock().equals(Blocks.FERN);
+        boolean isPodzol = clientLevel.getBlockState(new BlockPos(pos.getX(), pos.getY() - 1, pos.getZ())).getBlock().equals(Blocks.PODZOL);
+
+        return isFern && isPodzol;
     }
 }

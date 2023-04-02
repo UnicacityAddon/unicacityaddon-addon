@@ -5,6 +5,8 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
+import net.labymod.api.event.client.entity.player.ClientPlayerInteractEvent;
+import net.labymod.api.util.math.vector.FloatVector3;
 
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
@@ -22,21 +24,19 @@ public class PlantListener {
         this.unicacityAddon = unicacityAddon;
     }
 
-    // todo    @Subscribe
-//    public void onPlayerInteract(PlayerInteractEvent e) {
-//        if (!(e instanceof PlayerInteractEvent.RightClickBlock) || e.getHand().equals(EnumHand.OFF_HAND) || !this.unicacityAddon.isUnicacity()) return;
-//
-//        World world = e.getWorld();
-//        BlockPos clickedBlockPos = e.getPos();
-//        BlockPos bottomBlockPos = e.getPos().down();
-//
-//        boolean clickedBlockIsFern = world.getBlockState(clickedBlockPos).equals(Blocks.TALLGRASS.getDefaultState().withProperty(BlockTallGrass.TYPE, BlockTallGrass.EnumType.FERN));
-//        boolean bottomBlockIsPodzol = world.getBlockState(bottomBlockPos).equals(Blocks.DIRT.getDefaultState().withProperty(BlockDirt.VARIANT, BlockDirt.DirtType.PODZOL));
-//
-//        if (!clickedBlockIsFern || !bottomBlockIsPodzol) return;
-//
-//        p.sendServerMessage("/plant");
-//    }
+    @Subscribe
+    public void onClientPlayerInteract(ClientPlayerInteractEvent e) {
+        ClientPlayerInteractEvent.InteractionType interactionType = e.type();
+
+        if (interactionType.equals(ClientPlayerInteractEvent.InteractionType.INTERACT)) {
+            FloatVector3 pos = this.unicacityAddon.worldInteractionController().getClickedBlockLocation();
+            boolean isPlant = pos != null && this.unicacityAddon.worldInteractionController().isPlant(pos);
+
+            if (isPlant) {
+                this.unicacityAddon.player().sendServerMessage("/plant");
+            }
+        }
+    }
 
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {
