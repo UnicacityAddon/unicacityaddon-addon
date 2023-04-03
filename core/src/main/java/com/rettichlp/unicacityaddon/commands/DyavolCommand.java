@@ -18,7 +18,7 @@ import java.util.List;
 @UCCommand
 public class DyavolCommand extends Command {
 
-    private UnicacityAddon unicacityAddon;
+    private final UnicacityAddon unicacityAddon;
 
     public DyavolCommand(UnicacityAddon unicacityAddon) {
         super("dyavol");

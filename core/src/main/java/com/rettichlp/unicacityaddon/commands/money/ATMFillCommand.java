@@ -21,7 +21,7 @@ public class ATMFillCommand extends Command {
 
     private static final String usage = "/atmfill";
 
-    private UnicacityAddon unicacityAddon;
+    private final UnicacityAddon unicacityAddon;
 
     public ATMFillCommand(UnicacityAddon unicacityAddon) {
         super("atmfill");

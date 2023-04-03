@@ -25,7 +25,7 @@ public class ReinforcementCommand extends Command {
 
     private static final String usage = "/reinforcement (-d/-r/-rd/-e/-ed/-m/-lb/-da/-ct/-p/-b/-gn/-t)";
 
-    private UnicacityAddon unicacityAddon;
+    private final UnicacityAddon unicacityAddon;
 
     public ReinforcementCommand(UnicacityAddon unicacityAddon) {
         super("reinforcement", "callreinforcement", "reinf", "verstärkung");

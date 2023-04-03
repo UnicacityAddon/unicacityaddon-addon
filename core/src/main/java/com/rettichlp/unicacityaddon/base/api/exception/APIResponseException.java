@@ -15,7 +15,7 @@ public class APIResponseException extends Throwable {
     private final int responseCode;
     private final String infoMessage;
 
-    private UnicacityAddon unicacityAddon;
+    private final UnicacityAddon unicacityAddon;
 
     public APIResponseException(UnicacityAddon unicacityAddon, String urlString, int responseCode) {
         this.unicacityAddon = unicacityAddon;

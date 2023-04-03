@@ -17,7 +17,7 @@ public class ExplosiveBeltCommand extends Command {
 
     private static final String usage = "/sprenggürtel [Countdown]";
 
-    private UnicacityAddon unicacityAddon;
+    private final UnicacityAddon unicacityAddon;
 
     public ExplosiveBeltCommand(UnicacityAddon unicacityAddon) {
         super("sprenggürtel");

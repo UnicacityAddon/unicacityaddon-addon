@@ -20,7 +20,7 @@ public class MemberInfoCommand extends Command {
 
     private static final String usage = "/memberinfo (Fraktion)";
 
-    private UnicacityAddon unicacityAddon;
+    private final UnicacityAddon unicacityAddon;
 
     public MemberInfoCommand(UnicacityAddon unicacityAddon) {
         super("memberinfo", "mi");

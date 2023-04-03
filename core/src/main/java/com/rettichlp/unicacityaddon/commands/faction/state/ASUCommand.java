@@ -28,7 +28,7 @@ public class ASUCommand extends Command {
     private static final String usage = "/asu [Spieler...] [Grund] (-v/-b/-fsa/-wsa)";
     private final Timer timer = new Timer();
 
-    private UnicacityAddon unicacityAddon;
+    private final UnicacityAddon unicacityAddon;
 
     public ASUCommand(UnicacityAddon unicacityAddon) {
         super("asu");

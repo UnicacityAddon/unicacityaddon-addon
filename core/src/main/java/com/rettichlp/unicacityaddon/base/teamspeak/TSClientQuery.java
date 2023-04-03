@@ -34,7 +34,7 @@ public class TSClientQuery implements Closeable {
     private volatile boolean authenticated;
     private volatile int schandlerID;
 
-    private UnicacityAddon unicacityAddon;
+    private final UnicacityAddon unicacityAddon;
 
     private TSClientQuery(UnicacityAddon unicacityAddon) {
         this.unicacityAddon = unicacityAddon;

@@ -19,7 +19,7 @@ public class PlantHudWidget extends TextHudWidget<TextHudWidgetConfig> {
     private TextLine fertilize;
     private TextLine water;
 
-    private UnicacityAddon unicacityAddon;
+    private final UnicacityAddon unicacityAddon;
 
     public PlantHudWidget(String id, UnicacityAddon unicacityAddon) {
         super(id);

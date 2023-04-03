@@ -23,7 +23,7 @@ public class TimerCommand extends Command {
 
     private static final String usage = "/timer (start|stop) (Name|ID) (Zeit<h/m/s>)";
 
-    private UnicacityAddon unicacityAddon;
+    private final UnicacityAddon unicacityAddon;
 
     public TimerCommand(UnicacityAddon unicacityAddon) {
         super("timer");

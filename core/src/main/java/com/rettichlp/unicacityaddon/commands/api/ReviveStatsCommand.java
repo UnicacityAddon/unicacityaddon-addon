@@ -25,7 +25,7 @@ public class ReviveStatsCommand extends Command {
 
     private static final String usage = "/revivestats (all|old|Spieler|Rang)";
 
-    private UnicacityAddon unicacityAddon;
+    private final UnicacityAddon unicacityAddon;
 
     public ReviveStatsCommand(UnicacityAddon unicacityAddon) {
         super("revivestats", "rstats");

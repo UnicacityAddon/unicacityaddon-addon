@@ -19,7 +19,7 @@ public class ASetBlacklistCommand extends Command {
 
     private static final String usage = "/asetbl [Spieler...] [Grund]";
 
-    private UnicacityAddon unicacityAddon;
+    private final UnicacityAddon unicacityAddon;
 
     public ASetBlacklistCommand(UnicacityAddon unicacityAddon) {
         super("asetbl");

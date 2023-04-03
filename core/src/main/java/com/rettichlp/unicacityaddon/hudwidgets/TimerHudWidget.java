@@ -22,7 +22,7 @@ public class TimerHudWidget extends TextHudWidget<TextHudWidgetConfig> {
 
     private TextLine textLine;
 
-    private UnicacityAddon unicacityAddon;
+    private final UnicacityAddon unicacityAddon;
 
     public TimerHudWidget(String id, UnicacityAddon unicacityAddon) {
         super(id);

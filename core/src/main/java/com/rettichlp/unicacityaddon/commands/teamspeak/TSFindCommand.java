@@ -26,7 +26,7 @@ public class TSFindCommand extends Command {
 
     private static final String usage = "/tsfind [Spieler]";
 
-    private UnicacityAddon unicacityAddon;
+    private final UnicacityAddon unicacityAddon;
 
     public TSFindCommand(UnicacityAddon unicacityAddon) {
         super("tsfind");

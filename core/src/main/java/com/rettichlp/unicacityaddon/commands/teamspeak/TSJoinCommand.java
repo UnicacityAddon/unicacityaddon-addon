@@ -30,7 +30,7 @@ public class TSJoinCommand extends Command {
 
     private static final String usage = "/tsjoin [Channel]";
 
-    private UnicacityAddon unicacityAddon;
+    private final UnicacityAddon unicacityAddon;
 
     public TSJoinCommand(UnicacityAddon unicacityAddon) {
         super("tsjoin");

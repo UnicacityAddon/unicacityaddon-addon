@@ -5,7 +5,6 @@ import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.controller.DeadBodyController;
-import com.rettichlp.unicacityaddon.listener.NameTagListener;
 import net.labymod.api.models.Implements;
 import net.labymod.api.util.math.vector.FloatVector3;
 import net.minecraft.ChatFormatting;

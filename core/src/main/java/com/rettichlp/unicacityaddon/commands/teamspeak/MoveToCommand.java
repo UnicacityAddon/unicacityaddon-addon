@@ -24,7 +24,7 @@ public class MoveToCommand extends Command {
 
     private static final String usage = "/moveto [Spieler]";
 
-    private UnicacityAddon unicacityAddon;
+    private final UnicacityAddon unicacityAddon;
 
     public MoveToCommand(UnicacityAddon unicacityAddon) {
         super("moveto");

@@ -21,7 +21,7 @@ public class ModifyWantedsCommand extends Command {
 
     private static final String usage = "/mw [Spieler] [GF/SF/SSF/S/DA5/DA10/DA15/FSA/WSA/WGV]";
 
-    private UnicacityAddon unicacityAddon;
+    private final UnicacityAddon unicacityAddon;
 
     public ModifyWantedsCommand(UnicacityAddon unicacityAddon) {
         super("modifywanteds", "mw");

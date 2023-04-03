@@ -16,7 +16,7 @@ public class HouseBankCommand extends Command {
 
     private static final String usage = "/hauskasseninfo";
 
-    private UnicacityAddon unicacityAddon;
+    private final UnicacityAddon unicacityAddon;
 
     public HouseBankCommand(UnicacityAddon unicacityAddon) {
         super("hauskasseninfo", "hkasseninfo", "hkinfo");

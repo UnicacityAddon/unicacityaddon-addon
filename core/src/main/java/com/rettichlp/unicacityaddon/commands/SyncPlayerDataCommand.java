@@ -15,7 +15,7 @@ public class SyncPlayerDataCommand extends Command {
 
     private static final String usage = "/syncplayerdata";
 
-    private UnicacityAddon unicacityAddon;
+    private final UnicacityAddon unicacityAddon;
 
     public SyncPlayerDataCommand(UnicacityAddon unicacityAddon) {
         super("syncplayerdata", "spd", "sync", "syncdata");

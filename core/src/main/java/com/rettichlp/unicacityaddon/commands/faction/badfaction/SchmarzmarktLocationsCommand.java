@@ -22,7 +22,7 @@ public class SchmarzmarktLocationsCommand extends Command {
 
     private static final String usage = "/schwarzmarktlocations";
 
-    private UnicacityAddon unicacityAddon;
+    private final UnicacityAddon unicacityAddon;
 
     public SchmarzmarktLocationsCommand(UnicacityAddon unicacityAddon) {
         super("schwarzmarktlocations", "schwarzmarktlocs", "smarktlocs");

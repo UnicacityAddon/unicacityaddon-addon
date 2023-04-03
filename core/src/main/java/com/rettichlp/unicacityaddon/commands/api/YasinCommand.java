@@ -20,7 +20,7 @@ import java.util.List;
 @UCCommand
 public class YasinCommand extends Command {
 
-    private UnicacityAddon unicacityAddon;
+    private final UnicacityAddon unicacityAddon;
 
     public YasinCommand(UnicacityAddon unicacityAddon) {
         super("yasin");

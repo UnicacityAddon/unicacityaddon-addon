@@ -21,7 +21,7 @@ public class EquipListCommand extends Command {
 
     private static final String usage = "/equiplist (reset)";
 
-    private UnicacityAddon unicacityAddon;
+    private final UnicacityAddon unicacityAddon;
 
     public EquipListCommand(UnicacityAddon unicacityAddon) {
         super("equiplist");

@@ -29,7 +29,7 @@ public class FileService {
 
     private Data data;
 
-    private UnicacityAddon unicacityAddon;
+    private final UnicacityAddon unicacityAddon;
 
     public FileService(UnicacityAddon unicacityAddon) {
         this.unicacityAddon = unicacityAddon;

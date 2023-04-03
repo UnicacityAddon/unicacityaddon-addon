@@ -34,7 +34,16 @@ public class NameTagListener {
         if (e.context().equals(PlayerNameTagRenderEvent.Context.PLAYER_RENDER)) {
             NetworkPlayerInfo networkPlayerInfo = e.playerInfo();
 
-            // TODO: 30.03.2023
+            Optional<ScoreboardTeam> optionalScoreboardTeam = this.unicacityAddon.player().getScoreboard().getTeams().stream()
+                    .filter(scoreboardTeam -> scoreboardTeam.getTeamName().contains("MASKED"))
+                    .findAny();
+
+            if (optionalScoreboardTeam.isPresent()) {
+                this.unicacityAddon.debug("MASKEDLIST=" + optionalScoreboardTeam.get().getEntries());
+                this.unicacityAddon.debug("MASKED=" + optionalScoreboardTeam.get().getEntries().contains(networkPlayerInfo.displayName()));
+            }
+
+            // TODO: 03.04.2023
             // if (e.nameTag().toString().contains("§k") || e.nameTag().toString().contains("&k"))
             //     UnicacityAddon.debug("NAMETAG: " + e.nameTag() + " " + networkPlayerInfo.profile().getUsername());
 

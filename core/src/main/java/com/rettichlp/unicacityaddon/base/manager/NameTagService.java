@@ -26,7 +26,7 @@ public class NameTagService {
 
     private Collection<String> noPushPlayerList;
 
-    private UnicacityAddon unicacityAddon;
+    private final UnicacityAddon unicacityAddon;
 
     public NameTagService(UnicacityAddon unicacityAddon) {
         this.unicacityAddon = unicacityAddon;

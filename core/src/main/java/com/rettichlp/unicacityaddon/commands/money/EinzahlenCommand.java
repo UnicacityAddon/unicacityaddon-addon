@@ -14,7 +14,7 @@ import java.util.List;
 @UCCommand
 public class EinzahlenCommand extends Command {
 
-    private UnicacityAddon unicacityAddon;
+    private final UnicacityAddon unicacityAddon;
 
     public EinzahlenCommand(UnicacityAddon unicacityAddon) {
         super("einzahlen");

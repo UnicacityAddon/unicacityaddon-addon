@@ -15,7 +15,7 @@ import java.util.List;
 @UCCommand
 public class GaggedCommand extends Command {
 
-    private UnicacityAddon unicacityAddon;
+    private final UnicacityAddon unicacityAddon;
 
     public GaggedCommand(UnicacityAddon unicacityAddon) {
         super("geknebelt");

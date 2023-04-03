@@ -30,7 +30,7 @@ public class RequestBuilder {
         private String subPath;
         private Map<String, String> parameter;
 
-        private UnicacityAddon unicacityAddon;
+        private final UnicacityAddon unicacityAddon;
 
         public Builder(UnicacityAddon unicacityAddon) {
             this.unicacityAddon = unicacityAddon;

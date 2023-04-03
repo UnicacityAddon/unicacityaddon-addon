@@ -17,7 +17,7 @@ public class SFForceCommand extends Command {
 
     private static final String usage = "/sfforce [Nachricht]";
 
-    private UnicacityAddon unicacityAddon;
+    private final UnicacityAddon unicacityAddon;
 
     public SFForceCommand(UnicacityAddon unicacityAddon) {
         super("sfforce");

@@ -17,7 +17,7 @@ public class BombHudWidget extends TextHudWidget<TextHudWidgetConfig> {
     public static int timer = -1;
     public static TextLine textLine;
 
-    private UnicacityAddon unicacityAddon;
+    private final UnicacityAddon unicacityAddon;
 
     public BombHudWidget(String id, UnicacityAddon unicacityAddon) {
         super(id);

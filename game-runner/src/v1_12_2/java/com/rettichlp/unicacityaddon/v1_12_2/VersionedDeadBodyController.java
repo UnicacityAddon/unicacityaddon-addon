@@ -4,7 +4,6 @@ import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.controller.DeadBodyController;
-import com.rettichlp.unicacityaddon.listener.NameTagListener;
 import net.labymod.api.models.Implements;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.item.EntityItem;

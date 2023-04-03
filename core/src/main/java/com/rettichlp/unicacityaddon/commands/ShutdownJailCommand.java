@@ -18,7 +18,7 @@ public class ShutdownJailCommand extends Command {
 
     public static boolean shutdownJail = false;
 
-    private UnicacityAddon unicacityAddon;
+    private final UnicacityAddon unicacityAddon;
 
     public ShutdownJailCommand(UnicacityAddon unicacityAddon) {
         super("shutdownjail", "shutdowngefängnis");

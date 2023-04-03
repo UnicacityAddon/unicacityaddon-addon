@@ -22,7 +22,7 @@ public class MoveCommand extends Command {
 
     private static final String usage = "/move [Spieler] [Ziel]";
 
-    private UnicacityAddon unicacityAddon;
+    private final UnicacityAddon unicacityAddon;
 
     public MoveCommand(UnicacityAddon unicacityAddon) {
         super("move");

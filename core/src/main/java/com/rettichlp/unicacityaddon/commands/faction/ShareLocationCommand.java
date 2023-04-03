@@ -24,7 +24,7 @@ public class ShareLocationCommand extends Command {
 
     private static final String usage = "/sharelocation [Player...] (-d)";
 
-    private UnicacityAddon unicacityAddon;
+    private final UnicacityAddon unicacityAddon;
 
     public ShareLocationCommand(UnicacityAddon unicacityAddon) {
         super("sharelocation", "sloc", "shareloc");

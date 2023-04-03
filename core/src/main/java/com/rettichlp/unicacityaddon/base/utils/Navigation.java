@@ -17,7 +17,7 @@ import java.util.Map;
  */
 public class Navigation {
 
-    private UnicacityAddon unicacityAddon;
+    private final UnicacityAddon unicacityAddon;
 
     public Navigation(UnicacityAddon unicacityAddon) {
         this.unicacityAddon = unicacityAddon;

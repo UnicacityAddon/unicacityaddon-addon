@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
 @UCCommand
 public class DBankDropAllCommand extends Command {
 
-    private UnicacityAddon unicacityAddon;
+    private final UnicacityAddon unicacityAddon;
 
     public DBankDropAllCommand(UnicacityAddon unicacityAddon) {
         super("dbankdropall");

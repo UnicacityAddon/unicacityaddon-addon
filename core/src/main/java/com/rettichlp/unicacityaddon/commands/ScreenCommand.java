@@ -22,7 +22,7 @@ public class ScreenCommand extends Command {
 
     private static final String usage = "/screen [Typ]";
 
-    private UnicacityAddon unicacityAddon;
+    private final UnicacityAddon unicacityAddon;
 
     public ScreenCommand(UnicacityAddon unicacityAddon) {
         super("screen", "activitytest");

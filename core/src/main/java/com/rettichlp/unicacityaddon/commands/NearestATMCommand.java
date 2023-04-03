@@ -19,7 +19,7 @@ import java.util.Map;
 @UCCommand
 public class NearestATMCommand extends Command {
 
-    private UnicacityAddon unicacityAddon;
+    private final UnicacityAddon unicacityAddon;
 
     public NearestATMCommand(UnicacityAddon unicacityAddon) {
         super("nearestatm", "natm");

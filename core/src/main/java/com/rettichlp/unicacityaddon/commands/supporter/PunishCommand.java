@@ -19,7 +19,7 @@ public class PunishCommand extends Command {
 
     private static final String usage = "/punish [Spielername] [Grund]";
 
-    private UnicacityAddon unicacityAddon;
+    private final UnicacityAddon unicacityAddon;
 
     public PunishCommand(UnicacityAddon unicacityAddon) {
         super("punish");

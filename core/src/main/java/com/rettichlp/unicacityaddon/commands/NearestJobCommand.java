@@ -19,7 +19,7 @@ import java.util.Map;
 @UCCommand
 public class NearestJobCommand extends Command {
 
-    private UnicacityAddon unicacityAddon;
+    private final UnicacityAddon unicacityAddon;
 
     public NearestJobCommand(UnicacityAddon unicacityAddon) {
         super("nearestjob", "njob");

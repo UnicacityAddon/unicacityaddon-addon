@@ -31,7 +31,7 @@ public class ChannelActivityCommand extends Command {
 
     private static final String usage = "/channelactivity";
 
-    private UnicacityAddon unicacityAddon;
+    private final UnicacityAddon unicacityAddon;
 
     public ChannelActivityCommand(UnicacityAddon unicacityAddon) {
         super("channelactivity");

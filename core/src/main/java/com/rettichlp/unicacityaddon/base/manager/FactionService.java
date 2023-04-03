@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
  */
 public class FactionService {
 
-    private UnicacityAddon unicacityAddon;
+    private final UnicacityAddon unicacityAddon;
 
     public FactionService(UnicacityAddon unicacityAddon) {
         this.unicacityAddon = unicacityAddon;

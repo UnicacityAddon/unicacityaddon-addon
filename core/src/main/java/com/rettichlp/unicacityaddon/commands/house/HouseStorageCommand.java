@@ -14,7 +14,7 @@ import java.util.List;
 @UCCommand
 public class HouseStorageCommand extends Command {
 
-    private UnicacityAddon unicacityAddon;
+    private final UnicacityAddon unicacityAddon;
 
     public HouseStorageCommand(UnicacityAddon unicacityAddon) {
         super("drogenlagerinfo", "dlagerinfo", "drugstorage");

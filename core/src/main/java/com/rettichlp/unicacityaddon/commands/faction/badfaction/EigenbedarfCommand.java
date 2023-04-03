@@ -23,7 +23,7 @@ public class EigenbedarfCommand extends Command {
 
     private static List<String> scheduledTasks = new ArrayList<>();
 
-    private UnicacityAddon unicacityAddon;
+    private final UnicacityAddon unicacityAddon;
 
     public EigenbedarfCommand(UnicacityAddon unicacityAddon) {
         super("eigenbedarf");

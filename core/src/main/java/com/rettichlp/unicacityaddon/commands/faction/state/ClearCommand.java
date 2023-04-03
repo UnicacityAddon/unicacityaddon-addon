@@ -17,7 +17,7 @@ public class ClearCommand extends Command {
 
     private static final String usage = "/clear [Spieler...]";
 
-    private UnicacityAddon unicacityAddon;
+    private final UnicacityAddon unicacityAddon;
 
     public ClearCommand(UnicacityAddon unicacityAddon) {
         super("clear");

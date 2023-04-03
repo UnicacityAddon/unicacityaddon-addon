@@ -16,7 +16,7 @@ import java.util.List;
 @UCCommand
 public class ServiceCountCommand extends Command {
 
-    private UnicacityAddon unicacityAddon;
+    private final UnicacityAddon unicacityAddon;
 
     public ServiceCountCommand(UnicacityAddon unicacityAddon) {
         super("servicecount", "YXZ");

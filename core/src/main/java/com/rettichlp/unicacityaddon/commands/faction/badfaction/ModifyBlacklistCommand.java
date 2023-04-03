@@ -24,7 +24,7 @@ public class ModifyBlacklistCommand extends Command {
 
     private static final String usage = "/modifyblacklist [Spieler] [Grund/-v]";
 
-    private UnicacityAddon unicacityAddon;
+    private final UnicacityAddon unicacityAddon;
 
     public ModifyBlacklistCommand(UnicacityAddon unicacityAddon) {
         super("modifyblacklist", "mbl");

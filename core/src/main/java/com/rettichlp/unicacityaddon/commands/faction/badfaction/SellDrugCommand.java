@@ -19,7 +19,7 @@ public class SellDrugCommand extends Command {
 
     private static final String usage = "/selldrug [Spieler] [Droge] [Reinheit] [Menge] [Preis]";
 
-    private UnicacityAddon unicacityAddon;
+    private final UnicacityAddon unicacityAddon;
 
     public SellDrugCommand(UnicacityAddon unicacityAddon) {
         super("selldrug");

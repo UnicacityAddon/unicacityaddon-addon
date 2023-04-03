@@ -19,7 +19,7 @@ public class BlacklistInfoCommand extends Command {
 
     private static final String usage = "/blacklistinfo [Spieler]";
 
-    private UnicacityAddon unicacityAddon;
+    private final UnicacityAddon unicacityAddon;
 
     public BlacklistInfoCommand(UnicacityAddon unicacityAddon) {
         super("blacklistinfo", "blinfo");

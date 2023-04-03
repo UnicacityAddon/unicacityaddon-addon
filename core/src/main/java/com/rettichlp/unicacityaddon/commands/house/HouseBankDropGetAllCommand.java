@@ -19,7 +19,7 @@ public class HouseBankDropGetAllCommand extends Command {
 
     private static final String usage = "/hauskasse";
 
-    private UnicacityAddon unicacityAddon;
+    private final UnicacityAddon unicacityAddon;
 
     public HouseBankDropGetAllCommand(UnicacityAddon unicacityAddon) {
         super("hauskasse", "hkasse");

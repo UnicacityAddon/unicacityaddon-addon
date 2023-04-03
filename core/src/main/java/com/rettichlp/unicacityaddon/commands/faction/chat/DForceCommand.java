@@ -17,7 +17,7 @@ public class DForceCommand extends Command {
 
     private static final String usage = "/dforce [Nachricht]";
 
-    private UnicacityAddon unicacityAddon;
+    private final UnicacityAddon unicacityAddon;
 
     public DForceCommand(UnicacityAddon unicacityAddon) {
         super("dforce");

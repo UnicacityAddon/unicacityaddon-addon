@@ -17,7 +17,7 @@ import java.util.Map;
  */
 public class TSUtils {
 
-    private UnicacityAddon unicacityAddon;
+    private final UnicacityAddon unicacityAddon;
 
     public TSUtils(UnicacityAddon unicacityAddon) {
         this.unicacityAddon = unicacityAddon;

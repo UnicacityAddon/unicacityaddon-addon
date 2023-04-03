@@ -14,7 +14,7 @@ import java.util.List;
 @UCCommand
 public class ClockCommand extends Command {
 
-    private UnicacityAddon unicacityAddon;
+    private final UnicacityAddon unicacityAddon;
 
     public ClockCommand(UnicacityAddon unicacityAddon) {
         super("clock", "uhrzeit", "uhr");

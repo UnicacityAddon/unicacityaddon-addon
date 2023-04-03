@@ -27,7 +27,7 @@ public class DropDrugAllCommand extends Command {
 
     private static final String usage = "/dbankdropall bzw. /asservatenkammerdropall";
 
-    private UnicacityAddon unicacityAddon;
+    private final UnicacityAddon unicacityAddon;
 
     public DropDrugAllCommand(UnicacityAddon unicacityAddon) {
         super("dbankdropall", "dda", "asservatenkammerdropall", "ada");

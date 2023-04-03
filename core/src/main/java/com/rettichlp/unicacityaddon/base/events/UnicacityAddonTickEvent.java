@@ -10,7 +10,7 @@ public class UnicacityAddonTickEvent implements Event {
 
     private final Phase phase;
 
-    private UnicacityAddon unicacityAddon;
+    private final UnicacityAddon unicacityAddon;
 
     public UnicacityAddonTickEvent(UnicacityAddon unicacityAddon, Phase phase) {
         this.unicacityAddon = unicacityAddon;

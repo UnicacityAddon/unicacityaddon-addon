@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 @UCCommand
 public class MemberInfoAllCommand extends Command {
 
-    private UnicacityAddon unicacityAddon;
+    private final UnicacityAddon unicacityAddon;
 
     public MemberInfoAllCommand(UnicacityAddon unicacityAddon) {
         super("memberinfoall", "miall");

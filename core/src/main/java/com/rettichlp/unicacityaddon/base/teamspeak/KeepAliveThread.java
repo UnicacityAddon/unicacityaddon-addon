@@ -15,7 +15,7 @@ public class KeepAliveThread extends Thread implements Closeable {
     private final TSClientQuery clientQuery;
     private volatile boolean closed;
 
-    private UnicacityAddon unicacityAddon;
+    private final UnicacityAddon unicacityAddon;
 
     public KeepAliveThread(UnicacityAddon unicacityAddon, TSClientQuery clientQuery) {
         this.unicacityAddon = unicacityAddon;

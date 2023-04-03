@@ -25,7 +25,7 @@ public class ARezeptCommand extends Command {
 
     private static final String usage = "/arezept [Spieler] [Rezept] [Anzahl]";
 
-    private UnicacityAddon unicacityAddon;
+    private final UnicacityAddon unicacityAddon;
 
     public ARezeptCommand(UnicacityAddon unicacityAddon) {
         super("arezept");

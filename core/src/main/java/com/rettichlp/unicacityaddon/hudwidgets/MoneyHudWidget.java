@@ -15,7 +15,7 @@ public class MoneyHudWidget extends TextHudWidget<TextHudWidgetConfig> {
     private TextLine bank;
     private TextLine cash;
 
-    private UnicacityAddon unicacityAddon;
+    private final UnicacityAddon unicacityAddon;
 
     public MoneyHudWidget(String id, UnicacityAddon unicacityAddon) {
         super(id);

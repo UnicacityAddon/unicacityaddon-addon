@@ -25,7 +25,7 @@ public class GiftEigenbedarfCommand extends Command {
 
     private static final String usage = "/gifteigenbedarf [Spieler]";
 
-    private UnicacityAddon unicacityAddon;
+    private final UnicacityAddon unicacityAddon;
 
     public GiftEigenbedarfCommand(UnicacityAddon unicacityAddon) {
         super("gifteigenbedarf");

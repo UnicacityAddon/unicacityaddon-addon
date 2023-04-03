@@ -29,7 +29,7 @@ public class FactionInfoCommand extends Command {
 
     private static final String usage = "/checkactivemembers [Fraktion]";
 
-    private UnicacityAddon unicacityAddon;
+    private final UnicacityAddon unicacityAddon;
 
     public FactionInfoCommand(UnicacityAddon unicacityAddon) {
         super("checkactivemembers", "cam");

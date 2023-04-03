@@ -23,7 +23,7 @@ public class GetGunCommand extends Command {
 
     private static final String usage = "/getgunpattern (remove|create) [Name] (Waffe) (Munition)";
 
-    private UnicacityAddon unicacityAddon;
+    private final UnicacityAddon unicacityAddon;
 
     public GetGunCommand(UnicacityAddon unicacityAddon) {
         super("getgunpattern", "ggp");

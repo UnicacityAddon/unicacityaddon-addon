@@ -46,7 +46,7 @@ public class TokenService {
 
     private String apiToken;
 
-    private UnicacityAddon unicacityAddon;
+    private final UnicacityAddon unicacityAddon;
 
     public TokenService(UnicacityAddon unicacityAddon) {
         this.unicacityAddon = unicacityAddon;

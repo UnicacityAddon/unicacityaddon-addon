@@ -17,7 +17,7 @@ public class FForceCommand extends Command {
 
     private static final String usage = "/fforce [Nachricht]";
 
-    private UnicacityAddon unicacityAddon;
+    private final UnicacityAddon unicacityAddon;
 
     public FForceCommand(UnicacityAddon unicacityAddon) {
         super("fforce");

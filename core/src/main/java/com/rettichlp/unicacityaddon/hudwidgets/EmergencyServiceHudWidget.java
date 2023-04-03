@@ -13,7 +13,7 @@ public class EmergencyServiceHudWidget extends TextHudWidget<TextHudWidgetConfig
 
     public static TextLine textLine;
 
-    private UnicacityAddon unicacityAddon;
+    private final UnicacityAddon unicacityAddon;
 
     public EmergencyServiceHudWidget(String id, UnicacityAddon unicacityAddon) {
         super(id);

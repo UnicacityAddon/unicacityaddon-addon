@@ -24,7 +24,7 @@ public class TopListCommand extends Command {
 
     private static final String usage = "/toplist";
 
-    private UnicacityAddon unicacityAddon;
+    private final UnicacityAddon unicacityAddon;
 
     public TopListCommand(UnicacityAddon unicacityAddon) {
         super("toplist");

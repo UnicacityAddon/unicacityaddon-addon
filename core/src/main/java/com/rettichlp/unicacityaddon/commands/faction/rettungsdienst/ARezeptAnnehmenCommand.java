@@ -20,7 +20,7 @@ public class ARezeptAnnehmenCommand extends Command {
 
     private static final String usage = "/arezeptannehmen [Anzahl]";
 
-    private UnicacityAddon unicacityAddon;
+    private final UnicacityAddon unicacityAddon;
 
     public ARezeptAnnehmenCommand(UnicacityAddon unicacityAddon) {
         super("arezeptannehmen", "arannehmen");
