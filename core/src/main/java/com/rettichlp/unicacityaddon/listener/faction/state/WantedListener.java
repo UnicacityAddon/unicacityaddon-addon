@@ -76,7 +76,7 @@ public class WantedListener {
             int wpAmount = Integer.parseInt(wantedListEntryMatcher.group(2));
             boolean isAfk = wantedListEntryMatcher.group(4).contains("AFK");
 
-            ColorCode colorCode = getWpColorCode(wpAmount);
+            ColorCode colorCode = this.unicacityAddon.nametagService().getWpColor(wpAmount);
 
             e.setMessage(Message.getBuilder().space().space()
                     .of("»").color(ColorCode.DARK_GRAY).advance().space()
@@ -125,23 +125,5 @@ public class WantedListener {
         public void setAmount(int amount) {
             this.amount = amount;
         }
-    }
-
-    private ColorCode getWpColorCode(int wpAmount) {
-        ColorCode colorCode;
-        if (wpAmount > 60) {
-            colorCode = ColorCode.DARK_RED;
-        } else if (wpAmount > 50) {
-            colorCode = ColorCode.RED;
-        } else if (wpAmount > 25) {
-            colorCode = ColorCode.GOLD;
-        } else if (wpAmount > 15) {
-            colorCode = ColorCode.YELLOW;
-        } else if (wpAmount > 1) {
-            colorCode = ColorCode.GREEN;
-        } else {
-            colorCode = ColorCode.DARK_GREEN;
-        }
-        return colorCode;
     }
 }

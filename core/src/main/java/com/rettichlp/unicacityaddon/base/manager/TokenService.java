@@ -42,13 +42,13 @@ import java.security.NoSuchAlgorithmException;
  *
  * @author RettichLP
  */
-public class TokenManager {
+public class TokenService {
 
     private String apiToken;
 
     private UnicacityAddon unicacityAddon;
 
-    public TokenManager(UnicacityAddon unicacityAddon) {
+    public TokenService(UnicacityAddon unicacityAddon) {
         this.unicacityAddon = unicacityAddon;
     }
 

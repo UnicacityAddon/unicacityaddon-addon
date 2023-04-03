@@ -8,7 +8,6 @@ import com.rettichlp.unicacityaddon.base.config.nametag.setting.DefaultStreetwar
 import com.rettichlp.unicacityaddon.base.config.nametag.setting.FactionNameTagSetting;
 import com.rettichlp.unicacityaddon.base.config.nametag.setting.SpecificNameTagSetting;
 import com.rettichlp.unicacityaddon.base.config.nametag.setting.StreetwarNameTagSetting;
-import net.labymod.api.client.gui.screen.widget.widgets.input.SliderWidget.SliderSetting;
 import net.labymod.api.client.gui.screen.widget.widgets.input.SwitchWidget.SwitchSetting;
 import net.labymod.api.configuration.loader.Config;
 import net.labymod.api.configuration.loader.property.ConfigProperty;
@@ -17,9 +16,6 @@ import net.labymod.api.configuration.loader.property.ConfigProperty;
  * @author RettichLP
  */
 public class DefaultNameTagSetting extends Config implements NameTagSetting {
-
-    @SliderSetting(min = 1, max = 60)
-    private final ConfigProperty<Integer> updateInterval = new ConfigProperty<>(5);
 
     @SwitchSetting
     private final ConfigProperty<Boolean> factionInfo = new ConfigProperty<>(true);
@@ -41,10 +37,8 @@ public class DefaultNameTagSetting extends Config implements NameTagSetting {
     @SwitchSetting
     private final ConfigProperty<Boolean> corpse = new ConfigProperty<>(true);
 
-    @Override
-    public ConfigProperty<Integer> updateInterval() {
-        return this.updateInterval;
-    }
+    @SwitchSetting
+    private final ConfigProperty<Boolean> noPushInfo = new ConfigProperty<>(true);
 
     @Override
     public ConfigProperty<Boolean> factionInfo() {
@@ -84,5 +78,10 @@ public class DefaultNameTagSetting extends Config implements NameTagSetting {
     @Override
     public ConfigProperty<Boolean> corpse() {
         return this.corpse;
+    }
+
+    @Override
+    public ConfigProperty<Boolean> noPushInfo() {
+        return this.noPushInfo;
     }
 }

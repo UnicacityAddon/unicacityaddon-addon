@@ -11,8 +11,6 @@ import net.labymod.api.configuration.loader.property.ConfigProperty;
  */
 public interface NameTagSetting {
 
-    ConfigProperty<Integer> updateInterval();
-
     ConfigProperty<Boolean> factionInfo();
 
     FactionNameTagSetting factionNameTagSetting();
@@ -28,4 +26,6 @@ public interface NameTagSetting {
     SpecificNameTagSetting specificNameTagSetting();
 
     ConfigProperty<Boolean> corpse();
+
+    ConfigProperty<Boolean> noPushInfo();
 }

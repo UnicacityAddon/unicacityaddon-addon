@@ -23,7 +23,7 @@ import java.util.Objects;
  *
  * @author RettichLP
  */
-public class FileManager {
+public class FileService {
 
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
 
@@ -31,7 +31,7 @@ public class FileManager {
 
     private UnicacityAddon unicacityAddon;
 
-    public FileManager(UnicacityAddon unicacityAddon) {
+    public FileService(UnicacityAddon unicacityAddon) {
         this.unicacityAddon = unicacityAddon;
         this.data = new Data(unicacityAddon); // fallback if data cannot be loaded
 

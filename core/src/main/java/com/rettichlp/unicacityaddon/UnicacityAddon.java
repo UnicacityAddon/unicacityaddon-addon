@@ -5,13 +5,15 @@ import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.DefaultAddonPlayer;
 import com.rettichlp.unicacityaddon.base.api.request.API;
 import com.rettichlp.unicacityaddon.base.config.DefaultUnicacityAddonConfiguration;
-import com.rettichlp.unicacityaddon.base.manager.FactionManager;
-import com.rettichlp.unicacityaddon.base.manager.FileManager;
-import com.rettichlp.unicacityaddon.base.manager.TokenManager;
+import com.rettichlp.unicacityaddon.base.manager.FactionService;
+import com.rettichlp.unicacityaddon.base.manager.FileService;
+import com.rettichlp.unicacityaddon.base.manager.NameTagService;
+import com.rettichlp.unicacityaddon.base.manager.TokenService;
 import com.rettichlp.unicacityaddon.base.nametags.AddonTag;
 import com.rettichlp.unicacityaddon.base.nametags.DutyTag;
 import com.rettichlp.unicacityaddon.base.nametags.FactionInfoTag;
 import com.rettichlp.unicacityaddon.base.nametags.HouseBanTag;
+import com.rettichlp.unicacityaddon.base.nametags.NoPushTag;
 import com.rettichlp.unicacityaddon.base.nametags.OutlawTag;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
@@ -103,9 +105,10 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
 
     private final String version = "2.0.0-alpha.2";
     private AddonPlayer player;
-    private FileManager fileManager;
-    private TokenManager tokenManager;
-    private FactionManager factionManager;
+    private FactionService factionService;
+    private FileService fileService;
+    private NameTagService nametagService;
+    private TokenService tokenService;
     private API api;
     private Navigation navigation;
     private TSUtils tsUtils;
@@ -116,9 +119,10 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
     @Override
     public void load() {
         this.player = new DefaultAddonPlayer(this);
-        this.fileManager = new FileManager(this);
-        this.tokenManager = new TokenManager(this);
-        this.factionManager = new FactionManager(this);
+        this.factionService = new FactionService(this);
+        this.fileService = new FileService(this);
+        this.nametagService = new NameTagService(this);
+        this.tokenService = new TokenService(this);
         this.api = new API(this);
         this.navigation = new Navigation(this);
         this.tsUtils = new TSUtils(this);
@@ -128,7 +132,7 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
 
     @Override
     protected void enable() {
-        this.tokenManager.createToken();
+        this.tokenService.createToken();
         this.api.syncAll();
 
         this.registerSettingCategory();
@@ -153,16 +157,20 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
         return player;
     }
 
-    public FileManager fileManager() {
-        return fileManager;
+    public FactionService factionManager() {
+        return factionService;
     }
 
-    public TokenManager tokenManager() {
-        return tokenManager;
+    public FileService fileManager() {
+        return fileService;
     }
 
-    public FactionManager factionManager() {
-        return factionManager;
+    public NameTagService nametagService() {
+        return nametagService;
+    }
+
+    public TokenService tokenManager() {
+        return tokenService;
     }
 
     public API api() {
@@ -232,6 +240,12 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
                 "unicacityaddon_addontag",
                 PositionType.ABOVE_NAME,
                 AddonTag.create(this)
+        );
+
+        tagRegistry.register(
+                "unicacityaddon_nopushtag",
+                PositionType.ABOVE_NAME,
+                NoPushTag.create(this)
         );
 
         tagRegistry.register(

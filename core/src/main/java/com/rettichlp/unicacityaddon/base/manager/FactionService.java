@@ -14,11 +14,11 @@ import java.util.stream.Collectors;
 /**
  * @author RettichLP
  */
-public class FactionManager {
+public class FactionService {
 
     private UnicacityAddon unicacityAddon;
 
-    public FactionManager(UnicacityAddon unicacityAddon) {
+    public FactionService(UnicacityAddon unicacityAddon) {
         this.unicacityAddon = unicacityAddon;
     }
 
