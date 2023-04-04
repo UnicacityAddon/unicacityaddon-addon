@@ -1,10 +1,9 @@
-name: LabyAddon Build
+name: Release
 
 on:
   push:
     branches:
       - main
-  workflow_dispatch:
 
 env:
   PUBLIC_RELEASE_BUILD: true
