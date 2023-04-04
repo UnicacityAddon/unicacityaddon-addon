@@ -110,14 +110,6 @@ public enum Faction {
         return null;
     }
 
-    public static Faction getFactionByDisplayName(String s) {
-        for (Faction faction : Faction.values()) {
-            if (faction.getDisplayName().equalsIgnoreCase(s))
-                return faction;
-        }
-        return null;
-    }
-
     public static Faction getFactionByFactionKey(String s) {
         for (Faction faction : Faction.values()) {
             if (faction.getFactionKey().equalsIgnoreCase(s))
