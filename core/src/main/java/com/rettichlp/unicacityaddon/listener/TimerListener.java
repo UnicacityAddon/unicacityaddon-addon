@@ -4,8 +4,6 @@ import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.enums.api.StatisticType;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
-import com.rettichlp.unicacityaddon.base.utils.ForgeUtils;
-import com.rettichlp.unicacityaddon.commands.ShutdownJailCommand;
 import com.rettichlp.unicacityaddon.listener.faction.rettungsdienst.ReviveListener;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
@@ -69,8 +67,8 @@ public class TimerListener {
             isJail = false;
             this.unicacityAddon.fileService().data().setTimer(0);
 
-            if (ShutdownJailCommand.shutdownJail)
-                ForgeUtils.shutdownPC();
+            // TODO: 04.04.2023 if (ShutdownJailCommand.shutdownJail)
+//                ForgeUtils.shutdownPC();
         }
     }
 }
