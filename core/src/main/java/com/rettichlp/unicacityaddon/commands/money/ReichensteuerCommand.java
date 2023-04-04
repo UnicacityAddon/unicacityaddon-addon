@@ -30,13 +30,13 @@ public class ReichensteuerCommand extends Command {
     public boolean execute(String prefix, String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
 
-        if (this.unicacityAddon.fileManager().data().getBankBalance() > 100000) {
+        if (this.unicacityAddon.fileService().data().getBankBalance() > 100000) {
             if (isActive)
                 return true;
 
             p.sendServerMessage("/atminfo");
             isActive = true;
-            int removeMoneyAmount = this.unicacityAddon.fileManager().data().getBankBalance() - 100000;
+            int removeMoneyAmount = this.unicacityAddon.fileService().data().getBankBalance() - 100000;
 
             (new Timer()).schedule(new TimerTask() {
                 @Override

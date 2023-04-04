@@ -48,8 +48,8 @@ public class HouseDataListener {
         if (houseBankValueMatcher.find()) {
             if (System.currentTimeMillis() - lastCheck < 500)
                 e.setCancelled(true);
-            HouseData houseData = this.unicacityAddon.fileManager().data().getHouseData(lastCheckedHouseNumber).setHouseBank(Integer.parseInt(houseBankValueMatcher.group(1)));
-            this.unicacityAddon.fileManager().data().updateHouseData(lastCheckedHouseNumber, houseData);
+            HouseData houseData = this.unicacityAddon.fileService().data().getHouseData(lastCheckedHouseNumber).setHouseBank(Integer.parseInt(houseBankValueMatcher.group(1)));
+            this.unicacityAddon.fileService().data().updateHouseData(lastCheckedHouseNumber, houseData);
             return;
         }
 
@@ -74,10 +74,10 @@ public class HouseDataListener {
                 DrugType drugType = DrugType.getDrugType(drugStorageAddCommandMatcher.group("drugType"));
                 DrugPurity drugPurity = DrugPurity.getDrugPurity(drugStorageAddCommandMatcher.group("drugPurity"));
 
-                HouseData houseData = this.unicacityAddon.fileManager().data().getHouseData(lastCheckedHouseNumber).addToStorage(drugType, drugPurity, amount);
-                this.unicacityAddon.fileManager().data().updateHouseData(lastCheckedHouseNumber, houseData);
+                HouseData houseData = this.unicacityAddon.fileService().data().getHouseData(lastCheckedHouseNumber).addToStorage(drugType, drugPurity, amount);
+                this.unicacityAddon.fileService().data().updateHouseData(lastCheckedHouseNumber, houseData);
 
-                this.unicacityAddon.fileManager().data().removeDrugFromInventory(drugType, drugPurity, amount);
+                this.unicacityAddon.fileService().data().removeDrugFromInventory(drugType, drugPurity, amount);
             }
 
             Matcher drugStorageRemoveCommandMatcher = PatternHandler.HOUSE_STORAGE_REMOVE_COMMAND_PATTERN.matcher(waitingCommand);
@@ -86,10 +86,10 @@ public class HouseDataListener {
                 DrugType drugType = DrugType.getDrugType(drugStorageRemoveCommandMatcher.group("drugType"));
                 DrugPurity drugPurity = DrugPurity.getDrugPurity(drugStorageRemoveCommandMatcher.group("drugPurity"));
 
-                HouseData houseData = this.unicacityAddon.fileManager().data().getHouseData(lastCheckedHouseNumber).removeFromStorage(drugType, drugPurity, amount);
-                this.unicacityAddon.fileManager().data().updateHouseData(lastCheckedHouseNumber, houseData);
+                HouseData houseData = this.unicacityAddon.fileService().data().getHouseData(lastCheckedHouseNumber).removeFromStorage(drugType, drugPurity, amount);
+                this.unicacityAddon.fileService().data().updateHouseData(lastCheckedHouseNumber, houseData);
 
-                this.unicacityAddon.fileManager().data().addDrugToInventory(drugType, drugPurity, amount);
+                this.unicacityAddon.fileService().data().addDrugToInventory(drugType, drugPurity, amount);
             }
         }
     }

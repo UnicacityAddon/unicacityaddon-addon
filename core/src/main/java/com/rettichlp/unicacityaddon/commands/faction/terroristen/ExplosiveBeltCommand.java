@@ -33,7 +33,7 @@ public class ExplosiveBeltCommand extends Command {
             return true;
         }
 
-        this.unicacityAddon.fileManager().data().setTimer(Integer.parseInt(arguments[0]));
+        this.unicacityAddon.fileService().data().setTimer(Integer.parseInt(arguments[0]));
         p.sendServerMessage("/sprenggürtel " + arguments[0]);
         return true;
     }

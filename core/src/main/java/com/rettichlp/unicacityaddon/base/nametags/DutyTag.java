@@ -46,6 +46,6 @@ public class DutyTag extends NameTag {
                 .of("●").color(ColorCode.GREEN).advance().space()
                 .createComponent();
 
-        return this.unicacityAddon.factionManager().checkPlayerDuty(playerName) ? RenderableComponent.of(component) : null;
+        return this.unicacityAddon.factionService().checkPlayerDuty(playerName) ? RenderableComponent.of(component) : null;
     }
 }

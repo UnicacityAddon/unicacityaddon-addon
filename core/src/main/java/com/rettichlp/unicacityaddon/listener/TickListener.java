@@ -95,7 +95,7 @@ public class TickListener {
     private void handleActivityScreenshot(long activityMillis, String activityType) {
         if (activityMillis >= 0 && activityMillis + 15 == currentTick) {
             try {
-                File file = this.unicacityAddon.fileManager().getNewActivityImageFile(activityType);
+                File file = this.unicacityAddon.fileService().getNewActivityImageFile(activityType);
                 ScreenshotBuilder.getBuilder(this.unicacityAddon).file(file).save();
             } catch (IOException e) {
                 this.unicacityAddon.logger().warn(e.getMessage());
@@ -113,8 +113,8 @@ public class TickListener {
     }
 
     private void handleTimer() {
-        if (this.unicacityAddon.fileManager().data().getTimer() > 0) {
-            this.unicacityAddon.fileManager().data().setTimer(this.unicacityAddon.fileManager().data().getTimer() - 1);
+        if (this.unicacityAddon.fileService().data().getTimer() > 0) {
+            this.unicacityAddon.fileService().data().setTimer(this.unicacityAddon.fileService().data().getTimer() - 1);
         }
     }
 }

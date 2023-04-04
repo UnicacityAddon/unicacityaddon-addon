@@ -141,7 +141,7 @@ public class DefaultAddonPlayer implements AddonPlayer {
 
     @Override
     public boolean inDuty() {
-        return this.unicacityAddon.factionManager().checkPlayerDuty(getName());
+        return this.unicacityAddon.factionService().checkPlayerDuty(getName());
     }
 
     @Override

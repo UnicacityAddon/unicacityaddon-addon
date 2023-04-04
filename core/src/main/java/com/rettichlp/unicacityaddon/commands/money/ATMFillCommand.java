@@ -40,7 +40,7 @@ public class ATMFillCommand extends Command {
                 @Override
                 public void run() {
                     int fillAmount = 100000 - cashInATM;
-                    int bankDepositAmount = Math.min(fillAmount, ATMFillCommand.this.unicacityAddon.fileManager().data().getCashBalance());
+                    int bankDepositAmount = Math.min(fillAmount, ATMFillCommand.this.unicacityAddon.fileService().data().getCashBalance());
 
                     if (bankDepositAmount > 0) {
                         p.sendServerMessage("/bank einzahlen " + bankDepositAmount);

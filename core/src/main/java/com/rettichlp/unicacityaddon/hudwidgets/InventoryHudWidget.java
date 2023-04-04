@@ -26,7 +26,7 @@ public class InventoryHudWidget extends TextHudWidget<TextHudWidgetConfig> {
     public void load(TextHudWidgetConfig config) {
         super.load(config);
 
-        int amount = this.unicacityAddon.fileManager().data().getDrugInventoryMap().values().stream()
+        int amount = this.unicacityAddon.fileService().data().getDrugInventoryMap().values().stream()
                 .map(Map::values)
                 .map(integers -> integers.stream().reduce(0, Integer::sum))
                 .reduce(0, Integer::sum);
@@ -38,7 +38,7 @@ public class InventoryHudWidget extends TextHudWidget<TextHudWidgetConfig> {
     @Subscribe
     public void onUnicacityAddonTick(UnicacityAddonTickEvent e) {
         if (e.isPhase(UnicacityAddonTickEvent.Phase.SECOND)) {
-            int amount = this.unicacityAddon.fileManager().data().getDrugInventoryMap().values().stream()
+            int amount = this.unicacityAddon.fileService().data().getDrugInventoryMap().values().stream()
                     .map(Map::values)
                     .map(integers -> integers.stream().reduce(0, Integer::sum))
                     .reduce(0, Integer::sum);

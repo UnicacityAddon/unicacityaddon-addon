@@ -38,11 +38,11 @@ public class CoordlistCommand extends Command {
             listCoords(p);
         } else if (arguments.length > 1 && arguments[0].equalsIgnoreCase("add")) {
             String name = TextUtils.makeStringByArgs(arguments, "-").replace("add-", "");
-            this.unicacityAddon.fileManager().data().addCoordToCoordlist(name, p.getPosition());
+            this.unicacityAddon.fileService().data().addCoordToCoordlist(name, p.getPosition());
             p.sendInfoMessage("Koordinaten gespeichert.");
         } else if (arguments.length > 1 && arguments[0].equalsIgnoreCase("remove")) {
             String name = TextUtils.makeStringByArgs(arguments, "-").replace("remove-", "");
-            if (this.unicacityAddon.fileManager().data().removeCoordFromCoordlist(name)) {
+            if (this.unicacityAddon.fileService().data().removeCoordFromCoordlist(name)) {
                 p.sendInfoMessage("Koordinaten gelöscht.");
             }
         } else {
@@ -56,7 +56,7 @@ public class CoordlistCommand extends Command {
         return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments)
                 .addAtIndex(1, "add")
                 .addAtIndex(1, "remove")
-                .addAtIndex(2, this.unicacityAddon.fileManager().data().getCoordlist().stream().map(CoordlistEntry::getName).collect(Collectors.toList()))
+                .addAtIndex(2, this.unicacityAddon.fileService().data().getCoordlist().stream().map(CoordlistEntry::getName).collect(Collectors.toList()))
                 .build();
     }
 
@@ -66,7 +66,7 @@ public class CoordlistCommand extends Command {
                 .of("Koordinaten:").color(ColorCode.DARK_AQUA).bold().advance()
                 .createComponent());
 
-        this.unicacityAddon.fileManager().data().getCoordlist().forEach(coordlistEntry -> p.sendMessage(Message.getBuilder()
+        this.unicacityAddon.fileService().data().getCoordlist().forEach(coordlistEntry -> p.sendMessage(Message.getBuilder()
                 .of("»").color(ColorCode.GRAY).advance().space()
                 .of(coordlistEntry.getName().replace("-", " ")).color(ColorCode.AQUA).advance().space()
                 .of("-").color(ColorCode.GRAY).advance().space()

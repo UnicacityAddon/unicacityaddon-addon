@@ -49,7 +49,7 @@ public class ScreenCommand extends Command {
         }
 
         try {
-            File file = this.unicacityAddon.fileManager().getNewActivityImageFile(arguments[0]);
+            File file = this.unicacityAddon.fileService().getNewActivityImageFile(arguments[0]);
             ScreenshotBuilder.getBuilder(this.unicacityAddon).file(file).save();
         } catch (IOException e) {
             throw new RuntimeException(e);

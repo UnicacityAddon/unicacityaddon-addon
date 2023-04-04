@@ -32,7 +32,7 @@ public class APIResponseException extends Throwable {
     }
 
     public void sendInfo() {
-        this.unicacityAddon.logger().warn("APIResponseException - " + responseCode + " [" + urlString.replace(this.unicacityAddon.tokenManager().getApiToken(), "TOKEN") + "]: " + infoMessage);
+        this.unicacityAddon.logger().warn("APIResponseException - " + responseCode + " [" + urlString.replace(this.unicacityAddon.tokenService().getApiToken(), "TOKEN") + "]: " + infoMessage);
         this.unicacityAddon.labyAPI().notificationController().push(Notification.builder()
                 .title(Message.getBuilder().of("API Fehler - " + responseCode).color(ColorCode.RED).bold().advance().createComponent())
                 .text(Message.getBuilder().of(infoMessage).advance().createComponent())

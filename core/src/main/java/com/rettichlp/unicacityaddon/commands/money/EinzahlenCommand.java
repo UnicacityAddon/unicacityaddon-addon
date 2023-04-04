@@ -25,8 +25,8 @@ public class EinzahlenCommand extends Command {
     public boolean execute(String prefix, String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
 
-        if (this.unicacityAddon.fileManager().data().getCashBalance() > 0)
-            p.sendServerMessage("/bank einzahlen " + this.unicacityAddon.fileManager().data().getCashBalance());
+        if (this.unicacityAddon.fileService().data().getCashBalance() > 0)
+            p.sendServerMessage("/bank einzahlen " + this.unicacityAddon.fileService().data().getCashBalance());
         else
             p.sendErrorMessage("Du hast kein Geld auf der Hand!");
         return true;

@@ -26,11 +26,11 @@ public class HouseBankCommand extends Command {
     @Override
     public boolean execute(String prefix, String[] arguments) {
         if (arguments.length > 1 && arguments[0].equalsIgnoreCase("remove") && MathUtils.isInteger(arguments[1])) {
-            this.unicacityAddon.fileManager().data().removeHouseData(Integer.parseInt(arguments[1]));
+            this.unicacityAddon.fileService().data().removeHouseData(Integer.parseInt(arguments[1]));
             return true;
         }
 
-        this.unicacityAddon.fileManager().data().sendAllHouseBankMessage();
+        this.unicacityAddon.fileService().data().sendAllHouseBankMessage();
         return true;
     }
 

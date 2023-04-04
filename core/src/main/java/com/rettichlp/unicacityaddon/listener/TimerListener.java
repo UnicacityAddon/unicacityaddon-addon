@@ -33,7 +33,7 @@ public class TimerListener {
 
         Matcher fbiHackStartedMatcher = PatternHandler.TIMER_FBI_HACK_START_PATTERN.matcher(msg);
         if (fbiHackStartedMatcher.find()) {
-            this.unicacityAddon.fileManager().data().setTimer(Integer.parseInt(fbiHackStartedMatcher.group(1)));
+            this.unicacityAddon.fileService().data().setTimer(Integer.parseInt(fbiHackStartedMatcher.group(1)));
             return;
         }
 
@@ -44,7 +44,7 @@ public class TimerListener {
 
             if (!isJail) {
                 int seconds = (int) TimeUnit.MINUTES.toSeconds(Integer.parseInt(timerGraveyardStartMatcher.group(1)));
-                this.unicacityAddon.fileManager().data().setTimer(seconds);
+                this.unicacityAddon.fileService().data().setTimer(seconds);
             }
 
             return;
@@ -54,20 +54,20 @@ public class TimerListener {
         if (timerJailStartMatcher.find()) {
             isJail = true;
             int seconds = (int) TimeUnit.MINUTES.toSeconds(Integer.parseInt(timerJailStartMatcher.group(1)));
-            this.unicacityAddon.fileManager().data().setTimer(seconds);
+            this.unicacityAddon.fileService().data().setTimer(seconds);
             return;
         }
 
         Matcher jailModifyMatcher = PatternHandler.TIMER_JAIL_MODIFY_PATTERN.matcher(msg);
         if (jailModifyMatcher.find()) {
-            this.unicacityAddon.fileManager().data().setTimer(this.unicacityAddon.fileManager().data().getTimer() - Integer.parseInt(jailModifyMatcher.group(1)) * 60);
+            this.unicacityAddon.fileService().data().setTimer(this.unicacityAddon.fileService().data().getTimer() - Integer.parseInt(jailModifyMatcher.group(1)) * 60);
             return;
         }
 
         Matcher jailFinishMatcher = PatternHandler.TIMER_JAIL_FINISH_PATTERN.matcher(msg);
         if (jailFinishMatcher.find()) {
             isJail = false;
-            this.unicacityAddon.fileManager().data().setTimer(0);
+            this.unicacityAddon.fileService().data().setTimer(0);
 
             if (ShutdownJailCommand.shutdownJail)
                 ForgeUtils.shutdownPC();

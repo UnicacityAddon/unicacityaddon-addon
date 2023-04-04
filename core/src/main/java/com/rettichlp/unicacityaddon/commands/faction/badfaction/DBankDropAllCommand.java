@@ -32,12 +32,12 @@ public class DBankDropAllCommand extends Command {
 
         // reset drug inventory tracker
         if (arguments.length > 0 && arguments[0].equalsIgnoreCase("reset")) {
-            this.unicacityAddon.fileManager().data().setDrugInventoryMap(new HashMap<>());
+            this.unicacityAddon.fileService().data().setDrugInventoryMap(new HashMap<>());
             return true;
         }
 
         List<String> commandQueue = new ArrayList<>();
-        this.unicacityAddon.fileManager().data().getDrugInventoryMap()
+        this.unicacityAddon.fileService().data().getDrugInventoryMap()
                 .forEach((drugType, drugPurityIntegerMap) -> drugPurityIntegerMap
                         .forEach((drugPurity, integer) -> {
                             if (integer > 0)

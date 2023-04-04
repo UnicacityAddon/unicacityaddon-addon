@@ -39,7 +39,7 @@ public class DropDrugAllCommand extends Command {
         AddonPlayer p = this.unicacityAddon.player();
 
         if (arguments.length > 0 && arguments[0].equalsIgnoreCase("reset")) {
-            this.unicacityAddon.fileManager().data().setDrugInventoryMap(new HashMap<>());
+            this.unicacityAddon.fileService().data().setDrugInventoryMap(new HashMap<>());
             return true;
         }
 

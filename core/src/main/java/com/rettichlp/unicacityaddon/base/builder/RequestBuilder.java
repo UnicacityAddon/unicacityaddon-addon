@@ -7,7 +7,7 @@ import com.google.gson.JsonParser;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.api.exception.APIResponseException;
 import com.rettichlp.unicacityaddon.base.enums.api.ApplicationPath;
-import com.rettichlp.unicacityaddon.base.utils.WebsiteUtils;
+import com.rettichlp.unicacityaddon.base.manager.WebService;
 
 import java.util.Map;
 
@@ -57,8 +57,8 @@ public class RequestBuilder {
         }
 
         public JsonElement send() throws APIResponseException {
-            String urlString = WebsiteUtils.createUrl(this.unicacityAddon, this.nonProd, this.applicationPath, this.subPath, this.parameter);
-            String response = WebsiteUtils.sendRequest(urlString, this.unicacityAddon);
+            String urlString = this.unicacityAddon.webService().createUrl(this.nonProd, this.applicationPath, this.subPath, this.parameter);
+            String response = this.unicacityAddon.webService().sendRequest(urlString);
             return new JsonParser().parse(response);
         }
 

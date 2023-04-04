@@ -9,6 +9,7 @@ import com.rettichlp.unicacityaddon.base.manager.FactionService;
 import com.rettichlp.unicacityaddon.base.manager.FileService;
 import com.rettichlp.unicacityaddon.base.manager.NameTagService;
 import com.rettichlp.unicacityaddon.base.manager.TokenService;
+import com.rettichlp.unicacityaddon.base.manager.WebService;
 import com.rettichlp.unicacityaddon.base.nametags.AddonTag;
 import com.rettichlp.unicacityaddon.base.nametags.DutyTag;
 import com.rettichlp.unicacityaddon.base.nametags.FactionInfoTag;
@@ -109,6 +110,7 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
     private FileService fileService;
     private NameTagService nametagService;
     private TokenService tokenService;
+    private WebService webService;
     private API api;
     private Navigation navigation;
     private TSUtils tsUtils;
@@ -123,6 +125,7 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
         this.fileService = new FileService(this);
         this.nametagService = new NameTagService(this);
         this.tokenService = new TokenService(this);
+        this.webService = new WebService(this);
         this.api = new API(this);
         this.navigation = new Navigation(this);
         this.tsUtils = new TSUtils(this);
@@ -157,11 +160,11 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
         return player;
     }
 
-    public FactionService factionManager() {
+    public FactionService factionService() {
         return factionService;
     }
 
-    public FileService fileManager() {
+    public FileService fileService() {
         return fileService;
     }
 
@@ -169,8 +172,12 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
         return nametagService;
     }
 
-    public TokenService tokenManager() {
+    public TokenService tokenService() {
         return tokenService;
+    }
+
+    public WebService webService() {
+        return webService;
     }
 
     public API api() {

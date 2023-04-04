@@ -500,7 +500,7 @@ public class Data {
     }
 
     private void saveAndFireEvent() {
-        unicacityAddon.labyAPI().eventBus().fire(new OfflineDataChangedEvent(unicacityAddon.fileManager().data()));
-        unicacityAddon.fileManager().saveData();
+        unicacityAddon.labyAPI().eventBus().fire(new OfflineDataChangedEvent(unicacityAddon.fileService().data()));
+        unicacityAddon.fileService().saveData();
     }
 }

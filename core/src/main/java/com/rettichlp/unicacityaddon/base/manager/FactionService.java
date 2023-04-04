@@ -5,7 +5,6 @@ import com.rettichlp.unicacityaddon.base.api.exception.APIResponseException;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.utils.ForgeUtils;
 import com.rettichlp.unicacityaddon.base.utils.TextUtils;
-import com.rettichlp.unicacityaddon.base.utils.WebsiteUtils;
 import jdk.internal.joptsimple.internal.Strings;
 
 import java.util.Objects;
@@ -38,7 +37,7 @@ public class FactionService {
 
     public String getWebsiteSource(Faction faction) {
         try {
-            return WebsiteUtils.sendRequest(faction.getWebsiteUrl(), this.unicacityAddon);
+            return this.unicacityAddon.webService().sendRequest(faction.getWebsiteUrl());
         } catch (APIResponseException e) {
             return Strings.EMPTY;
         }
