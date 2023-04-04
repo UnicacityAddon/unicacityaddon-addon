@@ -1,7 +1,6 @@
 package com.rettichlp.unicacityaddon.base.builder;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.utils.ForgeUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -61,7 +60,7 @@ public class TabCompletionBuilder {
 
         public List<String> build() {
             int length = this.arguments.length;
-            List<String> tabCompletionList = this.tabCompletionMap.getOrDefault(length, ForgeUtils.getOnlinePlayers(this.unicacityAddon));
+            List<String> tabCompletionList = this.tabCompletionMap.getOrDefault(length, this.unicacityAddon.getOnlinePlayers());
 
             // add tabCompletionFromIndexMap entry to tab completion
             this.tabCompletionFromIndexMap.entrySet().stream()

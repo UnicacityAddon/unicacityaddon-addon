@@ -7,7 +7,6 @@ import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
-import com.rettichlp.unicacityaddon.base.utils.ForgeUtils;
 import net.labymod.api.client.chat.command.Command;
 
 import java.util.Arrays;
@@ -64,7 +63,7 @@ public class MemberInfoAllCommand extends Command {
                                 .of("» Rang:").color(ColorCode.GRAY).advance().space()
                                 .of(rank != null ? String.valueOf(rank) : "X").color(ColorCode.AQUA).advance().space()
                                 .of("|").color(ColorCode.DARK_GRAY).advance().space()
-                                .of(playername).color(ForgeUtils.getOnlinePlayers(this.unicacityAddon).contains(playername) ? ColorCode.GREEN : ColorCode.RED).advance()
+                                .of(playername).color(this.unicacityAddon.getOnlinePlayers().contains(playername) ? ColorCode.GREEN : ColorCode.RED).advance()
                                 .createComponent());
                     });
         } else {

@@ -5,7 +5,6 @@ import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.models.BlacklistReason;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
-import com.rettichlp.unicacityaddon.base.utils.ForgeUtils;
 import net.labymod.api.client.chat.command.Command;
 
 import java.util.List;
@@ -49,7 +48,7 @@ public class ASetBlacklistCommand extends Command {
     @Override
     public List<String> complete(String[] arguments) {
         return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments)
-                .addToAllFromIndex(2, ForgeUtils.getOnlinePlayers(this.unicacityAddon))
+                .addToAllFromIndex(2, this.unicacityAddon.getOnlinePlayers())
                 .addToAllFromIndex(2, this.unicacityAddon.api().getBlacklistReasonList().stream().map(BlacklistReason::getReason).sorted().collect(Collectors.toList()))
                 .build();
     }

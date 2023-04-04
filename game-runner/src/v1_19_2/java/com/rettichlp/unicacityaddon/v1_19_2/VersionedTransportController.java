@@ -1,6 +1,5 @@
 package com.rettichlp.unicacityaddon.v1_19_2;
 
-import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.enums.location.Bus;
 import com.rettichlp.unicacityaddon.commands.BusCommand;

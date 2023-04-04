@@ -7,7 +7,6 @@ import com.google.gson.JsonParser;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.api.exception.APIResponseException;
 import com.rettichlp.unicacityaddon.base.enums.api.ApplicationPath;
-import com.rettichlp.unicacityaddon.base.manager.WebService;
 
 import java.util.Map;
 

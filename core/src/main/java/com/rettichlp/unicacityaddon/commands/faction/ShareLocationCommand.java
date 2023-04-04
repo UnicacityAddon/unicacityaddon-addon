@@ -6,7 +6,6 @@ import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
-import com.rettichlp.unicacityaddon.base.utils.ForgeUtils;
 import com.rettichlp.unicacityaddon.listener.MobileListener;
 import net.labymod.api.client.chat.command.Command;
 import net.labymod.api.util.math.vector.FloatVector3;
@@ -48,7 +47,7 @@ public class ShareLocationCommand extends Command {
                 allianceChat = true;
                 break;
             }
-            if (ForgeUtils.getOnlinePlayers(this.unicacityAddon).contains(argument))
+            if (this.unicacityAddon.getOnlinePlayers().contains(argument))
                 playerNames.add(argument);
         }
 

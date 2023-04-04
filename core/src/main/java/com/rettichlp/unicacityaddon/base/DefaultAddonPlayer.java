@@ -8,7 +8,6 @@ import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.models.ManagementUser;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
-import com.rettichlp.unicacityaddon.base.utils.ForgeUtils;
 import com.rettichlp.unicacityaddon.listener.NavigationListener;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.entity.player.ClientPlayer;
@@ -194,7 +193,7 @@ public class DefaultAddonPlayer implements AddonPlayer {
         Map<String, Integer> filteredPlayerMap = this.unicacityAddon.api().getPlayerFactionMap().entrySet().stream()
                 .filter(e -> e.getValue().equals(getFaction())) // name and faction from faction
                 .map(Map.Entry::getKey) // name of players from faction
-                .filter(s -> ForgeUtils.getOnlinePlayers(this.unicacityAddon).contains(s)) // is online
+                .filter(s -> this.unicacityAddon.getOnlinePlayers().contains(s)) // is online
                 .filter(this::hasPlayerLatestAddonVersion) // has supported addon version
                 .collect(Collectors.toMap(s -> s, this.unicacityAddon.api().getPlayerRankMap()::get)); // collect name and rank of players from faction
 

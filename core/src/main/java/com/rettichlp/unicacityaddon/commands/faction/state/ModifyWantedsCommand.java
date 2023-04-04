@@ -4,7 +4,6 @@ import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.enums.faction.ModifyWantedType;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
-import com.rettichlp.unicacityaddon.base.utils.ForgeUtils;
 import com.rettichlp.unicacityaddon.listener.faction.state.WantedListener;
 import net.labymod.api.client.chat.command.Command;
 
@@ -89,7 +88,7 @@ public class ModifyWantedsCommand extends Command {
     @Override
     public List<String> complete(String[] arguments) {
         if (arguments.length == 1) {
-            List<String> tabCompletions = ForgeUtils.getOnlinePlayers(this.unicacityAddon);
+            List<String> tabCompletions = this.unicacityAddon.getOnlinePlayers();
             String input = arguments[arguments.length - 1].toLowerCase();
             tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
             return tabCompletions;

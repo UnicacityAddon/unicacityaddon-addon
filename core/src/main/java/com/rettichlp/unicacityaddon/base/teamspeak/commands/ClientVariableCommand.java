@@ -3,7 +3,7 @@ package com.rettichlp.unicacityaddon.base.teamspeak.commands;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.teamspeak.CommandResponse;
 import com.rettichlp.unicacityaddon.base.teamspeak.objects.Client;
-import com.rettichlp.unicacityaddon.base.utils.ForgeUtils;
+import com.rettichlp.unicacityaddon.base.utils.TextUtils;
 
 import java.util.Arrays;
 import java.util.List;
@@ -149,7 +149,7 @@ public class ClientVariableCommand extends BaseCommand<ClientVariableCommand.Res
             if (description == null)
                 return null;
 
-            return ForgeUtils.stripPrefix(description);
+            return TextUtils.stripPrefix(description);
         }
 
         public int getID() {

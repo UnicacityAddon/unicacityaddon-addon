@@ -23,6 +23,7 @@ import com.rettichlp.unicacityaddon.base.teamspeak.TSUtils;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.utils.Navigation;
+import com.rettichlp.unicacityaddon.base.utils.TextUtils;
 import com.rettichlp.unicacityaddon.controller.DeadBodyController;
 import com.rettichlp.unicacityaddon.controller.OverlayMessageController;
 import com.rettichlp.unicacityaddon.controller.ScreenshotController;
@@ -47,13 +48,18 @@ import net.labymod.api.client.entity.player.tag.PositionType;
 import net.labymod.api.client.entity.player.tag.TagRegistry;
 import net.labymod.api.client.gui.hud.HudWidgetRegistry;
 import net.labymod.api.client.gui.icon.Icon;
+import net.labymod.api.client.network.ClientPacketListener;
+import net.labymod.api.client.network.NetworkPlayerInfo;
 import net.labymod.api.client.network.server.ServerData;
 import net.labymod.api.client.resources.ResourceLocation;
 import net.labymod.api.models.addon.annotation.AddonMain;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -235,6 +241,21 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
                 .of("]").color(ColorCode.DARK_GRAY).advance().space()
                 .add(debugMessage)
                 .createComponent());
+    }
+
+    public List<String> getOnlinePlayers() {
+        ClientPacketListener clientPacketListener = this.labyAPI().minecraft().getClientPacketListener();
+        if (clientPacketListener == null)
+            return Collections.emptyList();
+
+        Collection<NetworkPlayerInfo> networkPlayerInfoCollection = clientPacketListener.getNetworkPlayerInfos();
+
+        return networkPlayerInfoCollection.stream()
+                .map(networkPlayerInfo -> networkPlayerInfo.profile().getUsername())
+                .map(TextUtils::stripColor)
+                .map(TextUtils::stripPrefix)
+                .sorted()
+                .collect(Collectors.toList());
     }
 
     private DefaultReferenceStorage controller() {

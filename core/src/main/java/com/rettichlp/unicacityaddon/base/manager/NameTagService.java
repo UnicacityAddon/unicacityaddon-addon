@@ -9,7 +9,6 @@ import com.rettichlp.unicacityaddon.base.config.nametag.setting.StreetwarNameTag
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.FormattingCode;
-import com.rettichlp.unicacityaddon.base.utils.ForgeUtils;
 import com.rettichlp.unicacityaddon.base.utils.TextUtils;
 import com.rettichlp.unicacityaddon.listener.faction.ContractListener;
 import com.rettichlp.unicacityaddon.listener.faction.badfaction.blacklist.BlacklistListener;
@@ -117,8 +116,8 @@ public class NameTagService {
                 .map(networkPlayerInfo -> TextUtils.legacy(networkPlayerInfo.displayName()))
                 .filter(s -> s.startsWith("&8[&9UC&8]&c"))
                 .collect(Collectors.toList()).stream()
-                .map(ForgeUtils::stripColor)
-                .map(ForgeUtils::stripPrefix)
+                .map(TextUtils::stripColor)
+                .map(TextUtils::stripPrefix)
                 .anyMatch(s -> Objects.equals(s, playerName));
     }
 }

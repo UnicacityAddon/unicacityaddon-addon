@@ -1,5 +1,6 @@
 package com.rettichlp.unicacityaddon.base.utils;
 
+import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.serializer.legacy.LegacyComponentSerializer;
 import net.labymod.api.client.component.serializer.plain.PlainTextComponentSerializer;
@@ -33,6 +34,14 @@ public class TextUtils {
         return PlainTextComponentSerializer.plainText().serialize(component);
 
         // TODO: 19.12.2022 Laby.labyAPI().renderPipeline().componentRenderer().plainSerializer() ?
+    }
+
+    public static String stripColor(String string) {
+        return PatternHandler.STRIP_COLOR_PATTERN.matcher(string).replaceAll("");
+    }
+
+    public static String stripPrefix(String string) {
+        return PatternHandler.STRIP_PREFIX_PATTERN.matcher(string).replaceAll("");
     }
 
     public static String parseTimer(long seconds) {

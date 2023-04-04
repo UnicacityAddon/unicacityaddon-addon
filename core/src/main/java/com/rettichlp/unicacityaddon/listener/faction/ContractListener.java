@@ -5,7 +5,7 @@ import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.enums.api.StatisticType;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
-import com.rettichlp.unicacityaddon.base.utils.ForgeUtils;
+import com.rettichlp.unicacityaddon.base.utils.TextUtils;
 import com.rettichlp.unicacityaddon.commands.faction.AFbankEinzahlenCommand;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
@@ -75,7 +75,7 @@ public class ContractListener {
         // TODO TRANSFORM TO REGEX
         if (currentTime - hitlistShown < 5000L && msg.startsWith(" - ") && msg.contains("$")) {
             String[] splittedMessage = msg.split(" ");
-            String name = ForgeUtils.stripPrefix(splittedMessage[1]);
+            String name = TextUtils.stripPrefix(splittedMessage[1]);
             CONTRACT_LIST.add(name);
         }
     }

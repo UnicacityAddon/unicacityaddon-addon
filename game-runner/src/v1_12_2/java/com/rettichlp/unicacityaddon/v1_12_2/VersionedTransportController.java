@@ -1,10 +1,9 @@
 package com.rettichlp.unicacityaddon.v1_12_2;
 
-import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.enums.location.Bus;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
-import com.rettichlp.unicacityaddon.base.utils.ForgeUtils;
+import com.rettichlp.unicacityaddon.base.utils.TextUtils;
 import com.rettichlp.unicacityaddon.commands.BusCommand;
 import com.rettichlp.unicacityaddon.controller.TransportController;
 import net.labymod.api.models.Implements;
@@ -43,8 +42,8 @@ public class VersionedTransportController extends TransportController {
 
                 Map<Bus, Slot> busSlotMap = container.inventorySlots.stream()
                         .filter(slot -> slot.getStack().getDisplayName().startsWith(ColorCode.GOLD.getCode()))
-                        .filter(slot -> Bus.getBus(ForgeUtils.stripColor(slot.getStack().getDisplayName())) != null)
-                        .collect(Collectors.toMap(slot -> Bus.getBus(ForgeUtils.stripColor(slot.getStack().getDisplayName())), slot -> slot));
+                        .filter(slot -> Bus.getBus(TextUtils.stripColor(slot.getStack().getDisplayName())) != null)
+                        .collect(Collectors.toMap(slot -> Bus.getBus(TextUtils.stripColor(slot.getStack().getDisplayName())), slot -> slot));
 
                 Bus nearestBusToDestination = BusCommand.getNearestBusToDestination(busSlotMap.keySet());
                 if (nearestBusToDestination == null) {

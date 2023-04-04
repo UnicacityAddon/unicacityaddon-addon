@@ -3,7 +3,6 @@ package com.rettichlp.unicacityaddon.base.manager;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.api.exception.APIResponseException;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
-import com.rettichlp.unicacityaddon.base.utils.ForgeUtils;
 import com.rettichlp.unicacityaddon.base.utils.TextUtils;
 import jdk.internal.joptsimple.internal.Strings;
 
@@ -26,8 +25,8 @@ public class FactionService {
                 .map(networkPlayerInfo -> TextUtils.legacy(networkPlayerInfo.displayName()))
                 .filter(s -> s.startsWith("&1[UC]") || s.startsWith("&1") || s.startsWith("&9[UC]") || s.startsWith("&9") || s.startsWith("&4[UC]") || s.startsWith("&4") || s.startsWith("&6[UC]") || s.startsWith("&6"))
                 .collect(Collectors.toList()).stream()
-                .map(ForgeUtils::stripColor)
-                .map(ForgeUtils::stripPrefix)
+                .map(TextUtils::stripColor)
+                .map(TextUtils::stripPrefix)
                 .anyMatch(s -> Objects.equals(s, playerName));
     }
 

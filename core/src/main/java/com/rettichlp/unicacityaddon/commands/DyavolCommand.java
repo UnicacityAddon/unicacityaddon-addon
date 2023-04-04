@@ -7,7 +7,6 @@ import com.rettichlp.unicacityaddon.base.enums.api.AddonGroup;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
-import com.rettichlp.unicacityaddon.base.utils.ForgeUtils;
 import net.labymod.api.client.chat.command.Command;
 
 import java.util.List;
@@ -35,7 +34,7 @@ public class DyavolCommand extends Command {
                 .createComponent());
 
         AddonGroup.DYAVOL.getMemberList().forEach(s -> {
-            boolean online = ForgeUtils.getOnlinePlayers(this.unicacityAddon).contains(s); // TODO: 31.03.2023 rework forgeutils
+            boolean online = this.unicacityAddon.getOnlinePlayers().contains(s); // TODO: 31.03.2023 rework forgeutils
             p.sendMessage(Message.getBuilder()
                     .of("»").color(ColorCode.GRAY).advance().space()
                     .of(s).color(online ? ColorCode.GREEN : ColorCode.RED).advance()
