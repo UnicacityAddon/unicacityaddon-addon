@@ -27,4 +27,6 @@ public interface HotkeySetting {
     ConfigProperty<Key> reinforcementAlliance();
 
     ConfigProperty<Key> publicChannel();
+
+    ConfigProperty<Key> aBuy();
 }

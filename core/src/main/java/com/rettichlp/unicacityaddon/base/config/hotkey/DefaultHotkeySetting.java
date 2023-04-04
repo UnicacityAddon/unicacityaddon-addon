@@ -43,6 +43,9 @@ public class DefaultHotkeySetting extends Config implements HotkeySetting {
     @KeyBindSetting
     private final ConfigProperty<Key> publicChannel = new ConfigProperty<>(Key.NONE);
 
+    @KeyBindSetting
+    private final ConfigProperty<Key> aBuy = new ConfigProperty<>(Key.NONE);
+
     @Override
     public ConfigProperty<Boolean> enabled() {
         return this.enabled;
@@ -91,5 +94,10 @@ public class DefaultHotkeySetting extends Config implements HotkeySetting {
     @Override
     public ConfigProperty<Key> publicChannel() {
         return this.publicChannel;
+    }
+
+    @Override
+    public ConfigProperty<Key> aBuy() {
+        return this.aBuy;
     }
 }
