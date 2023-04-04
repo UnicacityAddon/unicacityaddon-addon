@@ -32,7 +32,7 @@ public enum ChatType {
     }
 
     public String getChatCommand() {
-        return "/" + getChatType();
+        return this.equals(CHAT) ? "" : "/" + getChatType();
     }
 
     public static ChatType getChatTypeByDisplayName(String s) {
