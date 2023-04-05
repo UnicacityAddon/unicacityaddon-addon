@@ -3,7 +3,6 @@ package com.rettichlp.unicacityaddon.listener;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import net.labymod.api.event.Subscribe;
-import net.labymod.api.event.client.scoreboard.ScoreboardTeamUpdateEvent;
 import net.labymod.api.event.client.scoreboard.TabListUpdateEvent;
 
 /**
@@ -17,12 +16,6 @@ public class TabListListener {
 
     public TabListListener(UnicacityAddon unicacityAddon) {
         this.unicacityAddon = unicacityAddon;
-    }
-
-    @Subscribe
-    public void onScoreboardTeamUpdate(ScoreboardTeamUpdateEvent e) {
-        // if (e.team().getEntries().size() > 0)
-        // TODO: 30.03.2023 UnicacityAddon.debug("SCOREBOARDTEAM: " + e.team().getTeamName() + " (" + e.team().getEntries() + ")");
     }
 
     @Subscribe
