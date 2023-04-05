@@ -2,6 +2,7 @@ package com.rettichlp.unicacityaddon.base.nametags;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.enums.api.AddonGroup;
+import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import net.labymod.api.client.entity.player.Player;
 import net.labymod.api.client.entity.player.tag.tags.NameTag;
@@ -43,13 +44,14 @@ public class AddonTag extends NameTag {
 
     @Override
     public float getScale() {
-        return 0.65F;
+        return 0.6F;
     }
 
     private RenderableComponent getComponent(String playerName) {
         List<AddonGroup> addonGroupList = AddonGroup.getAddonGroupsOfPlayer(playerName);
 
         return !addonGroupList.isEmpty() ? RenderableComponent.of(Message.getBuilder()
+                .of("UCAddon").color(ColorCode.WHITE).bold().advance().space()
                 .of(addonGroupList.get(0).getDisplayName()).color(addonGroupList.get(0).getColorCode()).advance()
                 .createComponent()) : null;
     }

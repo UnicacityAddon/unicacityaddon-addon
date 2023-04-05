@@ -283,7 +283,7 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
 
         tagRegistry.register(
                 "unicacityaddon_housebantag",
-                PositionType.LEFT_TO_NAME,
+                PositionType.BELOW_NAME,
                 HouseBanTag.create(this)
         );
 

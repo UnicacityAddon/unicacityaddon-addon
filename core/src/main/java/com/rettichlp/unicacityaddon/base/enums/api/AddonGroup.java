@@ -11,12 +11,12 @@ import java.util.stream.Collectors;
  * @author RettichLP
  */
 public enum AddonGroup {
-    CEO("CEO", "UCAddon CEO", ColorCode.RED, new ArrayList<>()),
-    DEV("DEV", "UCAddon Developer", ColorCode.AQUA, new ArrayList<>()),
-    MOD("MOD", "UCAddon Moderator", ColorCode.BLUE, new ArrayList<>()),
-    SUP("SUP", "UCAddon Supporter", ColorCode.GOLD, new ArrayList<>()),
-    BETA("BETA", "UCAddon Beta-Tester", ColorCode.DARK_PURPLE, new ArrayList<>()),
-    VIP("VIP", "UCAddon VIP", ColorCode.YELLOW, new ArrayList<>()),
+    CEO("CEO", "CEO", ColorCode.RED, new ArrayList<>()),
+    DEV("DEV", "Developer", ColorCode.AQUA, new ArrayList<>()),
+    MOD("MOD", "Moderator", ColorCode.BLUE, new ArrayList<>()),
+    SUP("SUP", "Supporter", ColorCode.GOLD, new ArrayList<>()),
+    BETA("BETA", "Beta-Tester", ColorCode.DARK_PURPLE, new ArrayList<>()),
+    VIP("VIP", "VIP", ColorCode.YELLOW, new ArrayList<>()),
     BLACKLIST("BLACKLIST", "", null, new ArrayList<>()),
     DYAVOL("DYAVOL", "", null, new ArrayList<>());
 

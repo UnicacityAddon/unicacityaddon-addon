@@ -7,6 +7,7 @@ import net.labymod.api.client.component.Component;
 import net.labymod.api.client.entity.player.Player;
 import net.labymod.api.client.entity.player.tag.tags.NameTag;
 import net.labymod.api.client.render.font.RenderableComponent;
+import net.labymod.api.util.math.vector.FloatVector3;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
@@ -28,12 +29,15 @@ public class HouseBanTag extends NameTag {
 
     @Override
     protected @Nullable RenderableComponent getRenderableComponent() {
-        if (this.unicacityAddon.configuration().nameTagSetting().houseBan().get()) {
+        if (this.unicacityAddon.isUnicacity() && this.unicacityAddon.configuration().nameTagSetting().houseBan().get()) {
             Optional<Player> playerOptional = this.unicacityAddon.player().getWorld().getPlayers().stream()
                     .filter(p -> p.gameUser().getUniqueId().equals(this.entity.getUniqueId()))
                     .findFirst();
 
-            if (playerOptional.isPresent()) {
+            FloatVector3 hospital = new FloatVector3(265, 69, 215);
+            FloatVector3 fireDepartment = new FloatVector3(-120, 69, -260);
+
+            if (playerOptional.isPresent() && (playerOptional.get().position().distance(hospital) < 80 || playerOptional.get().position().distance(fireDepartment) < 30)) {
                 return getComponent(playerOptional.get().getName());
             }
         }
@@ -41,11 +45,14 @@ public class HouseBanTag extends NameTag {
         return null;
     }
 
+    @Override
+    public float getScale() {
+        return 0.6F;
+    }
+
     private RenderableComponent getComponent(String playerName) {
         Component component = Message.getBuilder()
-                .of("[").color(ColorCode.DARK_GRAY).advance()
-                .of("HV").color(ColorCode.RED).advance()
-                .of("]").color(ColorCode.DARK_GRAY).advance()
+                .of("Hausverbot").color(ColorCode.RED).bold().advance()
                 .createComponent();
 
         boolean hasHouseBan = this.unicacityAddon.api().getHouseBanList().stream()

@@ -29,7 +29,7 @@ public class OutlawTag extends NameTag {
 
     @Override
     protected @Nullable RenderableComponent getRenderableComponent() {
-        if (this.unicacityAddon.configuration().nameTagSetting().specificNameTagSetting().enabled().get()) {
+        if (this.unicacityAddon.isUnicacity() && this.unicacityAddon.configuration().nameTagSetting().specificNameTagSetting().enabled().get()) {
             Optional<Player> playerOptional = this.unicacityAddon.player().getWorld().getPlayers().stream()
                     .filter(p -> p.gameUser().getUniqueId().equals(this.entity.getUniqueId()))
                     .findFirst();

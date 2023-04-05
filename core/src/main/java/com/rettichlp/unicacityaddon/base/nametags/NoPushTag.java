@@ -27,7 +27,7 @@ public class NoPushTag extends NameTag {
 
     @Override
     protected @Nullable RenderableComponent getRenderableComponent() {
-        if (this.unicacityAddon.configuration().nameTagSetting().noPushInfo().get()) {
+        if (this.unicacityAddon.isUnicacity() && this.unicacityAddon.configuration().nameTagSetting().noPushInfo().get()) {
             Optional<Player> playerOptional = this.unicacityAddon.player().getWorld().getPlayers().stream()
                     .filter(p -> p.gameUser().getUniqueId().equals(this.entity.getUniqueId()))
                     .findFirst();
@@ -42,7 +42,7 @@ public class NoPushTag extends NameTag {
 
     @Override
     public float getScale() {
-        return 0.65F;
+        return 0.5F;
     }
 
     private RenderableComponent getComponent(String playerName) {
@@ -50,7 +50,7 @@ public class NoPushTag extends NameTag {
         boolean isADuty = this.unicacityAddon.nametagService().isAdminDuty(playerName);
 
         return isNoPush ? RenderableComponent.of(Message.getBuilder()
-                .of(isADuty ? "Admin-Dienst" : "AFK").color(ColorCode.GOLD).advance()
+                .of(isADuty ? "ADMIN DIENST" : "AFK").color(ColorCode.GOLD).bold().advance()
                 .createComponent()) : null;
     }
 }
