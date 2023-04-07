@@ -48,10 +48,6 @@ public interface AddonPlayer {
 
     Inventory getInventory();
 
-//    void playSound(String soundIn);
-
-//    void playSound(SoundEvent soundIn, int volume, int pitch);
-
     Faction getFaction();
 
     int getRank();

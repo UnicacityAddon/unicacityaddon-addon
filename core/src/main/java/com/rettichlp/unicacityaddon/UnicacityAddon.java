@@ -28,6 +28,7 @@ import com.rettichlp.unicacityaddon.controller.ABuyController;
 import com.rettichlp.unicacityaddon.controller.DeadBodyController;
 import com.rettichlp.unicacityaddon.controller.OverlayMessageController;
 import com.rettichlp.unicacityaddon.controller.ScreenshotController;
+import com.rettichlp.unicacityaddon.controller.SoundController;
 import com.rettichlp.unicacityaddon.controller.TabListController;
 import com.rettichlp.unicacityaddon.controller.TransportController;
 import com.rettichlp.unicacityaddon.controller.WorldInteractionController;
@@ -213,6 +214,10 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
 
     public ScreenshotController screenshotController() {
         return controller().getScreenshotController();
+    }
+
+    public SoundController soundController() {
+        return controller().getSoundController();
     }
 
     public TabListController tabListController() {

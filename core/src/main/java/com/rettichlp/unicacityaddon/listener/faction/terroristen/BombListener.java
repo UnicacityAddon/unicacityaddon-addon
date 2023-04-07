@@ -47,7 +47,7 @@ public class BombListener {
         Matcher bombPlacedMatcher = PatternHandler.BOMB_PLACED_PATTERN.matcher(msg);
         if (bombPlacedMatcher.find()) {
             BombHudWidget.timer = 0;
-//            p.playSound(SoundRegistry.BOMB_SOUND, 1, 1); // TODO: 08.02.2023
+            this.unicacityAddon.soundController().playBombPlacedSound();
 
             if (((p.getFaction().equals(Faction.POLIZEI) || p.getFaction().equals(Faction.FBI)) && p.getRank() > 3) || p.isSuperUser()) {
                 location = bombPlacedMatcher.group("location");

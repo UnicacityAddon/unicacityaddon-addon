@@ -87,7 +87,7 @@ public class ReportListener {
         }
 
         if (PatternHandler.REPORT_PATTERN.matcher(unformattedMsg).find()) {
-            // TODO: 09.12.2022 p.playSound(SoundRegistry.REPORT_SOUND, 1, 1);
+            this.unicacityAddon.soundController().playReportSound();
         }
     }
 }

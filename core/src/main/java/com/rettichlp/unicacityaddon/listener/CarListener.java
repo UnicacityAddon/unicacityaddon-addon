@@ -120,8 +120,7 @@ public class CarListener {
                 case 5:
                     if (!sentTankWarnings.contains(tank)) {
                         p.sendInfoMessage("Dein Tank hat noch " + tank + " Liter.");
-                        // TODO: 09.12.2022 Implement sounds
-                        // p.playSound("block.note.harp");
+                        this.unicacityAddon.soundController().playTankWarningSound();
                         sentTankWarnings.add(tank);
                     }
                     break;

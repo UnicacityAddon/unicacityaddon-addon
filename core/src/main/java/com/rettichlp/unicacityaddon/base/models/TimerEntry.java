@@ -51,7 +51,7 @@ public class TimerEntry {
             @Override
             public void run() {
                 AddonPlayer p = unicacityAddon.player();
-                // TODO: 10.12.2022 p.playSound("ui.toast.challenge_complete");
+                unicacityAddon.soundController().playTimerExpiredSound();
                 p.sendEmptyMessage();
                 p.sendMessage(Message.getBuilder()
                         .of("Timer").color(ColorCode.AQUA).advance().space()

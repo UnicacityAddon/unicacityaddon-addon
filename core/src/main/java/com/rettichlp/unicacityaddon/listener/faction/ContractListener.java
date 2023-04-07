@@ -38,7 +38,7 @@ public class ContractListener {
 
         Matcher contractSetMatcher = PatternHandler.CONTRACT_SET_PATTERN.matcher(msg);
         if (contractSetMatcher.find()) {
-            // TODO: 10.12.2022 p.playSound(SoundRegistry.CONTRACT_SET_SOUND, 1, 1);
+            this.unicacityAddon.soundController().playContractSetSound();
             String name = contractSetMatcher.group(1);
             CONTRACT_LIST.add(name);
             return;
@@ -55,7 +55,7 @@ public class ContractListener {
                 break;
             }
 
-            // TODO: 10.12.2022 p.playSound(SoundRegistry.CONTRACT_FULFILLED_SOUND, 1, 1);
+            this.unicacityAddon.soundController().playContractFulfilledSound();
             CONTRACT_LIST.remove(name);
 
             if (msg.contains("getötet") && msg.contains(p.getName())) {

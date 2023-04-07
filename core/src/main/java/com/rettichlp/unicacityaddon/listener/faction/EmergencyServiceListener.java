@@ -49,7 +49,7 @@ public class EmergencyServiceListener {
 
         Matcher serviceArrivedMatcher = PatternHandler.SERVICE_ARRIVED_PATTERN.matcher(msg);
         if (serviceArrivedMatcher.find()) {
-            // TODO: 10.12.2022 p.playSound(SoundRegistry.SERVICE_SOUND, 1, 1);
+            this.unicacityAddon.soundController().playServiceSound();
 
             openServices++;
             EmergencyServiceHudWidget.textLine.updateAndFlush(openServices);
@@ -84,7 +84,7 @@ public class EmergencyServiceListener {
 
         Matcher serviceRequeuedMatcher = PatternHandler.SERVICE_REQUEUED_PATTERN.matcher(msg);
         if (serviceRequeuedMatcher.find()) {
-            // TODO: 10.12.2022 p.playSound(SoundRegistry.SERVICE_SOUND, 1, 1);
+            this.unicacityAddon.soundController().playServiceSound();
 
             openServices++;
             EmergencyServiceHudWidget.textLine.updateAndFlush(openServices);

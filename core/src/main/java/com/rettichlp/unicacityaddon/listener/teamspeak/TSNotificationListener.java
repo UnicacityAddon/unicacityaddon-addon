@@ -16,11 +16,11 @@ import net.labymod.api.event.Subscribe;
  * @author RettichLP
  */
 @UCEvent
-public class WaitingRoomListener {
+public class TSNotificationListener {
 
     private final UnicacityAddon unicacityAddon;
 
-    public WaitingRoomListener(UnicacityAddon unicacityAddon) {
+    public TSNotificationListener(UnicacityAddon unicacityAddon) {
         this.unicacityAddon = unicacityAddon;
     }
 
@@ -36,10 +36,10 @@ public class WaitingRoomListener {
 
         if (this.unicacityAddon.configuration().tsNotificationSupport().get() && targetChannelID == 41) {
             handleEnterSupportChannel(p, clientID);
-            // TODO: 09.12.2022 p.playSound("block.note.pling");
+            this.unicacityAddon.soundController().playTSNotificationSupportChannelSound();
         } else if (this.unicacityAddon.configuration().tsNotificationPublic().get() && targetChannelID == p.getFaction().getPublicChannelId()) {
             handleEnterPublicChannel(p, clientID);
-            // TODO: 09.12.2022 p.playSound("block.note.pling");
+            this.unicacityAddon.soundController().playTSNotificationPublicChannelSound();
         }
     }
 

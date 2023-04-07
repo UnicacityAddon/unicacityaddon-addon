@@ -106,7 +106,7 @@ public class MobileListener {
             }
             if (!muted) {
                 whitelistSound = true;
-                // TODO: 09.12.2022 p.playSound("record.cat");
+                this.unicacityAddon.soundController().playMobileCallSound();
             }
             return;
         }
@@ -124,7 +124,7 @@ public class MobileListener {
             }
             if (!muted) {
                 whitelistSound = true;
-                // TODO: 09.12.2022 p.playSound("entity.sheep.ambient");
+                this.unicacityAddon.soundController().playMobileSMSSound();
             }
         }
     }
