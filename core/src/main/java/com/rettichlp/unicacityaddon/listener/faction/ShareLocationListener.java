@@ -55,7 +55,7 @@ public class ShareLocationListener {
                 .of("" + posZ).color(ColorCode.AQUA).advance()
                 .createComponent();
 
-        Map.Entry<Double, NaviPoint> doubleNaviPointEntry = this.unicacityAddon.navigation().getNearestNaviPoint(posX, posY, posZ);
+        Map.Entry<Double, NaviPoint> doubleNaviPointEntry = this.unicacityAddon.navigationService().getNearestNaviPoint(posX, posY, posZ);
 
         String navipointString;
         if (doubleNaviPointEntry.getValue() == null) {

@@ -22,7 +22,7 @@ import com.rettichlp.unicacityaddon.base.teamspeak.TSClientQuery;
 import com.rettichlp.unicacityaddon.base.teamspeak.TSUtils;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
-import com.rettichlp.unicacityaddon.base.utils.Navigation;
+import com.rettichlp.unicacityaddon.base.manager.NavigationService;
 import com.rettichlp.unicacityaddon.base.utils.TextUtils;
 import com.rettichlp.unicacityaddon.controller.ABuyController;
 import com.rettichlp.unicacityaddon.controller.DeadBodyController;
@@ -117,10 +117,10 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
     private FactionService factionService;
     private FileService fileService;
     private NameTagService nametagService;
+    private NavigationService navigationService;
     private TokenService tokenService;
     private WebService webService;
     private API api;
-    private Navigation navigation;
     private TSUtils tsUtils;
 
     public UnicacityAddon() {
@@ -132,10 +132,10 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
         this.factionService = new FactionService(this);
         this.fileService = new FileService(this);
         this.nametagService = new NameTagService(this);
+        this.navigationService = new NavigationService(this);
         this.tokenService = new TokenService(this);
         this.webService = new WebService(this);
         this.api = new API(this);
-        this.navigation = new Navigation(this);
         this.tsUtils = new TSUtils(this);
 
         this.logger().info("Enabled UnicacityAddon");
@@ -180,6 +180,10 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
         return nametagService;
     }
 
+    public NavigationService navigationService() {
+        return navigationService;
+    }
+
     public TokenService tokenService() {
         return tokenService;
     }
@@ -190,10 +194,6 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
 
     public API api() {
         return api;
-    }
-
-    public Navigation navigation() {
-        return navigation;
     }
 
     public TSUtils tsUtils() {

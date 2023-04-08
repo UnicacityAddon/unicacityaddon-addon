@@ -47,8 +47,8 @@ public class BusCommand extends Command {
             return false;
         }
 
-        start = this.unicacityAddon.navigation().getNearestBus().getValue();
-        destination = this.unicacityAddon.navigation().getNearestBus(naviPoint.getBlockPos()).getValue();
+        start = this.unicacityAddon.navigationService().getNearestBus().getValue();
+        destination = this.unicacityAddon.navigationService().getNearestBus(naviPoint.getBlockPos()).getValue();
 
         limiter = 0;
         p.sendServerMessage("/bus");

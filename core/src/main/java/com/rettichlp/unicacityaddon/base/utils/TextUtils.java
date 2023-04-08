@@ -1,9 +1,8 @@
 package com.rettichlp.unicacityaddon.base.utils;
 
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
+import net.labymod.api.Laby;
 import net.labymod.api.client.component.Component;
-import net.labymod.api.client.component.serializer.legacy.LegacyComponentSerializer;
-import net.labymod.api.client.component.serializer.plain.PlainTextComponentSerializer;
 
 import java.util.concurrent.TimeUnit;
 
@@ -12,42 +11,62 @@ import java.util.concurrent.TimeUnit;
  */
 public class TextUtils {
 
-    // TODO: 08.02.2023 update doc comments!
-
     /**
      * Converts textComponent to a legacy string - <code>&6Hello &b&lworld&c!</code>
      *
-     * @param component component to be converted to formatted string
+     * @param component Component to be converted to formatted string
      * @return converted string of component
      */
     public static String legacy(Component component) {
-        return LegacyComponentSerializer.legacyAmpersand().serialize(component);
+        return Laby.references().renderPipeline().componentRenderer().legacySectionSerializer().serialize(component);
     }
 
     /**
      * Converts textComponent to a plain string - <code>Hello world!</code>
      *
-     * @param component component to be converted to unformatted string
+     * @param component Component to be converted to unformatted string
      * @return converted string of component
      */
     public static String plain(Component component) {
-        return PlainTextComponentSerializer.plainText().serialize(component);
-
-        // TODO: 19.12.2022 Laby.labyAPI().renderPipeline().componentRenderer().plainSerializer() ?
+        return Laby.references().renderPipeline().componentRenderer().plainSerializer().serialize(component);
     }
 
-    public static String stripColor(String string) {
-        return PatternHandler.STRIP_COLOR_PATTERN.matcher(string).replaceAll("");
+    /**
+     * Removes the color code with <code>§</code> or <code>&</code> prefix from text
+     *
+     * @param text String starting with a color code containing <code>§</code> or <code>&</code>
+     * @return text without color code prefix
+     */
+    public static String stripColor(String text) {
+        return PatternHandler.STRIP_COLOR_PATTERN.matcher(text).replaceAll("");
     }
 
-    public static String stripPrefix(String string) {
-        return PatternHandler.STRIP_PREFIX_PATTERN.matcher(string).replaceAll("");
+    /**
+     * Removes a server provided player prefix from text. A player prefix is a text starting with <code>[</code> and ending with <code>]</code>
+     *
+     * @param text String without server provided prefix
+     * @return text without server provided prefix
+     */
+    public static String stripPrefix(String text) {
+        return PatternHandler.STRIP_PREFIX_PATTERN.matcher(text).replaceAll("");
     }
 
+    /**
+     * Converts a given time in seconds to an easy readable time in <code>HH:mm:ss</code> format or <code>mm:ss</code> if duration is less than an hour
+     *
+     * @param seconds time in seconds
+     * @return converted time in readable format
+     */
     public static String parseTimer(long seconds) {
         return seconds >= 3600 ? String.format("%02d:%02d:%02d", seconds / 3600, seconds % 3600 / 60, seconds % 60) : String.format("%02d:%02d", seconds / 60, seconds % 60);
     }
 
+    /**
+     * Converts a given time in milliseconds to an easy readable time in <code>XXd XXh XXm XXs</code> format
+     *
+     * @param milliseconds time in milliseconds
+     * @return converted time in readable format
+     */
     public static String parseTimerWithTimeUnit(long milliseconds) {
         long seconds = TimeUnit.MILLISECONDS.toSeconds(milliseconds);
         long minutes = TimeUnit.SECONDS.toMinutes(seconds);
@@ -60,7 +79,7 @@ public class TextUtils {
      * Converts a given <code>Long</code> with specific <code>TimeUnit</code> to an easy readable time <code>String</code>
      *
      * @param timeUnit TimeUnit in which the given value is provided
-     * @param time Long of the time to be converted
+     * @param time     Long of the time to be converted
      * @return converted time in readable format
      */
     public static String parseTime(TimeUnit timeUnit, long time) {
@@ -80,7 +99,7 @@ public class TextUtils {
     /**
      * Converts an array of <code>Object</code> to a <code>String</code> with the space between the objects
      *
-     * @param args Array of <code>Object</code>
+     * @param args  Array of <code>Object</code>
      * @param space String of space between objects
      * @return String of objects with the space between them
      */

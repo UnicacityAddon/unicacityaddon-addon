@@ -1,4 +1,4 @@
-package com.rettichlp.unicacityaddon.base.utils;
+package com.rettichlp.unicacityaddon.base.manager;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
@@ -15,11 +15,11 @@ import java.util.Map;
  * @author RettichLP
  * @see <a href="https://github.com/paulzhng/UCUtils/blob/e1e4cc90a852a24fbb552413eb478097f865c6f3/src/main/java/de/fuzzlemann/ucutils/utils/location/navigation/NavigationUtil.java">UCUtils by paulzhng</a>
  */
-public class Navigation {
+public class NavigationService {
 
     private final UnicacityAddon unicacityAddon;
 
-    public Navigation(UnicacityAddon unicacityAddon) {
+    public NavigationService(UnicacityAddon unicacityAddon) {
         this.unicacityAddon = unicacityAddon;
     }
 

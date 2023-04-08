@@ -28,7 +28,7 @@ public class NearestJobCommand extends Command {
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        Map.Entry<Double, Job> nearestJob = this.unicacityAddon.navigation().getNearestJob();
+        Map.Entry<Double, Job> nearestJob = this.unicacityAddon.navigationService().getNearestJob();
 
         this.unicacityAddon.player().sendMessage(Message.getBuilder()
                 .prefix()
