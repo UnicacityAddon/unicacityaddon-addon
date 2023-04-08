@@ -60,9 +60,9 @@ public class ShareLocationCommand extends Command {
         String command = allianceChat ? "/d" : "/f";
 
         FloatVector3 position = p.getPosition();
-        float posX = position.getX();
-        float posY = position.getY();
-        float posZ = position.getZ();
+        int posX = (int) position.getX();
+        int posY = (int) position.getY();
+        int posZ = (int) position.getZ();
 
         p.sendServerMessage(command + " Positionsteilung für " + playerString + "! -> X: " + posX + " | Y: " + posY + " | Z: " + posZ);
 

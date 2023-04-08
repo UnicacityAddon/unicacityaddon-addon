@@ -65,11 +65,11 @@ public class ReinforcementListener {
                 type = lastReinforcement.getType().getMessage();
             }
 
-            Component hoverMessage = Message.getBuilder().of("" + posX).color(ColorCode.AQUA).advance()
+            Component hoverMessage = Message.getBuilder().of(String.valueOf(posX)).color(ColorCode.AQUA).advance()
                     .of(" | ").color(ColorCode.GRAY).advance()
-                    .of("" + posY).color(ColorCode.AQUA).advance()
+                    .of(String.valueOf(posY)).color(ColorCode.AQUA).advance()
                     .of(" | ").color(ColorCode.GRAY).advance()
-                    .of("" + posZ).color(ColorCode.AQUA).advance()
+                    .of(String.valueOf(posZ)).color(ColorCode.AQUA).advance()
                     .createComponent();
 
             Map.Entry<Double, NaviPoint> nearestNaviPoint = this.unicacityAddon.navigationService().getNearestNaviPoint(posX, posY, posZ);

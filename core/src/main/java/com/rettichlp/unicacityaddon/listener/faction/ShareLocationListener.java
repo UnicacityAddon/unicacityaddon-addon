@@ -48,11 +48,11 @@ public class ShareLocationListener {
         int posY = Integer.parseInt(shareLocationMatcher.group(4));
         int posZ = Integer.parseInt(shareLocationMatcher.group(5));
 
-        Component hoverMessage = Message.getBuilder().of("" + posX).color(ColorCode.AQUA).advance()
+        Component hoverMessage = Message.getBuilder().of(String.valueOf(posX)).color(ColorCode.AQUA).advance()
                 .of(" | ").color(ColorCode.GRAY).advance()
-                .of("" + posY).color(ColorCode.AQUA).advance()
+                .of(String.valueOf(posY)).color(ColorCode.AQUA).advance()
                 .of(" | ").color(ColorCode.GRAY).advance()
-                .of("" + posZ).color(ColorCode.AQUA).advance()
+                .of(String.valueOf(posZ)).color(ColorCode.AQUA).advance()
                 .createComponent();
 
         Map.Entry<Double, NaviPoint> doubleNaviPointEntry = this.unicacityAddon.navigationService().getNearestNaviPoint(posX, posY, posZ);
