@@ -15,6 +15,7 @@ import com.rettichlp.unicacityaddon.listener.faction.badfaction.blacklist.Blackl
 import com.rettichlp.unicacityaddon.listener.faction.state.WantedListener;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -24,11 +25,14 @@ import java.util.stream.Collectors;
 public class NameTagService {
 
     private Collection<String> noPushPlayerList;
+    private Collection<String> maskedPlayerList;
 
     private final UnicacityAddon unicacityAddon;
 
     public NameTagService(UnicacityAddon unicacityAddon) {
         this.unicacityAddon = unicacityAddon;
+        this.noPushPlayerList = Collections.emptyList();
+        this.maskedPlayerList = Collections.emptyList();
     }
 
     public Collection<String> getNoPushPlayerList() {
@@ -37,6 +41,14 @@ public class NameTagService {
 
     public void setNoPushPlayerList(Collection<String> noPushPlayerList) {
         this.noPushPlayerList = noPushPlayerList;
+    }
+
+    public Collection<String> getMaskedPlayerList() {
+        return maskedPlayerList;
+    }
+
+    public void setMaskedPlayerList(Collection<String> maskedPlayerList) {
+        this.maskedPlayerList = maskedPlayerList;
     }
 
     public String getPrefix(String playerName, boolean isCorpse) {

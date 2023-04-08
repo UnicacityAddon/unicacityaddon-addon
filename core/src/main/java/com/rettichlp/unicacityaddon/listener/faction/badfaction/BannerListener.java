@@ -31,7 +31,7 @@ public class BannerListener {
         if (e.type().equals(ClientPlayerInteractEvent.InteractionType.INTERACT) && this.unicacityAddon.isUnicacity()) {
             FloatVector3 pos = this.unicacityAddon.worldInteractionController().getClickedBlockLocation();
 
-            if (this.unicacityAddon.worldInteractionController().isBanner(pos)) {
+            if (pos != null && this.unicacityAddon.worldInteractionController().isBanner(pos)) {
                 lastClickedBannerPosition = pos;
             }
         }

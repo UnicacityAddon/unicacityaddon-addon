@@ -64,5 +64,10 @@ public class NameTagListener {
                 .filter(scoreboardTeam -> scoreboardTeam.getTeamName().equals("nopush"))
                 .findFirst()
                 .ifPresent(scoreboardTeam -> this.unicacityAddon.nametagService().setNoPushPlayerList(scoreboardTeam.getEntries()));
+
+        this.unicacityAddon.player().getScoreboard().getTeams().stream()
+                .filter(scoreboardTeam -> scoreboardTeam.getTeamName().equals("masked"))
+                .findFirst()
+                .ifPresent(scoreboardTeam -> this.unicacityAddon.nametagService().setMaskedPlayerList(scoreboardTeam.getEntries()));
     }
 }
