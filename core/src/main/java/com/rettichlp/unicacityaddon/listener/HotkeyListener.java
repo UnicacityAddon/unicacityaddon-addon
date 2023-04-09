@@ -4,6 +4,7 @@ import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.config.hotkey.HotkeySetting;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
+import com.rettichlp.unicacityaddon.base.events.UnicacityAddonTickEvent;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.teamspeak.CommandResponse;
 import com.rettichlp.unicacityaddon.base.teamspeak.commands.ClientMoveCommand;
@@ -32,18 +33,27 @@ public class HotkeyListener {
 
     @Subscribe
     public void onKey(KeyEvent e) {
-        if (e.state().equals(KeyEvent.State.PRESS) && this.unicacityAddon.configuration().hotkeySetting().enabled().get()) {
-            handleHotkey(e.key());
+        if (Laby.references().chatAccessor().isChatOpen() || !this.unicacityAddon.isUnicacity())
+            return;
+
+        KeyEvent.State state = e.state();
+        Key key = e.key();
+
+        HotkeySetting hotkeySetting = this.unicacityAddon.configuration().hotkeySetting();
+        if (state.equals(KeyEvent.State.PRESS) && hotkeySetting.enabled().get()) {
+            handleHotkey(key, hotkeySetting);
         }
     }
 
-    private void handleHotkey(Key key) {
-        AddonPlayer p = this.unicacityAddon.player();
-        HotkeySetting hotkeySetting = this.unicacityAddon.configuration().hotkeySetting();
-
-        if (!this.unicacityAddon.isUnicacity() || Laby.references().chatAccessor().isChatOpen()) {
-            return;
+    @Subscribe
+    public void onUnicacityAddonTick(UnicacityAddonTickEvent e) {
+        if (e.isPhase(UnicacityAddonTickEvent.Phase.TICK) && Key.TAB.isPressed() && this.unicacityAddon.configuration().orderedTablist().get() && !Laby.references().chatAccessor().isChatOpen()) {
+            this.unicacityAddon.tabListController().orderTabList(this.unicacityAddon.labyAPI().minecraft().getClientPacketListener().getNetworkPlayerInfos());
         }
+    }
+
+    private void handleHotkey(Key key, HotkeySetting hotkeySetting) {
+        AddonPlayer p = this.unicacityAddon.player();
 
         if (key.equals(hotkeySetting.acceptAd().getOrDefault(Key.NONE))) {
             AdListener.handleAd("freigeben", this.unicacityAddon);

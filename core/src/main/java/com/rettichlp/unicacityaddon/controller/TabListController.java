@@ -4,6 +4,8 @@ import net.labymod.api.client.network.NetworkPlayerInfo;
 import net.labymod.api.reference.annotation.Referenceable;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Collection;
+
 /**
  * @author RettichLP
  */
@@ -11,7 +13,5 @@ import org.jetbrains.annotations.Nullable;
 @Referenceable
 public abstract class TabListController {
 
-    public abstract void orderTabList();
-
-    public abstract String tabListName(NetworkPlayerInfo networkPlayerInfo);
+    public abstract void orderTabList(Collection<NetworkPlayerInfo> networkPlayerInfos);
 }

@@ -1,96 +1,73 @@
 package com.rettichlp.unicacityaddon.v1_12_2;
 
-import com.google.common.collect.Ordering;
-import com.rettichlp.unicacityaddon.base.text.ColorCode;
-import com.rettichlp.unicacityaddon.base.text.FormattingCode;
+import com.rettichlp.unicacityaddon.base.tab.TabPrefix;
 import com.rettichlp.unicacityaddon.base.utils.TextUtils;
 import com.rettichlp.unicacityaddon.controller.TabListController;
-import net.labymod.api.client.component.Component;
-import net.labymod.api.client.component.format.TextColor;
 import net.labymod.api.client.network.NetworkPlayerInfo;
 import net.labymod.api.models.Implements;
-import net.minecraft.client.gui.GuiPlayerTabOverlay;
+import net.minecraft.client.Minecraft;
+import net.minecraft.scoreboard.ScorePlayerTeam;
+import net.minecraft.scoreboard.Scoreboard;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author RettichLP
  */
 @Singleton
 @Implements(TabListController.class)
-public class VersionedTabListController extends TabListController implements Comparator<NetworkPlayerInfo> {
-
-    private static final List<String> ORDERED_ENTRIES = Arrays.asList("§1[UC]", "§1", "§9[UC]", "§9", "§4[UC]", "§4", "§6[UC]", "§6", "§8[§9UC§8]§c", "§8[§eB§8]", "§8[§6R§8]", "[UC]");
+public class VersionedTabListController extends TabListController {
 
     @Inject
     public VersionedTabListController() {
     }
 
     @Override
-    public void orderTabList() {
-        try {
-            Field field = GuiPlayerTabOverlay.class.getDeclaredField("ENTRY_ORDERING");
-            field.setAccessible(true);
-            field.set(null, Ordering.from(new VersionedTabListController()));
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
+    public void orderTabList(Collection<NetworkPlayerInfo> networkPlayerInfos) {
+        assert Minecraft.getMinecraft().world != null;
+        Scoreboard scoreboard = Minecraft.getMinecraft().world.getScoreboard();
 
-        // ReflectionUtils.setValue(GuiPlayerTabOverlay.class, Ordering.class, Ordering.from(new VersionedTabListController()));
+        // get teams or create if not present
+        Map<TabPrefix, ScorePlayerTeam> tabPrefixScorePlayerTeamMap = getScorePlayerTeamMap(scoreboard);
+
+        // add default player team (m_player)
+        networkPlayerInfos.stream()
+                .filter(networkPlayerInfo -> networkPlayerInfo.profile() != null)
+                .filter(networkPlayerInfo -> networkPlayerInfo.getTeam() == null || (!networkPlayerInfo.getTeam().getTeamName().equals("nopush") && !networkPlayerInfo.getTeam().getTeamName().equals("masked")))
+                .map(networkPlayerInfo -> networkPlayerInfo.profile().getUsername())
+                .forEach(s -> scoreboard.addPlayerToTeam(s, tabPrefixScorePlayerTeamMap.get(TabPrefix.NONE).getName()));
+
+        // add formatted player teams
+        networkPlayerInfos.stream()
+                .filter(networkPlayerInfo -> networkPlayerInfo.displayName() != null)
+                .filter(networkPlayerInfo -> networkPlayerInfo.getTeam() == null || (!networkPlayerInfo.getTeam().getTeamName().equals("nopush") && !networkPlayerInfo.getTeam().getTeamName().equals("masked")))
+                .forEach(networkPlayerInfo -> {
+                    String displayName = TextUtils.legacy(networkPlayerInfo.displayName());
+                    TabPrefix tabPrefix = TabPrefix.getTypeByDisplayName(displayName);
+                    ScorePlayerTeam playerTeam = tabPrefixScorePlayerTeamMap.get(tabPrefix);
+                    scoreboard.addPlayerToTeam(networkPlayerInfo.profile().getUsername(), playerTeam.getName());
+                });
     }
 
-    @Override
-    public String tabListName(NetworkPlayerInfo networkPlayerInfo) {
-        Component displayNameComponent = networkPlayerInfo.displayName() != null
-                ? networkPlayerInfo.displayName()
-                : networkPlayerInfo.getTeam().formatDisplayName(Component.text(networkPlayerInfo.profile().getUsername()));
-
-        StringBuilder tabListName = new StringBuilder();
-
-        List<Component> children = displayNameComponent.children();
-        if (children.size() > 0) {
-            children.forEach(child -> {
-                TextColor color = child.color();
-                if (color == null)
-                    return;
-                tabListName.append(ColorCode.getColorCodeByTextColor(color).getCode()).append(TextUtils.plain(child));
-            });
-        }
-
-        if (tabListName.toString().isEmpty() || tabListName.toString().contains("§8[§eB§8]"))
-            tabListName.append(TextUtils.plain(displayNameComponent));
-
-        if (tabListName.toString().isEmpty() || tabListName.toString().contains("§8[§6R§8]"))
-            tabListName.append(TextUtils.plain(displayNameComponent));
-
-        return tabListName.toString()
-                .replace("[B]", FormattingCode.RESET.getCode())
-                .replace("[R]", FormattingCode.RESET.getCode());
-    }
-
-    @Override
-    public int compare(NetworkPlayerInfo o1, NetworkPlayerInfo o2) {
-        String stringOne = tabListName(o1);
-        String stringTwo = tabListName(o2);
-
-        String stringOneStartsWith = ORDERED_ENTRIES.stream().filter(stringOne::startsWith).findAny().orElse(null);
-        String stringTwoStartsWith = ORDERED_ENTRIES.stream().filter(stringTwo::startsWith).findAny().orElse(null);
-
-        if (stringOneStartsWith != null && stringTwoStartsWith != null) {
-            int sgn = ORDERED_ENTRIES.indexOf(stringOneStartsWith) - ORDERED_ENTRIES.indexOf(stringTwoStartsWith);
-            return sgn != 0 ? sgn : stringOne.compareTo(stringTwo);
-        }
-
-        if (stringOneStartsWith != null)
-            return -1;
-        if (stringTwoStartsWith != null)
-            return 1;
-
-        return stringOne.compareTo(stringTwo);
+    private Map<TabPrefix, ScorePlayerTeam> getScorePlayerTeamMap(Scoreboard scoreboard) {
+        Map<TabPrefix, ScorePlayerTeam> scorePlayerTeamMap = new HashMap<>();
+        scorePlayerTeamMap.put(TabPrefix.FBI_UC, scoreboard.getTeam("a_fbi_uc") != null ? scoreboard.getTeam("a_fbi_uc") : scoreboard.createTeam("a_fbi_uc"));
+        scorePlayerTeamMap.put(TabPrefix.FBI, scoreboard.getTeam("b_fbi") != null ? scoreboard.getTeam("b_fbi") : scoreboard.createTeam("b_fbi"));
+        scorePlayerTeamMap.put(TabPrefix.POLICE_UC, scoreboard.getTeam("c_police_uc") != null ? scoreboard.getTeam("c_police_uc") : scoreboard.createTeam("c_police_uc"));
+        scorePlayerTeamMap.put(TabPrefix.POLICE, scoreboard.getTeam("d_police") != null ? scoreboard.getTeam("d_police") : scoreboard.createTeam("d_police"));
+        scorePlayerTeamMap.put(TabPrefix.MEDIC_UC, scoreboard.getTeam("e_medic_uc") != null ? scoreboard.getTeam("e_medic_uc") : scoreboard.createTeam("e_medic_uc"));
+        scorePlayerTeamMap.put(TabPrefix.MEDIC, scoreboard.getTeam("f_medic") != null ? scoreboard.getTeam("f_medic") : scoreboard.createTeam("f_medic"));
+        scorePlayerTeamMap.put(TabPrefix.NEWS_UC, scoreboard.getTeam("g_news_uc") != null ? scoreboard.getTeam("g_news_uc") : scoreboard.createTeam("g_news_uc"));
+        scorePlayerTeamMap.put(TabPrefix.NEWS, scoreboard.getTeam("h_news") != null ? scoreboard.getTeam("h_news") : scoreboard.createTeam("h_news"));
+        scorePlayerTeamMap.put(TabPrefix.UC_DUTY, scoreboard.getTeam("i_uc_duty") != null ? scoreboard.getTeam("i_uc_duty") : scoreboard.createTeam("i_uc_duty"));
+        scorePlayerTeamMap.put(TabPrefix.BUILDER, scoreboard.getTeam("j_builder") != null ? scoreboard.getTeam("j_builder") : scoreboard.createTeam("j_builder"));
+        scorePlayerTeamMap.put(TabPrefix.REPORT, scoreboard.getTeam("k_report") != null ? scoreboard.getTeam("k_report") : scoreboard.createTeam("k_report"));
+        scorePlayerTeamMap.put(TabPrefix.UC, scoreboard.getTeam("l_uc") != null ? scoreboard.getTeam("l_uc") : scoreboard.createTeam("l_uc"));
+        scorePlayerTeamMap.put(TabPrefix.NONE, scoreboard.getTeam("m_player") != null ? scoreboard.getTeam("m_player") : scoreboard.createTeam("m_player"));
+        return scorePlayerTeamMap;
     }
 }

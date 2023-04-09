@@ -1,4 +1,4 @@
-package com.rettichlp.unicacityaddon.v1_16_5;
+package com.rettichlp.unicacityaddon.v1_18_2;
 
 import com.rettichlp.unicacityaddon.base.tab.TabPrefix;
 import com.rettichlp.unicacityaddon.base.utils.TextUtils;
