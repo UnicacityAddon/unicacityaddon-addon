@@ -2,9 +2,9 @@ package com.rettichlp.unicacityaddon.listener;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
+import com.rettichlp.unicacityaddon.base.config.UnicacityAddonConfiguration;
 import com.rettichlp.unicacityaddon.base.config.hotkey.HotkeySetting;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
-import com.rettichlp.unicacityaddon.base.events.UnicacityAddonTickEvent;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.teamspeak.CommandResponse;
 import com.rettichlp.unicacityaddon.base.teamspeak.commands.ClientMoveCommand;
@@ -38,17 +38,16 @@ public class HotkeyListener {
 
         KeyEvent.State state = e.state();
         Key key = e.key();
+        UnicacityAddonConfiguration configuration = this.unicacityAddon.configuration();
 
-        HotkeySetting hotkeySetting = this.unicacityAddon.configuration().hotkeySetting();
+        if (state.equals(KeyEvent.State.PRESS) && key.equals(Key.TAB) && configuration.orderedTablist().get()) {
+            this.unicacityAddon.tabListController().orderTabList(this.unicacityAddon.labyAPI().minecraft().getClientPacketListener().getNetworkPlayerInfos());
+            return;
+        }
+
+        HotkeySetting hotkeySetting = configuration.hotkeySetting();
         if (state.equals(KeyEvent.State.PRESS) && hotkeySetting.enabled().get()) {
             handleHotkey(key, hotkeySetting);
-        }
-    }
-
-    @Subscribe
-    public void onUnicacityAddonTick(UnicacityAddonTickEvent e) {
-        if (e.isPhase(UnicacityAddonTickEvent.Phase.TICK) && Key.TAB.isPressed() && this.unicacityAddon.configuration().orderedTablist().get() && !Laby.references().chatAccessor().isChatOpen()) {
-            this.unicacityAddon.tabListController().orderTabList(this.unicacityAddon.labyAPI().minecraft().getClientPacketListener().getNetworkPlayerInfos());
         }
     }
 

@@ -17,11 +17,11 @@ import java.util.Optional;
  * @author RettichLP
  */
 @UCEvent
-public class NameTagListener {
+public class NameTagRenderListener {
 
     private final UnicacityAddon unicacityAddon;
 
-    public NameTagListener(UnicacityAddon unicacityAddon) {
+    public NameTagRenderListener(UnicacityAddon unicacityAddon) {
         this.unicacityAddon = unicacityAddon;
     }
 
