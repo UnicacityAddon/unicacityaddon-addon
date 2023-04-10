@@ -1,0 +1,347 @@
+{
+  "unicacityaddon": {
+    "hudWidget": {
+      "bomb": {
+        "name": "Bomben Timer"
+      },
+      "car": {
+        "name": "Auto Info"
+      },
+      "service": {
+        "name": "Offene Services"
+      },
+      "hearth": {
+        "name": "Herzen Anzeige"
+      },
+      "inventory": {
+        "name": "Inventar"
+      },
+      "job": {
+        "name": "Job Belohnungen"
+      },
+      "money": {
+        "name": "Geld"
+      },
+      "payday": {
+        "name": "Zeit bis zum PayDay"
+      },
+      "plant": {
+        "name": "Plant Timer"
+      },
+      "timer": {
+        "name": "Timer"
+      }
+    },
+    "settings": {
+      "header": {
+        "nametags": {
+          "name": "NameTags"
+        },
+        "reinforcement_and_sloc": {
+          "name": "Reinforcement & Sloc"
+        },
+        "messages": {
+          "name": "Nachrichten"
+        },
+        "join": {
+          "name": "Spielbeitritt"
+        },
+        "automation": {
+          "name": "Automatisierung"
+        },
+        "teamspeak": {
+          "name": "Teamspeak"
+        },
+        "equip": {
+          "name": "Equip"
+        },
+        "others": {
+          "name": "Sonstiges"
+        }
+      },
+      "name": "UnicacityAddon",
+      "enabled": {
+        "name": "Enabled",
+        "description": "Aktiviert und deaktiviert das Addon"
+      },
+      "hotkeySetting": {
+        "name": "Hotkeys",
+        "acceptAd": {
+          "name": "Werbung akzeptieren",
+          "description": "Akzeptiert die Werbung eines Spielers"
+        },
+        "declineAd": {
+          "name": "Werbung ablehnen",
+          "description": "Lehnt die Werbung eines Spielers ab, wenn gegen Richtlinien verstoßen wird"
+        },
+        "acceptReport": {
+          "name": "Report annehmen",
+          "description": "Nimmt einen Report an und sendet die Begrüßungsnachricht aus 'Report -> Begrüßung'"
+        },
+        "cancelReport": {
+          "name": "Report beenden",
+          "description": "Sendet die Verabschiedung aus 'Report -> Verabschiedung' und schließt den Report"
+        },
+        "aDuty": {
+          "name": "ADuty",
+          "description": "Führt den '/aduty' Befehl aus"
+        },
+        "aDutySilent": {
+          "name": "ADuty (ohne Nachricht)",
+          "description": "Führt den '/aduty -s' Befehl aus"
+        },
+        "reinforcementFaction": {
+          "name": "Reinforcement (Fraktion)",
+          "description": "Sendet einen Reinforcement an die eigene Fraktion"
+        },
+        "reinforcementAlliance": {
+          "name": "Reinforcement (Bündnis)",
+          "description": "Sendet einen Reinforcement an die eigene Fraktion und das Bündnis"
+        },
+        "publicChannel": {
+          "name": "Öffentlichen Channel betreten",
+          "description": "Bewegt den Spieler in den eigenen öffentlichen Channel auf dem Teamspeak"
+        },
+        "aBuy": {
+          "name": "Automatisches Kaufen (/abuy)",
+          "description": "Kauft automatisch die vorher (mit /abuy) eingestellte Menge, wenn über ein kaufbares Item mit der Maus gegangen wird und dieser Hotkey statt der linken Maustaste gedrückt wird"
+        }
+      },
+      "nameTagSetting": {
+        "name": "NameTags",
+        "factionInfo": {
+          "name": "Fraktionsinfo",
+          "description": "Zeigt die Fraktion hinter dem Namen an"
+        },
+        "factionNameTagSetting": {
+          "name": "Fraktion",
+          "color": {
+            "name": "Farbe",
+            "description": "Farbe in der Fraktionsmitglieder angezeigt werden"
+          }
+        },
+        "allianceFactionNameTagSetting": {
+          "name": "Bündnis",
+          "color": {
+            "name": "Farbe",
+            "description": "Farbe in der Bündnismitglieder angezeigt werden"
+          },
+          "faction1": {
+            "name": "Bündnisfraktion",
+            "description": "Hinweis: muss angegeben werden um D-Chat Reinforcements senden zu können"
+          },
+          "faction2": {
+            "name": "Bündnisfraktion (optional)"
+          }
+        },
+        "streetwarNameTagSetting": {
+          "name": "Streetwar",
+          "color": {
+            "name": "Farbe",
+            "description": "Farbe in der Streetwar-Gegner angezeigt werden"
+          },
+          "faction1": {
+            "name": "Streetwarfraktion"
+          },
+          "faction2": {
+            "name": "Streetwarfraktion (optional)"
+          }
+        },
+        "houseBan": {
+          "name": "Hausverbot",
+          "description": "Zeigt Spieler mit Hausverbot im Krankenhaus an"
+        },
+        "duty": {
+          "name": "im Dienst",
+          "description": "Zeigt einen grünen Punkt an, wenn der Spieler im Dienst ist"
+        },
+        "factionSpecificNameTagSetting": {
+          "name": "Blacklist/Contract/WPs anzeigen",
+          "description": "Zeigt fraktionsspezifische NameTags farbig",
+          "color": {
+            "name": "Farbe",
+            "description": "Farbe in der fraktionsspezifische Nametags angezeigt werden (nur für Blacklist und Contract)"
+          }
+        },
+        "corpse": {
+          "name": "Farbige Leichennamen",
+          "description": "Zeigt den Namen der Leiche in den Fraktionsfarben und fügt die Fraktionsinfo am Ende hinzu"
+        },
+        "noPushInfo": {
+          "name": "AFK und ADMIN-DIENST Info",
+          "description": "Zeigt an, wenn ein Spieler AFK oder im Admin-Dienst ist"
+        }
+      },
+      "reinforcementSetting": {
+        "name": "Reinforcement",
+        "reinforcement": {
+          "name": "Reinforcement",
+          "description": "Vorlage für einen Reinforcement"
+        },
+        "answer": {
+          "name": "Reinforcement Antwort",
+          "description": "Vorlage für die Reinforcement Antwort"
+        },
+        "screen": {
+          "name": "Screenshot",
+          "description": "Erstellt beim Annehmen eines Reinforcement einen Screenshot und speichert ihn als Reinforcement Aktivität ab"
+        }
+      },
+      "slocSetting": {
+        "name": "Sloc",
+        "sloc": {
+          "name": "Sloc",
+          "description": "Vorlage für einen Sloc"
+        }
+      },
+      "factionMessageSetting": {
+        "name": "Fraktion",
+        "hq": {
+          "name": "HQ Nachrichten",
+          "description": "Formatierung der HQ Nachrichten in ein übersichtlicheres Design"
+        },
+        "service": {
+          "name": "Service Nachrichten",
+          "description": "Formatierung der Service Nachrichten in ein übersichtlicheres Design"
+        },
+        "dBank": {
+          "name": "D-Bank Nachrichten",
+          "description": "Formatierung der D-Bank Nachrichten in ein übersichtlicheres Design"
+        }
+      },
+      "reportMessageSetting": {
+        "name": "Report",
+        "greeting": {
+          "name": "Begrüßung",
+          "description": "Nachricht die bei der Annahme eines Reports gesendet wird"
+        },
+        "farewell": {
+          "name": "Verabschiedung",
+          "description": "Nachricht die vor der Beendung eines Reports gesendet wird"
+        },
+        "prefix": {
+          "name": "Prefix",
+          "description": "Prefix für den Report um eine Filterung für ein Chat-Fenster zu ermöglichen"
+        }
+      },
+      "passwordSetting": {
+        "name": "Passwort",
+        "password": {
+          "name": "Passwort",
+          "description": "Dieses passwort wird zum Serverbeitritt automatisch an den Server gesendet."
+        }
+      },
+      "commandSetting": {
+        "name": "Start-Befehle",
+        "first": {
+          "name": "Erster Befehl",
+          "description": "Legt den ersten Befehl fest der nach dem Serverbeitritt ausgeführt wird (z. B. '/mi')"
+        },
+        "second": {
+          "name": "Zweiter Befehl",
+          "description": "Legt den zweiten Befehl fest der nach dem Serverbeitritt ausgeführt wird (z. B. '/bl')"
+        },
+        "third": {
+          "name": "Dritter Befehl",
+          "description": "Legt den dritten Befehl fest der nach dem Serverbeitritt ausgeführt wird (z. B. '/afk')"
+        }
+      },
+      "texturePack": {
+        "name": "TexturePack Nachricht deaktivieren",
+        "description": "Deaktiviert die TexturePack Nachricht"
+      },
+      "atmSetting": {
+        "name": "ATM Einstellungen",
+        "atmInfo": {
+          "name": "ATM Info",
+          "description": "Beim Anklicken eines ATMs wird '/atminfo' ausgeführt"
+        },
+        "fBank": {
+          "name": "F-Bank",
+          "description": "Beim Anklicken eines ATMs wird '/fbank' ausgeführt"
+        },
+        "grBank": {
+          "name": "Gruppierungs-Kasse",
+          "description": "Beim Anklicken eines ATMs wird '/grkasse info' ausgeführt"
+        }
+      },
+      "bombScreenshot": {
+        "name": "Bomben Screenshot",
+        "description": "Erstellt am Ende einer Bombe automatisch einen Großeinsatz-Screenshot"
+      },
+      "carRoute": {
+        "name": "Automatisch die Route zum Auto anzeigen",
+        "description": "Nach Ausführung des '/car find' Commands wird direkt die Route angezeigt"
+      },
+      "tsApiKey": {
+        "name": "Teamspeak API Key"
+      },
+      "tsNotificationPublic": {
+        "name": "Öffentlich-Channel-betreten Nachricht"
+      },
+      "tsNotificationSupport": {
+        "name": "Support-Channel-betreten Nachricht"
+      },
+      "equipSetting": {
+        "header": {
+          "global": {
+            "name": "Fraktionsübergreifend"
+          },
+          "specific": {
+            "name": "Fraktionsabhängig"
+          }
+        },
+        "name": "Equip",
+        "description": "Hier bin ich aktuell zu faul die einzelnen Equipdinger einzutragen"
+      },
+      "ownUseSetting": {
+        "name": "Eigenbedarf",
+        "kokainSetting": {
+          "name": "Kokain",
+          "amount": {
+            "name": "Menge",
+            "description": "Menge an Kokain, das als Eigenbedarf genutzt werden soll"
+          },
+          "purity": {
+            "name": "Reinheit",
+            "description": "Reinheit des Kokains, das als Eigenbedarf genutzt werden soll"
+          }
+        },
+        "marihuanaSetting": {
+          "name": "Marihuana",
+          "amount": {
+            "name": "Menge",
+            "description": "Menge an Marihuana, das als Eigenbedarf genutzt werden soll"
+          },
+          "purity": {
+            "name": "Reinheit",
+            "description": "Reinheit des Marihuanas, das als Eigenbedarf genutzt werden soll"
+          }
+        },
+        "methamphetaminSetting": {
+          "name": "Methamphetamin",
+          "amount": {
+            "name": "Menge",
+            "description": "Menge an Methamphetamin, das als Eigenbedarf genutzt werden soll"
+          },
+          "purity": {
+            "name": "Reinheit",
+            "description": "Reinheit des Methamphetamins, das als Eigenbedarf genutzt werden soll"
+          }
+        }
+      },
+      "orderedTablist": {
+        "name": "Sortierte Tabliste",
+        "description": "Sortiert die Tabliste nach Duty-Fraktionen, UC's, Buildern und aktiven Reports"
+      },
+      "despawnTime": {
+        "name": "Despawn Zeitpunkt",
+        "description": "Zeigt in der Karma Nachricht nach einem Kill den Despawn Zeitpunkt an"
+      },
+      "addonTag": {
+        "name": "Addon Team Tag",
+        "description": "Zeigt den Team Rang über dem Namen an"
+      }
+    }
+  }
+}
