@@ -5,7 +5,6 @@ import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.enums.api.StatisticType;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
-import com.rettichlp.unicacityaddon.base.utils.TextUtils;
 import com.rettichlp.unicacityaddon.commands.faction.AFbankEinzahlenCommand;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
@@ -65,17 +64,16 @@ public class ContractListener {
             return;
         }
 
-        // TODO TRANSFORM TO REGEX
-        if (msg.equals("=~=~=~Contracts~=~=~=")) {
+        Matcher contractListHeaderMatcher = PatternHandler.CONTRACT_LIST_HEADER_PATTERN.matcher(msg);
+        if (contractListHeaderMatcher.find()) {
             CONTRACT_LIST.clear();
             hitlistShown = currentTime;
             return;
         }
 
-        // TODO TRANSFORM TO REGEX
-        if (currentTime - hitlistShown < 5000L && msg.startsWith(" - ") && msg.contains("$")) {
-            String[] splittedMessage = msg.split(" ");
-            String name = TextUtils.stripPrefix(splittedMessage[1]);
+        Matcher contractListMatcher = PatternHandler.CONTRACT_LIST_PATTERN.matcher(msg);
+        if (contractListMatcher.find() && currentTime - hitlistShown < 5000L) {
+            String name = contractListMatcher.group("name");
             CONTRACT_LIST.add(name);
         }
     }

@@ -38,8 +38,8 @@ public enum Equip {
     EXPLOSIVEBELT("Sprenggürtel", "Sprenggürtel", (configuration) -> configuration.equipSetting().terrorSetting().explosiveBelt().getOrDefault("0")),
     RPG7("RPG-7", "RPG-7", (configuration) -> configuration.equipSetting().terrorSetting().rpg7().getOrDefault("0")),
     NOTEPAD("Notizblock", "Notizblock", (configuration) -> configuration.equipSetting().newsSetting().notepad().getOrDefault("0")), // UnicaCity Bug (Nachricht gibt es noch nicht)
-    GLASSCUTTER("Glasschneider", "Glasschneider", (configuration) -> configuration.equipSetting().hitmanSetting().glassCutter().getOrDefault("0")), // TODO: Equipname
-    LOCKPICK("Dietrich", "Dietrich", (configuration) -> configuration.equipSetting().hitmanSetting().lockPick().getOrDefault("0")); // TODO: Equipname
+    GLASSCUTTER("Glasschneider", "Glasschneider", (configuration) -> configuration.equipSetting().hitmanSetting().glassCutter().getOrDefault("0")),
+    LOCKPICK("Dietrich", "Dietrich", (configuration) -> configuration.equipSetting().hitmanSetting().lockPick().getOrDefault("0"));
 
     private final String equipName;
     private final String messageName;

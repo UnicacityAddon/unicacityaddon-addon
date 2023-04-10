@@ -55,6 +55,7 @@ import net.labymod.api.client.network.NetworkPlayerInfo;
 import net.labymod.api.client.network.server.ServerData;
 import net.labymod.api.client.resources.ResourceLocation;
 import net.labymod.api.models.addon.annotation.AddonMain;
+import org.apache.commons.lang3.SystemUtils;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -266,6 +267,32 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
                 .map(TextUtils::stripPrefix)
                 .sorted()
                 .collect(Collectors.toList());
+    }
+
+    public void shutdownPC() {
+        String shutdownCommand;
+
+        if (SystemUtils.IS_OS_AIX) {
+            shutdownCommand = "shutdown -Fh now";
+        } else if (SystemUtils.IS_OS_SOLARIS || SystemUtils.IS_OS_SUN_OS) {
+            shutdownCommand = "shutdown -y -i5 -gnow";
+        } else if (SystemUtils.IS_OS_MAC || SystemUtils.IS_OS_UNIX) {
+            shutdownCommand = "shutdown -h now";
+        } else if (SystemUtils.IS_OS_HP_UX) {
+            shutdownCommand = "shutdown -hy now";
+        } else if (SystemUtils.IS_OS_IRIX) {
+            shutdownCommand = "shutdown -y -g now";
+        } else if (SystemUtils.IS_OS_WINDOWS) {
+            shutdownCommand = "shutdown -s -t 0";
+        } else {
+            return;
+        }
+
+        try {
+            Runtime.getRuntime().exec(shutdownCommand);
+        } catch (IOException e) {
+            logger().warn(e.getMessage());
+        }
     }
 
     private DefaultReferenceStorage controller() {

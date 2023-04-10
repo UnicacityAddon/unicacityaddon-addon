@@ -4,6 +4,7 @@ import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.enums.api.StatisticType;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
+import com.rettichlp.unicacityaddon.commands.ShutdownGraveyardCommand;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
@@ -46,8 +47,9 @@ public class ReviveListener {
             this.unicacityAddon.fileService().data().setTimer(0);
             this.unicacityAddon.fileService().data().setCashBalance(0);
 
-            // TODO: 04.04.2023 if (ShutdownGraveyardCommand.shutdownGraveyard)
-//                ForgeUtils.shutdownPC();
+            if (ShutdownGraveyardCommand.shutdownGraveyard)
+                this.unicacityAddon.shutdownPC();
+
             return;
         }
 
@@ -61,6 +63,7 @@ public class ReviveListener {
             reviveFromMedicStartTime = System.currentTimeMillis();
     }
 
+    // todo
 //    @SubscribeEvent
 //    public void onSuccessfulRevive(PotionEvent.PotionAddedEvent e) {
 //

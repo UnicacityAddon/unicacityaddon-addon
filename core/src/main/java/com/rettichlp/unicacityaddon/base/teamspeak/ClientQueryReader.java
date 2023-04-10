@@ -81,7 +81,7 @@ public class ClientQueryReader extends Thread implements Closeable {
                     }
                 }
             } catch (IOException | IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException | ClassNotFoundException e) {
-                // TODO: 31.03.2023  UnicacityAddon.LOGGER.error(e.getMessage());
+                unicacityAddon.logger().error(e.getMessage());
             }
 
             Uninterruptibles.sleepUninterruptibly(100, TimeUnit.MILLISECONDS);
