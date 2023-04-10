@@ -3,7 +3,9 @@ package com.rettichlp.unicacityaddon.listener;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
+import com.rettichlp.unicacityaddon.base.utils.TextUtils;
 import net.labymod.api.client.component.Component;
+import net.labymod.api.client.world.item.ItemStack;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 import net.labymod.api.event.client.world.ItemStackTooltipEvent;
@@ -19,7 +21,10 @@ import java.util.regex.Pattern;
 @UCEvent
 public class ABuyListener {
 
-    public static int amountLeft;
+    public static int amountLeft = 0;
+    public static int slotNumber = -1;
+
+    private ItemStack lastHoveredItemStack;
 
     private final UnicacityAddon unicacityAddon;
 
@@ -29,38 +34,23 @@ public class ABuyListener {
 
     @Subscribe
     public void onItemStackTooltip(ItemStackTooltipEvent e) {
-        boolean isPurchasableItem = isPurchasableItem(e.getTooltipLines());
-
-        int slotIndex = -1;
-        int i = 0;
-        while (isPurchasableItem && slotIndex < 0 && i < 50) {
-            if (this.unicacityAddon.player().getInventory().itemStackAt(i).equals(e.itemStack())) {
-                slotIndex = i;
-            }
-            i++;
+        ItemStack itemStack = e.itemStack();
+        if (!itemStack.equals(lastHoveredItemStack) && isPurchasableItem(e.getTooltipLines()) && amountLeft == 0) {
+            lastHoveredItemStack = itemStack;
+            slotNumber = this.unicacityAddon.aBuyController().getHoveredSlotNumber(TextUtils.plain(e.itemStack().getDisplayName()));
         }
-
-        if (this.unicacityAddon.configuration().hotkeySetting().aBuy().get().isPressed()) {
-            this.unicacityAddon.aBuyController().startBuy(this.unicacityAddon, slotIndex);
-        }
-    }
-
-    private boolean isPurchasableItem(@NotNull List<Component> tooltipLines) {
-        Pattern purchasableItemIdentificator = Pattern.compile("\\d+\\$");
-
-        return tooltipLines.stream()
-                .anyMatch(component -> purchasableItemIdentificator.matcher(component.toString()).find());
     }
 
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {
-        if (amountLeft == 0)
-            return;
-
         String msg = e.chatMessage().getPlainText();
-        if (!PatternHandler.BUY_INTERRUPTED_PATTERN.matcher(msg).find())
-            return;
+        if (PatternHandler.BUY_INTERRUPTED_PATTERN.matcher(msg).find()) {
+            amountLeft = 0;
+        }
+    }
 
-        amountLeft = 0;
+    private boolean isPurchasableItem(@NotNull List<Component> tooltipLines) {
+        return tooltipLines.stream()
+                .anyMatch(component -> Pattern.compile("\\d+\\$").matcher(component.toString()).find());
     }
 }

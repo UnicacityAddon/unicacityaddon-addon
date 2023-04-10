@@ -11,5 +11,7 @@ import org.jetbrains.annotations.Nullable;
 @Referenceable
 public abstract class ABuyController {
 
-    public abstract void startBuy(UnicacityAddon unicacityAddon, int slotIndex);
+    public abstract int getHoveredSlotNumber(String displayName);
+
+    public abstract void buy(UnicacityAddon unicacityAddon, int slotIndex);
 }

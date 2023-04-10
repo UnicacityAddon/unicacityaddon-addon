@@ -11,6 +11,7 @@ import com.rettichlp.unicacityaddon.base.teamspeak.commands.ClientMoveCommand;
 import com.rettichlp.unicacityaddon.base.teamspeak.objects.Channel;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
+import com.rettichlp.unicacityaddon.commands.ABuyCommand;
 import com.rettichlp.unicacityaddon.listener.team.AdListener;
 import net.labymod.api.Laby;
 import net.labymod.api.client.gui.screen.key.Key;
@@ -18,12 +19,17 @@ import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.input.KeyEvent;
 import net.labymod.api.util.math.vector.FloatVector3;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 /**
  * @author RettichLP
  * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/events/AlternateScreenshotEventHandler.java">UCUtils by paulzhng</a>
  */
 @UCEvent
 public class HotkeyListener {
+
+    private int amountLeft = 0;
 
     private final UnicacityAddon unicacityAddon;
 
@@ -75,6 +81,22 @@ public class HotkeyListener {
         } else if (key.equals(hotkeySetting.reinforcementAlliance().getOrDefault(Key.NONE))) {
             FloatVector3 position = p.getPosition();
             p.sendServerMessage("/d Benötige Verstärkung! -> X: " + (int) position.getX() + " | Y: " + (int) position.getY() + " | Z: " + (int) position.getZ());
+        } else if (key.equals(hotkeySetting.aBuy().getOrDefault(Key.NONE))) {
+            ABuyListener.amountLeft = ABuyCommand.amount;
+            int slotNumber = ABuyListener.slotNumber;
+            if (slotNumber >= 0) {
+                new Timer().scheduleAtFixedRate(new TimerTask() {
+                    @Override
+                    public void run() {
+                        if (ABuyListener.amountLeft > 0) {
+                            HotkeyListener.this.unicacityAddon.aBuyController().buy(HotkeyListener.this.unicacityAddon, slotNumber);
+                            ABuyListener.amountLeft--;
+                        } else {
+                            this.cancel();
+                        }
+                    }
+                }, 0, 200);
+            }
         } else if (key.equals(hotkeySetting.publicChannel().getOrDefault(Key.NONE))) {
             if (p.getFaction().equals(Faction.NULL)) {
                 p.sendErrorMessage("Du befindest dich in keiner Fraktion.");

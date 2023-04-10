@@ -16,7 +16,6 @@ import java.util.List;
 public class ABuyCommand extends Command {
 
     public static int amount = 0;
-    public static int delay = 200;
 
     private static final String usage = "/abuy [Menge] (Delay)";
 
@@ -31,22 +30,13 @@ public class ABuyCommand extends Command {
     public boolean execute(String prefix, String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
 
-        if (arguments.length == 1) {
-            if (!MathUtils.isInteger(arguments[0])) {
-                p.sendSyntaxMessage(usage);
-                return true;
-            }
+        if (arguments.length > 0 && MathUtils.isInteger(arguments[0])) {
             amount = Integer.parseInt(arguments[0]);
-        } else if (arguments.length > 1) {
-            if (!MathUtils.isInteger(arguments[0]) || !MathUtils.isInteger(arguments[1])) {
-                p.sendSyntaxMessage(usage);
-                return true;
-            }
-            amount = Integer.parseInt(arguments[0]);
-            delay = Integer.parseInt(arguments[1]);
+            p.sendInfoMessage("Menge für ABuy wurde eingestellt.");
+        } else {
+            p.sendSyntaxMessage(usage);
         }
 
-        p.sendInfoMessage("Menge für ABuy wurde eingestellt.");
         return true;
     }
 
