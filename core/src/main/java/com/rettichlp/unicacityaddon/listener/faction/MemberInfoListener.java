@@ -23,11 +23,12 @@ import java.util.regex.Pattern;
 @UCEvent
 public class MemberInfoListener {
 
+    public static CompletableFuture<Map<Boolean, Integer>> future;
+
     private static final Timer TIMER = new Timer();
     private static final Pattern FACTION_MEMBERS_PATTERN = Pattern.compile("^ {2}=== Fraktionsmitglieder \\[(.+)] ===$");
     private static final Map<Boolean, Integer> MEMBER_MAP = new HashMap<>();
     private static long memberlistShown;
-    public static CompletableFuture<Map<Boolean, Integer>> future;
 
     private final UnicacityAddon unicacityAddon;
 
@@ -67,8 +68,8 @@ public class MemberInfoListener {
                     .of(factionString).color(ColorCode.DARK_AQUA).advance()
                     .of("]").color(ColorCode.DARK_GRAY).advance().space()
                     .of("(").color(ColorCode.DARK_GRAY).advance()
-                    .of(String.valueOf(this.unicacityAddon.api().getPlayerFactionMap().entrySet().stream()
-                            .filter(stringFactionEntry -> stringFactionEntry.getKey().equals(faction))
+                    .of(String.valueOf(this.unicacityAddon.api().getPlayerFactionMap().values().stream()
+                            .filter(f -> f.equals(faction))
                             .count())).color(ColorCode.AQUA).advance()
                     .of(")").color(ColorCode.DARK_GRAY).advance().space()
                     .of("===").color(ColorCode.DARK_GRAY).advance()

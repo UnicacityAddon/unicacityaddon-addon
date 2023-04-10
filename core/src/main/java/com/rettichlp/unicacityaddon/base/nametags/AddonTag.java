@@ -50,7 +50,7 @@ public class AddonTag extends NameTag {
     private RenderableComponent getComponent(String playerName) {
         List<AddonGroup> addonGroupList = AddonGroup.getAddonGroupsOfPlayer(playerName);
 
-        return !addonGroupList.isEmpty() ? RenderableComponent.of(Message.getBuilder()
+        return !addonGroupList.isEmpty() && addonGroupList.get(0).getColorCode() != null ? RenderableComponent.of(Message.getBuilder()
                 .of("UCAddon").color(ColorCode.WHITE).bold().advance().space()
                 .of(addonGroupList.get(0).getDisplayName()).color(addonGroupList.get(0).getColorCode()).advance()
                 .createComponent()) : null;

@@ -1,5 +1,6 @@
 package com.rettichlp.unicacityaddon.commands.faction;
 
+import com.google.common.util.concurrent.Uninterruptibles;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
@@ -14,10 +15,10 @@ import net.labymod.api.client.component.event.HoverEvent;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 /**
@@ -89,15 +90,12 @@ public class FactionInfoCommand extends Command {
         MemberInfoListener.future = new CompletableFuture<>();
         this.unicacityAddon.player().sendServerMessage("/memberinfo " + faction.getFactionKey());
 
-        return new HashMap<>();
-
-//        TODO: 11.12.2022
-//        try {
-//            return Uninterruptibles.getUninterruptibly(MemberInfoListener.future);
-//        } catch (ExecutionException e) {
-//            throw new IllegalStateException(e);
-//        } finally {
-//            MemberInfoListener.future = null;
-//        }
+        try {
+            return Uninterruptibles.getUninterruptibly(MemberInfoListener.future);
+        } catch (ExecutionException e) {
+            throw new IllegalStateException(e);
+        } finally {
+            MemberInfoListener.future = null;
+        }
     }
 }
