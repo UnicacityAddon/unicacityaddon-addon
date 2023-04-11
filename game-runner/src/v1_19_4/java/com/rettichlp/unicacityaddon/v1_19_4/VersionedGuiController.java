@@ -124,6 +124,8 @@ public class VersionedGuiController extends GuiController {
 
                 DropDrugAllCommand.active = false;
                 DropDrugAllCommand.dropCommandExecution(unicacityAddon);
+                assert Minecraft.getInstance().player != null;
+                Minecraft.getInstance().player.closeContainer();
             }
         } else if (screen instanceof HopperScreen && DropDrugAllCommand.active) {
             HopperMenu hopperMenu = ((HopperScreen) screen).getMenu();

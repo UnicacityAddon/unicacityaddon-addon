@@ -120,6 +120,7 @@ public class VersionedGuiController extends GuiController {
 
                 DropDrugAllCommand.active = false;
                 DropDrugAllCommand.dropCommandExecution(unicacityAddon);
+                Minecraft.getMinecraft().player.closeScreen();
             }
         } else if (guiScreen instanceof GuiHopper && DropDrugAllCommand.active) {
             GuiHopper guiHopper = (GuiHopper) guiScreen;
