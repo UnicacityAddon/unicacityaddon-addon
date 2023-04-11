@@ -8,7 +8,7 @@ import net.labymod.api.event.Event;
  */
 public class OfflineDataChangedEvent implements Event {
 
-    private Data data;
+    private final Data data;
 
     public OfflineDataChangedEvent(Data data) {
         this.data = data;

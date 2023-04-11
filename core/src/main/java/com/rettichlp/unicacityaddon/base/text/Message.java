@@ -105,16 +105,38 @@ public class Message {
             Message message = build();
             Component component = Component.text("");
 
-            message.getMessageParts().forEach(messagePart -> component.append(Component.text(messagePart.getMessage())
-                    .style(Style.style(messagePart.getColorCode() == null ? null : messagePart.getColorCode().getTextColor()).toBuilder()
-                            .decoration(TextDecoration.BOLD, messagePart.getFormattingCodes().contains(FormattingCode.BOLD) ? TextDecoration.State.TRUE : TextDecoration.State.FALSE)
-                            .decoration(TextDecoration.ITALIC, messagePart.getFormattingCodes().contains(FormattingCode.ITALIC) ? TextDecoration.State.TRUE : TextDecoration.State.FALSE)
-                            .decoration(TextDecoration.OBFUSCATED, messagePart.getFormattingCodes().contains(FormattingCode.OBFUSCATED) ? TextDecoration.State.TRUE : TextDecoration.State.FALSE)
-                            .decoration(TextDecoration.STRIKETHROUGH, messagePart.getFormattingCodes().contains(FormattingCode.STRIKETHROUGH) ? TextDecoration.State.TRUE : TextDecoration.State.FALSE)
-                            .decoration(TextDecoration.UNDERLINED, messagePart.getFormattingCodes().contains(FormattingCode.UNDERLINE) ? TextDecoration.State.TRUE : TextDecoration.State.FALSE)
-                            .build())
-                    .clickEvent(messagePart.getClickEvent())
-                    .hoverEvent(messagePart.getHoverEvent())));
+            message.getMessageParts().forEach(messagePart -> {
+                Style.Builder builder = Style.builder();
+
+                if (messagePart.getColorCode() != null) {
+                    builder.color(messagePart.getColorCode().getTextColor());
+                }
+
+                if (messagePart.getFormattingCodes().contains(FormattingCode.BOLD)) {
+                    builder.decorate(TextDecoration.BOLD);
+                }
+
+                if (messagePart.getFormattingCodes().contains(FormattingCode.ITALIC)) {
+                    builder.decorate(TextDecoration.ITALIC);
+                }
+
+                if (messagePart.getFormattingCodes().contains(FormattingCode.OBFUSCATED)) {
+                    builder.decorate(TextDecoration.OBFUSCATED);
+                }
+
+                if (messagePart.getFormattingCodes().contains(FormattingCode.STRIKETHROUGH)) {
+                    builder.decorate(TextDecoration.STRIKETHROUGH);
+                }
+
+                if (messagePart.getFormattingCodes().contains(FormattingCode.UNDERLINE)) {
+                    builder.decorate(TextDecoration.UNDERLINED);
+                }
+
+                builder.hoverEvent(messagePart.getHoverEvent());
+                builder.clickEvent(messagePart.getClickEvent());
+
+                component.append(Component.text(messagePart.getMessage()).style(builder.build()));
+            });
 
             return component;
         }

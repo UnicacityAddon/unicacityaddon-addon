@@ -34,7 +34,7 @@ public class AmmunitionHudWidget extends TextHudWidget<TextHudWidgetConfig> {
 
     @Override
     public boolean isVisibleInGame() {
-        ItemStack mainHandItemStack = this.unicacityAddon.labyAPI().minecraft().clientPlayer().getMainHandItemStack();
+        ItemStack mainHandItemStack = this.unicacityAddon.labyAPI().minecraft().getClientPlayer().getMainHandItemStack();
         String displayName = TextUtils.legacy(mainHandItemStack.getDisplayName());
         return Weapon.getWeaponByItemName(displayName) != null;
     }

@@ -118,7 +118,7 @@ public class DefaultEquipSetting extends Config implements EquipSetting {
 
     @Override
     public StateSetting stateSetting() {
-        return null;
+        return this.stateSetting;
     }
 
     @Override

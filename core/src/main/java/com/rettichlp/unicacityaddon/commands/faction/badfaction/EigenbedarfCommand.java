@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit;
 @UCCommand
 public class EigenbedarfCommand extends Command {
 
-    private static List<String> scheduledTasks = new ArrayList<>();
+    private static final List<String> scheduledTasks = new ArrayList<>();
 
     private final UnicacityAddon unicacityAddon;
 

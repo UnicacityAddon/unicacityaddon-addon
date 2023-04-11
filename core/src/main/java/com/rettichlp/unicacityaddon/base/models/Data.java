@@ -420,7 +420,7 @@ public class Data {
      * @see Message
      */
     public void sendAllHouseBankMessage() {
-        AddonPlayer p = this.unicacityAddon.player();
+        AddonPlayer p = unicacityAddon.player();
 
         p.sendEmptyMessage();
         p.sendMessage(Message.getBuilder()
@@ -438,7 +438,7 @@ public class Data {
      * @see Message
      */
     public void sendAllDrugStorageMessage() {
-        AddonPlayer p = this.unicacityAddon.player();
+        AddonPlayer p = unicacityAddon.player();
 
         p.sendEmptyMessage();
         p.sendMessage(Message.getBuilder()

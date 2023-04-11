@@ -25,6 +25,7 @@ public class VersionedWorldInteractionController extends WorldInteractionControl
 
     @Override
     public FloatVector3 getClickedBlockLocation() {
+        assert Minecraft.getInstance().cameraEntity != null;
         HitResult hitResult = Minecraft.getInstance().cameraEntity.pick(20, 0, false);
         Vec3 vec3 = hitResult.getLocation();
 

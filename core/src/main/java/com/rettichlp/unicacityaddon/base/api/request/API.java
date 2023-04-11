@@ -707,15 +707,15 @@ public class API {
                 .getAsJsonObject();
     }
 
-    public JsonObject sendTokenCreateRequest() throws APIResponseException {
-        return RequestBuilder.getBuilder(this.unicacityAddon)
+    public void sendTokenCreateRequest() throws APIResponseException {
+        RequestBuilder.getBuilder(this.unicacityAddon)
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.TOKEN)
                 .subPath(CREATE_SUB_PATH)
                 .parameter(mapOf(
                         "authToken", this.unicacityAddon.labyAPI().minecraft().sessionAccessor().session().getAccessToken(),
                         "version", this.unicacityAddon.version()))
-                .getAsJsonObject();
+                .sendAsync();
     }
 
     public JsonArray sendWantedReasonRequest() throws APIResponseException {
