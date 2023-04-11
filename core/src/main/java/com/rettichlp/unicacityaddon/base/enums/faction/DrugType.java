@@ -42,7 +42,7 @@ public enum DrugType {
 
     public static DrugType getDrugType(String s) {
         return Arrays.stream(DrugType.values())
-                .filter(drugType -> s.equalsIgnoreCase(drugType.drugName) || s.equalsIgnoreCase(drugType.shortName))
+                .filter(drugType -> s.contains(drugType.drugName) || (drugType.shortName != null && s.contains(drugType.shortName)))
                 .findFirst()
                 .orElse(null);
     }

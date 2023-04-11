@@ -31,9 +31,9 @@ public enum DrugPurity {
         return MathUtils.isInteger(drugPurity) ? getDrugPurityByInteger(Integer.parseInt(drugPurity)) : getDrugPurityByString(drugPurity);
     }
 
-    private static DrugPurity getDrugPurityByString(String drugPurity) {
+    private static DrugPurity getDrugPurityByString(String s) {
         return Arrays.stream(DrugPurity.values())
-                .filter(drugPurity1 -> drugPurity.equalsIgnoreCase(drugPurity1.getPurityString()))
+                .filter(drugPurity -> s.contains(drugPurity.getPurityString()))
                 .findFirst().orElseThrow(() -> new RuntimeException("DrugPurity does not exist"));
     }
 

@@ -14,7 +14,6 @@ import net.labymod.api.client.scoreboard.Scoreboard;
 import net.labymod.api.client.scoreboard.ScoreboardScore;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
-import net.labymod.api.event.client.render.ScreenRenderEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,11 +88,6 @@ public class CarListener {
                 name = checkKFZMatcher.group(2);
             p.sendServerMessage("/memberinfo " + name);
         }
-    }
-
-    @Subscribe
-    public void onScreenRender(ScreenRenderEvent e) {
-        this.unicacityAddon.transportController().carInteract();
     }
 
     @Subscribe
