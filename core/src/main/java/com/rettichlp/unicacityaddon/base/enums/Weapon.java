@@ -27,7 +27,7 @@ public enum Weapon {
         return name;
     }
 
-    public String getItemName() {
+    public String getDisplayName() {
         return "§8" + name;
     }
 
@@ -50,7 +50,7 @@ public enum Weapon {
 
     public static Weapon getWeaponByItemName(String displayName) {
         return Arrays.stream(Weapon.values())
-                .filter(weapon -> displayName.equalsIgnoreCase(weapon.getItemName()))
+                .filter(weapon -> displayName.equalsIgnoreCase(weapon.getDisplayName()))
                 .findFirst()
                 .orElse(null);
     }

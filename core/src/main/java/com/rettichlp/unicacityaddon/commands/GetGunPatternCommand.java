@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
  * @author RettichLP
  */
 @UCCommand
-public class GetGunCommand extends Command {
+public class GetGunPatternCommand extends Command {
 
     public static Armament armament = null;
 
@@ -25,7 +25,7 @@ public class GetGunCommand extends Command {
 
     private final UnicacityAddon unicacityAddon;
 
-    public GetGunCommand(UnicacityAddon unicacityAddon) {
+    public GetGunPatternCommand(UnicacityAddon unicacityAddon) {
         super("getgunpattern", "ggp");
         this.unicacityAddon = unicacityAddon;
     }
@@ -58,6 +58,8 @@ public class GetGunCommand extends Command {
             } else {
                 p.sendErrorMessage("Vorlage konnte nicht erstellt werden!");
             }
+        } else {
+            p.sendSyntaxMessage(usage);
         }
         return true;
     }
