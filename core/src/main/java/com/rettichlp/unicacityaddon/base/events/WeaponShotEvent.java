@@ -1,5 +1,6 @@
 package com.rettichlp.unicacityaddon.base.events;
 
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.enums.Weapon;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
@@ -14,10 +15,10 @@ public class WeaponShotEvent implements Event {
     private final int loaded;
     private final int backup;
 
-    public WeaponShotEvent(Weapon weapon, int loaded, int backup) {
+    public WeaponShotEvent(UnicacityAddon unicacityAddon, Weapon weapon) {
         this.weapon = weapon;
-        this.loaded = loaded;
-        this.backup = backup;
+        this.loaded = weapon.getLoadedAmmunition(unicacityAddon);
+        this.backup = weapon.getBackupAmmunition(unicacityAddon);
     }
 
     public Weapon getWeapon() {

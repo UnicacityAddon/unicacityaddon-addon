@@ -3,11 +3,13 @@ package com.rettichlp.unicacityaddon.base;
 import com.google.gson.JsonObject;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.api.exception.APIResponseException;
+import com.rettichlp.unicacityaddon.base.enums.Weapon;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.models.ManagementUser;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
+import com.rettichlp.unicacityaddon.base.utils.TextUtils;
 import com.rettichlp.unicacityaddon.listener.NavigationListener;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.entity.player.ClientPlayer;
@@ -186,6 +188,11 @@ public class DefaultAddonPlayer implements AddonPlayer {
         return getScoreboard().getScores(getScoreboard().getObjective(DisplaySlot.SIDEBAR)).stream()
                 .map(ScoreboardScore::getName)
                 .anyMatch(s -> s.contains("Angreifer") || s.contains("Verteidiger"));
+    }
+
+    @Override
+    public Weapon getWeaponInMainHand() {
+        return Weapon.getWeaponByItemName(TextUtils.legacy(getPlayer().getMainHandItemStack().getDisplayName()));
     }
 
     @Override

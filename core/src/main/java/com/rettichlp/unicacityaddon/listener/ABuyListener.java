@@ -37,7 +37,7 @@ public class ABuyListener {
         ItemStack itemStack = e.itemStack();
         if (!itemStack.equals(lastHoveredItemStack) && isPurchasableItem(e.getTooltipLines()) && amountLeft == 0) {
             lastHoveredItemStack = itemStack;
-            slotNumber = this.unicacityAddon.aBuyController().getHoveredSlotNumber(TextUtils.plain(e.itemStack().getDisplayName()));
+            slotNumber = this.unicacityAddon.guiController().getSlotNumberByDisplayName(TextUtils.plain(e.itemStack().getDisplayName()));
         }
     }
 

@@ -1,5 +1,6 @@
 package com.rettichlp.unicacityaddon.base;
 
+import com.rettichlp.unicacityaddon.base.enums.Weapon;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import net.labymod.api.client.component.Component;
@@ -69,6 +70,8 @@ public interface AddonPlayer {
     boolean isSuperUser();
 
     boolean hasGangwar();
+
+    Weapon getWeaponInMainHand();
 
     boolean isPrioritizedMember();
 }
