@@ -29,7 +29,6 @@ public class MobileListener {
     public static boolean activeCommunicationsCheck;
     public static final List<String> blockedPlayerList = new ArrayList<>();
     private boolean blockNextMessage = false;
-    private boolean whitelistSound = false;
 
     private final UnicacityAddon unicacityAddon;
 
@@ -98,51 +97,12 @@ public class MobileListener {
             return;
         }
 
-        Matcher mobileCallMatcher = PatternHandler.MOBILE_CALL_PATTERN.matcher(msg);
-        if (mobileCallMatcher.find()) {
-            if (blockedPlayerList.contains(mobileCallMatcher.group(1))) {
-                e.setCancelled(true);
-                return;
-            }
-            if (!muted) {
-                whitelistSound = true;
-                this.unicacityAddon.soundController().playMobileCallSound();
-            }
-            return;
-        }
-
         Matcher mobileSmsMatcher = PatternHandler.MOBILE_SMS_PATTERN.matcher(msg);
         if (mobileSmsMatcher.find()) {
             String playerName = mobileSmsMatcher.group(1);
             if (!AccountListener.isAfk)
                 p.sendServerMessage("/nummer " + playerName);
             isActive = true;
-            if (blockedPlayerList.contains(playerName)) {
-                blockNextMessage = true;
-                e.setCancelled(true);
-                return;
-            }
-            if (!muted) {
-                whitelistSound = true;
-                this.unicacityAddon.soundController().playMobileSMSSound();
-            }
         }
     }
-
-// TODO: 09.12.2022
-//    /**
-//     * To handle muted and blocked mobile settings, cancel all mobile sounds and send sound on client side if trigger message is received
-//     */
-//    @Subscribe
-//    public void onPlaySound(PlaySoundEvent e) {
-//        //The event.result starts off equal to event.sound, but could have been altered or set to null by another mod
-//        if (e.getResult() != null) {
-//            String name = e.getName();
-//            if ((name.equals("record.cat") || name.equals("record.stal") || name.equals("entity.sheep.ambient")) && !whitelistSound) {
-//                e.setResult(null);
-//                e.setResultSound(null);
-//                this.unicacityAddon.logger().info("Sound event cancelled: " + name);
-//            } else whitelistSound = false;
-//        }
-//    }
 }

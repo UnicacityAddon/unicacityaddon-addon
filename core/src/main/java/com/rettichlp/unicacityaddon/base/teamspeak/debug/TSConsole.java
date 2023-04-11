@@ -25,7 +25,7 @@ public class TSConsole implements TSListener {
 //                CommandResponse response = new BaseCommand<CommandResponse>(line) {
 //                }.getResponse();
 //
-//                // TODO Logger.LOGGER.info(response.getRawResponse());
+//                Logger.LOGGER.info(response.getRawResponse());
 //            }
 //        }
 //    }

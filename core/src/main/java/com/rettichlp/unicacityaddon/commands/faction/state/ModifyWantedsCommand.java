@@ -95,7 +95,6 @@ public class ModifyWantedsCommand extends Command {
         } else {
             List<String> tabCompletions = Arrays.stream(ModifyWantedType.values()).map(ModifyWantedType::getFlagArgument).sorted().collect(Collectors.toList());
 
-            // TODO: 30.09.2022
             String input = arguments[arguments.length - 1].toLowerCase().replace('-', ' ');
             tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
 
