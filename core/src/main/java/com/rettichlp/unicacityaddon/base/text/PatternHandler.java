@@ -260,7 +260,7 @@ public class PatternHandler {
      * @see com.rettichlp.unicacityaddon.listener.TimerListener
      */
     public static final Pattern TIMER_FBI_HACK_START_PATTERN = Pattern.compile("^\\[Polizeicomputer] Du hast einen Hackversuch gestartet\\. Geschätzte Dauer: (\\d+) Sekunden\\.$");
-    public static final Pattern TIMER_GRAVEYARD_START_PATTERN = Pattern.compile("^Du bist nun für (20|8|5) Minuten auf dem Friedhof\\.$");
+    public static final Pattern TIMER_GRAVEYARD_START_PATTERN = Pattern.compile("^Du bist nun für (2|5|8|20) Minuten auf dem Friedhof\\.$");
     public static final Pattern TIMER_JAIL_START_PATTERN = Pattern.compile("^\\[Gefängnis] Du bist nun für (\\d+) Minuten im Gefängnis\\.$");
     public static final Pattern TIMER_JAIL_FINISH_PATTERN = Pattern.compile("^\\[Gefängnis] Du bist wieder frei!$");
     public static final Pattern TIMER_JAIL_MODIFY_PATTERN = Pattern.compile("^\\[PI] Gute Arbeit\\. Du darfst nun (\\d)min früher gehen\\.$");
@@ -324,13 +324,11 @@ public class PatternHandler {
 
     /**
      * Pattern for church interaction
-     *
      */
     public static final Pattern PRAYING_START_PATTERN = Pattern.compile("^\\[Kirche] Du hast begonnen für (?:\\[UC])*(?<name>\\w+) zu beten\\.$");
 
     /**
      * Pattern for state messages
-     *
      */
     public static final Pattern DRUG_VAULT_DROP_PATTERN = Pattern.compile("^HQ: (.+) (?:\\[UC])*(\\w+) hat (\\d+)g (Kokain|Methamphetamin|Marihuana|LSD) \\((Höchste Reinheit|Gute Reinheit|Mittlere Reinheit|Schlechte Reinheit)\\) in der Asservatenkammer verstaut\\.$");
     public static final Pattern DRUG_VAULT_GET_PATTERN = Pattern.compile("^HQ: (.+) (?:\\[UC])*(\\w+) hat (\\d+)g (Kokain|Methamphetamin|Marihuana|LSD) \\((Höchste Reinheit|Gute Reinheit|Mittlere Reinheit|Schlechte Reinheit)\\) aus der Asservatenkammer genommen\\.$");

@@ -2,7 +2,7 @@ package com.rettichlp.unicacityaddon.listener.job;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
-import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
+import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
@@ -39,7 +39,7 @@ public class FishermanListener {
     }
 
     @Subscribe
-    public void onChatReceive(ChatReceiveEvent e)  {
+    public void onChatReceive(ChatReceiveEvent e) {
         String msg = e.chatMessage().getPlainText();
         AddonPlayer p = this.unicacityAddon.player();
 

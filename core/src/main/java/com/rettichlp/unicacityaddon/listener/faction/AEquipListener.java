@@ -1,7 +1,7 @@
 package com.rettichlp.unicacityaddon.listener.faction;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
+import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
 
 import java.util.Timer;
 
@@ -23,7 +23,7 @@ public class AEquipListener {
         this.unicacityAddon = unicacityAddon;
     }
 
-    //    @Subscribe
+    // todo   @Subscribe
 //    public void onKeyboardClickEvent(GuiScreenEvent.KeyboardInputEvent.Post e) {
 //        int amount = AEquipCommand.amount;
 //        if (amount == 0)

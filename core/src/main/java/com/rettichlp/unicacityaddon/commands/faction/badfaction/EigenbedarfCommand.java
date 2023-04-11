@@ -1,13 +1,13 @@
 package com.rettichlp.unicacityaddon.commands.faction.badfaction;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.config.ownUse.setting.KokainSetting;
 import com.rettichlp.unicacityaddon.base.config.ownUse.setting.MarihuanaSetting;
 import com.rettichlp.unicacityaddon.base.config.ownUse.setting.MethamphetaminSetting;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
-import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import net.labymod.api.client.chat.command.Command;
 
 import java.util.ArrayList;

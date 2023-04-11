@@ -1,7 +1,7 @@
 package com.rettichlp.unicacityaddon.listener.faction.rettungsdienst;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
+import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
@@ -22,7 +22,7 @@ public class FireListener {
      */
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {
-//        String msg = e.chatMessage().getPlainText();
+//        todo String msg = e.chatMessage().getPlainText();
 //
 //        if (!msg.equals("Fehler: Es brennt noch!"))
 //            return;

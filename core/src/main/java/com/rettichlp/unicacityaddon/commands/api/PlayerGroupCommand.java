@@ -3,10 +3,10 @@ package com.rettichlp.unicacityaddon.commands.api;
 import com.google.gson.JsonObject;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
+import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.api.exception.APIResponseException;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.enums.api.AddonGroup;
-import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import net.labymod.api.client.chat.command.Command;
@@ -43,9 +43,9 @@ public class PlayerGroupCommand extends Command {
                         .createComponent());
 
                 AddonGroup.valueOf(arguments[1]).getMemberList().forEach(s -> p.sendMessage(Message.getBuilder()
-                                .of("»").color(ColorCode.GRAY).advance().space()
-                                .of(s).color(ColorCode.AQUA).advance()
-                                .createComponent()));
+                        .of("»").color(ColorCode.GRAY).advance().space()
+                        .of(s).color(ColorCode.AQUA).advance()
+                        .createComponent()));
 
                 p.sendEmptyMessage();
 

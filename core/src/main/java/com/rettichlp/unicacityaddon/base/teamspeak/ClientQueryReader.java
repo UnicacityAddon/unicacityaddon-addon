@@ -80,7 +80,8 @@ public class ClientQueryReader extends Thread implements Closeable {
                         baseCommand.getResponseFuture().complete(commandResponse);
                     }
                 }
-            } catch (IOException | IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException | ClassNotFoundException e) {
+            } catch (IOException | IllegalAccessException | InstantiationException | NoSuchMethodException |
+                     InvocationTargetException | ClassNotFoundException e) {
                 unicacityAddon.logger().error(e.getMessage());
             }
 

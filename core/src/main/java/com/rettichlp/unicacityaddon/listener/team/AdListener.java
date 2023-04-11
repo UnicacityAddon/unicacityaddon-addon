@@ -1,7 +1,7 @@
 package com.rettichlp.unicacityaddon.listener.team;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
+import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
@@ -25,7 +25,7 @@ public class AdListener {
     }
 
     @Subscribe
-    public void onChatReceive(ChatReceiveEvent e)  {
+    public void onChatReceive(ChatReceiveEvent e) {
         Matcher matcher = PatternHandler.AD_CONTROL_PATTERN.matcher(e.chatMessage().getPlainText());
         if (matcher.find()) {
             adIssuer = matcher.group(1);

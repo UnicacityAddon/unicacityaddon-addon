@@ -3,9 +3,9 @@ package com.rettichlp.unicacityaddon.commands.api;
 import com.google.gson.JsonObject;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
+import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.api.exception.APIResponseException;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
-import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.FormattingCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
@@ -48,11 +48,11 @@ public class YasinCommand extends Command {
                                 .of("»").color(ColorCode.GRAY).advance().space()
                                 .of((done ? FormattingCode.STRIKETHROUGH.getCode() : "") + name).color(ColorCode.AQUA).advance().space()
                                 .of(!done ? "[✔] " : "").color(ColorCode.GREEN)
-                                        .clickEvent(ClickEvent.Action.RUN_COMMAND, "/yasin done " + name)
-                                        .advance()
+                                .clickEvent(ClickEvent.Action.RUN_COMMAND, "/yasin done " + name)
+                                .advance()
                                 .of("[✕]").color(ColorCode.RED)
-                                        .clickEvent(ClickEvent.Action.RUN_COMMAND, "/yasin remove " + name)
-                                        .advance()
+                                .clickEvent(ClickEvent.Action.RUN_COMMAND, "/yasin remove " + name)
+                                .advance()
                                 .createComponent());
                     });
 

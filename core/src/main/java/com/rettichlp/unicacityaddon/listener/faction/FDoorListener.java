@@ -1,7 +1,7 @@
 package com.rettichlp.unicacityaddon.listener.faction;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
+import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
 import net.labymod.api.util.math.vector.FloatVector3;
 
 import java.util.Arrays;
@@ -28,6 +28,7 @@ public class FDoorListener {
         this.unicacityAddon = unicacityAddon;
     }
 
+    // todo
     //    @Subscribe
 //    public void onRightClickBlock(PlayerInteractEvent.RightClickBlock e) {
 //        FloatVector3 pos = e.getPos();

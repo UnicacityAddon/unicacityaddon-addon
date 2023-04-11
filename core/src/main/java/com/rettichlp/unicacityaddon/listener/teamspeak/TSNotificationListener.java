@@ -2,7 +2,7 @@ package com.rettichlp.unicacityaddon.listener.teamspeak;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
-import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
+import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.teamspeak.commands.ClientVariableCommand;
 import com.rettichlp.unicacityaddon.base.teamspeak.events.ClientMovedEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;

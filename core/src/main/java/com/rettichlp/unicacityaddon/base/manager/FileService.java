@@ -34,26 +34,7 @@ public class FileService {
     public FileService(UnicacityAddon unicacityAddon) {
         this.unicacityAddon = unicacityAddon;
         this.data = new Data(unicacityAddon); // fallback if data cannot be loaded
-
-        String jsonData = "";
-        try {
-            File dataFile = getDataFile();
-            assert dataFile != null;
-            jsonData = FileUtils.readFileToString(dataFile, StandardCharsets.UTF_8.toString());
-        } catch (IOException e) {
-            this.unicacityAddon.logger().error(e.getMessage());
-        }
-
-        try {
-            new JsonParser().parse(jsonData); // validate check
-            if (!jsonData.isEmpty()) {
-                this.data = new Gson().fromJson(jsonData, Data.class);
-            }
-        } catch (JsonSyntaxException e) {
-            this.unicacityAddon.logger().info("Data cannot be created because Json is invalid: " + jsonData);
-            this.unicacityAddon.logger().error(e.getMessage());
-            this.unicacityAddon.logger().info("Creating default Data...");
-        }
+        loadData();
     }
 
     public Data data() {
@@ -141,6 +122,28 @@ public class FileService {
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    private void loadData() {
+        String jsonData = "";
+        try {
+            File dataFile = getDataFile();
+            assert dataFile != null;
+            jsonData = FileUtils.readFileToString(dataFile, StandardCharsets.UTF_8.toString());
+        } catch (IOException e) {
+            this.unicacityAddon.logger().error(e.getMessage());
+        }
+
+        try {
+            new JsonParser().parse(jsonData); // validate check
+            if (!jsonData.isEmpty()) {
+                this.data = new Gson().fromJson(jsonData, Data.class);
+            }
+        } catch (JsonSyntaxException e) {
+            this.unicacityAddon.logger().info("Data cannot be created because Json is invalid: " + jsonData);
+            this.unicacityAddon.logger().error(e.getMessage());
+            this.unicacityAddon.logger().info("Creating default Data...");
         }
     }
 }

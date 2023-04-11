@@ -1,7 +1,7 @@
 package com.rettichlp.unicacityaddon.listener;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
+import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
@@ -23,6 +23,7 @@ public class FriendJoinListener {
 
     public FriendJoinListener(UnicacityAddon unicacityAddon) {
         this.unicacityAddon = unicacityAddon;
+        // todo to account listener
     }
 
     @Subscribe
