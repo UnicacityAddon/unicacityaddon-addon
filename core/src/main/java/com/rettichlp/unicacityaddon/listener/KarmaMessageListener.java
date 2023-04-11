@@ -13,6 +13,7 @@ import net.labymod.api.event.client.chat.ChatReceiveEvent;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 
 /**
@@ -38,9 +39,12 @@ public class KarmaMessageListener {
             return;
 
         Matcher karmaChangedMatcher = PatternHandler.KARMA_CHANGED_PATTERN.matcher(msg);
-        if (karmaChangedMatcher.find() && !TimerListener.isJail && !ReviveListener.isDead) {
-            ReviveListener.handleRevive(this.unicacityAddon);
+        if (karmaChangedMatcher.find()) {
+            // handle revive
+            if (System.currentTimeMillis() - ReviveListener.medicReviveStartTime < TimeUnit.SECONDS.toMillis(10))
+                unicacityAddon.api().sendStatisticAddRequest(StatisticType.REVIVE);
 
+            // show karma mesage
             karmaCheck = true;
             this.unicacityAddon.player().sendServerMessage("/karma");
             e.setCancelled(true);

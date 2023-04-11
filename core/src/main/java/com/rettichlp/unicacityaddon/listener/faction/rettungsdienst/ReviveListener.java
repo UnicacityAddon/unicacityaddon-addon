@@ -1,14 +1,18 @@
 package com.rettichlp.unicacityaddon.listener.faction.rettungsdienst;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.enums.api.StatisticType;
+import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.commands.ShutdownGraveyardCommand;
+import com.rettichlp.unicacityaddon.listener.AccountListener;
+import com.rettichlp.unicacityaddon.listener.MobileListener;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
+import net.labymod.api.util.math.vector.FloatVector3;
 
 import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 
@@ -19,9 +23,9 @@ import java.util.regex.Matcher;
 public class ReviveListener {
 
     public static boolean isDead = false;
+    public static long medicReviveStartTime = 0; // revive time if you are the medic
 
-    private static long reviveByMedicStartTime = 0; // revive time if you are dead
-    private static long reviveFromMedicStartTime = 0; // revive time if you are the medic
+    private static long playerReviveStartTime = 0; // revive time if you are dead
     private static final Timer timer = new Timer();
 
     private final UnicacityAddon unicacityAddon;
@@ -36,7 +40,35 @@ public class ReviveListener {
 
         Matcher reviveByMedicStartMatcher = PatternHandler.REVIVE_BY_MEDIC_START_PATTERN.matcher(msg);
         if (reviveByMedicStartMatcher.find()) {
-            reviveByMedicStartTime = System.currentTimeMillis();
+            playerReviveStartTime = System.currentTimeMillis();
+
+            FloatVector3 playerReviveLocation = this.unicacityAddon.player().getPosition();
+            new Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    if (ReviveListener.this.unicacityAddon.player().getPosition().distance(playerReviveLocation) > 50) {
+                        AddonPlayer p = ReviveListener.this.unicacityAddon.player();
+                        ReviveListener.this.unicacityAddon.fileService().data().setTimer(0);
+                        isDead = false;
+
+                        if (System.currentTimeMillis() - playerReviveStartTime < TimeUnit.SECONDS.toMillis(10)) {
+                            ReviveListener.this.unicacityAddon.fileService().data().removeBankBalance(50); // successfully revived by medic = 50$
+
+                            // message to remember how long you are not allowed to shoot after revive
+                            timer.schedule(new TimerTask() {
+                                @Override
+                                public void run() {
+                                    p.sendInfoMessage("Du darfst wieder schießen.");
+                                }
+                            }, TimeUnit.MINUTES.toMillis(2));
+                        }
+
+                        if (MobileListener.hasCommunications && !AccountListener.isAfk)
+                            p.sendServerMessage("/togglephone");
+                    }
+                }
+            }, TimeUnit.SECONDS.toMillis(9));
+
             return;
         }
 
@@ -60,36 +92,6 @@ public class ReviveListener {
         }
 
         if (PatternHandler.REVIVE_START_PATTERN.matcher(msg).find() && this.unicacityAddon.isUnicacity())
-            reviveFromMedicStartTime = System.currentTimeMillis();
-    }
-
-    // todo
-//    @SubscribeEvent
-//    public void onSuccessfulRevive(PotionEvent.PotionAddedEvent e) {
-//
-//        if (isDead && e.getPotionEffect().getPotion().equals(Potion.getPotionById(15))) {
-//            isDead = false;
-//            this.unicacityAddon.getData().setTimer(0);
-//
-//            if (System.currentTimeMillis() - reviveByMedicStartTime < TimeUnit.SECONDS.toMillis(10)) {
-//                this.unicacityAddon.getData().removeBankBalance(50); // successfully revived by medic = 50$
-//
-//                // message to remember how long you are not allowed to shoot after revive
-//                timer.schedule(new TimerTask() {
-//                    @Override
-//                    public void run() {
-//                        p.sendInfoMessage("Du darfst wieder schießen.");
-//                    }
-//                }, TimeUnit.MINUTES.toMillis(2));
-//            }
-//
-//            if (MobileListener.hasCommunications && !AccountListener.isAfk)
-//                p.sendServerMessage("/togglephone");
-//        }
-//    }
-
-    public static void handleRevive(UnicacityAddon unicacityAddon) {
-        if (System.currentTimeMillis() - reviveFromMedicStartTime < TimeUnit.SECONDS.toMillis(10))
-            unicacityAddon.api().sendStatisticAddRequest(StatisticType.REVIVE);
+            medicReviveStartTime = System.currentTimeMillis();
     }
 }
