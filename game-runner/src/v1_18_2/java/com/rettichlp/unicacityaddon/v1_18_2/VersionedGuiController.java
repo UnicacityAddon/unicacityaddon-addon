@@ -1,7 +1,7 @@
-package com.rettichlp.unicacityaddon.v1_17_1;
+package com.rettichlp.unicacityaddon.v1_18_2;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.controller.ABuyController;
+import com.rettichlp.unicacityaddon.controller.GuiController;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMaps;
 import net.labymod.api.models.Implements;
 import net.minecraft.client.Minecraft;
@@ -21,11 +21,11 @@ import java.util.Optional;
  * @author RettichLP
  */
 @Singleton
-@Implements(ABuyController.class)
-public class VersionedABuyController extends ABuyController {
+@Implements(GuiController.class)
+public class VersionedGuiController extends GuiController {
 
     @Override
-    public int getHoveredSlotNumber(String displayName) {
+    public int getSlotNumberByDisplayName(String displayName) {
         int slotNumber = -1;
 
         Screen screen = Minecraft.getInstance().screen;
@@ -46,7 +46,7 @@ public class VersionedABuyController extends ABuyController {
     }
 
     @Override
-    public void buy(UnicacityAddon unicacityAddon, int slotIndex) {
+    public void inventoryClick(UnicacityAddon unicacityAddon, int slotNumber) {
         Screen screen = Minecraft.getInstance().screen;
         if (screen instanceof ContainerScreen && ((ContainerScreen) screen).getMenu() instanceof ChestMenu) {
             ChestMenu chestMenu = ((ContainerScreen) screen).getMenu();
@@ -54,7 +54,7 @@ public class VersionedABuyController extends ABuyController {
             LocalPlayer localPlayer = Minecraft.getInstance().player;
             assert localPlayer != null;
 
-            ServerboundContainerClickPacket serverboundContainerClickPacket = new ServerboundContainerClickPacket(chestMenu.containerId, 0, slotIndex, 1, ClickType.PICKUP, localPlayer.containerMenu.getCarried(), Int2ObjectMaps.emptyMap());
+            ServerboundContainerClickPacket serverboundContainerClickPacket = new ServerboundContainerClickPacket(chestMenu.containerId, 0, slotNumber, 1, ClickType.PICKUP, localPlayer.containerMenu.getCarried(), Int2ObjectMaps.emptyMap());
             localPlayer.connection.send(serverboundContainerClickPacket);
         }
     }

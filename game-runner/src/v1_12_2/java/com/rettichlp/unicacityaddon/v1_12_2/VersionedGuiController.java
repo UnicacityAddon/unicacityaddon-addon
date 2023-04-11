@@ -1,7 +1,7 @@
 package com.rettichlp.unicacityaddon.v1_12_2;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.controller.ABuyController;
+import com.rettichlp.unicacityaddon.controller.GuiController;
 import net.labymod.api.models.Implements;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
@@ -18,11 +18,11 @@ import java.util.Optional;
  * @author RettichLP
  */
 @Singleton
-@Implements(ABuyController.class)
-public class VersionedABuyController extends ABuyController {
+@Implements(GuiController.class)
+public class VersionedGuiController extends GuiController {
 
     @Override
-    public int getHoveredSlotNumber(String displayName) {
+    public int getSlotNumberByDisplayName(String displayName) {
         int slotNumber = -1;
 
         GuiScreen guiScreen = Minecraft.getMinecraft().currentScreen;
@@ -44,11 +44,11 @@ public class VersionedABuyController extends ABuyController {
     }
 
     @Override
-    public void buy(UnicacityAddon unicacityAddon, int slotIndex) {
+    public void inventoryClick(UnicacityAddon unicacityAddon, int slotNumber) {
         GuiScreen guiScreen = Minecraft.getMinecraft().currentScreen;
         if (guiScreen instanceof GuiContainer && ((GuiContainer) guiScreen).inventorySlots instanceof ContainerChest) {
             ContainerChest containerChest = (ContainerChest) ((GuiContainer) guiScreen).inventorySlots;
-            Minecraft.getMinecraft().playerController.windowClick(containerChest.windowId, slotIndex, 0, ClickType.PICKUP, Minecraft.getMinecraft().player);
+            Minecraft.getMinecraft().playerController.windowClick(containerChest.windowId, slotNumber, 0, ClickType.PICKUP, Minecraft.getMinecraft().player);
         }
     }
 }

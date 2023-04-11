@@ -9,9 +9,9 @@ import org.jetbrains.annotations.Nullable;
  */
 @Nullable
 @Referenceable
-public abstract class ABuyController {
+public abstract class GuiController {
 
-    public abstract int getHoveredSlotNumber(String displayName);
+    public abstract int getSlotNumberByDisplayName(String displayName);
 
-    public abstract void buy(UnicacityAddon unicacityAddon, int slotIndex);
+    public abstract void inventoryClick(UnicacityAddon unicacityAddon, int slotNumber);
 }

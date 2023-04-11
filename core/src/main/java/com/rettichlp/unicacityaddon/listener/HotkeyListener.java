@@ -89,7 +89,7 @@ public class HotkeyListener {
                     @Override
                     public void run() {
                         if (ABuyListener.amountLeft > 0) {
-                            HotkeyListener.this.unicacityAddon.aBuyController().buy(HotkeyListener.this.unicacityAddon, slotNumber);
+                            HotkeyListener.this.unicacityAddon.guiController().inventoryClick(HotkeyListener.this.unicacityAddon, slotNumber);
                             ABuyListener.amountLeft--;
                         } else {
                             this.cancel();

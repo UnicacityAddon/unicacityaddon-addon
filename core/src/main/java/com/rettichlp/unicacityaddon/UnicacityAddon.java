@@ -24,7 +24,7 @@ import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.manager.NavigationService;
 import com.rettichlp.unicacityaddon.base.utils.TextUtils;
-import com.rettichlp.unicacityaddon.controller.ABuyController;
+import com.rettichlp.unicacityaddon.controller.GuiController;
 import com.rettichlp.unicacityaddon.controller.DeadBodyController;
 import com.rettichlp.unicacityaddon.controller.OverlayMessageController;
 import com.rettichlp.unicacityaddon.controller.ScreenshotController;
@@ -201,8 +201,8 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
         return tsUtils;
     }
 
-    public ABuyController aBuyController() {
-        return controller().getABuyController();
+    public GuiController guiController() {
+        return controller().getGuiController();
     }
 
     public DeadBodyController deadBodyController() {
