@@ -2,16 +2,15 @@ package com.rettichlp.unicacityaddon.listener;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
+import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.config.UnicacityAddonConfiguration;
 import com.rettichlp.unicacityaddon.base.config.hotkey.HotkeySetting;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
-import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.teamspeak.CommandResponse;
 import com.rettichlp.unicacityaddon.base.teamspeak.commands.ClientMoveCommand;
 import com.rettichlp.unicacityaddon.base.teamspeak.objects.Channel;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
-import com.rettichlp.unicacityaddon.commands.ABuyCommand;
 import com.rettichlp.unicacityaddon.listener.team.AdListener;
 import net.labymod.api.Laby;
 import net.labymod.api.client.gui.screen.key.Key;
@@ -29,7 +28,9 @@ import java.util.TimerTask;
 @UCEvent
 public class HotkeyListener {
 
-    private int amountLeft = 0;
+    public static int amountLeft = 0;
+
+    private int slotNumber = -1;
 
     private final UnicacityAddon unicacityAddon;
 
@@ -82,17 +83,19 @@ public class HotkeyListener {
             FloatVector3 position = p.getPosition();
             p.sendServerMessage("/d Benötige Verstärkung! -> X: " + (int) position.getX() + " | Y: " + (int) position.getY() + " | Z: " + (int) position.getZ());
         } else if (key.equals(hotkeySetting.aBuy().getOrDefault(Key.NONE))) {
-            ABuyListener.amountLeft = ABuyCommand.amount;
-            int slotNumber = ABuyListener.slotNumber;
+            amountLeft = this.unicacityAddon.configuration().aBuyAmount().getOrDefault(5);
+            slotNumber = ScreenRenderListener.lastHoveredSlotNumber;
+
             if (slotNumber >= 0) {
                 new Timer().scheduleAtFixedRate(new TimerTask() {
                     @Override
                     public void run() {
-                        if (ABuyListener.amountLeft > 0) {
+                        if (amountLeft > 0) {
                             HotkeyListener.this.unicacityAddon.guiController().inventoryClick(HotkeyListener.this.unicacityAddon, slotNumber);
-                            ABuyListener.amountLeft--;
+                            amountLeft--;
                         } else {
                             this.cancel();
+                            slotNumber = -1;
                         }
                     }
                 }, 0, 200);

@@ -1,8 +1,6 @@
 package com.rettichlp.unicacityaddon.base.text;
 
 
-import com.rettichlp.unicacityaddon.listener.faction.terroristen.BombListener;
-
 import java.util.regex.Pattern;
 
 /**
@@ -30,7 +28,7 @@ public class PatternHandler {
     /**
      * Pattern for bomb timer
      *
-     * @see BombListener
+     * @see com.rettichlp.unicacityaddon.listener.faction.terroristen.BombListener
      */
     public static final Pattern BOMB_PLACED_PATTERN = Pattern.compile("^News: ACHTUNG! Es wurde eine Bombe in der Nähe von (?<location>.+) gefunden!$");
     public static final Pattern BOMB_REMOVED_PATTERN = Pattern.compile("^News: Die Bombe konnte (nicht|erfolgreich) entschärft werden!$");
@@ -300,7 +298,7 @@ public class PatternHandler {
     /**
      * Pattern for equip interaction
      *
-     * @see com.rettichlp.unicacityaddon.listener.faction.EquipListener
+     * @see com.rettichlp.unicacityaddon.listener.EquipShopListener
      */
     public static final Pattern TRACKER_PATTERN = Pattern.compile("^Du hast einen Peilsender an (?:\\[UC])*(\\w+) befestigt\\.$");
     public static final Pattern EQUIP_PATTERN = Pattern.compile("^(?:|\\[Equip] )Du hast (?:dir|dich mit) (?:|ein|eine|einen|einem) (.+) equip(?:|p)t[!.]$");
@@ -317,7 +315,7 @@ public class PatternHandler {
     /**
      * Pattern for shop interaction
      *
-     * @see com.rettichlp.unicacityaddon.listener.ABuyListener
+     * @see com.rettichlp.unicacityaddon.listener.EquipShopListener
      */
     public static final Pattern BUY_INTERRUPTED_PATTERN = Pattern.compile("^Verkäufer: (Tut (uns|mir) Leid|Verzeihung), unser Lager ist derzeit leer\\.$" +
             "|^Verkäufer: Dieses Produkt kostet \\d+\\$\\.$" + "|^Verkäufer: Du hast leider nicht genug Geld dabei\\.$");

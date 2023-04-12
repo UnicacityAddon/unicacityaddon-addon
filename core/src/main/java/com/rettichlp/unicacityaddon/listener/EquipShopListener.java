@@ -1,4 +1,4 @@
-package com.rettichlp.unicacityaddon.listener.faction;
+package com.rettichlp.unicacityaddon.listener;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
@@ -12,21 +12,29 @@ import java.util.Optional;
 import java.util.regex.Matcher;
 
 /**
- * @author Dimiikou
  * @author RettichLP
+ * @author Dimiikou
+ * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/commands/ABuyCommand.java">UCUtils by paulzhng</a>
  */
 @UCEvent
-public class EquipListener {
+public class EquipShopListener {
 
     private final UnicacityAddon unicacityAddon;
 
-    public EquipListener(UnicacityAddon unicacityAddon) {
+    public EquipShopListener(UnicacityAddon unicacityAddon) {
         this.unicacityAddon = unicacityAddon;
     }
 
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {
         String msg = e.chatMessage().getPlainText();
+
+        Matcher buyInterruptedMatcher = PatternHandler.BUY_INTERRUPTED_PATTERN.matcher(msg);
+        Matcher equipInterruptedMatcher = PatternHandler.EQUIP_INTERRUPTED_PATTERN.matcher(msg);
+        if (buyInterruptedMatcher.find() || equipInterruptedMatcher.find()) {
+            HotkeyListener.amountLeft = 0;
+            return;
+        }
 
         Matcher equipMatcher = PatternHandler.EQUIP_PATTERN.matcher(msg);
         if (equipMatcher.find()) {
