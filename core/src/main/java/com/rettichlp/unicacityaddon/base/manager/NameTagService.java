@@ -16,8 +16,6 @@ import com.rettichlp.unicacityaddon.listener.faction.state.WantedListener;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 /**
  * @author RettichLP
@@ -126,10 +124,6 @@ public class NameTagService {
     public boolean isAdminDuty(String playerName) {
         return this.unicacityAddon.isUnicacity() && this.unicacityAddon.labyAPI().minecraft().getClientPacketListener().getNetworkPlayerInfos().stream()
                 .map(networkPlayerInfo -> TextUtils.legacy(networkPlayerInfo.displayName()))
-                .filter(s -> s.startsWith("&8[&9UC&8]&c"))
-                .collect(Collectors.toList()).stream()
-                .map(TextUtils::stripColor)
-                .map(TextUtils::stripPrefix)
-                .anyMatch(s -> Objects.equals(s, playerName));
+                .anyMatch(s -> s.startsWith("§8[§9UC§8]§c") && s.contains(playerName));
     }
 }

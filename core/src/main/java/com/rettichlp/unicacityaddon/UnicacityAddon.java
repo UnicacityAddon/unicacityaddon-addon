@@ -113,7 +113,7 @@ import java.util.stream.Collectors;
 @AddonMain
 public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration> {
 
-    private final String version = "2.0.0-alpha.2";
+    private final String version = "2.0.0-alpha.3";
     private AddonPlayer player;
     private FactionService factionService;
     private FileService fileService;
