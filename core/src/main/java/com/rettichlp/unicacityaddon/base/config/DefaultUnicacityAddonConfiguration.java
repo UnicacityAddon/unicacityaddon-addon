@@ -23,6 +23,7 @@ import com.rettichlp.unicacityaddon.base.config.reinforcement.ReinforcementSetti
 import com.rettichlp.unicacityaddon.base.config.sloc.DefaultSlocSetting;
 import com.rettichlp.unicacityaddon.base.config.sloc.SlocSetting;
 import net.labymod.api.addon.AddonConfig;
+import net.labymod.api.client.gui.screen.widget.widgets.input.SliderWidget.SliderSetting;
 import net.labymod.api.client.gui.screen.widget.widgets.input.SwitchWidget.SwitchSetting;
 import net.labymod.api.client.gui.screen.widget.widgets.input.TextFieldWidget.TextFieldSetting;
 import net.labymod.api.configuration.loader.annotation.ConfigName;
@@ -67,7 +68,7 @@ public class DefaultUnicacityAddonConfiguration extends AddonConfig implements U
     @SwitchSetting
     private final ConfigProperty<Boolean> carRoute = new ConfigProperty<>(true);
 
-    @SwitchSetting
+    @SliderSetting(min = 1, max = 20)
     private final ConfigProperty<Integer> aBuyAmount = new ConfigProperty<>(10);
 
     @SettingSection("teamspeak")
