@@ -103,8 +103,8 @@
           "description": "Bewegt den Spieler in den eigenen öffentlichen Channel auf dem Teamspeak"
         },
         "aBuy": {
-          "name": "Automatisches Kaufen (/abuy)",
-          "description": "Kauft automatisch die vorher (mit /abuy) eingestellte Menge, wenn über ein kaufbares Item mit der Maus gegangen wird und dieser Hotkey statt der linken Maustaste gedrückt wird"
+          "name": "ABuy und AEquip ausführen",
+          "description": "Kauft automatisch die eingestellte Menge, wenn über ein kaufbares/ausrüstbares Item mit der Maus gegangen wird und dieser Hotkey statt der linken Maustaste gedrückt wird"
         }
       },
       "nameTagSetting": {
@@ -272,6 +272,10 @@
       "carRoute": {
         "name": "Automatisch die Route zum Auto anzeigen",
         "description": "Nach Ausführung des '/car find' Commands wird direkt die Route angezeigt"
+      },
+      "aBuyAmount": {
+        "name": "Mange für ABuy und AEquip",
+        "description": "Anzahl der Gegenstände/des Equips, das automatisch gekauft oder ausgerüstet werden soll"
       },
       "tsApiKey": {
         "name": "Teamspeak API Key"
