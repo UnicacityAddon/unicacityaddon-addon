@@ -6,14 +6,19 @@ import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.utils.TextUtils;
 import com.rettichlp.unicacityaddon.commands.GetGunPatternCommand;
 import com.rettichlp.unicacityaddon.commands.faction.DropDrugAllCommand;
+import net.labymod.api.client.world.item.ItemStack;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.render.ScreenRenderEvent;
+import net.labymod.api.event.client.world.ItemStackTooltipEvent;
 
 /**
  * @author RettichLP
  */
 @UCEvent
 public class ScreenRenderListener {
+
+    public static ItemStack lastHoveredItemStack;
+    public static int lastHoveredSlotNumber = -1;
 
     private final UnicacityAddon unicacityAddon;
 
@@ -39,5 +44,12 @@ public class ScreenRenderListener {
         if (DropDrugAllCommand.active) {
             this.unicacityAddon.guiController().updateDrugInventoryMap(this.unicacityAddon);
         }
+    }
+
+    @Subscribe
+    public void onItemStackTooltip(ItemStackTooltipEvent e) {
+        ItemStack itemStack = e.itemStack();
+        lastHoveredItemStack = itemStack;
+        lastHoveredSlotNumber = this.unicacityAddon.guiController().getSlotNumberByDisplayName(TextUtils.plain(itemStack.getDisplayName()));
     }
 }

@@ -68,7 +68,7 @@ public class DefaultUnicacityAddonConfiguration extends AddonConfig implements U
     private final ConfigProperty<Boolean> carRoute = new ConfigProperty<>(true);
 
     @SwitchSetting
-    private final ConfigProperty<Boolean> update = new ConfigProperty<>(true);
+    private final ConfigProperty<Integer> aBuyAmount = new ConfigProperty<>(10);
 
     @SettingSection("teamspeak")
     @TextFieldSetting
@@ -161,8 +161,8 @@ public class DefaultUnicacityAddonConfiguration extends AddonConfig implements U
     }
 
     @Override
-    public ConfigProperty<Boolean> update() {
-        return this.update;
+    public ConfigProperty<Integer> aBuyAmount() {
+        return this.aBuyAmount;
     }
 
     @Override

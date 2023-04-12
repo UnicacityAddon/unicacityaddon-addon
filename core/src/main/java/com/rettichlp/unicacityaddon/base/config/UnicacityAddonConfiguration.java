@@ -42,7 +42,7 @@ public interface UnicacityAddonConfiguration {
 
     ConfigProperty<Boolean> carRoute();
 
-    ConfigProperty<Boolean> update();
+    ConfigProperty<Integer> aBuyAmount();
 
     ConfigProperty<String> tsApiKey();
 
