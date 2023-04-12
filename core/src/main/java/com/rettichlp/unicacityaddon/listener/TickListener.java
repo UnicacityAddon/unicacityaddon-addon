@@ -78,11 +78,6 @@ public class TickListener {
             handleDamageTracker();
         }
 
-        if (e.isPhase(UnicacityAddonTickEvent.Phase.TICK_5)) {
-            this.unicacityAddon.transportController().processBusRouting(this.unicacityAddon.player());
-            // TODO: 17.03.2023 DropDrugAllCommand.process();
-        }
-
         if (e.isPhase(UnicacityAddonTickEvent.Phase.SECOND)) {
             handleTimer();
         }

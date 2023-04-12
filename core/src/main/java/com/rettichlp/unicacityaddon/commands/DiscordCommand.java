@@ -40,8 +40,9 @@ public class DiscordCommand extends Command {
         p.sendMessage(Message.getBuilder()
                 .of("»").color(ColorCode.GRAY).advance().space()
                 .of("discord.gg/A9u5eY7CbS").color(ColorCode.AQUA).bold()
-                .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("*Klick*").color(ColorCode.DARK_AQUA).bold().advance().createComponent())
-                .clickEvent(ClickEvent.Action.OPEN_URL, "https://discord.gg/A9u5eY7CbS").advance()
+                        .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("*Klick*").color(ColorCode.DARK_AQUA).bold().advance().createComponent())
+                        .clickEvent(ClickEvent.Action.OPEN_URL, "https://discord.gg/A9u5eY7CbS")
+                        .advance()
                 .createComponent());
 
         p.sendEmptyMessage();

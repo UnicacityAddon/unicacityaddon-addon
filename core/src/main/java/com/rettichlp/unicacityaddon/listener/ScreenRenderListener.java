@@ -13,17 +13,18 @@ import net.labymod.api.event.client.render.ScreenRenderEvent;
  * @author RettichLP
  */
 @UCEvent
-public class ScreenListener {
+public class ScreenRenderListener {
 
     private final UnicacityAddon unicacityAddon;
 
-    public ScreenListener(UnicacityAddon unicacityAddon) {
+    public ScreenRenderListener(UnicacityAddon unicacityAddon) {
         this.unicacityAddon = unicacityAddon;
     }
 
     @Subscribe
     public void onScreenRender(ScreenRenderEvent e) {
         this.unicacityAddon.transportController().carInteract();
+        this.unicacityAddon.transportController().processBusRouting(this.unicacityAddon.player());
 
         if (GetGunPatternCommand.armament != null) {
             Weapon weapon = GetGunPatternCommand.armament.getWeapon();

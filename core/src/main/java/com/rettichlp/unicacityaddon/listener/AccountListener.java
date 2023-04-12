@@ -14,6 +14,9 @@ import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.base.utils.MathUtils;
 import com.rettichlp.unicacityaddon.commands.MaskInfoCommand;
+import net.labymod.api.client.chat.ChatMessage;
+import net.labymod.api.client.component.event.ClickEvent;
+import net.labymod.api.client.component.event.HoverEvent;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
@@ -43,7 +46,9 @@ public class AccountListener {
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {
         AddonPlayer p = this.unicacityAddon.player();
-        String msg = e.chatMessage().getPlainText();
+        ChatMessage chatMessage = e.chatMessage();
+        String msg = chatMessage.getPlainText();
+        String formattedMsg = chatMessage.getFormattedText();
 
         if (!this.unicacityAddon.isUnicacity())
             return;
@@ -91,6 +96,45 @@ public class AccountListener {
             }, new Date(lastDamageTime + TimeUnit.SECONDS.toMillis(15)));
             return;
         }
+
+        Matcher accountFriendJoinMatcher = PatternHandler.ACCOUNT_FRIEND_JOIN_PATTERN.matcher(msg);
+        if (accountFriendJoinMatcher.find()) {
+            String name = accountFriendJoinMatcher.group("name");
+            e.setMessage(Message.getBuilder()
+                    .add(formattedMsg)
+                    .space()
+                    .of("[☎]").color(ColorCode.DARK_GREEN)
+                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of(name + " anrufen").color(ColorCode.DARK_GREEN).advance().createComponent())
+                            .clickEvent(ClickEvent.Action.RUN_COMMAND, "/acall " + name)
+                            .advance()
+                    .space()
+                    .of("[✉]").color(ColorCode.GOLD)
+                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("SMS an " + name + " senden").color(ColorCode.GOLD).advance().createComponent())
+                            .clickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/asms " + name + " ")
+                            .advance()
+                    .space()
+                    .of("[✕]").color(ColorCode.RED)
+                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of(name + " aus der Freundesliste entfernen").color(ColorCode.RED).advance().createComponent())
+                            .clickEvent(ClickEvent.Action.RUN_COMMAND, "/fl delete " + name)
+                            .advance()
+                    .createComponent());
+            return;
+        }
+
+        Matcher accountFriendLeaveMatcher = PatternHandler.ACCOUNT_FRIEND_LEAVE_PATTERN.matcher(msg);
+        if (accountFriendLeaveMatcher.find()) {
+            String name = accountFriendLeaveMatcher.group("name");
+            e.setMessage(Message.getBuilder()
+                    .add(formattedMsg)
+                    .space()
+                    .of("[✕]").color(ColorCode.RED)
+                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of(name + " aus der Freundesliste entfernen").color(ColorCode.RED).advance().createComponent())
+                            .clickEvent(ClickEvent.Action.RUN_COMMAND, "/fl delete " + name)
+                            .advance()
+                    .createComponent());
+            return;
+        }
+
 
         if (PatternHandler.ACCOUNT_TREUEBONUS_PATTERN.matcher(msg).find()) {
             new Thread(() -> {

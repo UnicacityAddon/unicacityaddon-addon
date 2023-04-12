@@ -59,9 +59,9 @@ public class ActivityCommand extends Command {
                         .of(":").color(ColorCode.GRAY).advance().space()
                         .of(String.valueOf(entryCount)).color(ColorCode.AQUA).advance().space()
                         .of("[↗]").color(ColorCode.BLUE)
-                        .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Ordner öffnen").color(ColorCode.RED).advance().createComponent())
-                        .clickEvent(ClickEvent.Action.OPEN_FILE, this.unicacityAddon.fileService().getAddonActivityScreenDir(s).getAbsolutePath())
-                        .advance()
+                                .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Ordner öffnen").color(ColorCode.RED).advance().createComponent())
+                                .clickEvent(ClickEvent.Action.OPEN_FILE, this.unicacityAddon.fileService().getAddonActivityScreenDir(s).getAbsolutePath())
+                                .advance()
                         .createComponent());
             }
         });

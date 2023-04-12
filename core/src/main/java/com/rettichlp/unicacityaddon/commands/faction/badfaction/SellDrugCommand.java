@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 
 /**
  * @author Dimiikou
+ * @author RettichLP
  */
 @UCCommand
 public class SellDrugCommand extends Command {
@@ -29,13 +30,14 @@ public class SellDrugCommand extends Command {
     @Override
     public boolean execute(String prefix, String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
+
         if (arguments.length < 5) {
             p.sendSyntaxMessage(usage);
             return true;
         }
 
-        p.sendServerMessage("/selldrug " + arguments[0] + " " + arguments[1] + " " + arguments[2] + " " + arguments[3] + " " + arguments[4]);
-        return true;
+        // command is only used to add tab completion
+        return false;
     }
 
     @Override
