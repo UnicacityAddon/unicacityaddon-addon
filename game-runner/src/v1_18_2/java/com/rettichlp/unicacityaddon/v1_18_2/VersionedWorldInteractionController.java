@@ -14,7 +14,10 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
 import javax.inject.Singleton;
+import java.util.Collection;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 /**
  * @author RettichLP
@@ -67,5 +70,16 @@ public class VersionedWorldInteractionController extends WorldInteractionControl
         boolean isPodzol = clientLevel.getBlockState(new BlockPos(pos.getX(), pos.getY() - 1, pos.getZ())).getBlock().equals(Blocks.PODZOL);
 
         return isFern && isPodzol;
+    }
+
+    @Override
+    public Collection<FloatVector3> getFireBlocksInBox(FloatVector3 one, FloatVector3 two) {
+        BlockPos oneBlockPos = new BlockPos(one.getX(), one.getY(), one.getZ());
+        BlockPos twoBlockPos = new BlockPos(two.getX(), two.getY(), two.getZ());
+
+        return StreamSupport.stream(BlockPos.betweenClosed(oneBlockPos, twoBlockPos).spliterator(), false)
+                .filter(blockPos -> Minecraft.getInstance().level.getBlockState(blockPos).getBlock().equals(Blocks.FIRE))
+                .map(blockPos -> new FloatVector3(blockPos.getX(), blockPos.getY(), blockPos.getZ()))
+                .collect(Collectors.toList());
     }
 }

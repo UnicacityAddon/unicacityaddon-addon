@@ -4,6 +4,8 @@ import net.labymod.api.reference.annotation.Referenceable;
 import net.labymod.api.util.math.vector.FloatVector3;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Collection;
+
 /**
  * @author RettichLP
  */
@@ -18,4 +20,6 @@ public abstract class WorldInteractionController {
     public abstract boolean isBanner(FloatVector3 pos);
 
     public abstract boolean isPlant(FloatVector3 clickedBlock);
+
+    public abstract Collection<FloatVector3> getFireBlocksInBox(FloatVector3 one, FloatVector3 two);
 }
