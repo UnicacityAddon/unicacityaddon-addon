@@ -2,20 +2,18 @@ package com.rettichlp.unicacityaddon.listener.faction;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
+import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.config.reinforcement.DefaultReinforcementSetting;
 import com.rettichlp.unicacityaddon.base.enums.faction.ReinforcementType;
 import com.rettichlp.unicacityaddon.base.models.NaviPoint;
-import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
-import com.rettichlp.unicacityaddon.listener.TickListener;
 import net.labymod.api.client.chat.ChatMessage;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.event.HoverEvent;
 import net.labymod.api.event.Subscribe;
-import net.labymod.api.event.client.chat.ChatMessageSendEvent;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 import net.labymod.api.util.math.vector.FloatVector3;
 
@@ -31,7 +29,6 @@ import java.util.regex.Pattern;
 public class ReinforcementListener {
 
     private static Reinforcement lastReinforcement;
-    public static int activeReinforcement = -1;
 
     private final UnicacityAddon unicacityAddon;
 
@@ -141,12 +138,6 @@ public class ReinforcementListener {
             e.setCancelled(true);
             return;
         }
-    }
-
-    @Subscribe
-    public void onChatMessageSend(ChatMessageSendEvent e) {
-        if (this.unicacityAddon.configuration().reinforcementSetting().screen().get() && e.getMessage().toLowerCase().startsWith("/reinforcement ontheway "))
-            activeReinforcement = TickListener.currentTick;
     }
 
     private static class Reinforcement {

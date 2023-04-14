@@ -9,6 +9,7 @@ import com.rettichlp.unicacityaddon.base.enums.faction.ReinforcementType;
 import com.rettichlp.unicacityaddon.base.text.ChatType;
 import com.rettichlp.unicacityaddon.base.utils.MathUtils;
 import com.rettichlp.unicacityaddon.listener.MobileListener;
+import com.rettichlp.unicacityaddon.listener.TickListener;
 import net.labymod.api.client.chat.command.Command;
 import net.labymod.api.util.math.vector.FloatVector3;
 
@@ -23,7 +24,9 @@ import java.util.stream.Collectors;
 @UCCommand
 public class ReinforcementCommand extends Command {
 
-    private static final String usage = "/reinforcement (-d/-r/-rd/-e/-ed/-m/-lb/-da/-ct/-p/-b/-gn/-t)";
+    public static int activeReinforcement = -1;
+
+    private static final String usage = "/reinforcement (-f|-d|-r|-rd|-e|-ed|-m|-lb|-da|-ct|-p|-b|-gn|-gnd|-t|-td|-test)";
 
     private final UnicacityAddon unicacityAddon;
 
@@ -41,6 +44,11 @@ public class ReinforcementCommand extends Command {
             return true;
         }
 
+        if ((p.getFaction() == Faction.FBI || p.getFaction() == Faction.RETTUNGSDIENST || p.getFaction() == Faction.POLIZEI) && !p.inDuty()) {
+            p.sendErrorMessage("Du bist nicht im Dienst!");
+            return true;
+        }
+
         ReinforcementType firstType = ReinforcementType.DEFAULT;
         if (arguments.length == 1 || arguments.length == 6)
             firstType = ReinforcementType.getByArgument(arguments[arguments.length - 1]);
@@ -48,11 +56,6 @@ public class ReinforcementCommand extends Command {
         ChatType chatType = firstType.getChatType(this.unicacityAddon.configuration().nameTagSetting());
 
         if ((arguments.length >= 5) && arguments[0].equalsIgnoreCase("ontheway")) {
-            if ((p.getFaction() == Faction.FBI || p.getFaction() == Faction.RETTUNGSDIENST || p.getFaction() == Faction.POLIZEI) && !p.inDuty()) {
-                p.sendErrorMessage("Du bist nicht im Dienst.");
-                return true;
-            }
-
             String name = arguments[1];
 
             if (!MathUtils.isInteger(arguments[2]) || !MathUtils.isInteger(arguments[3]) || !MathUtils.isInteger(arguments[4]))
@@ -63,6 +66,11 @@ public class ReinforcementCommand extends Command {
 
             p.sendServerMessage(chatType.getChatCommand() + " " + name + ", ich bin zu deinem Verstärkungsruf unterwegs! (" + (int) p.getPosition().distance(new FloatVector3(x, y, z)) + " Meter entfernt)");
             p.setNaviRoute(x, y, z);
+
+            // activity screenshot
+            if (this.unicacityAddon.configuration().reinforcementSetting().screen().get())
+                activeReinforcement = TickListener.currentTick;
+
             return true;
         }
 

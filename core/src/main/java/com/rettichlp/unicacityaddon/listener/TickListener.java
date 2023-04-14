@@ -1,10 +1,10 @@
 package com.rettichlp.unicacityaddon.listener;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.builder.ScreenshotBuilder;
 import com.rettichlp.unicacityaddon.base.events.UnicacityAddonTickEvent;
-import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
-import com.rettichlp.unicacityaddon.listener.faction.ReinforcementListener;
+import com.rettichlp.unicacityaddon.commands.faction.ReinforcementCommand;
 import com.rettichlp.unicacityaddon.listener.faction.terroristen.BombListener;
 import net.labymod.api.event.Phase;
 import net.labymod.api.event.Subscribe;
@@ -73,7 +73,7 @@ public class TickListener {
     @Subscribe
     public void onUnicacityAddonTick(UnicacityAddonTickEvent e) {
         if (e.isIngame() && e.isPhase(UnicacityAddonTickEvent.Phase.TICK)) {
-            handleActivityScreenshot(ReinforcementListener.activeReinforcement, "reinforcement");
+            handleActivityScreenshot(ReinforcementCommand.activeReinforcement, "reinforcement");
             handleActivityScreenshot(BombListener.activeBomb, "großeinsatz");
             handleDamageTracker();
         }

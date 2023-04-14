@@ -77,11 +77,9 @@ public class HotkeyListener {
         } else if (key.equals(hotkeySetting.aDutySilent().getOrDefault(Key.NONE))) {
             p.sendServerMessage("/aduty -s");
         } else if (key.equals(hotkeySetting.reinforcementFaction().getOrDefault(Key.NONE))) {
-            FloatVector3 position = p.getPosition();
-            p.sendServerMessage("/f Benötige Verstärkung! -> X: " + (int) position.getX() + " | Y: " + (int) position.getY() + " | Z: " + (int) position.getZ());
+            p.sendServerMessage("/reinforcement -f");
         } else if (key.equals(hotkeySetting.reinforcementAlliance().getOrDefault(Key.NONE))) {
-            FloatVector3 position = p.getPosition();
-            p.sendServerMessage("/d Benötige Verstärkung! -> X: " + (int) position.getX() + " | Y: " + (int) position.getY() + " | Z: " + (int) position.getZ());
+            p.sendServerMessage("/reinforcement -d");
         } else if (key.equals(hotkeySetting.aBuy().getOrDefault(Key.NONE))) {
             amountLeft = this.unicacityAddon.configuration().aBuyAmount().getOrDefault(5);
             slotNumber = ScreenRenderListener.lastHoveredSlotNumber;
