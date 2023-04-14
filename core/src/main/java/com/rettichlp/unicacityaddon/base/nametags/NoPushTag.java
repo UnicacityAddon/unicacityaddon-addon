@@ -1,6 +1,7 @@
 package com.rettichlp.unicacityaddon.base.nametags;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.base.manager.NameTagService;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import net.labymod.api.client.entity.player.Player;
@@ -14,6 +15,14 @@ import java.util.Optional;
  * @author RettichLP
  */
 public class NoPushTag extends NameTag {
+
+    private final RenderableComponent ADMIN_DUTY_COMPONENT = RenderableComponent.of(Message.getBuilder()
+            .of("ADMIN DIENST").color(ColorCode.GOLD).bold().advance()
+            .createComponent());
+
+    private final RenderableComponent AFK_COMPONENT = RenderableComponent.of(Message.getBuilder()
+            .of("AFK").color(ColorCode.GOLD).bold().advance()
+            .createComponent());
 
     private final UnicacityAddon unicacityAddon;
 
@@ -46,11 +55,13 @@ public class NoPushTag extends NameTag {
     }
 
     private RenderableComponent getComponent(String playerName) {
-        boolean isNoPush = this.unicacityAddon.nametagService().getNoPushPlayerList().contains(playerName);
-        boolean isADuty = this.unicacityAddon.nametagService().isAdminDuty(playerName);
-
-        return isNoPush ? RenderableComponent.of(Message.getBuilder()
-                .of(isADuty ? "ADMIN DIENST" : "AFK").color(ColorCode.GOLD).bold().advance()
-                .createComponent()) : null;
+        NameTagService nameTagService = this.unicacityAddon.nametagService();
+        if (nameTagService.isAdminDuty(playerName)) {
+            return ADMIN_DUTY_COMPONENT;
+        } else if (nameTagService.getNoPushPlayerList().contains(playerName)) {
+            return AFK_COMPONENT;
+        } else {
+            return null;
+        }
     }
 }

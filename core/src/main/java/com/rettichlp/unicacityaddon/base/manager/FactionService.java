@@ -23,11 +23,8 @@ public class FactionService {
     public boolean checkPlayerDuty(String playerName) {
         return this.unicacityAddon.isUnicacity() && this.unicacityAddon.labyAPI().minecraft().getClientPacketListener().getNetworkPlayerInfos().stream()
                 .map(networkPlayerInfo -> TextUtils.legacy(networkPlayerInfo.displayName()))
-                .filter(s -> s.startsWith("&1[UC]") || s.startsWith("&1") || s.startsWith("&9[UC]") || s.startsWith("&9") || s.startsWith("&4[UC]") || s.startsWith("&4") || s.startsWith("&6[UC]") || s.startsWith("&6"))
-                .collect(Collectors.toList()).stream()
-                .map(TextUtils::stripColor)
-                .map(TextUtils::stripPrefix)
-                .anyMatch(s -> Objects.equals(s, playerName));
+                .filter(s -> s.startsWith("§1") || s.startsWith("§9") || s.startsWith("§4") || s.startsWith("§6"))
+                .anyMatch(s -> s.contains(playerName));
     }
 
     public String getNameTagSuffix(Faction faction) {
