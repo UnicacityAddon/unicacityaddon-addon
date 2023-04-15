@@ -2,8 +2,10 @@ package com.rettichlp.unicacityaddon.listener;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
+import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.FormattingCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
+import net.labymod.api.client.component.Component;
 import net.labymod.api.client.network.NetworkPlayerInfo;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.render.PlayerNameTagRenderEvent;
@@ -14,6 +16,10 @@ import net.labymod.api.event.client.scoreboard.ScoreboardTeamUpdateEvent;
  */
 @UCEvent
 public class NameTagRenderListener {
+
+    private final Component AFK_COMPONENT = Message.getBuilder().space()
+            .of("(AFK)").color(ColorCode.GRAY).advance()
+            .createComponent();
 
     private final UnicacityAddon unicacityAddon;
 
@@ -27,21 +33,27 @@ public class NameTagRenderListener {
      */
     @Subscribe
     public void onPlayerNameTagRender(PlayerNameTagRenderEvent e) {
-        if (e.context().equals(PlayerNameTagRenderEvent.Context.PLAYER_RENDER)) {
-            NetworkPlayerInfo networkPlayerInfo = e.playerInfo();
+        PlayerNameTagRenderEvent.Context context = e.context();
+        NetworkPlayerInfo networkPlayerInfo = e.playerInfo();
 
-            if (networkPlayerInfo != null) {
-                String playerName = networkPlayerInfo.profile().getUsername();
+        if (networkPlayerInfo == null)
+            return;
 
-                if (this.unicacityAddon.nametagService().getMaskedPlayerList().contains(playerName)) {
-                    e.setNameTag(Message.getBuilder().of(playerName).obfuscated().advance().createComponent());
-                } else {
-                    String prefix = this.unicacityAddon.nametagService().getPrefix(playerName, false);
-                    if (!prefix.equals(FormattingCode.RESET.getCode())) {
-                        // prevent to add the pencil to players whose name was not visible changed
-                        e.setNameTag(Message.getBuilder().add(prefix + playerName).createComponent());
-                    }
+        String playerName = networkPlayerInfo.profile().getUsername();
+
+        if (context.equals(PlayerNameTagRenderEvent.Context.PLAYER_RENDER)) {
+            if (this.unicacityAddon.nametagService().getMaskedPlayerList().contains(playerName)) {
+                e.setNameTag(Message.getBuilder().of(playerName).obfuscated().advance().createComponent());
+            } else {
+                String prefix = this.unicacityAddon.nametagService().getPrefix(playerName, false);
+                if (!prefix.equals(FormattingCode.RESET.getCode())) {
+                    // prevent to add the pencil to players whose name was not visible changed
+                    e.setNameTag(Message.getBuilder().add(prefix + playerName).createComponent());
                 }
+            }
+        } else if (context.equals(PlayerNameTagRenderEvent.Context.TAB_LIST)) {
+            if (this.unicacityAddon.nametagService().getNoPushPlayerList().contains(playerName)) {
+                e.setNameTag(e.nameTag().append(AFK_COMPONENT));
             }
         }
     }
