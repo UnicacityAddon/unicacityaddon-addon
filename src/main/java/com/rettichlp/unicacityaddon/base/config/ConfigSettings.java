@@ -89,6 +89,12 @@ public class ConfigSettings {
         BooleanElement plantBurnSetting = new BooleanElement("Plant-Burn Nachricht", unicacityAddon, new ControlElement.IconData(Material.FIRE), "PLANT_BURN_MESSAGE_SETTINGS", ConfigElements.getPlantBurnMessageActivated());
         settings.add(plantBurnSetting);
 
+        BooleanElement betterWantedList = new BooleanElement("Bessere Fahndungsliste", unicacityAddon, new ControlElement.IconData(Material.COOKED_FISH), "BETTER_WANTED_LIST_SETTINGS", ConfigElements.getBetterWantedList());
+        settings.add(betterWantedList);
+
+        BooleanElement betterContractMessages = new BooleanElement("Contractnachrichten", unicacityAddon, new ControlElement.IconData(Material.STONE_HOE), "BETTER_CONTRACT_MESSAGES_SETTINGS", ConfigElements.getContractMessageActivated());
+        settings.add(betterContractMessages);
+
         return settings;
     }
 

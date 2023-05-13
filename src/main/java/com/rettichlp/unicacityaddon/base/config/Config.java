@@ -119,9 +119,6 @@ public class Config {
         BooleanElement despawnTimeAfterKarma = new BooleanElement("Despawn Zeitpunkt", unicacityAddon, new ControlElement.IconData(Material.SKULL_ITEM), "ESTIMATED_DESPAWN_TIME_SETTINGS", ConfigElements.getEstimatedDespawnTime());
         list.add(despawnTimeAfterKarma);
 
-        BooleanElement betterWantedList = new BooleanElement("Bessere Fahndungsliste", unicacityAddon, new ControlElement.IconData(Material.COOKED_FISH), "BETTER_WANTED_LIST_SETTINGS", ConfigElements.getBetterWantedList());
-        list.add(betterWantedList);
-
         ListContainerElement soundSettings = new ListContainerElement("Sounds", new ControlElement.IconData(Material.NOTE_BLOCK));
         soundSettings.setSubSettings(ConfigSettings.getSoundSettings(unicacityAddon));
         list.add(soundSettings);
