@@ -15,8 +15,8 @@ labyMod {
         namespace = "unicacityaddon"
         displayName = "UnicacityAddon"
         author = "RettichLP & Dimiikou"
-        description = "This addon is a modification for UnicaCity providing specialized and nice-to-have features and utilities for everyday gameplay."
-        minecraftVersion = "*"
+        description = "UnicacityAddon is a LabyMod addon written for the Minecraft server Unicacity and provides specialized, nice-to-have features and utilities for everyday gameplay."
+        minecraftVersion = "1.12.2<*"
         version = System.getenv().getOrDefault("VERSION", "2.0.0-alpha.3")
     }
 
