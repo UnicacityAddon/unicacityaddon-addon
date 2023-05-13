@@ -12,14 +12,11 @@ import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.client.event.GuiContainerEvent;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author RettichLP
@@ -28,33 +25,14 @@ import java.util.concurrent.TimeUnit;
 @UCEvent
 public class WeaponEventHandler {
 
-    public static boolean tazerLoaded = false;
-
-    private long tazerLastWarningSend = 0;
     private int lastWindowId = 0;
-
-    @SubscribeEvent
-    public void onChatReceived(ClientChatReceivedEvent e) {
-        String message = e.getMessage().getUnformattedText();
-        if (message.equals("Dein Tazer ist nun bereit!")) {
-            tazerLoaded = true;
-        } else if (message.equals("Dein Tazer ist nun nicht mehr bereit!") || message.equals("Dein Tazer muss sich noch aufladen...")) {
-            tazerLoaded = false;
-        }
-    }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onPlayerInteract(PlayerInteractEvent e) {
-        if (tazerLoaded && System.currentTimeMillis() - tazerLastWarningSend > TimeUnit.SECONDS.toMillis(5) && (e instanceof PlayerInteractEvent.LeftClickBlock || e instanceof PlayerInteractEvent.LeftClickEmpty || e instanceof PlayerInteractEvent.EntityInteractSpecific)) {
-            AbstractionLayer.getPlayer().sendInfoMessage("Achtung! Dein Tazer ist geladen!");
-            tazerLastWarningSend = System.currentTimeMillis();
-        }
-
         if (e instanceof PlayerInteractEvent.RightClickItem || e instanceof PlayerInteractEvent.RightClickBlock || e instanceof PlayerInteractEvent.EntityInteractSpecific) {
             ItemStack is = e.getItemStack();
             Weapon weapon = Weapon.getWeaponByItemName(is.getDisplayName());
             if (weapon != null) {
-                tazerLoaded = false;
                 handleMunitionDisplay(is);
             }
         }
