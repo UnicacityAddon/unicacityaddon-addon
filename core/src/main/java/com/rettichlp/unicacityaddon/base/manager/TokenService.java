@@ -34,7 +34,7 @@ import java.security.NoSuchAlgorithmException;
  * For editing any data, a certain faction and rank in this faction is required.<br><br>
  * I can read the faction and rank from the Unicacity website (<a href="https://unicacity.de/fraktionen">https://unicacity.de/fraktionen</a>).<br>
  * But in order to be able to assign the faction information to a player, I need his UUID. I could pass these as
- * parameters, but you could mess that up by calling the endpoint with a different UUID that isn't your own.<br>
+ * parameters in the api call, but you could mess that up by calling the endpoint with a different UUID that isn't your own.<br>
  * I needed a way to pass the UUID so that it cannot (so easily) be falsified. For this I use the session token, because
  * I can use it to read the UUID via the Mojang API and nobody else knows the session token.<br><br>
  * The session token is never saved ore logged. Only my specially generated token is saved in a database.<br>

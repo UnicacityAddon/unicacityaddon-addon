@@ -3,6 +3,8 @@ package com.rettichlp.unicacityaddon;
 import com.google.common.reflect.ClassPath;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.DefaultAddonPlayer;
+import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
+import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.api.request.API;
 import com.rettichlp.unicacityaddon.base.config.DefaultUnicacityAddonConfiguration;
 import com.rettichlp.unicacityaddon.base.manager.FactionService;
@@ -17,8 +19,6 @@ import com.rettichlp.unicacityaddon.base.nametags.FactionInfoTag;
 import com.rettichlp.unicacityaddon.base.nametags.HouseBanTag;
 import com.rettichlp.unicacityaddon.base.nametags.NoPushTag;
 import com.rettichlp.unicacityaddon.base.nametags.OutlawTag;
-import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
-import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.teamspeak.TSClientQuery;
 import com.rettichlp.unicacityaddon.base.teamspeak.TSUtils;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
@@ -71,7 +71,7 @@ import java.util.stream.Collectors;
  * <p>
  * I know the guidelines for publication but still use the user's session token and access the player's file system. In the following I will briefly explain why I do this:
  * <br><br>
- * <h3>Session token</h3>
+ * <h3>Session token ({@link TokenService})</h3>
  * An important function of the addon is to collect statistics and make data available to all players.
  * I use a private server for this. This provides data for:
  * <ul>
@@ -96,13 +96,13 @@ import java.util.stream.Collectors;
  * For editing any data, a certain faction and rank in this faction is required.<br><br>
  * I can read the faction and rank from the Unicacity website (<a href="https://unicacity.de/fraktionen">https://unicacity.de/fraktionen</a>).<br>
  * But in order to be able to assign the faction information to a player, I need his UUID. I could pass these as
- * parameters, but you could mess that up by calling the endpoint with a different UUID that isn't your own.<br>
+ * parameters in the api call, but you could mess that up by calling the endpoint with a different UUID that isn't your own.<br>
  * I needed a way to pass the UUID so that it cannot (so easily) be falsified. For this I use the session token, because
  * I can use it to read the UUID via the Mojang API and nobody else knows the session token.<br><br>
  * The session token is never saved ore logged. Only my specially generated token is saved in a database.<br>
  * If necessary I can give access to the server code and give an insight into all stored data.
  * <br><br>
- * <h3>File storage access</h3>
+ * <h3>File storage access ({@link FileService})</h3>
  * The addon uses data that is not important for all players. That's why they are not stored on my server via the API, but locally on the player's computer.<br>
  * This data contains, for example, the current account balance or the time until the next payday. This is used to be able to display Hudwidgets
  * immediately after joining the server and not to wait until a specific message is in the chat or to execute a command that supplies the said data.<br>
