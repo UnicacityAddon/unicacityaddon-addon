@@ -1,6 +1,7 @@
 package com.rettichlp.unicacityaddon.base.nametags;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.base.config.UnicacityAddonConfiguration;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import net.labymod.api.client.component.Component;
@@ -17,6 +18,9 @@ import java.util.Optional;
  */
 public class HouseBanTag extends NameTag {
 
+    private final FloatVector3 HOSPITAL = new FloatVector3(265, 69, 215);
+    private final FloatVector3 FIRE_DEPARTMENT = new FloatVector3(-120, 69, -260);
+
     private final UnicacityAddon unicacityAddon;
 
     private HouseBanTag(UnicacityAddon unicacityAddon) {
@@ -29,20 +33,16 @@ public class HouseBanTag extends NameTag {
 
     @Override
     protected @Nullable RenderableComponent getRenderableComponent() {
-        if (this.unicacityAddon.isUnicacity() && this.unicacityAddon.configuration().nameTagSetting().houseBan().get()) {
-            Optional<Player> playerOptional = this.unicacityAddon.player().getWorld().getPlayers().stream()
-                    .filter(p -> p.gameUser().getUniqueId().equals(this.entity.getUniqueId()))
-                    .findFirst();
+        UnicacityAddonConfiguration unicacityAddonConfiguration = this.unicacityAddon.configuration();
+        boolean isEnabled = unicacityAddonConfiguration.enabled().get() && unicacityAddonConfiguration.nameTagSetting().houseBan().get();
 
-            FloatVector3 hospital = new FloatVector3(265, 69, 215);
-            FloatVector3 fireDepartment = new FloatVector3(-120, 69, -260);
+        Optional<Player> playerOptional = this.unicacityAddon.player().getWorld().getPlayers().stream()
+                .filter(p -> p.gameUser().getUniqueId().equals(this.entity.getUniqueId()))
+                .findFirst();
 
-            if (playerOptional.isPresent() && (playerOptional.get().position().distance(hospital) < 80 || playerOptional.get().position().distance(fireDepartment) < 30)) {
-                return getComponent(playerOptional.get().getName());
-            }
-        }
-
-        return null;
+        return isEnabled && playerOptional.isPresent() && (playerOptional.get().position().distance(HOSPITAL) < 80 || playerOptional.get().position().distance(FIRE_DEPARTMENT) < 30)
+                ? getComponent(playerOptional.get().getName())
+                : null;
     }
 
     @Override

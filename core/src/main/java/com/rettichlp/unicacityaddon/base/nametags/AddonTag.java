@@ -1,16 +1,15 @@
 package com.rettichlp.unicacityaddon.base.nametags;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.base.config.UnicacityAddonConfiguration;
 import com.rettichlp.unicacityaddon.base.enums.api.AddonGroup;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
-import net.labymod.api.client.entity.player.Player;
 import net.labymod.api.client.entity.player.tag.tags.NameTag;
 import net.labymod.api.client.render.font.RenderableComponent;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @author RettichLP
@@ -29,17 +28,13 @@ public class AddonTag extends NameTag {
 
     @Override
     protected @Nullable RenderableComponent getRenderableComponent() {
-        if (this.unicacityAddon.configuration().addonTag().get()) {
-            Optional<Player> playerOptional = this.unicacityAddon.player().getWorld().getPlayers().stream()
-                    .filter(p -> p.gameUser().getUniqueId().equals(this.entity.getUniqueId()))
-                    .findFirst();
+        UnicacityAddonConfiguration unicacityAddonConfiguration = this.unicacityAddon.configuration();
+        boolean isEnabled = unicacityAddonConfiguration.enabled().get() && unicacityAddonConfiguration.addonTag().get();
 
-            if (playerOptional.isPresent()) {
-                return getComponent(playerOptional.get().getName());
-            }
-        }
-
-        return null;
+        return isEnabled ? this.unicacityAddon.player().getWorld().getPlayers().stream()
+                .filter(p -> p.gameUser().getUniqueId().equals(this.entity.getUniqueId()))
+                .findFirst()
+                .map(player -> getComponent(player.getName())).orElse(null) : null;
     }
 
     @Override

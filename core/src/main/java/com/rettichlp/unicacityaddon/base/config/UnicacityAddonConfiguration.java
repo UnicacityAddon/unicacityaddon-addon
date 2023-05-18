@@ -18,6 +18,8 @@ import net.labymod.api.configuration.loader.property.ConfigProperty;
  */
 public interface UnicacityAddonConfiguration {
 
+    ConfigProperty<Boolean> enabled();
+
     HotkeySetting hotkeySetting();
 
     NameTagSetting nameTagSetting();
