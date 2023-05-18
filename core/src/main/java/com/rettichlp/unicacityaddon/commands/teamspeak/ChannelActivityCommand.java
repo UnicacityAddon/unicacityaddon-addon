@@ -10,7 +10,7 @@ import com.rettichlp.unicacityaddon.base.teamspeak.commands.ClientVariableComman
 import com.rettichlp.unicacityaddon.base.teamspeak.objects.Client;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
-import net.labymod.api.client.chat.command.Command;
+import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.event.HoverEvent;
 
@@ -27,19 +27,19 @@ import java.util.stream.IntStream;
  * @author RettichLP
  */
 @UCCommand
-public class ChannelActivityCommand extends Command {
+public class ChannelActivityCommand extends UnicacityCommand {
 
     private static final String usage = "/channelactivity";
 
     private final UnicacityAddon unicacityAddon;
 
     public ChannelActivityCommand(UnicacityAddon unicacityAddon) {
-        super("channelactivity");
+        super(unicacityAddon, "channelactivity", false);
         this.unicacityAddon = unicacityAddon;
     }
 
     @Override
-    public boolean execute(String prefix, String[] arguments) {
+    public boolean execute(String[] arguments) {
         new Thread(() -> {
             AddonPlayer p = this.unicacityAddon.player();
 

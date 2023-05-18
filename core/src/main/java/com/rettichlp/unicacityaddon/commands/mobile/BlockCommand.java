@@ -4,8 +4,8 @@ import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
+import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
 import com.rettichlp.unicacityaddon.listener.MobileListener;
-import net.labymod.api.client.chat.command.Command;
 
 import java.util.List;
 
@@ -13,19 +13,19 @@ import java.util.List;
  * @author RettichLP
  */
 @UCCommand
-public class BlockCommand extends Command {
+public class BlockCommand extends UnicacityCommand {
 
     private static final String usage = "/blockieren [Spieler]";
 
     private final UnicacityAddon unicacityAddon;
 
     public BlockCommand(UnicacityAddon unicacityAddon) {
-        super("blockieren", "block", "blocknumber");
+        super(unicacityAddon, "blockieren", true, "block", "blocknumber");
         this.unicacityAddon = unicacityAddon;
     }
 
     @Override
-    public boolean execute(String prefix, String[] arguments) {
+    public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
 
         if (arguments.length > 0) {

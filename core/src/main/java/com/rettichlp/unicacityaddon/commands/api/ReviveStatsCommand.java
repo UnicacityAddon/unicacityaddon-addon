@@ -10,7 +10,7 @@ import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.FormattingCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.utils.MathUtils;
-import net.labymod.api.client.chat.command.Command;
+import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
 import net.labymod.api.client.component.event.HoverEvent;
 
 import java.util.List;
@@ -21,19 +21,19 @@ import java.util.stream.Collectors;
  * @author RettichLP
  */
 @UCCommand
-public class ReviveStatsCommand extends Command {
+public class ReviveStatsCommand extends UnicacityCommand {
 
     private static final String usage = "/revivestats (all|old|Spieler|Rang)";
 
     private final UnicacityAddon unicacityAddon;
 
     public ReviveStatsCommand(UnicacityAddon unicacityAddon) {
-        super("revivestats", "rstats");
+        super(unicacityAddon, "revivestats", true, "rstats");
         this.unicacityAddon = unicacityAddon;
     }
 
     @Override
-    public boolean execute(String prefix, String[] arguments) {
+    public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
 
         this.unicacityAddon.overlayMessageController().sendOverlayMessage(ColorCode.AQUA.getCode() + FormattingCode.BOLD.getCode() + "Revivestats werden geladen...");

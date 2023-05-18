@@ -6,7 +6,6 @@ import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.models.NaviPoint;
 import com.rettichlp.unicacityaddon.base.utils.MathUtils;
-import net.labymod.api.client.chat.command.Command;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,17 +14,17 @@ import java.util.stream.Collectors;
  * @author RettichLP
  */
 @UCCommand
-public class NaviCommand extends Command {
+public class NaviCommand extends UnicacityCommand {
 
     private final UnicacityAddon unicacityAddon;
 
     public NaviCommand(UnicacityAddon unicacityAddon) {
-        super("navi");
+        super(unicacityAddon, "navi", true);
         this.unicacityAddon = unicacityAddon;
     }
 
     @Override
-    public boolean execute(String prefix, String[] arguments) {
+    public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
         if (arguments.length < 1) {
             return false;

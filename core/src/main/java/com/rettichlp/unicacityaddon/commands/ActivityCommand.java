@@ -7,7 +7,6 @@ import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.enums.ScreenshotType;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
-import net.labymod.api.client.chat.command.Command;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.event.HoverEvent;
 
@@ -21,17 +20,17 @@ import java.util.stream.Collectors;
  * @author RettichLP
  */
 @UCCommand
-public class ActivityCommand extends Command {
+public class ActivityCommand extends UnicacityCommand {
 
     private final UnicacityAddon unicacityAddon;
 
     public ActivityCommand(UnicacityAddon unicacityAddon) {
-        super("activity");
+        super(unicacityAddon, "activity", false);
         this.unicacityAddon = unicacityAddon;
     }
 
     @Override
-    public boolean execute(String prefix, String[] arguments) {
+    public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
 
         List<ScreenshotType> screenshotTypeList = arguments.length < 1 ?

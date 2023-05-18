@@ -7,7 +7,7 @@ import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.api.exception.APIResponseException;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.models.WantedReason;
-import net.labymod.api.client.chat.command.Command;
+import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,19 +16,19 @@ import java.util.stream.Collectors;
  * @author RettichLP
  */
 @UCCommand
-public class WantedReasonCommand extends Command {
+public class WantedReasonCommand extends UnicacityCommand {
 
     private static final String usage = "/wantedreason (add|remove) (Grund) (Wanted-Punkte)";
 
     private final UnicacityAddon unicacityAddon;
 
     public WantedReasonCommand(UnicacityAddon unicacityAddon) {
-        super("wantedreason");
+        super(unicacityAddon, "wantedreason", true);
         this.unicacityAddon = unicacityAddon;
     }
 
     @Override
-    public boolean execute(String prefix, String[] arguments) {
+    public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
 
         new Thread(() -> {

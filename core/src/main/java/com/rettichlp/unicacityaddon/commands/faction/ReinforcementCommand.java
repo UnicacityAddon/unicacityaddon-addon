@@ -8,9 +8,9 @@ import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.enums.faction.ReinforcementType;
 import com.rettichlp.unicacityaddon.base.text.ChatType;
 import com.rettichlp.unicacityaddon.base.utils.MathUtils;
+import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
 import com.rettichlp.unicacityaddon.listener.MobileListener;
 import com.rettichlp.unicacityaddon.listener.TickListener;
-import net.labymod.api.client.chat.command.Command;
 import net.labymod.api.util.math.vector.FloatVector3;
 
 import java.util.Arrays;
@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
  * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/commands/faction/CallReinforcementCommand.java">UCUtils by paulzhng</a>
  */
 @UCCommand
-public class ReinforcementCommand extends Command {
+public class ReinforcementCommand extends UnicacityCommand {
 
     public static int activeReinforcement = -1;
 
@@ -31,12 +31,12 @@ public class ReinforcementCommand extends Command {
     private final UnicacityAddon unicacityAddon;
 
     public ReinforcementCommand(UnicacityAddon unicacityAddon) {
-        super("reinforcement", "callreinforcement", "reinf", "verstärkung");
+        super(unicacityAddon, "reinforcement", true, "callreinforcement", "reinf", "verstärkung");
         this.unicacityAddon = unicacityAddon;
     }
 
     @Override
-    public boolean execute(String prefix, String[] arguments) {
+    public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
 
         if (!MobileListener.hasCommunications) {

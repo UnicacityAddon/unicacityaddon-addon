@@ -8,7 +8,7 @@ import com.rettichlp.unicacityaddon.base.api.exception.APIResponseException;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
-import net.labymod.api.client.chat.command.Command;
+import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
 import net.labymod.api.client.component.event.HoverEvent;
 
 import java.util.List;
@@ -20,14 +20,14 @@ import static com.rettichlp.unicacityaddon.base.utils.MathUtils.DECIMAL_FORMAT;
  * @author RettichLP
  */
 @UCCommand
-public class TopListCommand extends Command {
+public class TopListCommand extends UnicacityCommand {
 
     private static final String usage = "/toplist";
 
     private final UnicacityAddon unicacityAddon;
 
     public TopListCommand(UnicacityAddon unicacityAddon) {
-        super("toplist");
+        super(unicacityAddon, "toplist", true);
         this.unicacityAddon = unicacityAddon;
     }
 
@@ -35,7 +35,7 @@ public class TopListCommand extends Command {
      * Quote: "Neue Formel überlegen!" - Dimiikou zu "<code>(0.5f + kd) * (services + revives)</code>", 30.09.2022
      */
     @Override
-    public boolean execute(String prefix, String[] arguments) {
+    public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
 
         new Thread(() -> {

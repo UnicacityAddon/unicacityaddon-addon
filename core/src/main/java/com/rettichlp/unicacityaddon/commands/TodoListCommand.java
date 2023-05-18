@@ -9,7 +9,6 @@ import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.utils.MathUtils;
 import com.rettichlp.unicacityaddon.base.utils.TextUtils;
-import net.labymod.api.client.chat.command.Command;
 import net.labymod.api.client.component.event.ClickEvent;
 
 import java.util.List;
@@ -19,17 +18,17 @@ import java.util.Optional;
  * @author RettichLP
  */
 @UCCommand
-public class TodoListCommand extends Command {
+public class TodoListCommand extends UnicacityCommand {
 
     private final UnicacityAddon unicacityAddon;
 
     public TodoListCommand(UnicacityAddon unicacityAddon) {
-        super("todo");
+        super(unicacityAddon, "todo", true);
         this.unicacityAddon = unicacityAddon;
     }
 
     @Override
-    public boolean execute(String prefix, String[] arguments) {
+    public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
 
         if (arguments.length == 0) {

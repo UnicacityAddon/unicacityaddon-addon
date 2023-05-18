@@ -7,7 +7,6 @@ import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.enums.Weapon;
 import com.rettichlp.unicacityaddon.base.models.Armament;
 import com.rettichlp.unicacityaddon.base.utils.MathUtils;
-import net.labymod.api.client.chat.command.Command;
 
 import java.util.Arrays;
 import java.util.List;
@@ -17,7 +16,7 @@ import java.util.stream.Collectors;
  * @author RettichLP
  */
 @UCCommand
-public class GetGunPatternCommand extends Command {
+public class GetGunPatternCommand extends UnicacityCommand {
 
     public static Armament armament = null;
 
@@ -26,12 +25,12 @@ public class GetGunPatternCommand extends Command {
     private final UnicacityAddon unicacityAddon;
 
     public GetGunPatternCommand(UnicacityAddon unicacityAddon) {
-        super("getgunpattern", "ggp");
+        super(unicacityAddon, "getgunpattern", true, "ggp");
         this.unicacityAddon = unicacityAddon;
     }
 
     @Override
-    public boolean execute(String prefix, String[] arguments) {
+    public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
 
         if (arguments.length == 1) {

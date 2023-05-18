@@ -3,7 +3,6 @@ package com.rettichlp.unicacityaddon.commands;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
-import net.labymod.api.client.chat.command.Command;
 
 import java.util.List;
 
@@ -11,19 +10,19 @@ import java.util.List;
  * @author RettichLP
  */
 @UCCommand
-public class SyncPlayerDataCommand extends Command {
+public class SyncPlayerDataCommand extends UnicacityCommand {
 
     private static final String usage = "/syncplayerdata";
 
     private final UnicacityAddon unicacityAddon;
 
     public SyncPlayerDataCommand(UnicacityAddon unicacityAddon) {
-        super("syncplayerdata", "spd", "sync", "syncdata");
+        super(unicacityAddon, "sync", true);
         this.unicacityAddon = unicacityAddon;
     }
 
     @Override
-    public boolean execute(String prefix, String[] arguments) {
+    public boolean execute(String[] arguments) {
         this.unicacityAddon.player().sendInfoMessage("Synchronisierung gestartet.");
         this.unicacityAddon.api().syncAll();
         return true;

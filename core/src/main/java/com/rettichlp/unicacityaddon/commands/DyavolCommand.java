@@ -7,7 +7,6 @@ import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.enums.api.AddonGroup;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
-import net.labymod.api.client.chat.command.Command;
 
 import java.util.List;
 
@@ -15,17 +14,17 @@ import java.util.List;
  * @author Dimiikou
  */
 @UCCommand
-public class DyavolCommand extends Command {
+public class DyavolCommand extends UnicacityCommand {
 
     private final UnicacityAddon unicacityAddon;
 
     public DyavolCommand(UnicacityAddon unicacityAddon) {
-        super("dyavol");
+        super(unicacityAddon, "dyavol", true);
         this.unicacityAddon = unicacityAddon;
     }
 
     @Override
-    public boolean execute(String prefix, String[] arguments) {
+    public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
 
         p.sendEmptyMessage();

@@ -4,7 +4,7 @@ import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
-import net.labymod.api.client.chat.command.Command;
+import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
 
 import java.util.List;
 import java.util.Timer;
@@ -14,19 +14,19 @@ import java.util.TimerTask;
  * @author Dimiikou
  */
 @UCCommand
-public class ADropMoneyCommand extends Command {
+public class ADropMoneyCommand extends UnicacityCommand {
 
     private int step = 0;
 
     private final UnicacityAddon unicacityAddon;
 
     public ADropMoneyCommand(UnicacityAddon unicacityAddon) {
-        super("adropmoney");
+        super(unicacityAddon, "adropmoney", true);
         this.unicacityAddon = unicacityAddon;
     }
 
     @Override
-    public boolean execute(String prefix, String[] arguments) {
+    public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
 
         new Timer().scheduleAtFixedRate(new TimerTask() {

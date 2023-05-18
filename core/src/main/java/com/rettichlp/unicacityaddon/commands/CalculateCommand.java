@@ -8,7 +8,6 @@ import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.utils.MathUtils;
 import com.rettichlp.unicacityaddon.base.utils.TextUtils;
-import net.labymod.api.client.chat.command.Command;
 
 import java.util.List;
 
@@ -16,19 +15,19 @@ import java.util.List;
  * @author RettichLP
  */
 @UCCommand
-public class CalculateCommand extends Command {
+public class CalculateCommand extends UnicacityCommand {
 
     private static final String usage = "/calculate [mathematischer Ausdruck]";
 
     private final UnicacityAddon unicacityAddon;
 
     public CalculateCommand(UnicacityAddon unicacityAddon) {
-        super("calculate", "calc", "rechner");
+        super(unicacityAddon, "calculate", false, "calc", "rechner");
         this.unicacityAddon = unicacityAddon;
     }
 
     @Override
-    public boolean execute(String prefix, String[] arguments) {
+    public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
         if (arguments.length < 1) {
             p.sendSyntaxMessage(usage);

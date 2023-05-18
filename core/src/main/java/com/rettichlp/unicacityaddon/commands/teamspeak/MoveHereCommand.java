@@ -8,7 +8,7 @@ import com.rettichlp.unicacityaddon.base.teamspeak.CommandResponse;
 import com.rettichlp.unicacityaddon.base.teamspeak.TSClientQuery;
 import com.rettichlp.unicacityaddon.base.teamspeak.commands.ClientMoveCommand;
 import com.rettichlp.unicacityaddon.base.teamspeak.objects.Client;
-import net.labymod.api.client.chat.command.Command;
+import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
 
 import java.util.Collections;
 import java.util.List;
@@ -18,19 +18,19 @@ import java.util.List;
  * @author RettichLP
  */
 @UCCommand
-public class MoveHereCommand extends Command {
+public class MoveHereCommand extends UnicacityCommand {
 
     private static final String usage = "/movehere [Spieler]";
 
     private final UnicacityAddon unicacityAddon;
 
     public MoveHereCommand(UnicacityAddon unicacityAddon) {
-        super("movehere");
+        super(unicacityAddon, "movehere", false);
         this.unicacityAddon = unicacityAddon;
     }
 
     @Override
-    public boolean execute(String prefix, String[] arguments) {
+    public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
 
         if (arguments.length < 1) {

@@ -6,7 +6,6 @@ import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
-import net.labymod.api.client.chat.command.Command;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.event.HoverEvent;
 
@@ -16,19 +15,19 @@ import java.util.List;
  * @author Dimiikou
  */
 @UCCommand
-public class DiscordCommand extends Command {
+public class DiscordCommand extends UnicacityCommand {
 
     private static final String usage = "/discord";
 
     private final UnicacityAddon unicacityAddon;
 
     public DiscordCommand(UnicacityAddon unicacityAddon) {
-        super("discord");
+        super(unicacityAddon, "discord", true);
         this.unicacityAddon = unicacityAddon;
     }
 
     @Override
-    public boolean execute(String prefix, String[] arguments) {
+    public boolean execute(String[] arguments) {
         if (!this.unicacityAddon.isUnicacity())
             return true;
         AddonPlayer p = this.unicacityAddon.player();

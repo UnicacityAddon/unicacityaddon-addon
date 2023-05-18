@@ -4,8 +4,8 @@ import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.enums.faction.ModifyWantedType;
+import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
 import com.rettichlp.unicacityaddon.listener.faction.state.WantedListener;
-import net.labymod.api.client.chat.command.Command;
 
 import java.util.Arrays;
 import java.util.List;
@@ -16,19 +16,19 @@ import java.util.stream.Collectors;
  * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/commands/faction/police/ModifyWantedsCommand.java">UCUtils by paulzhng</a>
  */
 @UCCommand
-public class ModifyWantedsCommand extends Command {
+public class ModifyWantedsCommand extends UnicacityCommand {
 
     private static final String usage = "/mw [Spieler] [GF/SF/SSF/S/DA5/DA10/DA15/FSA/WSA/WGV]";
 
     private final UnicacityAddon unicacityAddon;
 
     public ModifyWantedsCommand(UnicacityAddon unicacityAddon) {
-        super("modifywanteds", "mw");
+        super(unicacityAddon, "modifywanteds", true, "mw");
         this.unicacityAddon = unicacityAddon;
     }
 
     @Override
-    public boolean execute(String prefix, String[] arguments) {
+    public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
 
         if (arguments.length < 2)

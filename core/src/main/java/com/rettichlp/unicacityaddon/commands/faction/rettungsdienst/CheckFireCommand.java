@@ -6,7 +6,7 @@ import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
-import net.labymod.api.client.chat.command.Command;
+import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.event.HoverEvent;
 import net.labymod.api.util.math.vector.FloatVector3;
@@ -18,14 +18,14 @@ import java.util.List;
  * @author RettichLP
  */
 @UCCommand
-public class CheckFireCommand extends Command {
+public class CheckFireCommand extends UnicacityCommand {
 
     private static final String usage = "/checkfire";
 
     private final UnicacityAddon unicacityAddon;
 
     public CheckFireCommand(UnicacityAddon unicacityAddon) {
-        super("checkfire");
+        super(unicacityAddon, "checkfire", true);
         this.unicacityAddon = unicacityAddon;
     }
 
@@ -33,7 +33,7 @@ public class CheckFireCommand extends Command {
      * Quote: "Meine Öffi-Nachricht geht nicht... oh... ich habe den Imgur-Link eingefügt..." - [UC]laaurin_, 02.10.2022
      */
     @Override
-    public boolean execute(String prefix, String[] arguments) {
+    public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
 
         FloatVector3 pos = p.getPosition();

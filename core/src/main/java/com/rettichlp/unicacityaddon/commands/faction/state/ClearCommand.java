@@ -4,7 +4,7 @@ import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
-import net.labymod.api.client.chat.command.Command;
+import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
 
 import java.util.Arrays;
 import java.util.List;
@@ -13,19 +13,19 @@ import java.util.List;
  * @author Gelegenheitscode
  */
 @UCCommand
-public class ClearCommand extends Command {
+public class ClearCommand extends UnicacityCommand {
 
     private static final String usage = "/clear [Spieler...]";
 
     private final UnicacityAddon unicacityAddon;
 
     public ClearCommand(UnicacityAddon unicacityAddon) {
-        super("clear");
+        super(unicacityAddon, "clear", true);
         this.unicacityAddon = unicacityAddon;
     }
 
     @Override
-    public boolean execute(String prefix, String[] arguments) {
+    public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
 
         if (arguments.length < 1) {

@@ -6,7 +6,7 @@ import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.enums.faction.ModifyBlacklistType;
 import com.rettichlp.unicacityaddon.base.models.BlacklistReason;
-import net.labymod.api.client.chat.command.Command;
+import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
  * @author Dimiikou
  */
 @UCCommand
-public class ModifyBlacklistCommand extends Command {
+public class ModifyBlacklistCommand extends UnicacityCommand {
 
     public static String target;
     public static ModifyBlacklistType type;
@@ -27,12 +27,12 @@ public class ModifyBlacklistCommand extends Command {
     private final UnicacityAddon unicacityAddon;
 
     public ModifyBlacklistCommand(UnicacityAddon unicacityAddon) {
-        super("modifyblacklist", "mbl");
+        super(unicacityAddon, "modifyblacklist", true, "mbl");
         this.unicacityAddon = unicacityAddon;
     }
 
     @Override
-    public boolean execute(String prefix, String[] arguments) {
+    public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
 
         if (arguments.length != 2) {

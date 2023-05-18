@@ -4,8 +4,8 @@ import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
+import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
 import com.rettichlp.unicacityaddon.listener.house.HouseDataListener;
-import net.labymod.api.client.chat.command.Command;
 
 import java.util.List;
 import java.util.Timer;
@@ -15,19 +15,19 @@ import java.util.TimerTask;
  * @author RettichLP
  */
 @UCCommand
-public class HouseBankDropGetAllCommand extends Command {
+public class HouseBankDropGetAllCommand extends UnicacityCommand {
 
     private static final String usage = "/hauskasse";
 
     private final UnicacityAddon unicacityAddon;
 
     public HouseBankDropGetAllCommand(UnicacityAddon unicacityAddon) {
-        super("hauskasse", "hkasse");
+        super(unicacityAddon, "hauskasse", true, "hkasse");
         this.unicacityAddon = unicacityAddon;
     }
 
     @Override
-    public boolean execute(String prefix, String[] arguments) {
+    public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
 
         if (arguments.length > 1 && arguments[1].equalsIgnoreCase("all")) {

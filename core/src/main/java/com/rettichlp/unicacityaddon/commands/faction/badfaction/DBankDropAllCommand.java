@@ -4,7 +4,7 @@ import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
-import net.labymod.api.client.chat.command.Command;
+import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,17 +17,17 @@ import java.util.concurrent.TimeUnit;
  * @author RettichLP
  */
 @UCCommand
-public class DBankDropAllCommand extends Command {
+public class DBankDropAllCommand extends UnicacityCommand {
 
     private final UnicacityAddon unicacityAddon;
 
     public DBankDropAllCommand(UnicacityAddon unicacityAddon) {
-        super("dbankdropall");
+        super(unicacityAddon, "dbankdropall", true);
         this.unicacityAddon = unicacityAddon;
     }
 
     @Override
-    public boolean execute(String prefix, String[] arguments) {
+    public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
 
         // reset drug inventory tracker

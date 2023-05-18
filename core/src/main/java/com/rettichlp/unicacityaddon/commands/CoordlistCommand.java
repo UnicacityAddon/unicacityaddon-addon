@@ -8,7 +8,6 @@ import com.rettichlp.unicacityaddon.base.models.CoordlistEntry;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.utils.TextUtils;
-import net.labymod.api.client.chat.command.Command;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.event.HoverEvent;
 
@@ -19,19 +18,19 @@ import java.util.stream.Collectors;
  * @author RettichLP
  */
 @UCCommand
-public class CoordlistCommand extends Command {
+public class CoordlistCommand extends UnicacityCommand {
 
     private static final String usage = "/coordlist [add|remove] [Ort]";
 
     private final UnicacityAddon unicacityAddon;
 
     public CoordlistCommand(UnicacityAddon unicacityAddon) {
-        super("coordlist");
+        super(unicacityAddon, "coordlist", true);
         this.unicacityAddon = unicacityAddon;
     }
 
     @Override
-    public boolean execute(String prefix, String[] arguments) {
+    public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
 
         if (arguments.length == 0) {

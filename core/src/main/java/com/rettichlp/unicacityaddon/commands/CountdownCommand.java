@@ -6,7 +6,6 @@ import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.text.ChatType;
 import com.rettichlp.unicacityaddon.base.utils.MathUtils;
-import net.labymod.api.client.chat.command.Command;
 
 import java.util.Arrays;
 import java.util.List;
@@ -18,7 +17,7 @@ import java.util.stream.Collectors;
  * @author RettichLP
  */
 @UCCommand
-public class CountdownCommand extends Command {
+public class CountdownCommand extends UnicacityCommand {
 
     public static int countdown;
 
@@ -28,12 +27,12 @@ public class CountdownCommand extends Command {
     private final UnicacityAddon unicacityAddon;
 
     public CountdownCommand(UnicacityAddon unicacityAddon) {
-        super("countdown");
+        super(unicacityAddon, "countdown", true);
         this.unicacityAddon = unicacityAddon;
     }
 
     @Override
-    public boolean execute(String prefix, String[] arguments) {
+    public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
 
         if (active) {

@@ -4,7 +4,6 @@ import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
-import net.labymod.api.client.chat.command.Command;
 
 import java.util.List;
 
@@ -12,19 +11,19 @@ import java.util.List;
  * @author RettichLP
  */
 @UCCommand
-public class UpdateAddonCommand extends Command {
+public class UpdateAddonCommand extends UnicacityCommand {
 
     private static final String usage = "/updateunicacityaddon";
 
     private final UnicacityAddon unicacityAddon;
 
     public UpdateAddonCommand(UnicacityAddon unicacityAddon) {
-        super("updateunicacityaddon");
+        super(unicacityAddon, "updateunicacityaddon", true);
         this.unicacityAddon = unicacityAddon;
     }
 
     @Override
-    public boolean execute(String prefix, String[] arguments) {
+    public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
 //        if (!UpdateUtils.latestVersion.equals(UnicacityAddon.VERSION)) {
 //            if (SystemUtils.IS_OS_WINDOWS || SystemUtils.IS_OS_UNIX) {

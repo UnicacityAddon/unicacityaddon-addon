@@ -11,7 +11,7 @@ import com.rettichlp.unicacityaddon.base.teamspeak.objects.Channel;
 import com.rettichlp.unicacityaddon.base.teamspeak.objects.Client;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
-import net.labymod.api.client.chat.command.Command;
+import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -22,19 +22,19 @@ import java.util.List;
  * @author RettichLP
  */
 @UCCommand
-public class TSFindCommand extends Command {
+public class TSFindCommand extends UnicacityCommand {
 
     private static final String usage = "/tsfind [Spieler]";
 
     private final UnicacityAddon unicacityAddon;
 
     public TSFindCommand(UnicacityAddon unicacityAddon) {
-        super("tsfind");
+        super(unicacityAddon, "tsfind", false);
         this.unicacityAddon = unicacityAddon;
     }
 
     @Override
-    public boolean execute(String prefix, String[] arguments) {
+    public boolean execute(String[] arguments) {
         new Thread(() -> {
             AddonPlayer p = this.unicacityAddon.player();
 

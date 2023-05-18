@@ -5,8 +5,8 @@ import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.utils.MathUtils;
+import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
 import com.rettichlp.unicacityaddon.listener.faction.rettungsdienst.MedicationListener;
-import net.labymod.api.client.chat.command.Command;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ import java.util.List;
  * @author RettichLP
  */
 @UCCommand
-public class ARezeptAnnehmenCommand extends Command {
+public class ARezeptAnnehmenCommand extends UnicacityCommand {
 
     public static int amount = 0;
 
@@ -23,12 +23,12 @@ public class ARezeptAnnehmenCommand extends Command {
     private final UnicacityAddon unicacityAddon;
 
     public ARezeptAnnehmenCommand(UnicacityAddon unicacityAddon) {
-        super("arezeptannehmen", "arannehmen");
+        super(unicacityAddon, "arezeptannehmen", true, "arannehmen");
         this.unicacityAddon = unicacityAddon;
     }
 
     @Override
-    public boolean execute(String prefix, String[] arguments) {
+    public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
 
         if (arguments.length < 1) {

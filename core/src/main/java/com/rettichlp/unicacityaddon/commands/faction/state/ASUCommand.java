@@ -6,7 +6,7 @@ import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.enums.faction.WantedFlag;
 import com.rettichlp.unicacityaddon.base.models.WantedReason;
-import net.labymod.api.client.chat.command.Command;
+import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
  * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/commands/faction/police/ASUCommand.java">UCUtils by paulzhng</a>
  */
 @UCCommand
-public class ASUCommand extends Command {
+public class ASUCommand extends UnicacityCommand {
 
     private static final String usage = "/asu [Spieler...] [Grund] (-v/-b/-fsa/-wsa)";
     private final Timer timer = new Timer();
@@ -30,12 +30,12 @@ public class ASUCommand extends Command {
     private final UnicacityAddon unicacityAddon;
 
     public ASUCommand(UnicacityAddon unicacityAddon) {
-        super("asu");
+        super(unicacityAddon, "asu", true);
         this.unicacityAddon = unicacityAddon;
     }
 
     @Override
-    public boolean execute(String prefix, String[] arguments) {
+    public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
         if (arguments.length < 2) {
             p.sendSyntaxMessage(usage);

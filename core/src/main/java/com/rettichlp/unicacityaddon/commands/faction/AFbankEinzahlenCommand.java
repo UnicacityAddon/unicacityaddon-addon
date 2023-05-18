@@ -7,7 +7,7 @@ import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.utils.MathUtils;
-import net.labymod.api.client.chat.command.Command;
+import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -22,7 +22,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * @author Dimiikou
  */
 @UCCommand
-public class AFbankEinzahlenCommand extends Command {
+public class AFbankEinzahlenCommand extends UnicacityCommand {
 
     public static int amount;
     public static final AtomicBoolean STARTED = new AtomicBoolean();
@@ -33,12 +33,12 @@ public class AFbankEinzahlenCommand extends Command {
     private final UnicacityAddon unicacityAddon;
 
     public AFbankEinzahlenCommand(UnicacityAddon unicacityAddon) {
-        super("afbank");
+        super(unicacityAddon, "afbank", true);
         this.unicacityAddon = unicacityAddon;
     }
 
     @Override
-    public boolean execute(String prefix, String[] arguments) {
+    public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
         if (arguments.length != 2 || !MathUtils.isInteger(arguments[1])) {
             p.sendSyntaxMessage(usage);

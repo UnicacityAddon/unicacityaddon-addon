@@ -4,8 +4,8 @@ import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
+import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
 import com.rettichlp.unicacityaddon.listener.faction.badfaction.GaggedListener;
-import net.labymod.api.client.chat.command.Command;
 
 import java.util.List;
 
@@ -13,17 +13,17 @@ import java.util.List;
  * @author Dimiikou
  */
 @UCCommand
-public class GaggedCommand extends Command {
+public class GaggedCommand extends UnicacityCommand {
 
     private final UnicacityAddon unicacityAddon;
 
     public GaggedCommand(UnicacityAddon unicacityAddon) {
-        super("geknebelt");
+        super(unicacityAddon, "geknebelt", true);
         this.unicacityAddon = unicacityAddon;
     }
 
     @Override
-    public boolean execute(String prefix, String[] arguments) {
+    public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
         GaggedListener.toggleGagged();
 

@@ -9,7 +9,7 @@ import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.enums.api.AddonGroup;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
-import net.labymod.api.client.chat.command.Command;
+import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
 
 import java.util.Arrays;
 import java.util.List;
@@ -19,19 +19,19 @@ import java.util.stream.Collectors;
  * @author RettichLP
  */
 @UCCommand
-public class PlayerGroupCommand extends Command {
+public class PlayerGroupCommand extends UnicacityCommand {
 
     private static final String usage = "/playergroup [list|add|remove] [Gruppe] [Spieler]";
 
     private final UnicacityAddon unicacityAddon;
 
     public PlayerGroupCommand(UnicacityAddon unicacityAddon) {
-        super("playergroup");
+        super(unicacityAddon, "playergroup", false);
         this.unicacityAddon = unicacityAddon;
     }
 
     @Override
-    public boolean execute(String prefix, String[] arguments) {
+    public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
 
         new Thread(() -> {

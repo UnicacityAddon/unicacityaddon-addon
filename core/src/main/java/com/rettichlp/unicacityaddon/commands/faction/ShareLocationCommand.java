@@ -6,8 +6,8 @@ import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
+import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
 import com.rettichlp.unicacityaddon.listener.MobileListener;
-import net.labymod.api.client.chat.command.Command;
 import net.labymod.api.util.math.vector.FloatVector3;
 
 import java.util.LinkedHashSet;
@@ -19,19 +19,19 @@ import java.util.Set;
  * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/commands/faction/ShareLocationCommand.java">UCUtils by paulzhng</a>
  */
 @UCCommand
-public class ShareLocationCommand extends Command {
+public class ShareLocationCommand extends UnicacityCommand {
 
     private static final String usage = "/sharelocation [Player...] (-d)";
 
     private final UnicacityAddon unicacityAddon;
 
     public ShareLocationCommand(UnicacityAddon unicacityAddon) {
-        super("sharelocation", "sloc", "shareloc");
+        super(unicacityAddon, "sharelocation", true, "sloc", "shareloc");
         this.unicacityAddon = unicacityAddon;
     }
 
     @Override
-    public boolean execute(String prefix, String[] arguments) {
+    public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
 
         if (!MobileListener.hasCommunications) {

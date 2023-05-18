@@ -6,7 +6,7 @@ import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
-import net.labymod.api.client.chat.command.Command;
+import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
 
 import java.text.NumberFormat;
 import java.util.HashMap;
@@ -17,14 +17,14 @@ import java.util.Locale;
  * @author Dimiikou
  */
 @UCCommand
-public class EquipListCommand extends Command {
+public class EquipListCommand extends UnicacityCommand {
 
     private static final String usage = "/equiplist (reset)";
 
     private final UnicacityAddon unicacityAddon;
 
     public EquipListCommand(UnicacityAddon unicacityAddon) {
-        super("equiplist");
+        super(unicacityAddon, "equiplist", true);
         this.unicacityAddon = unicacityAddon;
     }
 
@@ -32,7 +32,7 @@ public class EquipListCommand extends Command {
      * Quote: "This is a token for 1 free hug. Redeem at your nearest Mojangsta: [~~HUG~~]" - Minecraft Crash Report, 09.10.2022
      */
     @Override
-    public boolean execute(String prefix, String[] arguments) {
+    public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
         if (arguments.length == 1 && arguments[0].equalsIgnoreCase("reset")) {
             this.unicacityAddon.fileService().data().setEquipMap(new HashMap<>());

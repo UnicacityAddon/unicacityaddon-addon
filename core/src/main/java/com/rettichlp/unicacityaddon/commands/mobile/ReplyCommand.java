@@ -5,8 +5,8 @@ import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.utils.TextUtils;
+import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
 import com.rettichlp.unicacityaddon.listener.MobileListener;
-import net.labymod.api.client.chat.command.Command;
 
 import java.util.List;
 
@@ -14,19 +14,19 @@ import java.util.List;
  * @author Dimiikou
  */
 @UCCommand
-public class ReplyCommand extends Command {
+public class ReplyCommand extends UnicacityCommand {
 
     private static final String usage = "/reply [Nachricht]";
 
     private final UnicacityAddon unicacityAddon;
 
     public ReplyCommand(UnicacityAddon unicacityAddon) {
-        super("reply", "r");
+        super(unicacityAddon, "reply", true, "r");
         this.unicacityAddon = unicacityAddon;
     }
 
     @Override
-    public boolean execute(String prefix, String[] arguments) {
+    public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
         if (arguments.length < 1) {
             p.sendSyntaxMessage(usage);

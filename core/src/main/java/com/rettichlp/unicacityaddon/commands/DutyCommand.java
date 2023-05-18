@@ -6,7 +6,6 @@ import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
-import net.labymod.api.client.chat.command.Command;
 
 import java.util.List;
 
@@ -14,19 +13,19 @@ import java.util.List;
  * @author RettichLP
  */
 @UCCommand
-public class DutyCommand extends Command {
+public class DutyCommand extends UnicacityCommand {
 
     private static final String usage = "/checkduty [Spieler]";
 
     private final UnicacityAddon unicacityAddon;
 
     public DutyCommand(UnicacityAddon unicacityAddon) {
-        super("checkduty");
+        super(unicacityAddon, "checkduty", true);
         this.unicacityAddon = unicacityAddon;
     }
 
     @Override
-    public boolean execute(String prefix, String[] arguments) {
+    public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
 
         if (arguments.length == 0) {

@@ -6,7 +6,7 @@ import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
-import net.labymod.api.client.chat.command.Command;
+import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.event.HoverEvent;
 import net.labymod.api.notification.Notification;
@@ -17,19 +17,19 @@ import java.util.List;
  * @author RettichLP
  */
 @UCCommand
-public class TokenCommand extends Command {
+public class TokenCommand extends UnicacityCommand {
 
     private static final String usage = "/token (create|revoke)";
 
     private final UnicacityAddon unicacityAddon;
 
     public TokenCommand(UnicacityAddon unicacityAddon) {
-        super("token");
+        super(unicacityAddon, "token", false);
         this.unicacityAddon = unicacityAddon;
     }
 
     @Override
-    public boolean execute(String prefix, String[] arguments) {
+    public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
 
         new Thread(() -> {

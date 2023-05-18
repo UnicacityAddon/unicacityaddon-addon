@@ -10,7 +10,6 @@ import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.utils.MathUtils;
-import net.labymod.api.client.chat.command.Command;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.event.HoverEvent;
 
@@ -34,7 +33,7 @@ import java.util.concurrent.TimeUnit;
  * @author RettichLP
  */
 @UCCommand
-public class ChatLogCommand extends Command {
+public class ChatLogCommand extends UnicacityCommand {
 
     public static final Map<Long, String> chatLogMap = new HashMap<>();
 
@@ -44,12 +43,12 @@ public class ChatLogCommand extends Command {
     private final UnicacityAddon unicacityAddon;
 
     public ChatLogCommand(UnicacityAddon unicacityAddon) {
-        super("chatlog");
+        super(unicacityAddon, "chatlog", true);
         this.unicacityAddon = unicacityAddon;
     }
 
     @Override
-    public boolean execute(String prefix, String[] arguments) {
+    public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
 
         String chatlog;

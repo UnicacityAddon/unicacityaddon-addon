@@ -9,7 +9,7 @@ import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.FormattingCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
-import net.labymod.api.client.chat.command.Command;
+import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
 import net.labymod.api.client.component.event.ClickEvent;
 
 import java.util.List;
@@ -18,17 +18,17 @@ import java.util.List;
  * @author RettichLP
  */
 @UCCommand
-public class YasinCommand extends Command {
+public class YasinCommand extends UnicacityCommand {
 
     private final UnicacityAddon unicacityAddon;
 
     public YasinCommand(UnicacityAddon unicacityAddon) {
-        super("yasin");
+        super(unicacityAddon, "yasin", true);
         this.unicacityAddon = unicacityAddon;
     }
 
     @Override
-    public boolean execute(String prefix, String[] arguments) {
+    public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
 
         new Thread(() -> {

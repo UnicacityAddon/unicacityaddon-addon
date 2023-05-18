@@ -8,7 +8,6 @@ import com.rettichlp.unicacityaddon.base.models.TimerEntry;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.utils.MathUtils;
-import net.labymod.api.client.chat.command.Command;
 import net.labymod.api.client.component.event.ClickEvent;
 
 import java.util.HashMap;
@@ -19,19 +18,19 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author RettichLP
  */
 @UCCommand
-public class TimerCommand extends Command {
+public class TimerCommand extends UnicacityCommand {
 
     private static final String usage = "/timer (start|stop) (Name|ID) (Zeit<h/m/s>)";
 
     private final UnicacityAddon unicacityAddon;
 
     public TimerCommand(UnicacityAddon unicacityAddon) {
-        super("timer");
+        super(unicacityAddon, "timer", true);
         this.unicacityAddon = unicacityAddon;
     }
 
     @Override
-    public boolean execute(String prefix, String[] arguments) {
+    public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
         if (TimerEntry.ACTIVE_TIMERS == null)
             TimerEntry.ACTIVE_TIMERS = new HashMap<>();

@@ -5,7 +5,7 @@ import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.utils.MathUtils;
-import net.labymod.api.client.chat.command.Command;
+import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
 
 import java.util.List;
 
@@ -13,19 +13,19 @@ import java.util.List;
  * @author Dimiikou
  */
 @UCCommand
-public class ExplosiveBeltCommand extends Command {
+public class ExplosiveBeltCommand extends UnicacityCommand {
 
     private static final String usage = "/sprenggürtel [Countdown]";
 
     private final UnicacityAddon unicacityAddon;
 
     public ExplosiveBeltCommand(UnicacityAddon unicacityAddon) {
-        super("sprenggürtel");
+        super(unicacityAddon, "sprenggürtel", true);
         this.unicacityAddon = unicacityAddon;
     }
 
     @Override
-    public boolean execute(String prefix, String[] arguments) {
+    public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
 
         if (arguments.length < 1 || !MathUtils.isInteger(arguments[0])) {

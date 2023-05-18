@@ -6,7 +6,6 @@ import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.enums.location.Bus;
 import com.rettichlp.unicacityaddon.base.models.NaviPoint;
-import net.labymod.api.client.chat.command.Command;
 import net.labymod.api.util.math.vector.FloatVector3;
 
 import java.util.Collection;
@@ -18,7 +17,7 @@ import java.util.stream.Collectors;
  * @author RettichLP
  */
 @UCCommand
-public class BusCommand extends Command {
+public class BusCommand extends UnicacityCommand {
 
     public static Bus start;
     public static Bus destination;
@@ -29,12 +28,12 @@ public class BusCommand extends Command {
     private final UnicacityAddon unicacityAddon;
 
     public BusCommand(UnicacityAddon unicacityAddon) {
-        super("bus");
+        super(unicacityAddon, "bus", true);
         this.unicacityAddon = unicacityAddon;
     }
 
     @Override
-    public boolean execute(String prefix, String[] arguments) {
+    public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
 
         if (arguments.length < 1) {

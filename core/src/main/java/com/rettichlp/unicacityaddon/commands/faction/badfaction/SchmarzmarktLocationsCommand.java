@@ -7,7 +7,7 @@ import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.enums.faction.BlackMarketLocation;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
-import net.labymod.api.client.chat.command.Command;
+import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.event.HoverEvent;
 
@@ -18,19 +18,19 @@ import java.util.List;
  * @author Dimiikou
  */
 @UCCommand
-public class SchmarzmarktLocationsCommand extends Command {
+public class SchmarzmarktLocationsCommand extends UnicacityCommand {
 
     private static final String usage = "/schwarzmarktlocations";
 
     private final UnicacityAddon unicacityAddon;
 
     public SchmarzmarktLocationsCommand(UnicacityAddon unicacityAddon) {
-        super("schwarzmarktlocations", "schwarzmarktlocs", "smarktlocs");
+        super(unicacityAddon, "schwarzmarktlocations", true, "schwarzmarktlocs", "smarktlocs");
         this.unicacityAddon = unicacityAddon;
     }
 
     @Override
-    public boolean execute(String prefix, String[] arguments) {
+    public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
 
         p.sendMessage(Message.getBuilder()

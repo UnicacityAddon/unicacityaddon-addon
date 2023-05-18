@@ -5,7 +5,7 @@ import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.utils.MathUtils;
-import net.labymod.api.client.chat.command.Command;
+import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ import java.util.List;
  * @author RettichLP
  */
 @UCCommand
-public class AEquipCommand extends Command {
+public class AEquipCommand extends UnicacityCommand {
 
     public static int amount = 0;
 
@@ -22,12 +22,12 @@ public class AEquipCommand extends Command {
     private final UnicacityAddon unicacityAddon;
 
     public AEquipCommand(UnicacityAddon unicacityAddon) {
-        super("aequip");
+        super(unicacityAddon, "aequip", true);
         this.unicacityAddon = unicacityAddon;
     }
 
     @Override
-    public boolean execute(String prefix, String[] arguments) {
+    public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
 
         if (arguments.length > 0) {

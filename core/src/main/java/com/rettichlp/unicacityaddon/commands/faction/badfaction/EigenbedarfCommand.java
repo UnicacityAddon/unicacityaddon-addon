@@ -8,7 +8,7 @@ import com.rettichlp.unicacityaddon.base.config.ownUse.setting.MarihuanaSetting;
 import com.rettichlp.unicacityaddon.base.config.ownUse.setting.MethamphetaminSetting;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
-import net.labymod.api.client.chat.command.Command;
+import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,19 +19,19 @@ import java.util.concurrent.TimeUnit;
  * @author RettichLP
  */
 @UCCommand
-public class EigenbedarfCommand extends Command {
+public class EigenbedarfCommand extends UnicacityCommand {
 
     private static final List<String> scheduledTasks = new ArrayList<>();
 
     private final UnicacityAddon unicacityAddon;
 
     public EigenbedarfCommand(UnicacityAddon unicacityAddon) {
-        super("eigenbedarf");
+        super(unicacityAddon, "eigenbedarf", true);
         this.unicacityAddon = unicacityAddon;
     }
 
     @Override
-    public boolean execute(String prefix, String[] arguments) {
+    public boolean execute(String[] arguments) {
         KokainSetting kokainSetting = this.unicacityAddon.configuration().ownUseSetting().kokainSetting();
         MarihuanaSetting marihuanaSetting = this.unicacityAddon.configuration().ownUseSetting().marihuanaSetting();
         MethamphetaminSetting methamphetaminSetting = this.unicacityAddon.configuration().ownUseSetting().methamphetaminSetting();

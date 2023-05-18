@@ -13,7 +13,7 @@ import com.rettichlp.unicacityaddon.base.teamspeak.objects.Channel;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.utils.TextUtils;
-import net.labymod.api.client.chat.command.Command;
+import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
 
 import java.util.HashMap;
 import java.util.List;
@@ -26,19 +26,19 @@ import java.util.stream.Collectors;
  * @author RettichLP
  */
 @UCCommand
-public class TSJoinCommand extends Command {
+public class TSJoinCommand extends UnicacityCommand {
 
     private static final String usage = "/tsjoin [Channel]";
 
     private final UnicacityAddon unicacityAddon;
 
     public TSJoinCommand(UnicacityAddon unicacityAddon) {
-        super("tsjoin");
+        super(unicacityAddon, "tsjoin", false);
         this.unicacityAddon = unicacityAddon;
     }
 
     @Override
-    public boolean execute(String prefix, String[] arguments) {
+    public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
 
         if (arguments.length < 1) {

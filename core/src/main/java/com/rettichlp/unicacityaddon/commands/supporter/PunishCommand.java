@@ -5,7 +5,7 @@ import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.enums.Punishment;
-import net.labymod.api.client.chat.command.Command;
+import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
 
 import java.util.Arrays;
 import java.util.List;
@@ -15,19 +15,19 @@ import java.util.stream.Collectors;
  * @author Dimiikou
  */
 @UCCommand
-public class PunishCommand extends Command {
+public class PunishCommand extends UnicacityCommand {
 
     private static final String usage = "/punish [Spielername] [Grund]";
 
     private final UnicacityAddon unicacityAddon;
 
     public PunishCommand(UnicacityAddon unicacityAddon) {
-        super("punish");
+        super(unicacityAddon, "punish", true);
         this.unicacityAddon = unicacityAddon;
     }
 
     @Override
-    public boolean execute(String prefix, String[] arguments) {
+    public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
 
         if (arguments.length < 2) {

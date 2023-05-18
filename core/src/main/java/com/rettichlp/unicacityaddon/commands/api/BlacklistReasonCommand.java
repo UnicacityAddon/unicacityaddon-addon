@@ -9,7 +9,7 @@ import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.models.BlacklistReason;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
-import net.labymod.api.client.chat.command.Command;
+import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
 import net.labymod.api.client.component.event.HoverEvent;
 
 import java.util.List;
@@ -19,19 +19,19 @@ import java.util.stream.Collectors;
  * @author RettichLP
  */
 @UCCommand
-public class BlacklistReasonCommand extends Command {
+public class BlacklistReasonCommand extends UnicacityCommand {
 
     private static final String usage = "/blacklistreason (add|remove) (Grund) (Preis) (Kills)";
 
     private final UnicacityAddon unicacityAddon;
 
     public BlacklistReasonCommand(UnicacityAddon unicacityAddon) {
-        super("blacklistreason");
+        super(unicacityAddon, "blacklistreason", true);
         this.unicacityAddon = unicacityAddon;
     }
 
     @Override
-    public boolean execute(String prefix, String[] arguments) {
+    public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
 
         new Thread(() -> {

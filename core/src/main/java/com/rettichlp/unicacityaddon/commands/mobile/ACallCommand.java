@@ -4,8 +4,8 @@ import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
+import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
 import com.rettichlp.unicacityaddon.listener.MobileListener;
-import net.labymod.api.client.chat.command.Command;
 
 import java.util.List;
 import java.util.Timer;
@@ -15,7 +15,7 @@ import java.util.TimerTask;
  * @author RettichLP
  */
 @UCCommand
-public class ACallCommand extends Command {
+public class ACallCommand extends UnicacityCommand {
 
     public static boolean isActive;
 
@@ -25,12 +25,12 @@ public class ACallCommand extends Command {
     private final UnicacityAddon unicacityAddon;
 
     public ACallCommand(UnicacityAddon unicacityAddon) {
-        super("acall");
+        super(unicacityAddon, "acall", true);
         this.unicacityAddon = unicacityAddon;
     }
 
     @Override
-    public boolean execute(String prefix, String[] arguments) {
+    public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
         if (arguments.length < 1) {
             p.sendSyntaxMessage(usage);

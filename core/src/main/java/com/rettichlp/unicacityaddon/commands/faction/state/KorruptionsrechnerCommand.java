@@ -6,8 +6,8 @@ import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
+import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
 import com.rettichlp.unicacityaddon.listener.faction.state.WantedListener;
-import net.labymod.api.client.chat.command.Command;
 
 import java.util.List;
 
@@ -15,19 +15,19 @@ import java.util.List;
  * @author Gelegenheitscode
  */
 @UCCommand
-public class KorruptionsrechnerCommand extends Command {
+public class KorruptionsrechnerCommand extends UnicacityCommand {
 
     private static final String usage = "/korruptionsrechner [Spieler]";
 
     private final UnicacityAddon unicacityAddon;
 
     public KorruptionsrechnerCommand(UnicacityAddon unicacityAddon) {
-        super("korruptionsrechner");
+        super(unicacityAddon, "korruptionsrechner", true);
         this.unicacityAddon = unicacityAddon;
     }
 
     @Override
-    public boolean execute(String prefix, String[] arguments) {
+    public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
 
         if (arguments.length < 1) {

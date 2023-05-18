@@ -5,7 +5,6 @@ import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.utils.TextUtils;
-import net.labymod.api.client.chat.command.Command;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -14,19 +13,19 @@ import java.util.concurrent.TimeUnit;
  * @author RettichLP
  */
 @UCCommand
-public class MaskInfoCommand extends Command {
+public class MaskInfoCommand extends UnicacityCommand {
 
     public static long startTime = 0;
 
     private final UnicacityAddon unicacityAddon;
 
     public MaskInfoCommand(UnicacityAddon unicacityAddon) {
-        super("maskinfo");
+        super(unicacityAddon, "maskinfo", true);
         this.unicacityAddon = unicacityAddon;
     }
 
     @Override
-    public boolean execute(String prefix, String[] arguments) {
+    public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
 
         if (startTime > 0) {

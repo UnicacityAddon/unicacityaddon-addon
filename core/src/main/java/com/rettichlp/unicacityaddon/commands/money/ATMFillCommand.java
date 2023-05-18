@@ -4,7 +4,7 @@ import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
-import net.labymod.api.client.chat.command.Command;
+import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
 
 import java.util.List;
 import java.util.Timer;
@@ -14,7 +14,7 @@ import java.util.TimerTask;
  * @author RettichLP
  */
 @UCCommand
-public class ATMFillCommand extends Command {
+public class ATMFillCommand extends UnicacityCommand {
 
     public static int cashInATM = 0;
     public static boolean isActive = false;
@@ -24,12 +24,12 @@ public class ATMFillCommand extends Command {
     private final UnicacityAddon unicacityAddon;
 
     public ATMFillCommand(UnicacityAddon unicacityAddon) {
-        super("atmfill");
+        super(unicacityAddon, "atmfill", true);
         this.unicacityAddon = unicacityAddon;
     }
 
     @Override
-    public boolean execute(String prefix, String[] arguments) {
+    public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
 
         if (!isActive) {

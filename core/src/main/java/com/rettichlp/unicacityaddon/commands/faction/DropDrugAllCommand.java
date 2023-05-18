@@ -6,7 +6,7 @@ import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
-import net.labymod.api.client.chat.command.Command;
+import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
  * @author RettichLP
  */
 @UCCommand
-public class DropDrugAllCommand extends Command {
+public class DropDrugAllCommand extends UnicacityCommand {
 
     public static boolean cocaineCheck = true;
     public static boolean marihuanaCheck = true;
@@ -32,12 +32,12 @@ public class DropDrugAllCommand extends Command {
     private final UnicacityAddon unicacityAddon;
 
     public DropDrugAllCommand(UnicacityAddon unicacityAddon) {
-        super("dbankdropall", "dda", "asservatenkammerdropall", "ada");
+        super(unicacityAddon, "dbankdropall", true, "dda", "asservatenkammerdropall", "ada");
         this.unicacityAddon = unicacityAddon;
     }
 
     @Override
-    public boolean execute(String prefix, String[] arguments) {
+    public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
 
         this.unicacityAddon.fileService().data().setDrugInventoryMap(new HashMap<>());

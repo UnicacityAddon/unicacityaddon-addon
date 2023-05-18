@@ -9,7 +9,7 @@ import com.rettichlp.unicacityaddon.base.config.ownUse.setting.MarihuanaSetting;
 import com.rettichlp.unicacityaddon.base.config.ownUse.setting.MethamphetaminSetting;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
-import net.labymod.api.client.chat.command.Command;
+import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit;
  * @author RettichLP
  */
 @UCCommand
-public class GiftEigenbedarfCommand extends Command {
+public class GiftEigenbedarfCommand extends UnicacityCommand {
 
     public static final List<String> scheduledTasks = new ArrayList<>();
 
@@ -29,12 +29,12 @@ public class GiftEigenbedarfCommand extends Command {
     private final UnicacityAddon unicacityAddon;
 
     public GiftEigenbedarfCommand(UnicacityAddon unicacityAddon) {
-        super("gifteigenbedarf");
+        super(unicacityAddon, "gifteigenbedarf", true);
         this.unicacityAddon = unicacityAddon;
     }
 
     @Override
-    public boolean execute(String prefix, String[] arguments) {
+    public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
 
         if (arguments.length < 1) {

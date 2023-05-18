@@ -10,7 +10,7 @@ import com.rettichlp.unicacityaddon.base.models.HouseBanReason;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.utils.MathUtils;
-import net.labymod.api.client.chat.command.Command;
+import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
 import net.labymod.api.client.component.event.HoverEvent;
 
 import java.util.List;
@@ -20,19 +20,19 @@ import java.util.stream.Collectors;
  * @author RettichLP
  */
 @UCCommand
-public class HousebanReasonCommand extends Command {
+public class HousebanReasonCommand extends UnicacityCommand {
 
     private static final String usage = "/housebanreason (add|remove) (Grund) (Tage)";
 
     private final UnicacityAddon unicacityAddon;
 
     public HousebanReasonCommand(UnicacityAddon unicacityAddon) {
-        super("housebanreason");
+        super(unicacityAddon, "housebanreason", true);
         this.unicacityAddon = unicacityAddon;
     }
 
     @Override
-    public boolean execute(String prefix, String[] arguments) {
+    public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
 
         new Thread(() -> {

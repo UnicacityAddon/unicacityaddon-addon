@@ -5,7 +5,6 @@ import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
-import net.labymod.api.client.chat.command.Command;
 
 import java.util.Arrays;
 import java.util.List;
@@ -16,19 +15,19 @@ import java.util.stream.Collectors;
  * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/commands/faction/CheckActiveMembersCommand.java">UCUtils by paulzhng</a>
  */
 @UCCommand
-public class MemberInfoCommand extends Command {
+public class MemberInfoCommand extends UnicacityCommand {
 
     private static final String usage = "/memberinfo (Fraktion)";
 
     private final UnicacityAddon unicacityAddon;
 
     public MemberInfoCommand(UnicacityAddon unicacityAddon) {
-        super("memberinfo", "mi");
+        super(unicacityAddon, "memberinfo", true, "mi");
         this.unicacityAddon = unicacityAddon;
     }
 
     @Override
-    public boolean execute(String prefix, String[] arguments) {
+    public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
 
         String faction = arguments.length < 1 ? p.getFaction().getFactionKey() : arguments[0];

@@ -9,7 +9,7 @@ import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.utils.TextUtils;
-import net.labymod.api.client.chat.command.Command;
+import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -23,14 +23,14 @@ import java.util.Locale;
  * @author RettichLP
  */
 @UCCommand
-public class BroadcastCommand extends Command {
+public class BroadcastCommand extends UnicacityCommand {
 
     private static final String usage = "/broadcast [queue|send] (dd.MM.yyyy) (HH:mm:ss) (Nachricht)";
 
     private final UnicacityAddon unicacityAddon;
 
     public BroadcastCommand(UnicacityAddon unicacityAddon) {
-        super("broadcast");
+        super(unicacityAddon, "broadcast", false);
         this.unicacityAddon = unicacityAddon;
     }
 
@@ -38,7 +38,7 @@ public class BroadcastCommand extends Command {
      * Quote: *Stille* "Hat das Vorteile?" - RettichLP zu der WG von Fio, 29.09.2022
      */
     @Override
-    public boolean execute(String prefix, String[] arguments) {
+    public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
 
         new Thread(() -> {

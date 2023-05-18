@@ -6,7 +6,6 @@ import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
-import net.labymod.api.client.chat.command.Command;
 
 import java.util.List;
 
@@ -14,19 +13,19 @@ import java.util.List;
  * @author Dimiikou
  */
 @UCCommand
-public class ShutdownGraveyardCommand extends Command {
+public class ShutdownGraveyardCommand extends UnicacityCommand {
 
     public static boolean shutdownGraveyard = false;
 
     private final UnicacityAddon unicacityAddon;
 
     public ShutdownGraveyardCommand(UnicacityAddon unicacityAddon) {
-        super("shutdowngraveyard", "shutdownfriedhof");
+        super(unicacityAddon, "shutdowngraveyard", true, "shutdownfriedhof");
         this.unicacityAddon = unicacityAddon;
     }
 
     @Override
-    public boolean execute(String prefix, String[] arguments) {
+    public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
         shutdownGraveyard = !shutdownGraveyard;
 

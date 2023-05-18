@@ -4,7 +4,7 @@ import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
-import net.labymod.api.client.chat.command.Command;
+import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
 
 import java.util.List;
 
@@ -12,17 +12,17 @@ import java.util.List;
  * @author Dimiikou
  */
 @UCCommand
-public class EinzahlenCommand extends Command {
+public class EinzahlenCommand extends UnicacityCommand {
 
     private final UnicacityAddon unicacityAddon;
 
     public EinzahlenCommand(UnicacityAddon unicacityAddon) {
-        super("einzahlen");
+        super(unicacityAddon, "einzahlen", true);
         this.unicacityAddon = unicacityAddon;
     }
 
     @Override
-    public boolean execute(String prefix, String[] arguments) {
+    public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
 
         if (this.unicacityAddon.fileService().data().getCashBalance() > 0)

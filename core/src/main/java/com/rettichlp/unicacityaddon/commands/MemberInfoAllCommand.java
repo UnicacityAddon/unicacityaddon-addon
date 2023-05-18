@@ -7,7 +7,6 @@ import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
-import net.labymod.api.client.chat.command.Command;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -19,17 +18,17 @@ import java.util.stream.Collectors;
  * @author RettichLP
  */
 @UCCommand
-public class MemberInfoAllCommand extends Command {
+public class MemberInfoAllCommand extends UnicacityCommand {
 
     private final UnicacityAddon unicacityAddon;
 
     public MemberInfoAllCommand(UnicacityAddon unicacityAddon) {
-        super("memberinfoall", "miall");
+        super(unicacityAddon, "memberinfoall", false, "miall");
         this.unicacityAddon = unicacityAddon;
     }
 
     @Override
-    public boolean execute(String prefix, String[] arguments) {
+    public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
 
         String factionString = arguments.length < 1 ? p.getFaction().getFactionKey() : arguments[0];

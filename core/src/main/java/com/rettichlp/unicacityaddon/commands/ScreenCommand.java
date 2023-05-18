@@ -6,7 +6,6 @@ import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.builder.ScreenshotBuilder;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.enums.ScreenshotType;
-import net.labymod.api.client.chat.command.Command;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,19 +17,19 @@ import java.util.stream.Collectors;
  * @author Dimiikou
  */
 @UCCommand
-public class ScreenCommand extends Command {
+public class ScreenCommand extends UnicacityCommand {
 
     private static final String usage = "/screen [Typ]";
 
     private final UnicacityAddon unicacityAddon;
 
     public ScreenCommand(UnicacityAddon unicacityAddon) {
-        super("screen", "activitytest");
+        super(unicacityAddon, "screen", true, "activitytest");
         this.unicacityAddon = unicacityAddon;
     }
 
     @Override
-    public boolean execute(String prefix, String[] arguments) {
+    public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
 
         if (arguments.length < 1) {

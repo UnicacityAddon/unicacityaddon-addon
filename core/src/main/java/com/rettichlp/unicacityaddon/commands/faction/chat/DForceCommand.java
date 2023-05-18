@@ -5,7 +5,7 @@ import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.utils.TextUtils;
-import net.labymod.api.client.chat.command.Command;
+import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
 
 import java.util.List;
 
@@ -13,19 +13,19 @@ import java.util.List;
  * @author RettichLP
  */
 @UCCommand
-public class DForceCommand extends Command {
+public class DForceCommand extends UnicacityCommand {
 
     private static final String usage = "/dforce [Nachricht]";
 
     private final UnicacityAddon unicacityAddon;
 
     public DForceCommand(UnicacityAddon unicacityAddon) {
-        super("dforce");
+        super(unicacityAddon, "dforce", true);
         this.unicacityAddon = unicacityAddon;
     }
 
     @Override
-    public boolean execute(String prefix, String[] arguments) {
+    public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
 
         if (arguments.length == 0) {
