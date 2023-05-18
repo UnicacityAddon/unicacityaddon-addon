@@ -41,7 +41,7 @@ public class Message {
                     .of("U").color(ColorCode.BLUE).advance()
                     .of("C").color(ColorCode.RED).advance()
                     .of("A").color(ColorCode.BLUE).advance().space()
-                    .of("\u25cf").color(ColorCode.DARK_GRAY).advance().space()
+                    .of("●").color(ColorCode.DARK_GRAY).advance().space()
                     .create());
         }
 

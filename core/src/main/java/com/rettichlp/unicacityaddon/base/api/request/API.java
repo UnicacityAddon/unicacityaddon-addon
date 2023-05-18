@@ -707,7 +707,7 @@ public class API {
                 .getAsJsonObject();
     }
 
-    public void sendTokenCreateRequest() throws APIResponseException {
+    public void sendTokenCreateRequest() {
         RequestBuilder.getBuilder(this.unicacityAddon)
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.TOKEN)

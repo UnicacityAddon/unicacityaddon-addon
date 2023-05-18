@@ -6,9 +6,6 @@ import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.utils.TextUtils;
 import jdk.internal.joptsimple.internal.Strings;
 
-import java.util.Objects;
-import java.util.stream.Collectors;
-
 /**
  * @author RettichLP
  */

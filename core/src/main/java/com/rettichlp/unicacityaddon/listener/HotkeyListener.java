@@ -16,7 +16,6 @@ import net.labymod.api.Laby;
 import net.labymod.api.client.gui.screen.key.Key;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.input.KeyEvent;
-import net.labymod.api.util.math.vector.FloatVector3;
 
 import java.util.Timer;
 import java.util.TimerTask;

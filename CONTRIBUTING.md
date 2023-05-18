@@ -41,7 +41,7 @@ Wenn Du ein geschlossenes Issue findest, von dem Du denkst, dass es sich um das 
 
 #### Was macht ein gutes Bug-Issue aus
 - **Verwende einen klaren und aussagekräftigen Titel** für das Problem, um das Problem zu identifizieren.
-- **Beschreibe die genauen Schritte, die das Problem reproduzieren**, so detailliert wie möglich. Beginne zum Beispiel damit, ob Minecraft länger geladen hat als sonst, welchen Befehl du verwendet hast. Wenn Du die Schritte auflistest, **sag nicht nur, was Du getan hast, sondern erklär auch, wie Du es getan hast** (Hotkey, manuelle Eingabe, ...).
+- **Beschreibe die genauen Schritte, die das Problem reproduzieren**, so detailliert wie möglich. Beginne zum Beispiel damit, ob Minecraft länger geladen hat als sonst, welchen Befehl Du verwendet hast. Wenn Du die Schritte auflistest, **sag nicht nur, was Du getan hast, sondern erklär auch, wie Du es getan hast** (Hotkey, manuelle Eingabe, ...).
 - **Erkläre, welches Verhalten Du stattdessen erwartet hast und warum.**
 - **Füge Screenshots und animierte GIFs bei**, die zeigen, wie der Fehler entstanden ist und diesen deutlich veranschaulichen. Du kannst [dieses Tool](https://www.cockos.com/licecap/) verwenden, um GIFs unter macOS und Windows aufzunehmen und [dieses Tool](https://github.com/colinkeenan/silentcast) oder [dieses Tool](https://github.com/GNOME/byzanz) unter Linux.
 - **Wenn das Spiel abstürzt**, füge den Absturzbericht bei. Dieser wird automatisch von Minecraft geöffnet. Füge den Absturzbericht in einem [Markdown-Codeblock](https://help.github.com/articles/markdown-basics/#multiple-lines), einem [Dateianhang](https://help.github.com/articles/file-attachments-on-issues-and-pull-requests/) oder in einem verlinkten [Gist](https://gist.github.com/) hinzu.
@@ -64,7 +64,7 @@ Für einen leichteren Einstieg in das Projekt gibt es `good first issue` und ` h
 ## Code
 
 ### Branch
-Der Branch Name ergibt sich aus dem Titel des Issues. Dabei steht UCAF für Feature und UCAB für Bug. Leerzeichen werden durch Bindestriche ersetzt. Das Template für Branches ist folgendes:
+Der Branch Name ergibt sich aus dem Titel des Issues. Dabei steht UCAF für Feature und UCAB für Bug. Leerzeichen werden durch Bindestriche ersetzt. Das Template für Branches ist Folgendes:
 - Feature (UCAF): `feature/UCAF-NUMMER-BESCHREIBUNG`
 - Bug (UCAB): `bug/UCAB-NUMMER-BESCHREIBUNG`
 
