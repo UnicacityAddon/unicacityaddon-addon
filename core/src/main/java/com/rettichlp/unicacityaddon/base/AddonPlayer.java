@@ -10,6 +10,7 @@ import net.labymod.api.client.scoreboard.Scoreboard;
 import net.labymod.api.client.world.ClientWorld;
 import net.labymod.api.util.math.vector.FloatVector3;
 
+import javax.annotation.Nullable;
 import java.util.UUID;
 
 /**
@@ -17,11 +18,17 @@ import java.util.UUID;
  */
 public interface AddonPlayer {
 
-    ClientPlayer getPlayer();
+    @Nullable ClientPlayer getPlayer();
 
-    String getName();
+    @Nullable String getName();
 
-    UUID getUniqueId();
+    @Nullable UUID getUniqueId();
+
+    @Nullable Float getHealth();
+
+    @Nullable FloatVector3 getPosition();
+
+    @Nullable Inventory getInventory();
 
     void sendMessage(String message);
 
@@ -41,13 +48,7 @@ public interface AddonPlayer {
 
     ClientWorld getWorld();
 
-    float getHealth();
-
-    FloatVector3 getPosition();
-
     Scoreboard getScoreboard();
-
-    Inventory getInventory();
 
     Faction getFaction();
 
@@ -71,7 +72,7 @@ public interface AddonPlayer {
 
     boolean hasGangwar();
 
-    Weapon getWeaponInMainHand();
+    @Nullable Weapon getWeaponInMainHand();
 
     boolean isPrioritizedMember();
 }

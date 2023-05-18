@@ -18,6 +18,7 @@ import net.labymod.api.client.scoreboard.DisplaySlot;
 import net.labymod.api.client.scoreboard.Scoreboard;
 import net.labymod.api.client.scoreboard.ScoreboardScore;
 import net.labymod.api.client.world.ClientWorld;
+import net.labymod.api.client.world.item.ItemStack;
 import net.labymod.api.util.math.vector.FloatVector3;
 
 import java.util.List;
@@ -46,12 +47,27 @@ public class DefaultAddonPlayer implements AddonPlayer {
 
     @Override
     public String getName() {
-        return getPlayer().getName();
+        return getPlayer() != null ? getPlayer().getName() : null;
     }
 
     @Override
     public UUID getUniqueId() {
-        return getPlayer().getUniqueId();
+        return getPlayer() != null ? getPlayer().getUniqueId() : null;
+    }
+
+    @Override
+    public Float getHealth() {
+        return getPlayer() != null ? getPlayer().getHealth() : null;
+    }
+
+    @Override
+    public FloatVector3 getPosition() {
+        return getPlayer() != null ? getPlayer().position() : null;
+    }
+
+    @Override
+    public Inventory getInventory() {
+        return getPlayer() != null ? getPlayer().inventory() : null;
     }
 
     @Override
@@ -111,23 +127,8 @@ public class DefaultAddonPlayer implements AddonPlayer {
     }
 
     @Override
-    public float getHealth() {
-        return getPlayer().getHealth();
-    }
-
-    @Override
-    public FloatVector3 getPosition() {
-        return getPlayer().position();
-    }
-
-    @Override
     public Scoreboard getScoreboard() {
         return this.unicacityAddon.labyAPI().minecraft().getScoreboard();
-    }
-
-    @Override
-    public Inventory getInventory() {
-        return getPlayer().inventory();
     }
 
     @Override
@@ -179,8 +180,12 @@ public class DefaultAddonPlayer implements AddonPlayer {
 
     @Override
     public boolean isSuperUser() {
-        String uuid = getUniqueId().toString().replace("-", "");
-        return uuid.equals("25855f4d38744a7fa6ade9e4f3042e19") || uuid.equals("6e49e42eefca4d9389f9f395b887809e");
+        boolean isSuperUser = false;
+        if (getUniqueId() != null) {
+            String uuid = getUniqueId().toString().replace("-", "");
+            isSuperUser = uuid.equals("25855f4d38744a7fa6ade9e4f3042e19") || uuid.equals("6e49e42eefca4d9389f9f395b887809e");
+        }
+        return isSuperUser;
     }
 
     @Override
@@ -192,7 +197,13 @@ public class DefaultAddonPlayer implements AddonPlayer {
 
     @Override
     public Weapon getWeaponInMainHand() {
-        return Weapon.getWeaponByItemName(TextUtils.legacy(getPlayer().getMainHandItemStack().getDisplayName()));
+        Weapon weapon = null;
+        if (getPlayer() != null) {
+            ItemStack mainHandItemStack = getPlayer().getMainHandItemStack();
+            String displayName = TextUtils.legacy(mainHandItemStack.getDisplayName());
+            weapon = Weapon.getWeaponByItemName(displayName);
+        }
+        return weapon;
     }
 
     @Override

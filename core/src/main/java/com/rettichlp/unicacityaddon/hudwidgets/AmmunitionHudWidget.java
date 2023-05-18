@@ -1,14 +1,11 @@
 package com.rettichlp.unicacityaddon.hudwidgets;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.enums.Weapon;
 import com.rettichlp.unicacityaddon.base.events.WeaponShotEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
-import com.rettichlp.unicacityaddon.base.utils.TextUtils;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidget;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidgetConfig;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextLine;
-import net.labymod.api.client.world.item.ItemStack;
 import net.labymod.api.event.Subscribe;
 
 /**
@@ -34,9 +31,7 @@ public class AmmunitionHudWidget extends TextHudWidget<TextHudWidgetConfig> {
 
     @Override
     public boolean isVisibleInGame() {
-        ItemStack mainHandItemStack = this.unicacityAddon.labyAPI().minecraft().getClientPlayer().getMainHandItemStack();
-        String displayName = TextUtils.legacy(mainHandItemStack.getDisplayName());
-        return Weapon.getWeaponByItemName(displayName) != null;
+        return this.unicacityAddon.player().getWeaponInMainHand() != null;
     }
 
     @Subscribe
