@@ -16,15 +16,13 @@ import java.util.Locale;
 /**
  * @author Dimiikou
  */
-@UCCommand
+@UCCommand(prefix = "equiplist", usage = "(reset)")
 public class EquipListCommand extends UnicacityCommand {
-
-    private static final String usage = "/equiplist (reset)";
 
     private final UnicacityAddon unicacityAddon;
 
-    public EquipListCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "equiplist", true);
+    public EquipListCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 

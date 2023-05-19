@@ -15,15 +15,13 @@ import java.util.stream.Collectors;
  * @author RettichLP
  * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/commands/faction/police/ModifyWantedsCommand.java">UCUtils by paulzhng</a>
  */
-@UCCommand
+@UCCommand(prefix = "modifywanteds", aliases = {"mw"}, usage = "[Spieler] [gf|sf|ssf|s|da5|da10|da15|fsa|wsa|wgv]")
 public class ModifyWantedsCommand extends UnicacityCommand {
-
-    private static final String usage = "/mw [Spieler] [GF/SF/SSF/S/DA5/DA10/DA15/FSA/WSA/WGV]";
 
     private final UnicacityAddon unicacityAddon;
 
-    public ModifyWantedsCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "modifywanteds", true, "mw");
+    public ModifyWantedsCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 

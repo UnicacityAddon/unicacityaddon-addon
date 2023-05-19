@@ -13,13 +13,13 @@ import java.util.stream.Collectors;
 /**
  * @author RettichLP
  */
-@UCCommand
+@UCCommand(prefix = "navi")
 public class NaviCommand extends UnicacityCommand {
 
     private final UnicacityAddon unicacityAddon;
 
-    public NaviCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "navi", true);
+    public NaviCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 

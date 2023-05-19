@@ -19,15 +19,13 @@ import static com.rettichlp.unicacityaddon.base.utils.MathUtils.DECIMAL_FORMAT;
 /**
  * @author RettichLP
  */
-@UCCommand
+@UCCommand(prefix = "toplist")
 public class TopListCommand extends UnicacityCommand {
-
-    private static final String usage = "/toplist";
 
     private final UnicacityAddon unicacityAddon;
 
-    public TopListCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "toplist", true);
+    public TopListCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 

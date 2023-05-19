@@ -21,15 +21,13 @@ import java.util.Locale;
 /**
  * @author RettichLP
  */
-@UCCommand
+@UCCommand(prefix = "broadcast", onlyOnUnicacity = false, usage = "[queue|send] (dd.MM.yyyy) (HH:mm:ss) (Nachricht)")
 public class BroadcastCommand extends UnicacityCommand {
-
-    private static final String usage = "/broadcast [queue|send] (dd.MM.yyyy) (HH:mm:ss) (Nachricht)";
 
     private final UnicacityAddon unicacityAddon;
 
-    public BroadcastCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "broadcast", false);
+    public BroadcastCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 
@@ -84,7 +82,7 @@ public class BroadcastCommand extends UnicacityCommand {
                     e.sendInfo();
                 }
             } else {
-                p.sendSyntaxMessage(usage);
+                sendUsage(p);
             }
         }).start();
         return true;

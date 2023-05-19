@@ -14,18 +14,17 @@ import java.util.TimerTask;
 /**
  * @author RettichLP
  */
-@UCCommand
+@UCCommand(prefix = "acall", usage = "[Spieler]")
 public class ACallCommand extends UnicacityCommand {
 
     public static boolean isActive;
 
-    private static final String usage = "/acall [Spielername]";
     private final Timer timer = new Timer();
 
     private final UnicacityAddon unicacityAddon;
 
-    public ACallCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "acall", true);
+    public ACallCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 
@@ -33,7 +32,7 @@ public class ACallCommand extends UnicacityCommand {
     public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
         if (arguments.length < 1) {
-            p.sendSyntaxMessage(usage);
+            sendUsage(p);
             return true;
         }
 

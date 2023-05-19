@@ -24,15 +24,13 @@ import java.util.stream.Collectors;
  * @author Fuzzlemann
  * @author RettichLP
  */
-@UCCommand
+@UCCommand(prefix = "tsjoin", onlyOnUnicacity = false, usage = "[Channel]")
 public class TSJoinCommand extends UnicacityCommand {
-
-    private static final String usage = "/tsjoin [Channel]";
 
     private final UnicacityAddon unicacityAddon;
 
-    public TSJoinCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "tsjoin", false);
+    public TSJoinCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 
@@ -41,7 +39,7 @@ public class TSJoinCommand extends UnicacityCommand {
         AddonPlayer p = this.unicacityAddon.player();
 
         if (arguments.length < 1) {
-            p.sendSyntaxMessage(usage);
+            sendUsage(p);
             return true;
         }
 

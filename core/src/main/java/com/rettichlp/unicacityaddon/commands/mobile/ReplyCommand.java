@@ -12,15 +12,13 @@ import java.util.List;
 /**
  * @author Dimiikou
  */
-@UCCommand
+@UCCommand(prefix = "reply", aliases = {"r"}, usage = "[Nachricht]")
 public class ReplyCommand extends UnicacityCommand {
-
-    private static final String usage = "/reply [Nachricht]";
 
     private final UnicacityAddon unicacityAddon;
 
-    public ReplyCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "reply", true, "r");
+    public ReplyCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 
@@ -28,7 +26,7 @@ public class ReplyCommand extends UnicacityCommand {
     public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
         if (arguments.length < 1) {
-            p.sendSyntaxMessage(usage);
+            sendUsage(p);
             return true;
         }
 

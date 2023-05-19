@@ -13,15 +13,15 @@ import java.util.TimerTask;
 /**
  * @author Dimiikou
  */
-@UCCommand
+@UCCommand(prefix = "adropmoney")
 public class ADropMoneyCommand extends UnicacityCommand {
 
     private int step = 0;
 
     private final UnicacityAddon unicacityAddon;
 
-    public ADropMoneyCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "adropmoney", true);
+    public ADropMoneyCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 

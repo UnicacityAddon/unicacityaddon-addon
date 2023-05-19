@@ -11,15 +11,13 @@ import java.util.List;
 /**
  * @author Dimiikou
  */
-@UCCommand
+@UCCommand(prefix = "hauskasseninfo", aliases = {"hkasseninfo", "hkinfo"})
 public class HouseBankCommand extends UnicacityCommand {
-
-    private static final String usage = "/hauskasseninfo";
 
     private final UnicacityAddon unicacityAddon;
 
-    public HouseBankCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "hauskasseninfo", true, "hkasseninfo", "hkinfo");
+    public HouseBankCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 

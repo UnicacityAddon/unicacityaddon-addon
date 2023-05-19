@@ -16,19 +16,17 @@ import java.util.stream.Collectors;
 /**
  * @author RettichLP
  */
-@UCCommand
+@UCCommand(prefix = "arezept", usage = "[Spieler] [Rezept] [Anzahl]")
 public class ARezeptCommand extends UnicacityCommand {
 
     public static String target;
     public static DrugType medication;
     public static int amount = 0;
 
-    private static final String usage = "/arezept [Spieler] [Rezept] [Anzahl]";
-
     private final UnicacityAddon unicacityAddon;
 
-    public ARezeptCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "arezept", true);
+    public ARezeptCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 
@@ -37,7 +35,7 @@ public class ARezeptCommand extends UnicacityCommand {
         AddonPlayer p = this.unicacityAddon.player();
 
         if (arguments.length < 3) {
-            p.sendSyntaxMessage(usage);
+            sendUsage(p);
             return true;
         }
 

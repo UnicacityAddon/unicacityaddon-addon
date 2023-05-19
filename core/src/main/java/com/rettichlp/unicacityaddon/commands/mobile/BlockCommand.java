@@ -12,15 +12,13 @@ import java.util.List;
 /**
  * @author RettichLP
  */
-@UCCommand
+@UCCommand(prefix = "blockieren", aliases = {"block", "blocknumber"}, usage = "[Spieler]")
 public class BlockCommand extends UnicacityCommand {
-
-    private static final String usage = "/blockieren [Spieler]";
 
     private final UnicacityAddon unicacityAddon;
 
-    public BlockCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "blockieren", true, "block", "blocknumber");
+    public BlockCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 
@@ -38,7 +36,7 @@ public class BlockCommand extends UnicacityCommand {
                 p.sendInfoMessage("Du hast " + playerName + " blockiert.");
             }
         } else
-            p.sendSyntaxMessage(usage);
+            sendUsage(p);
         return true;
     }
 

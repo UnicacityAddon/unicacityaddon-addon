@@ -21,16 +21,15 @@ import java.util.stream.Collectors;
  * @author RettichLP
  * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/commands/faction/police/ASUCommand.java">UCUtils by paulzhng</a>
  */
-@UCCommand
+@UCCommand(prefix = "asu", usage = "[Spieler...] [Grund] (-v|-b|-fsa|-wsa)")
 public class ASUCommand extends UnicacityCommand {
 
-    private static final String usage = "/asu [Spieler...] [Grund] (-v/-b/-fsa/-wsa)";
     private final Timer timer = new Timer();
 
     private final UnicacityAddon unicacityAddon;
 
-    public ASUCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "asu", true);
+    public ASUCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 
@@ -38,7 +37,7 @@ public class ASUCommand extends UnicacityCommand {
     public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
         if (arguments.length < 2) {
-            p.sendSyntaxMessage(usage);
+            sendUsage(p);
             return true;
         }
 

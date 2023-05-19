@@ -16,15 +16,13 @@ import java.util.stream.Collectors;
 /**
  * @author RettichLP
  */
-@UCCommand
+@UCCommand(prefix = "navipoint", usage = "[add|remove] [Name] (x) (y) (z) (der|die|das)")
 public class NaviPointCommand extends UnicacityCommand {
-
-    private static final String usage = "/navipoint [add|remove] [Name] (x) (y) (z) (Artikel)";
 
     private final UnicacityAddon unicacityAddon;
 
-    public NaviPointCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "navipoint", true);
+    public NaviPointCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 
@@ -48,7 +46,7 @@ public class NaviPointCommand extends UnicacityCommand {
                     e.sendInfo();
                 }
             } else {
-                p.sendSyntaxMessage(usage);
+                sendUsage(p);
             }
         }).start();
         return true;

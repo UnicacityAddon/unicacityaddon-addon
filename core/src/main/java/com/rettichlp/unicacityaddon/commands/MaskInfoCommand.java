@@ -11,15 +11,15 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author RettichLP
  */
-@UCCommand
+@UCCommand(prefix = "maskinfo")
 public class MaskInfoCommand extends UnicacityCommand {
 
     public static long startTime = 0;
 
     private final UnicacityAddon unicacityAddon;
 
-    public MaskInfoCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "maskinfo", true);
+    public MaskInfoCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 

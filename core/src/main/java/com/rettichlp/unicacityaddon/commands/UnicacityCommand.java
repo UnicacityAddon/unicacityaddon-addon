@@ -1,6 +1,8 @@
 package com.rettichlp.unicacityaddon.commands;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.base.AddonPlayer;
+import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import net.labymod.api.client.chat.command.Command;
 import org.jetbrains.annotations.NotNull;
 
@@ -10,21 +12,25 @@ import org.jetbrains.annotations.NotNull;
 public abstract class UnicacityCommand extends Command {
 
     private final UnicacityAddon unicacityAddon;
-    private final boolean onlyOnUnicacity;
+    private final UCCommand ucCommand;
 
     /**
      * Instantiates a new Command.
      */
-    protected UnicacityCommand(UnicacityAddon unicacityAddon, String prefix, boolean onlyOnUnicacity, String... aliases) {
-        super(prefix, aliases);
+    protected UnicacityCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(ucCommand.prefix(), ucCommand.aliases());
         this.unicacityAddon = unicacityAddon;
-        this.onlyOnUnicacity = onlyOnUnicacity;
+        this.ucCommand = ucCommand;
     }
 
     public abstract boolean execute(@NotNull final String[] arguments);
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        return (this.unicacityAddon.utils().isUnicacity() || !this.onlyOnUnicacity) && this.execute(arguments);
+        return (this.unicacityAddon.utils().isUnicacity() || !this.ucCommand.onlyOnUnicacity()) && this.execute(arguments);
+    }
+
+    public void sendUsage(AddonPlayer addonPlayer) {
+        addonPlayer.sendSyntaxMessage("/" + this.ucCommand.prefix() + " " + this.ucCommand.usage());
     }
 }

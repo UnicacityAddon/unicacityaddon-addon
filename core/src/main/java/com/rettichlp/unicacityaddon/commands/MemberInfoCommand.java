@@ -14,15 +14,13 @@ import java.util.stream.Collectors;
  * @author RettichLP
  * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/commands/faction/CheckActiveMembersCommand.java">UCUtils by paulzhng</a>
  */
-@UCCommand
+@UCCommand(prefix = "memberinfo", aliases = {"mi"}, onlyOnUnicacity = false, usage = "(Fraktion)")
 public class MemberInfoCommand extends UnicacityCommand {
-
-    private static final String usage = "/memberinfo (Fraktion)";
 
     private final UnicacityAddon unicacityAddon;
 
-    public MemberInfoCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "memberinfo", true, "mi");
+    public MemberInfoCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 

@@ -12,15 +12,15 @@ import java.util.List;
 /**
  * @author Dimiikou
  */
-@UCCommand
+@UCCommand(prefix = "shutdowngraveyard", aliases = {"shutdownfriedhof"})
 public class ShutdownGraveyardCommand extends UnicacityCommand {
 
     public static boolean shutdownGraveyard = false;
 
     private final UnicacityAddon unicacityAddon;
 
-    public ShutdownGraveyardCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "shutdowngraveyard", true, "shutdownfriedhof");
+    public ShutdownGraveyardCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 

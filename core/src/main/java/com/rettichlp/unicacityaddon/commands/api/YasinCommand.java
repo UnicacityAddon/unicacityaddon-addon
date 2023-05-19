@@ -17,13 +17,13 @@ import java.util.List;
 /**
  * @author RettichLP
  */
-@UCCommand
+@UCCommand(prefix = "yasin")
 public class YasinCommand extends UnicacityCommand {
 
     private final UnicacityAddon unicacityAddon;
 
-    public YasinCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "yasin", true);
+    public YasinCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 

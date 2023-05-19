@@ -21,17 +21,15 @@ import java.util.stream.Collectors;
  * @author Dimiikou
  * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/commands/faction/CallReinforcementCommand.java">UCUtils by paulzhng</a>
  */
-@UCCommand
+@UCCommand(prefix = "reinforcement", aliases = {"callreinforcement", "reinf", "verstärkung"}, usage = "(-f|-d|-r|-rd|-e|-ed|-m|-lb|-da|-ct|-p|-b|-gn|-gnd|-t|-td|-test)")
 public class ReinforcementCommand extends UnicacityCommand {
 
     public static int activeReinforcement = -1;
 
-    private static final String usage = "/reinforcement (-f|-d|-r|-rd|-e|-ed|-m|-lb|-da|-ct|-p|-b|-gn|-gnd|-t|-td|-test)";
-
     private final UnicacityAddon unicacityAddon;
 
-    public ReinforcementCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "reinforcement", true, "callreinforcement", "reinf", "verstärkung");
+    public ReinforcementCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 

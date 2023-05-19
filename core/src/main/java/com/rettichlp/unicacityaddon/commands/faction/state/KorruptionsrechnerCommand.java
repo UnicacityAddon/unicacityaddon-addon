@@ -14,15 +14,13 @@ import java.util.List;
 /**
  * @author Gelegenheitscode
  */
-@UCCommand
+@UCCommand(prefix = "korruptionsrechner", usage = "[Spieler]")
 public class KorruptionsrechnerCommand extends UnicacityCommand {
-
-    private static final String usage = "/korruptionsrechner [Spieler]";
 
     private final UnicacityAddon unicacityAddon;
 
-    public KorruptionsrechnerCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "korruptionsrechner", true);
+    public KorruptionsrechnerCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 
@@ -31,7 +29,7 @@ public class KorruptionsrechnerCommand extends UnicacityCommand {
         AddonPlayer p = this.unicacityAddon.player();
 
         if (arguments.length < 1) {
-            p.sendSyntaxMessage(usage);
+            sendUsage(p);
             return true;
         }
 

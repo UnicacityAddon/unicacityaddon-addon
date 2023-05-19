@@ -17,15 +17,13 @@ import java.util.List;
 /**
  * @author Dimiikou
  */
-@UCCommand
+@UCCommand(prefix = "schwarzmarktlocations", aliases = {"schwarzmarktlocs", "smarktlocs"})
 public class SchmarzmarktLocationsCommand extends UnicacityCommand {
-
-    private static final String usage = "/schwarzmarktlocations";
 
     private final UnicacityAddon unicacityAddon;
 
-    public SchmarzmarktLocationsCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "schwarzmarktlocations", true, "schwarzmarktlocs", "smarktlocs");
+    public SchmarzmarktLocationsCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 

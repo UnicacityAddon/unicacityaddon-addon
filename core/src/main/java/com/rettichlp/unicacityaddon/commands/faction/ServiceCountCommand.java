@@ -13,13 +13,13 @@ import java.util.List;
 /**
  * @author Dimiikou
  */
-@UCCommand
+@UCCommand(prefix = "servicecount")
 public class ServiceCountCommand extends UnicacityCommand {
 
     private final UnicacityAddon unicacityAddon;
 
-    public ServiceCountCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "servicecount", true);
+    public ServiceCountCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 

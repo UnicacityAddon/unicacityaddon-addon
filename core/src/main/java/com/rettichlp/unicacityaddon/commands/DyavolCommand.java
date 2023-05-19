@@ -13,13 +13,13 @@ import java.util.List;
 /**
  * @author Dimiikou
  */
-@UCCommand
+@UCCommand(prefix = "dyavol", onlyOnUnicacity = false)
 public class DyavolCommand extends UnicacityCommand {
 
     private final UnicacityAddon unicacityAddon;
 
-    public DyavolCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "dyavol", true);
+    public DyavolCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 

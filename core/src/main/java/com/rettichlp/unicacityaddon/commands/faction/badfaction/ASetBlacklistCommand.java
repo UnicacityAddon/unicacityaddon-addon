@@ -13,15 +13,13 @@ import java.util.stream.Collectors;
 /**
  * @author RettichLP
  */
-@UCCommand
+@UCCommand(prefix = "asetbl", usage = "[Spieler...] [Grund]")
 public class ASetBlacklistCommand extends UnicacityCommand {
-
-    private static final String usage = "/asetbl [Spieler...] [Grund]";
 
     private final UnicacityAddon unicacityAddon;
 
-    public ASetBlacklistCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "asetbl", true);
+    public ASetBlacklistCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 
@@ -29,7 +27,7 @@ public class ASetBlacklistCommand extends UnicacityCommand {
     public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
         if (arguments.length < 2) {
-            p.sendSyntaxMessage(usage);
+            sendUsage(p);
             return true;
         }
 

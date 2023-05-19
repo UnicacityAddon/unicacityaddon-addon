@@ -13,18 +13,16 @@ import java.util.TimerTask;
 /**
  * @author RettichLP
  */
-@UCCommand
+@UCCommand(prefix = "atmfill")
 public class ATMFillCommand extends UnicacityCommand {
 
     public static int cashInATM = 0;
     public static boolean isActive = false;
 
-    private static final String usage = "/atmfill";
-
     private final UnicacityAddon unicacityAddon;
 
-    public ATMFillCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "atmfill", true);
+    public ATMFillCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 

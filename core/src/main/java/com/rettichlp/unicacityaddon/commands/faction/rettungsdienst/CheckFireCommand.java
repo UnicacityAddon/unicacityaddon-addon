@@ -17,15 +17,13 @@ import java.util.List;
 /**
  * @author RettichLP
  */
-@UCCommand
+@UCCommand(prefix = "checkfire")
 public class CheckFireCommand extends UnicacityCommand {
-
-    private static final String usage = "/checkfire";
 
     private final UnicacityAddon unicacityAddon;
 
-    public CheckFireCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "checkfire", true);
+    public CheckFireCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 

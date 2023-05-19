@@ -16,18 +16,17 @@ import java.util.stream.Collectors;
 /**
  * @author RettichLP
  */
-@UCCommand
+@UCCommand(prefix = "countdown", usage = "[Sekunden] [Chat]")
 public class CountdownCommand extends UnicacityCommand {
 
     public static int countdown;
 
-    private static final String usage = "/countdown [Sekunden] [Chat]";
     private static boolean active = false;
 
     private final UnicacityAddon unicacityAddon;
 
-    public CountdownCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "countdown", true);
+    public CountdownCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 
@@ -41,7 +40,7 @@ public class CountdownCommand extends UnicacityCommand {
         }
 
         if (arguments.length < 1 || !MathUtils.isInteger(arguments[0])) {
-            p.sendSyntaxMessage(usage);
+            sendUsage(p);
             return true;
         }
 
@@ -54,7 +53,7 @@ public class CountdownCommand extends UnicacityCommand {
 
         ChatType chatType = arguments.length == 1 ? ChatType.CHAT : ChatType.getChatTypeByDisplayName(arguments[1]);
         if (chatType == null) {
-            p.sendSyntaxMessage(usage);
+            sendUsage(p);
             return true;
         }
 

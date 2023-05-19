@@ -21,15 +21,13 @@ import java.util.List;
  * @author Fuzzlemann
  * @author RettichLP
  */
-@UCCommand
+@UCCommand(prefix = "tsfind", onlyOnUnicacity = false, usage = "[Spieler]")
 public class TSFindCommand extends UnicacityCommand {
-
-    private static final String usage = "/tsfind [Spieler]";
 
     private final UnicacityAddon unicacityAddon;
 
-    public TSFindCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "tsfind", false);
+    public TSFindCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 
@@ -39,7 +37,7 @@ public class TSFindCommand extends UnicacityCommand {
             AddonPlayer p = this.unicacityAddon.player();
 
             if (arguments.length < 1) {
-                p.sendSyntaxMessage(usage);
+                sendUsage(p);
                 return;
             }
 

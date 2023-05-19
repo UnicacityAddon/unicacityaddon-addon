@@ -15,13 +15,13 @@ import java.util.Map;
 /**
  * @author RettichLP
  */
-@UCCommand
+@UCCommand(prefix = "nearestatm", aliases = {"natm"})
 public class NearestATMCommand extends UnicacityCommand {
 
     private final UnicacityAddon unicacityAddon;
 
-    public NearestATMCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "nearestatm", true, "natm");
+    public NearestATMCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 

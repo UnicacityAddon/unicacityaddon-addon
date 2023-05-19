@@ -11,15 +11,13 @@ import java.util.List;
 /**
  * @author RettichLP
  */
-@UCCommand
+@UCCommand(prefix = "sfforce", usage = "[Nachricht]")
 public class SFForceCommand extends UnicacityCommand {
-
-    private static final String usage = "/sfforce [Nachricht]";
 
     private final UnicacityAddon unicacityAddon;
 
-    public SFForceCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "sfforce", true);
+    public SFForceCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 
@@ -28,7 +26,7 @@ public class SFForceCommand extends UnicacityCommand {
         AddonPlayer p = this.unicacityAddon.player();
 
         if (arguments.length == 0) {
-            p.sendSyntaxMessage(usage);
+            sendUsage(p);
             return true;
         }
 

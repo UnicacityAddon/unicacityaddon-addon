@@ -19,15 +19,13 @@ import java.util.stream.Collectors;
 /**
  * @author RettichLP
  */
-@UCCommand
+@UCCommand(prefix = "housebanreason", usage = "(add|remove) (Grund) (Tage)")
 public class HousebanReasonCommand extends UnicacityCommand {
-
-    private static final String usage = "/housebanreason (add|remove) (Grund) (Tage)";
 
     private final UnicacityAddon unicacityAddon;
 
-    public HousebanReasonCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "housebanreason", true);
+    public HousebanReasonCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 
@@ -75,7 +73,7 @@ public class HousebanReasonCommand extends UnicacityCommand {
                     e.sendInfo();
                 }
             } else {
-                p.sendSyntaxMessage(usage);
+                sendUsage(p);
             }
         }).start();
         return true;

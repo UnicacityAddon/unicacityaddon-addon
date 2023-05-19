@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author RettichLP
  */
-@UCCommand
+@UCCommand(prefix = "dbankdropall", aliases = {"dda", "asservatenkammerdropall", "ada"})
 public class DropDrugAllCommand extends UnicacityCommand {
 
     public static boolean cocaineCheck = true;
@@ -27,12 +27,10 @@ public class DropDrugAllCommand extends UnicacityCommand {
     public static boolean active = false;
     public static int lastWindowId = 0;
 
-    private static final String usage = "/dbankdropall bzw. /asservatenkammerdropall";
-
     private final UnicacityAddon unicacityAddon;
 
-    public DropDrugAllCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "dbankdropall", true, "dda", "asservatenkammerdropall", "ada");
+    public DropDrugAllCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 

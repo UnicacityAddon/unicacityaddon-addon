@@ -12,15 +12,13 @@ import java.util.List;
 /**
  * @author Dimiikou
  */
-@UCCommand
+@UCCommand(prefix = "sprenggürtel", usage = "[Countdown]")
 public class ExplosiveBeltCommand extends UnicacityCommand {
-
-    private static final String usage = "/sprenggürtel [Countdown]";
 
     private final UnicacityAddon unicacityAddon;
 
-    public ExplosiveBeltCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "sprenggürtel", true);
+    public ExplosiveBeltCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 
@@ -29,7 +27,7 @@ public class ExplosiveBeltCommand extends UnicacityCommand {
         AddonPlayer p = this.unicacityAddon.player();
 
         if (arguments.length < 1 || !MathUtils.isInteger(arguments[0])) {
-            p.sendSyntaxMessage(usage);
+            sendUsage(p);
             return true;
         }
 

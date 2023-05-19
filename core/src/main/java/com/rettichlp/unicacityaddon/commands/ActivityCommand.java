@@ -19,13 +19,13 @@ import java.util.stream.Collectors;
 /**
  * @author RettichLP
  */
-@UCCommand
+@UCCommand(prefix = "activity", onlyOnUnicacity = false)
 public class ActivityCommand extends UnicacityCommand {
 
     private final UnicacityAddon unicacityAddon;
 
-    public ActivityCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "activity", false);
+    public ActivityCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 

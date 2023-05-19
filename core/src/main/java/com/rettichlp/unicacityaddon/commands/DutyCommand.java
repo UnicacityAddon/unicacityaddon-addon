@@ -12,15 +12,13 @@ import java.util.List;
 /**
  * @author RettichLP
  */
-@UCCommand
+@UCCommand(prefix = "checkduty", usage = "[Spieler]")
 public class DutyCommand extends UnicacityCommand {
-
-    private static final String usage = "/checkduty [Spieler]";
 
     private final UnicacityAddon unicacityAddon;
 
-    public DutyCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "checkduty", true);
+    public DutyCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 
@@ -29,7 +27,7 @@ public class DutyCommand extends UnicacityCommand {
         AddonPlayer p = this.unicacityAddon.player();
 
         if (arguments.length == 0) {
-            p.sendSyntaxMessage(usage);
+            sendUsage(p);
             return true;
         }
 

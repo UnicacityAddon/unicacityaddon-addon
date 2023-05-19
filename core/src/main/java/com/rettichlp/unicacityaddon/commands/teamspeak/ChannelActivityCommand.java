@@ -26,15 +26,13 @@ import java.util.stream.IntStream;
  * @author Fuzzlemann
  * @author RettichLP
  */
-@UCCommand
+@UCCommand(prefix = "channelactivity", onlyOnUnicacity = false)
 public class ChannelActivityCommand extends UnicacityCommand {
-
-    private static final String usage = "/channelactivity";
 
     private final UnicacityAddon unicacityAddon;
 
-    public ChannelActivityCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "channelactivity", false);
+    public ChannelActivityCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 

@@ -18,15 +18,15 @@ import java.util.concurrent.TimeUnit;
  * @author Dimiikou
  * @author RettichLP
  */
-@UCCommand
+@UCCommand(prefix = "eigenbedarf")
 public class EigenbedarfCommand extends UnicacityCommand {
 
     private static final List<String> scheduledTasks = new ArrayList<>();
 
     private final UnicacityAddon unicacityAddon;
 
-    public EigenbedarfCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "eigenbedarf", true);
+    public EigenbedarfCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 

@@ -17,13 +17,13 @@ import java.util.stream.Collectors;
 /**
  * @author RettichLP
  */
-@UCCommand
+@UCCommand(prefix = "memberinfoall", aliases = {"miall"}, onlyOnUnicacity = false)
 public class MemberInfoAllCommand extends UnicacityCommand {
 
     private final UnicacityAddon unicacityAddon;
 
-    public MemberInfoAllCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "memberinfoall", false, "miall");
+    public MemberInfoAllCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 

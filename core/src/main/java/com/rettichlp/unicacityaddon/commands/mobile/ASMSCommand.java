@@ -14,18 +14,17 @@ import java.util.TimerTask;
 /**
  * @author RettichLP
  */
-@UCCommand
+@UCCommand(prefix = "asms", usage = "[Spieler] [Nachricht]")
 public class ASMSCommand extends UnicacityCommand {
 
     public static boolean isActive;
 
-    private static final String usage = "/asms [Spielername] [Nachricht]";
     private final Timer timer = new Timer();
 
     private final UnicacityAddon unicacityAddon;
 
-    public ASMSCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "asms", true);
+    public ASMSCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 
@@ -34,7 +33,7 @@ public class ASMSCommand extends UnicacityCommand {
         AddonPlayer p = this.unicacityAddon.player();
 
         if (arguments.length < 2) {
-            p.sendSyntaxMessage(usage);
+            sendUsage(p);
             return true;
         }
 

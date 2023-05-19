@@ -17,15 +17,13 @@ import java.util.List;
  * @author Fuzzlemann
  * @author RettichLP
  */
-@UCCommand
+@UCCommand(prefix = "move", onlyOnUnicacity = false, usage = "[Spieler] [Channel]")
 public class MoveCommand extends UnicacityCommand {
-
-    private static final String usage = "/move [Spieler] [Ziel]";
 
     private final UnicacityAddon unicacityAddon;
 
-    public MoveCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "move", false);
+    public MoveCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 
@@ -34,7 +32,7 @@ public class MoveCommand extends UnicacityCommand {
         AddonPlayer p = this.unicacityAddon.player();
 
         if (arguments.length < 2) {
-            p.sendSyntaxMessage(usage);
+            sendUsage(p);
             return true;
         }
 

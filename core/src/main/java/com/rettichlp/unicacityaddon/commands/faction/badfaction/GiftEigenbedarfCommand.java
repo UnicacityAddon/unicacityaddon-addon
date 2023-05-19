@@ -19,17 +19,15 @@ import java.util.concurrent.TimeUnit;
  * @author Dimiikou
  * @author RettichLP
  */
-@UCCommand
+@UCCommand(prefix = "gifteigenbedarf", usage = "[Spieler]")
 public class GiftEigenbedarfCommand extends UnicacityCommand {
 
     public static final List<String> scheduledTasks = new ArrayList<>();
 
-    private static final String usage = "/gifteigenbedarf [Spieler]";
-
     private final UnicacityAddon unicacityAddon;
 
-    public GiftEigenbedarfCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "gifteigenbedarf", true);
+    public GiftEigenbedarfCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 
@@ -38,7 +36,7 @@ public class GiftEigenbedarfCommand extends UnicacityCommand {
         AddonPlayer p = this.unicacityAddon.player();
 
         if (arguments.length < 1) {
-            p.sendSyntaxMessage(usage);
+            sendUsage(p);
             return true;
         }
 

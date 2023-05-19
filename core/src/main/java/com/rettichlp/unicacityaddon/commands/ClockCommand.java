@@ -10,13 +10,13 @@ import java.util.List;
 /**
  * @author Dimiikou
  */
-@UCCommand
+@UCCommand(prefix = "clock", aliases = {"uhrzeit", "uhr"}, onlyOnUnicacity = false)
 public class ClockCommand extends UnicacityCommand {
 
     private final UnicacityAddon unicacityAddon;
 
-    public ClockCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "clock", false, "uhrzeit", "uhr");
+    public ClockCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 

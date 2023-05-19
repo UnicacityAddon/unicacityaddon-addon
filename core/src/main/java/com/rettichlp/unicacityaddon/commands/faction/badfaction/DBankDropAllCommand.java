@@ -16,13 +16,13 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author RettichLP
  */
-@UCCommand
+@UCCommand(prefix = "dbankdropall")
 public class DBankDropAllCommand extends UnicacityCommand {
 
     private final UnicacityAddon unicacityAddon;
 
-    public DBankDropAllCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "dbankdropall", true);
+    public DBankDropAllCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 

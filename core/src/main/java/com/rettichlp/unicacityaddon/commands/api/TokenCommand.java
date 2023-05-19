@@ -16,15 +16,13 @@ import java.util.List;
 /**
  * @author RettichLP
  */
-@UCCommand
+@UCCommand(prefix = "token", onlyOnUnicacity = false, usage = "(create)")
 public class TokenCommand extends UnicacityCommand {
-
-    private static final String usage = "/token (create|revoke)";
 
     private final UnicacityAddon unicacityAddon;
 
-    public TokenCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "token", false);
+    public TokenCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 
@@ -38,9 +36,9 @@ public class TokenCommand extends UnicacityCommand {
                         .prefix()
                         .of("Mit diesem").color(ColorCode.GRAY).advance().space()
                         .of("Token").color(ColorCode.AQUA)
-                        .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of(this.unicacityAddon.services().tokenService().getApiToken()).color(ColorCode.RED).advance().createComponent())
-                        .clickEvent(ClickEvent.Action.RUN_COMMAND, "/token copy")
-                        .advance().space()
+                                .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of(this.unicacityAddon.services().tokenService().getApiToken()).color(ColorCode.RED).advance().createComponent())
+                                .clickEvent(ClickEvent.Action.RUN_COMMAND, "/token copy")
+                                .advance().space()
                         .of("kann jeder in deinem Namen Anfragen an die API senden.").color(ColorCode.GRAY).advance()
                         .createComponent());
             } else if (arguments.length == 1 && arguments[0].equalsIgnoreCase("create")) {
@@ -52,7 +50,7 @@ public class TokenCommand extends UnicacityCommand {
                         .text(Message.getBuilder().of("Token in Zwischenablage kopiert.").color(ColorCode.WHITE).advance().createComponent())
                         .build());
             } else {
-                p.sendSyntaxMessage(usage);
+                sendUsage(p);
             }
         }).start();
         return true;

@@ -16,15 +16,13 @@ import java.util.stream.Collectors;
 /**
  * @author Dimiikou
  */
-@UCCommand
+@UCCommand(prefix = "screen", aliases = {"activitytest"}, usage = "[Typ]")
 public class ScreenCommand extends UnicacityCommand {
-
-    private static final String usage = "/screen [Typ]";
 
     private final UnicacityAddon unicacityAddon;
 
-    public ScreenCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "screen", true, "activitytest");
+    public ScreenCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 
@@ -33,7 +31,7 @@ public class ScreenCommand extends UnicacityCommand {
         AddonPlayer p = this.unicacityAddon.player();
 
         if (arguments.length < 1) {
-            p.sendSyntaxMessage(usage);
+            sendUsage(p);
             return true;
         }
 
@@ -43,7 +41,7 @@ public class ScreenCommand extends UnicacityCommand {
                 .orElse(null);
 
         if (screenshotType == null) {
-            p.sendSyntaxMessage(usage);
+            sendUsage(p);
             return true;
         }
 

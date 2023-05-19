@@ -11,18 +11,16 @@ import java.util.List;
 /**
  * @author Dimiikou
  */
-@UCCommand
+@UCCommand(prefix = "blacklistinfo", aliases = {"blinfo"}, usage = "[Spieler]")
 public class BlacklistInfoCommand extends UnicacityCommand {
 
     public static long executedTime = -1;
     public static String target;
 
-    private static final String usage = "/blacklistinfo [Spieler]";
-
     private final UnicacityAddon unicacityAddon;
 
-    public BlacklistInfoCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "blacklistinfo", true, "blinfo");
+    public BlacklistInfoCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 
@@ -31,7 +29,7 @@ public class BlacklistInfoCommand extends UnicacityCommand {
         AddonPlayer p = this.unicacityAddon.player();
 
         if (arguments.length != 1) {
-            p.sendSyntaxMessage(usage);
+            sendUsage(p);
             return true;
         }
 

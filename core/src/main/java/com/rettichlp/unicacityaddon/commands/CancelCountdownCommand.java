@@ -9,13 +9,13 @@ import java.util.List;
 /**
  * @author RettichLP
  */
-@UCCommand
+@UCCommand(prefix = "cancelcountdown")
 public class CancelCountdownCommand extends UnicacityCommand {
 
     private final UnicacityAddon unicacityAddon;
 
-    public CancelCountdownCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "cancelcountdown", true);
+    public CancelCountdownCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 

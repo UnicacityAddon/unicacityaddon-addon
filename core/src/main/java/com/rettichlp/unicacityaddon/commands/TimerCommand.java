@@ -17,15 +17,13 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * @author RettichLP
  */
-@UCCommand
+@UCCommand(prefix = "timer", usage = "(start|stop) (Name|ID) (Zeit)(h|m|s)")
 public class TimerCommand extends UnicacityCommand {
-
-    private static final String usage = "/timer (start|stop) (Name|ID) (Zeit<h/m/s>)";
 
     private final UnicacityAddon unicacityAddon;
 
-    public TimerCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "timer", true);
+    public TimerCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 
@@ -62,7 +60,7 @@ public class TimerCommand extends UnicacityCommand {
             TimerEntry.ACTIVE_TIMERS.get(Long.parseLong(arguments[1])).stop();
             p.sendInfoMessage("Timer gestoppt.");
         } else {
-            p.sendSyntaxMessage(usage);
+            sendUsage(p);
         }
         return true;
     }

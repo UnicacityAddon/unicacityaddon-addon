@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 /**
  * @author RettichLP
  */
-@UCCommand
+@UCCommand(prefix = "bus")
 public class BusCommand extends UnicacityCommand {
 
     public static Bus start;
@@ -27,8 +27,8 @@ public class BusCommand extends UnicacityCommand {
 
     private final UnicacityAddon unicacityAddon;
 
-    public BusCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "bus", true);
+    public BusCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 

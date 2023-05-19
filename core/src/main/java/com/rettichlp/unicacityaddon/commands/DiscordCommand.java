@@ -14,15 +14,13 @@ import java.util.List;
 /**
  * @author Dimiikou
  */
-@UCCommand
+@UCCommand(prefix = "discord")
 public class DiscordCommand extends UnicacityCommand {
-
-    private static final String usage = "/discord";
 
     private final UnicacityAddon unicacityAddon;
 
-    public DiscordCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "discord", true);
+    public DiscordCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 

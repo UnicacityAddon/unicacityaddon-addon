@@ -20,15 +20,13 @@ import java.util.stream.Collectors;
 /**
  * @author RettichLP
  */
-@UCCommand
+@UCCommand(prefix = "houseban", usage = "(add|remove) (Spieler) (Grund)")
 public class HousebanCommand extends UnicacityCommand {
-
-    private static final String usage = "/houseban (add|remove) (Spieler) (Grund)";
 
     private final UnicacityAddon unicacityAddon;
 
-    public HousebanCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "houseban", true);
+    public HousebanCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 
@@ -108,7 +106,7 @@ public class HousebanCommand extends UnicacityCommand {
                     e.sendInfo();
                 }
             } else {
-                p.sendSyntaxMessage(usage);
+                sendUsage(p);
             }
         }).start();
         return true;

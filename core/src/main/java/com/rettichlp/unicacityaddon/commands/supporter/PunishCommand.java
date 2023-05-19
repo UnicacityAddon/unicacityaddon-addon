@@ -14,15 +14,13 @@ import java.util.stream.Collectors;
 /**
  * @author Dimiikou
  */
-@UCCommand
+@UCCommand(prefix = "punish", usage = "[Spieler] [Grund]")
 public class PunishCommand extends UnicacityCommand {
-
-    private static final String usage = "/punish [Spielername] [Grund]";
 
     private final UnicacityAddon unicacityAddon;
 
-    public PunishCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "punish", true);
+    public PunishCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 
@@ -31,7 +29,7 @@ public class PunishCommand extends UnicacityCommand {
         AddonPlayer p = this.unicacityAddon.player();
 
         if (arguments.length < 2) {
-            p.sendSyntaxMessage(usage);
+            sendUsage(p);
             return true;
         }
 

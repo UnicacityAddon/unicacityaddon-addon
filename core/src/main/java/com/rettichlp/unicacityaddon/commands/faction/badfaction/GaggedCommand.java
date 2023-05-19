@@ -12,13 +12,13 @@ import java.util.List;
 /**
  * @author Dimiikou
  */
-@UCCommand
+@UCCommand(prefix = "geknebelt")
 public class GaggedCommand extends UnicacityCommand {
 
     private final UnicacityAddon unicacityAddon;
 
-    public GaggedCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "geknebelt", true);
+    public GaggedCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 

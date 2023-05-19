@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 /**
  * @author Dimiikou
  */
-@UCCommand
+@UCCommand(prefix = "modifyblacklist", aliases = {"mbl"}, usage = "[Spieler] [Grund|-v]")
 public class ModifyBlacklistCommand extends UnicacityCommand {
 
     public static String target;
@@ -22,12 +22,10 @@ public class ModifyBlacklistCommand extends UnicacityCommand {
     public static BlacklistReason addReason;
     public static long executedTime = -1;
 
-    private static final String usage = "/modifyblacklist [Spieler] [Grund/-v]";
-
     private final UnicacityAddon unicacityAddon;
 
-    public ModifyBlacklistCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "modifyblacklist", true, "mbl");
+    public ModifyBlacklistCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 
@@ -36,7 +34,7 @@ public class ModifyBlacklistCommand extends UnicacityCommand {
         AddonPlayer p = this.unicacityAddon.player();
 
         if (arguments.length != 2) {
-            p.sendSyntaxMessage(usage);
+            sendUsage(p);
             return true;
         }
 

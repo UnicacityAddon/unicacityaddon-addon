@@ -261,7 +261,8 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
                 .filter(commandClass -> commandClass.isAnnotationPresent(UCCommand.class))
                 .forEach(commandClass -> {
                     try {
-                        this.registerCommand((Command) commandClass.getConstructor(UnicacityAddon.class).newInstance(this));
+                        UCCommand ucCommand = commandClass.getAnnotation(UCCommand.class);
+                        this.registerCommand((Command) commandClass.getConstructor(UnicacityAddon.class, UCCommand.class).newInstance(this, ucCommand));
                     } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException |
                              InstantiationException e) {
                         throw new RuntimeException(e);

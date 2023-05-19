@@ -13,7 +13,7 @@ import java.util.TimerTask;
 /**
  * @author Dimiikou
  */
-@UCCommand
+@UCCommand(prefix = "reichensteuer")
 public class ReichensteuerCommand extends UnicacityCommand {
 
     public static boolean isActive = false;
@@ -21,8 +21,8 @@ public class ReichensteuerCommand extends UnicacityCommand {
 
     private final UnicacityAddon unicacityAddon;
 
-    public ReichensteuerCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "reichensteuer", true);
+    public ReichensteuerCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 

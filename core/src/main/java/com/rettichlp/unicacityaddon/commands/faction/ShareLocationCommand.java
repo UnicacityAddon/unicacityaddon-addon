@@ -18,15 +18,13 @@ import java.util.Set;
  * @author Dimiikou
  * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/commands/faction/ShareLocationCommand.java">UCUtils by paulzhng</a>
  */
-@UCCommand
+@UCCommand(prefix = "sharelocation", aliases = {"sloc", "shareloc"}, usage = "[Spieler...] (-d)")
 public class ShareLocationCommand extends UnicacityCommand {
-
-    private static final String usage = "/sharelocation [Player...] (-d)";
 
     private final UnicacityAddon unicacityAddon;
 
-    public ShareLocationCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "sharelocation", true, "sloc", "shareloc");
+    public ShareLocationCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 

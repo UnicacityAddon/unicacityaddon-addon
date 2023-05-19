@@ -18,15 +18,13 @@ import java.util.stream.Collectors;
 /**
  * @author RettichLP
  */
-@UCCommand
+@UCCommand(prefix = "playergroup", onlyOnUnicacity = false, usage = "[list|add|remove] [Gruppe] [Spieler]")
 public class PlayerGroupCommand extends UnicacityCommand {
-
-    private static final String usage = "/playergroup [list|add|remove] [Gruppe] [Spieler]";
 
     private final UnicacityAddon unicacityAddon;
 
-    public PlayerGroupCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "playergroup", false);
+    public PlayerGroupCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 
@@ -64,7 +62,7 @@ public class PlayerGroupCommand extends UnicacityCommand {
                     e.sendInfo();
                 }
             } else {
-                p.sendSyntaxMessage(usage);
+                sendUsage(p);
             }
         }).start();
         return true;

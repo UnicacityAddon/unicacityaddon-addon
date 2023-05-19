@@ -16,13 +16,13 @@ import java.util.Optional;
 /**
  * @author RettichLP
  */
-@UCCommand
+@UCCommand(prefix = "todo")
 public class TodoListCommand extends UnicacityCommand {
 
     private final UnicacityAddon unicacityAddon;
 
-    public TodoListCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "todo", true);
+    public TodoListCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 

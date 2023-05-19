@@ -25,15 +25,13 @@ import java.util.stream.Collectors;
  * @author RettichLP
  * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/commands/faction/CheckActiveMembersCommand.java">UCUtils by paulzhng</a>
  */
-@UCCommand
+@UCCommand(prefix = "checkactivemembers", aliases = {"cam"}, usage = "[Fraktion...]")
 public class FactionInfoCommand extends UnicacityCommand {
-
-    private static final String usage = "/checkactivemembers [Fraktion]";
 
     private final UnicacityAddon unicacityAddon;
 
-    public FactionInfoCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "checkactivemembers", true, "cam");
+    public FactionInfoCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 

@@ -16,15 +16,13 @@ import java.util.stream.Collectors;
 /**
  * @author RettichLP
  */
-@UCCommand
+@UCCommand(prefix = "coordlist", usage = "[add|remove] [Ort]")
 public class CoordlistCommand extends UnicacityCommand {
-
-    private static final String usage = "/coordlist [add|remove] [Ort]";
 
     private final UnicacityAddon unicacityAddon;
 
-    public CoordlistCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "coordlist", true);
+    public CoordlistCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 
@@ -44,7 +42,7 @@ public class CoordlistCommand extends UnicacityCommand {
                 p.sendInfoMessage("Koordinaten gelöscht.");
             }
         } else {
-            p.sendSyntaxMessage(usage);
+            sendUsage(p);
         }
         return true;
     }

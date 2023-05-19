@@ -14,15 +14,13 @@ import java.util.TimerTask;
 /**
  * @author RettichLP
  */
-@UCCommand
+@UCCommand(prefix = "hauskasse", aliases = {"hkasse"})
 public class HouseBankDropGetAllCommand extends UnicacityCommand {
-
-    private static final String usage = "/hauskasse";
 
     private final UnicacityAddon unicacityAddon;
 
-    public HouseBankDropGetAllCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "hauskasse", true, "hkasse");
+    public HouseBankDropGetAllCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 

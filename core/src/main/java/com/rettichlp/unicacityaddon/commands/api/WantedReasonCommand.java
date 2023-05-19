@@ -15,15 +15,13 @@ import java.util.stream.Collectors;
 /**
  * @author RettichLP
  */
-@UCCommand
+@UCCommand(prefix = "wantedreason", usage = "[add|remove] [Grund] (Wanted-Punkte)")
 public class WantedReasonCommand extends UnicacityCommand {
-
-    private static final String usage = "/wantedreason (add|remove) (Grund) (Wanted-Punkte)";
 
     private final UnicacityAddon unicacityAddon;
 
-    public WantedReasonCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "wantedreason", true);
+    public WantedReasonCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 
@@ -47,7 +45,7 @@ public class WantedReasonCommand extends UnicacityCommand {
                     e.sendInfo();
                 }
             } else {
-                p.sendSyntaxMessage(usage);
+                sendUsage(p);
             }
         }).start();
         return true;

@@ -18,15 +18,13 @@ import java.util.stream.Collectors;
 /**
  * @author RettichLP
  */
-@UCCommand
+@UCCommand(prefix = "blacklistreason", usage = "(add|remove) (Grund) (Preis) (Kills)")
 public class BlacklistReasonCommand extends UnicacityCommand {
-
-    private static final String usage = "/blacklistreason (add|remove) (Grund) (Preis) (Kills)";
 
     private final UnicacityAddon unicacityAddon;
 
-    public BlacklistReasonCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "blacklistreason", true);
+    public BlacklistReasonCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 
@@ -73,7 +71,7 @@ public class BlacklistReasonCommand extends UnicacityCommand {
                     e.sendInfo();
                 }
             } else {
-                p.sendSyntaxMessage(usage);
+                sendUsage(p);
             }
         }).start();
         return true;

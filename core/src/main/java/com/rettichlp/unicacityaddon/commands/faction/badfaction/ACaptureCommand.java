@@ -13,17 +13,15 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author Dimiikou
  */
-@UCCommand
+@UCCommand(prefix = "capture")
 public class ACaptureCommand extends UnicacityCommand {
 
     public static boolean isActive;
 
-    private static final String usage = "/capture";
-
     private final UnicacityAddon unicacityAddon;
 
-    public ACaptureCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "capture", true);
+    public ACaptureCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 

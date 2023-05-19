@@ -15,13 +15,13 @@ import java.util.Map;
 /**
  * @author RettichLP
  */
-@UCCommand
+@UCCommand(prefix = "nearestjob", aliases = {"njob"})
 public class NearestJobCommand extends UnicacityCommand {
 
     private final UnicacityAddon unicacityAddon;
 
-    public NearestJobCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "nearestjob", true, "njob");
+    public NearestJobCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 

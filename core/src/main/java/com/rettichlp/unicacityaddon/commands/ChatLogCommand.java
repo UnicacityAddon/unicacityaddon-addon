@@ -32,18 +32,17 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author RettichLP
  */
-@UCCommand
+@UCCommand(prefix = "chatlog", usage = "(ab letzten X Minuten)")
 public class ChatLogCommand extends UnicacityCommand {
 
     public static final Map<Long, String> chatLogMap = new HashMap<>();
 
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("[yyyy-MM-dd] [HH:mm:ss]");
-    private static final String usage = "/chatlog (Uhrzeit)";
 
     private final UnicacityAddon unicacityAddon;
 
-    public ChatLogCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "chatlog", true);
+    public ChatLogCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 

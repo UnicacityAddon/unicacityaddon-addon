@@ -15,15 +15,13 @@ import java.util.stream.Collectors;
  * @author Dimiikou
  * @author RettichLP
  */
-@UCCommand
+@UCCommand(prefix = "selldrug", usage = "[Spieler] [Droge] [Reinheit] [Menge] [Preis]")
 public class SellDrugCommand extends UnicacityCommand {
-
-    private static final String usage = "/selldrug [Spieler] [Droge] [Reinheit] [Menge] [Preis]";
 
     private final UnicacityAddon unicacityAddon;
 
-    public SellDrugCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "selldrug", true);
+    public SellDrugCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 
@@ -32,7 +30,7 @@ public class SellDrugCommand extends UnicacityCommand {
         AddonPlayer p = this.unicacityAddon.player();
 
         if (arguments.length < 5) {
-            p.sendSyntaxMessage(usage);
+            sendUsage(p);
             return true;
         }
 

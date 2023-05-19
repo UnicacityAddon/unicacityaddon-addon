@@ -15,17 +15,15 @@ import java.util.stream.Collectors;
 /**
  * @author RettichLP
  */
-@UCCommand
+@UCCommand(prefix = "getgunpattern", aliases = {"ggp"}, usage = "(create|remove) [Name] (Waffe) (Munition)")
 public class GetGunPatternCommand extends UnicacityCommand {
 
     public static Armament armament = null;
 
-    private static final String usage = "/getgunpattern (remove|create) [Name] (Waffe) (Munition)";
-
     private final UnicacityAddon unicacityAddon;
 
-    public GetGunPatternCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "getgunpattern", true, "ggp");
+    public GetGunPatternCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 
@@ -58,7 +56,7 @@ public class GetGunPatternCommand extends UnicacityCommand {
                 p.sendErrorMessage("Vorlage konnte nicht erstellt werden!");
             }
         } else {
-            p.sendSyntaxMessage(usage);
+            sendUsage(p);
         }
         return true;
     }

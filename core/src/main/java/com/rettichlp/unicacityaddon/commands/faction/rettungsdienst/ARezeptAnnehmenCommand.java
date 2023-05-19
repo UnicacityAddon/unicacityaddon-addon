@@ -13,17 +13,15 @@ import java.util.List;
 /**
  * @author RettichLP
  */
-@UCCommand
+@UCCommand(prefix = "arezeptannehmen", aliases = {"arannehmen"}, usage = "[Anzahl]")
 public class ARezeptAnnehmenCommand extends UnicacityCommand {
 
     public static int amount = 0;
 
-    private static final String usage = "/arezeptannehmen [Anzahl]";
-
     private final UnicacityAddon unicacityAddon;
 
-    public ARezeptAnnehmenCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "arezeptannehmen", true, "arannehmen");
+    public ARezeptAnnehmenCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 
@@ -32,7 +30,7 @@ public class ARezeptAnnehmenCommand extends UnicacityCommand {
         AddonPlayer p = this.unicacityAddon.player();
 
         if (arguments.length < 1) {
-            p.sendSyntaxMessage(usage);
+            sendUsage(p);
             return true;
         }
 

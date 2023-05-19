@@ -12,15 +12,15 @@ import java.util.List;
 /**
  * @author Dimiikou
  */
-@UCCommand
+@UCCommand(prefix = "shutdownjail", aliases = {"shutdowngefängnis"})
 public class ShutdownJailCommand extends UnicacityCommand {
 
     public static boolean shutdownJail = false;
 
     private final UnicacityAddon unicacityAddon;
 
-    public ShutdownJailCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "shutdownjail", true, "shutdowngefängnis");
+    public ShutdownJailCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 

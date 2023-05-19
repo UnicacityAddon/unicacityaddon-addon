@@ -12,17 +12,15 @@ import java.util.List;
 /**
  * @author RettichLP
  */
-@UCCommand
+@UCCommand(prefix = "aequip", usage = "[Anzahl]")
 public class AEquipCommand extends UnicacityCommand {
 
     public static int amount = 0;
 
-    private static final String usage = "/aequip [Menge]";
-
     private final UnicacityAddon unicacityAddon;
 
-    public AEquipCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "aequip", true);
+    public AEquipCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 
@@ -32,7 +30,7 @@ public class AEquipCommand extends UnicacityCommand {
 
         if (arguments.length > 0) {
             if (!MathUtils.isInteger(arguments[0])) {
-                p.sendSyntaxMessage(usage);
+                sendUsage(p);
                 return true;
             }
             amount = Integer.parseInt(arguments[0]);

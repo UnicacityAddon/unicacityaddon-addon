@@ -20,15 +20,13 @@ import java.util.stream.Collectors;
 /**
  * @author RettichLP
  */
-@UCCommand
+@UCCommand(prefix = "revivestats", aliases = {"rstats"}, usage = "(all|old|Spieler|Rang)")
 public class ReviveStatsCommand extends UnicacityCommand {
-
-    private static final String usage = "/revivestats (all|old|Spieler|Rang)";
 
     private final UnicacityAddon unicacityAddon;
 
-    public ReviveStatsCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "revivestats", true, "rstats");
+    public ReviveStatsCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 

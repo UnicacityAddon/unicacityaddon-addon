@@ -13,15 +13,13 @@ import java.util.List;
 /**
  * @author RettichLP
  */
-@UCCommand
+@UCCommand(prefix = "calculate", aliases = {"calc", "rechner"}, onlyOnUnicacity = false, usage = "[mathematischer Ausdruck]")
 public class CalculateCommand extends UnicacityCommand {
-
-    private static final String usage = "/calculate [mathematischer Ausdruck]";
 
     private final UnicacityAddon unicacityAddon;
 
-    public CalculateCommand(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon, "calculate", false, "calc", "rechner");
+    public CalculateCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
 
@@ -29,7 +27,7 @@ public class CalculateCommand extends UnicacityCommand {
     public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
         if (arguments.length < 1) {
-            p.sendSyntaxMessage(usage);
+            sendUsage(p);
             return true;
         }
 
