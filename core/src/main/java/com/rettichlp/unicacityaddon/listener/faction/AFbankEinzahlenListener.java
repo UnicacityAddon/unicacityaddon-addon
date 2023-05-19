@@ -30,8 +30,9 @@ public class AFbankEinzahlenListener {
             return;
 
         String msg = e.chatMessage().getPlainText();
-        Matcher taxesMatcher = PatternHandler.FBANK_TAXES.matcher(msg);
-        if (taxesMatcher.find()) {
+        Matcher cashFromFBankMatcher = PatternHandler.CASH_FROM_FBANK_PATTERN.matcher(msg);
+        Matcher cashToFBankMatcher = PatternHandler.CASH_TO_FBANK_PATTERN.matcher(msg);
+        if ((cashFromFBankMatcher.find() && msg.contains("$ (+")) || (cashToFBankMatcher.find() && msg.contains("$ (-"))) {
             AFbankEinzahlenCommand.STARTED.set(false);
             // send clock command
             AFbankEinzahlenCommand.timer.schedule(new TimerTask() {
