@@ -2,7 +2,6 @@ package com.rettichlp.unicacityaddon.hudwidgets;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.events.UnicacityAddonTickEvent;
-import com.rettichlp.unicacityaddon.base.utils.TextUtils;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidget;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidgetConfig;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextLine;
@@ -32,19 +31,19 @@ public class TimerHudWidget extends TextHudWidget<TextHudWidgetConfig> {
     @Override
     public void load(TextHudWidgetConfig config) {
         super.load(config);
-        this.textLine = super.createLine("Timer", TextUtils.parseTimer(this.unicacityAddon.fileService().data().getTimer()));
-        this.setIcon(this.unicacityAddon.getIcon());
+        this.textLine = super.createLine("Timer", this.unicacityAddon.utils().textUtils().parseTimer(this.unicacityAddon.services().fileService().data().getTimer()));
+        this.setIcon(this.unicacityAddon.utils().icon());
     }
 
     @Override
     public boolean isVisibleInGame() {
-        return this.unicacityAddon.fileService().data().getTimer() > 0;
+        return this.unicacityAddon.services().fileService().data().getTimer() > 0;
     }
 
     @Subscribe
     public void onUnicacityAddonTick(UnicacityAddonTickEvent e) {
         if (e.isPhase(UnicacityAddonTickEvent.Phase.SECOND)) {
-            this.textLine.updateAndFlush(TextUtils.parseTimer(this.unicacityAddon.fileService().data().getTimer()));
+            this.textLine.updateAndFlush(this.unicacityAddon.utils().textUtils().parseTimer(this.unicacityAddon.services().fileService().data().getTimer()));
         }
     }
 }

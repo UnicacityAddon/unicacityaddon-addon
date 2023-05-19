@@ -1,8 +1,8 @@
 package com.rettichlp.unicacityaddon.listener;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.enums.api.StatisticType;
 import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
+import com.rettichlp.unicacityaddon.base.enums.api.StatisticType;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.commands.ShutdownJailCommand;
 import com.rettichlp.unicacityaddon.listener.faction.rettungsdienst.ReviveListener;
@@ -32,7 +32,7 @@ public class TimerListener {
 
         Matcher fbiHackStartedMatcher = PatternHandler.TIMER_FBI_HACK_START_PATTERN.matcher(msg);
         if (fbiHackStartedMatcher.find()) {
-            this.unicacityAddon.fileService().data().setTimer(Integer.parseInt(fbiHackStartedMatcher.group(1)));
+            this.unicacityAddon.services().fileService().data().setTimer(Integer.parseInt(fbiHackStartedMatcher.group(1)));
             return;
         }
 
@@ -43,7 +43,7 @@ public class TimerListener {
 
             if (!isJail) {
                 int seconds = (int) TimeUnit.MINUTES.toSeconds(Integer.parseInt(timerGraveyardStartMatcher.group(1)));
-                this.unicacityAddon.fileService().data().setTimer(seconds);
+                this.unicacityAddon.services().fileService().data().setTimer(seconds);
             }
 
             return;
@@ -53,23 +53,23 @@ public class TimerListener {
         if (timerJailStartMatcher.find()) {
             isJail = true;
             int seconds = (int) TimeUnit.MINUTES.toSeconds(Integer.parseInt(timerJailStartMatcher.group(1)));
-            this.unicacityAddon.fileService().data().setTimer(seconds);
+            this.unicacityAddon.services().fileService().data().setTimer(seconds);
             return;
         }
 
         Matcher jailModifyMatcher = PatternHandler.TIMER_JAIL_MODIFY_PATTERN.matcher(msg);
         if (jailModifyMatcher.find()) {
-            this.unicacityAddon.fileService().data().setTimer(this.unicacityAddon.fileService().data().getTimer() - Integer.parseInt(jailModifyMatcher.group(1)) * 60);
+            this.unicacityAddon.services().fileService().data().setTimer(this.unicacityAddon.services().fileService().data().getTimer() - Integer.parseInt(jailModifyMatcher.group(1)) * 60);
             return;
         }
 
         Matcher jailFinishMatcher = PatternHandler.TIMER_JAIL_FINISH_PATTERN.matcher(msg);
         if (jailFinishMatcher.find()) {
             isJail = false;
-            this.unicacityAddon.fileService().data().setTimer(0);
+            this.unicacityAddon.services().fileService().data().setTimer(0);
 
             if (ShutdownJailCommand.shutdownJail)
-                this.unicacityAddon.shutdownPC();
+                this.unicacityAddon.utils().shutdownPC();
         }
     }
 }

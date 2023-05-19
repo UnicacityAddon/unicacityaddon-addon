@@ -48,11 +48,11 @@ public class ReviveListener {
                 public void run() {
                     if (ReviveListener.this.unicacityAddon.player().getPosition().distance(playerReviveLocation) > 50) {
                         AddonPlayer p = ReviveListener.this.unicacityAddon.player();
-                        ReviveListener.this.unicacityAddon.fileService().data().setTimer(0);
+                        ReviveListener.this.unicacityAddon.services().fileService().data().setTimer(0);
                         isDead = false;
 
                         if (System.currentTimeMillis() - playerReviveStartTime < TimeUnit.SECONDS.toMillis(10)) {
-                            ReviveListener.this.unicacityAddon.fileService().data().removeBankBalance(50); // successfully revived by medic = 50$
+                            ReviveListener.this.unicacityAddon.services().fileService().data().removeBankBalance(50); // successfully revived by medic = 50$
 
                             // message to remember how long you are not allowed to shoot after revive
                             timer.schedule(new TimerTask() {
@@ -76,22 +76,22 @@ public class ReviveListener {
         if (reviveFailureMatcher.find()) {
             isDead = false;
 
-            this.unicacityAddon.fileService().data().setTimer(0);
-            this.unicacityAddon.fileService().data().setCashBalance(0);
+            this.unicacityAddon.services().fileService().data().setTimer(0);
+            this.unicacityAddon.services().fileService().data().setCashBalance(0);
 
             if (ShutdownGraveyardCommand.shutdownGraveyard)
-                this.unicacityAddon.shutdownPC();
+                this.unicacityAddon.utils().shutdownPC();
 
             return;
         }
 
         Matcher firstAidUseMatcher = PatternHandler.FIRST_AID_USE_PATTERN.matcher(msg);
         if (firstAidUseMatcher.find()) {
-            this.unicacityAddon.fileService().data().setTimer(this.unicacityAddon.fileService().data().getTimer() + 60);
+            this.unicacityAddon.services().fileService().data().setTimer(this.unicacityAddon.services().fileService().data().getTimer() + 60);
             return;
         }
 
-        if (PatternHandler.REVIVE_START_PATTERN.matcher(msg).find() && this.unicacityAddon.isUnicacity())
+        if (PatternHandler.REVIVE_START_PATTERN.matcher(msg).find() && this.unicacityAddon.utils().isUnicacity())
             medicReviveStartTime = System.currentTimeMillis();
     }
 }

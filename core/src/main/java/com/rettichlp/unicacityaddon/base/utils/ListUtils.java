@@ -10,7 +10,10 @@ import java.util.regex.Pattern;
  */
 public class ListUtils {
 
-    public static List<String> getAllMatchesFromString(Pattern pattern, String content) {
+    public ListUtils() {
+    }
+
+    public List<String> getAllMatchesFromString(Pattern pattern, String content) {
         List<String> list = new ArrayList<>();
         Matcher matcher = pattern.matcher(content);
         while (matcher.find())

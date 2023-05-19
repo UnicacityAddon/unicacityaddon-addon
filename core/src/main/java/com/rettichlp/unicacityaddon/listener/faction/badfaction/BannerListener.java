@@ -28,7 +28,7 @@ public class BannerListener {
 
     @Subscribe
     public void onClientPlayerInteract(ClientPlayerInteractEvent e) {
-        if (e.type().equals(ClientPlayerInteractEvent.InteractionType.INTERACT) && this.unicacityAddon.isUnicacity()) {
+        if (e.type().equals(ClientPlayerInteractEvent.InteractionType.INTERACT) && this.unicacityAddon.utils().isUnicacity()) {
             FloatVector3 pos = this.unicacityAddon.worldInteractionController().getClickedBlockLocation();
 
             if (pos != null && this.unicacityAddon.worldInteractionController().isBanner(pos)) {
@@ -43,7 +43,7 @@ public class BannerListener {
 
         Matcher bannerStartMatcher = PatternHandler.BANNER_SPRAYED_PATTERN.matcher(e.chatMessage().getPlainText());
         if (bannerStartMatcher.find() && lastClickedBannerPosition != null) {
-            NaviPoint naviPoint = this.unicacityAddon.navigationService().getNearestNaviPoint(lastClickedBannerPosition).getValue();
+            NaviPoint naviPoint = this.unicacityAddon.services().navigationService().getNearestNaviPoint(lastClickedBannerPosition).getValue();
             this.unicacityAddon.api().sendBannerAddRequest(p.getFaction(), (int) lastClickedBannerPosition.getX(), (int) lastClickedBannerPosition.getY(), (int) lastClickedBannerPosition.getZ(), naviPoint.getName());
         }
     }

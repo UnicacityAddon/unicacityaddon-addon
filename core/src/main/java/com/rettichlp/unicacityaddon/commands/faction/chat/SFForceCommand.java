@@ -4,7 +4,6 @@ import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
-import com.rettichlp.unicacityaddon.base.utils.TextUtils;
 import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
 
 import java.util.List;
@@ -33,7 +32,7 @@ public class SFForceCommand extends UnicacityCommand {
             return true;
         }
 
-        String message = TextUtils.makeStringByArgs(arguments, " ");
+        String message = this.unicacityAddon.utils().textUtils().makeStringByArgs(arguments, " ");
         p.sendServerMessage("/sf " + message);
         return true;
     }

@@ -1,9 +1,8 @@
 package com.rettichlp.unicacityaddon.listener;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.enums.Weapon;
 import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
-import com.rettichlp.unicacityaddon.base.utils.TextUtils;
+import com.rettichlp.unicacityaddon.base.enums.Weapon;
 import com.rettichlp.unicacityaddon.commands.GetGunPatternCommand;
 import com.rettichlp.unicacityaddon.commands.faction.DropDrugAllCommand;
 import net.labymod.api.client.world.item.ItemStack;
@@ -29,11 +28,11 @@ public class ScreenRenderListener {
     @Subscribe
     public void onScreenRender(ScreenRenderEvent e) {
         this.unicacityAddon.transportController().carInteract();
-        this.unicacityAddon.transportController().processBusRouting(this.unicacityAddon.player());
+        this.unicacityAddon.transportController().processBusRouting(this.unicacityAddon);
 
         if (GetGunPatternCommand.armament != null) {
             Weapon weapon = GetGunPatternCommand.armament.getWeapon();
-            String unformattedWeaponDisplayName = TextUtils.stripColor(weapon.getDisplayName());
+            String unformattedWeaponDisplayName = this.unicacityAddon.utils().textUtils().stripColor(weapon.getDisplayName());
             int weaponSlotNumber = this.unicacityAddon.guiController().getSlotNumberByDisplayName(unformattedWeaponDisplayName);
 
             this.unicacityAddon.guiController().inventoryClick(this.unicacityAddon, weaponSlotNumber);
@@ -50,6 +49,6 @@ public class ScreenRenderListener {
     public void onItemStackTooltip(ItemStackTooltipEvent e) {
         ItemStack itemStack = e.itemStack();
         lastHoveredItemStack = itemStack;
-        lastHoveredSlotNumber = this.unicacityAddon.guiController().getSlotNumberByDisplayName(TextUtils.plain(itemStack.getDisplayName()));
+        lastHoveredSlotNumber = this.unicacityAddon.guiController().getSlotNumberByDisplayName(this.unicacityAddon.utils().textUtils().plain(itemStack.getDisplayName()));
     }
 }

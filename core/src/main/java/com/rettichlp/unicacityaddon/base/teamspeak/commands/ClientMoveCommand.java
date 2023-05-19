@@ -27,7 +27,7 @@ public class ClientMoveCommand extends BaseCommand<CommandResponse> {
     }
 
     public ClientMoveCommand(UnicacityAddon unicacityAddon, int channelID, String password) {
-        super(unicacityAddon, "clientmove cid=" + channelID + " cpw= " + TSParser.encode(password) + " clid=" + unicacityAddon.tsUtils().getMyClientID());
+        super(unicacityAddon, "clientmove cid=" + channelID + " cpw= " + TSParser.encode(password) + " clid=" + unicacityAddon.utils().tsUtils().getMyClientID());
     }
 
     private static String parseCommand(int channelID, int... clientIDs) {

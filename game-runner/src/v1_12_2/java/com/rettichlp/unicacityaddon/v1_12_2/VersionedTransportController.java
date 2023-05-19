@@ -1,5 +1,6 @@
 package com.rettichlp.unicacityaddon.v1_12_2;
 
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.enums.location.Bus;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
@@ -31,7 +32,8 @@ import java.util.stream.Collectors;
 public class VersionedTransportController extends TransportController {
 
     @Override
-    public void processBusRouting(AddonPlayer p) {
+    public void processBusRouting(UnicacityAddon unicacityAddon) {
+        AddonPlayer p = unicacityAddon.player();
         GuiScreen guiScreen = Minecraft.getMinecraft().currentScreen;
         if (guiScreen instanceof GuiHopper && BusCommand.active) {
             GuiHopper guiHopper = (GuiHopper) guiScreen;
@@ -42,8 +44,8 @@ public class VersionedTransportController extends TransportController {
 
                 Map<Bus, Slot> busSlotMap = container.inventorySlots.stream()
                         .filter(slot -> slot.getStack().getDisplayName().startsWith(ColorCode.GOLD.getCode()))
-                        .filter(slot -> Bus.getBus(TextUtils.stripColor(slot.getStack().getDisplayName())) != null)
-                        .collect(Collectors.toMap(slot -> Bus.getBus(TextUtils.stripColor(slot.getStack().getDisplayName())), slot -> slot));
+                        .filter(slot -> Bus.getBus(unicacityAddon.utils().textUtils().stripColor(slot.getStack().getDisplayName())) != null)
+                        .collect(Collectors.toMap(slot -> Bus.getBus(unicacityAddon.utils().textUtils().stripColor(slot.getStack().getDisplayName())), slot -> slot));
 
                 Bus nearestBusToDestination = BusCommand.getNearestBusToDestination(busSlotMap.keySet());
                 if (nearestBusToDestination == null) {

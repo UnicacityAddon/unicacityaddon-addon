@@ -52,8 +52,8 @@ public class MoveCommand extends UnicacityCommand {
         String name = arguments[0];
         String target = arguments[1];
 
-        List<Client> clientsMoved = this.unicacityAddon.tsUtils().getClientsByName(Collections.singletonList(name));
-        List<Client> clientsMoveTo = this.unicacityAddon.tsUtils().getClientsByName(Collections.singletonList(target));
+        List<Client> clientsMoved = this.unicacityAddon.utils().tsUtils().getClientsByName(Collections.singletonList(name));
+        List<Client> clientsMoveTo = this.unicacityAddon.utils().tsUtils().getClientsByName(Collections.singletonList(target));
 
         if (clientsMoved.isEmpty() || clientsMoveTo.isEmpty()) {
             p.sendErrorMessage("Einer der Spieler befindet sich nicht auf dem TeamSpeak.");

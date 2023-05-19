@@ -27,7 +27,7 @@ public class NearestATMCommand extends UnicacityCommand {
 
     @Override
     public boolean execute(String[] arguments) {
-        Map.Entry<Double, ATM> nearestATM = this.unicacityAddon.navigationService().getNearestATM();
+        Map.Entry<Double, ATM> nearestATM = this.unicacityAddon.services().navigationService().getNearestATM();
 
         this.unicacityAddon.player().sendMessage(Message.getBuilder()
                 .prefix()

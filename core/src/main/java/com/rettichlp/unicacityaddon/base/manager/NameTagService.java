@@ -9,7 +9,6 @@ import com.rettichlp.unicacityaddon.base.config.nametag.setting.StreetwarNameTag
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.FormattingCode;
-import com.rettichlp.unicacityaddon.base.utils.TextUtils;
 import com.rettichlp.unicacityaddon.listener.faction.ContractListener;
 import com.rettichlp.unicacityaddon.listener.faction.badfaction.blacklist.BlacklistListener;
 import com.rettichlp.unicacityaddon.listener.faction.state.WantedListener;
@@ -122,8 +121,8 @@ public class NameTagService {
     }
 
     public boolean isAdminDuty(String playerName) {
-        return this.unicacityAddon.isUnicacity() && this.unicacityAddon.labyAPI().minecraft().getClientPacketListener().getNetworkPlayerInfos().stream()
-                .map(networkPlayerInfo -> TextUtils.legacy(networkPlayerInfo.displayName()))
+        return this.unicacityAddon.utils().isUnicacity() && this.unicacityAddon.labyAPI().minecraft().getClientPacketListener().getNetworkPlayerInfos().stream()
+                .map(networkPlayerInfo -> this.unicacityAddon.utils().textUtils().legacy(networkPlayerInfo.displayName()))
                 .anyMatch(s -> s.startsWith("§8[§9UC§8]§c") && s.contains(playerName));
     }
 }

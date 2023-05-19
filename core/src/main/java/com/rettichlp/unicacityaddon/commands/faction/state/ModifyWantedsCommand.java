@@ -88,7 +88,7 @@ public class ModifyWantedsCommand extends UnicacityCommand {
     @Override
     public List<String> complete(String[] arguments) {
         if (arguments.length == 1) {
-            List<String> tabCompletions = this.unicacityAddon.getOnlinePlayers();
+            List<String> tabCompletions = this.unicacityAddon.utils().getOnlinePlayers();
             String input = arguments[arguments.length - 1].toLowerCase();
             tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
             return tabCompletions;

@@ -3,11 +3,11 @@ package com.rettichlp.unicacityaddon.listener;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
+import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.config.ownUse.OwnUseSetting;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
-import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
@@ -88,7 +88,7 @@ public class DrugListener {
             DrugPurity drugPurity = DrugPurity.getDrugPurity(dbankGetMatcher.group("drugPurity"));
 
             if (msg.contains(p.getName())) {
-                this.unicacityAddon.fileService().data().addDrugToInventory(drugType, drugPurity, amount);
+                this.unicacityAddon.services().fileService().data().addDrugToInventory(drugType, drugPurity, amount);
             }
 
             if (hqMessageSetting) {
@@ -117,7 +117,7 @@ public class DrugListener {
             DrugPurity drugPurity = DrugPurity.getDrugPurity(dbankGiveMatcher.group("drugPurity"));
 
             if (msg.contains(p.getName())) {
-                this.unicacityAddon.fileService().data().removeDrugFromInventory(drugType, drugPurity, amount);
+                this.unicacityAddon.services().fileService().data().removeDrugFromInventory(drugType, drugPurity, amount);
             }
 
             if (hqMessageSetting) {
@@ -143,7 +143,7 @@ public class DrugListener {
         if (medicationGetMatcher.find()) {
             int amount = Integer.parseInt(medicationGetMatcher.group("amount"));
             DrugType drugType = DrugType.getDrugType(medicationGetMatcher.group("drugType"));
-            this.unicacityAddon.fileService().data().addDrugToInventory(drugType, DrugPurity.BEST, amount);
+            this.unicacityAddon.services().fileService().data().addDrugToInventory(drugType, DrugPurity.BEST, amount);
             return;
         }
 
@@ -167,7 +167,7 @@ public class DrugListener {
                 }
             }
 
-            this.unicacityAddon.fileService().data().removeDrugFromInventory(drugType, drugPurity, 1);
+            this.unicacityAddon.services().fileService().data().removeDrugFromInventory(drugType, drugPurity, 1);
             return;
         }
 
@@ -175,9 +175,9 @@ public class DrugListener {
         Matcher trunkInteractionAcceptedMatcher = PatternHandler.TRUNK_INTERACTION_ACCEPTED_PATTERN.matcher(msg);
         if ((drugDealAcceptedMatcher.find() || trunkInteractionAcceptedMatcher.find()) && System.currentTimeMillis() - time < TimeUnit.MINUTES.toMillis(3)) {
             if (type.equals("ADD")) {
-                this.unicacityAddon.fileService().data().addDrugToInventory(lastDrugType, lastDrugPurity, amount);
+                this.unicacityAddon.services().fileService().data().addDrugToInventory(lastDrugType, lastDrugPurity, amount);
             } else if (type.equals("REMOVE")) {
-                this.unicacityAddon.fileService().data().removeDrugFromInventory(lastDrugType, lastDrugPurity, amount);
+                this.unicacityAddon.services().fileService().data().removeDrugFromInventory(lastDrugType, lastDrugPurity, amount);
             }
             return;
         }
@@ -325,7 +325,7 @@ public class DrugListener {
         if (drugUseMatcher.find()) {
             DrugType drugType = DrugType.getDrugType(drugUseMatcher.group("drugType"));
             DrugPurity drugPurity = DrugPurity.getDrugPurity(drugUseMatcher.group("drugPurity"));
-            this.unicacityAddon.fileService().data().removeDrugFromInventory(drugType, drugPurity, 1);
+            this.unicacityAddon.services().fileService().data().removeDrugFromInventory(drugType, drugPurity, 1);
         }
     }
 

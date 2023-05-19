@@ -53,14 +53,14 @@ public class MoveToCommand extends UnicacityCommand {
 
         String name = arguments[0];
 
-        List<Client> clients = this.unicacityAddon.tsUtils().getClientsByName(Collections.singletonList(name));
+        List<Client> clients = this.unicacityAddon.utils().tsUtils().getClientsByName(Collections.singletonList(name));
         if (clients.isEmpty()) {
             p.sendErrorMessage("Es wurde kein Spieler auf dem TeamSpeak mit diesem Namen gefunden.");
             return true;
         }
 
         Client client = clients.get(0);
-        CommandResponse response = new ClientMoveCommand(this.unicacityAddon, client.getChannelID(), this.unicacityAddon.tsUtils().getMyClientID()).getResponse();
+        CommandResponse response = new ClientMoveCommand(this.unicacityAddon, client.getChannelID(), this.unicacityAddon.utils().tsUtils().getMyClientID()).getResponse();
 
         if (!response.succeeded()) {
             p.sendErrorMessage("Das Bewegen ist fehlgeschlagen.");

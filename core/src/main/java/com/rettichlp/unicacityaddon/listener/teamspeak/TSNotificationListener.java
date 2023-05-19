@@ -28,7 +28,7 @@ public class TSNotificationListener {
     public void onClientMoved(ClientMovedEvent e) {
         AddonPlayer p = this.unicacityAddon.player();
 
-        if (!this.unicacityAddon.isUnicacity())
+        if (!this.unicacityAddon.utils().isUnicacity())
             return;
 
         int clientID = e.getClientID();

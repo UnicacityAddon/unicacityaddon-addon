@@ -28,7 +28,7 @@ public class HearthHudWidget extends TextHudWidget<TextHudWidgetConfig> {
     public void load(TextHudWidgetConfig config) {
         super.load(config);
         this.textLine = super.createLine("Herzen", "nicht geladen");
-        this.setIcon(this.unicacityAddon.getIcon());
+        this.setIcon(this.unicacityAddon.utils().icon());
     }
 
     @Override

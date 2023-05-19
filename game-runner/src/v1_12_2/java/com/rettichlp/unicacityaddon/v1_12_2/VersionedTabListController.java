@@ -1,5 +1,6 @@
 package com.rettichlp.unicacityaddon.v1_12_2;
 
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.tab.TabPrefix;
 import com.rettichlp.unicacityaddon.base.utils.TextUtils;
 import com.rettichlp.unicacityaddon.controller.TabListController;
@@ -8,6 +9,7 @@ import net.labymod.api.models.Implements;
 import net.minecraft.client.Minecraft;
 import net.minecraft.scoreboard.ScorePlayerTeam;
 import net.minecraft.scoreboard.Scoreboard;
+import org.jetbrains.annotations.NotNull;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -27,7 +29,8 @@ public class VersionedTabListController extends TabListController {
     }
 
     @Override
-    public void orderTabList(Collection<NetworkPlayerInfo> networkPlayerInfos) {
+    public void orderTabList(UnicacityAddon unicacityAddon) {
+        Collection<NetworkPlayerInfo> networkPlayerInfos = unicacityAddon.labyAPI().minecraft().getClientPacketListener().getNetworkPlayerInfos();
         assert Minecraft.getMinecraft().world != null;
         Scoreboard scoreboard = Minecraft.getMinecraft().world.getScoreboard();
 
@@ -46,7 +49,7 @@ public class VersionedTabListController extends TabListController {
                 .filter(networkPlayerInfo -> networkPlayerInfo.displayName() != null)
                 .filter(networkPlayerInfo -> networkPlayerInfo.getTeam() == null || (!networkPlayerInfo.getTeam().getTeamName().equals("nopush") && !networkPlayerInfo.getTeam().getTeamName().equals("masked")))
                 .forEach(networkPlayerInfo -> {
-                    String displayName = TextUtils.legacy(networkPlayerInfo.displayName());
+                    String displayName = unicacityAddon.utils().textUtils().legacy(networkPlayerInfo.displayName());
                     TabPrefix tabPrefix = TabPrefix.getTypeByDisplayName(displayName);
                     ScorePlayerTeam playerTeam = tabPrefixScorePlayerTeamMap.get(tabPrefix);
                     scoreboard.addPlayerToTeam(networkPlayerInfo.profile().getUsername(), playerTeam.getName());

@@ -3,7 +3,6 @@ package com.rettichlp.unicacityaddon.base.manager;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.api.exception.APIResponseException;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
-import com.rettichlp.unicacityaddon.base.utils.TextUtils;
 import jdk.internal.joptsimple.internal.Strings;
 
 /**
@@ -18,8 +17,8 @@ public class FactionService {
     }
 
     public boolean checkPlayerDuty(String playerName) {
-        return this.unicacityAddon.isUnicacity() && this.unicacityAddon.labyAPI().minecraft().getClientPacketListener().getNetworkPlayerInfos().stream()
-                .map(networkPlayerInfo -> TextUtils.legacy(networkPlayerInfo.displayName()))
+        return this.unicacityAddon.utils().isUnicacity() && this.unicacityAddon.labyAPI().minecraft().getClientPacketListener().getNetworkPlayerInfos().stream()
+                .map(networkPlayerInfo -> this.unicacityAddon.utils().textUtils().legacy(networkPlayerInfo.displayName()))
                 .filter(s -> s.startsWith("§1") || s.startsWith("§9") || s.startsWith("§4") || s.startsWith("§6"))
                 .anyMatch(s -> s.contains(playerName));
     }
@@ -30,7 +29,7 @@ public class FactionService {
 
     public String getWebsiteSource(Faction faction) {
         try {
-            return this.unicacityAddon.webService().sendRequest(faction.getWebsiteUrl());
+            return this.unicacityAddon.services().webService().sendRequest(faction.getWebsiteUrl());
         } catch (APIResponseException e) {
             return Strings.EMPTY;
         }

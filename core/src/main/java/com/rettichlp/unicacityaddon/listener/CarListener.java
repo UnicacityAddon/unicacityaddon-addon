@@ -2,8 +2,8 @@ package com.rettichlp.unicacityaddon.listener;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
-import com.rettichlp.unicacityaddon.base.events.UnicacityAddonTickEvent;
 import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
+import com.rettichlp.unicacityaddon.base.events.UnicacityAddonTickEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
@@ -39,12 +39,12 @@ public class CarListener {
         String msg = e.chatMessage().getPlainText();
 
         if (PatternHandler.CAR_OPEN_PATTERN.matcher(msg).find()) {
-            this.unicacityAddon.fileService().data().setCarOpen(true);
+            this.unicacityAddon.services().fileService().data().setCarOpen(true);
             return;
         }
 
         if (PatternHandler.CAR_CLOSE_PATTERN.matcher(msg).find()) {
-            this.unicacityAddon.fileService().data().setCarOpen(false);
+            this.unicacityAddon.services().fileService().data().setCarOpen(false);
             return;
         }
 
@@ -58,7 +58,7 @@ public class CarListener {
         if (carTicketMatcher.find()) {
             int fine = Integer.parseInt(carTicketMatcher.group(2));
 
-            if (this.unicacityAddon.fileService().data().getCashBalance() >= fine) {
+            if (this.unicacityAddon.services().fileService().data().getCashBalance() >= fine) {
                 e.setMessage(Message.getBuilder()
                         .of("[").color(ColorCode.DARK_GRAY).advance()
                         .of("Car").color(ColorCode.GOLD).advance()

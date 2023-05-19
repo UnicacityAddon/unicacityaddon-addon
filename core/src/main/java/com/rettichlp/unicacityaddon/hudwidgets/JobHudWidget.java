@@ -24,8 +24,8 @@ public class JobHudWidget extends TextHudWidget<TextHudWidgetConfig> {
     @Override
     public void load(TextHudWidgetConfig config) {
         super.load(config);
-        this.textLine = super.createLine("Job", this.unicacityAddon.fileService().data().getJobBalance() + "$ | " + this.unicacityAddon.fileService().data().getJobExperience() + " EXP");
-        this.setIcon(this.unicacityAddon.getIcon());
+        this.textLine = super.createLine("Job", this.unicacityAddon.services().fileService().data().getJobBalance() + "$ | " + this.unicacityAddon.services().fileService().data().getJobExperience() + " EXP");
+        this.setIcon(this.unicacityAddon.utils().icon());
     }
 
     @Subscribe

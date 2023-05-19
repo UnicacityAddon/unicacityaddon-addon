@@ -39,7 +39,7 @@ public class HotkeyListener {
 
     @Subscribe
     public void onKey(KeyEvent e) {
-        if (Laby.references().chatAccessor().isChatOpen() || !this.unicacityAddon.isUnicacity())
+        if (Laby.references().chatAccessor().isChatOpen() || !this.unicacityAddon.utils().isUnicacity())
             return;
 
         KeyEvent.State state = e.state();
@@ -47,7 +47,7 @@ public class HotkeyListener {
         UnicacityAddonConfiguration configuration = this.unicacityAddon.configuration();
 
         if (state.equals(KeyEvent.State.PRESS) && key.equals(Key.TAB) && configuration.orderedTablist().get()) {
-            this.unicacityAddon.tabListController().orderTabList(this.unicacityAddon.labyAPI().minecraft().getClientPacketListener().getNetworkPlayerInfos());
+            this.unicacityAddon.tabListController().orderTabList(this.unicacityAddon);
             return;
         }
 
@@ -104,7 +104,7 @@ public class HotkeyListener {
             }
 
             Channel foundChannel = new Channel(p.getFaction().getPublicChannelId(), "Öffentlich", 0, 0);
-            ClientMoveCommand clientMoveCommand = new ClientMoveCommand(this.unicacityAddon, foundChannel.getChannelID(), this.unicacityAddon.tsUtils().getMyClientID());
+            ClientMoveCommand clientMoveCommand = new ClientMoveCommand(this.unicacityAddon, foundChannel.getChannelID(), this.unicacityAddon.utils().tsUtils().getMyClientID());
 
             CommandResponse commandResponse = clientMoveCommand.getResponse();
             if (!commandResponse.succeeded()) {

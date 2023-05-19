@@ -3,16 +3,14 @@ package com.rettichlp.unicacityaddon;
 import com.google.common.reflect.ClassPath;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.DefaultAddonPlayer;
+import com.rettichlp.unicacityaddon.base.Services;
+import com.rettichlp.unicacityaddon.base.Utils;
 import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.api.request.API;
 import com.rettichlp.unicacityaddon.base.config.DefaultUnicacityAddonConfiguration;
-import com.rettichlp.unicacityaddon.base.manager.FactionService;
 import com.rettichlp.unicacityaddon.base.manager.FileService;
-import com.rettichlp.unicacityaddon.base.manager.NameTagService;
-import com.rettichlp.unicacityaddon.base.manager.NavigationService;
 import com.rettichlp.unicacityaddon.base.manager.TokenService;
-import com.rettichlp.unicacityaddon.base.manager.WebService;
 import com.rettichlp.unicacityaddon.base.nametags.AddonTag;
 import com.rettichlp.unicacityaddon.base.nametags.DutyTag;
 import com.rettichlp.unicacityaddon.base.nametags.FactionInfoTag;
@@ -20,10 +18,6 @@ import com.rettichlp.unicacityaddon.base.nametags.HouseBanTag;
 import com.rettichlp.unicacityaddon.base.nametags.NoPushTag;
 import com.rettichlp.unicacityaddon.base.nametags.OutlawTag;
 import com.rettichlp.unicacityaddon.base.teamspeak.TSClientQuery;
-import com.rettichlp.unicacityaddon.base.teamspeak.TSUtils;
-import com.rettichlp.unicacityaddon.base.text.ColorCode;
-import com.rettichlp.unicacityaddon.base.text.Message;
-import com.rettichlp.unicacityaddon.base.utils.TextUtils;
 import com.rettichlp.unicacityaddon.controller.DeadBodyController;
 import com.rettichlp.unicacityaddon.controller.GuiController;
 import com.rettichlp.unicacityaddon.controller.OverlayMessageController;
@@ -49,20 +43,11 @@ import net.labymod.api.client.chat.command.Command;
 import net.labymod.api.client.entity.player.tag.PositionType;
 import net.labymod.api.client.entity.player.tag.TagRegistry;
 import net.labymod.api.client.gui.hud.HudWidgetRegistry;
-import net.labymod.api.client.gui.icon.Icon;
-import net.labymod.api.client.network.ClientPacketListener;
-import net.labymod.api.client.network.NetworkPlayerInfo;
-import net.labymod.api.client.network.server.ServerData;
-import net.labymod.api.client.resources.ResourceLocation;
 import net.labymod.api.models.addon.annotation.AddonMain;
-import org.apache.commons.lang3.SystemUtils;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -113,16 +98,10 @@ import java.util.stream.Collectors;
 @AddonMain
 public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration> {
 
-    private final String version = "2.0.0-alpha.3";
     private AddonPlayer player;
-    private FactionService factionService;
-    private FileService fileService;
-    private NameTagService nametagService;
-    private NavigationService navigationService;
-    private TokenService tokenService;
-    private WebService webService;
+    private Services services;
     private API api;
-    private TSUtils tsUtils;
+    private Utils utils;
 
     public UnicacityAddon() {
     }
@@ -130,21 +109,16 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
     @Override
     public void load() {
         this.player = new DefaultAddonPlayer(this);
-        this.factionService = new FactionService(this);
-        this.fileService = new FileService(this);
-        this.nametagService = new NameTagService(this);
-        this.navigationService = new NavigationService(this);
-        this.tokenService = new TokenService(this);
-        this.webService = new WebService(this);
+        this.services = new Services(this);
         this.api = new API(this);
-        this.tsUtils = new TSUtils(this);
+        this.utils = new Utils(this);
 
         this.logger().info("Enabled UnicacityAddon");
     }
 
     @Override
     protected void enable() {
-        this.tokenService.createToken();
+        this.services.tokenService().createToken();
         this.api.syncAll();
 
         this.registerSettingCategory();
@@ -161,44 +135,20 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
         return DefaultUnicacityAddonConfiguration.class;
     }
 
-    public String version() {
-        return version;
-    }
-
     public AddonPlayer player() {
         return player;
     }
 
-    public FactionService factionService() {
-        return factionService;
-    }
-
-    public FileService fileService() {
-        return fileService;
-    }
-
-    public NameTagService nametagService() {
-        return nametagService;
-    }
-
-    public NavigationService navigationService() {
-        return navigationService;
-    }
-
-    public TokenService tokenService() {
-        return tokenService;
-    }
-
-    public WebService webService() {
-        return webService;
+    public Services services() {
+        return services;
     }
 
     public API api() {
         return api;
     }
 
-    public TSUtils tsUtils() {
-        return tsUtils;
+    public Utils utils() {
+        return utils;
     }
 
     public GuiController guiController() {
@@ -231,68 +181,6 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
 
     public WorldInteractionController worldInteractionController() {
         return controller().getWorldInteractionController();
-    }
-
-    public Icon getIcon() {
-        return Icon.texture(ResourceLocation.create("unicacityaddon", "textures/uc.png")).resolution(64, 64);
-    }
-
-    public boolean isUnicacity() {
-        if (this.labyAPI().minecraft().isIngame()) {
-            ServerData serverData = this.labyAPI().serverController().getCurrentServerData();
-            return serverData != null && serverData.address().matches("unicacity.de", 25565, true);
-        }
-        return false;
-    }
-
-    public void debug(String debugMessage) {
-        this.player.sendMessage(Message.getBuilder()
-                .of("[").color(ColorCode.DARK_GRAY).advance()
-                .of("DEBUG").color(ColorCode.YELLOW).advance()
-                .of("]").color(ColorCode.DARK_GRAY).advance().space()
-                .add(debugMessage)
-                .createComponent());
-    }
-
-    public List<String> getOnlinePlayers() {
-        ClientPacketListener clientPacketListener = this.labyAPI().minecraft().getClientPacketListener();
-        if (clientPacketListener == null)
-            return Collections.emptyList();
-
-        Collection<NetworkPlayerInfo> networkPlayerInfoCollection = clientPacketListener.getNetworkPlayerInfos();
-
-        return networkPlayerInfoCollection.stream()
-                .map(networkPlayerInfo -> networkPlayerInfo.profile().getUsername())
-                .map(TextUtils::stripColor)
-                .map(TextUtils::stripPrefix)
-                .sorted()
-                .collect(Collectors.toList());
-    }
-
-    public void shutdownPC() {
-        String shutdownCommand;
-
-        if (SystemUtils.IS_OS_AIX) {
-            shutdownCommand = "shutdown -Fh now";
-        } else if (SystemUtils.IS_OS_SOLARIS || SystemUtils.IS_OS_SUN_OS) {
-            shutdownCommand = "shutdown -y -i5 -gnow";
-        } else if (SystemUtils.IS_OS_MAC || SystemUtils.IS_OS_UNIX) {
-            shutdownCommand = "shutdown -h now";
-        } else if (SystemUtils.IS_OS_HP_UX) {
-            shutdownCommand = "shutdown -hy now";
-        } else if (SystemUtils.IS_OS_IRIX) {
-            shutdownCommand = "shutdown -y -g now";
-        } else if (SystemUtils.IS_OS_WINDOWS) {
-            shutdownCommand = "shutdown -s -t 0";
-        } else {
-            return;
-        }
-
-        try {
-            Runtime.getRuntime().exec(shutdownCommand);
-        } catch (IOException e) {
-            logger().warn(e.getMessage());
-        }
     }
 
     private DefaultReferenceStorage controller() {

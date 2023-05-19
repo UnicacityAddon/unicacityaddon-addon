@@ -9,7 +9,6 @@ import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.models.ManagementUser;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
-import com.rettichlp.unicacityaddon.base.utils.TextUtils;
 import com.rettichlp.unicacityaddon.listener.NavigationListener;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.entity.player.ClientPlayer;
@@ -143,7 +142,7 @@ public class DefaultAddonPlayer implements AddonPlayer {
 
     @Override
     public boolean inDuty() {
-        return this.unicacityAddon.factionService().checkPlayerDuty(getName());
+        return this.unicacityAddon.services().factionService().checkPlayerDuty(getName());
     }
 
     @Override
@@ -200,7 +199,7 @@ public class DefaultAddonPlayer implements AddonPlayer {
         Weapon weapon = null;
         if (getPlayer() != null) {
             ItemStack mainHandItemStack = getPlayer().getMainHandItemStack();
-            String displayName = TextUtils.legacy(mainHandItemStack.getDisplayName());
+            String displayName = this.unicacityAddon.utils().textUtils().legacy(mainHandItemStack.getDisplayName());
             weapon = Weapon.getWeaponByItemName(displayName);
         }
         return weapon;
@@ -211,7 +210,7 @@ public class DefaultAddonPlayer implements AddonPlayer {
         Map<String, Integer> filteredPlayerMap = this.unicacityAddon.api().getPlayerFactionMap().entrySet().stream()
                 .filter(e -> e.getValue().equals(getFaction())) // name and faction from faction
                 .map(Map.Entry::getKey) // name of players from faction
-                .filter(s -> this.unicacityAddon.getOnlinePlayers().contains(s)) // is online
+                .filter(s -> this.unicacityAddon.utils().getOnlinePlayers().contains(s)) // is online
                 .filter(this::hasPlayerLatestAddonVersion) // has supported addon version
                 .collect(Collectors.toMap(s -> s, this.unicacityAddon.api().getPlayerRankMap()::get)); // collect name and rank of players from faction
 
@@ -245,7 +244,7 @@ public class DefaultAddonPlayer implements AddonPlayer {
                 mgmtVersion = response.get("latestVersion").getAsString();
             } catch (APIResponseException e) {
                 e.sendInfo();
-                mgmtVersion = this.unicacityAddon.version();
+                mgmtVersion = this.unicacityAddon.utils().version();
             }
             latestVersion = mgmtVersion;
         }

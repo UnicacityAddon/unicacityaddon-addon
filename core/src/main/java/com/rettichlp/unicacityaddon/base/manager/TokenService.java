@@ -1,7 +1,6 @@
 package com.rettichlp.unicacityaddon.base.manager;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.api.exception.APIResponseException;
 import net.labymod.api.client.session.Session;
 
 import java.math.BigInteger;
@@ -63,11 +62,7 @@ public class TokenService {
         String authToken = session.getAccessToken();
         apiToken = hash(uuid + salt + authToken);
 
-        try {
-            this.unicacityAddon.api().sendTokenCreateRequest();
-        } catch (APIResponseException e) {
-            e.sendInfo();
-        }
+        this.unicacityAddon.api().sendTokenCreateRequest();
     }
 
     public String hash(String input) {

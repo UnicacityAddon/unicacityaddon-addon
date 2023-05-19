@@ -51,7 +51,7 @@ public class VersionedDeadBodyController extends DeadBodyController {
             if (!customName.getString().contains("§")) { // not already formatted
                 String playerName = customName.getString().substring(1);
 
-                String prefix = unicacityAddon.nametagService().getPrefix(playerName, true);
+                String prefix = unicacityAddon.services().nametagService().getPrefix(playerName, true);
                 String factionInfo = unicacityAddon.api().getPlayerFactionMap().getOrDefault(playerName, Faction.NULL).getNameTagSuffix();
 
                 boolean nonRevivable = Objects.equals(customName.getStyle().getColor(), TextColor.fromLegacyFormat(ChatFormatting.DARK_GRAY));

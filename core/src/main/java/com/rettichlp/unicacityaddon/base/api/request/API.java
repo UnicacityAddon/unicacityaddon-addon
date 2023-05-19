@@ -21,7 +21,6 @@ import com.rettichlp.unicacityaddon.base.models.WantedReason;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
-import com.rettichlp.unicacityaddon.base.utils.ListUtils;
 import net.labymod.api.notification.Notification;
 
 import java.util.ArrayList;
@@ -136,7 +135,7 @@ public class API {
                 this.unicacityAddon.labyAPI().notificationController().push(Notification.builder()
                         .title(Message.getBuilder().of("Synchronisierung").color(ColorCode.AQUA).bold().advance().createComponent())
                         .text(Message.getBuilder().of("Addon-Gruppen aktualisiert.").advance().createComponent())
-                        .icon(this.unicacityAddon.getIcon())
+                        .icon(this.unicacityAddon.utils().icon())
                         .type(Notification.Type.ADVANCEMENT)
                         .build());
             } catch (APIResponseException e) {
@@ -148,9 +147,9 @@ public class API {
             playerFactionMap.clear();
             playerRankMap.clear();
             for (Faction faction : Faction.values()) {
-                String factionWebsiteSource = this.unicacityAddon.factionService().getWebsiteSource(faction);
-                List<String> nameList = ListUtils.getAllMatchesFromString(PatternHandler.NAME_PATTERN, factionWebsiteSource);
-                List<String> rankList = ListUtils.getAllMatchesFromString(PatternHandler.RANK_PATTERN, factionWebsiteSource);
+                String factionWebsiteSource = this.unicacityAddon.services().factionService().getWebsiteSource(faction);
+                List<String> nameList = this.unicacityAddon.utils().listUtils().getAllMatchesFromString(PatternHandler.NAME_PATTERN, factionWebsiteSource);
+                List<String> rankList = this.unicacityAddon.utils().listUtils().getAllMatchesFromString(PatternHandler.RANK_PATTERN, factionWebsiteSource);
                 nameList.forEach(name -> {
                     String formattedname = name.replace("<h4 class=\"h5 g-mb-5\"><strong>", "");
                     playerFactionMap.put(formattedname, faction);
@@ -163,7 +162,7 @@ public class API {
             this.unicacityAddon.labyAPI().notificationController().push(Notification.builder()
                     .title(Message.getBuilder().of("Synchronisierung").color(ColorCode.AQUA).bold().advance().createComponent())
                     .text(Message.getBuilder().of("Fraktionen aktualisiert.").advance().createComponent())
-                    .icon(this.unicacityAddon.getIcon())
+                    .icon(this.unicacityAddon.utils().icon())
                     .type(Notification.Type.ADVANCEMENT)
                     .build());
         }).start();
@@ -173,7 +172,7 @@ public class API {
                 this.unicacityAddon.labyAPI().notificationController().push(Notification.builder()
                         .title(Message.getBuilder().of("Synchronisierung").color(ColorCode.AQUA).bold().advance().createComponent())
                         .text(Message.getBuilder().of("Hausverbote aktualisiert.").advance().createComponent())
-                        .icon(this.unicacityAddon.getIcon())
+                        .icon(this.unicacityAddon.utils().icon())
                         .type(Notification.Type.ADVANCEMENT)
                         .build());
         }).start();
@@ -183,7 +182,7 @@ public class API {
                 this.unicacityAddon.labyAPI().notificationController().push(Notification.builder()
                         .title(Message.getBuilder().of("Synchronisierung").color(ColorCode.AQUA).bold().advance().createComponent())
                         .text(Message.getBuilder().of("Hausverbot-Gründe aktualisiert.").advance().createComponent())
-                        .icon(this.unicacityAddon.getIcon())
+                        .icon(this.unicacityAddon.utils().icon())
                         .type(Notification.Type.ADVANCEMENT)
                         .build());
         }).start();
@@ -193,7 +192,7 @@ public class API {
                 this.unicacityAddon.labyAPI().notificationController().push(Notification.builder()
                         .title(Message.getBuilder().of("Synchronisierung").color(ColorCode.AQUA).bold().advance().createComponent())
                         .text(Message.getBuilder().of("Management-User aktualisiert.").advance().createComponent())
-                        .icon(this.unicacityAddon.getIcon())
+                        .icon(this.unicacityAddon.utils().icon())
                         .type(Notification.Type.ADVANCEMENT)
                         .build());
         }).start();
@@ -203,7 +202,7 @@ public class API {
                 this.unicacityAddon.labyAPI().notificationController().push(Notification.builder()
                         .title(Message.getBuilder().of("Synchronisierung").color(ColorCode.AQUA).bold().advance().createComponent())
                         .text(Message.getBuilder().of("Navipunkte aktualisiert.").advance().createComponent())
-                        .icon(this.unicacityAddon.getIcon())
+                        .icon(this.unicacityAddon.utils().icon())
                         .type(Notification.Type.ADVANCEMENT)
                         .build());
         }).start();
@@ -213,7 +212,7 @@ public class API {
                 this.unicacityAddon.labyAPI().notificationController().push(Notification.builder()
                         .title(Message.getBuilder().of("Synchronisierung").color(ColorCode.AQUA).bold().advance().createComponent())
                         .text(Message.getBuilder().of("Blacklist-Gründe aktualisiert.").advance().createComponent())
-                        .icon(this.unicacityAddon.getIcon())
+                        .icon(this.unicacityAddon.utils().icon())
                         .type(Notification.Type.ADVANCEMENT)
                         .build());
         }).start();
@@ -223,7 +222,7 @@ public class API {
                 this.unicacityAddon.labyAPI().notificationController().push(Notification.builder()
                         .title(Message.getBuilder().of("Synchronisierung").color(ColorCode.AQUA).bold().advance().createComponent())
                         .text(Message.getBuilder().of("Wanted-Gründe aktualisiert.").advance().createComponent())
-                        .icon(this.unicacityAddon.getIcon())
+                        .icon(this.unicacityAddon.utils().icon())
                         .type(Notification.Type.ADVANCEMENT)
                         .build());
         }).start();
@@ -689,7 +688,7 @@ public class API {
     }
 
     public void sendStatisticAddRequest(StatisticType statisticType) {
-        if (this.unicacityAddon.isUnicacity()) {
+        if (this.unicacityAddon.utils().isUnicacity()) {
             RequestBuilder.getBuilder(this.unicacityAddon)
                     .nonProd(NON_PROD)
                     .applicationPath(ApplicationPath.STATISTIC)
@@ -714,7 +713,7 @@ public class API {
                 .subPath(CREATE_SUB_PATH)
                 .parameter(mapOf(
                         "authToken", this.unicacityAddon.labyAPI().minecraft().sessionAccessor().session().getAccessToken(),
-                        "version", this.unicacityAddon.version()))
+                        "version", this.unicacityAddon.utils().version()))
                 .sendAsync();
     }
 

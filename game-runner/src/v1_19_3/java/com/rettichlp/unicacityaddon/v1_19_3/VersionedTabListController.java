@@ -1,5 +1,6 @@
 package com.rettichlp.unicacityaddon.v1_19_3;
 
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.tab.TabPrefix;
 import com.rettichlp.unicacityaddon.base.utils.TextUtils;
 import com.rettichlp.unicacityaddon.controller.TabListController;
@@ -27,7 +28,8 @@ public class VersionedTabListController extends TabListController {
     }
 
     @Override
-    public void orderTabList(Collection<NetworkPlayerInfo> networkPlayerInfos) {
+    public void orderTabList(UnicacityAddon unicacityAddon) {
+        Collection<NetworkPlayerInfo> networkPlayerInfos = unicacityAddon.labyAPI().minecraft().getClientPacketListener().getNetworkPlayerInfos();
         assert Minecraft.getInstance().level != null;
         Scoreboard scoreboard = Minecraft.getInstance().level.getScoreboard();
 
@@ -46,7 +48,7 @@ public class VersionedTabListController extends TabListController {
                 .filter(networkPlayerInfo -> networkPlayerInfo.displayName() != null)
                 .filter(networkPlayerInfo -> networkPlayerInfo.getTeam() == null || (!networkPlayerInfo.getTeam().getTeamName().equals("nopush") && !networkPlayerInfo.getTeam().getTeamName().equals("masked")))
                 .forEach(networkPlayerInfo -> {
-                    String displayName = TextUtils.legacy(networkPlayerInfo.displayName());
+                    String displayName = unicacityAddon.utils().textUtils().legacy(networkPlayerInfo.displayName());
                     TabPrefix tabPrefix = TabPrefix.getTypeByDisplayName(displayName);
                     PlayerTeam playerTeam = tabPrefixScorePlayerTeamMap.get(tabPrefix);
                     scoreboard.addPlayerToTeam(networkPlayerInfo.profile().getUsername(), playerTeam);

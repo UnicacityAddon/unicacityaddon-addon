@@ -60,7 +60,7 @@ public class TabCompletionBuilder {
 
         public List<String> build() {
             int length = this.arguments.length;
-            List<String> tabCompletionList = this.tabCompletionMap.getOrDefault(length, this.unicacityAddon.getOnlinePlayers());
+            List<String> tabCompletionList = this.tabCompletionMap.getOrDefault(length, this.unicacityAddon.utils().getOnlinePlayers());
 
             // add tabCompletionFromIndexMap entry to tab completion
             this.tabCompletionFromIndexMap.entrySet().stream()

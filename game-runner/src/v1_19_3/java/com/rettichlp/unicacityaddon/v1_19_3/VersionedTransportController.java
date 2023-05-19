@@ -1,5 +1,6 @@
 package com.rettichlp.unicacityaddon.v1_19_3;
 
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.enums.location.Bus;
 import com.rettichlp.unicacityaddon.commands.BusCommand;
@@ -30,7 +31,8 @@ import java.util.stream.Collectors;
 public class VersionedTransportController extends TransportController {
 
     @Override
-    public void processBusRouting(AddonPlayer p) {
+    public void processBusRouting(UnicacityAddon unicacityAddon) {
+        AddonPlayer p = unicacityAddon.player();
         Screen screen = Minecraft.getInstance().screen;
         if (screen instanceof HopperScreen hopperScreen && BusCommand.active) {
             HopperMenu hopperMenu = hopperScreen.getMenu();

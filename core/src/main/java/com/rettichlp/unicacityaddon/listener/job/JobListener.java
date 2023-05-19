@@ -39,7 +39,7 @@ public class JobListener {
     public void onClientPlayerInteract(ClientPlayerInteractEvent e) {
         ClientPlayerInteractEvent.InteractionType interactionType = e.type();
 
-        if (interactionType.equals(ClientPlayerInteractEvent.InteractionType.INTERACT) && this.unicacityAddon.isUnicacity()) {
+        if (interactionType.equals(ClientPlayerInteractEvent.InteractionType.INTERACT) && this.unicacityAddon.utils().isUnicacity()) {
             AddonPlayer p = this.unicacityAddon.player();
 
             FloatVector3 pos = this.unicacityAddon.worldInteractionController().getClickedBlockLocation();

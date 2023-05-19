@@ -10,7 +10,6 @@ import com.rettichlp.unicacityaddon.base.models.HouseBan;
 import com.rettichlp.unicacityaddon.base.models.HouseBanReason;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
-import com.rettichlp.unicacityaddon.base.utils.TextUtils;
 import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
 import net.labymod.api.client.component.event.HoverEvent;
 
@@ -51,7 +50,7 @@ public class HousebanCommand extends UnicacityCommand {
                     long durationInMillis = houseBanEntry.getExpirationTime() - System.currentTimeMillis();
 
                     String duration = Message.getBuilder()
-                            .add(ColorCode.AQUA.getCode() + TextUtils.parseTimerWithTimeUnit(durationInMillis)
+                            .add(ColorCode.AQUA.getCode() + this.unicacityAddon.utils().textUtils().parseTimerWithTimeUnit(durationInMillis)
                                     .replace("d", ColorCode.DARK_AQUA.getCode() + "d" + ColorCode.AQUA.getCode())
                                     .replace("h", ColorCode.DARK_AQUA.getCode() + "h" + ColorCode.AQUA.getCode())
                                     .replace("m", ColorCode.DARK_AQUA.getCode() + "m" + ColorCode.AQUA.getCode())

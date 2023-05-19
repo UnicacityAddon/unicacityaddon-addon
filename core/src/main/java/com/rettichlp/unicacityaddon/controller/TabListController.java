@@ -1,10 +1,8 @@
 package com.rettichlp.unicacityaddon.controller;
 
-import net.labymod.api.client.network.NetworkPlayerInfo;
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 import net.labymod.api.reference.annotation.Referenceable;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.Collection;
 
 /**
  * @author RettichLP
@@ -13,5 +11,5 @@ import java.util.Collection;
 @Referenceable
 public abstract class TabListController {
 
-    public abstract void orderTabList(Collection<NetworkPlayerInfo> networkPlayerInfos);
+    public abstract void orderTabList(UnicacityAddon unicacityAddon);
 }

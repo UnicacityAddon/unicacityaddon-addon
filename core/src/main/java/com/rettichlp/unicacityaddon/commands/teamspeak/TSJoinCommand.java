@@ -12,7 +12,6 @@ import com.rettichlp.unicacityaddon.base.teamspeak.commands.ClientMoveCommand;
 import com.rettichlp.unicacityaddon.base.teamspeak.objects.Channel;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
-import com.rettichlp.unicacityaddon.base.utils.TextUtils;
 import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
 
 import java.util.HashMap;
@@ -57,7 +56,7 @@ public class TSJoinCommand extends UnicacityCommand {
             return true;
         }
 
-        String channelName = TextUtils.makeStringByArgs(arguments, "-");
+        String channelName = this.unicacityAddon.utils().textUtils().makeStringByArgs(arguments, "-");
 
         ChannelListCommand.Response channelListResponse = new ChannelListCommand(this.unicacityAddon).getResponse();
         if (!channelListResponse.succeeded()) {
@@ -90,7 +89,7 @@ public class TSJoinCommand extends UnicacityCommand {
             return true;
         }
 
-        ClientMoveCommand clientMoveCommand = new ClientMoveCommand(this.unicacityAddon, foundChannel.getChannelID(), this.unicacityAddon.tsUtils().getMyClientID());
+        ClientMoveCommand clientMoveCommand = new ClientMoveCommand(this.unicacityAddon, foundChannel.getChannelID(), this.unicacityAddon.utils().tsUtils().getMyClientID());
 
         CommandResponse commandResponse = clientMoveCommand.getResponse();
         if (!commandResponse.succeeded()) {

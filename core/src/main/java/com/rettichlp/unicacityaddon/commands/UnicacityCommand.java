@@ -25,6 +25,6 @@ public abstract class UnicacityCommand extends Command {
 
     @Override
     public boolean execute(String prefix, String[] arguments) {
-        return (this.unicacityAddon.isUnicacity() || !this.onlyOnUnicacity) && this.execute(arguments);
+        return (this.unicacityAddon.utils().isUnicacity() || !this.onlyOnUnicacity) && this.execute(arguments);
     }
 }

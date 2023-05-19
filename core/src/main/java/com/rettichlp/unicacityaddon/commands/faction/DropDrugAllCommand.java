@@ -40,7 +40,7 @@ public class DropDrugAllCommand extends UnicacityCommand {
     public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
 
-        this.unicacityAddon.fileService().data().setDrugInventoryMap(new HashMap<>());
+        this.unicacityAddon.services().fileService().data().setDrugInventoryMap(new HashMap<>());
         if (arguments.length > 0 && arguments[0].equalsIgnoreCase("reset")) {
             return true;
         }
@@ -61,7 +61,7 @@ public class DropDrugAllCommand extends UnicacityCommand {
         AddonPlayer p = unicacityAddon.player();
         List<String> commandQueue = new ArrayList<>();
 
-        unicacityAddon.fileService().data().getDrugInventoryMap().entrySet().stream()
+        unicacityAddon.services().fileService().data().getDrugInventoryMap().entrySet().stream()
                 .filter(drugTypeMapEntry -> drugTypeMapEntry.getKey().equals(DrugType.COCAINE) || drugTypeMapEntry.getKey().equals(DrugType.MARIJUANA) || drugTypeMapEntry.getKey().equals(DrugType.METH) || drugTypeMapEntry.getKey().equals(DrugType.LSD))
                 .forEach(drugTypeMapEntry -> drugTypeMapEntry.getValue().forEach((drugPurity, integer) -> {
                     if (integer > 0) {

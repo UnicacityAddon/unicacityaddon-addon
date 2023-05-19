@@ -4,7 +4,6 @@ import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
-import com.rettichlp.unicacityaddon.base.utils.TextUtils;
 import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
 import com.rettichlp.unicacityaddon.listener.MobileListener;
 
@@ -51,7 +50,7 @@ public class ASMSCommand extends UnicacityCommand {
                     return;
                 }
 
-                String message = TextUtils.makeStringByArgs(arguments, " ").replace(arguments[0], "");
+                String message = ASMSCommand.this.unicacityAddon.utils().textUtils().makeStringByArgs(arguments, " ").replace(arguments[0], "");
                 p.sendServerMessage("/sms " + number + message);
             }
         }, 250L);

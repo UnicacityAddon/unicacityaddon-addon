@@ -1,9 +1,9 @@
 package com.rettichlp.unicacityaddon.listener;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.enums.Weapon;
 import com.rettichlp.unicacityaddon.base.events.WeaponShotEvent;
-import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.entity.player.ClientPlayerInteractEvent;
 

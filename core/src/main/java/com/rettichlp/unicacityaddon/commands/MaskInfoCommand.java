@@ -4,7 +4,6 @@ import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
-import com.rettichlp.unicacityaddon.base.utils.TextUtils;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -30,7 +29,7 @@ public class MaskInfoCommand extends UnicacityCommand {
 
         if (startTime > 0) {
             long timeLeft = System.currentTimeMillis() - startTime;
-            String maskDuration = TextUtils.parseTimer(1200 - TimeUnit.MILLISECONDS.toSeconds(timeLeft));
+            String maskDuration = this.unicacityAddon.utils().textUtils().parseTimer(1200 - TimeUnit.MILLISECONDS.toSeconds(timeLeft));
             String[] splittedMaskDurytion = maskDuration.split(":");
             int minutes = Integer.parseInt(splittedMaskDurytion[0]);
             int seconds = Integer.parseInt(splittedMaskDurytion[1]);

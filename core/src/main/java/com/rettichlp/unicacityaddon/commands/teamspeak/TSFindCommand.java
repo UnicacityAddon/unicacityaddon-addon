@@ -56,7 +56,7 @@ public class TSFindCommand extends UnicacityCommand {
 
             String name = arguments[0];
 
-            List<Client> clients = this.unicacityAddon.tsUtils().getClientsByName(Collections.singletonList(name));
+            List<Client> clients = this.unicacityAddon.utils().tsUtils().getClientsByName(Collections.singletonList(name));
             if (clients.isEmpty()) {
                 p.sendErrorMessage("Es wurde kein Spieler auf dem TeamSpeak mit diesem Namen gefunden.");
                 return;

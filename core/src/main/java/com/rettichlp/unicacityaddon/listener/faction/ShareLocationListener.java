@@ -2,9 +2,9 @@ package com.rettichlp.unicacityaddon.listener.faction;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
+import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.config.sloc.DefaultSlocSetting;
 import com.rettichlp.unicacityaddon.base.models.NaviPoint;
-import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
@@ -55,7 +55,7 @@ public class ShareLocationListener {
                 .of(String.valueOf(posZ)).color(ColorCode.AQUA).advance()
                 .createComponent();
 
-        Map.Entry<Double, NaviPoint> doubleNaviPointEntry = this.unicacityAddon.navigationService().getNearestNaviPoint(posX, posY, posZ);
+        Map.Entry<Double, NaviPoint> doubleNaviPointEntry = this.unicacityAddon.services().navigationService().getNearestNaviPoint(posX, posY, posZ);
 
         String navipointString;
         if (doubleNaviPointEntry.getValue() == null) {

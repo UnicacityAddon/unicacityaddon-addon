@@ -11,13 +11,16 @@ import java.util.concurrent.TimeUnit;
  */
 public class TextUtils {
 
+    public TextUtils() {
+    }
+
     /**
      * Converts textComponent to a legacy string - <code>&6Hello &b&lworld&c!</code>
      *
      * @param component Component to be converted to formatted string
      * @return converted string of component
      */
-    public static String legacy(Component component) {
+    public String legacy(Component component) {
         return Laby.references().renderPipeline().componentRenderer().legacySectionSerializer().serialize(component);
     }
 
@@ -27,7 +30,7 @@ public class TextUtils {
      * @param component Component to be converted to unformatted string
      * @return converted string of component
      */
-    public static String plain(Component component) {
+    public String plain(Component component) {
         return Laby.references().renderPipeline().componentRenderer().plainSerializer().serialize(component);
     }
 
@@ -37,7 +40,7 @@ public class TextUtils {
      * @param text String starting with a color code containing <code>§</code> or <code>&</code>
      * @return text without color code prefix
      */
-    public static String stripColor(String text) {
+    public String stripColor(String text) {
         return PatternHandler.STRIP_COLOR_PATTERN.matcher(text).replaceAll("");
     }
 
@@ -47,7 +50,7 @@ public class TextUtils {
      * @param text String without server provided prefix
      * @return text without server provided prefix
      */
-    public static String stripPrefix(String text) {
+    public String stripPrefix(String text) {
         return PatternHandler.STRIP_PREFIX_PATTERN.matcher(text).replaceAll("");
     }
 
@@ -57,7 +60,7 @@ public class TextUtils {
      * @param seconds time in seconds
      * @return converted time in readable format
      */
-    public static String parseTimer(long seconds) {
+    public String parseTimer(long seconds) {
         return seconds >= 3600 ? String.format("%02d:%02d:%02d", seconds / 3600, seconds % 3600 / 60, seconds % 60) : String.format("%02d:%02d", seconds / 60, seconds % 60);
     }
 
@@ -67,7 +70,7 @@ public class TextUtils {
      * @param milliseconds time in milliseconds
      * @return converted time in readable format
      */
-    public static String parseTimerWithTimeUnit(long milliseconds) {
+    public String parseTimerWithTimeUnit(long milliseconds) {
         long seconds = TimeUnit.MILLISECONDS.toSeconds(milliseconds);
         long minutes = TimeUnit.SECONDS.toMinutes(seconds);
         long hours = TimeUnit.MINUTES.toHours(minutes);
@@ -82,7 +85,7 @@ public class TextUtils {
      * @param time     Long of the time to be converted
      * @return converted time in readable format
      */
-    public static String parseTime(TimeUnit timeUnit, long time) {
+    public String parseTime(TimeUnit timeUnit, long time) {
         long dd = timeUnit.toDays(time);
         long hh = timeUnit.toHours(time) % 24;
         long mm = timeUnit.toMinutes(time) % 60;
@@ -103,7 +106,7 @@ public class TextUtils {
      * @param space String of space between objects
      * @return String of objects with the space between them
      */
-    public static String makeStringByArgs(Object[] args, String space) {
+    public String makeStringByArgs(Object[] args, String space) {
         StringBuilder stringBuilder = new StringBuilder();
         for (Object o : args) {
             stringBuilder.append(o).append(space);

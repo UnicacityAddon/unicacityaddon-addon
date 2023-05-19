@@ -2,8 +2,8 @@ package com.rettichlp.unicacityaddon.listener;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
-import com.rettichlp.unicacityaddon.base.events.UnicacityAddonTickEvent;
 import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
+import com.rettichlp.unicacityaddon.base.events.UnicacityAddonTickEvent;
 import net.labymod.api.client.scoreboard.DisplaySlot;
 import net.labymod.api.client.scoreboard.Scoreboard;
 import net.labymod.api.client.scoreboard.ScoreboardScore;
@@ -26,7 +26,7 @@ public class EventListener {
         if (e.isPhase(UnicacityAddonTickEvent.Phase.SECOND_30)) {
             AddonPlayer p = this.unicacityAddon.player();
 
-            if (this.unicacityAddon.isUnicacity() && p.hasGangwar() && p.isPrioritizedMember()) {
+            if (this.unicacityAddon.utils().isUnicacity() && p.hasGangwar() && p.isPrioritizedMember()) {
                 Scoreboard scoreboard = p.getScoreboard();
 
                 ScoreboardScore attackerScore = scoreboard.getScores(scoreboard.getObjective(DisplaySlot.SIDEBAR)).stream()

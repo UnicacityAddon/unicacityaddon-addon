@@ -8,7 +8,6 @@ import com.rettichlp.unicacityaddon.base.models.NaviPoint;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
-import com.rettichlp.unicacityaddon.base.utils.TextUtils;
 import com.rettichlp.unicacityaddon.hudwidgets.BombHudWidget;
 import com.rettichlp.unicacityaddon.listener.TickListener;
 import net.labymod.api.client.chat.ChatMessage;
@@ -70,7 +69,7 @@ public class BombListener {
         if (m.find()) {
             String state = m.group(1);
 
-            String timeString = BombHudWidget.timer > -1 ? TextUtils.parseTimer(BombHudWidget.timer) : "";
+            String timeString = BombHudWidget.timer > -1 ? this.unicacityAddon.utils().textUtils().parseTimer(BombHudWidget.timer) : "";
             BombHudWidget.timer = -1;
 
             e.setMessage(Message.getBuilder()

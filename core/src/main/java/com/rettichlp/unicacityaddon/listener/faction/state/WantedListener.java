@@ -76,7 +76,7 @@ public class WantedListener {
             int wpAmount = Integer.parseInt(wantedListEntryMatcher.group(2));
             boolean isAfk = wantedListEntryMatcher.group(4).contains("AFK");
 
-            ColorCode colorCode = this.unicacityAddon.nametagService().getWpColor(wpAmount);
+            ColorCode colorCode = this.unicacityAddon.services().nametagService().getWpColor(wpAmount);
 
             e.setMessage(Message.getBuilder().space().space()
                     .of("»").color(ColorCode.DARK_GRAY).advance().space()

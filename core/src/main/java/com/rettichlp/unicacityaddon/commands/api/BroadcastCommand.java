@@ -8,7 +8,6 @@ import com.rettichlp.unicacityaddon.base.api.exception.APIResponseException;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
-import com.rettichlp.unicacityaddon.base.utils.TextUtils;
 import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
 
 import java.text.SimpleDateFormat;
@@ -70,7 +69,7 @@ public class BroadcastCommand extends UnicacityCommand {
             } else if (arguments.length > 3 && arguments[0].equalsIgnoreCase("send")) {
                 String date = arguments[1]; // TT.MM.JJJJ
                 String time = arguments[2]; // HH:MM:SS
-                String message = TextUtils.makeStringByArgs(arguments, " ")
+                String message = this.unicacityAddon.utils().textUtils().makeStringByArgs(arguments, " ")
                         .replace("send ", "")
                         .replace(date + " ", "")
                         .replace(time + " ", "");

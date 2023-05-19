@@ -69,7 +69,7 @@ public class ReinforcementListener {
                     .of(String.valueOf(posZ)).color(ColorCode.AQUA).advance()
                     .createComponent();
 
-            Map.Entry<Double, NaviPoint> nearestNaviPoint = this.unicacityAddon.navigationService().getNearestNaviPoint(posX, posY, posZ);
+            Map.Entry<Double, NaviPoint> nearestNaviPoint = this.unicacityAddon.services().navigationService().getNearestNaviPoint(posX, posY, posZ);
             NaviPoint navipoint = nearestNaviPoint.getValue();
 
             String navipointString;

@@ -28,7 +28,7 @@ public class DiscordCommand extends UnicacityCommand {
 
     @Override
     public boolean execute(String[] arguments) {
-        if (!this.unicacityAddon.isUnicacity())
+        if (!this.unicacityAddon.utils().isUnicacity())
             return true;
         AddonPlayer p = this.unicacityAddon.player();
 

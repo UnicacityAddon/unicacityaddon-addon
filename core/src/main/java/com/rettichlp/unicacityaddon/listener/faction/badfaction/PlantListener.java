@@ -43,17 +43,17 @@ public class PlantListener {
         String msg = e.chatMessage().getPlainText();
 
         if (PatternHandler.PLANT_HARVEST_PATTERN.matcher(msg).find()) {
-            this.unicacityAddon.fileService().data().setPlantFertilizeTime(0L);
-            this.unicacityAddon.fileService().data().setPlantWaterTime(0L);
+            this.unicacityAddon.services().fileService().data().setPlantFertilizeTime(0L);
+            this.unicacityAddon.services().fileService().data().setPlantWaterTime(0L);
             return;
         }
 
         Matcher plantUseMatcher = PatternHandler.PLANT_USE_PATTERN.matcher(msg);
         if (plantUseMatcher.find() && msg.contains(this.unicacityAddon.player().getName())) {
-            if (msg.contains("gewässert") && System.currentTimeMillis() - TimeUnit.MINUTES.toMillis(10) > this.unicacityAddon.fileService().data().getPlantWaterTime()) {
-                this.unicacityAddon.fileService().data().setPlantWaterTime(System.currentTimeMillis());
-            } else if (msg.contains("gedüngt") && System.currentTimeMillis() - TimeUnit.MINUTES.toMillis(10) > this.unicacityAddon.fileService().data().getPlantFertilizeTime()) {
-                this.unicacityAddon.fileService().data().setPlantFertilizeTime(System.currentTimeMillis());
+            if (msg.contains("gewässert") && System.currentTimeMillis() - TimeUnit.MINUTES.toMillis(10) > this.unicacityAddon.services().fileService().data().getPlantWaterTime()) {
+                this.unicacityAddon.services().fileService().data().setPlantWaterTime(System.currentTimeMillis());
+            } else if (msg.contains("gedüngt") && System.currentTimeMillis() - TimeUnit.MINUTES.toMillis(10) > this.unicacityAddon.services().fileService().data().getPlantFertilizeTime()) {
+                this.unicacityAddon.services().fileService().data().setPlantFertilizeTime(System.currentTimeMillis());
             }
         }
     }

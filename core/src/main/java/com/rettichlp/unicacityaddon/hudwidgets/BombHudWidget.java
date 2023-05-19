@@ -3,7 +3,6 @@ package com.rettichlp.unicacityaddon.hudwidgets;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.events.UnicacityAddonTickEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
-import com.rettichlp.unicacityaddon.base.utils.TextUtils;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidget;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidgetConfig;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextLine;
@@ -28,7 +27,7 @@ public class BombHudWidget extends TextHudWidget<TextHudWidgetConfig> {
     public void load(TextHudWidgetConfig config) {
         super.load(config);
         textLine = super.createLine("Bombe", "");
-        this.setIcon(this.unicacityAddon.getIcon());
+        this.setIcon(this.unicacityAddon.utils().icon());
     }
 
     @Override
@@ -39,7 +38,7 @@ public class BombHudWidget extends TextHudWidget<TextHudWidgetConfig> {
     @Subscribe
     public void onUnicacityAddonTick(UnicacityAddonTickEvent e) {
         if (e.isPhase(UnicacityAddonTickEvent.Phase.SECOND) && timer >= 0) {
-            textLine.updateAndFlush((timer >= 780 ? ColorCode.RED.getCode() : "") + TextUtils.parseTimer(timer));
+            textLine.updateAndFlush((timer >= 780 ? ColorCode.RED.getCode() : "") + this.unicacityAddon.utils().textUtils().parseTimer(timer));
 
             if (timer >= 1200)
                 timer = -1;
