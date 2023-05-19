@@ -12,4 +12,6 @@ public interface FactionMessageSetting {
     ConfigProperty<Boolean> service();
 
     ConfigProperty<Boolean> dBank();
+
+    ConfigProperty<Boolean> contract();
 }

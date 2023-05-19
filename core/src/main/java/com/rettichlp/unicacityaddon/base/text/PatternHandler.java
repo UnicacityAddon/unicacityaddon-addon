@@ -108,9 +108,8 @@ public class PatternHandler {
     public static final Pattern BLACKLIST_ADDED_PATTERN = Pattern.compile("^\\[Blacklist] (?:\\[UC])*(\\w+) wurde von (?:\\[UC])*\\w+ auf die Blacklist gesetzt!$");
     public static final Pattern BLACKLIST_REMOVED_PATTERN = Pattern.compile("^\\[Blacklist] (?:\\[UC])*(\\w+) wurde von (?:\\[UC])*\\w+ von der Blacklist gelöscht!$");
     public static final Pattern CONTRACT_SET_PATTERN = Pattern.compile("^\\[Contract] Es wurde ein Kopfgeld auf (?:\\[UC])*(\\w+) \\(\\d+\\$\\) ausgesetzt\\.$");
+    public static final Pattern CONTRACT_KILL_PATTERN = Pattern.compile("^\\[Contract] (?:\\[UC])*(\\w+) hat (?:\\[UC])*(\\w+) getötet\\. Kopfgeld: (\\d+)\\$$");
     public static final Pattern CONTRACT_DELETE_PATTERN = Pattern.compile("^\\[Contract] (?:\\[UC])*(\\w+) hat (?:\\[UC])*(\\w+) von der Contract Liste gelöscht\\. \\[-\\d+]$");
-    public static final Pattern CONTRACT_REMOVED_PATTERN = Pattern.compile("^\\[Contract] (?:\\[UC])*(\\w+) hat (?:\\[UC])*(\\w+) getötet\\. Kopfgeld: (\\d+)\\$" +
-            "|^\\[Contract] (?:\\[UC])*(\\w+) hat (?:\\[UC])*(\\w+) von der Contract Liste gelöscht\\. \\[-\\d+]$");
     public static final Pattern CONTRACT_LIST_HEADER_PATTERN = Pattern.compile("^=~=~=~Contracts~=~=~=$");
     public static final Pattern CONTRACT_LIST_PATTERN = Pattern.compile("^ - (?:\\[UC])*(?<name>\\w+) \\[(?<money>\\d+)\\$](| \\(AFK\\))$");
 
