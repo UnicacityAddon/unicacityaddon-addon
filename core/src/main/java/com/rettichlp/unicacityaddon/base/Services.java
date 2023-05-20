@@ -1,12 +1,12 @@
 package com.rettichlp.unicacityaddon.base;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.manager.FactionService;
-import com.rettichlp.unicacityaddon.base.manager.FileService;
-import com.rettichlp.unicacityaddon.base.manager.NameTagService;
-import com.rettichlp.unicacityaddon.base.manager.NavigationService;
-import com.rettichlp.unicacityaddon.base.manager.TokenService;
-import com.rettichlp.unicacityaddon.base.manager.WebService;
+import com.rettichlp.unicacityaddon.base.services.FactionService;
+import com.rettichlp.unicacityaddon.base.services.FileService;
+import com.rettichlp.unicacityaddon.base.services.NameTagService;
+import com.rettichlp.unicacityaddon.base.services.NavigationService;
+import com.rettichlp.unicacityaddon.base.services.TokenService;
+import com.rettichlp.unicacityaddon.base.services.WebService;
 
 public class Services {
 

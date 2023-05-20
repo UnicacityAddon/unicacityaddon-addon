@@ -1,4 +1,4 @@
-package com.rettichlp.unicacityaddon.base.manager;
+package com.rettichlp.unicacityaddon.base.services;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonParser;

@@ -1,4 +1,4 @@
-package com.rettichlp.unicacityaddon.base.manager;
+package com.rettichlp.unicacityaddon.base.services;
 
 import com.google.common.collect.Maps;
 import com.google.gson.JsonParser;

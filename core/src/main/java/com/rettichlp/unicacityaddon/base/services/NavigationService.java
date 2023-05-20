@@ -1,4 +1,4 @@
-package com.rettichlp.unicacityaddon.base.manager;
+package com.rettichlp.unicacityaddon.base.services;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
