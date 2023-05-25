@@ -32,10 +32,6 @@ public enum DrugType {
         return drugName;
     }
 
-    public String getShortName() {
-        return shortName;
-    }
-
     public boolean isLegal() {
         return legal;
     }

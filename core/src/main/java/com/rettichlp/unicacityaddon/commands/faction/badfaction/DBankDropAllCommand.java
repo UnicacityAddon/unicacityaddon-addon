@@ -41,7 +41,7 @@ public class DBankDropAllCommand extends UnicacityCommand {
                 .forEach((drugType, drugPurityIntegerMap) -> drugPurityIntegerMap
                         .forEach((drugPurity, integer) -> {
                             if (integer > 0)
-                                commandQueue.add("/dbank drop " + drugType.getShortName() + " " + integer + " " + drugPurity.getPurity());
+                                commandQueue.add("/dbank drop " + drugType.getDrugName() + " " + integer + " " + drugPurity.getPurity());
                         }));
 
         Timer timer = new Timer();
