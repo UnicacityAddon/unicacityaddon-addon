@@ -132,7 +132,7 @@ public class DropDrugAllCommand implements IClientCommand {
                 UnicacityAddon.MINECRAFT.playerController.windowClick(windowId, 2, 0, ClickType.PICKUP, UnicacityAddon.MINECRAFT.player);
             } else {
                 guiContainer.inventorySlots.getInventory().stream()
-                        .filter(itemStack -> !itemStack.isEmpty() && !itemStack.getDisplayName().contains("Kokain") && !itemStack.getDisplayName().contains("Marihuana") && !itemStack.getDisplayName().contains("Methamphetamin"))
+                        .filter(itemStack -> !itemStack.isEmpty() && !itemStack.getDisplayName().contains("Pulver") && !itemStack.getDisplayName().contains("Kräuter") && !itemStack.getDisplayName().contains("Kristalle"))
                         .forEach(itemStack -> {
                             NBTTagCompound nbtTagCompound = itemStack.getSubCompound("display");
                             if (nbtTagCompound != null) {
