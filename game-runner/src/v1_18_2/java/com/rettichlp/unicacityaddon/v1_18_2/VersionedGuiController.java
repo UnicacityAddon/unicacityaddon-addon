@@ -101,7 +101,7 @@ public class VersionedGuiController extends GuiController {
                 this.inventoryClick(unicacityAddon, 2);
             } else {
                 chestMenu.getItems().stream()
-                        .filter(itemStack -> !itemStack.isEmpty() && !itemStack.getDisplayName().getString().contains("Kokain") && !itemStack.getDisplayName().getString().contains("Marihuana") && !itemStack.getDisplayName().getString().contains("Methamphetamin"))
+                        .filter(itemStack -> !itemStack.isEmpty() && !itemStack.getDisplayName().getString().contains("Kokain") && !itemStack.getDisplayName().getString().contains("Kräuter") && !itemStack.getDisplayName().getString().contains("Kristalle"))
                         .forEach(itemStack -> {
                             assert itemStack.getTag() != null;
                             CompoundTag compoundTag = itemStack.getTag().getCompound("display");
