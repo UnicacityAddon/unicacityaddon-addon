@@ -235,11 +235,6 @@ public class UPlayerImpl implements UPlayer {
                 .sorted()
                 .collect(Collectors.toList());
 
-        boolean hasRankPriority = false;
-        if (!rankPlayerList.isEmpty()) {
-            hasRankPriority = rankPlayerList.get(0).equals(getName());
-        }
-
-        return !hasAnyPlayerHigherRank && hasRankPriority;
+        return !hasAnyPlayerHigherRank && (!rankPlayerList.isEmpty() && rankPlayerList.get(0).equals(getName()));
     }
 }

@@ -229,6 +229,7 @@ public class EmergencyServiceEventHandler {
 
         if (PatternHandler.SERVICE_DONE_PATTERN.matcher(unformattedMsg).find()) {
             FileManager.DATA.setServiceCount(FileManager.DATA.getServiceCount() + 1);
+            distanceToService = 0;
             APIRequest.sendStatisticAddRequest(StatisticType.SERVICE);
         }
     }

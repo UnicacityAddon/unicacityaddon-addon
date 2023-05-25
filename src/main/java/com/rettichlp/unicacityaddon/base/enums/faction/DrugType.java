@@ -4,10 +4,10 @@ import java.util.Arrays;
 
 public enum DrugType {
 
-    COCAINE("Kokain", "Koks", false),
-    MARIJUANA("Marihuana", "Gras", false),
-    METH("Methamphetamin", "Meth", false),
-    LSD("LSD", "LSD", false),
+    COCAINE("Pulver", "Koks", false),
+    MARIJUANA("Kräuter", "Gras", false),
+    METH("Kristalle", "Meth", false),
+    LSD("Wundertüte", "LSD", false),
     IRON("Eisen", null, false),
     MASK("Maske", null, false),
     GUNPOWDER("Schwarzpulver", null, false),

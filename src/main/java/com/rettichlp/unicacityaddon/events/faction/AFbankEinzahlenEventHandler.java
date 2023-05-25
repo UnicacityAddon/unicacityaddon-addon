@@ -24,19 +24,20 @@ public class AFbankEinzahlenEventHandler {
             return;
 
         String msg = e.getMessage().getUnformattedText();
-        Matcher taxesMatcher = PatternHandler.FBANK_TAXES.matcher(msg);
-        if (taxesMatcher.find()) {
+        Matcher cashFromFBankMatcher = PatternHandler.CASH_FROM_FBANK_PATTERN.matcher(msg);
+        Matcher cashToFBankMatcher = PatternHandler.CASH_TO_FBANK_PATTERN.matcher(msg);
+        if ((cashFromFBankMatcher.find() && msg.contains("$ (+")) || (cashToFBankMatcher.find() && msg.contains("$ (-"))) {
             AFbankEinzahlenCommand.STARTED.set(false);
             // send clock command
             AFbankEinzahlenCommand.timer.schedule(new TimerTask() {
                 public void run() {
                     AFbankEinzahlenCommand.sendClockMessage();
-                    Message.getBuilder()
+                    AbstractionLayer.getPlayer().sendMessage(Message.getBuilder()
                             .prefix()
                             .of("Nicht eingezahlt wurden: ").color(ColorCode.GRAY).advance()
                             .of(AFbankEinzahlenCommand.amount + "$").color(ColorCode.BLUE).advance()
                             .of(".").color(ColorCode.GRAY).advance()
-                            .sendTo(AbstractionLayer.getPlayer().getPlayer());
+                            .createComponent());
                 }
             }, 200L);
         }
