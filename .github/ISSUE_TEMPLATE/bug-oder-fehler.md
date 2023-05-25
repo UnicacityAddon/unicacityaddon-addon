@@ -25,4 +25,4 @@ Füge gegebenenfalls Screenshots hinzu, um das Problem zu erläutern.
 
 **Weitere Informationen (bitte ausfüllen):**
 Minecraft Version: `1.12.2`
-Addon Version: `1.10.0`
+Addon Version: `1.10.1`
