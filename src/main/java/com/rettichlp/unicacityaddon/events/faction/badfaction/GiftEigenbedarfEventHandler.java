@@ -30,7 +30,7 @@ public class GiftEigenbedarfEventHandler {
             return;
 
         if (ConfigElements.getMarihuanaActivated() && GiftEigenbedarfCommand.checkWeed) {
-            p.sendChatMessage("/selldrug " + drugDealEndedMatcher.group(1) + " Gras " + ConfigElements.getMarihuanaDrugPurity().getPurity() + " " + ConfigElements.getMarihuanaAmount() + " 0");
+            p.sendChatMessage("/selldrug " + drugDealEndedMatcher.group(1) + " Kräuter " + ConfigElements.getMarihuanaDrugPurity().getPurity() + " " + ConfigElements.getMarihuanaAmount() + " 0");
             GiftEigenbedarfCommand.checkWeed = false;
 
             if (ConfigElements.getMethActivated())
@@ -39,7 +39,7 @@ public class GiftEigenbedarfEventHandler {
         }
 
         if (ConfigElements.getMethActivated() && GiftEigenbedarfCommand.checkMeth)
-            p.sendChatMessage("/selldrug " + drugDealEndedMatcher.group(1) + " Meth " + ConfigElements.getMethDrugPurity().getPurity() + " " + ConfigElements.getMethAmount() + " 0");
+            p.sendChatMessage("/selldrug " + drugDealEndedMatcher.group(1) + " Kristalle " + ConfigElements.getMethDrugPurity().getPurity() + " " + ConfigElements.getMethAmount() + " 0");
 
         GiftEigenbedarfCommand.checkMeth = false;
     }

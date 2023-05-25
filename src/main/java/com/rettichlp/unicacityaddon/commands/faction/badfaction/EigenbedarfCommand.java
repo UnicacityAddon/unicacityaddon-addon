@@ -64,19 +64,19 @@ public class EigenbedarfCommand implements IClientCommand {
         Timer t = new Timer();
 
         if (ConfigElements.getCocainActivated()) {
-            p.sendChatMessage("/dbank get Koks " + ConfigElements.getCocaineAmount() + " " + ConfigElements.getCocainDrugPurity().getPurity());
+            p.sendChatMessage("/dbank get Pulver " + ConfigElements.getCocaineAmount() + " " + ConfigElements.getCocainDrugPurity().getPurity());
 
             if (ConfigElements.getMarihuanaActivated()) {
                 t.schedule(new TimerTask() {
                     @Override
                     public void run() {
-                        p.sendChatMessage("/dbank get Gras " + ConfigElements.getMarihuanaAmount() + " " + ConfigElements.getMarihuanaDrugPurity().getPurity());
+                        p.sendChatMessage("/dbank get Kräuter " + ConfigElements.getMarihuanaAmount() + " " + ConfigElements.getMarihuanaDrugPurity().getPurity());
 
                         if (ConfigElements.getMethActivated())
                             t.schedule(new TimerTask() {
                                 @Override
                                 public void run() {
-                                    p.sendChatMessage("/dbank get Meth " + ConfigElements.getMethAmount() + " " + ConfigElements.getMethDrugPurity().getPurity());
+                                    p.sendChatMessage("/dbank get Kristalle " + ConfigElements.getMethAmount() + " " + ConfigElements.getMethDrugPurity().getPurity());
 
                                 }
                             }, 1000L);
@@ -87,13 +87,13 @@ public class EigenbedarfCommand implements IClientCommand {
         }
 
         if (ConfigElements.getMarihuanaActivated()) {
-            p.sendChatMessage("/dbank get Marihuana " + ConfigElements.getMarihuanaAmount() + " " + ConfigElements.getMarihuanaDrugPurity().getPurity());
+            p.sendChatMessage("/dbank get Kräuter " + ConfigElements.getMarihuanaAmount() + " " + ConfigElements.getMarihuanaDrugPurity().getPurity());
 
             if (ConfigElements.getMethActivated())
                 t.schedule(new TimerTask() {
                     @Override
                     public void run() {
-                        p.sendChatMessage("/dbank get Meth " + ConfigElements.getMethAmount() + " " + ConfigElements.getMethDrugPurity().getPurity());
+                        p.sendChatMessage("/dbank get Kristalle " + ConfigElements.getMethAmount() + " " + ConfigElements.getMethDrugPurity().getPurity());
                     }
                 }, 1000L);
 
@@ -101,7 +101,7 @@ public class EigenbedarfCommand implements IClientCommand {
         }
 
         if (ConfigElements.getMethActivated())
-            p.sendChatMessage("/dbank get Meth " + ConfigElements.getMethAmount() + " " + ConfigElements.getMethDrugPurity().getPurity());
+            p.sendChatMessage("/dbank get Kristalle " + ConfigElements.getMethAmount() + " " + ConfigElements.getMethDrugPurity().getPurity());
     }
 
     @Override

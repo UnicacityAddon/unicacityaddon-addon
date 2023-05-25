@@ -58,7 +58,7 @@ public class GiftEigenbedarfCommand implements IClientCommand {
         }
 
         if (ConfigElements.getCocainActivated()) {
-            p.sendChatMessage("/selldrug " + args[0] + " Kokain " + ConfigElements.getCocainDrugPurity().getPurity() + " " + ConfigElements.getCocaineAmount() + " 0");
+            p.sendChatMessage("/selldrug " + args[0] + " Pulver " + ConfigElements.getCocainDrugPurity().getPurity() + " " + ConfigElements.getCocaineAmount() + " 0");
 
             if (ConfigElements.getMarihuanaActivated())
                 checkWeed = true;
@@ -68,7 +68,7 @@ public class GiftEigenbedarfCommand implements IClientCommand {
         }
 
         if (ConfigElements.getMarihuanaActivated()) {
-            p.sendChatMessage("/selldrug " + args[0] + " Gras " + ConfigElements.getMarihuanaDrugPurity().getPurity() + " " + ConfigElements.getMarihuanaAmount() + " 0");
+            p.sendChatMessage("/selldrug " + args[0] + " Kräuter " + ConfigElements.getMarihuanaDrugPurity().getPurity() + " " + ConfigElements.getMarihuanaAmount() + " 0");
 
             if (ConfigElements.getMethActivated())
                 checkMeth = true;
@@ -76,7 +76,7 @@ public class GiftEigenbedarfCommand implements IClientCommand {
         }
 
         if (ConfigElements.getMethActivated()) {
-            p.sendChatMessage("/selldrug " + args[0] + " Meth " + ConfigElements.getMethDrugPurity().getPurity() + " " + ConfigElements.getMethAmount() + " 0");
+            p.sendChatMessage("/selldrug " + args[0] + " Kristalle " + ConfigElements.getMethDrugPurity().getPurity() + " " + ConfigElements.getMethAmount() + " 0");
         }
     }
 
