@@ -5,10 +5,10 @@ import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import java.util.Arrays;
 
 public enum Weapon {
-    M4("M4"),
-    MP5("MP5"),
-    PISTOLE("Pistole"),
-    HUNTING_RIFLE("Jagdflinte");
+    TS_19("TS-19"), // M4
+    SCATTER_3("Scatter-3"), // MP5
+    P_69("P-69"), // Pistole
+    EXTENSO_18("Extenso-18"); // Jagdgewehr
 
     private final String name;
 
