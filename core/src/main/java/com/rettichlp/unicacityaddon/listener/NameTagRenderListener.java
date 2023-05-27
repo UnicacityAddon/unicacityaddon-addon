@@ -18,7 +18,7 @@ import net.labymod.api.event.client.scoreboard.ScoreboardTeamUpdateEvent;
 public class NameTagRenderListener {
 
     private final Component AFK_COMPONENT = Message.getBuilder().space()
-            .of("(AFK)").color(ColorCode.GRAY).advance()
+            .of("AFK").color(ColorCode.GRAY).italic().advance()
             .createComponent();
 
     private final UnicacityAddon unicacityAddon;

@@ -17,6 +17,7 @@ import net.minecraft.world.phys.AABB;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -48,13 +49,17 @@ public class VersionedDeadBodyController extends DeadBodyController {
             Component customName = itemEntity.getCustomName();
 
             assert customName != null;
-            if (!customName.getString().contains("§")) { // not already formatted
-                String playerName = customName.getString().substring(1);
+            List<Component> siblings = customName.getSiblings();
+
+            if (siblings.size() > 0) { // sibling size only by not formatted corpses greater than 0
+                Component originalCorpseName = siblings.get(0);
+
+                boolean nonRevivable = Objects.equals(originalCorpseName.getStyle().getColor(), TextColor.fromLegacyFormat(ChatFormatting.DARK_GRAY));
+
+                String playerName = originalCorpseName.getContents().toString().substring(1);
 
                 String prefix = unicacityAddon.services().nametagService().getPrefix(playerName, true);
                 String factionInfo = unicacityAddon.api().getPlayerFactionMap().getOrDefault(playerName, Faction.NULL).getNameTagSuffix();
-
-                boolean nonRevivable = Objects.equals(customName.getStyle().getColor(), TextColor.fromLegacyFormat(ChatFormatting.DARK_GRAY));
 
                 String ndn = Message.getBuilder()
                         .of("✟").color(nonRevivable ? ColorCode.DARK_GRAY : ColorCode.GRAY).advance()

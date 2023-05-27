@@ -64,7 +64,7 @@ public class DropDrugAllCommand extends UnicacityCommand {
                 .forEach(drugTypeMapEntry -> drugTypeMapEntry.getValue().forEach((drugPurity, integer) -> {
                     if (integer > 0) {
                         String type = p.getFaction().equals(Faction.FBI) ? "asservatenkammer" : "dbank";
-                        commandQueue.add("/" + type + " drop " + drugTypeMapEntry.getKey().getShortName() + " " + integer + " " + drugPurity.getPurity());
+                        commandQueue.add("/" + type + " drop " + drugTypeMapEntry.getKey().getDrugName() + " " + integer + " " + drugPurity.getPurity());
                     }
                 }));
 
