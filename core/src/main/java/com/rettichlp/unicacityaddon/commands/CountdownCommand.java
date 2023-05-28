@@ -40,7 +40,7 @@ public class CountdownCommand extends UnicacityCommand {
         }
 
         if (arguments.length < 1 || !MathUtils.isInteger(arguments[0])) {
-            sendUsage(p);
+            sendUsage();
             return true;
         }
 
@@ -53,7 +53,7 @@ public class CountdownCommand extends UnicacityCommand {
 
         ChatType chatType = arguments.length == 1 ? ChatType.CHAT : ChatType.getChatTypeByDisplayName(arguments[1]);
         if (chatType == null) {
-            sendUsage(p);
+            sendUsage();
             return true;
         }
 

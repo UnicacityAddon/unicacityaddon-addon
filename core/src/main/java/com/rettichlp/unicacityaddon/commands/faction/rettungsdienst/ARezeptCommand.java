@@ -35,7 +35,7 @@ public class ARezeptCommand extends UnicacityCommand {
         AddonPlayer p = this.unicacityAddon.player();
 
         if (arguments.length < 3) {
-            sendUsage(p);
+            sendUsage();
             return true;
         }
 

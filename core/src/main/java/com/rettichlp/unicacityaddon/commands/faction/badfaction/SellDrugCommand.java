@@ -30,7 +30,7 @@ public class SellDrugCommand extends UnicacityCommand {
         AddonPlayer p = this.unicacityAddon.player();
 
         if (arguments.length < 5) {
-            sendUsage(p);
+            sendUsage();
             return true;
         }
 

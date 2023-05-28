@@ -30,7 +30,7 @@ public abstract class UnicacityCommand extends Command {
         return (this.unicacityAddon.utils().isUnicacity() || !this.ucCommand.onlyOnUnicacity()) && this.execute(arguments);
     }
 
-    public void sendUsage(AddonPlayer addonPlayer) {
-        addonPlayer.sendSyntaxMessage("/" + this.ucCommand.prefix() + " " + this.ucCommand.usage());
+    public void sendUsage() {
+        this.unicacityAddon.player().sendSyntaxMessage("/" + this.ucCommand.prefix() + " " + this.ucCommand.usage());
     }
 }

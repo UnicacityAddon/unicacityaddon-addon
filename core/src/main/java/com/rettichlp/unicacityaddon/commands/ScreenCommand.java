@@ -31,7 +31,7 @@ public class ScreenCommand extends UnicacityCommand {
         AddonPlayer p = this.unicacityAddon.player();
 
         if (arguments.length < 1) {
-            sendUsage(p);
+            sendUsage();
             return true;
         }
 
@@ -41,7 +41,7 @@ public class ScreenCommand extends UnicacityCommand {
                 .orElse(null);
 
         if (screenshotType == null) {
-            sendUsage(p);
+            sendUsage();
             return true;
         }
 

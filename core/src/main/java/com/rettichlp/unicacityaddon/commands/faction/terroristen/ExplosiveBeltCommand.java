@@ -27,7 +27,7 @@ public class ExplosiveBeltCommand extends UnicacityCommand {
         AddonPlayer p = this.unicacityAddon.player();
 
         if (arguments.length < 1 || !MathUtils.isInteger(arguments[0])) {
-            sendUsage(p);
+            sendUsage();
             return true;
         }
 

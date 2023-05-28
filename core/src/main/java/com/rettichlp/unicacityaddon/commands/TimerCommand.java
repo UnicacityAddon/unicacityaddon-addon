@@ -60,7 +60,7 @@ public class TimerCommand extends UnicacityCommand {
             TimerEntry.ACTIVE_TIMERS.get(Long.parseLong(arguments[1])).stop();
             p.sendInfoMessage("Timer gestoppt.");
         } else {
-            sendUsage(p);
+            sendUsage();
         }
         return true;
     }

@@ -30,7 +30,7 @@ public class AEquipCommand extends UnicacityCommand {
 
         if (arguments.length > 0) {
             if (!MathUtils.isInteger(arguments[0])) {
-                sendUsage(p);
+                sendUsage();
                 return true;
             }
             amount = Integer.parseInt(arguments[0]);

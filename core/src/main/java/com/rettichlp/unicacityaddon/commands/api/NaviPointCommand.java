@@ -46,7 +46,7 @@ public class NaviPointCommand extends UnicacityCommand {
                     e.sendInfo();
                 }
             } else {
-                sendUsage(p);
+                sendUsage();
             }
         }).start();
         return true;

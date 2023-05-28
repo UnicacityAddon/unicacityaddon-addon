@@ -27,7 +27,7 @@ public class ClearCommand extends UnicacityCommand {
         AddonPlayer p = this.unicacityAddon.player();
 
         if (arguments.length < 1) {
-            sendUsage(p);
+            sendUsage();
             return true;
         }
 

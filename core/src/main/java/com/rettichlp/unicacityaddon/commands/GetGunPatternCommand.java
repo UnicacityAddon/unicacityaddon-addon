@@ -56,7 +56,7 @@ public class GetGunPatternCommand extends UnicacityCommand {
                 p.sendErrorMessage("Vorlage konnte nicht erstellt werden!");
             }
         } else {
-            sendUsage(p);
+            sendUsage();
         }
         return true;
     }

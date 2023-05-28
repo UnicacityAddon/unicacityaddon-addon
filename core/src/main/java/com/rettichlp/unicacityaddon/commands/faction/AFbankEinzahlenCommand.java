@@ -39,7 +39,7 @@ public class AFbankEinzahlenCommand extends UnicacityCommand {
     public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
         if (arguments.length != 2 || !MathUtils.isInteger(arguments[1])) {
-            sendUsage(p);
+            sendUsage();
             return true;
         }
 

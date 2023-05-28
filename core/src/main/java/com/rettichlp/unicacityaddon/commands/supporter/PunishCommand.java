@@ -29,7 +29,7 @@ public class PunishCommand extends UnicacityCommand {
         AddonPlayer p = this.unicacityAddon.player();
 
         if (arguments.length < 2) {
-            sendUsage(p);
+            sendUsage();
             return true;
         }
 

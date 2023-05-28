@@ -50,7 +50,7 @@ public class TokenCommand extends UnicacityCommand {
                         .text(Message.getBuilder().of("Token in Zwischenablage kopiert.").color(ColorCode.WHITE).advance().createComponent())
                         .build());
             } else {
-                sendUsage(p);
+                sendUsage();
             }
         }).start();
         return true;

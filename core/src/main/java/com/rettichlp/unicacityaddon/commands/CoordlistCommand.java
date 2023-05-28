@@ -42,7 +42,7 @@ public class CoordlistCommand extends UnicacityCommand {
                 p.sendInfoMessage("Koordinaten gelöscht.");
             }
         } else {
-            sendUsage(p);
+            sendUsage();
         }
         return true;
     }

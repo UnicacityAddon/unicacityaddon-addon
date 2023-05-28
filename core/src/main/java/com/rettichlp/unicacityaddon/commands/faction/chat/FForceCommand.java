@@ -26,7 +26,7 @@ public class FForceCommand extends UnicacityCommand {
         AddonPlayer p = this.unicacityAddon.player();
 
         if (arguments.length == 0) {
-            sendUsage(p);
+            sendUsage();
             return true;
         }
 

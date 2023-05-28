@@ -36,7 +36,7 @@ public class BlockCommand extends UnicacityCommand {
                 p.sendInfoMessage("Du hast " + playerName + " blockiert.");
             }
         } else
-            sendUsage(p);
+            sendUsage();
         return true;
     }
 

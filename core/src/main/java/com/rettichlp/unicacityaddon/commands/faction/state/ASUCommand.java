@@ -37,7 +37,7 @@ public class ASUCommand extends UnicacityCommand {
     public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
         if (arguments.length < 2) {
-            sendUsage(p);
+            sendUsage();
             return true;
         }
 

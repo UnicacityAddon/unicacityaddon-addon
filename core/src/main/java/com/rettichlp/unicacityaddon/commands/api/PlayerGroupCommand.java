@@ -62,7 +62,7 @@ public class PlayerGroupCommand extends UnicacityCommand {
                     e.sendInfo();
                 }
             } else {
-                sendUsage(p);
+                sendUsage();
             }
         }).start();
         return true;

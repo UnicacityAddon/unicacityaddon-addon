@@ -32,7 +32,7 @@ public class ACallCommand extends UnicacityCommand {
     public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
         if (arguments.length < 1) {
-            sendUsage(p);
+            sendUsage();
             return true;
         }
 

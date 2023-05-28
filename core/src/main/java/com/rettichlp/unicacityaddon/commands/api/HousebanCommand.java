@@ -106,7 +106,7 @@ public class HousebanCommand extends UnicacityCommand {
                     e.sendInfo();
                 }
             } else {
-                sendUsage(p);
+                sendUsage();
             }
         }).start();
         return true;

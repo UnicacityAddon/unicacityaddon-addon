@@ -82,7 +82,7 @@ public class BroadcastCommand extends UnicacityCommand {
                     e.sendInfo();
                 }
             } else {
-                sendUsage(p);
+                sendUsage();
             }
         }).start();
         return true;
