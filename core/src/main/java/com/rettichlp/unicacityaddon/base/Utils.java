@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 
 public class Utils {
 
-    private final String VERSION = "2.0.0-alpha.3";
+    private final String VERSION = "2.0.0-alpha.4";
     private final Icon ICON = Icon.texture(ResourceLocation.create("unicacityaddon", "textures/uc.png")).resolution(64, 64);
 
     private final ListUtils listUtils;
