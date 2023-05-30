@@ -17,6 +17,7 @@ import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -109,6 +110,7 @@ public class TSJoinCommand extends UnicacityCommand {
         return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments)
                 .addAtIndex(1, new ChannelListCommand(this.unicacityAddon).getResponse().getChannels().stream()
                         .map(Channel::getName)
+                        .filter(Objects::nonNull)
                         .filter(s -> !s.startsWith("[cspacer") || !s.startsWith("[spacer"))
                         .map(this::modifyChannelName)
                         .collect(Collectors.toList()))
