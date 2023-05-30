@@ -59,7 +59,7 @@ public class TabCompletionBuilder {
         }
 
         public List<String> build() {
-            int length = this.arguments.length;
+            int length = this.arguments.length - 1; // -1 is a fix for auto-completion before final implementation by LabyMod
             List<String> tabCompletionList = this.tabCompletionMap.getOrDefault(length, this.unicacityAddon.utils().getOnlinePlayers());
 
             // add tabCompletionFromIndexMap entry to tab completion

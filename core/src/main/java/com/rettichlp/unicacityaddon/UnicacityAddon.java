@@ -9,14 +9,14 @@ import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.api.request.API;
 import com.rettichlp.unicacityaddon.base.config.DefaultUnicacityAddonConfiguration;
-import com.rettichlp.unicacityaddon.base.services.FileService;
-import com.rettichlp.unicacityaddon.base.services.TokenService;
 import com.rettichlp.unicacityaddon.base.nametags.AddonTag;
 import com.rettichlp.unicacityaddon.base.nametags.DutyTag;
 import com.rettichlp.unicacityaddon.base.nametags.FactionInfoTag;
 import com.rettichlp.unicacityaddon.base.nametags.HouseBanTag;
 import com.rettichlp.unicacityaddon.base.nametags.NoPushTag;
 import com.rettichlp.unicacityaddon.base.nametags.OutlawTag;
+import com.rettichlp.unicacityaddon.base.services.FileService;
+import com.rettichlp.unicacityaddon.base.services.TokenService;
 import com.rettichlp.unicacityaddon.base.teamspeak.TSClientQuery;
 import com.rettichlp.unicacityaddon.controller.DeadBodyController;
 import com.rettichlp.unicacityaddon.controller.GuiController;
@@ -47,7 +47,9 @@ import net.labymod.api.models.addon.annotation.AddonMain;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -102,6 +104,7 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
     private Services services;
     private API api;
     private Utils utils;
+    private List<Command> commands;
 
     public UnicacityAddon() {
     }
@@ -112,6 +115,7 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
         this.services = new Services(this);
         this.api = new API(this);
         this.utils = new Utils(this);
+        this.commands = new ArrayList<>();
 
         this.logger().info("Enabled UnicacityAddon");
     }
@@ -149,6 +153,10 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
 
     public Utils utils() {
         return utils;
+    }
+
+    public List<Command> commands() {
+        return commands;
     }
 
     public GuiController guiController() {
@@ -262,7 +270,9 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
                 .forEach(commandClass -> {
                     try {
                         UCCommand ucCommand = commandClass.getAnnotation(UCCommand.class);
-                        this.registerCommand((Command) commandClass.getConstructor(UnicacityAddon.class, UCCommand.class).newInstance(this, ucCommand));
+                        Command command = (Command) commandClass.getConstructor(UnicacityAddon.class, UCCommand.class).newInstance(this, ucCommand);
+                        this.commands.add(command);
+                        this.registerCommand(command);
                     } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException |
                              InstantiationException e) {
                         throw new RuntimeException(e);
