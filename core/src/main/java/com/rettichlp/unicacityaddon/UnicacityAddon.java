@@ -184,7 +184,7 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
     }
 
     private DefaultReferenceStorage controller() {
-        return this.getReferenceStorageAccessor();
+        return this.referenceStorageAccessor();
     }
 
     private void registerTags() {
