@@ -6,7 +6,6 @@ import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.api.HttpStatus;
 import com.rettichlp.unicacityaddon.base.api.exception.APIResponseException;
 import com.rettichlp.unicacityaddon.base.enums.api.ApplicationPath;
-import jdk.internal.joptsimple.internal.Strings;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -52,8 +51,8 @@ public class WebService {
         return (nonProd ? "http://localhost:8888/unicacityaddon/v1/" : "http://rettichlp.de:8888/unicacityaddon/v1/")
                 + this.unicacityAddon.services().tokenService().getApiToken()
                 + applicationPath.getApplicationPath()
-                + (subPath == null ? Strings.EMPTY : "/" + subPath)
-                + (parameter == null || parameter.isEmpty() ? Strings.EMPTY : getParamsString(parameter));
+                + (subPath == null ? "" : "/" + subPath)
+                + (parameter == null || parameter.isEmpty() ? "" : getParamsString(parameter));
     }
 
     public String getParamsString(Map<String, String> params) {
@@ -71,7 +70,7 @@ public class WebService {
                     ? "?" + resultString.substring(0, resultString.length() - 1)
                     : resultString;
         } catch (UnsupportedEncodingException e) {
-            return Strings.EMPTY;
+            return "";
         }
     }
 

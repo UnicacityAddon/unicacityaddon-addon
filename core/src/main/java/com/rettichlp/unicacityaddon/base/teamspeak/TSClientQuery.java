@@ -8,10 +8,13 @@ import com.rettichlp.unicacityaddon.base.teamspeak.commands.ClientNotifyRegister
 import com.rettichlp.unicacityaddon.base.teamspeak.commands.CurrentSchandlerIDCommand;
 import com.rettichlp.unicacityaddon.base.teamspeak.exceptions.ClientQueryAuthenticationException;
 import com.rettichlp.unicacityaddon.base.teamspeak.exceptions.ClientQueryConnectionException;
-import jdk.internal.joptsimple.internal.Strings;
 import org.apache.commons.io.IOUtils;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.Closeable;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
@@ -105,7 +108,7 @@ public class TSClientQuery implements Closeable {
     }
 
     private void authenticate() {
-        AuthCommand authCommand = new AuthCommand(this.unicacityAddon, this.unicacityAddon.configuration().tsApiKey().getOrDefault(Strings.EMPTY));
+        AuthCommand authCommand = new AuthCommand(this.unicacityAddon, this.unicacityAddon.configuration().tsApiKey().getOrDefault(""));
         authCommand.execute(this);
 
         CommandResponse response = authCommand.getResponse();

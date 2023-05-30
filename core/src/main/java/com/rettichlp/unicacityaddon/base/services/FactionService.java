@@ -3,7 +3,6 @@ package com.rettichlp.unicacityaddon.base.services;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.api.exception.APIResponseException;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
-import jdk.internal.joptsimple.internal.Strings;
 
 /**
  * @author RettichLP
@@ -31,7 +30,7 @@ public class FactionService {
         try {
             return this.unicacityAddon.services().webService().sendRequest(faction.getWebsiteUrl());
         } catch (APIResponseException e) {
-            return Strings.EMPTY;
+            return "";
         }
     }
 }

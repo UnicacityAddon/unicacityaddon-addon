@@ -1,7 +1,6 @@
 package com.rettichlp.unicacityaddon.base.teamspeak;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import jdk.internal.joptsimple.internal.Strings;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.SystemUtils;
 
@@ -26,7 +25,7 @@ public class TSAPIKeyLoader {
     private final List<File> possibleConfigDirectories = new ArrayList<>();
 
     public void load(UnicacityAddon unicacityAddon) throws IOException {
-        if (!unicacityAddon.configuration().tsApiKey().getOrDefault(Strings.EMPTY).isEmpty())
+        if (!unicacityAddon.configuration().tsApiKey().getOrDefault("").isEmpty())
             return;
 
         loadPossibleConfigDirectories();
