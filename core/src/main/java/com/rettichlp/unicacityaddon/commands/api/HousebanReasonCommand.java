@@ -1,12 +1,10 @@
 package com.rettichlp.unicacityaddon.commands.api;
 
-import com.google.gson.JsonObject;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
-import com.rettichlp.unicacityaddon.base.api.exception.APIResponseException;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
-import com.rettichlp.unicacityaddon.base.models.HouseBanReason;
+import com.rettichlp.unicacityaddon.base.models.api.houseBan.HouseBanReason;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.utils.MathUtils;
@@ -35,7 +33,7 @@ public class HousebanReasonCommand extends UnicacityCommand {
 
         new Thread(() -> {
             if (arguments.length < 1) {
-                List<HouseBanReason> houseBanReasonList = this.unicacityAddon.api().loadHouseBanReasonList();
+                List<HouseBanReason> houseBanReasonList = this.unicacityAddon.api().sendHouseBanReasonRequest();
                 this.unicacityAddon.api().setHouseBanReasonList(houseBanReasonList);
 
                 p.sendEmptyMessage();
@@ -59,19 +57,11 @@ public class HousebanReasonCommand extends UnicacityCommand {
                 p.sendEmptyMessage();
 
             } else if (arguments.length == 3 && arguments[0].equalsIgnoreCase("add") && MathUtils.isInteger(arguments[2])) {
-                try {
-                    JsonObject response = this.unicacityAddon.api().sendHouseBanReasonAddRequest(arguments[1], arguments[2]);
-                    p.sendAPIMessage(response.get("info").getAsString(), true);
-                } catch (APIResponseException e) {
-                    e.sendInfo();
-                }
+                String info = this.unicacityAddon.api().sendHouseBanReasonAddRequest(arguments[1], arguments[2]).getInfo();
+                p.sendAPIMessage(info, true);
             } else if (arguments.length == 2 && arguments[0].equalsIgnoreCase("remove")) {
-                try {
-                    JsonObject response = this.unicacityAddon.api().sendHouseBanReasonRemoveRequest(arguments[1]);
-                    p.sendAPIMessage(response.get("info").getAsString(), true);
-                } catch (APIResponseException e) {
-                    e.sendInfo();
-                }
+                String info = this.unicacityAddon.api().sendHouseBanReasonRemoveRequest(arguments[1]).getInfo();
+                p.sendAPIMessage(info, true);
             } else {
                 sendUsage();
             }

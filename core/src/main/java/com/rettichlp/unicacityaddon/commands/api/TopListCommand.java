@@ -1,11 +1,10 @@
 package com.rettichlp.unicacityaddon.commands.api;
 
-import com.google.gson.JsonArray;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
-import com.rettichlp.unicacityaddon.base.api.exception.APIResponseException;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
+import com.rettichlp.unicacityaddon.base.models.api.statisticTop.StatisticTopKdEntry;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
@@ -37,43 +36,34 @@ public class TopListCommand extends UnicacityCommand {
         AddonPlayer p = this.unicacityAddon.player();
 
         new Thread(() -> {
-            try {
-                JsonArray kdJsonArray = this.unicacityAddon.api().sendStatisticTopRequest().getAsJsonArray("kd");
+            List<StatisticTopKdEntry> statisticTopKdEntryList = this.unicacityAddon.api().sendStatisticTopRequest().getKd();
 
-                p.sendEmptyMessage();
+            p.sendEmptyMessage();
+            p.sendMessage(Message.getBuilder()
+                    .of("Top 10 Spieler:").color(ColorCode.DARK_AQUA).bold().advance()
+                    .createComponent());
+
+            AtomicInteger place = new AtomicInteger();
+            statisticTopKdEntryList.forEach(statisticTopKdEntry -> {
+                place.getAndIncrement();
                 p.sendMessage(Message.getBuilder()
-                        .of("Top 10 Spieler:").color(ColorCode.DARK_AQUA).bold().advance()
+                        .of(String.valueOf(place.get())).color(ColorCode.GOLD).advance()
+                        .of(".").color(ColorCode.GRAY).advance().space()
+                        .of(statisticTopKdEntry.getName()).color(ColorCode.AQUA)
+                        .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder()
+                                .of("Tode:").color(ColorCode.GRAY).advance().space()
+                                .of(String.valueOf(statisticTopKdEntry.getDeaths())).color(ColorCode.RED).advance().newline()
+                                .of("Kills:").color(ColorCode.GRAY).advance().space()
+                                .of(String.valueOf(statisticTopKdEntry.getKills())).color(ColorCode.RED).advance()
+                                .createComponent())
+                        .advance().space()
+                        .of("-").color(ColorCode.GRAY).advance().space()
+                        .of(DECIMAL_FORMAT.format(statisticTopKdEntry.getValue())).color(ColorCode.AQUA).advance().space()
+                        .of("Punkte").color(ColorCode.AQUA).advance().space()
                         .createComponent());
+            });
 
-                AtomicInteger place = new AtomicInteger();
-                kdJsonArray.forEach(jsonElement -> {
-                    String name = jsonElement.getAsJsonObject().get("name").getAsString();
-                    String kd = DECIMAL_FORMAT.format(jsonElement.getAsJsonObject().get("value").getAsFloat());
-                    String deaths = String.valueOf(jsonElement.getAsJsonObject().get("deaths").getAsInt());
-                    String kills = String.valueOf(jsonElement.getAsJsonObject().get("kills").getAsInt());
-
-                    place.getAndIncrement();
-                    p.sendMessage(Message.getBuilder()
-                            .of(String.valueOf(place.get())).color(ColorCode.GOLD).advance()
-                            .of(".").color(ColorCode.GRAY).advance().space()
-                            .of(name).color(ColorCode.AQUA)
-                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder()
-                                    .of("Tode:").color(ColorCode.GRAY).advance().space()
-                                    .of(deaths).color(ColorCode.RED).advance().newline()
-                                    .of("Kills:").color(ColorCode.GRAY).advance().space()
-                                    .of(kills).color(ColorCode.RED).advance()
-                                    .createComponent())
-                            .advance().space()
-                            .of("-").color(ColorCode.GRAY).advance().space()
-                            .of(kd).color(ColorCode.AQUA).advance().space()
-                            .of("Punkte").color(ColorCode.AQUA).advance().space()
-                            .createComponent());
-                });
-
-                p.sendEmptyMessage();
-            } catch (APIResponseException e) {
-                e.sendInfo();
-            }
+            p.sendEmptyMessage();
         }).start();
         return true;
     }

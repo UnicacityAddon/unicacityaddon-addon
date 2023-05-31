@@ -4,7 +4,7 @@ import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
-import com.rettichlp.unicacityaddon.base.models.NaviPoint;
+import com.rettichlp.unicacityaddon.base.models.api.NaviPoint;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
@@ -60,6 +60,10 @@ public class BombListener {
                                 .advance()
                         .of("]").color(ColorCode.DARK_GRAY).advance()
                         .createComponent());
+            }
+
+            if (p.getFaction().equals(Faction.POLIZEI)) {
+                this.unicacityAddon.api().sendEventBombRequest(System.currentTimeMillis());
             }
 
             return;

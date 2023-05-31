@@ -1,10 +1,8 @@
 package com.rettichlp.unicacityaddon.commands.api;
 
-import com.google.gson.JsonObject;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
-import com.rettichlp.unicacityaddon.base.api.exception.APIResponseException;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
@@ -40,30 +38,25 @@ public class BroadcastCommand extends UnicacityCommand {
 
         new Thread(() -> {
             if (arguments.length == 1 && arguments[0].equalsIgnoreCase("queue")) {
-                try {
-                    p.sendEmptyMessage();
+                p.sendEmptyMessage();
+                p.sendMessage(Message.getBuilder()
+                        .of("Aktive Broadcasts:").color(ColorCode.DARK_AQUA).bold().advance()
+                        .createComponent());
+
+                this.unicacityAddon.api().sendBroadcastQueueRequest().forEach(broadcast -> {
+                    String message = broadcast.getBroadcast();
+                    String issuerName = broadcast.getIssuerName();
+
                     p.sendMessage(Message.getBuilder()
-                            .of("Aktive Broadcasts:").color(ColorCode.DARK_AQUA).bold().advance()
+                            .of("»").color(ColorCode.GRAY).advance().space()
+                            .of(message).color(ColorCode.AQUA).advance().space()
+                            .of("(").color(ColorCode.GRAY).advance()
+                            .of(issuerName).color(ColorCode.GRAY).advance()
+                            .of(")").color(ColorCode.GRAY).advance()
                             .createComponent());
+                });
 
-                    this.unicacityAddon.api().sendBroadcastQueueRequest().forEach(jsonElement -> {
-                        JsonObject o = jsonElement.getAsJsonObject();
-                        String broadcast = o.get("broadcast").getAsString();
-                        String issuerName = o.get("issuerName").getAsString();
-
-                        p.sendMessage(Message.getBuilder()
-                                .of("»").color(ColorCode.GRAY).advance().space()
-                                .of(broadcast).color(ColorCode.AQUA).advance().space()
-                                .of("(").color(ColorCode.GRAY).advance()
-                                .of(issuerName).color(ColorCode.GRAY).advance()
-                                .of(")").color(ColorCode.GRAY).advance()
-                                .createComponent());
-                    });
-
-                    p.sendEmptyMessage();
-                } catch (APIResponseException e) {
-                    e.sendInfo();
-                }
+                p.sendEmptyMessage();
             } else if (arguments.length > 3 && arguments[0].equalsIgnoreCase("send")) {
                 String date = arguments[1]; // TT.MM.JJJJ
                 String time = arguments[2]; // HH:MM:SS
@@ -75,12 +68,8 @@ public class BroadcastCommand extends UnicacityCommand {
                 LocalDateTime localDateTime = LocalDateTime.parse(date + " " + time, DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss"));
                 long sendTime = localDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
 
-                try {
-                    JsonObject response = this.unicacityAddon.api().sendBroadcastSendRequest(message, String.valueOf(sendTime));
-                    p.sendAPIMessage(response.get("info").getAsString(), true);
-                } catch (APIResponseException e) {
-                    e.sendInfo();
-                }
+                String info = this.unicacityAddon.api().sendBroadcastSendRequest(message, String.valueOf(sendTime)).getInfo();
+                p.sendAPIMessage(info, true);
             } else {
                 sendUsage();
             }

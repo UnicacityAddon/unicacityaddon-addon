@@ -1,9 +1,11 @@
-package com.rettichlp.unicacityaddon.base.models;
+package com.rettichlp.unicacityaddon.base.models.api;
+
+import com.rettichlp.unicacityaddon.base.models.ResponseSchema;
 
 /**
  * @author RettichLP
  */
-public class Revive {
+public class Revive extends ResponseSchema {
 
     private final int currentWeekReviveAmount;
     private final int lastWeekReviveAmount;

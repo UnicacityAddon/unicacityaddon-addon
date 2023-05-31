@@ -1,11 +1,12 @@
-package com.rettichlp.unicacityaddon.base.models;
+package com.rettichlp.unicacityaddon.base.models.api;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.base.models.ResponseSchema;
 
 /**
  * @author RettichLP
  */
-public class WantedReason {
+public class WantedReason extends ResponseSchema {
 
     private final String reason;
     private final int points;

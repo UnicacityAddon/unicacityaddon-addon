@@ -1,4 +1,4 @@
-package com.rettichlp.unicacityaddon.base.models;
+package com.rettichlp.unicacityaddon.base.models.file;
 
 /**
  * @author RettichLP

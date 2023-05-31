@@ -1,13 +1,19 @@
 package com.rettichlp.unicacityaddon.base.builder;
 
+import com.google.common.reflect.TypeParameter;
+import com.google.common.reflect.TypeToken;
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.api.exception.APIResponseException;
 import com.rettichlp.unicacityaddon.base.enums.api.ApplicationPath;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -71,14 +77,36 @@ public class RequestBuilder {
             }).start();
         }
 
-        public JsonObject getAsJsonObject() throws APIResponseException {
-            JsonElement jsonElement = send();
-            return jsonElement.getAsJsonObject();
+        public <T> T getAsJsonObjectAndParse(Class<T> responseSchemaClass) {
+            try {
+                JsonElement jsonElement = send();
+                return parse(jsonElement.getAsJsonObject(), responseSchemaClass);
+            } catch (APIResponseException e) {
+                e.sendInfo();
+                return (T) e.failureResponse();
+            }
         }
 
-        public JsonArray getAsJsonArray() throws APIResponseException {
-            JsonElement jsonElement = send();
-            return jsonElement.getAsJsonArray();
+        public <T> List<T> getAsJsonArrayAndParse(Class<T> responseSchemaClass) {
+            try {
+                JsonElement jsonElement = send();
+                return parse(jsonElement.getAsJsonArray(), responseSchemaClass);
+            } catch (APIResponseException e) {
+                e.sendInfo();
+            }
+            return Collections.emptyList();
+        }
+
+        private <T> T parse(JsonObject jsonObject, Class<T> responseSchemaClass) throws JsonSyntaxException {
+            TypeToken<T> typeToken = new TypeToken<T>() {}.where(new TypeParameter<>() {}, responseSchemaClass);
+            Gson gson = new Gson();
+            return gson.fromJson(jsonObject, typeToken.getType());
+        }
+
+        public <T> List<T> parse(JsonArray jsonArray, Class<T> responseSchemaClass) throws JsonSyntaxException {
+            TypeToken<List<T>> typeToken = new TypeToken<List<T>>() {}.where(new TypeParameter<>() {}, responseSchemaClass);
+            Gson gson = new Gson();
+            return gson.fromJson(jsonArray, typeToken.getType());
         }
     }
 }

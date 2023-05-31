@@ -1,12 +1,10 @@
 package com.rettichlp.unicacityaddon.commands.api;
 
-import com.google.gson.JsonObject;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
-import com.rettichlp.unicacityaddon.base.api.exception.APIResponseException;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
-import com.rettichlp.unicacityaddon.base.models.NaviPoint;
+import com.rettichlp.unicacityaddon.base.models.api.NaviPoint;
 import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
 import net.labymod.api.util.math.vector.FloatVector3;
 
@@ -32,19 +30,11 @@ public class NaviPointCommand extends UnicacityCommand {
 
         new Thread(() -> {
             if (arguments.length == 6 && arguments[0].equalsIgnoreCase("add")) {
-                try {
-                    JsonObject response = this.unicacityAddon.api().sendNaviPointAddRequest(arguments[1], arguments[2], arguments[3], arguments[4], arguments[5]);
-                    p.sendAPIMessage(response.get("info").getAsString(), true);
-                } catch (APIResponseException e) {
-                    e.sendInfo();
-                }
+                String info = this.unicacityAddon.api().sendNaviPointAddRequest(arguments[1], arguments[2], arguments[3], arguments[4], arguments[5]).getInfo();
+                p.sendAPIMessage(info, true);
             } else if (arguments.length == 2 && arguments[0].equalsIgnoreCase("remove")) {
-                try {
-                    JsonObject response = this.unicacityAddon.api().sendNaviPointRemoveRequest(arguments[1]);
-                    p.sendAPIMessage(response.get("info").getAsString(), true);
-                } catch (APIResponseException e) {
-                    e.sendInfo();
-                }
+                String info = this.unicacityAddon.api().sendNaviPointRemoveRequest(arguments[1]).getInfo();
+                p.sendAPIMessage(info, true);
             } else {
                 sendUsage();
             }

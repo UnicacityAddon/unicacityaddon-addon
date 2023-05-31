@@ -2,6 +2,7 @@ package com.rettichlp.unicacityaddon.base.api.exception;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.api.HttpStatus;
+import com.rettichlp.unicacityaddon.base.models.api.response.Failure;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import net.labymod.api.notification.Notification;
@@ -39,5 +40,9 @@ public class APIResponseException extends Throwable {
                 .icon(this.unicacityAddon.utils().icon())
                 .type(Notification.Type.ADVANCEMENT)
                 .build());
+    }
+
+    public Failure failureResponse() {
+        return new Failure(responseCode, HttpStatus.valueOf(responseCode).getReasonPhrase(), infoMessage);
     }
 }

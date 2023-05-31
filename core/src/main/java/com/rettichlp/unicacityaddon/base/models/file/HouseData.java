@@ -1,4 +1,4 @@
-package com.rettichlp.unicacityaddon.base.models;
+package com.rettichlp.unicacityaddon.base.models.file;
 
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;

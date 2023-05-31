@@ -1,9 +1,11 @@
-package com.rettichlp.unicacityaddon.base.models;
+package com.rettichlp.unicacityaddon.base.models.api;
+
+import com.rettichlp.unicacityaddon.base.models.ResponseSchema;
 
 /**
  * @author RettichLP
  */
-public class Broadcast {
+public class Broadcast extends ResponseSchema {
 
     private final String broadcast;
     private final int id;

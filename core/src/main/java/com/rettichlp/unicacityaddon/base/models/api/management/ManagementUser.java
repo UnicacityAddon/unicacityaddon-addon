@@ -1,9 +1,11 @@
-package com.rettichlp.unicacityaddon.base.models;
+package com.rettichlp.unicacityaddon.base.models.api.management;
+
+import com.rettichlp.unicacityaddon.base.models.ResponseSchema;
 
 /**
  * @author RettichLP
  */
-public class ManagementUser {
+public class ManagementUser extends ResponseSchema {
 
     private final boolean active;
     private final String uuid;

@@ -1,9 +1,11 @@
-package com.rettichlp.unicacityaddon.base.models;
+package com.rettichlp.unicacityaddon.base.models.api.houseBan;
+
+import com.rettichlp.unicacityaddon.base.models.ResponseSchema;
 
 /**
  * @author RettichLP
  */
-public class HouseBanReason {
+public class HouseBanReason extends ResponseSchema {
 
     private final String reason;
     private final String creatorUUID;

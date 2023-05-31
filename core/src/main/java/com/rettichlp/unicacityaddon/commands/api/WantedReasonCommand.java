@@ -1,12 +1,10 @@
 package com.rettichlp.unicacityaddon.commands.api;
 
-import com.google.gson.JsonObject;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
-import com.rettichlp.unicacityaddon.base.api.exception.APIResponseException;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
-import com.rettichlp.unicacityaddon.base.models.WantedReason;
+import com.rettichlp.unicacityaddon.base.models.api.WantedReason;
 import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
 
 import java.util.List;
@@ -31,19 +29,11 @@ public class WantedReasonCommand extends UnicacityCommand {
 
         new Thread(() -> {
             if (arguments.length == 3 && arguments[0].equalsIgnoreCase("add")) {
-                try {
-                    JsonObject response = this.unicacityAddon.api().sendWantedReasonAddRequest(arguments[1], arguments[2]);
-                    p.sendAPIMessage(response.get("info").getAsString(), true);
-                } catch (APIResponseException e) {
-                    e.sendInfo();
-                }
+                String info = this.unicacityAddon.api().sendWantedReasonAddRequest(arguments[1], arguments[2]).getInfo();
+                p.sendAPIMessage(info, true);
             } else if (arguments.length == 2 && arguments[0].equalsIgnoreCase("remove")) {
-                try {
-                    JsonObject response = this.unicacityAddon.api().sendWantedReasonRemoveRequest(arguments[1]);
-                    p.sendAPIMessage(response.get("info").getAsString(), true);
-                } catch (APIResponseException e) {
-                    e.sendInfo();
-                }
+                String info = this.unicacityAddon.api().sendWantedReasonRemoveRequest(arguments[1]).getInfo();
+                p.sendAPIMessage(info, true);
             } else {
                 sendUsage();
             }

@@ -5,7 +5,7 @@ import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
-import com.rettichlp.unicacityaddon.base.models.Revive;
+import com.rettichlp.unicacityaddon.base.models.api.Revive;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.FormattingCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
@@ -65,7 +65,7 @@ public class ReviveStatsCommand extends UnicacityCommand {
     }
 
     private void sendRevivestatsPlayer(AddonPlayer p, String name) {
-        Revive revive = this.unicacityAddon.api().loadRevivePlayer(name);
+        Revive revive = this.unicacityAddon.api().sendRevivePlayerRequest(name);
 
         if (revive != null) {
             int currentWeekReviveAmount = revive.getCurrentWeekReviveAmount();
@@ -97,7 +97,7 @@ public class ReviveStatsCommand extends UnicacityCommand {
     }
 
     private void sendRevivestatsRank(AddonPlayer p, int rank) {
-        List<Revive> reviveList = this.unicacityAddon.api().loadReviveRankList(rank);
+        List<Revive> reviveList = this.unicacityAddon.api().sendReviveRankRequest(rank);
 
         p.sendEmptyMessage();
         p.sendMessage(Message.getBuilder()
@@ -136,7 +136,7 @@ public class ReviveStatsCommand extends UnicacityCommand {
     }
 
     private void sendRevivestatsAll(AddonPlayer p) {
-        List<Revive> reviveList = this.unicacityAddon.api().loadReviveList();
+        List<Revive> reviveList = this.unicacityAddon.api().sendReviveRequest();
         if (!reviveList.isEmpty()) {
             p.sendEmptyMessage();
             p.sendMessage(Message.getBuilder()
@@ -148,7 +148,7 @@ public class ReviveStatsCommand extends UnicacityCommand {
     }
 
     private void sendRevivestatsOld(AddonPlayer p) {
-        List<Revive> reviveList = this.unicacityAddon.api().loadReviveList();
+        List<Revive> reviveList = this.unicacityAddon.api().sendReviveRequest();
         if (!reviveList.isEmpty()) {
             p.sendEmptyMessage();
             p.sendMessage(Message.getBuilder()

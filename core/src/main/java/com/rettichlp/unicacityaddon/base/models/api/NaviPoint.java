@@ -1,12 +1,13 @@
-package com.rettichlp.unicacityaddon.base.models;
+package com.rettichlp.unicacityaddon.base.models.api;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.base.models.ResponseSchema;
 import net.labymod.api.util.math.vector.FloatVector3;
 
 /**
  * @author RettichLP
  */
-public class NaviPoint {
+public class NaviPoint extends ResponseSchema {
 
     private final String name;
     private final int x;

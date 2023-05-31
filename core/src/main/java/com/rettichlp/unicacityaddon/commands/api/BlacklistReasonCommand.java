@@ -1,12 +1,10 @@
 package com.rettichlp.unicacityaddon.commands.api;
 
-import com.google.gson.JsonObject;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
-import com.rettichlp.unicacityaddon.base.api.exception.APIResponseException;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
-import com.rettichlp.unicacityaddon.base.models.BlacklistReason;
+import com.rettichlp.unicacityaddon.base.models.api.BlacklistReason;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
@@ -34,7 +32,7 @@ public class BlacklistReasonCommand extends UnicacityCommand {
 
         new Thread(() -> {
             if (arguments.length < 1) {
-                List<BlacklistReason> blacklistReasonList = this.unicacityAddon.api().loadBlacklistReasonList();
+                List<BlacklistReason> blacklistReasonList = this.unicacityAddon.api().sendBlacklistReasonRequest();
                 this.unicacityAddon.api().setBlacklistReasonList(blacklistReasonList);
 
                 p.sendEmptyMessage();
@@ -57,19 +55,11 @@ public class BlacklistReasonCommand extends UnicacityCommand {
                 p.sendEmptyMessage();
 
             } else if (arguments.length == 4 && arguments[0].equalsIgnoreCase("add")) {
-                try {
-                    JsonObject response = this.unicacityAddon.api().sendBlacklistReasonAddRequest(arguments[1], arguments[2], arguments[3]);
-                    p.sendAPIMessage(response.get("info").getAsString(), true);
-                } catch (APIResponseException e) {
-                    e.sendInfo();
-                }
+                String info = this.unicacityAddon.api().sendBlacklistReasonAddRequest(arguments[1], arguments[2], arguments[3]).getInfo();
+                p.sendAPIMessage(info, true);
             } else if (arguments.length == 2 && arguments[0].equalsIgnoreCase("remove")) {
-                try {
-                    JsonObject response = this.unicacityAddon.api().sendBlacklistReasonRemoveRequest(arguments[1]);
-                    p.sendAPIMessage(response.get("info").getAsString(), true);
-                } catch (APIResponseException e) {
-                    e.sendInfo();
-                }
+                String info = this.unicacityAddon.api().sendBlacklistReasonRemoveRequest(arguments[1]).getInfo();
+                p.sendAPIMessage(info, true);
             } else {
                 sendUsage();
             }

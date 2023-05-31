@@ -1,11 +1,13 @@
-package com.rettichlp.unicacityaddon.base.models;
+package com.rettichlp.unicacityaddon.base.models.api.houseBan;
+
+import com.rettichlp.unicacityaddon.base.models.ResponseSchema;
 
 import java.util.List;
 
 /**
  * @author RettichLP
  */
-public class HouseBan {
+public class HouseBan extends ResponseSchema {
 
     private final long duration;
     private final List<HouseBanReason> houseBanReasonList;

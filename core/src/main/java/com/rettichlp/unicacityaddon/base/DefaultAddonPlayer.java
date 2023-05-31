@@ -1,12 +1,10 @@
 package com.rettichlp.unicacityaddon.base;
 
-import com.google.gson.JsonObject;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.api.exception.APIResponseException;
 import com.rettichlp.unicacityaddon.base.enums.Weapon;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
-import com.rettichlp.unicacityaddon.base.models.ManagementUser;
+import com.rettichlp.unicacityaddon.base.models.api.management.ManagementUser;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.listener.NavigationListener;
@@ -238,15 +236,7 @@ public class DefaultAddonPlayer implements AddonPlayer {
 
     private String getLatestVersion() {
         if (latestVersion == null) {
-            String mgmtVersion;
-            try {
-                JsonObject response = this.unicacityAddon.api().sendManagementRequest();
-                mgmtVersion = response.get("latestVersion").getAsString();
-            } catch (APIResponseException e) {
-                e.sendInfo();
-                mgmtVersion = this.unicacityAddon.utils().version();
-            }
-            latestVersion = mgmtVersion;
+            latestVersion = this.unicacityAddon.api().sendManagementRequest().getLatestVersion();
         }
         return latestVersion;
     }
