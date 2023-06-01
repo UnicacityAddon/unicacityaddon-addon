@@ -1,6 +1,6 @@
 package com.rettichlp.unicacityaddon.base.annotation;
 
-import com.rettichlp.unicacityaddon.base.AddonPlayer;
+import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -42,7 +42,7 @@ public @interface UCCommand {
      * Raw command syntax: <code>/tp RettichLP 1 2 3</code><br>
      * Usage: '<code>[Spieler] [x] [y] [z]</code>'<br>
      * <br>
-     * The complete syntax with prefix is generated in {@link com.rettichlp.unicacityaddon.commands.UnicacityCommand#sendUsage(AddonPlayer)}<br>
+     * The complete syntax with prefix is generated in {@link UnicacityCommand#sendUsage()}<br>
      * <br>
      * @return Usage or empty string
      */
