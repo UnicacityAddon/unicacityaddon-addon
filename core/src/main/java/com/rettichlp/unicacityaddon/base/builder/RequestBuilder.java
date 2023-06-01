@@ -98,7 +98,7 @@ public class RequestBuilder {
         }
 
         private <T> T parse(JsonObject jsonObject, Class<T> responseSchemaClass) throws JsonSyntaxException {
-            TypeToken<T> typeToken = new TypeToken<T>() {}.where(new TypeParameter<>() {}, responseSchemaClass);
+            TypeToken<T> typeToken = TypeToken.of(responseSchemaClass);
             Gson gson = new Gson();
             return gson.fromJson(jsonObject, typeToken.getType());
         }
