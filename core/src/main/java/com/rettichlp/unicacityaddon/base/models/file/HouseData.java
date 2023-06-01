@@ -4,6 +4,7 @@ import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
+import lombok.Getter;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.event.HoverEvent;
 
@@ -18,6 +19,7 @@ import static com.rettichlp.unicacityaddon.base.api.request.API.mapOf;
 public class HouseData {
 
     private final int houseNumber;
+    @Getter
     private int houseBank;
 
     private final Map<DrugType, Map<DrugPurity, Integer>> storageMap;
@@ -57,10 +59,6 @@ public class HouseData {
                 DrugPurity.GOOD, 0,
                 DrugPurity.MEDIUM, 0,
                 DrugPurity.BAD, 0));
-    }
-
-    public int getHouseBank() {
-        return houseBank;
     }
 
     public HouseData setHouseBank(int houseBank) {

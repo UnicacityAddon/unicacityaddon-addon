@@ -1,8 +1,15 @@
 package com.rettichlp.unicacityaddon.base.models.api.management;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 /**
  * @author RettichLP
  */
-public record ManagementVersion(String version, long users) {
+@Getter
+@AllArgsConstructor
+public class ManagementVersion {
 
+    private final String version;
+    private final long users;
 }

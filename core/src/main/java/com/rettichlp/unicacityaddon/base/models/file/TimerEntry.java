@@ -4,6 +4,7 @@ import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
+import lombok.Getter;
 
 import java.util.Map;
 import java.util.Timer;
@@ -16,9 +17,11 @@ import java.util.concurrent.TimeUnit;
 public class TimerEntry {
 
     public static Map<Long, TimerEntry> ACTIVE_TIMERS;
+    @Getter
     private final String name;
     private final long duration;
     private final TimeUnit timeUnit;
+    @Getter
     private final long id;
     private final Timer timer = new Timer();
 
@@ -29,20 +32,12 @@ public class TimerEntry {
         this.id = System.currentTimeMillis();
     }
 
-    public String getName() {
-        return name;
-    }
-
     public String getTimeLeftString() {
         long timeLeft = timeUnit.toMillis(duration) - (System.currentTimeMillis() - id); // id = starttime
         long hh = TimeUnit.MILLISECONDS.toHours(timeLeft);
         long mm = TimeUnit.MILLISECONDS.toMinutes(timeLeft) % 60;
         long ss = TimeUnit.MILLISECONDS.toSeconds(timeLeft) % 60;
         return String.format("%02d:%02d:%02d", hh, mm, ss);
-    }
-
-    public long getId() {
-        return id;
     }
 
     public void start(UnicacityAddon unicacityAddon) {

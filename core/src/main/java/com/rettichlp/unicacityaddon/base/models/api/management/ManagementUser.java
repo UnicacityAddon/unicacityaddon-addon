@@ -1,31 +1,16 @@
 package com.rettichlp.unicacityaddon.base.models.api.management;
 
-import com.rettichlp.unicacityaddon.base.models.ResponseSchema;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 /**
  * @author RettichLP
  */
-public class ManagementUser extends ResponseSchema {
+@Getter
+@AllArgsConstructor
+public class ManagementUser {
 
     private final boolean active;
     private final String uuid;
     private final String version;
-
-    public ManagementUser(boolean active, String uuid, String version) {
-        this.active = active;
-        this.uuid = uuid;
-        this.version = version;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public String getUuid() {
-        return uuid;
-    }
-
-    public String getVersion() {
-        return version;
-    }
 }

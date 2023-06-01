@@ -1,47 +1,22 @@
 package com.rettichlp.unicacityaddon.base.models.api;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.models.ResponseSchema;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import net.labymod.api.util.math.vector.FloatVector3;
 
 /**
  * @author RettichLP
  */
-public class NaviPoint extends ResponseSchema {
+@Getter
+@AllArgsConstructor
+public class NaviPoint {
 
     private final String name;
     private final int x;
     private final int y;
     private final int z;
     private final String article;
-
-    public NaviPoint(String name, int x, int y, int z, String article) {
-        this.name = name;
-        this.x = x;
-        this.y = y;
-        this.z = z;
-        this.article = article;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public int getZ() {
-        return z;
-    }
-
-    public String getArticle() {
-        return article;
-    }
 
     public String getTabName() {
         return name.replace(" ", "-");

@@ -1,19 +1,14 @@
 package com.rettichlp.unicacityaddon.base.models.api.response;
 
-import com.rettichlp.unicacityaddon.base.models.ResponseSchema;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 /**
  * @author RettichLP
  */
-public class Success extends ResponseSchema {
+@Getter
+@AllArgsConstructor
+public class Success {
 
     private final String info;
-
-    public Success(String info) {
-        this.info = info;
-    }
-
-    public String getInfo() {
-        return info;
-    }
 }
