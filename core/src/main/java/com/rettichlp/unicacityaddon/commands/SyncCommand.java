@@ -10,11 +10,11 @@ import java.util.List;
  * @author RettichLP
  */
 @UCCommand(prefix = "sync")
-public class SyncPlayerDataCommand extends UnicacityCommand {
+public class SyncCommand extends UnicacityCommand {
 
     private final UnicacityAddon unicacityAddon;
 
-    public SyncPlayerDataCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+    public SyncCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
         super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
