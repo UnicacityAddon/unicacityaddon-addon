@@ -52,8 +52,10 @@ public class NameTagRenderListener {
                 }
             }
         } else if (context.equals(PlayerNameTagRenderEvent.Context.TAB_LIST)) {
-            if (this.unicacityAddon.services().nametagService().getNoPushPlayerList().contains(playerName)) {
-                e.setNameTag(e.nameTag().append(AFK_COMPONENT));
+            Component nameTagComponent = e.nameTag();
+            String legacyNameTagComponent = this.unicacityAddon.utils().textUtils().legacy(nameTagComponent);
+            if (this.unicacityAddon.services().nametagService().getNoPushPlayerList().contains(playerName) && !legacyNameTagComponent.contains(" §7§oAFK")) {
+                e.setNameTag(nameTagComponent.append(AFK_COMPONENT));
             }
         }
     }

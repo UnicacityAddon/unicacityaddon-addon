@@ -77,6 +77,7 @@ public class RequestBuilder {
             }).start();
         }
 
+        @SuppressWarnings("unchecked")
         public <T> T getAsJsonObjectAndParse(Class<T> responseSchemaClass) {
             try {
                 JsonElement jsonElement = send();
