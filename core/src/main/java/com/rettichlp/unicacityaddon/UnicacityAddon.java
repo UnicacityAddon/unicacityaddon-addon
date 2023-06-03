@@ -51,6 +51,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 /**
@@ -250,22 +251,27 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
     }
 
     private void registerListeners() {
-        getAllClassesFromPackage("com.rettichlp.unicacityaddon.listener").stream()
+        AtomicInteger registeredListenerCount = new AtomicInteger();
+        Set<Class<?>> listenerClassSet = getAllClassesFromPackage("com.rettichlp.unicacityaddon.listener");
+        listenerClassSet.stream()
                 .filter(listenerClass -> listenerClass.isAnnotationPresent(UCEvent.class))
                 .forEach(listenerClass -> {
                     try {
                         this.registerListener(listenerClass.getConstructor(UnicacityAddon.class).newInstance(this));
+                        registeredListenerCount.getAndIncrement();
                     } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException |
                              InstantiationException e) {
-                        throw new RuntimeException(e);
+                        this.logger().warn("Can't register listener: {}", listenerClass.getSimpleName());
+                        e.printStackTrace();
                     }
-
-                    System.out.println("Registered listener " + listenerClass.getSimpleName());
                 });
+        this.logger().info("Registered {}/{} listeners", registeredListenerCount, listenerClassSet.size());
     }
 
     private void registerCommands() {
-        getAllClassesFromPackage("com.rettichlp.unicacityaddon.commands").stream()
+        AtomicInteger registeredCommandCount = new AtomicInteger();
+        Set<Class<?>> commandClassSet = getAllClassesFromPackage("com.rettichlp.unicacityaddon.commands");
+        commandClassSet.stream()
                 .filter(commandClass -> commandClass.isAnnotationPresent(UCCommand.class))
                 .forEach(commandClass -> {
                     try {
@@ -273,13 +279,14 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
                         Command command = (Command) commandClass.getConstructor(UnicacityAddon.class, UCCommand.class).newInstance(this, ucCommand);
                         this.commands.add(command);
                         this.registerCommand(command);
+                        registeredCommandCount.getAndIncrement();
                     } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException |
                              InstantiationException e) {
-                        throw new RuntimeException(e);
+                        this.logger().warn("Can't register command: {}", commandClass.getSimpleName());
+                        e.printStackTrace();
                     }
-
-                    System.out.println("Registered command " + commandClass.getSimpleName());
                 });
+        this.logger().info("Registered {}/{} commands", registeredCommandCount, commandClassSet.size());
     }
 
     private Set<Class<?>> getAllClassesFromPackage(String packageName) {
