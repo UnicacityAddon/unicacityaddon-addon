@@ -229,8 +229,9 @@ public class AccountListener {
 
     private void handleUnlockAccount() {
         PasswordSetting passwordSetting = this.unicacityAddon.configuration().passwordSetting();
-        if (passwordSetting.enabled().get())
-            this.unicacityAddon.player().sendServerMessage("/passwort " + passwordSetting.password().getOrDefault(""));
+        String password = passwordSetting.password().getOrDefault("");
+        if (passwordSetting.enabled().get() && !password.isBlank())
+            this.unicacityAddon.player().sendServerMessage("/passwort " + password);
     }
 
     private void handleJoin() {
