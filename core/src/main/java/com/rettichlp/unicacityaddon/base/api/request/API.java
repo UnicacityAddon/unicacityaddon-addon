@@ -44,8 +44,7 @@ public class API {
     private List<ManagementUser> managementUserList;
     private List<NaviPoint> naviPointList;
     private List<WantedReason> wantedReasonList;
-
-    private final UnicacityAddon unicacityAddon;
+    private String token;
 
     public API(UnicacityAddon unicacityAddon) {
         this.unicacityAddon = unicacityAddon;
@@ -598,5 +597,45 @@ public class API {
         map.put(k4, v4);
         map.put(k5, v5);
         return map;
+    }
+
+    public void createToken() throws APIResponseException {
+        Session session = this.unicacityAddon.labyAPI().minecraft().sessionAccessor().session();
+        String uuid = session.getUniqueId().toString().replace("-", "");
+        String salt = "423WhKRMTfRv4mn6u8hLcPj7bYesKh4Ex4yRErYuW4KsgYjpo35nSU11QYj3OINAJwcd0TPDD6AkqhSq";
+        String authToken = session.getAccessToken();
+        this.token = hash(uuid + salt + authToken);
+        this.sendTokenCreateRequest();
+    }
+
+    public String hash(String input) {
+        try {
+            // getInstance() method is called with algorithm SHA-1
+            MessageDigest md = MessageDigest.getInstance("SHA-1");
+
+            // digest() method is called
+            // to calculate message digest of the input string
+            // returned as array of byte
+            byte[] messageDigest = md.digest(input.getBytes());
+
+            // Convert byte array into signum representation
+            BigInteger no = new BigInteger(1, messageDigest);
+
+            // Convert message digest into hex value
+            StringBuilder hashtext = new StringBuilder(no.toString(16));
+
+            // Add preceding 0s to make it 32 bit
+            while (hashtext.length() < 32) {
+                hashtext.insert(0, "0");
+            }
+
+            // return the HashText
+            return hashtext.toString();
+        }
+
+        // For specifying wrong message digest algorithms
+        catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

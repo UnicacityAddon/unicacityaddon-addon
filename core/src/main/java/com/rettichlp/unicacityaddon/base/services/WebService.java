@@ -38,7 +38,7 @@ public class WebService {
         boolean isApiRequest = urlString.startsWith("http://rettichlp.de:8888/unicacityaddon/v1/");
 
         if (responseCode == HttpURLConnection.HTTP_OK) {
-            this.unicacityAddon.logger().info("APIResponse - " + responseCode + " [" + urlString.replace(this.unicacityAddon.services().tokenService().getApiToken(), "TOKEN") + "]");
+            this.unicacityAddon.logger().info("APIResponse - " + responseCode + " [" + urlString.replace(this.unicacityAddon.api().getToken(), "TOKEN") + "]");
             return websiteSource;
         } else {
             throw new APIResponseException(this.unicacityAddon, urlString, responseCode, isApiRequest
@@ -49,7 +49,7 @@ public class WebService {
 
     public String createUrl(boolean nonProd, ApplicationPath applicationPath, String subPath, Map<String, String> parameter) {
         return (nonProd ? "http://localhost:8888/unicacityaddon/v1/" : "http://rettichlp.de:8888/unicacityaddon/v1/")
-                + this.unicacityAddon.services().tokenService().getApiToken()
+                + this.unicacityAddon.api().getToken()
                 + applicationPath.getApplicationPath()
                 + (subPath == null ? "" : "/" + subPath)
                 + (parameter == null || parameter.isEmpty() ? "" : getParamsString(parameter));

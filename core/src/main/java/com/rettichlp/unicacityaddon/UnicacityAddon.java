@@ -16,7 +16,6 @@ import com.rettichlp.unicacityaddon.base.nametags.HouseBanTag;
 import com.rettichlp.unicacityaddon.base.nametags.NoPushTag;
 import com.rettichlp.unicacityaddon.base.nametags.OutlawTag;
 import com.rettichlp.unicacityaddon.base.services.FileService;
-import com.rettichlp.unicacityaddon.base.services.TokenService;
 import com.rettichlp.unicacityaddon.base.teamspeak.TSClientQuery;
 import com.rettichlp.unicacityaddon.controller.DeadBodyController;
 import com.rettichlp.unicacityaddon.controller.GuiController;
@@ -123,9 +122,7 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
 
     @Override
     protected void enable() {
-        this.services.tokenService().createToken();
-        this.api.syncAll();
-
+        this.api.sync();
         this.registerSettingCategory();
         this.registerTags();
         this.registerHudWidgets();

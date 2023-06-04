@@ -36,7 +36,7 @@ public class TokenCommand extends UnicacityCommand {
                         .prefix()
                         .of("Mit diesem").color(ColorCode.GRAY).advance().space()
                         .of("Token").color(ColorCode.AQUA)
-                                .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of(this.unicacityAddon.services().tokenService().getApiToken()).color(ColorCode.RED).advance().createComponent())
+                                .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of(this.unicacityAddon.api().getToken()).color(ColorCode.RED).advance().createComponent())
                                 .clickEvent(ClickEvent.Action.RUN_COMMAND, "/token copy")
                                 .advance().space()
                         .of("kann jeder in deinem Namen Anfragen an die API senden.").color(ColorCode.GRAY).advance()
@@ -44,7 +44,7 @@ public class TokenCommand extends UnicacityCommand {
             } else if (arguments.length == 1 && arguments[0].equalsIgnoreCase("create")) {
                 this.unicacityAddon.services().tokenService().createToken();
             } else if (arguments.length == 1 && arguments[0].equalsIgnoreCase("copy")) {
-                p.copyToClipboard(this.unicacityAddon.services().tokenService().getApiToken());
+                p.copyToClipboard(this.unicacityAddon.api().getToken());
                 this.unicacityAddon.labyAPI().notificationController().push(Notification.builder()
                         .title(Message.getBuilder().of("Kopiert!").color(ColorCode.GREEN).bold().advance().createComponent())
                         .text(Message.getBuilder().of("Token in Zwischenablage kopiert.").color(ColorCode.WHITE).advance().createComponent())
