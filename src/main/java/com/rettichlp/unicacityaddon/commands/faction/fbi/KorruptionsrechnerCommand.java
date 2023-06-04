@@ -65,7 +65,7 @@ public class KorruptionsrechnerCommand implements IClientCommand {
         }
 
         int money = wanted.getAmount() * 150;
-        int drugs = money / 45;
+        int drugs = money / 40;
         int methDrugs0 = money / 110;
         int methDrugs1 = money / 100;
         int methDrugs2 = money / 50;
@@ -91,7 +91,7 @@ public class KorruptionsrechnerCommand implements IClientCommand {
                 .createComponent());
         p.sendMessage(Message.getBuilder()
                 .of("»").color(ColorCode.GRAY).advance().space()
-                .of("Meth").color(ColorCode.DARK_AQUA).advance()
+                .of("Kristalle").color(ColorCode.DARK_AQUA).advance()
                 .of(":").color(ColorCode.DARK_GRAY).advance().space()
                 .of(methDrugs0 + "g").color(ColorCode.AQUA).advance().space()
                 .of("|").color(ColorCode.DARK_GRAY).advance().space()
