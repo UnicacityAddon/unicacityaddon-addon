@@ -1,6 +1,8 @@
 package com.rettichlp.unicacityaddon.hudwidgets;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.base.events.BombPlantedEvent;
+import com.rettichlp.unicacityaddon.base.events.BombRemovedEvent;
 import com.rettichlp.unicacityaddon.base.events.UnicacityAddonTickEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidget;
@@ -13,8 +15,8 @@ import net.labymod.api.event.Subscribe;
  */
 public class BombHudWidget extends TextHudWidget<TextHudWidgetConfig> {
 
-    public static int timer = -1;
-    public static TextLine textLine;
+    private TextLine textLine;
+    private Integer time;
 
     private final UnicacityAddon unicacityAddon;
 
@@ -26,24 +28,30 @@ public class BombHudWidget extends TextHudWidget<TextHudWidgetConfig> {
     @Override
     public void load(TextHudWidgetConfig config) {
         super.load(config);
-        textLine = super.createLine("Bombe", "");
+        this.textLine = super.createLine("Bombe", this.unicacityAddon.utils().textUtils().parseTimer(0));
         this.setIcon(this.unicacityAddon.utils().icon());
     }
 
     @Override
     public boolean isVisibleInGame() {
-        return timer >= 0;
+        return this.time != null;
+    }
+
+    @Subscribe
+    public void onBombPlanted(BombPlantedEvent e) {
+        this.time = 0;
+    }
+
+    @Subscribe
+    public void onBombRemoved(BombRemovedEvent e) {
+        this.time = null;
     }
 
     @Subscribe
     public void onUnicacityAddonTick(UnicacityAddonTickEvent e) {
-        if (e.isPhase(UnicacityAddonTickEvent.Phase.SECOND) && timer >= 0) {
-            textLine.updateAndFlush((timer >= 780 ? ColorCode.RED.getCode() : "") + this.unicacityAddon.utils().textUtils().parseTimer(timer));
-
-            if (timer >= 1200)
-                timer = -1;
-            else
-                timer++;
+        if (e.isPhase(UnicacityAddonTickEvent.Phase.SECOND) && this.time != null) {
+            textLine.updateAndFlush((this.time >= 780 ? ColorCode.RED.getCode() : "") + this.unicacityAddon.utils().textUtils().parseTimer(this.time));
+            this.time = this.time >= 1200 ? null : this.time + 1;
         }
     }
 }

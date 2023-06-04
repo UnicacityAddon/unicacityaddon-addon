@@ -4,18 +4,19 @@ import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
+import com.rettichlp.unicacityaddon.base.events.BombPlantedEvent;
+import com.rettichlp.unicacityaddon.base.events.BombRemovedEvent;
 import com.rettichlp.unicacityaddon.base.models.api.NaviPoint;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
-import com.rettichlp.unicacityaddon.hudwidgets.BombHudWidget;
-import com.rettichlp.unicacityaddon.listener.TickListener;
 import net.labymod.api.client.chat.ChatMessage;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.event.HoverEvent;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 
 /**
@@ -24,8 +25,8 @@ import java.util.regex.Matcher;
 @UCEvent
 public class BombListener {
 
+    private Long bombPlantedTime;
     private static String location;
-    public static int activeBomb = -1;
 
     private final UnicacityAddon unicacityAddon;
 
@@ -43,13 +44,14 @@ public class BombListener {
         String formattedMsg = e.chatMessage().getFormattedText();
         String msg = chatMessage.getPlainText();
 
-        Matcher bombPlacedMatcher = PatternHandler.BOMB_PLACED_PATTERN.matcher(msg);
-        if (bombPlacedMatcher.find()) {
-            BombHudWidget.timer = 0;
-            this.unicacityAddon.soundController().playBombPlacedSound();
+        Matcher bombPlantedMatcher = PatternHandler.BOMB_PLANTED_PATTERN.matcher(msg);
+        if (bombPlantedMatcher.find()) {
+            this.bombPlantedTime = System.currentTimeMillis();
+            this.unicacityAddon.labyAPI().eventBus().fire(new BombPlantedEvent());
+            this.unicacityAddon.soundController().playBombPlantedSound();
 
             if (((p.getFaction().equals(Faction.POLIZEI) || p.getFaction().equals(Faction.FBI)) && p.getRank() > 3) || p.isSuperUser()) {
-                location = bombPlacedMatcher.group("location");
+                location = bombPlantedMatcher.group("location");
                 e.setMessage(Message.getBuilder()
                         .add(formattedMsg)
                         .space()
@@ -69,12 +71,14 @@ public class BombListener {
             return;
         }
 
-        Matcher m = PatternHandler.BOMB_REMOVED_PATTERN.matcher(msg);
-        if (m.find()) {
-            String state = m.group(1);
+        Matcher bombRemovedMatcher = PatternHandler.BOMB_REMOVED_PATTERN.matcher(msg);
+        if (bombRemovedMatcher.find()) {
+            this.unicacityAddon.labyAPI().eventBus().fire(new BombRemovedEvent());
 
-            String timeString = BombHudWidget.timer > -1 ? this.unicacityAddon.utils().textUtils().parseTimer(BombHudWidget.timer) : "";
-            BombHudWidget.timer = -1;
+            Long timeSinceBombPlanted = this.bombPlantedTime != null ? System.currentTimeMillis() - this.bombPlantedTime : null;
+            String timeString = timeSinceBombPlanted != null ? this.unicacityAddon.utils().textUtils().parseTimer(TimeUnit.MILLISECONDS.toSeconds(timeSinceBombPlanted)) : "";
+
+            String state = bombRemovedMatcher.group(1);
 
             e.setMessage(Message.getBuilder()
                     .add(formattedMsg)
@@ -90,10 +94,6 @@ public class BombListener {
                             .advance()
                     .of(location != null ? "]" : "").color(ColorCode.DARK_GRAY).advance()
                     .createComponent());
-
-            if (this.unicacityAddon.configuration().bombScreenshot().get()) {
-                activeBomb = TickListener.currentTick;
-            }
         }
     }
 

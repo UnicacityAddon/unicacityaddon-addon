@@ -6,11 +6,11 @@ import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.enums.faction.ReinforcementType;
+import com.rettichlp.unicacityaddon.base.events.ReinforcementAcceptedEvent;
 import com.rettichlp.unicacityaddon.base.text.ChatType;
 import com.rettichlp.unicacityaddon.base.utils.MathUtils;
 import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
 import com.rettichlp.unicacityaddon.listener.MobileListener;
-import com.rettichlp.unicacityaddon.listener.TickListener;
 import net.labymod.api.util.math.vector.FloatVector3;
 
 import java.util.Arrays;
@@ -67,7 +67,7 @@ public class ReinforcementCommand extends UnicacityCommand {
 
             // activity screenshot
             if (this.unicacityAddon.configuration().reinforcementSetting().screen().get())
-                activeReinforcement = TickListener.currentTick;
+                this.unicacityAddon.labyAPI().eventBus().fire(new ReinforcementAcceptedEvent());
 
             return true;
         }
