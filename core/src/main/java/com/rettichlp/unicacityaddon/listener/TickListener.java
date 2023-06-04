@@ -2,17 +2,12 @@ package com.rettichlp.unicacityaddon.listener;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
-import com.rettichlp.unicacityaddon.base.builder.ScreenshotBuilder;
 import com.rettichlp.unicacityaddon.base.events.UnicacityAddonTickEvent;
-import com.rettichlp.unicacityaddon.commands.faction.ReinforcementCommand;
-import com.rettichlp.unicacityaddon.listener.faction.terroristen.BombListener;
 import net.labymod.api.event.Phase;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.lifecycle.GameTickEvent;
 import org.spongepowered.include.com.google.common.collect.Maps;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.Map;
 
 /**
@@ -73,43 +68,22 @@ public class TickListener {
     @Subscribe
     public void onUnicacityAddonTick(UnicacityAddonTickEvent e) {
         if (e.isIngame() && e.isPhase(UnicacityAddonTickEvent.Phase.TICK)) {
-            handleActivityScreenshot(ReinforcementCommand.activeReinforcement, "reinforcement");
-            handleActivityScreenshot(BombListener.activeBomb, "großeinsatz");
-            handleDamageTracker();
+            float currentHeal = this.unicacityAddon.player().getPlayer().getHealth();
+            if (lastTickDamage.getValue() > currentHeal) {
+                lastTickDamage = Maps.immutableEntry(System.currentTimeMillis(), currentHeal);
+            } else if (lastTickDamage.getValue() < currentHeal) {
+                lastTickDamage = Maps.immutableEntry(System.currentTimeMillis(), currentHeal);
+            }
         }
 
         if (e.isPhase(UnicacityAddonTickEvent.Phase.SECOND)) {
-            handleTimer();
+            if (this.unicacityAddon.services().fileService().data().getTimer() > 0) {
+                this.unicacityAddon.services().fileService().data().setTimer(this.unicacityAddon.services().fileService().data().getTimer() - 1);
+            }
         }
 
         if (e.isUnicacity() && e.isPhase(UnicacityAddonTickEvent.Phase.SECOND) && this.unicacityAddon.configuration().nameTagSetting().corpse().get()) {
             this.unicacityAddon.deadBodyController().updateDisplayName(this.unicacityAddon);
-        }
-    }
-
-    private void handleActivityScreenshot(long activityMillis, String activityType) {
-        if (activityMillis >= 0 && activityMillis + 15 == currentTick) {
-            try {
-                File file = this.unicacityAddon.services().fileService().getNewActivityImageFile(activityType);
-                ScreenshotBuilder.getBuilder(this.unicacityAddon).file(file).save();
-            } catch (IOException e) {
-                this.unicacityAddon.logger().warn(e.getMessage());
-            }
-        }
-    }
-
-    private void handleDamageTracker() {
-        float currentHeal = this.unicacityAddon.player().getPlayer().getHealth();
-        if (lastTickDamage.getValue() > currentHeal) {
-            lastTickDamage = Maps.immutableEntry(System.currentTimeMillis(), currentHeal);
-        } else if (lastTickDamage.getValue() < currentHeal) {
-            lastTickDamage = Maps.immutableEntry(System.currentTimeMillis(), currentHeal);
-        }
-    }
-
-    private void handleTimer() {
-        if (this.unicacityAddon.services().fileService().data().getTimer() > 0) {
-            this.unicacityAddon.services().fileService().data().setTimer(this.unicacityAddon.services().fileService().data().getTimer() - 1);
         }
     }
 }
