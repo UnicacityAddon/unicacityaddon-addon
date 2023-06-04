@@ -30,7 +30,7 @@ public class PatternHandler {
      *
      * @see com.rettichlp.unicacityaddon.listener.faction.terroristen.BombListener
      */
-    public static final Pattern BOMB_PLACED_PATTERN = Pattern.compile("^News: ACHTUNG! Es wurde eine Bombe in der Nähe von (?<location>.+) gefunden!$");
+    public static final Pattern BOMB_PLANTED_PATTERN = Pattern.compile("^News: ACHTUNG! Es wurde eine Bombe in der Nähe von (?<location>.+) gefunden!$");
     public static final Pattern BOMB_REMOVED_PATTERN = Pattern.compile("^News: Die Bombe konnte (nicht|erfolgreich) entschärft werden!$");
 
     /**

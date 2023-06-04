@@ -21,7 +21,7 @@ public class VersionedSoundController extends SoundController {
     }
 
     @Override
-    public void playBombPlacedSound() {
+    public void playBombPlantedSound() {
 
     }
 
