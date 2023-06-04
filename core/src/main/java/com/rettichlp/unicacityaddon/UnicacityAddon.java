@@ -19,7 +19,6 @@ import com.rettichlp.unicacityaddon.base.services.FileService;
 import com.rettichlp.unicacityaddon.base.teamspeak.TSClientQuery;
 import com.rettichlp.unicacityaddon.controller.DeadBodyController;
 import com.rettichlp.unicacityaddon.controller.GuiController;
-import com.rettichlp.unicacityaddon.controller.OverlayMessageController;
 import com.rettichlp.unicacityaddon.controller.ScreenshotController;
 import com.rettichlp.unicacityaddon.controller.SoundController;
 import com.rettichlp.unicacityaddon.controller.TabListController;
@@ -165,10 +164,6 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
 
     public DeadBodyController deadBodyController() {
         return controller().getDeadBodyController();
-    }
-
-    public OverlayMessageController overlayMessageController() {
-        return controller().getOverlayMessageController();
     }
 
     public ScreenshotController screenshotController() {

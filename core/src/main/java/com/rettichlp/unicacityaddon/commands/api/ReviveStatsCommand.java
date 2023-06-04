@@ -34,7 +34,7 @@ public class ReviveStatsCommand extends UnicacityCommand {
     public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
 
-        this.unicacityAddon.overlayMessageController().sendOverlayMessage(ColorCode.AQUA.getCode() + FormattingCode.BOLD.getCode() + "Revivestats werden geladen...");
+        this.unicacityAddon.labyAPI().minecraft().chatExecutor().displayActionBar(ColorCode.AQUA.getCode() + FormattingCode.BOLD.getCode() + "Revivestats werden geladen...");
 
         new Thread(() -> {
             if (arguments.length == 0) {

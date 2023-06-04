@@ -87,6 +87,6 @@ public class HouseInteractionListener {
                     .append(i < progress ? ColorCode.GREEN.getCode() : ColorCode.GRAY.getCode())
                     .append("█");
         }
-        this.unicacityAddon.overlayMessageController().sendOverlayMessage(stringBuilder.toString());
+        this.unicacityAddon.labyAPI().minecraft().chatExecutor().displayActionBar(stringBuilder.toString());
     }
 }
