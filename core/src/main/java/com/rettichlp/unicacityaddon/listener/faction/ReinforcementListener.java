@@ -75,7 +75,7 @@ public class ReinforcementListener {
             String navipointString;
             if (navipoint == null) {
                 navipointString = "unbekannter Ort";
-                p.sendErrorMessage("Navipunkte wurden nicht geladen. Versuche /syncdata um diese neu zu laden!");
+                p.sendErrorMessage("Navipunkte wurden nicht geladen. Versuche /sync um diese neu zu laden!");
             } else {
                 navipointString = navipoint.getName().replace("-", " ");
             }

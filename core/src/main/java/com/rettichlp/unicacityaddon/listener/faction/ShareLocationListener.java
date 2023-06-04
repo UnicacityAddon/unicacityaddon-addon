@@ -60,7 +60,7 @@ public class ShareLocationListener {
         String navipointString;
         if (doubleNaviPointEntry.getValue() == null) {
             navipointString = "unbekannter Ort";
-            p.sendErrorMessage("Navipunkte wurden nicht geladen. Versuche /syncdata um diese neu zu laden!");
+            p.sendErrorMessage("Navipunkte wurden nicht geladen. Versuche /sync um diese neu zu laden!");
         } else {
             navipointString = doubleNaviPointEntry.getValue().getName().replace("-", " ");
         }
