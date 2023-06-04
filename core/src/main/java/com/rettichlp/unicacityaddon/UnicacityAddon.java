@@ -37,6 +37,7 @@ import com.rettichlp.unicacityaddon.hudwidgets.MoneyHudWidget;
 import com.rettichlp.unicacityaddon.hudwidgets.PayDayHudWidget;
 import com.rettichlp.unicacityaddon.hudwidgets.PlantHudWidget;
 import com.rettichlp.unicacityaddon.hudwidgets.TimerHudWidget;
+import lombok.Setter;
 import net.labymod.api.addon.LabyAddon;
 import net.labymod.api.client.chat.command.Command;
 import net.labymod.api.client.entity.player.tag.PositionType;
@@ -58,7 +59,7 @@ import java.util.stream.Collectors;
  * <p>
  * I know the guidelines for publication but still use the user's session token and access the player's file system. In the following I will briefly explain why I do this:
  * <br><br>
- * <h3>Session token ({@link TokenService})</h3>
+ * <h3>Session token ({@link API})</h3>
  * An important function of the addon is to collect statistics and make data available to all players.
  * I use a private server for this. This provides data for:
  * <ul>
@@ -98,6 +99,7 @@ import java.util.stream.Collectors;
  * @author RettichLP
  */
 @AddonMain
+@Setter
 public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration> {
 
     private AddonPlayer player;

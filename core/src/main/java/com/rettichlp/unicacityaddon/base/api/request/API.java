@@ -1,6 +1,7 @@
 package com.rettichlp.unicacityaddon.base.api.request;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.base.api.exception.APIResponseException;
 import com.rettichlp.unicacityaddon.base.builder.RequestBuilder;
 import com.rettichlp.unicacityaddon.base.enums.api.AddonGroup;
 import com.rettichlp.unicacityaddon.base.enums.api.ApplicationPath;
@@ -24,9 +25,15 @@ import com.rettichlp.unicacityaddon.base.models.api.statisticTop.StatisticTop;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
+import lombok.Getter;
+import lombok.Setter;
+import net.labymod.api.client.component.Component;
+import net.labymod.api.client.session.Session;
 import net.labymod.api.notification.Notification;
 
-import java.util.ArrayList;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,179 +41,8 @@ import java.util.Map;
 /**
  * @author RettichLP
  */
+@Getter
 public class API {
-
-    private final Map<String, Faction> playerFactionMap;
-    private final Map<String, Integer> playerRankMap;
-    private List<BlacklistReason> blacklistReasonList;
-    private List<HouseBan> houseBanList;
-    private List<HouseBanReason> houseBanReasonList;
-    private List<ManagementUser> managementUserList;
-    private List<NaviPoint> naviPointList;
-    private List<WantedReason> wantedReasonList;
-    private String token;
-
-    public API(UnicacityAddon unicacityAddon) {
-        this.unicacityAddon = unicacityAddon;
-
-        this.playerFactionMap = new HashMap<>();
-        this.playerRankMap = new HashMap<>();
-        this.blacklistReasonList = new ArrayList<>();
-        this.houseBanList = new ArrayList<>();
-        this.houseBanReasonList = new ArrayList<>();
-        this.managementUserList = new ArrayList<>();
-        this.naviPointList = new ArrayList<>();
-        this.wantedReasonList = new ArrayList<>();
-    }
-
-    public Map<String, Faction> getPlayerFactionMap() {
-        return playerFactionMap;
-    }
-
-    public Map<String, Integer> getPlayerRankMap() {
-        return playerRankMap;
-    }
-
-    public List<BlacklistReason> getBlacklistReasonList() {
-        return blacklistReasonList;
-    }
-
-    public void setBlacklistReasonList(List<BlacklistReason> blacklistReasonList) {
-        this.blacklistReasonList = blacklistReasonList;
-    }
-
-    public List<HouseBan> getHouseBanList() {
-        return houseBanList;
-    }
-
-    public void setHouseBanList(List<HouseBan> houseBanList) {
-        this.houseBanList = houseBanList;
-    }
-
-    public List<HouseBanReason> getHouseBanReasonList() {
-        return houseBanReasonList;
-    }
-
-    public void setHouseBanReasonList(List<HouseBanReason> houseBanReasonList) {
-        this.houseBanReasonList = houseBanReasonList;
-    }
-
-    public List<ManagementUser> getManagementUserList() {
-        return managementUserList;
-    }
-
-    public List<NaviPoint> getNaviPointList() {
-        return naviPointList;
-    }
-
-    public List<WantedReason> getWantedReasonList() {
-        return wantedReasonList;
-    }
-
-    public void syncAll() {
-        new Thread(() -> {
-            Player player = sendPlayerRequest();
-            AddonGroup.CEO.getMemberList().addAll(player.getCEO().stream().map(PlayerEntry::getName).toList());
-            AddonGroup.DEV.getMemberList().addAll(player.getDEV().stream().map(PlayerEntry::getName).toList());
-            AddonGroup.MOD.getMemberList().addAll(player.getMOD().stream().map(PlayerEntry::getName).toList());
-            AddonGroup.SUP.getMemberList().addAll(player.getSUP().stream().map(PlayerEntry::getName).toList());
-            AddonGroup.BETA.getMemberList().addAll(player.getBETA().stream().map(PlayerEntry::getName).toList());
-            AddonGroup.VIP.getMemberList().addAll(player.getVIP().stream().map(PlayerEntry::getName).toList());
-            AddonGroup.BLACKLIST.getMemberList().addAll(player.getBLACKLIST().stream().map(PlayerEntry::getName).toList());
-            AddonGroup.DYAVOL.getMemberList().addAll(player.getDYAVOL().stream().map(PlayerEntry::getName).toList());
-
-            this.unicacityAddon.labyAPI().notificationController().push(Notification.builder()
-                    .title(Message.getBuilder().of("Synchronisierung").color(ColorCode.AQUA).bold().advance().createComponent())
-                    .text(Message.getBuilder().of("Addon-Gruppen aktualisiert.").advance().createComponent())
-                    .icon(this.unicacityAddon.utils().icon())
-                    .type(Notification.Type.ADVANCEMENT)
-                    .build());
-        }).start();
-
-        new Thread(() -> {
-            playerFactionMap.clear();
-            playerRankMap.clear();
-            for (Faction faction : Faction.values()) {
-                String factionWebsiteSource = this.unicacityAddon.services().factionService().getWebsiteSource(faction);
-                List<String> nameList = this.unicacityAddon.utils().listUtils().getAllMatchesFromString(PatternHandler.NAME_PATTERN, factionWebsiteSource);
-                List<String> rankList = this.unicacityAddon.utils().listUtils().getAllMatchesFromString(PatternHandler.RANK_PATTERN, factionWebsiteSource);
-                nameList.forEach(name -> {
-                    String formattedname = name.replace("<h4 class=\"h5 g-mb-5\"><strong>", "");
-                    playerFactionMap.put(formattedname, faction);
-                    playerRankMap.put(formattedname, Integer.parseInt(String.valueOf(rankList.get(nameList.indexOf(name))
-                            .replace("<strong>Rang ", "")
-                            .charAt(0))));
-                });
-            }
-
-            this.unicacityAddon.labyAPI().notificationController().push(Notification.builder()
-                    .title(Message.getBuilder().of("Synchronisierung").color(ColorCode.AQUA).bold().advance().createComponent())
-                    .text(Message.getBuilder().of("Fraktionen aktualisiert.").advance().createComponent())
-                    .icon(this.unicacityAddon.utils().icon())
-                    .type(Notification.Type.ADVANCEMENT)
-                    .build());
-        }).start();
-
-        new Thread(() -> {
-            if (!(houseBanList = sendHouseBanRequest(this.unicacityAddon.player().getFaction().equals(Faction.RETTUNGSDIENST))).isEmpty())
-                this.unicacityAddon.labyAPI().notificationController().push(Notification.builder()
-                        .title(Message.getBuilder().of("Synchronisierung").color(ColorCode.AQUA).bold().advance().createComponent())
-                        .text(Message.getBuilder().of("Hausverbote aktualisiert.").advance().createComponent())
-                        .icon(this.unicacityAddon.utils().icon())
-                        .type(Notification.Type.ADVANCEMENT)
-                        .build());
-        }).start();
-
-        new Thread(() -> {
-            if (!(houseBanReasonList = sendHouseBanReasonRequest()).isEmpty())
-                this.unicacityAddon.labyAPI().notificationController().push(Notification.builder()
-                        .title(Message.getBuilder().of("Synchronisierung").color(ColorCode.AQUA).bold().advance().createComponent())
-                        .text(Message.getBuilder().of("Hausverbot-Gründe aktualisiert.").advance().createComponent())
-                        .icon(this.unicacityAddon.utils().icon())
-                        .type(Notification.Type.ADVANCEMENT)
-                        .build());
-        }).start();
-
-        new Thread(() -> {
-            if (!(managementUserList = sendManagementUserRequest()).isEmpty())
-                this.unicacityAddon.labyAPI().notificationController().push(Notification.builder()
-                        .title(Message.getBuilder().of("Synchronisierung").color(ColorCode.AQUA).bold().advance().createComponent())
-                        .text(Message.getBuilder().of("Management-User aktualisiert.").advance().createComponent())
-                        .icon(this.unicacityAddon.utils().icon())
-                        .type(Notification.Type.ADVANCEMENT)
-                        .build());
-        }).start();
-
-        new Thread(() -> {
-            if (!(naviPointList = sendNaviPointRequest()).isEmpty())
-                this.unicacityAddon.labyAPI().notificationController().push(Notification.builder()
-                        .title(Message.getBuilder().of("Synchronisierung").color(ColorCode.AQUA).bold().advance().createComponent())
-                        .text(Message.getBuilder().of("Navipunkte aktualisiert.").advance().createComponent())
-                        .icon(this.unicacityAddon.utils().icon())
-                        .type(Notification.Type.ADVANCEMENT)
-                        .build());
-        }).start();
-
-        new Thread(() -> {
-            if (!(blacklistReasonList = sendBlacklistReasonRequest()).isEmpty())
-                this.unicacityAddon.labyAPI().notificationController().push(Notification.builder()
-                        .title(Message.getBuilder().of("Synchronisierung").color(ColorCode.AQUA).bold().advance().createComponent())
-                        .text(Message.getBuilder().of("Blacklist-Gründe aktualisiert.").advance().createComponent())
-                        .icon(this.unicacityAddon.utils().icon())
-                        .type(Notification.Type.ADVANCEMENT)
-                        .build());
-        }).start();
-
-        new Thread(() -> {
-            if (!(wantedReasonList = sendWantedReasonRequest()).isEmpty())
-                this.unicacityAddon.labyAPI().notificationController().push(Notification.builder()
-                        .title(Message.getBuilder().of("Synchronisierung").color(ColorCode.AQUA).bold().advance().createComponent())
-                        .text(Message.getBuilder().of("Wanted-Gründe aktualisiert.").advance().createComponent())
-                        .icon(this.unicacityAddon.utils().icon())
-                        .type(Notification.Type.ADVANCEMENT)
-                        .build());
-        }).start();
-    }
 
     private static final boolean NON_PROD = false;
     private static final String ADD_SUB_PATH = "add";
@@ -219,6 +55,114 @@ public class API {
     private static final String USERS_SUB_PATH = "users";
     private static final String BOMB_SUB_PATH = "bomb";
     private static final String GANGWAR_SUB_PATH = "gangwar";
+
+    private final Map<String, Faction> playerFactionMap = new HashMap<>();
+    private final Map<String, Integer> playerRankMap = new HashMap<>();
+
+    @Setter private List<BlacklistReason> blacklistReasonList;
+    @Setter private List<HouseBan> houseBanList;
+    @Setter private List<HouseBanReason> houseBanReasonList;
+    @Setter private List<ManagementUser> managementUserList;
+    @Setter private List<NaviPoint> naviPointList;
+    @Setter private List<WantedReason> wantedReasonList;
+
+    private String token;
+
+    private final UnicacityAddon unicacityAddon;
+
+    public API(UnicacityAddon unicacityAddon) {
+        this.unicacityAddon = unicacityAddon;
+    }
+
+    public void sync() {
+        this.unicacityAddon.labyAPI().notificationController().push(syncNotification(Type.STARTED));
+
+        new Thread(() -> {
+            try {
+                this.createToken();
+
+                this.loadFactionData();
+                this.loadPlayerData();
+
+                this.blacklistReasonList = this.sendBlacklistReasonRequest();
+                this.houseBanList = this.sendHouseBanRequest(this.unicacityAddon.player().getFaction().equals(Faction.RETTUNGSDIENST));
+                this.houseBanReasonList = this.sendHouseBanReasonRequest();
+                this.managementUserList = this.sendManagementUserRequest();
+                this.naviPointList = this.sendNaviPointRequest();
+                this.wantedReasonList = this.sendWantedReasonRequest();
+
+                this.unicacityAddon.labyAPI().notificationController().pop(syncNotification(Type.STARTED));
+                this.unicacityAddon.labyAPI().notificationController().push(syncNotification(Type.SUCCESS));
+            } catch (APIResponseException e) {
+                this.unicacityAddon.logger().warn("API Token was not generated successfully. Data synchronization cannot be performed!");
+
+                this.unicacityAddon.labyAPI().notificationController().pop(syncNotification(Type.STARTED));
+                this.unicacityAddon.labyAPI().notificationController().push(syncNotification(Type.FAILURE));
+            }
+        }).start();
+    }
+
+    private Notification syncNotification(Type type) {
+        Component text = null;
+        ColorCode colorCode = ColorCode.WHITE;
+
+        switch (type) {
+            case STARTED -> {
+                colorCode = ColorCode.AQUA;
+                text = Message.getBuilder().of("Aktualisierung gestartet.").advance().createComponent();
+            }
+            case SUCCESS -> {
+                colorCode = ColorCode.GREEN;
+                text = Message.getBuilder().of("Aktualisierung abgeschlossen.").advance().createComponent();
+            }
+            case FAILURE -> {
+                colorCode = ColorCode.RED;
+                text = Message.getBuilder().of("Aktualisierung fehlgeschlagen.").advance().createComponent();
+            }
+        }
+
+        return Notification.builder()
+                .title(Message.getBuilder().of("Synchronisierung").color(colorCode).bold().advance().createComponent())
+                .text(text)
+                .icon(this.unicacityAddon.utils().icon())
+                .type(Notification.Type.ADVANCEMENT)
+                .build();
+    }
+
+    private enum Type {
+        STARTED,
+        SUCCESS,
+        FAILURE
+    }
+
+    private void loadFactionData() {
+        playerFactionMap.clear();
+        playerRankMap.clear();
+        for (Faction faction : Faction.values()) {
+            String factionWebsiteSource = this.unicacityAddon.services().factionService().getWebsiteSource(faction);
+            List<String> nameList = this.unicacityAddon.utils().listUtils().getAllMatchesFromString(PatternHandler.NAME_PATTERN, factionWebsiteSource);
+            List<String> rankList = this.unicacityAddon.utils().listUtils().getAllMatchesFromString(PatternHandler.RANK_PATTERN, factionWebsiteSource);
+            nameList.forEach(name -> {
+                String formattedName = name.replace("<h4 class=\"h5 g-mb-5\"><strong>", "");
+                playerFactionMap.put(formattedName, faction);
+                playerRankMap.put(formattedName, Integer.parseInt(String.valueOf(rankList.get(nameList.indexOf(name))
+                        .replace("<strong>Rang ", "")
+                        .charAt(0))));
+            });
+        }
+    }
+
+    private void loadPlayerData() {
+        Player player = sendPlayerRequest();
+        AddonGroup.CEO.getMemberList().addAll(player.getCEO().stream().map(PlayerEntry::getName).toList());
+        AddonGroup.DEV.getMemberList().addAll(player.getDEV().stream().map(PlayerEntry::getName).toList());
+        AddonGroup.MOD.getMemberList().addAll(player.getMOD().stream().map(PlayerEntry::getName).toList());
+        AddonGroup.SUP.getMemberList().addAll(player.getSUP().stream().map(PlayerEntry::getName).toList());
+        AddonGroup.BETA.getMemberList().addAll(player.getBETA().stream().map(PlayerEntry::getName).toList());
+        AddonGroup.VIP.getMemberList().addAll(player.getVIP().stream().map(PlayerEntry::getName).toList());
+        AddonGroup.BLACKLIST.getMemberList().addAll(player.getBLACKLIST().stream().map(PlayerEntry::getName).toList());
+        AddonGroup.DYAVOL.getMemberList().addAll(player.getDYAVOL().stream().map(PlayerEntry::getName).toList());
+    }
 
     public void sendBannerAddRequest(Faction faction, int x, int y, int z, String navipoint) {
         RequestBuilder.getBuilder(this.unicacityAddon)
@@ -487,7 +431,7 @@ public class API {
                 .getAsJsonObjectAndParse(StatisticTop.class);
     }
 
-    public void sendTokenCreateRequest() {
+    public void sendTokenCreateRequest() throws APIResponseException {
         RequestBuilder.getBuilder(this.unicacityAddon)
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.TOKEN)
@@ -495,7 +439,7 @@ public class API {
                 .parameter(mapOf(
                         "authToken", this.unicacityAddon.labyAPI().minecraft().sessionAccessor().session().getAccessToken(),
                         "version", this.unicacityAddon.utils().version()))
-                .sendAsync();
+                .send();
     }
 
     public List<WantedReason> sendWantedReasonRequest() {
