@@ -201,7 +201,7 @@ public class AccountEventHandler {
                 new Timer().schedule(new TimerTask() {
                     @Override
                     public void run() {
-                        UpdateUtils.updateChecker();
+                        UpdateUtils.update(false);
                     }
                 }, 2000);
             }

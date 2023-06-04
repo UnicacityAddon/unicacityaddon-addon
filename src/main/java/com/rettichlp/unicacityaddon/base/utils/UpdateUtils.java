@@ -3,13 +3,13 @@ package com.rettichlp.unicacityaddon.base.utils;
 import com.google.gson.JsonObject;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
-import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.api.Syncer;
 import com.rettichlp.unicacityaddon.base.api.exception.APIResponseException;
 import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
 import com.rettichlp.unicacityaddon.base.config.ConfigElements;
 import com.rettichlp.unicacityaddon.base.models.ManagementUser;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
+import com.rettichlp.unicacityaddon.base.text.FormattingCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import net.labymod.main.LabyMod;
 import net.minecraft.util.text.event.ClickEvent;
@@ -29,58 +29,65 @@ import java.util.Optional;
  */
 public class UpdateUtils {
 
-    public static String latestVersion = UnicacityAddon.VERSION;
     public static File modFile;
 
+    private static String latestVersion = UnicacityAddon.VERSION;
     private static final File UPDATE_FILE = new File(System.getProperty("java.io.tmpdir"), "UnicacityAddon-update.jar");
     private static boolean replace;
 
-    public static void updateChecker() {
-        latestVersion = getLatestVersion();
-        if (latestVersion.equals(UnicacityAddon.VERSION) || UnicacityAddon.VERSION.contains("dev"))
-            return;
+    public static void update(boolean forceUpdate) {
+        new Thread(() -> {
+            UnicacityAddon.MINECRAFT.ingameGUI.setOverlayMessage(ColorCode.AQUA.getCode() + FormattingCode.BOLD.getCode() + "Es wird nach einem Update gesucht...", true);
+            if (updateChecker()) {
+                if (ConfigElements.getAutomatedUpdate() || forceUpdate) {
+                    // do update
+                    try {
+                        UnicacityAddon.MINECRAFT.ingameGUI.setOverlayMessage(ColorCode.AQUA.getCode() + FormattingCode.BOLD.getCode() + "Ein Update wird installiert...", true);
 
-        if (!ConfigElements.getAutomatedUpdate()) {
-            LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Update verfügbar!", "Es ist Version " + ColorCode.DARK_AQUA.getCode() + "v" + latestVersion + ColorCode.WHITE.getCode() + " verfügbar.");
+                        if (SystemUtils.IS_OS_WINDOWS) {
+                            windowsUpdate();
+                        } else {
+                            unixUpdate();
+                        }
 
-            AbstractionLayer.getPlayer().sendMessage(Message.getBuilder()
-                    .info().space()
-                    .of("Es ist").advance().space()
-                    .of("v" + latestVersion).color(ColorCode.AQUA)
-                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Changelog").color(ColorCode.RED).advance().createComponent())
-                            .clickEvent(ClickEvent.Action.OPEN_URL, "https://github.com/rettichlp/UnicacityAddon-1.12.2/releases/latest")
-                            .advance().space()
-                    .of("von").advance().space()
-                    .of("UnicacityAddon").color(ColorCode.AQUA).advance().space()
-                    .of("verfügbar!").advance().space()
-                    .of("[").color(ColorCode.DARK_GRAY).advance()
-                    .of("⬇").color(ColorCode.GREEN).underline()
-                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Aktualisieren").color(ColorCode.GREEN).advance().createComponent())
-                            .clickEvent(ClickEvent.Action.RUN_COMMAND, "/updateunicacityaddon")
-                            .advance()
-                    .of("]").color(ColorCode.DARK_GRAY).advance()
-                    .createComponent());
-        } else
-            update();
+                        UnicacityAddon.MINECRAFT.ingameGUI.setOverlayMessage(ColorCode.AQUA.getCode() + FormattingCode.BOLD.getCode() + "Update installiert! Starte Dein Spiel neu!", true);
+                        LabyMod.getInstance().notifyMessageRaw(ColorCode.GREEN.getCode() + "Update installiert!", "Starte Dein Spiel neu!");
+                    } catch (IOException e) {
+                        UnicacityAddon.LOGGER.catching(e);
+                        UnicacityAddon.MINECRAFT.ingameGUI.setOverlayMessage(ColorCode.RED.getCode() + FormattingCode.BOLD.getCode() + "Update konnte nicht installiert werden!", true);
+                        LabyMod.getInstance().notifyMessageRaw(ColorCode.RED.getCode() + "Fehler!", "Update konnte nicht installiert werden!");
+                    }
+                } else {
+                    // notify
+                    AbstractionLayer.getPlayer().sendMessage(Message.getBuilder()
+                            .info().space()
+                            .of("Es ist").advance().space()
+                            .of("v" + latestVersion).color(ColorCode.AQUA)
+                                    .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Changelog").color(ColorCode.RED).advance().createComponent())
+                                    .clickEvent(ClickEvent.Action.OPEN_URL, "https://github.com/UnicacityAddon/unicacityaddon-addon/releases/latest")
+                                    .advance().space()
+                            .of("von").advance().space()
+                            .of("UnicacityAddon").color(ColorCode.AQUA).advance().space()
+                            .of("verfügbar!").advance().space()
+                            .of("[").color(ColorCode.DARK_GRAY).advance()
+                            .of("⬇").color(ColorCode.GREEN).underline()
+                                    .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Aktualisieren").color(ColorCode.GREEN).advance().createComponent())
+                                    .clickEvent(ClickEvent.Action.RUN_COMMAND, "/updateunicacityaddon")
+                                    .advance()
+                            .of("]").color(ColorCode.DARK_GRAY).advance()
+                            .createComponent());
+
+                    LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Update verfügbar!", "Es ist Version " + ColorCode.DARK_AQUA.getCode() + "v" + latestVersion + ColorCode.WHITE.getCode() + " verfügbar.");
+                }
+            } else if (forceUpdate) {
+                UnicacityAddon.MINECRAFT.ingameGUI.setOverlayMessage(ColorCode.AQUA.getCode() + FormattingCode.BOLD.getCode() + "Du spielst bereits mit der neusten Version.", true);
+            }
+        }).start();
     }
 
-    public static void update() {
-        UPlayer p = AbstractionLayer.getPlayer();
-
-        try {
-            if (SystemUtils.IS_OS_WINDOWS)
-                windowsUpdate();
-            else
-                unixUpdate();
-        } catch (IOException e) {
-            UnicacityAddon.LOGGER.catching(e);
-            p.sendErrorMessage("Update konnte nicht heruntergeladen werden.");
-            LabyMod.getInstance().notifyMessageRaw(ColorCode.RED.getCode() + "Fehler!", "Update konnte nicht heruntergeladen werden.");
-            return;
-        }
-
-        p.sendInfoMessage("Die neuste Version wurde heruntergeladen. Starte dein Spiel neu um das Update abzuschließen!");
-        LabyMod.getInstance().notifyMessageRaw(ColorCode.GREEN.getCode() + "Update heruntergeladen!", "Starte dein Spiel neu!");
+    private static boolean updateChecker() {
+        latestVersion = getLatestVersion();
+        return !latestVersion.equals(UnicacityAddon.VERSION) && !UnicacityAddon.VERSION.contains("dev");
     }
 
     private static void windowsUpdate() throws IOException {
@@ -153,7 +160,7 @@ public class UpdateUtils {
         }
     }
 
-    public static String getLatestVersion() {
+    private static String getLatestVersion() {
         try {
             JsonObject response = APIRequest.sendManagementRequest();
             return response.get("latestVersion").getAsString();
