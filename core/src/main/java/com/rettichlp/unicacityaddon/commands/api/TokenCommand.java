@@ -41,8 +41,6 @@ public class TokenCommand extends UnicacityCommand {
                                 .advance().space()
                         .of("kann jeder in deinem Namen Anfragen an die API senden.").color(ColorCode.GRAY).advance()
                         .createComponent());
-            } else if (arguments.length == 1 && arguments[0].equalsIgnoreCase("create")) {
-                this.unicacityAddon.services().tokenService().createToken();
             } else if (arguments.length == 1 && arguments[0].equalsIgnoreCase("copy")) {
                 p.copyToClipboard(this.unicacityAddon.api().getToken());
                 this.unicacityAddon.labyAPI().notificationController().push(Notification.builder()
