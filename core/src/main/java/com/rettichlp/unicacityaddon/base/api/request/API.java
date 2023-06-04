@@ -34,6 +34,7 @@ import net.labymod.api.notification.Notification;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,12 +60,12 @@ public class API {
     private final Map<String, Faction> playerFactionMap = new HashMap<>();
     private final Map<String, Integer> playerRankMap = new HashMap<>();
 
-    @Setter private List<BlacklistReason> blacklistReasonList;
-    @Setter private List<HouseBan> houseBanList;
-    @Setter private List<HouseBanReason> houseBanReasonList;
-    @Setter private List<ManagementUser> managementUserList;
-    @Setter private List<NaviPoint> naviPointList;
-    @Setter private List<WantedReason> wantedReasonList;
+    @Setter private List<BlacklistReason> blacklistReasonList = new ArrayList<>();
+    @Setter private List<HouseBan> houseBanList = new ArrayList<>();
+    @Setter private List<HouseBanReason> houseBanReasonList = new ArrayList<>();
+    @Setter private List<ManagementUser> managementUserList = new ArrayList<>();
+    @Setter private List<NaviPoint> naviPointList = new ArrayList<>();
+    @Setter private List<WantedReason> wantedReasonList = new ArrayList<>();
 
     private String token;
 
