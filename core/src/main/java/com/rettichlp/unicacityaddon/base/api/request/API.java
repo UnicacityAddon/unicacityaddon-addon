@@ -155,14 +155,16 @@ public class API {
 
     private void loadPlayerData() {
         Player player = sendPlayerRequest();
-        AddonGroup.CEO.getMemberList().addAll(player.getCEO().stream().map(PlayerEntry::getName).toList());
-        AddonGroup.DEV.getMemberList().addAll(player.getDEV().stream().map(PlayerEntry::getName).toList());
-        AddonGroup.MOD.getMemberList().addAll(player.getMOD().stream().map(PlayerEntry::getName).toList());
-        AddonGroup.SUP.getMemberList().addAll(player.getSUP().stream().map(PlayerEntry::getName).toList());
-        AddonGroup.BETA.getMemberList().addAll(player.getBETA().stream().map(PlayerEntry::getName).toList());
-        AddonGroup.VIP.getMemberList().addAll(player.getVIP().stream().map(PlayerEntry::getName).toList());
-        AddonGroup.BLACKLIST.getMemberList().addAll(player.getBLACKLIST().stream().map(PlayerEntry::getName).toList());
-        AddonGroup.DYAVOL.getMemberList().addAll(player.getDYAVOL().stream().map(PlayerEntry::getName).toList());
+        if (player != null) {
+            AddonGroup.CEO.getMemberList().addAll(player.getCEO().stream().map(PlayerEntry::getName).toList());
+            AddonGroup.DEV.getMemberList().addAll(player.getDEV().stream().map(PlayerEntry::getName).toList());
+            AddonGroup.MOD.getMemberList().addAll(player.getMOD().stream().map(PlayerEntry::getName).toList());
+            AddonGroup.SUP.getMemberList().addAll(player.getSUP().stream().map(PlayerEntry::getName).toList());
+            AddonGroup.BETA.getMemberList().addAll(player.getBETA().stream().map(PlayerEntry::getName).toList());
+            AddonGroup.VIP.getMemberList().addAll(player.getVIP().stream().map(PlayerEntry::getName).toList());
+            AddonGroup.BLACKLIST.getMemberList().addAll(player.getBLACKLIST().stream().map(PlayerEntry::getName).toList());
+            AddonGroup.DYAVOL.getMemberList().addAll(player.getDYAVOL().stream().map(PlayerEntry::getName).toList());
+        }
     }
 
     public void sendBannerAddRequest(Faction faction, int x, int y, int z, String navipoint) {
@@ -181,6 +183,7 @@ public class API {
 
     public List<BlacklistReason> sendBlacklistReasonRequest() {
         return RequestBuilder.getBuilder(this.unicacityAddon)
+                .preCondition(this.unicacityAddon.player().getFaction().isBadFaction())
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.BLACKLISTREASON)
                 .subPath(this.unicacityAddon.player().getFaction().name())
@@ -414,14 +417,13 @@ public class API {
     }
 
     public void sendStatisticAddRequest(StatisticType statisticType) {
-        if (this.unicacityAddon.utils().isUnicacity()) {
-            RequestBuilder.getBuilder(this.unicacityAddon)
-                    .nonProd(NON_PROD)
-                    .applicationPath(ApplicationPath.STATISTIC)
-                    .subPath(this.unicacityAddon.player().getName() + "/add")
-                    .parameter(mapOf("type", statisticType.name()))
-                    .sendAsync();
-        }
+        RequestBuilder.getBuilder(this.unicacityAddon)
+                .preCondition(this.unicacityAddon.utils().isUnicacity())
+                .nonProd(NON_PROD)
+                .applicationPath(ApplicationPath.STATISTIC)
+                .subPath(this.unicacityAddon.player().getName() + "/add")
+                .parameter(mapOf("type", statisticType.name()))
+                .sendAsync();
     }
 
     public StatisticTop sendStatisticTopRequest() {
@@ -444,7 +446,9 @@ public class API {
     }
 
     public List<WantedReason> sendWantedReasonRequest() {
+        Faction faction = this.unicacityAddon.player().getFaction();
         return RequestBuilder.getBuilder(this.unicacityAddon)
+                .preCondition(faction.equals(Faction.POLIZEI) || faction.equals(Faction.FBI))
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.WANTEDREASON)
                 .getAsJsonArrayAndParse(WantedReason.class);

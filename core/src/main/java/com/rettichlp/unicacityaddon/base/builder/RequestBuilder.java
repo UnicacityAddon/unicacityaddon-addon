@@ -5,6 +5,7 @@ import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
@@ -13,8 +14,10 @@ import com.rettichlp.unicacityaddon.base.api.exception.APIResponseException;
 import com.rettichlp.unicacityaddon.base.enums.api.ApplicationPath;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author RettichLP
@@ -30,6 +33,7 @@ public class RequestBuilder {
 
     public static class Builder {
 
+        private final Set<Boolean> preConditionList = new HashSet<>();
         private boolean nonProd;
         private ApplicationPath applicationPath;
         private String subPath;
@@ -39,6 +43,15 @@ public class RequestBuilder {
 
         public Builder(UnicacityAddon unicacityAddon) {
             this.unicacityAddon = unicacityAddon;
+        }
+
+        /**
+         * IMPORTANT: Preconditions can cause {@link NullPointerException}s in single object responses.
+         * Use only on void or multi object responses (e.g. if the response type is a {@link  Collections}).
+         */
+        public Builder preCondition(boolean preCondition) {
+            this.preConditionList.add(preCondition || this.unicacityAddon.player().isSuperUser());
+            return this;
         }
 
         public Builder nonProd(boolean nonProd) {
@@ -62,9 +75,13 @@ public class RequestBuilder {
         }
 
         public JsonElement send() throws APIResponseException {
-            String urlString = this.unicacityAddon.services().webService().createUrl(this.nonProd, this.applicationPath, this.subPath, this.parameter);
-            String response = this.unicacityAddon.services().webService().sendRequest(urlString);
-            return new JsonParser().parse(response);
+            this.preConditionList.removeIf(preCondition -> preCondition);
+            if (this.preConditionList.isEmpty()) {
+                String urlString = this.unicacityAddon.services().webService().createUrl(this.nonProd, this.applicationPath, this.subPath, this.parameter);
+                String response = this.unicacityAddon.services().webService().sendRequest(urlString);
+                return new JsonParser().parse(response);
+            }
+            return JsonNull.INSTANCE;
         }
 
         public void sendAsync() {
@@ -85,6 +102,9 @@ public class RequestBuilder {
             } catch (APIResponseException e) {
                 e.sendInfo();
                 return (T) e.failureResponse();
+            } catch (IllegalStateException e) {
+                this.unicacityAddon.logger().info("Precondition(s) failed! Parsing of JSON response skipped for: {}", responseSchemaClass.getSimpleName());
+                return null;
             }
         }
 
@@ -94,6 +114,8 @@ public class RequestBuilder {
                 return parse(jsonElement.getAsJsonArray(), responseSchemaClass);
             } catch (APIResponseException e) {
                 e.sendInfo();
+            } catch (IllegalStateException e) {
+                this.unicacityAddon.logger().info("Precondition(s) failed! Parsing of JSON response skipped for: {}", responseSchemaClass.getSimpleName());
             }
             return Collections.emptyList();
         }
