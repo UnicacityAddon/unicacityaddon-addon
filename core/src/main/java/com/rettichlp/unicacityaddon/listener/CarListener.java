@@ -106,18 +106,14 @@ public class CarListener {
 
             int tank = scoreboardScore.getValue();
             switch (tank) {
-                case 100:
-                    sentTankWarnings.clear();
-                    break;
-                case 15:
-                case 10:
-                case 5:
+                case 100 -> sentTankWarnings.clear();
+                case 15, 10, 5 -> {
                     if (!sentTankWarnings.contains(tank)) {
                         p.sendInfoMessage("Dein Tank hat noch " + tank + " Liter.");
                         this.unicacityAddon.soundController().playTankWarningSound();
                         sentTankWarnings.add(tank);
                     }
-                    break;
+                }
             }
         }
     }

@@ -33,9 +33,7 @@ public class VersionedTransportController extends TransportController {
     public void processBusRouting(UnicacityAddon unicacityAddon) {
         AddonPlayer p = unicacityAddon.player();
         Screen screen = Minecraft.getInstance().screen;
-        if (screen instanceof HopperScreen && BusCommand.active) {
-            HopperScreen hopperScreen = (HopperScreen) screen;
-
+        if (screen instanceof HopperScreen hopperScreen && BusCommand.active) {
             HopperMenu hopperMenu = hopperScreen.getMenu();
             if (hopperMenu.containerId != BusCommand.lastWindowId) {
                 BusCommand.lastWindowId = hopperMenu.containerId;
@@ -75,9 +73,7 @@ public class VersionedTransportController extends TransportController {
     @Override
     public void carInteract() {
         Screen screen = Minecraft.getInstance().screen;
-        if (screen instanceof ContainerScreen) {
-            ContainerScreen containerScreen = (ContainerScreen) screen;
-
+        if (screen instanceof ContainerScreen containerScreen) {
             if (containerScreen.getTitle().getString().contains("CarControl")) {
                 ChestMenu chestMenu = containerScreen.getMenu();
                 int numberOfCars = (int) chestMenu.slots.stream()

@@ -7,11 +7,10 @@ import net.labymod.api.event.client.chat.ChatMessageSendEvent;
 
 /**
  * @author Dimiikou
+ * @author RettichLP
  */
 @UCEvent
 public class GaggedListener {
-
-    private static boolean gagged = false;
 
     private final UnicacityAddon unicacityAddon;
 
@@ -21,15 +20,7 @@ public class GaggedListener {
 
     @Subscribe
     public void onChatMessageSend(ChatMessageSendEvent e) {
-        if (gagged && !e.getMessage().startsWith("/"))
+        if (this.unicacityAddon.player().isGagged() && !e.getMessage().startsWith("/"))
             e.changeMessage("/w " + e.getMessage());
-    }
-
-    public static boolean isGagged() {
-        return gagged;
-    }
-
-    public static void toggleGagged() {
-        gagged = !gagged;
     }
 }

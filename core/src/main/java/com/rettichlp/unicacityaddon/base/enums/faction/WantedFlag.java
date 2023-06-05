@@ -1,11 +1,16 @@
 package com.rettichlp.unicacityaddon.base.enums.faction;
 
 import com.rettichlp.unicacityaddon.base.utils.MathUtils;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 /**
  * @author RettichLP
  */
+@Getter
+@AllArgsConstructor
 public enum WantedFlag {
+
     TRIED("-v", "Versuchte/r/s ", "", "x/2"),
     SUBSIDY("-b", "Beihilfe bei der/dem ", "", "x-10"),
     DRIVERS_LICENSE_WITHDRAWAL("-fsa", "", " + Führerscheinabnahme", "x"),
@@ -16,13 +21,6 @@ public enum WantedFlag {
     private final String postponeReason;
     private final String wantedModification;
 
-    WantedFlag(String flagArgument, String prependReason, String postponeReason, String wantedModification) {
-        this.flagArgument = flagArgument;
-        this.prependReason = prependReason;
-        this.postponeReason = postponeReason;
-        this.wantedModification = wantedModification;
-    }
-
     public static WantedFlag getFlag(String string) {
         for (WantedFlag wantedFlag : WantedFlag.values()) {
             if (wantedFlag.flagArgument.equalsIgnoreCase(string))
@@ -30,10 +28,6 @@ public enum WantedFlag {
         }
 
         return null;
-    }
-
-    public String getFlagArgument() {
-        return flagArgument;
     }
 
     public String modifyWantedReasonString(String wantedReasonString) {

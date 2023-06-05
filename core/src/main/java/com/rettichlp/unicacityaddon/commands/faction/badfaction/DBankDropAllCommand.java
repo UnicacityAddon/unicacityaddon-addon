@@ -9,9 +9,6 @@ import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author RettichLP
@@ -44,19 +41,7 @@ public class DBankDropAllCommand extends UnicacityCommand {
                                 commandQueue.add("/dbank drop " + drugType.getDrugName() + " " + integer + " " + drugPurity.getPurity());
                         }));
 
-        Timer timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                if (commandQueue.isEmpty()) {
-                    timer.cancel();
-                } else {
-                    p.sendServerMessage(commandQueue.get(0));
-                    commandQueue.remove(0);
-                }
-            }
-        }, 0, TimeUnit.SECONDS.toMillis(1));
-
+        this.unicacityAddon.utils().commandUtils().sendQueuedCommands(commandQueue);
         return true;
     }
 

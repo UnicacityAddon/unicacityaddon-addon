@@ -1,5 +1,8 @@
 package com.rettichlp.unicacityaddon.base.enums.location;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 /**
  * The following code is based on MPL-licensed code by Paul Zhang.
  * The original code is available at: <a href="https://github.com/paulzhng/UCUtils">https://github.com/paulzhng/UCUtils</a>.
@@ -8,8 +11,12 @@ package com.rettichlp.unicacityaddon.base.enums.location;
  * The following code is subject to the MPL Version 2.0.
  *
  * @author Fuzzlemann
+ * @author RettichLP
  */
+@Getter
+@AllArgsConstructor
 public enum ATM {
+
     ATM_1(1, 114, 70, 166),
     ATM_2(2, -7, 70, 196),
     ATM_3(3, -268, 70, 235),
@@ -74,29 +81,6 @@ public enum ATM {
     private final int x;
     private final int y;
     private final int z;
-
-    ATM(int id, int x, int y, int z) {
-        this.id = id;
-        this.x = x;
-        this.y = y;
-        this.z = z;
-    }
-
-    public int getID() {
-        return id;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public int getZ() {
-        return z;
-    }
 
     public String getNaviCommand() {
         return "/navi " + getX() + "/" + getY() + "/" + getZ();

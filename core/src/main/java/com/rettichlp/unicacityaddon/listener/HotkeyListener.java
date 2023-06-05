@@ -107,7 +107,7 @@ public class HotkeyListener {
             ClientMoveCommand clientMoveCommand = new ClientMoveCommand(this.unicacityAddon, foundChannel.getChannelID(), this.unicacityAddon.utils().tsUtils().getMyClientID());
 
             CommandResponse commandResponse = clientMoveCommand.getResponse();
-            if (!commandResponse.succeeded()) {
+            if (commandResponse.failed()) {
                 p.sendErrorMessage("Das Bewegen ist fehlgeschlagen.");
                 return;
             }

@@ -37,7 +37,7 @@ public class ActivityCommand extends UnicacityCommand {
                 new ArrayList<>(Arrays.asList(ScreenshotType.values())) :
                 Arrays.stream(ScreenshotType.values())
                         .filter(screenshotType -> screenshotType.getDirectoryName().equalsIgnoreCase(arguments[0]))
-                        .collect(Collectors.toList());
+                        .toList();
 
         p.sendEmptyMessage();
         p.sendMessage(Message.getBuilder()

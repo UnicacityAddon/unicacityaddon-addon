@@ -11,6 +11,8 @@ import com.rettichlp.unicacityaddon.listener.NavigationListener;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.entity.player.ClientPlayer;
 import net.labymod.api.client.entity.player.Inventory;
+import net.labymod.api.client.network.ClientPacketListener;
+import net.labymod.api.client.network.NetworkPlayerInfo;
 import net.labymod.api.client.scoreboard.DisplaySlot;
 import net.labymod.api.client.scoreboard.Scoreboard;
 import net.labymod.api.client.scoreboard.ScoreboardScore;
@@ -30,6 +32,8 @@ import java.util.stream.Collectors;
 public class DefaultAddonPlayer implements AddonPlayer {
 
     private static String latestVersion = null;
+
+    private boolean gagged = false;
 
     private final UnicacityAddon unicacityAddon;
 
@@ -204,6 +208,16 @@ public class DefaultAddonPlayer implements AddonPlayer {
     }
 
     @Override
+    public boolean isGagged() {
+        return gagged;
+    }
+
+    @Override
+    public void setGagged(boolean gagged) {
+        this.gagged = gagged;
+    }
+
+    @Override
     public boolean isPrioritizedMember() {
         Map<String, Integer> filteredPlayerMap = this.unicacityAddon.api().getPlayerFactionMap().entrySet().stream()
                 .filter(e -> e.getValue().equals(getFaction())) // name and faction from faction
@@ -219,7 +233,7 @@ public class DefaultAddonPlayer implements AddonPlayer {
                 .filter(stringIntegerEntry -> stringIntegerEntry.getValue().equals(getRank()))
                 .map(Map.Entry::getKey)
                 .sorted()
-                .collect(Collectors.toList());
+                .toList();
 
         boolean hasRankPriority = !rankPlayerList.isEmpty() && rankPlayerList.get(0).equals(getName());
 
@@ -227,8 +241,14 @@ public class DefaultAddonPlayer implements AddonPlayer {
     }
 
     public boolean hasPlayerLatestAddonVersion(String name) {
+        ClientPacketListener clientPacketListener = this.unicacityAddon.labyAPI().minecraft().getClientPacketListener();
+
         Optional<ManagementUser> managementUserOptional = this.unicacityAddon.api().getManagementUserList().stream()
-                .filter(mu -> mu.getUuid().equals(this.unicacityAddon.labyAPI().minecraft().getClientPacketListener().getNetworkPlayerInfo(name).profile().getUniqueId().toString().replace("-", "")))
+                .filter(managementUser -> clientPacketListener != null)
+                .filter(managementUser -> {
+                    NetworkPlayerInfo networkPlayerInfo = clientPacketListener.getNetworkPlayerInfo(name);
+                    return networkPlayerInfo != null && networkPlayerInfo.profile().getUniqueId().toString().replace("-", "").equals(managementUser.getUuid());
+                })
                 .findAny();
 
         return managementUserOptional.isPresent() && (managementUserOptional.get().getVersion().equals(getLatestVersion()) || managementUserOptional.get().getVersion().contains("dev"));

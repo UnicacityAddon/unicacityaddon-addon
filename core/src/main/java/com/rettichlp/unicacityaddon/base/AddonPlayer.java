@@ -74,5 +74,9 @@ public interface AddonPlayer {
 
     @Nullable Weapon getWeaponInMainHand();
 
+    boolean isGagged();
+
+    void setGagged(boolean gagged);
+
     boolean isPrioritizedMember();
 }

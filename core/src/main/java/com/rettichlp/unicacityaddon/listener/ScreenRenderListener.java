@@ -16,7 +16,6 @@ import net.labymod.api.event.client.world.ItemStackTooltipEvent;
 @UCEvent
 public class ScreenRenderListener {
 
-    public static ItemStack lastHoveredItemStack;
     public static int lastHoveredSlotNumber = -1;
 
     private final UnicacityAddon unicacityAddon;
@@ -48,7 +47,6 @@ public class ScreenRenderListener {
     @Subscribe
     public void onItemStackTooltip(ItemStackTooltipEvent e) {
         ItemStack itemStack = e.itemStack();
-        lastHoveredItemStack = itemStack;
         lastHoveredSlotNumber = this.unicacityAddon.guiController().getSlotNumberByDisplayName(this.unicacityAddon.utils().textUtils().plain(itemStack.getDisplayName()));
     }
 }

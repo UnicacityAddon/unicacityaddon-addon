@@ -19,7 +19,6 @@ import java.util.stream.Collectors;
 @UCCommand(prefix = "bus")
 public class BusCommand extends UnicacityCommand {
 
-    public static Bus start;
     public static Bus destination;
     public static boolean active = false;
     public static int lastWindowId = 0;
@@ -46,7 +45,6 @@ public class BusCommand extends UnicacityCommand {
             return false;
         }
 
-        start = this.unicacityAddon.services().navigationService().getNearestBus().getValue();
         destination = this.unicacityAddon.services().navigationService().getNearestBus(naviPoint.getBlockPos()).getValue();
 
         limiter = 0;

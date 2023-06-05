@@ -1,5 +1,7 @@
 package com.rettichlp.unicacityaddon.base.text;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import net.labymod.api.client.component.format.NamedTextColor;
 import net.labymod.api.client.component.format.TextColor;
 
@@ -9,6 +11,8 @@ import java.util.Arrays;
 /**
  * @author RettichLP
  */
+@Getter
+@AllArgsConstructor
 public enum ColorCode {
 
     BLACK("§0", NamedTextColor.BLACK, new Color(0, 0, 0)),
@@ -31,24 +35,6 @@ public enum ColorCode {
     private final String code;
     private final TextColor textColor;
     private final Color color;
-
-    ColorCode(String code, TextColor textColor, Color color) {
-        this.code = code;
-        this.textColor = textColor;
-        this.color = color;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public TextColor getTextColor() {
-        return textColor;
-    }
-
-    public Color getColor() {
-        return color;
-    }
 
     public static ColorCode getColorCodeByTextColor(TextColor color) {
         return Arrays.stream(values())

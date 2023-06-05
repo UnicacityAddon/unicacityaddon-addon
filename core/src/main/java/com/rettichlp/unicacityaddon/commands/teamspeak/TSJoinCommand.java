@@ -58,7 +58,7 @@ public class TSJoinCommand extends UnicacityCommand {
         String channelName = this.unicacityAddon.utils().textUtils().makeStringByArgs(arguments, "-");
 
         ChannelListCommand.Response channelListResponse = new ChannelListCommand(this.unicacityAddon).getResponse();
-        if (!channelListResponse.succeeded()) {
+        if (channelListResponse.failed()) {
             p.sendErrorMessage("Das Bewegen ist fehlgeschlagen.");
             return true;
         }
@@ -91,7 +91,7 @@ public class TSJoinCommand extends UnicacityCommand {
         ClientMoveCommand clientMoveCommand = new ClientMoveCommand(this.unicacityAddon, foundChannel.getChannelID(), this.unicacityAddon.utils().tsUtils().getMyClientID());
 
         CommandResponse commandResponse = clientMoveCommand.getResponse();
-        if (!commandResponse.succeeded()) {
+        if (commandResponse.failed()) {
             p.sendErrorMessage("Das Bewegen ist fehlgeschlagen.");
             return true;
         }

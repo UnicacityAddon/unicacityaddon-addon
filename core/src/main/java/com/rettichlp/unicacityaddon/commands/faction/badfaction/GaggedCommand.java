@@ -5,7 +5,6 @@ import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
-import com.rettichlp.unicacityaddon.listener.faction.badfaction.GaggedListener;
 
 import java.util.List;
 
@@ -25,12 +24,13 @@ public class GaggedCommand extends UnicacityCommand {
     @Override
     public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
-        GaggedListener.toggleGagged();
+        p.setGagged(!p.isGagged());
 
-        if (GaggedListener.isGagged())
+        if (p.isGagged()) {
             p.sendInfoMessage("Ab sofort kannst du nur noch flüstern.");
-        else
+        } else {
             p.sendInfoMessage("Ab sofort kannst du wieder normal reden.");
+        }
         return true;
     }
 

@@ -1,8 +1,13 @@
 package com.rettichlp.unicacityaddon.base.enums;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 /**
  * @author RettichLP
  */
+@Getter
+@AllArgsConstructor
 public enum ScreenshotType {
 
     ANDERE("andere"),
@@ -19,12 +24,4 @@ public enum ScreenshotType {
     VERHAFTUNG("verhaftung");
 
     private final String directoryName;
-
-    ScreenshotType(String directoryName) {
-        this.directoryName = directoryName;
-    }
-
-    public String getDirectoryName() {
-        return this.directoryName;
-    }
 }

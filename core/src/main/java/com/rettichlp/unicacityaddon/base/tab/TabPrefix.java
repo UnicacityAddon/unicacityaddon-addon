@@ -1,9 +1,15 @@
 package com.rettichlp.unicacityaddon.base.tab;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 import java.util.Arrays;
 import java.util.regex.Pattern;
 
+@Getter
+@AllArgsConstructor
 public enum TabPrefix {
+
     FBI_UC(Pattern.compile("^§1\\[UC]\\w+§r$"), Pattern.compile("^§1\\[UC]\\w+$")),
     FBI(Pattern.compile("^§1\\w+§r$"), Pattern.compile("^§1\\w+$")),
     POLICE_UC(Pattern.compile("^§9\\[UC]\\w+§r$"), Pattern.compile("^§9\\[UC]\\w+$")),
@@ -20,20 +26,6 @@ public enum TabPrefix {
 
     private final Pattern pattern_1_12_2;
     private final Pattern pattern_1_16_5;
-
-    TabPrefix(Pattern pattern_1_12_2, Pattern pattern_1_16_5) {
-        this.pattern_1_12_2 = pattern_1_12_2;
-        this.pattern_1_16_5 = pattern_1_16_5;
-
-    }
-
-    public Pattern getPattern_1_12_2() {
-        return pattern_1_12_2;
-    }
-
-    public Pattern getPattern_1_16_5() {
-        return pattern_1_16_5;
-    }
 
     public static TabPrefix getTypeByDisplayName(String displayName) {
         return Arrays.stream(values())

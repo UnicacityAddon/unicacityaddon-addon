@@ -52,7 +52,8 @@ public class ReinforcementListener {
             int posY = Integer.parseInt(reinforcementMatcher.group(4));
             int posZ = Integer.parseInt(reinforcementMatcher.group(5));
 
-            int distance = (int) p.getPosition().distance(new FloatVector3(posX, posY, posZ));
+            FloatVector3 position = p.getPosition();
+            int distance = position != null ? (int) position.distance(new FloatVector3(posX, posY, posZ)) : 0;
 
             boolean dChat = splitFormattedMsg[0].contains(ColorCode.RED.getCode())
                     && splitFormattedMsg[1].contains(ColorCode.RED.getCode());

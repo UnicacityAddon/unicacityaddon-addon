@@ -35,7 +35,7 @@ public class TodoListCommand extends UnicacityCommand {
         } else if (arguments.length > 1 && arguments[0].equalsIgnoreCase("done")) {
             String todo = this.unicacityAddon.utils().textUtils().makeStringByArgs(arguments, " ").replace("done ", "");
             Optional<TodolistEntry> todolistEntryOptional = this.unicacityAddon.services().fileService().data().getTodolist().stream().filter(todolistEntry -> todolistEntry.getTodo().equals(todo)).findFirst();
-            if (!todolistEntryOptional.isPresent()) {
+            if (todolistEntryOptional.isEmpty()) {
                 p.sendErrorMessage("Keinen Eintrag gefunden.");
                 return true;
             }

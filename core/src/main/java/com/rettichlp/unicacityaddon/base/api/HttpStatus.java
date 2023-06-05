@@ -1,11 +1,17 @@
 package com.rettichlp.unicacityaddon.base.api;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 import java.util.Arrays;
 
 /**
  * @author RettichLP
  */
+@Getter
+@AllArgsConstructor
 public enum HttpStatus {
+
     CONTINUE(100, "Continue"),
     SWITCHING_PROTOCOLS(101, "Switching Protocols"),
     PROCESSING(102, "Processing"),
@@ -74,19 +80,6 @@ public enum HttpStatus {
 
     private final int value;
     private final String reasonPhrase;
-
-    HttpStatus(int value, String reasonPhrase) {
-        this.value = value;
-        this.reasonPhrase = reasonPhrase;
-    }
-
-    public int getValue() {
-        return value;
-    }
-
-    public String getReasonPhrase() {
-        return reasonPhrase;
-    }
 
     public static HttpStatus valueOf(int statusCode) {
         return Arrays.stream(values())

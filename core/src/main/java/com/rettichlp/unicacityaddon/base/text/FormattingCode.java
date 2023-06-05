@@ -1,8 +1,13 @@
 package com.rettichlp.unicacityaddon.base.text;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 /**
  * @author RettichLP
  */
+@Getter
+@AllArgsConstructor
 public enum FormattingCode {
 
     OBFUSCATED("§k"),
@@ -13,12 +18,4 @@ public enum FormattingCode {
     RESET("§r");
 
     private final String code;
-
-    FormattingCode(String code) {
-        this.code = code;
-    }
-
-    public String getCode() {
-        return code;
-    }
 }

@@ -30,7 +30,7 @@ public class BroadcastCommand extends UnicacityCommand {
     }
 
     /**
-     * Quote: *Stille* "Hat das Vorteile?" - RettichLP zu der WG von Fio, 29.09.2022
+     * Quote: *Stille* "Hat Das Vorteile?" - RettichLP zu der WG von Fio, 29.09.2022
      */
     @Override
     public boolean execute(String[] arguments) {

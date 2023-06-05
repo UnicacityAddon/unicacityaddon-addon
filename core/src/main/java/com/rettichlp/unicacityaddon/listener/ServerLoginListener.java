@@ -23,6 +23,7 @@ public class ServerLoginListener {
         ServerData serverData = e.serverData();
         if (serverData.address().matches("unicacity.de", 25565, true)) {
             MobileListener.activeCommunicationsCheck = true;
+            this.unicacityAddon.logger().info("Enabled mobile check");
         }
     }
 }

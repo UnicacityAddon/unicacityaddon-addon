@@ -33,17 +33,13 @@ public class ADropMoneyCommand extends UnicacityCommand {
             @Override
             public void run() {
                 switch (step++) {
-                    case 1:
-                        p.sendServerMessage("/bank abbuchen 15000");
-                        break;
-                    case 2:
-                        p.sendServerMessage("/dropmoney");
-                        break;
-                    case 3:
+                    case 1 -> p.sendServerMessage("/bank abbuchen 15000");
+                    case 2 -> p.sendServerMessage("/dropmoney");
+                    case 3 -> {
                         p.sendServerMessage("/bank einzahlen 15000");
                         step = 0;
                         this.cancel();
-                        break;
+                    }
                 }
             }
         }, 0, 1000);

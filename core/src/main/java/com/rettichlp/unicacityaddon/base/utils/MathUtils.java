@@ -105,22 +105,13 @@ public class MathUtils {
                 nextChar();
             String func = expression.substring(startPos, this.pos);
             x = parseFactor();
-            switch (func) {
-                case "sqrt":
-                    x = Math.sqrt(x);
-                    break;
-                case "sin":
-                    x = Math.sin(Math.toRadians(x));
-                    break;
-                case "cos":
-                    x = Math.cos(Math.toRadians(x));
-                    break;
-                case "tan":
-                    x = Math.tan(Math.toRadians(x));
-                    break;
-                default:
-                    throw new ExpressionException("Unknown function: " + func);
-            }
+            x = switch (func) {
+                case "sqrt" -> Math.sqrt(x);
+                case "sin" -> Math.sin(Math.toRadians(x));
+                case "cos" -> Math.cos(Math.toRadians(x));
+                case "tan" -> Math.tan(Math.toRadians(x));
+                default -> throw new ExpressionException("Unknown function: " + func);
+            };
         } else {
             char wrongChar;
 

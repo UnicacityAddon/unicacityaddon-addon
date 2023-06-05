@@ -61,22 +61,11 @@ public class HouseInteractionListener {
 
     public void increaseProgress(int progressIndex) {
         switch (progress[progressIndex]) {
-            case 0:
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-            case 5:
-            case 6:
-            case 7:
-            case 8:
-            case 9:
+            case 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 -> {
                 progress[progressIndex]++;
                 setMessage(progress[progressIndex]);
-                break;
-            case 10:
-                progress[progressIndex] = -1;
-                break;
+            }
+            case 10 -> progress[progressIndex] = -1;
         }
     }
 

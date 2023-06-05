@@ -1,10 +1,15 @@
 package com.rettichlp.unicacityaddon.base.enums.faction;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 import java.util.Arrays;
 
 /**
  * @author RettichLP
  */
+@Getter
+@AllArgsConstructor
 public enum DrugType {
 
     COCAINE("Pulver", "Koks", false),
@@ -21,20 +26,6 @@ public enum DrugType {
     private final String drugName;
     private final String shortName;
     private final boolean legal;
-
-    DrugType(String drugName, String shortName, boolean legal) {
-        this.drugName = drugName;
-        this.shortName = shortName;
-        this.legal = legal;
-    }
-
-    public String getDrugName() {
-        return drugName;
-    }
-
-    public boolean isLegal() {
-        return legal;
-    }
 
     public static DrugType getDrugType(String s) {
         return Arrays.stream(DrugType.values())

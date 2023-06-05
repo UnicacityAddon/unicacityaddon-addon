@@ -1,7 +1,6 @@
 package com.rettichlp.unicacityaddon.commands.faction.rettungsdienst;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
@@ -32,8 +31,6 @@ public class ARezeptCommand extends UnicacityCommand {
 
     @Override
     public boolean execute(String[] arguments) {
-        AddonPlayer p = this.unicacityAddon.player();
-
         if (arguments.length < 3) {
             sendUsage();
             return true;

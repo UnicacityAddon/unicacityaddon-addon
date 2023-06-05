@@ -16,10 +16,10 @@ public class SendTextMessageCommand extends BaseCommand<CommandResponse> {
     }
 
     public SendTextMessageCommand(UnicacityAddon unicacityAddon, int targetID, String message) {
-        super(unicacityAddon, "sendtextmessage targetmode=" + TargetMode.PRIVATE.getID() + " target=" + targetID + " msg=" + TSParser.encode(message));
+        super(unicacityAddon, "sendtextmessage targetmode=" + TargetMode.PRIVATE.getId() + " target=" + targetID + " msg=" + TSParser.encode(message));
     }
 
     public SendTextMessageCommand(UnicacityAddon unicacityAddon, TargetMode targetMode, String message) {
-        super(unicacityAddon, "sendtextmessage targetmode=" + targetMode.getID() + " msg=" + TSParser.encode(message));
+        super(unicacityAddon, "sendtextmessage targetmode=" + targetMode.getId() + " msg=" + TSParser.encode(message));
     }
 }

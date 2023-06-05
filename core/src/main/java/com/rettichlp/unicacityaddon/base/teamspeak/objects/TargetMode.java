@@ -1,5 +1,8 @@
 package com.rettichlp.unicacityaddon.base.teamspeak.objects;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 /**
  * The following code is based on MPL-licensed code by Paul Zhang.
  * The original code is available at: <a href="https://github.com/paulzhng/UCUtils">https://github.com/paulzhng/UCUtils</a>.
@@ -9,6 +12,8 @@ package com.rettichlp.unicacityaddon.base.teamspeak.objects;
  *
  * @author Fuzzlemann
  */
+@Getter
+@AllArgsConstructor
 public enum TargetMode {
 
     PRIVATE(1),
@@ -17,20 +22,12 @@ public enum TargetMode {
 
     private final int id;
 
-    TargetMode(int id) {
-        this.id = id;
-    }
-
     public static TargetMode byID(int id) {
         for (TargetMode targetMode : TargetMode.values()) {
-            if (targetMode.getID() == id)
+            if (targetMode.getId() == id)
                 return targetMode;
         }
 
         return null;
-    }
-
-    public int getID() {
-        return id;
     }
 }

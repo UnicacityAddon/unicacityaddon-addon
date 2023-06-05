@@ -1,6 +1,8 @@
 package com.rettichlp.unicacityaddon.base.teamspeak.objects;
 
 import com.rettichlp.unicacityaddon.base.teamspeak.CommandResponse;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 import java.util.Map;
 
@@ -13,6 +15,8 @@ import java.util.Map;
  *
  * @author Fuzzlemann
  */
+@Getter
+@AllArgsConstructor
 public class Client {
 
     private final int clientID;
@@ -27,33 +31,5 @@ public class Client {
         this.channelID = CommandResponse.parseInt(map.get("cid"));
         this.name = map.get("client_nickname");
         this.clientType = CommandResponse.parseInt(map.get("client_type"));
-    }
-
-    public Client(int clientID, int clientDatabaseID, int channelID, String name, int clientType) {
-        this.clientID = clientID;
-        this.clientDatabaseID = clientDatabaseID;
-        this.channelID = channelID;
-        this.name = name;
-        this.clientType = clientType;
-    }
-
-    public int getClientID() {
-        return clientID;
-    }
-
-    public int getClientDatabaseID() {
-        return clientDatabaseID;
-    }
-
-    public int getChannelID() {
-        return channelID;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getClientType() {
-        return clientType;
     }
 }

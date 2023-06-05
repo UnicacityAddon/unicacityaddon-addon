@@ -1,6 +1,8 @@
 package com.rettichlp.unicacityaddon.base.enums.api;
 
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,7 +12,10 @@ import java.util.stream.Collectors;
 /**
  * @author RettichLP
  */
+@Getter
+@AllArgsConstructor
 public enum AddonGroup {
+
     CEO("CEO", "CEO", ColorCode.RED, new ArrayList<>()),
     DEV("DEV", "Developer", ColorCode.AQUA, new ArrayList<>()),
     MOD("MOD", "Moderator", ColorCode.BLUE, new ArrayList<>()),
@@ -24,29 +29,6 @@ public enum AddonGroup {
     private final String displayName;
     private final ColorCode colorCode;
     private final List<String> memberList;
-
-    AddonGroup(String apiName, String displayName, ColorCode colorCode, List<String> memberList) {
-        this.apiName = apiName;
-        this.displayName = displayName;
-        this.colorCode = colorCode;
-        this.memberList = memberList;
-    }
-
-    public String getApiName() {
-        return apiName;
-    }
-
-    public String getDisplayName() {
-        return displayName;
-    }
-
-    public ColorCode getColorCode() {
-        return colorCode;
-    }
-
-    public List<String> getMemberList() {
-        return memberList;
-    }
 
     public static List<AddonGroup> getAddonGroupsOfPlayer(String playerName) {
         return Arrays.stream(AddonGroup.values())

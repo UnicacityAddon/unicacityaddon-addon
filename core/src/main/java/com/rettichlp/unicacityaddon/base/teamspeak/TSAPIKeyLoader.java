@@ -24,6 +24,7 @@ public class TSAPIKeyLoader {
     private final String[] teamSpeakClientNames = new String[]{"TS3Client", "TeamSpeak 3 Client", "TeamSpeak", "TeamSpeak 3", "ts3"};
     private final List<File> possibleConfigDirectories = new ArrayList<>();
 
+    // TODO reimplement
     public void load(UnicacityAddon unicacityAddon) throws IOException {
         if (!unicacityAddon.configuration().tsApiKey().getOrDefault("").isEmpty())
             return;

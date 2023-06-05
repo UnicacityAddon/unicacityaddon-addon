@@ -35,6 +35,7 @@ public class VersionedDeadBodyController extends DeadBodyController {
     public void updateDisplayName(UnicacityAddon unicacityAddon) {
         FloatVector3 position = unicacityAddon.player().getPosition();
 
+        assert position != null;
         AABB aabb = new AABB(
                 position.getX() - 50,
                 position.getY() - 50,

@@ -32,7 +32,7 @@ public class NearestATMCommand extends UnicacityCommand {
         this.unicacityAddon.player().sendMessage(Message.getBuilder()
                 .prefix()
                 .of("ATM").color(ColorCode.GRAY).advance().space()
-                .of(String.valueOf(nearestATM.getValue().getID())).color(ColorCode.AQUA).bold().advance().space()
+                .of(String.valueOf(nearestATM.getValue().getId())).color(ColorCode.AQUA).bold().advance().space()
                 .of("ist").color(ColorCode.GRAY).advance().space()
                 .of(Math.round(nearestATM.getKey()) + "m").color(ColorCode.AQUA).bold().advance().space()
                 .of("entfernt.").color(ColorCode.GRAY).advance().space()

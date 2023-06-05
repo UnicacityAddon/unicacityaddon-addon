@@ -1,5 +1,7 @@
 package com.rettichlp.unicacityaddon.base.enums.location;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import net.labymod.api.util.math.vector.FloatVector3;
 
 import java.util.Arrays;
@@ -7,7 +9,10 @@ import java.util.Arrays;
 /**
  * @author RettichLP
  */
+@Getter
+@AllArgsConstructor
 public enum Bus {
+
     ALTSTADT("Altstadt", 263, 70, 596),
     ASIA_PARK("Asia Park", 1278, 70, -74),
     BAR("Bar", -19, 70, 191),
@@ -56,29 +61,6 @@ public enum Bus {
     private final int x;
     private final int y;
     private final int z;
-
-    Bus(String name, int x, int y, int z) {
-        this.name = name;
-        this.x = x;
-        this.y = y;
-        this.z = z;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public int getZ() {
-        return z;
-    }
 
     public FloatVector3 getBlockPos() {
         return new FloatVector3(x, y, z);

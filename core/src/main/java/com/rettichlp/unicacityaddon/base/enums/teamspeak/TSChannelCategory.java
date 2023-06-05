@@ -1,9 +1,15 @@
 package com.rettichlp.unicacityaddon.base.enums.teamspeak;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 /**
  * @author RettichLP
  */
+@Getter
+@AllArgsConstructor
 public enum TSChannelCategory {
+
     UNICACITY_TEAM("UnicaCity Team", 2),
     SERVER_TEAM("Serverteams", 15),
     SERVER_TEAM_BUILDING("Serverteams", 17),
@@ -30,17 +36,4 @@ public enum TSChannelCategory {
 
     private final String categoryName;
     private final int pid;
-
-    TSChannelCategory(String categoryName, int pid) {
-        this.categoryName = categoryName;
-        this.pid = pid;
-    }
-
-    public String getCategoryName() {
-        return categoryName;
-    }
-
-    public int getPid() {
-        return pid;
-    }
 }

@@ -30,6 +30,13 @@ public class UnicacityAddonTickEvent implements Event {
     }
 
     public enum Phase {
-        TICK, TICK_5, MINUTE, SECOND, SECOND_3, SECOND_5, SECOND_30
+
+        TICK,
+        TICK_5,
+        MINUTE,
+        SECOND,
+        SECOND_3,
+        SECOND_5,
+        SECOND_30
     }
 }

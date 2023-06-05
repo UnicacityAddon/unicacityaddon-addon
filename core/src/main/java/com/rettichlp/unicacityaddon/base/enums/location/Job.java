@@ -1,5 +1,8 @@
 package com.rettichlp.unicacityaddon.base.enums.location;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 /**
  * The following code is based on MPL-licensed code by Paul Zhang.
  * The original code is available at: <a href="https://github.com/paulzhng/UCUtils">https://github.com/paulzhng/UCUtils</a>.
@@ -9,7 +12,10 @@ package com.rettichlp.unicacityaddon.base.enums.location;
  *
  * @author Fuzzlemann
  */
+@Getter
+@AllArgsConstructor
 public enum Job {
+
     POWDER_MINE(510, 63, 178, "Pulvermine", "/startmine"),
     REFUSE_COLLECTOR(510, 63, 178, "Müllmann", "/müllmann"),
     LUMBERJACK(433, 64, 420, "Holzfäller", "/startwood"),
@@ -31,34 +37,6 @@ public enum Job {
     private final int z;
     private final String name;
     private final String command;
-
-    Job(int x, int y, int z, String name, String command) {
-        this.x = x;
-        this.y = y;
-        this.z = z;
-        this.name = name;
-        this.command = command;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public int getZ() {
-        return z;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getCommand() {
-        return command;
-    }
 
     public String getNaviCommand() {
         return "/navi " + getX() + "/" + getY() + "/" + getZ();

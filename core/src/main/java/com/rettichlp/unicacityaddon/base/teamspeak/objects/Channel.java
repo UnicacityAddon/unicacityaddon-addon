@@ -1,6 +1,8 @@
 package com.rettichlp.unicacityaddon.base.teamspeak.objects;
 
 import com.rettichlp.unicacityaddon.base.teamspeak.CommandResponse;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 import java.util.Map;
 
@@ -13,6 +15,8 @@ import java.util.Map;
  *
  * @author Fuzzlemann
  */
+@Getter
+@AllArgsConstructor
 public class Channel implements Comparable<Channel> {
 
     private final int channelID;
@@ -25,29 +29,6 @@ public class Channel implements Comparable<Channel> {
         this.name = map.get("channel_name");
         this.pid = CommandResponse.parseInt(map.get("pid"));
         this.channelOrder = CommandResponse.parseInt(map.get("channel_order"));
-    }
-
-    public Channel(int channelID, String name, int pid, int channelOrder) {
-        this.channelID = channelID;
-        this.name = name;
-        this.pid = pid;
-        this.channelOrder = channelOrder;
-    }
-
-    public int getChannelID() {
-        return channelID;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getPid() {
-        return pid;
-    }
-
-    public int getChannelOrder() {
-        return channelOrder;
     }
 
     @Override

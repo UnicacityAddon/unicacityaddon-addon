@@ -60,12 +60,9 @@ public class CommandResponse {
         return str != null && str.equals("1");
     }
 
-    public boolean succeeded() {
+    public boolean failed() {
         String msg = getResponse().get("msg");
-        if (msg == null)
-            return false;
-
-        return msg.equals("ok");
+        return msg == null || !msg.equals("ok");
     }
 
     public Map<String, String> getResponse() {

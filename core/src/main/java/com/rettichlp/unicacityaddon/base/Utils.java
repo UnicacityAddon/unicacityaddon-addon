@@ -4,8 +4,8 @@ import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.teamspeak.TSUtils;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
+import com.rettichlp.unicacityaddon.base.utils.CommandUtils;
 import com.rettichlp.unicacityaddon.base.utils.ListUtils;
-import com.rettichlp.unicacityaddon.base.utils.MathUtils;
 import com.rettichlp.unicacityaddon.base.utils.TextUtils;
 import net.labymod.api.client.gui.icon.Icon;
 import net.labymod.api.client.network.ClientPacketListener;
@@ -25,6 +25,7 @@ public class Utils {
     private final String VERSION = "2.0.0-alpha.4";
     private final Icon ICON = Icon.texture(ResourceLocation.create("unicacityaddon", "textures/uc.png")).resolution(64, 64);
 
+    public final CommandUtils commandUtils;
     private final ListUtils listUtils;
     private final TextUtils textUtils;
     private final TSUtils tsUtils;
@@ -33,9 +34,10 @@ public class Utils {
 
     public Utils(UnicacityAddon unicacityAddon) {
         this.unicacityAddon = unicacityAddon;
-        this.tsUtils = new TSUtils(unicacityAddon);
+        this.commandUtils = new CommandUtils(unicacityAddon);
         this.listUtils = new ListUtils();
         this.textUtils = new TextUtils();
+        this.tsUtils = new TSUtils(unicacityAddon);
     }
 
     public String version() {
@@ -46,12 +48,12 @@ public class Utils {
         return ICON;
     }
 
-    public ListUtils listUtils() {
-        return listUtils;
+    public CommandUtils commandUtils() {
+        return commandUtils;
     }
 
-    public MathUtils mathUtils(String expression) {
-        return new MathUtils(expression);
+    public ListUtils listUtils() {
+        return listUtils;
     }
 
     public TextUtils textUtils() {

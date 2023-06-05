@@ -34,9 +34,7 @@ public class VersionedTransportController extends TransportController {
     public void processBusRouting(UnicacityAddon unicacityAddon) {
         AddonPlayer p = unicacityAddon.player();
         GuiScreen guiScreen = Minecraft.getMinecraft().currentScreen;
-        if (guiScreen instanceof GuiHopper && BusCommand.active) {
-            GuiHopper guiHopper = (GuiHopper) guiScreen;
-
+        if (guiScreen instanceof GuiHopper guiHopper && BusCommand.active) {
             Container container = guiHopper.inventorySlots;
             if (container.windowId != BusCommand.lastWindowId && container instanceof ContainerHopper) {
                 BusCommand.lastWindowId = container.windowId;
@@ -72,9 +70,7 @@ public class VersionedTransportController extends TransportController {
     @Override
     public void carInteract() {
         GuiScreen guiScreen = Minecraft.getMinecraft().currentScreen;
-        if (guiScreen instanceof GuiContainer && ((GuiContainer) guiScreen).inventorySlots instanceof ContainerChest) {
-            ContainerChest containerChest = (ContainerChest) ((GuiContainer) guiScreen).inventorySlots;
-
+        if (guiScreen instanceof GuiContainer && ((GuiContainer) guiScreen).inventorySlots instanceof ContainerChest containerChest) {
             if (containerChest.getLowerChestInventory().getDisplayName().getUnformattedText().equals("§6CarControl")) {
                 int numberOfCars = (int) containerChest.getInventory().stream()
                         .filter(itemStack -> !itemStack.isEmpty() && itemStack.getDisplayName().startsWith(ColorCode.GOLD.getCode()))

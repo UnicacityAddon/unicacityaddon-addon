@@ -194,29 +194,25 @@ public class AccountListener {
         AddonPlayer p = this.unicacityAddon.player();
 
         switch (e.getData().getPayDayTime()) {
-            case 0:
-            case 56:
-            case 58:
-                isMessageLocked = false;
-                break;
-            case 55:
+            case 0, 56, 58 -> isMessageLocked = false;
+            case 55 -> {
                 if (!isMessageLocked) {
                     p.sendInfoMessage("Du hast in 5 Minuten deinen PayDay.");
                     isMessageLocked = true;
                 }
-                break;
-            case 57:
+            }
+            case 57 -> {
                 if (!isMessageLocked) {
                     p.sendInfoMessage("Du hast in 3 Minuten deinen PayDay.");
                     isMessageLocked = true;
                 }
-                break;
-            case 59:
+            }
+            case 59 -> {
                 if (!isMessageLocked) {
                     p.sendInfoMessage("Du hast in 1 Minute deinen PayDay.");
                     isMessageLocked = true;
                 }
-                break;
+            }
         }
     }
 

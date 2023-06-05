@@ -1,6 +1,9 @@
 package com.rettichlp.unicacityaddon.base.enums;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import net.labymod.api.client.entity.player.ClientPlayer;
 import net.labymod.api.nbt.NBTTag;
 import net.labymod.api.nbt.tags.NBTTagCompound;
 
@@ -11,21 +14,16 @@ import java.util.regex.Pattern;
 /**
  * @author RettichLP
  */
+@Getter
+@AllArgsConstructor
 public enum Weapon {
+
     TS_19("TS-19"), // M4
     SCATTER_3("Scatter-3"), // MP5
     P_69("P-69"), // Pistole
     EXTENSO_18("Extenso-18"); // Jagdgewehr
 
     private final String name;
-
-    Weapon(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
 
     public String getDisplayName() {
         return "§8" + name;
@@ -56,13 +54,16 @@ public enum Weapon {
     }
 
     private Matcher getAmmunitionNBTTagMatcher(UnicacityAddon unicacityAddon) {
-        NBTTagCompound nbtTagCompound = unicacityAddon.player().getPlayer().getMainHandItemStack().getNBTTag();
-        if (nbtTagCompound != null) {
-            NBTTag<?> nbtTag = nbtTagCompound.get("display");
-            if (nbtTag != null) {
-                Matcher matcher = Pattern.compile("(\\d+)/(\\d+)").matcher(nbtTag.value().toString());
-                if (matcher.find()) {
-                    return matcher;
+        ClientPlayer clientPlayer = unicacityAddon.player().getPlayer();
+        if (clientPlayer != null) {
+            NBTTagCompound nbtTagCompound = clientPlayer.getMainHandItemStack().getNBTTag();
+            if (nbtTagCompound != null) {
+                NBTTag<?> nbtTag = nbtTagCompound.get("display");
+                if (nbtTag != null && nbtTag.value() != null) {
+                    Matcher matcher = Pattern.compile("(\\d+)/(\\d+)").matcher(nbtTag.value().toString());
+                    if (matcher.find()) {
+                        return matcher;
+                    }
                 }
             }
         }

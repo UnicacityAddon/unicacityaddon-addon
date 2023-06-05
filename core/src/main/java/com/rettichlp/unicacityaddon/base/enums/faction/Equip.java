@@ -2,12 +2,16 @@ package com.rettichlp.unicacityaddon.base.enums.faction;
 
 import com.rettichlp.unicacityaddon.base.config.UnicacityAddonConfiguration;
 import com.rettichlp.unicacityaddon.base.utils.MathUtils;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 import java.util.function.Function;
 
 /**
  * @author RettichLP
  */
+@Getter
+@AllArgsConstructor
 public enum Equip {
 
     BASI("Baseballschläger", "Baseballschläger", (configuration) -> configuration.equipSetting().badFactionSetting().baseballBat().getOrDefault("0")),
@@ -44,20 +48,6 @@ public enum Equip {
     private final String equipName;
     private final String messageName;
     private final Function<? super UnicacityAddonConfiguration, ? extends String> priceFunction;
-
-    Equip(String equipName, String messageName, Function<? super UnicacityAddonConfiguration, ? extends String> function) {
-        this.equipName = equipName;
-        this.messageName = messageName;
-        this.priceFunction = function;
-    }
-
-    public String getName() {
-        return equipName;
-    }
-
-    public String getMessageName() {
-        return messageName;
-    }
 
     public int getPrice(UnicacityAddonConfiguration unicacityAddonConfiguration) {
         String priceString = priceFunction.apply(unicacityAddonConfiguration);

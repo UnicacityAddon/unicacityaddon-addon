@@ -1,11 +1,16 @@
 package com.rettichlp.unicacityaddon.base.enums.faction;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import net.labymod.api.util.math.vector.FloatVector3;
 
 /**
  * @author RettichLP
  */
+@Getter
+@AllArgsConstructor
 public enum BlackMarketLocation {
+
     PSYCHIATRIE("Psychiatrie", new FloatVector3(1689, 66, -390)),
     HAFEN_CHINA("Hafen (Chinatown)", new FloatVector3(1172, 69, -464)),
     HAUS_472("Haus 472 (Chinatown)", new FloatVector3(1205, 69, -118)),
@@ -20,15 +25,6 @@ public enum BlackMarketLocation {
 
     private final String displayName;
     private final FloatVector3 floatVector3;
-
-    BlackMarketLocation(String displayName, FloatVector3 floatVector3) {
-        this.displayName = displayName;
-        this.floatVector3 = floatVector3;
-    }
-
-    public String getDisplayName() {
-        return displayName;
-    }
 
     public String getNaviCommand() {
         return "/navi " + floatVector3.getX() + "/" + floatVector3.getY() + "/" + floatVector3.getZ();

@@ -54,7 +54,7 @@ public class EquipListCommand extends UnicacityCommand {
                 .of("Equip:").color(ColorCode.DARK_AQUA).bold().advance()
                 .createComponent());
         this.unicacityAddon.services().fileService().data().getEquipMap().forEach((equip, integer) -> p.sendMessage(Message.getBuilder()
-                .of("» " + integer + "x " + equip.getName() + ": ").color(ColorCode.GRAY).advance()
+                .of("» " + integer + "x " + equip.getEquipName() + ": ").color(ColorCode.GRAY).advance()
                 .of(numberFormat.format(equip.getPrice(this.unicacityAddon.configuration())) + "$").color(ColorCode.AQUA).advance()
                 .createComponent()));
 

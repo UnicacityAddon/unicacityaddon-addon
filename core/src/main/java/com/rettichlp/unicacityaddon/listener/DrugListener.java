@@ -44,6 +44,7 @@ public class DrugListener {
     public void onChatReceive(ChatReceiveEvent e) {
         String msg = e.chatMessage().getPlainText();
         AddonPlayer p = this.unicacityAddon.player();
+        String playerName = p.getName();
 
         boolean hqMessageSetting = this.unicacityAddon.configuration().factionMessageSetting().hq().get();
 
@@ -87,7 +88,7 @@ public class DrugListener {
             DrugType drugType = DrugType.getDrugType(dbankGetMatcher.group("drugType"));
             DrugPurity drugPurity = DrugPurity.getDrugPurity(dbankGetMatcher.group("drugPurity"));
 
-            if (msg.contains(p.getName())) {
+            if (playerName != null && msg.contains(playerName)) {
                 this.unicacityAddon.services().fileService().data().addDrugToInventory(drugType, drugPurity, amount);
             }
 
@@ -116,7 +117,7 @@ public class DrugListener {
             DrugType drugType = DrugType.getDrugType(dbankGiveMatcher.group("drugType"));
             DrugPurity drugPurity = DrugPurity.getDrugPurity(dbankGiveMatcher.group("drugPurity"));
 
-            if (msg.contains(p.getName())) {
+            if (playerName != null && msg.contains(playerName)) {
                 this.unicacityAddon.services().fileService().data().removeDrugFromInventory(drugType, drugPurity, amount);
             }
 
@@ -148,22 +149,16 @@ public class DrugListener {
         }
 
         Matcher drugUseMatcher = PatternHandler.DRUG_USE_PATTERN.matcher(msg);
-        if (drugUseMatcher.find() && msg.contains(p.getName())) {
+        if (drugUseMatcher.find() && playerName != null && msg.contains(playerName)) {
             DrugType drugType = DrugType.getDrugType(drugUseMatcher.group("drugType"));
             DrugPurity drugPurity = DrugPurity.BEST;
 
             if (drugType != null) {
                 OwnUseSetting ownUseSetting = this.unicacityAddon.configuration().ownUseSetting();
                 switch (drugType) {
-                    case COCAINE:
-                        drugPurity = ownUseSetting.kokainSetting().purity().get();
-                        break;
-                    case MARIJUANA:
-                        drugPurity = ownUseSetting.marihuanaSetting().purity().get();
-                        break;
-                    case METH:
-                        drugPurity = ownUseSetting.methamphetaminSetting().purity().get();
-                        break;
+                    case COCAINE -> drugPurity = ownUseSetting.kokainSetting().purity().get();
+                    case MARIJUANA -> drugPurity = ownUseSetting.marihuanaSetting().purity().get();
+                    case METH -> drugPurity = ownUseSetting.methamphetaminSetting().purity().get();
                 }
             }
 

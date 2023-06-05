@@ -1,10 +1,14 @@
 package com.rettichlp.unicacityaddon.base.enums.location;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import net.labymod.api.util.math.vector.FloatVector3;
 
 /**
  * @author RettichLP
  */
+@Getter
+@AllArgsConstructor
 public enum ServiceCallBox {
 
     ALTSTADT("Altstadt", 267, 69, 603),
@@ -23,35 +27,12 @@ public enum ServiceCallBox {
     private final int y;
     private final int z;
 
-    ServiceCallBox(String locationName, int x, int y, int z) {
-        this.locationName = locationName;
-        this.x = x;
-        this.y = y;
-        this.z = z;
-    }
-
-    public String getLocationName() {
-        return locationName;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public int getZ() {
-        return z;
-    }
-
-    public FloatVector3 getFloatVector3() {
-        return new FloatVector3(x, y, z);
-    }
-
     public long getDistance(FloatVector3 floatVector3) {
         return Math.round(floatVector3.distance(new FloatVector3(x, y, z)));
+    }
+
+    public String getNaviCommand() {
+        return "/navi " + x + "/" + y + "/" + z;
     }
 
     public static ServiceCallBox getServiceCallBoxByLocationName(String s) {
@@ -60,9 +41,5 @@ public enum ServiceCallBox {
                 return serviceCallBox;
         }
         return null;
-    }
-
-    public String getNaviCommand() {
-        return "/navi " + x + "/" + y + "/" + z;
     }
 }

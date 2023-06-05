@@ -78,7 +78,10 @@ public class VersionedWorldInteractionController extends WorldInteractionControl
         BlockPos twoBlockPos = new BlockPos(two.getX(), two.getY(), two.getZ());
 
         return StreamSupport.stream(BlockPos.betweenClosed(oneBlockPos, twoBlockPos).spliterator(), false)
-                .filter(blockPos -> Minecraft.getInstance().level.getBlockState(blockPos).getBlock().equals(Blocks.FIRE))
+                .filter(blockPos -> {
+                    assert Minecraft.getInstance().level != null;
+                    return Minecraft.getInstance().level.getBlockState(blockPos).getBlock().equals(Blocks.FIRE);
+                })
                 .map(blockPos -> new FloatVector3(blockPos.getX(), blockPos.getY(), blockPos.getZ()))
                 .collect(Collectors.toList());
     }

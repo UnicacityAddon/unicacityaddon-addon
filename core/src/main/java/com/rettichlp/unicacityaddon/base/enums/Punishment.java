@@ -1,9 +1,15 @@
 package com.rettichlp.unicacityaddon.base.enums;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 /**
  * @author Dimiikou
  */
+@Getter
+@AllArgsConstructor
 public enum Punishment {
+
     AFK_FARMING("AFK-Farming", "AFK-Farming", 300, 180, 0, true, false, 0, 0, 0),
     ACCOUNT_SHARING("Account-Sharing", "Account Sharing", 0, -1, 0, false, false, 0, 0, 0),
     ABUSE_OF_UWU_SYSTEM_FIRST_VIOLATION("Ausnutzung-des-UserWerbenUser-Systems-(erstes-Vergehen)", "Ausnutzung des UserWerbenUser-Systems", 0, 360, 0, false, false, 0, 0, 0),
@@ -96,57 +102,4 @@ public enum Punishment {
     private final int weaponLock;
     private final int factionLock;
     private final int adLock;
-
-    Punishment(String tabReason, String reason, int checkpoints, int banDuration, int warnAmmount, boolean loyalityPointReset, boolean kick, int weaponLock, int factionLock, int adLock) {
-        this.tabReason = tabReason;
-        this.reason = reason;
-        this.checkpoints = checkpoints;
-        this.banDuration = banDuration;
-        this.warnAmmount = warnAmmount;
-        this.loyalityPointReset = loyalityPointReset;
-        this.kick = kick;
-        this.weaponLock = weaponLock;
-        this.factionLock = factionLock;
-        this.adLock = adLock;
-    }
-
-    public String getReason() {
-        return reason;
-    }
-
-    public int getCheckpoints() {
-        return checkpoints;
-    }
-
-    public int getBanDuration() {
-        return banDuration;
-    }
-
-    public int getWarnAmmount() {
-        return warnAmmount;
-    }
-
-    public boolean isLoyalityPointReset() {
-        return loyalityPointReset;
-    }
-
-    public int getWeaponLock() {
-        return weaponLock;
-    }
-
-    public String getTabReason() {
-        return tabReason;
-    }
-
-    public boolean isKick() {
-        return kick;
-    }
-
-    public int getFactionLock() {
-        return factionLock;
-    }
-
-    public int getAdLock() {
-        return adLock;
-    }
 }

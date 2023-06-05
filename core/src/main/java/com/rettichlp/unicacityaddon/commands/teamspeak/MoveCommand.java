@@ -60,7 +60,7 @@ public class MoveCommand extends UnicacityCommand {
 
         Client moveToClient = clientsMoveTo.get(0);
         CommandResponse response = new ClientMoveCommand(this.unicacityAddon, moveToClient.getChannelID(), clientsMoved).getResponse();
-        if (!response.succeeded()) {
+        if (response.failed()) {
             p.sendErrorMessage("Das Moven ist fehlgeschlagen.");
             return true;
         }

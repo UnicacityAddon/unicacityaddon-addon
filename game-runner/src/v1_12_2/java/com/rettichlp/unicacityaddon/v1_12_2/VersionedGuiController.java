@@ -39,9 +39,7 @@ public class VersionedGuiController extends GuiController {
         int slotNumber = -1;
 
         GuiScreen guiScreen = Minecraft.getMinecraft().currentScreen;
-        if (guiScreen instanceof GuiContainer && ((GuiContainer) guiScreen).inventorySlots instanceof ContainerChest) {
-            ContainerChest containerChest = (ContainerChest) ((GuiContainer) guiScreen).inventorySlots;
-
+        if (guiScreen instanceof GuiContainer && ((GuiContainer) guiScreen).inventorySlots instanceof ContainerChest containerChest) {
             NonNullList<ItemStack> itemStacks = containerChest.getInventory();
             Optional<ItemStack> hoveredItemStackOptional = itemStacks.stream()
                     .filter(ItemStack::hasDisplayName)
@@ -73,9 +71,7 @@ public class VersionedGuiController extends GuiController {
     @Override
     public void updateDrugInventoryMap(UnicacityAddon unicacityAddon) {
         GuiScreen guiScreen = Minecraft.getMinecraft().currentScreen;
-        if (guiScreen instanceof GuiChest) {
-            GuiChest guiChest = (GuiChest) guiScreen;
-
+        if (guiScreen instanceof GuiChest guiChest) {
             int windowId = guiChest.inventorySlots.windowId;
             if (DropDrugAllCommand.lastWindowId == windowId)
                 return;
@@ -122,9 +118,7 @@ public class VersionedGuiController extends GuiController {
                 DropDrugAllCommand.dropCommandExecution(unicacityAddon);
                 Minecraft.getMinecraft().player.closeScreen();
             }
-        } else if (guiScreen instanceof GuiHopper && DropDrugAllCommand.active) {
-            GuiHopper guiHopper = (GuiHopper) guiScreen;
-
+        } else if (guiScreen instanceof GuiHopper guiHopper && DropDrugAllCommand.active) {
             int windowId = guiHopper.inventorySlots.windowId;
             if (windowId == DropDrugAllCommand.lastWindowId)
                 return;

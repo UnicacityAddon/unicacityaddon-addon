@@ -1,8 +1,13 @@
 package com.rettichlp.unicacityaddon.base.enums.api;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 /**
  * @author RettichLP
  */
+@Getter
+@AllArgsConstructor
 public enum ApplicationPath {
 
     BANNER("/banner"),
@@ -21,12 +26,4 @@ public enum ApplicationPath {
     YASIN("/yasin");
 
     private final String applicationPath;
-
-    ApplicationPath(String applicationPath) {
-        this.applicationPath = applicationPath;
-    }
-
-    public String getApplicationPath() {
-        return this.applicationPath;
-    }
 }

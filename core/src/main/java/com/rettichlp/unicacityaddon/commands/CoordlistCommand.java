@@ -9,6 +9,7 @@ import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.event.HoverEvent;
+import net.labymod.api.util.math.vector.FloatVector3;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,7 +35,8 @@ public class CoordlistCommand extends UnicacityCommand {
             listCoords(p);
         } else if (arguments.length > 1 && arguments[0].equalsIgnoreCase("add")) {
             String name = this.unicacityAddon.utils().textUtils().makeStringByArgs(arguments, "-").replace("add-", "");
-            this.unicacityAddon.services().fileService().data().addCoordToCoordlist(name, p.getPosition());
+            FloatVector3 position = p.getPosition();
+            this.unicacityAddon.services().fileService().data().addCoordToCoordlist(name, position != null ? position : new FloatVector3(0, 0, 0));
             p.sendInfoMessage("Koordinaten gespeichert.");
         } else if (arguments.length > 1 && arguments[0].equalsIgnoreCase("remove")) {
             String name = this.unicacityAddon.utils().textUtils().makeStringByArgs(arguments, "-").replace("remove-", "");

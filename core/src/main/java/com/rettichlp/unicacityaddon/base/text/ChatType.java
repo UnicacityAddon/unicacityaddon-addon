@@ -1,8 +1,13 @@
 package com.rettichlp.unicacityaddon.base.text;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 /**
  * @author RettichLP
  */
+@Getter
+@AllArgsConstructor
 public enum ChatType {
 
     ADMIN("Serverweit", "o"),
@@ -17,19 +22,6 @@ public enum ChatType {
 
     private final String displayName;
     private final String chatType;
-
-    ChatType(String displayName, String chatType) {
-        this.displayName = displayName;
-        this.chatType = chatType;
-    }
-
-    public String getDisplayName() {
-        return displayName;
-    }
-
-    public String getChatType() {
-        return chatType;
-    }
 
     public String getChatCommand() {
         return this.equals(CHAT) ? "" : "/" + getChatType();

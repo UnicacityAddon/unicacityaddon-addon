@@ -9,7 +9,6 @@ import com.rettichlp.unicacityaddon.base.enums.api.ApplicationPath;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -58,20 +57,16 @@ public class WebService {
     public String getParamsString(Map<String, String> params) {
         StringBuilder result = new StringBuilder();
 
-        try {
-            for (Map.Entry<String, String> entry : params.entrySet()) {
-                result.append(URLEncoder.encode(entry.getKey(), "UTF-8"));
-                result.append("=");
-                result.append(URLEncoder.encode(entry.getValue(), "UTF-8"));
-                result.append("&");
-            }
-            String resultString = result.toString();
-            return resultString.length() > 0
-                    ? "?" + resultString.substring(0, resultString.length() - 1)
-                    : resultString;
-        } catch (UnsupportedEncodingException e) {
-            return "";
+        for (Map.Entry<String, String> entry : params.entrySet()) {
+            result.append(URLEncoder.encode(entry.getKey(), StandardCharsets.UTF_8));
+            result.append("=");
+            result.append(URLEncoder.encode(entry.getValue(), StandardCharsets.UTF_8));
+            result.append("&");
         }
+        String resultString = result.toString();
+        return resultString.length() > 0
+                ? "?" + resultString.substring(0, resultString.length() - 1)
+                : resultString;
     }
 
     private Map.Entry<HttpURLConnection, Integer> getHttpURLConnection(String urlString) throws APIResponseException {

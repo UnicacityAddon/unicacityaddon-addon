@@ -4,11 +4,13 @@ import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.enums.Weapon;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
+import lombok.Getter;
 import net.labymod.api.event.Event;
 
 /**
  * @author RettichLP
  */
+@Getter
 public class WeaponShotEvent implements Event {
 
     private final Weapon weapon;
@@ -19,18 +21,6 @@ public class WeaponShotEvent implements Event {
         this.weapon = weapon;
         this.loaded = weapon.getLoadedAmmunition(unicacityAddon);
         this.backup = weapon.getBackupAmmunition(unicacityAddon);
-    }
-
-    public Weapon getWeapon() {
-        return weapon;
-    }
-
-    public int getLoadedAmmunition() {
-        return loaded;
-    }
-
-    public int getBackupAmmunition() {
-        return backup;
     }
 
     public String getWeaponAmmunitionText() {

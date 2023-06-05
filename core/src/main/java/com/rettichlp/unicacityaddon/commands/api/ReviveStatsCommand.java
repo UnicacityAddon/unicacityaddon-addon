@@ -169,9 +169,15 @@ public class ReviveStatsCommand extends UnicacityCommand {
             int finalI = i;
             List<Revive> rankReviveList = reviveList.stream()
                     .filter(revive -> this.unicacityAddon.api().getPlayerRankMap().getOrDefault(revive.getMinecraftName(), -1).equals(finalI))
-                    .collect(Collectors.toList());
+                    .toList();
 
-            int rankReviveAmount = onlyOld ? rankReviveList.stream().map(Revive::getLastWeekReviveAmount).reduce(0, Integer::sum) : rankReviveList.stream().map(Revive::getCurrentWeekReviveAmount).reduce(0, Integer::sum);
+            int rankReviveAmount = onlyOld
+                    ? rankReviveList.stream()
+                            .map(Revive::getLastWeekReviveAmount)
+                            .reduce(0, Integer::sum)
+                    : rankReviveList.stream()
+                            .map(Revive::getCurrentWeekReviveAmount)
+                            .reduce(0, Integer::sum);
             allReviveAmount += rankReviveAmount;
             overAllMessage
                     .of("Rang " + i + ":").color(ColorCode.GRAY).advance().space()

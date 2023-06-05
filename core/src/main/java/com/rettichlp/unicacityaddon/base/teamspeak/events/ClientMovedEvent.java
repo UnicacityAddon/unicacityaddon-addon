@@ -1,6 +1,7 @@
 package com.rettichlp.unicacityaddon.base.teamspeak.events;
 
 import com.rettichlp.unicacityaddon.base.teamspeak.CommandResponse;
+import lombok.Getter;
 
 /**
  * The following code is based on MPL-licensed code by Paul Zhang.
@@ -11,6 +12,7 @@ import com.rettichlp.unicacityaddon.base.teamspeak.CommandResponse;
  *
  * @author Fuzzlemann
  */
+@Getter
 @TSEvent.Name("notifyclientmoved")
 public class ClientMovedEvent extends TSEvent {
 
@@ -30,29 +32,5 @@ public class ClientMovedEvent extends TSEvent {
         this.invokerID = CommandResponse.parseInt(map.get("invokerid"));
         this.invokerName = map.get("invokername");
         this.invokerUniqueID = map.get("invokeruid");
-    }
-
-    public int getClientID() {
-        return clientID;
-    }
-
-    public int getTargetChannelID() {
-        return targetChannelID;
-    }
-
-    public boolean isMoved() {
-        return moved;
-    }
-
-    public int getInvokerID() {
-        return invokerID;
-    }
-
-    public String getInvokerName() {
-        return invokerName;
-    }
-
-    public String getInvokerUniqueID() {
-        return invokerUniqueID;
     }
 }
