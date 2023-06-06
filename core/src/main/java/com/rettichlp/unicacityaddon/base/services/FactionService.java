@@ -3,6 +3,7 @@ package com.rettichlp.unicacityaddon.base.services;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.api.exception.APIResponseException;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
+import net.labymod.api.client.network.ClientPacketListener;
 
 /**
  * @author RettichLP
@@ -16,7 +17,8 @@ public class FactionService {
     }
 
     public boolean checkPlayerDuty(String playerName) {
-        return this.unicacityAddon.utils().isUnicacity() && this.unicacityAddon.labyAPI().minecraft().getClientPacketListener().getNetworkPlayerInfos().stream()
+        ClientPacketListener clientPacketListener = this.unicacityAddon.labyAPI().minecraft().getClientPacketListener();
+        return clientPacketListener != null && this.unicacityAddon.utils().isUnicacity() && clientPacketListener.getNetworkPlayerInfos().stream()
                 .map(networkPlayerInfo -> this.unicacityAddon.utils().textUtils().legacy(networkPlayerInfo.displayName()))
                 .filter(s -> s.startsWith("§1") || s.startsWith("§9") || s.startsWith("§4") || s.startsWith("§6"))
                 .anyMatch(s -> s.contains(playerName));

@@ -8,7 +8,6 @@ import com.rettichlp.unicacityaddon.base.models.api.NaviPoint;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
-import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.event.HoverEvent;
 import net.labymod.api.event.Subscribe;
@@ -38,7 +37,7 @@ public class ShareLocationListener {
 
         if (!shareLocationMatcher.find())
             return;
-        if (!shareLocationMatcher.group(2).contains(p.getName())) {
+        if (p.getName() != null && !shareLocationMatcher.group(2).contains(p.getName())) {
             e.setCancelled(true);
             return;
         }
@@ -47,13 +46,6 @@ public class ShareLocationListener {
         int posX = Integer.parseInt(shareLocationMatcher.group(3));
         int posY = Integer.parseInt(shareLocationMatcher.group(4));
         int posZ = Integer.parseInt(shareLocationMatcher.group(5));
-
-        Component hoverMessage = Message.getBuilder().of(String.valueOf(posX)).color(ColorCode.AQUA).advance()
-                .of(" | ").color(ColorCode.GRAY).advance()
-                .of(String.valueOf(posY)).color(ColorCode.AQUA).advance()
-                .of(" | ").color(ColorCode.GRAY).advance()
-                .of(String.valueOf(posZ)).color(ColorCode.AQUA).advance()
-                .createComponent();
 
         Map.Entry<Double, NaviPoint> doubleNaviPointEntry = this.unicacityAddon.services().navigationService().getNearestNaviPoint(posX, posY, posZ);
 
@@ -70,12 +62,12 @@ public class ShareLocationListener {
                 .replace("&", "§")
                 .replace("%sender%", senderName)
                 .replace("%navipoint%", navipointString)
-                .replace("%distance%", String.valueOf((int) p.getPosition().distance(new FloatVector3(posX, posY, posZ)))));
+                .replace("%distance%", String.valueOf(position != null ? (int) position.distance(new FloatVector3(posX, posY, posZ)) : 0)));
 
         p.sendMessage(Message.getBuilder()
                 .of("»").color(ColorCode.GRAY).advance().space()
                 .of("Route Anzeigen").color(ColorCode.RED)
-                        .hoverEvent(HoverEvent.Action.SHOW_TEXT, hoverMessage)
+                        .hoverEvent(HoverEvent.Action.SHOW_TEXT, this.unicacityAddon.utils().commandUtils().positionHoverMessage(posX, posY, posZ))
                         .clickEvent(ClickEvent.Action.RUN_COMMAND, "/navi " + posX + "/" + posY + "/" + posZ)
                         .advance()
                 .createComponent());

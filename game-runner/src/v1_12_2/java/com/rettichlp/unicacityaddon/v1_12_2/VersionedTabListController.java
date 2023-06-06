@@ -3,6 +3,7 @@ package com.rettichlp.unicacityaddon.v1_12_2;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.tab.TabPrefix;
 import com.rettichlp.unicacityaddon.controller.TabListController;
+import net.labymod.api.client.network.ClientPacketListener;
 import net.labymod.api.client.network.NetworkPlayerInfo;
 import net.labymod.api.models.Implements;
 import net.minecraft.client.Minecraft;
@@ -12,6 +13,7 @@ import net.minecraft.scoreboard.Scoreboard;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,7 +30,8 @@ public class VersionedTabListController extends TabListController {
 
     @Override
     public void orderTabList(UnicacityAddon unicacityAddon) {
-        Collection<NetworkPlayerInfo> networkPlayerInfos = unicacityAddon.labyAPI().minecraft().getClientPacketListener().getNetworkPlayerInfos();
+        ClientPacketListener clientPacketListener = unicacityAddon.labyAPI().minecraft().getClientPacketListener();
+        Collection<NetworkPlayerInfo> networkPlayerInfos = clientPacketListener != null ? clientPacketListener.getNetworkPlayerInfos() : Collections.emptyList();
         assert Minecraft.getMinecraft().world != null;
         Scoreboard scoreboard = Minecraft.getMinecraft().world.getScoreboard();
 

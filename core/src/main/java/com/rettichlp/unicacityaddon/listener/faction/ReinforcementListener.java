@@ -13,7 +13,6 @@ import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import lombok.Getter;
 import net.labymod.api.client.chat.ChatMessage;
-import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.event.HoverEvent;
 import net.labymod.api.client.gui.screen.key.Key;
@@ -67,13 +66,6 @@ public class ReinforcementListener {
                 type = lastReinforcement.getReinforcementType().getMessage();
             }
 
-            Component hoverMessage = Message.getBuilder().of(String.valueOf(posX)).color(ColorCode.AQUA).advance()
-                    .of(" | ").color(ColorCode.GRAY).advance()
-                    .of(String.valueOf(posY)).color(ColorCode.AQUA).advance()
-                    .of(" | ").color(ColorCode.GRAY).advance()
-                    .of(String.valueOf(posZ)).color(ColorCode.AQUA).advance()
-                    .createComponent();
-
             Map.Entry<Double, NaviPoint> nearestNaviPoint = this.unicacityAddon.services().navigationService().getNearestNaviPoint(posX, posY, posZ);
             NaviPoint navipoint = nearestNaviPoint.getValue();
 
@@ -98,7 +90,7 @@ public class ReinforcementListener {
             p.sendMessage(Message.getBuilder()
                     .of("»").color(ColorCode.GRAY).advance().space()
                     .of("Route Anzeigen").color(ColorCode.RED)
-                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, hoverMessage)
+                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, this.unicacityAddon.utils().commandUtils.positionHoverMessage(posX, posY, posZ))
                             .clickEvent(ClickEvent.Action.RUN_COMMAND, "/navi " + posX + "/" + posY + "/" + posZ)
                             .advance()
                     .of(" | ").color(ColorCode.GRAY).advance()

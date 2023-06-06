@@ -10,6 +10,7 @@ import com.rettichlp.unicacityaddon.base.text.Message;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.event.HoverEvent;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -46,9 +47,13 @@ public class ActivityCommand extends UnicacityCommand {
 
         AtomicInteger overallCount = new AtomicInteger();
         screenshotTypeList.stream().map(ScreenshotType::getDirectoryName).sorted().forEach(s -> {
-            int entryCount = this.unicacityAddon.services().fileService().getAddonActivityScreenDir(s)
-                    .listFiles((dir, name) -> name.endsWith("-" + s + ".jpg"))
-                    .length;
+            File addonActivityScreenDir = this.unicacityAddon.services().fileService().getAddonActivityScreenDir(s);
+            File[] files = new File[0];
+            if (addonActivityScreenDir != null) {
+                files = addonActivityScreenDir.listFiles((dir, name) -> name.endsWith("-" + s + ".jpg"));
+            }
+
+            int entryCount = files != null ? files.length : 0;
 
             overallCount.addAndGet(entryCount);
             if (entryCount > 0) {

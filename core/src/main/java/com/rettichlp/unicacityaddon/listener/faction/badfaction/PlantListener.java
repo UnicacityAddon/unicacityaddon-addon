@@ -48,8 +48,9 @@ public class PlantListener {
             return;
         }
 
+        String playerName = this.unicacityAddon.player().getName();
         Matcher plantUseMatcher = PatternHandler.PLANT_USE_PATTERN.matcher(msg);
-        if (plantUseMatcher.find() && msg.contains(this.unicacityAddon.player().getName())) {
+        if (plantUseMatcher.find() && playerName != null && msg.contains(playerName)) {
             if (msg.contains("gewässert") && System.currentTimeMillis() - TimeUnit.MINUTES.toMillis(10) > this.unicacityAddon.services().fileService().data().getPlantWaterTime()) {
                 this.unicacityAddon.services().fileService().data().setPlantWaterTime(System.currentTimeMillis());
             } else if (msg.contains("gedüngt") && System.currentTimeMillis() - TimeUnit.MINUTES.toMillis(10) > this.unicacityAddon.services().fileService().data().getPlantFertilizeTime()) {

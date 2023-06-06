@@ -13,6 +13,7 @@ import com.rettichlp.unicacityaddon.listener.faction.ContractListener;
 import com.rettichlp.unicacityaddon.listener.faction.state.WantedListener;
 import lombok.Getter;
 import lombok.Setter;
+import net.labymod.api.client.network.ClientPacketListener;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -112,7 +113,8 @@ public class NameTagService {
     }
 
     public boolean isAdminDuty(String playerName) {
-        return this.unicacityAddon.utils().isUnicacity() && this.unicacityAddon.labyAPI().minecraft().getClientPacketListener().getNetworkPlayerInfos().stream()
+        ClientPacketListener clientPacketListener = this.unicacityAddon.labyAPI().minecraft().getClientPacketListener();
+        return clientPacketListener != null && this.unicacityAddon.utils().isUnicacity() && clientPacketListener.getNetworkPlayerInfos().stream()
                 .map(networkPlayerInfo -> this.unicacityAddon.utils().textUtils().legacy(networkPlayerInfo.displayName()))
                 .anyMatch(s -> s.startsWith("§8[§9UC§8]§c") && s.contains(playerName));
     }

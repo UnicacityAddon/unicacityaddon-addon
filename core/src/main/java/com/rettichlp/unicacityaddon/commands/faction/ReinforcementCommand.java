@@ -24,8 +24,6 @@ import java.util.stream.Collectors;
 @UCCommand(prefix = "reinforcement", aliases = {"callreinforcement", "reinf", "verstärkung"}, usage = "(-f|-d|-r|-rd|-e|-ed|-m|-lb|-da|-ct|-p|-b|-gn|-gnd|-t|-td|-test)")
 public class ReinforcementCommand extends UnicacityCommand {
 
-    public static int activeReinforcement = -1;
-
     private final UnicacityAddon unicacityAddon;
 
     public ReinforcementCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
@@ -53,34 +51,36 @@ public class ReinforcementCommand extends UnicacityCommand {
 
         ChatType chatType = firstType.getChatType(this.unicacityAddon.configuration().nameTagSetting());
 
-        if ((arguments.length >= 5) && arguments[0].equalsIgnoreCase("ontheway")) {
-            String name = arguments[1];
+        FloatVector3 position = p.getLocation();
+        if (position != null) {
+            if ((arguments.length >= 5) && arguments[0].equalsIgnoreCase("ontheway")) {
+                String name = arguments[1];
 
-            if (!MathUtils.isInteger(arguments[2]) || !MathUtils.isInteger(arguments[3]) || !MathUtils.isInteger(arguments[4]))
+                if (!MathUtils.isInteger(arguments[2]) || !MathUtils.isInteger(arguments[3]) || !MathUtils.isInteger(arguments[4]))
+                    return true;
+                int x = Integer.parseInt(arguments[2]);
+                int y = Integer.parseInt(arguments[3]);
+                int z = Integer.parseInt(arguments[4]);
+
+                p.sendServerMessage(chatType.getChatCommand() + " " + name + ", ich bin zu deinem Verstärkungsruf unterwegs! (" + (int) p.getLocation().distance(new FloatVector3(x, y, z)) + " Meter entfernt)");
+                p.setNaviRoute(x, y, z);
+
+                // activity screenshot
+                if (this.unicacityAddon.configuration().reinforcementSetting().screen().get())
+                    this.unicacityAddon.labyAPI().eventBus().fire(new ReinforcementAcceptedEvent());
+
                 return true;
-            int x = Integer.parseInt(arguments[2]);
-            int y = Integer.parseInt(arguments[3]);
-            int z = Integer.parseInt(arguments[4]);
+            }
 
-            p.sendServerMessage(chatType.getChatCommand() + " " + name + ", ich bin zu deinem Verstärkungsruf unterwegs! (" + (int) p.getPosition().distance(new FloatVector3(x, y, z)) + " Meter entfernt)");
-            p.setNaviRoute(x, y, z);
+            int posX = (int) position.getX();
+            int posY = (int) position.getY();
+            int posZ = (int) position.getZ();
 
-            // activity screenshot
-            if (this.unicacityAddon.configuration().reinforcementSetting().screen().get())
-                this.unicacityAddon.labyAPI().eventBus().fire(new ReinforcementAcceptedEvent());
+            if (firstType.getMessage() != null)
+                p.sendServerMessage(chatType.getChatCommand() + " " + firstType.getMessage());
 
-            return true;
+            p.sendServerMessage(chatType.getChatCommand() + " Benötige Verstärkung! -> X: " + posX + " | Y: " + posY + " | Z: " + posZ);
         }
-
-        FloatVector3 position = p.getPosition();
-        int posX = (int) position.getX();
-        int posY = (int) position.getY();
-        int posZ = (int) position.getZ();
-
-        if (firstType.getMessage() != null)
-            p.sendServerMessage(chatType.getChatCommand() + " " + firstType.getMessage());
-
-        p.sendServerMessage(chatType.getChatCommand() + " Benötige Verstärkung! -> X: " + posX + " | Y: " + posY + " | Z: " + posZ);
         return true;
     }
 

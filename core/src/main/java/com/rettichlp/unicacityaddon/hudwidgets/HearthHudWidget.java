@@ -38,8 +38,9 @@ public class HearthHudWidget extends TextHudWidget<TextHudWidgetConfig> {
 
     @Subscribe
     public void onUnicacityAddonTick(UnicacityAddonTickEvent e) {
-        if (e.isIngame() && e.isPhase(UnicacityAddonTickEvent.Phase.TICK)) {
-            this.textLine.updateAndFlush(HEART_DECIMAL_FORMAT.format(this.unicacityAddon.player().getHealth() / 2) + ColorCode.RED.getCode() + "❤");
+        Float health = this.unicacityAddon.player().getHealth();
+        if (e.isIngame() && e.isPhase(UnicacityAddonTickEvent.Phase.TICK) && health != null) {
+            this.textLine.updateAndFlush(HEART_DECIMAL_FORMAT.format(health / 2) + ColorCode.RED.getCode() + "❤");
         }
     }
 }

@@ -59,11 +59,9 @@ public enum Weapon {
             NBTTagCompound nbtTagCompound = clientPlayer.getMainHandItemStack().getNBTTag();
             if (nbtTagCompound != null) {
                 NBTTag<?> nbtTag = nbtTagCompound.get("display");
-                if (nbtTag != null && nbtTag.value() != null) {
-                    Matcher matcher = Pattern.compile("(\\d+)/(\\d+)").matcher(nbtTag.value().toString());
-                    if (matcher.find()) {
-                        return matcher;
-                    }
+                Matcher matcher = Pattern.compile("(\\d+)/(\\d+)").matcher(nbtTag != null ? nbtTag.toString() : "");
+                if (matcher.find()) {
+                    return matcher;
                 }
             }
         }

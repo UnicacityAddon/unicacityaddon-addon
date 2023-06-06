@@ -63,14 +63,15 @@ public class ShareLocationCommand extends UnicacityCommand {
             int posY = (int) position.getY();
             int posZ = (int) position.getZ();
 
-        p.sendServerMessage(command + " Positionsteilung für " + playerString + "! -> X: " + posX + " | Y: " + posY + " | Z: " + posZ);
+            p.sendServerMessage(command + " Positionsteilung für " + playerString + "! -> X: " + posX + " | Y: " + posY + " | Z: " + posZ);
 
-        p.sendMessage(Message.getBuilder().prefix()
-                .of("Du hast eine Positionsmitteilung an ").color(ColorCode.AQUA).advance()
-                .of(playerString).color(ColorCode.DARK_AQUA).advance().space()
-                .of("gesendet").color(ColorCode.AQUA).advance()
-                .of(".").color(ColorCode.GRAY).advance()
-                .createComponent());
+            p.sendMessage(Message.getBuilder().prefix()
+                    .of("Du hast eine Positionsmitteilung an ").color(ColorCode.AQUA).advance()
+                    .of(playerString).color(ColorCode.DARK_AQUA).advance().space()
+                    .of("gesendet").color(ColorCode.AQUA).advance()
+                    .of(".").color(ColorCode.GRAY).advance()
+                    .createComponent());
+        }
         return true;
     }
 

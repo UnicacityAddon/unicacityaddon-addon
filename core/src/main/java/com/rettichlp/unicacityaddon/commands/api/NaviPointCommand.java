@@ -48,9 +48,9 @@ public class NaviPointCommand extends UnicacityCommand {
         return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments)
                 .addAtIndex(1, "add", "remove")
                 .addAtIndex(2, this.unicacityAddon.api().getNaviPointList().stream().map(NaviPoint::getName).sorted().collect(Collectors.toList()))
-                .addAtIndex(3, String.valueOf(targetPos.getX())) // x
-                .addAtIndex(4, String.valueOf(targetPos.getY())) // y
-                .addAtIndex(5, String.valueOf(targetPos.getZ())) // z
+                .addAtIndex(3, String.valueOf(targetPos != null ? targetPos.getX() : "")) // x
+                .addAtIndex(4, String.valueOf(targetPos != null ? targetPos.getY() : "")) // y
+                .addAtIndex(5, String.valueOf(targetPos != null ? targetPos.getZ() : "")) // z
                 .addAtIndex(6, "der", "die", "das", "none")
                 .build();
     }

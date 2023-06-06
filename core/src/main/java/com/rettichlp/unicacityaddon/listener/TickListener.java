@@ -25,10 +25,10 @@ public class TickListener {
     @Subscribe
     public void onUnicacityAddonTick(UnicacityAddonTickEvent e) {
         if (e.isIngame() && e.isPhase(UnicacityAddonTickEvent.Phase.TICK)) {
-            float currentHeal = this.unicacityAddon.player().getPlayer().getHealth();
-            if (lastTickDamage.getValue() > currentHeal) {
+            Float currentHeal = this.unicacityAddon.player().getHealth();
+            if (currentHeal != null && lastTickDamage.getValue() > currentHeal) {
                 lastTickDamage = Maps.immutableEntry(System.currentTimeMillis(), currentHeal);
-            } else if (lastTickDamage.getValue() < currentHeal) {
+            } else if (currentHeal != null && lastTickDamage.getValue() < currentHeal) {
                 lastTickDamage = Maps.immutableEntry(System.currentTimeMillis(), currentHeal);
             }
         }
