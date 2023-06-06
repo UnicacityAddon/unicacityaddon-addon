@@ -25,7 +25,7 @@ import java.util.TimerTask;
  * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/events/AlternateScreenshotEventHandler.java">UCUtils by paulzhng</a>
  */
 @UCEvent
-public class HotkeyListener {
+public class EventRegistrationListener {
 
     public static int amountLeft = 0;
 
@@ -33,7 +33,7 @@ public class HotkeyListener {
 
     private final UnicacityAddon unicacityAddon;
 
-    public HotkeyListener(UnicacityAddon unicacityAddon) {
+    public EventRegistrationListener(UnicacityAddon unicacityAddon) {
         this.unicacityAddon = unicacityAddon;
     }
 
@@ -84,7 +84,7 @@ public class HotkeyListener {
                     @Override
                     public void run() {
                         if (amountLeft > 0) {
-                            HotkeyListener.this.unicacityAddon.guiController().inventoryClick(HotkeyListener.this.unicacityAddon, slotNumber);
+                            EventRegistrationListener.this.unicacityAddon.guiController().inventoryClick(EventRegistrationListener.this.unicacityAddon, slotNumber);
                             amountLeft--;
                         } else {
                             this.cancel();

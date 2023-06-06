@@ -13,11 +13,11 @@ import net.labymod.api.event.Subscribe;
  * @author RettichLP
  */
 @UCEvent
-public class EventListener {
+public class GangwarListener {
 
     private final UnicacityAddon unicacityAddon;
 
-    public EventListener(UnicacityAddon unicacityAddon) {
+    public GangwarListener(UnicacityAddon unicacityAddon) {
         this.unicacityAddon = unicacityAddon;
     }
 

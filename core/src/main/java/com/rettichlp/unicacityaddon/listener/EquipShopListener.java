@@ -32,7 +32,7 @@ public class EquipShopListener {
         Matcher buyInterruptedMatcher = PatternHandler.BUY_INTERRUPTED_PATTERN.matcher(msg);
         Matcher equipInterruptedMatcher = PatternHandler.EQUIP_INTERRUPTED_PATTERN.matcher(msg);
         if (buyInterruptedMatcher.find() || equipInterruptedMatcher.find()) {
-            HotkeyListener.amountLeft = 0;
+            EventRegistrationListener.amountLeft = 0;
             return;
         }
 

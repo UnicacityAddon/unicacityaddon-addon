@@ -264,7 +264,7 @@ public class PatternHandler {
     /**
      * Pattern for uc and vc interaction
      *
-     * @see com.rettichlp.unicacityaddon.listener.HotkeyListener
+     * @see com.rettichlp.unicacityaddon.listener.EventRegistrationListener
      * @see com.rettichlp.unicacityaddon.listener.team.ReportListener
      */
     public static final Pattern REPORT_PATTERN = Pattern.compile("^Es liegt ein neuer Report \\[\\d+] von (?:\\[UC])*(\\w+) vor! Thema: [a-zA-Z]+$|" +
