@@ -137,7 +137,7 @@ public class FileService {
         }
 
         try {
-            JsonParser.parseString(jsonData); // validate check
+            new JsonParser().parse(jsonData); // validate check
             if (!jsonData.isEmpty()) {
                 this.data = new Gson().fromJson(jsonData, Data.class);
             }

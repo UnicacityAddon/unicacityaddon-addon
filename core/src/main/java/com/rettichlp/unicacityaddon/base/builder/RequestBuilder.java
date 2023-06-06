@@ -79,7 +79,7 @@ public class RequestBuilder {
             if (this.preConditionList.isEmpty()) {
                 String urlString = this.unicacityAddon.services().webService().createUrl(this.nonProd, this.applicationPath, this.subPath, this.parameter);
                 String response = this.unicacityAddon.services().webService().sendRequest(urlString);
-                return JsonParser.parseString(response);
+                return new JsonParser().parse(response);
             }
             return JsonNull.INSTANCE;
         }
