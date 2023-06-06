@@ -23,8 +23,8 @@ public class FishermanListener {
     private boolean canCatchFish = false;
     private boolean fisherManJob = false;
     private int count = 0;
-    private final FloatVector3 FISHER_START_POSITION = new FloatVector3(-504, 63, 197);
-    private final List<FloatVector3> FISHER_POSITION_LIST = Arrays.asList(
+    private final FloatVector3 FISHER_START_LOCATION = new FloatVector3(-504, 63, 197);
+    private final List<FloatVector3> FISHER_LOCATION_LIST = Arrays.asList(
             new FloatVector3(-570, 63, 160),
             new FloatVector3(-555, 63, 106),
             new FloatVector3(-521, 63, 78),
@@ -45,7 +45,7 @@ public class FishermanListener {
 
         if (PatternHandler.FISHER_START.matcher(msg).find()) {
             fisherManJob = canCatchFish = true;
-            p.setNaviRoute(getFisherPosition(1));
+            p.setNaviRoute(getFisherLocation(1));
             catchFish();
             return;
         }
@@ -63,7 +63,7 @@ public class FishermanListener {
 
         if (PatternHandler.FISHER_CATCH_START.matcher(msg).find()) {
             canCatchFish = false;
-            p.setNaviRoute(getFisherPosition(count + 2));
+            p.setNaviRoute(getFisherLocation(count + 2));
             return;
         }
 
@@ -81,7 +81,7 @@ public class FishermanListener {
         if (PatternHandler.FISHER_END.matcher(msg).find()) {
             count = 0;
             fisherManJob = onTargetLocation = canCatchFish = false;
-            if (p.getLocation() != null && p.getLocation().distance(FISHER_START_POSITION) < 2) {
+            if (p.getLocation() != null && p.getLocation().distance(FISHER_START_LOCATION) < 2) {
                 p.sendServerMessage("/dropfish");
                 return;
             }
@@ -89,8 +89,8 @@ public class FishermanListener {
         }
     }
 
-    private FloatVector3 getFisherPosition(int i) {
-        return i > FISHER_POSITION_LIST.size() ? FISHER_START_POSITION : FISHER_POSITION_LIST.get(i - 1);
+    private FloatVector3 getFisherLocation(int i) {
+        return i > FISHER_LOCATION_LIST.size() ? FISHER_START_LOCATION : FISHER_LOCATION_LIST.get(i - 1);
     }
 
     private void catchFish() {

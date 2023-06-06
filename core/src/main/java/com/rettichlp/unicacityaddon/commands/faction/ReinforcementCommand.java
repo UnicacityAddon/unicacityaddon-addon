@@ -51,8 +51,8 @@ public class ReinforcementCommand extends UnicacityCommand {
 
         ChatType chatType = firstType.getChatType(this.unicacityAddon.configuration().nameTagSetting());
 
-        FloatVector3 position = p.getLocation();
-        if (position != null) {
+        FloatVector3 location = p.getLocation();
+        if (location != null) {
             if ((arguments.length >= 5) && arguments[0].equalsIgnoreCase("ontheway")) {
                 String name = arguments[1];
 
@@ -72,9 +72,9 @@ public class ReinforcementCommand extends UnicacityCommand {
                 return true;
             }
 
-            int posX = (int) position.getX();
-            int posY = (int) position.getY();
-            int posZ = (int) position.getZ();
+            int posX = (int) location.getX();
+            int posY = (int) location.getY();
+            int posZ = (int) location.getZ();
 
             if (firstType.getMessage() != null)
                 p.sendServerMessage(chatType.getChatCommand() + " " + firstType.getMessage());

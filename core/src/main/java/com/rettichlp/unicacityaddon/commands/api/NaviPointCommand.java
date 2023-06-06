@@ -44,13 +44,13 @@ public class NaviPointCommand extends UnicacityCommand {
 
     @Override
     public List<String> complete(String[] arguments) {
-        FloatVector3 targetPos = this.unicacityAddon.player().getLocation();
+        FloatVector3 location = this.unicacityAddon.player().getLocation();
         return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments)
                 .addAtIndex(1, "add", "remove")
                 .addAtIndex(2, this.unicacityAddon.api().getNaviPointList().stream().map(NaviPoint::getName).sorted().collect(Collectors.toList()))
-                .addAtIndex(3, String.valueOf(targetPos != null ? targetPos.getX() : "")) // x
-                .addAtIndex(4, String.valueOf(targetPos != null ? targetPos.getY() : "")) // y
-                .addAtIndex(5, String.valueOf(targetPos != null ? targetPos.getZ() : "")) // z
+                .addAtIndex(3, String.valueOf(location != null ? location.getX() : "")) // x
+                .addAtIndex(4, String.valueOf(location != null ? location.getY() : "")) // y
+                .addAtIndex(5, String.valueOf(location != null ? location.getZ() : "")) // z
                 .addAtIndex(6, "der", "die", "das", "none")
                 .build();
     }

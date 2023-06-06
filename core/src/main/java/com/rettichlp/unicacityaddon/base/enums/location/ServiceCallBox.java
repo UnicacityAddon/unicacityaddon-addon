@@ -27,8 +27,8 @@ public enum ServiceCallBox {
     private final int y;
     private final int z;
 
-    public long getDistance(FloatVector3 floatVector3) {
-        return Math.round(floatVector3.distance(new FloatVector3(x, y, z)));
+    public long getDistance(FloatVector3 location) {
+        return Math.round(location.distance(new FloatVector3(x, y, z)));
     }
 
     public String getNaviCommand() {

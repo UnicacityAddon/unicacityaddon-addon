@@ -15,11 +15,11 @@ public abstract class WorldInteractionController {
 
     public abstract FloatVector3 getClickedBlockLocation();
 
-    public abstract boolean isHouseNumberSign(FloatVector3 pos);
+    public abstract boolean isHouseNumberSign(FloatVector3 location);
 
-    public abstract boolean isBanner(FloatVector3 pos);
+    public abstract boolean isBanner(FloatVector3 location);
 
-    public abstract boolean isPlant(FloatVector3 clickedBlock);
+    public abstract boolean isPlant(FloatVector3 location);
 
     public abstract Collection<FloatVector3> getFireBlocksInBox(FloatVector3 one, FloatVector3 two);
 }

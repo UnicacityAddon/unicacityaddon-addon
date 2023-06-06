@@ -32,10 +32,10 @@ public class FDoorListener {
 
     @Subscribe
     public void onClientPlayerInteract(ClientPlayerInteractEvent e) {
-        FloatVector3 pos = this.unicacityAddon.worldInteractionController().getClickedBlockLocation();
+        FloatVector3 location = this.unicacityAddon.worldInteractionController().getClickedBlockLocation();
 
-        if (pos != null) {
-            FDoor fDoor = F_DOORS.stream().filter(fd -> fd.getDistance(pos) <= 3).findFirst().orElse(null);
+        if (location != null) {
+            FDoor fDoor = F_DOORS.stream().filter(fd -> fd.getDistance(location) <= 3).findFirst().orElse(null);
             if (fDoor != null && System.currentTimeMillis() - lastClick > 1000) {
                 lastClick = System.currentTimeMillis();
                 this.unicacityAddon.player().sendServerMessage("/fdoor");
@@ -52,12 +52,12 @@ public class FDoorListener {
             this.axisAlignedBoundingBox = new AxisAlignedBoundingBox(lowerCorner.add(0, -1, 0), upperCorner);
         }
 
-        public float getDistance(FloatVector3 pos) {
+        public float getDistance(FloatVector3 location) {
             float midX = this.axisAlignedBoundingBox.getMinX() + this.axisAlignedBoundingBox.getXSize() / 2;
             float midZ = this.axisAlignedBoundingBox.getMinZ() + this.axisAlignedBoundingBox.getZSize() / 2;
 
-            FloatVector3 fDoorFloatVector3 = new FloatVector3(midX, this.axisAlignedBoundingBox.getMinY(), midZ);
-            return fDoorFloatVector3.distance(pos);
+            FloatVector3 fDoorLocation = new FloatVector3(midX, this.axisAlignedBoundingBox.getMinY(), midZ);
+            return fDoorLocation.distance(location);
         }
     }
 }

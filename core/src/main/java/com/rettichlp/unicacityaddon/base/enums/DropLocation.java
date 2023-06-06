@@ -8,7 +8,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum DropPosition {
+public enum DropLocation {
 
     GLAS(885, 67, 350),
     WASTE(906, 66, 361),

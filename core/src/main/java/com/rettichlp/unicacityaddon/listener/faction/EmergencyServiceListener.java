@@ -31,7 +31,7 @@ public class EmergencyServiceListener {
 
     public static int openServices = 0;
     public static int distanceToService = 0;
-    public static FloatVector3 serviceAcceptPosition;
+    public static FloatVector3 serviceAcceptLocation;
 
     private static final List<ServiceCallBox> activeEmergencyCallBoxList = new ArrayList<>();
 
@@ -124,7 +124,7 @@ public class EmergencyServiceListener {
 
             if (serviceAcceptedMatcher.group(1).equals(p.getName())) {
                 distanceToService = Integer.parseInt(serviceAcceptedMatcher.group(3));
-                serviceAcceptPosition = p.getLocation();
+                serviceAcceptLocation = p.getLocation();
             }
 
             if (this.unicacityAddon.configuration().factionMessageSetting().service().get())

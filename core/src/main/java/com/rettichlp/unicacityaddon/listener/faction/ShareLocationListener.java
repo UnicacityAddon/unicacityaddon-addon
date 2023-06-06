@@ -57,17 +57,17 @@ public class ShareLocationListener {
             navipointString = doubleNaviPointEntry.getValue().getName().replace("-", " ");
         }
 
-        FloatVector3 position = this.unicacityAddon.player().getLocation();
+        FloatVector3 location = this.unicacityAddon.player().getLocation();
         p.sendMessage(this.unicacityAddon.configuration().slocSetting().sloc().getOrDefault(DefaultSlocSetting.SLOC)
                 .replace("&", "§")
                 .replace("%sender%", senderName)
                 .replace("%navipoint%", navipointString)
-                .replace("%distance%", String.valueOf(position != null ? (int) position.distance(new FloatVector3(posX, posY, posZ)) : 0)));
+                .replace("%distance%", String.valueOf(location != null ? (int) location.distance(new FloatVector3(posX, posY, posZ)) : 0)));
 
         p.sendMessage(Message.getBuilder()
                 .of("»").color(ColorCode.GRAY).advance().space()
                 .of("Route Anzeigen").color(ColorCode.RED)
-                        .hoverEvent(HoverEvent.Action.SHOW_TEXT, this.unicacityAddon.utils().commandUtils().positionHoverMessage(posX, posY, posZ))
+                        .hoverEvent(HoverEvent.Action.SHOW_TEXT, this.unicacityAddon.utils().commandUtils().locationHoverMessage(posX, posY, posZ))
                         .clickEvent(ClickEvent.Action.RUN_COMMAND, "/navi " + posX + "/" + posY + "/" + posZ)
                         .advance()
                 .createComponent());

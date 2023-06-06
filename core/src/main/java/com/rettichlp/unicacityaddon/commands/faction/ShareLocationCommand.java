@@ -57,11 +57,11 @@ public class ShareLocationCommand extends UnicacityCommand {
         String playerString = String.join(", ", playerNames);
         String command = allianceChat ? "/d" : "/f";
 
-        FloatVector3 position = p.getLocation();
-        if (position != null) {
-            int posX = (int) position.getX();
-            int posY = (int) position.getY();
-            int posZ = (int) position.getZ();
+        FloatVector3 location = p.getLocation();
+        if (location != null) {
+            int posX = (int) location.getX();
+            int posY = (int) location.getY();
+            int posZ = (int) location.getZ();
 
             p.sendServerMessage(command + " Positionsteilung für " + playerString + "! -> X: " + posX + " | Y: " + posY + " | Z: " + posZ);
 

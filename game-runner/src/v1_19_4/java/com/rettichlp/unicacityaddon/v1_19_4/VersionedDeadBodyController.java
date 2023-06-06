@@ -33,16 +33,16 @@ public class VersionedDeadBodyController extends DeadBodyController {
 
     @Override
     public void updateDisplayName(UnicacityAddon unicacityAddon) {
-        FloatVector3 position = unicacityAddon.player().getLocation();
+        FloatVector3 location = unicacityAddon.player().getLocation();
 
-        assert position != null;
+        assert location != null;
         AABB aabb = new AABB(
-                position.getX() - 50,
-                position.getY() - 50,
-                position.getZ() - 50,
-                position.getX() + 50,
-                position.getY() + 50,
-                position.getZ() + 50
+                location.getX() - 50,
+                location.getY() - 50,
+                location.getZ() - 50,
+                location.getX() + 50,
+                location.getY() + 50,
+                location.getZ() + 50
         );
 
         assert Minecraft.getInstance().level != null;

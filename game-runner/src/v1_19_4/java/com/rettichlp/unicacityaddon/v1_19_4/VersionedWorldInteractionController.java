@@ -36,9 +36,9 @@ public class VersionedWorldInteractionController extends WorldInteractionControl
     }
 
     @Override
-    public boolean isHouseNumberSign(FloatVector3 pos) {
+    public boolean isHouseNumberSign(FloatVector3 location) {
         ClientLevel clientLevel = Minecraft.getInstance().level;
-        BlockPos blockPos = new BlockPos((int) pos.getX(), (int) pos.getY(), (int) pos.getZ());
+        BlockPos blockPos = new BlockPos((int) location.getX(), (int) location.getY(), (int) location.getZ());
 
         assert clientLevel != null;
         if (clientLevel.getBlockState(blockPos).getBlock() instanceof SignBlock) {
@@ -53,21 +53,21 @@ public class VersionedWorldInteractionController extends WorldInteractionControl
     }
 
     @Override
-    public boolean isBanner(FloatVector3 pos) {
+    public boolean isBanner(FloatVector3 location) {
         ClientLevel clientLevel = Minecraft.getInstance().level;
-        BlockPos blockPos = new BlockPos((int) pos.getX(), (int) pos.getY(), (int) pos.getZ());
+        BlockPos blockPos = new BlockPos((int) location.getX(), (int) location.getY(), (int) location.getZ());
 
         assert clientLevel != null;
         return clientLevel.getBlockState(blockPos).getBlock() instanceof WallBannerBlock;
     }
 
     @Override
-    public boolean isPlant(FloatVector3 pos) {
+    public boolean isPlant(FloatVector3 location) {
         ClientLevel clientLevel = Minecraft.getInstance().level;
 
         assert clientLevel != null;
-        boolean isFern = clientLevel.getBlockState(new BlockPos((int) pos.getX(), (int) pos.getY(), (int) pos.getZ())).getBlock().equals(Blocks.FERN);
-        boolean isPodzol = clientLevel.getBlockState(new BlockPos((int) pos.getX(), ((int) pos.getY()) - 1, (int) pos.getZ())).getBlock().equals(Blocks.PODZOL);
+        boolean isFern = clientLevel.getBlockState(new BlockPos((int) location.getX(), (int) location.getY(), (int) location.getZ())).getBlock().equals(Blocks.FERN);
+        boolean isPodzol = clientLevel.getBlockState(new BlockPos((int) location.getX(), ((int) location.getY()) - 1, (int) location.getZ())).getBlock().equals(Blocks.PODZOL);
 
         return isFern && isPodzol;
     }

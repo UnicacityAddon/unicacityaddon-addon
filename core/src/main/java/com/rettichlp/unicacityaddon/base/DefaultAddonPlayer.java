@@ -169,9 +169,9 @@ public class DefaultAddonPlayer implements AddonPlayer {
     }
 
     @Override
-    public void setNaviRoute(FloatVector3 floatVector3) {
+    public void setNaviRoute(FloatVector3 location) {
         stopRoute();
-        sendServerMessage("/navi " + (int) floatVector3.getX() + "/" + (int) floatVector3.getY() + "/" + (int) floatVector3.getZ());
+        sendServerMessage("/navi " + (int) location.getX() + "/" + (int) location.getY() + "/" + (int) location.getZ());
     }
 
     @Override

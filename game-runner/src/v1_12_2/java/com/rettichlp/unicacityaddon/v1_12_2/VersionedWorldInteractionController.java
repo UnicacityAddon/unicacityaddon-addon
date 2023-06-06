@@ -34,10 +34,10 @@ public class VersionedWorldInteractionController extends WorldInteractionControl
     }
 
     @Override
-    public boolean isHouseNumberSign(FloatVector3 pos) {
+    public boolean isHouseNumberSign(FloatVector3 location) {
         World world = Minecraft.getMinecraft().world;
 
-        TileEntity tileEntity = world.getTileEntity(new BlockPos(pos.getX(), pos.getY(), pos.getZ()));
+        TileEntity tileEntity = world.getTileEntity(new BlockPos(location.getX(), location.getY(), location.getZ()));
 
         if (tileEntity instanceof TileEntitySign) {
             ITextComponent[] lines = ((TileEntitySign) tileEntity).signText;
@@ -48,21 +48,21 @@ public class VersionedWorldInteractionController extends WorldInteractionControl
     }
 
     @Override
-    public boolean isBanner(FloatVector3 pos) {
+    public boolean isBanner(FloatVector3 location) {
         World world = Minecraft.getMinecraft().world;
 
-        TileEntity tileEntity = world.getTileEntity(new BlockPos(pos.getX(), pos.getY(), pos.getZ()));
+        TileEntity tileEntity = world.getTileEntity(new BlockPos(location.getX(), location.getY(), location.getZ()));
 
         System.out.println("1.12.2: " + (tileEntity instanceof TileEntityBanner));
         return tileEntity instanceof TileEntityBanner;
     }
 
     @Override
-    public boolean isPlant(FloatVector3 pos) {
+    public boolean isPlant(FloatVector3 location) {
         World world = Minecraft.getMinecraft().world;
 
-        boolean isFern = world.getBlockState(new BlockPos(pos.getX(), pos.getY(), pos.getZ())).equals(Blocks.TALLGRASS.getDefaultState().withProperty(BlockTallGrass.TYPE, BlockTallGrass.EnumType.FERN));
-        boolean isPodzol = world.getBlockState(new BlockPos(pos.getX(), pos.getY() - 1, pos.getZ())).equals(Blocks.DIRT.getDefaultState().withProperty(BlockDirt.VARIANT, BlockDirt.DirtType.PODZOL));
+        boolean isFern = world.getBlockState(new BlockPos(location.getX(), location.getY(), location.getZ())).equals(Blocks.TALLGRASS.getDefaultState().withProperty(BlockTallGrass.TYPE, BlockTallGrass.EnumType.FERN));
+        boolean isPodzol = world.getBlockState(new BlockPos(location.getX(), location.getY() - 1, location.getZ())).equals(Blocks.DIRT.getDefaultState().withProperty(BlockDirt.VARIANT, BlockDirt.DirtType.PODZOL));
 
         return isFern && isPodzol;
     }

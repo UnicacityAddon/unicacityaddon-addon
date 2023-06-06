@@ -33,28 +33,28 @@ public class NavigationService {
         return getNearest(this.unicacityAddon.player().getLocation(), Job.values(), Job::getLocation);
     }
 
-    public Map.Entry<Double, Bus> getNearestBus(FloatVector3 position) {
-        return getNearest(position, Bus.values(), Bus::getLocation);
+    public Map.Entry<Double, Bus> getNearestBus(FloatVector3 location) {
+        return getNearest(location, Bus.values(), Bus::getLocation);
     }
 
     public Map.Entry<Double, NaviPoint> getNearestNaviPoint(int x, int y, int z) {
         return getNearestNaviPoint(new FloatVector3(x, y, z));
     }
 
-    public Map.Entry<Double, NaviPoint> getNearestNaviPoint(FloatVector3 position) {
-        return getNearest(position, this.unicacityAddon.api().getNaviPointList(), NaviPoint::getLocation);
+    public Map.Entry<Double, NaviPoint> getNearestNaviPoint(FloatVector3 location) {
+        return getNearest(location, this.unicacityAddon.api().getNaviPointList(), NaviPoint::getLocation);
     }
 
-    public <T> Map.Entry<Double, T> getNearest(FloatVector3 position, T[] elements, Function<T, FloatVector3> positionExtractor) {
-        return getNearest(position, List.of(elements), positionExtractor);
+    public <T> Map.Entry<Double, T> getNearest(FloatVector3 location, T[] elements, Function<T, FloatVector3> locationExtractor) {
+        return getNearest(location, List.of(elements), locationExtractor);
     }
 
-    public <T> Map.Entry<Double, T> getNearest(FloatVector3 position, Collection<T> elements, Function<T, FloatVector3> positionExtractor) {
+    public <T> Map.Entry<Double, T> getNearest(FloatVector3 location, Collection<T> elements, Function<T, FloatVector3> locationExtractor) {
         T nearestElement = null;
         double nearestDistance = Double.MAX_VALUE;
 
         for (T element : elements) {
-            double distance = position.distance(positionExtractor.apply(element));
+            double distance = location.distance(locationExtractor.apply(element));
             if (distance < nearestDistance) {
                 nearestDistance = distance;
                 nearestElement = element;

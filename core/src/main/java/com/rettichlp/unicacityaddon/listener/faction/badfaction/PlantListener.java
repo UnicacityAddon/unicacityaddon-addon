@@ -29,8 +29,8 @@ public class PlantListener {
         ClientPlayerInteractEvent.InteractionType interactionType = e.type();
 
         if (interactionType.equals(ClientPlayerInteractEvent.InteractionType.INTERACT)) {
-            FloatVector3 pos = this.unicacityAddon.worldInteractionController().getClickedBlockLocation();
-            boolean isPlant = pos != null && this.unicacityAddon.worldInteractionController().isPlant(pos);
+            FloatVector3 location = this.unicacityAddon.worldInteractionController().getClickedBlockLocation();
+            boolean isPlant = location != null && this.unicacityAddon.worldInteractionController().isPlant(location);
 
             if (isPlant) {
                 this.unicacityAddon.player().sendServerMessage("/plant");

@@ -24,9 +24,9 @@ public enum BlackMarketLocation {
     FREIBAD("Freibad", new FloatVector3(-269, 69, -521));
 
     private final String displayName;
-    private final FloatVector3 floatVector3;
+    private final FloatVector3 location;
 
     public String getNaviCommand() {
-        return "/navi " + floatVector3.getX() + "/" + floatVector3.getY() + "/" + floatVector3.getZ();
+        return "/navi " + location.getX() + "/" + location.getY() + "/" + location.getZ();
     }
 }

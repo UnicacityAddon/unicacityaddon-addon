@@ -64,7 +64,7 @@ public interface AddonPlayer {
 
     void setNaviRoute(int x, int y, int z);
 
-    void setNaviRoute(FloatVector3 floatVector3);
+    void setNaviRoute(FloatVector3 location);
 
     void copyToClipboard(String string);
 

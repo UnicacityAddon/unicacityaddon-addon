@@ -289,24 +289,24 @@ public class Data {
     }
 
     /**
-     * Adds the position of the <code>AddonPlayer</code> with the given name to the <code>coordlist</code>
+     * Adds the location of the <code>AddonPlayer</code> with the given name to the <code>coordlist</code>
      *
-     * @param name     Name of the position to be added to the <code>coordlist</code>
-     * @param blockPos Position to be added to the <code>coordlist</code>
+     * @param name     Name of the location to be added to the <code>coordlist</code>
+     * @param location Location to be added to the <code>coordlist</code>
      * @see FloatVector3
      * @see AddonPlayer
      */
-    public void addCoordToCoordlist(String name, FloatVector3 blockPos) {
+    public void addCoordToCoordlist(String name, FloatVector3 location) {
         List<CoordlistEntry> newCoordlistEntryList = getCoordlist();
-        newCoordlistEntryList.add(new CoordlistEntry(name, blockPos.getX(), blockPos.getY(), blockPos.getZ()));
+        newCoordlistEntryList.add(new CoordlistEntry(name, location.getX(), location.getY(), location.getZ()));
         coordlist = newCoordlistEntryList;
         saveAndFireEvent();
     }
 
     /**
-     * Removes the position with the given name from the <code>coordlist</code>
+     * Removes the location with the given name from the <code>coordlist</code>
      *
-     * @param name Name of the position to be removed from the <code>coordlist</code>
+     * @param name Name of the location to be removed from the <code>coordlist</code>
      */
     public boolean removeCoordFromCoordlist(String name) {
         List<CoordlistEntry> newCoordlistEntryList = getCoordlist();

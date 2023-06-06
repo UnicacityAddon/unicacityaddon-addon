@@ -35,8 +35,8 @@ public class CoordlistCommand extends UnicacityCommand {
             listCoords(p);
         } else if (arguments.length > 1 && arguments[0].equalsIgnoreCase("add")) {
             String name = this.unicacityAddon.utils().textUtils().makeStringByArgs(arguments, "-").replace("add-", "");
-            FloatVector3 position = p.getLocation();
-            this.unicacityAddon.services().fileService().data().addCoordToCoordlist(name, position != null ? position : new FloatVector3(0, 0, 0));
+            FloatVector3 location = p.getLocation();
+            this.unicacityAddon.services().fileService().data().addCoordToCoordlist(name, location != null ? location : new FloatVector3(0, 0, 0));
             p.sendInfoMessage("Koordinaten gespeichert.");
         } else if (arguments.length > 1 && arguments[0].equalsIgnoreCase("remove")) {
             String name = this.unicacityAddon.utils().textUtils().makeStringByArgs(arguments, "-").replace("remove-", "");

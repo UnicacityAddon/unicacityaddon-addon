@@ -50,9 +50,9 @@ public class NavigationListener {
             }
 
             if (EmergencyServiceListener.distanceToService > 0 && p.getLocation() != null) {
-                FloatVector3 pos = p.getLocation();
+                FloatVector3 location = p.getLocation();
 
-                double distanceFromServiceAcceptPositionToHere = EmergencyServiceListener.serviceAcceptPosition.distance(new FloatVector3(pos.getX(), pos.getY(), pos.getZ()));
+                double distanceFromServiceAcceptPositionToHere = EmergencyServiceListener.serviceAcceptLocation.distance(new FloatVector3(location.getX(), location.getY(), location.getZ()));
                 if (Math.abs(EmergencyServiceListener.distanceToService - distanceFromServiceAcceptPositionToHere) <= 5) {
                     p.sendServerMessage("/doneservice");
                 } else {

@@ -55,8 +55,8 @@ public class ReinforcementListener {
             int posY = Integer.parseInt(reinforcementMatcher.group(4));
             int posZ = Integer.parseInt(reinforcementMatcher.group(5));
 
-            FloatVector3 position = p.getLocation();
-            int distance = position != null ? (int) position.distance(new FloatVector3(posX, posY, posZ)) : 0;
+            FloatVector3 location = p.getLocation();
+            int distance = location != null ? (int) location.distance(new FloatVector3(posX, posY, posZ)) : 0;
 
             boolean dChat = splitFormattedMsg[0].contains(ColorCode.RED.getCode())
                     && splitFormattedMsg[1].contains(ColorCode.RED.getCode());
@@ -90,7 +90,7 @@ public class ReinforcementListener {
             p.sendMessage(Message.getBuilder()
                     .of("»").color(ColorCode.GRAY).advance().space()
                     .of("Route Anzeigen").color(ColorCode.RED)
-                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, this.unicacityAddon.utils().commandUtils.positionHoverMessage(posX, posY, posZ))
+                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, this.unicacityAddon.utils().commandUtils.locationHoverMessage(posX, posY, posZ))
                             .clickEvent(ClickEvent.Action.RUN_COMMAND, "/navi " + posX + "/" + posY + "/" + posZ)
                             .advance()
                     .of(" | ").color(ColorCode.GRAY).advance()

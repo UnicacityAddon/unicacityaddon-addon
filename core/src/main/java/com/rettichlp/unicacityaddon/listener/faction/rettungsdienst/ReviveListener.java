@@ -46,8 +46,8 @@ public class ReviveListener {
             new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    FloatVector3 position = ReviveListener.this.unicacityAddon.player().getLocation();
-                    if (position != null && position.distance(playerReviveLocation) > 50) {
+                    FloatVector3 location = ReviveListener.this.unicacityAddon.player().getLocation();
+                    if (location != null && location.distance(playerReviveLocation) > 50) {
                         AddonPlayer p = ReviveListener.this.unicacityAddon.player();
                         ReviveListener.this.unicacityAddon.services().fileService().data().setTimer(0);
                         isDead = false;

@@ -36,7 +36,7 @@ public class CommandUtils {
         }, 0, TimeUnit.SECONDS.toMillis(1));
     }
 
-    public Component positionHoverMessage(int x, int y, int z) {
+    public Component locationHoverMessage(int x, int y, int z) {
         return Message.getBuilder().of(String.valueOf(x)).color(ColorCode.AQUA).advance()
                 .of(" | ").color(ColorCode.GRAY).advance()
                 .of(String.valueOf(y)).color(ColorCode.AQUA).advance()
