@@ -27,8 +27,6 @@ public class SellDrugCommand extends UnicacityCommand {
 
     @Override
     public boolean execute(String[] arguments) {
-        AddonPlayer p = this.unicacityAddon.player();
-
         if (arguments.length < 5) {
             sendUsage();
             return true;

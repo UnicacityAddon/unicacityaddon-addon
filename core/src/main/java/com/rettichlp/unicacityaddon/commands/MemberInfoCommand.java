@@ -17,6 +17,8 @@ import java.util.stream.Collectors;
 @UCCommand(prefix = "memberinfo", aliases = {"mi"}, onlyOnUnicacity = false, usage = "(Fraktion)")
 public class MemberInfoCommand extends UnicacityCommand {
 
+    private boolean blocked = false;
+
     private final UnicacityAddon unicacityAddon;
 
     public MemberInfoCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
@@ -28,9 +30,14 @@ public class MemberInfoCommand extends UnicacityCommand {
     public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
 
-        String faction = arguments.length < 1 ? p.getFaction().getFactionKey() : arguments[0];
-        p.sendServerMessage("/memberinfo " + faction);
-        return true;
+        blocked = !blocked;
+
+        if (blocked) {
+            String faction = arguments.length < 1 ? p.getFaction().getFactionKey() : arguments[0];
+            p.sendServerMessage("/memberinfo " + faction);
+        }
+
+        return blocked;
     }
 
     @Override
