@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * @author RettichLP
  */
-@UCCommand(prefix = "sync")
+@UCCommand(prefix = "sync", onlyOnUnicacity = false)
 public class SyncCommand extends UnicacityCommand {
 
     private final UnicacityAddon unicacityAddon;
