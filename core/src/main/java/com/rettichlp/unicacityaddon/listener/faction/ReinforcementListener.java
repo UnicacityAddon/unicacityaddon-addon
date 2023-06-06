@@ -3,16 +3,20 @@ package com.rettichlp.unicacityaddon.listener.faction;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
+import com.rettichlp.unicacityaddon.base.config.hotkey.HotkeySetting;
 import com.rettichlp.unicacityaddon.base.config.reinforcement.DefaultReinforcementSetting;
 import com.rettichlp.unicacityaddon.base.enums.faction.ReinforcementType;
+import com.rettichlp.unicacityaddon.base.events.HotkeyEvent;
 import com.rettichlp.unicacityaddon.base.models.api.NaviPoint;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
+import lombok.Getter;
 import net.labymod.api.client.chat.ChatMessage;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.event.HoverEvent;
+import net.labymod.api.client.gui.screen.key.Key;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 import net.labymod.api.util.math.vector.FloatVector3;
@@ -60,7 +64,7 @@ public class ReinforcementListener {
 
             String type = "Reinforcement!";
             if (lastReinforcement != null && name.equals(lastReinforcement.getIssuerName()) && System.currentTimeMillis() - lastReinforcement.getTime() < 1000) {
-                type = lastReinforcement.getType().getMessage();
+                type = lastReinforcement.getReinforcementType().getMessage();
             }
 
             Component hoverMessage = Message.getBuilder().of(String.valueOf(posX)).color(ColorCode.AQUA).advance()
@@ -141,6 +145,20 @@ public class ReinforcementListener {
         }
     }
 
+    @Subscribe
+    public void onHotkey(HotkeyEvent e) {
+        AddonPlayer p = this.unicacityAddon.player();
+        Key key = e.key();
+        HotkeySetting hotkeySetting = e.hotkeySetting();
+
+        if (key.equals(hotkeySetting.reinforcementFaction().get())) {
+            p.sendServerMessage("/reinforcement -f");
+        } else if (key.equals(hotkeySetting.reinforcementAlliance().get())) {
+            p.sendServerMessage("/reinforcement -d");
+        }
+    }
+
+    @Getter
     private static class Reinforcement {
 
         private final String issuerName;
@@ -151,18 +169,6 @@ public class ReinforcementListener {
             this.issuerName = issuerName;
             this.reinforcementType = reinforcementType;
             this.time = System.currentTimeMillis();
-        }
-
-        public String getIssuerName() {
-            return issuerName;
-        }
-
-        public ReinforcementType getType() {
-            return reinforcementType;
-        }
-
-        public long getTime() {
-            return time;
         }
     }
 }

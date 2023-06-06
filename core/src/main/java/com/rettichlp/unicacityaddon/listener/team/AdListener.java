@@ -40,6 +40,7 @@ public class AdListener {
     public void onHotkey(HotkeyEvent e) {
         Key key = e.key();
         HotkeySetting hotkeySetting = e.hotkeySetting();
+
         if (key.equals(hotkeySetting.acceptAd().get())) {
             this.handleAd("freigeben");
         } else if (key.equals(hotkeySetting.declineAd().get())) {

@@ -3,12 +3,15 @@ package com.rettichlp.unicacityaddon.listener;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.enums.faction.Equip;
+import com.rettichlp.unicacityaddon.base.events.HotkeyEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
 import java.util.Arrays;
 import java.util.Optional;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.regex.Matcher;
 
 /**
@@ -18,6 +21,9 @@ import java.util.regex.Matcher;
  */
 @UCEvent
 public class EquipShopListener {
+
+    private int amountLeft = 0;
+    private int slotNumber = -1;
 
     private final UnicacityAddon unicacityAddon;
 
@@ -32,7 +38,7 @@ public class EquipShopListener {
         Matcher buyInterruptedMatcher = PatternHandler.BUY_INTERRUPTED_PATTERN.matcher(msg);
         Matcher equipInterruptedMatcher = PatternHandler.EQUIP_INTERRUPTED_PATTERN.matcher(msg);
         if (buyInterruptedMatcher.find() || equipInterruptedMatcher.find()) {
-            EventRegistrationListener.amountLeft = 0;
+            this.amountLeft = 0;
             return;
         }
 
@@ -55,6 +61,29 @@ public class EquipShopListener {
         Matcher trackerMatcher = PatternHandler.TRACKER_PATTERN.matcher(msg);
         if (trackerMatcher.find()) {
             this.unicacityAddon.services().fileService().data().addEquipToEquipMap(Equip.TRACKER);
+        }
+    }
+
+    @Subscribe
+    public void onHotkey(HotkeyEvent e) {
+        if (e.key().equals(e.hotkeySetting().aBuy().get())) {
+            this.amountLeft = this.unicacityAddon.configuration().aBuyAmount().getOrDefault(5);
+            slotNumber = ScreenRenderListener.lastHoveredSlotNumber;
+
+            if (slotNumber >= 0) {
+                new Timer().scheduleAtFixedRate(new TimerTask() {
+                    @Override
+                    public void run() {
+                        if (EquipShopListener.this.amountLeft > 0) {
+                            EquipShopListener.this.unicacityAddon.guiController().inventoryClick(EquipShopListener.this.unicacityAddon, slotNumber);
+                            EquipShopListener.this.amountLeft--;
+                        } else {
+                            this.cancel();
+                            EquipShopListener.this.slotNumber = -1;
+                        }
+                    }
+                }, 0, 200);
+            }
         }
     }
 }

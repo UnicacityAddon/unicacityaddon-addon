@@ -1,35 +1,25 @@
 package com.rettichlp.unicacityaddon.listener;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.config.UnicacityAddonConfiguration;
 import com.rettichlp.unicacityaddon.base.config.hotkey.HotkeySetting;
-import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
-import com.rettichlp.unicacityaddon.base.teamspeak.CommandResponse;
-import com.rettichlp.unicacityaddon.base.teamspeak.commands.ClientMoveCommand;
-import com.rettichlp.unicacityaddon.base.teamspeak.objects.Channel;
-import com.rettichlp.unicacityaddon.base.text.ColorCode;
-import com.rettichlp.unicacityaddon.base.text.Message;
-import com.rettichlp.unicacityaddon.listener.team.AdListener;
+import com.rettichlp.unicacityaddon.base.events.HotkeyEvent;
+import com.rettichlp.unicacityaddon.base.events.UnicacityAddonTickEvent;
 import net.labymod.api.Laby;
 import net.labymod.api.client.gui.screen.key.Key;
+import net.labymod.api.event.Phase;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.input.KeyEvent;
-
-import java.util.Timer;
-import java.util.TimerTask;
+import net.labymod.api.event.client.lifecycle.GameTickEvent;
 
 /**
  * @author RettichLP
- * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/events/AlternateScreenshotEventHandler.java">UCUtils by paulzhng</a>
  */
 @UCEvent
 public class EventRegistrationListener {
 
-    public static int amountLeft = 0;
-
-    private int slotNumber = -1;
+    private int currentTick = 0;
 
     private final UnicacityAddon unicacityAddon;
 
@@ -38,82 +28,60 @@ public class EventRegistrationListener {
     }
 
     @Subscribe
-    public void onKey(KeyEvent e) {
-        if (Laby.references().chatAccessor().isChatOpen() || !this.unicacityAddon.utils().isUnicacity())
-            return;
+    public void onGameTick(GameTickEvent e) {
+        if (e.phase().equals(Phase.POST)) {
+            this.currentTick++;
 
-        KeyEvent.State state = e.state();
-        Key key = e.key();
-        UnicacityAddonConfiguration configuration = this.unicacityAddon.configuration();
+            this.unicacityAddon.labyAPI().eventBus().fire(new UnicacityAddonTickEvent(this.unicacityAddon, UnicacityAddonTickEvent.Phase.TICK));
 
-        if (state.equals(KeyEvent.State.PRESS) && key.equals(Key.TAB) && configuration.orderedTablist().get()) {
-            this.unicacityAddon.tabListController().orderTabList(this.unicacityAddon);
-            return;
-        }
+            // 0,25 SECONDS
+            if (this.currentTick % 5 == 0) {
+                this.unicacityAddon.labyAPI().eventBus().fire(new UnicacityAddonTickEvent(this.unicacityAddon, UnicacityAddonTickEvent.Phase.TICK_5));
+            }
 
-        HotkeySetting hotkeySetting = configuration.hotkeySetting();
-        if (state.equals(KeyEvent.State.PRESS) && hotkeySetting.enabled().get()) {
-            handleHotkey(key, hotkeySetting);
+            // 1 SECOND
+            if (this.currentTick % 20 == 0) {
+                this.unicacityAddon.labyAPI().eventBus().fire(new UnicacityAddonTickEvent(this.unicacityAddon, UnicacityAddonTickEvent.Phase.SECOND));
+            }
+
+            // 3 SECONDS
+            if (this.currentTick % 60 == 0) {
+                this.unicacityAddon.labyAPI().eventBus().fire(new UnicacityAddonTickEvent(this.unicacityAddon, UnicacityAddonTickEvent.Phase.SECOND_3));
+            }
+
+            // 5 SECONDS
+            if (this.currentTick % 100 == 0) {
+                this.unicacityAddon.labyAPI().eventBus().fire(new UnicacityAddonTickEvent(this.unicacityAddon, UnicacityAddonTickEvent.Phase.SECOND_5));
+            }
+
+            // 30 SECONDS
+            if (this.currentTick % 600 == 0) {
+                this.unicacityAddon.labyAPI().eventBus().fire(new UnicacityAddonTickEvent(this.unicacityAddon, UnicacityAddonTickEvent.Phase.SECOND_30));
+            }
+
+            // 1 MINUTE
+            if (this.currentTick % 1200 == 0) {
+                this.unicacityAddon.labyAPI().eventBus().fire(new UnicacityAddonTickEvent(this.unicacityAddon, UnicacityAddonTickEvent.Phase.MINUTE));
+            }
         }
     }
 
-    private void handleHotkey(Key key, HotkeySetting hotkeySetting) {
-        AddonPlayer p = this.unicacityAddon.player();
+    @Subscribe
+    public void onKey(KeyEvent e) {
+        KeyEvent.State state = e.state();
+        Key key = e.key();
 
-        if (key.equals(hotkeySetting.acceptReport().getOrDefault(Key.NONE))) {
-            p.sendServerMessage("/ar");
-        } else if (key.equals(hotkeySetting.cancelReport().getOrDefault(Key.NONE))) {
-            String farewell = this.unicacityAddon.configuration().reportMessageSetting().farewell().getOrDefault("");
-            if (!farewell.isEmpty())
-                p.sendServerMessage(farewell);
-            p.sendServerMessage("/cr");
-        } else if (key.equals(hotkeySetting.aDuty().getOrDefault(Key.NONE))) {
-            p.sendServerMessage("/aduty");
-        } else if (key.equals(hotkeySetting.aDutySilent().getOrDefault(Key.NONE))) {
-            p.sendServerMessage("/aduty -s");
-        } else if (key.equals(hotkeySetting.reinforcementFaction().getOrDefault(Key.NONE))) {
-            p.sendServerMessage("/reinforcement -f");
-        } else if (key.equals(hotkeySetting.reinforcementAlliance().getOrDefault(Key.NONE))) {
-            p.sendServerMessage("/reinforcement -d");
-        } else if (key.equals(hotkeySetting.aBuy().getOrDefault(Key.NONE))) {
-            amountLeft = this.unicacityAddon.configuration().aBuyAmount().getOrDefault(5);
-            slotNumber = ScreenRenderListener.lastHoveredSlotNumber;
-
-            if (slotNumber >= 0) {
-                new Timer().scheduleAtFixedRate(new TimerTask() {
-                    @Override
-                    public void run() {
-                        if (amountLeft > 0) {
-                            EventRegistrationListener.this.unicacityAddon.guiController().inventoryClick(EventRegistrationListener.this.unicacityAddon, slotNumber);
-                            amountLeft--;
-                        } else {
-                            this.cancel();
-                            slotNumber = -1;
-                        }
-                    }
-                }, 0, 200);
-            }
-        } else if (key.equals(hotkeySetting.publicChannel().getOrDefault(Key.NONE))) {
-            if (p.getFaction().equals(Faction.NULL)) {
-                p.sendErrorMessage("Du befindest dich in keiner Fraktion.");
+        UnicacityAddonConfiguration configuration = this.unicacityAddon.configuration();
+        if (state.equals(KeyEvent.State.PRESS)) {
+            if (key.equals(Key.TAB) && configuration.orderedTablist().get()) {
+                this.unicacityAddon.tabListController().orderTabList(this.unicacityAddon);
                 return;
             }
 
-            Channel foundChannel = new Channel(p.getFaction().getPublicChannelId(), "Öffentlich", 0, 0);
-            ClientMoveCommand clientMoveCommand = new ClientMoveCommand(this.unicacityAddon, foundChannel.getChannelID(), this.unicacityAddon.utils().tsUtils().getMyClientID());
-
-            CommandResponse commandResponse = clientMoveCommand.getResponse();
-            if (commandResponse.failed()) {
-                p.sendErrorMessage("Das Bewegen ist fehlgeschlagen.");
-                return;
+            HotkeySetting hotkeySetting = configuration.hotkeySetting();
+            if (!Laby.references().chatAccessor().isChatOpen() && this.unicacityAddon.utils().isUnicacity() && hotkeySetting.enabled().get()) {
+                this.unicacityAddon.labyAPI().eventBus().fire(new HotkeyEvent(this.unicacityAddon, key));
             }
-
-            p.sendMessage(Message.getBuilder()
-                    .prefix()
-                    .of("Du bist in deinen").color(ColorCode.GRAY).advance().space()
-                    .of("\"Öffentlich Channel\"").color(ColorCode.AQUA).advance()
-                    .of(" gegangen.").color(ColorCode.GRAY).advance()
-                    .createComponent());
         }
     }
 }

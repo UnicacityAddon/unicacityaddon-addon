@@ -3,11 +3,14 @@ package com.rettichlp.unicacityaddon.listener.team;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
+import com.rettichlp.unicacityaddon.base.config.hotkey.HotkeySetting;
 import com.rettichlp.unicacityaddon.base.config.message.ReportMessageSetting;
+import com.rettichlp.unicacityaddon.base.events.HotkeyEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import net.labymod.api.client.component.event.ClickEvent;
+import net.labymod.api.client.gui.screen.key.Key;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
@@ -88,6 +91,22 @@ public class ReportListener {
 
         if (PatternHandler.REPORT_PATTERN.matcher(unformattedMsg).find()) {
             this.unicacityAddon.soundController().playReportSound();
+        }
+    }
+
+    @Subscribe
+    public void onHotkey(HotkeyEvent e) {
+        AddonPlayer p = this.unicacityAddon.player();
+        Key key = e.key();
+        HotkeySetting hotkeySetting = e.hotkeySetting();
+
+        if (key.equals(hotkeySetting.acceptReport().get())) {
+            p.sendServerMessage("/ar");
+        } else if (key.equals(hotkeySetting.cancelReport().get())) {
+            String farewell = this.unicacityAddon.configuration().reportMessageSetting().farewell().get();
+            if (!farewell.isEmpty())
+                p.sendServerMessage(farewell);
+            p.sendServerMessage("/cr");
         }
     }
 }
