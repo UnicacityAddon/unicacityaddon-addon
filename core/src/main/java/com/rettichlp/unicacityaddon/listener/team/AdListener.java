@@ -2,7 +2,10 @@ package com.rettichlp.unicacityaddon.listener.team;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
+import com.rettichlp.unicacityaddon.base.config.hotkey.HotkeySetting;
+import com.rettichlp.unicacityaddon.base.events.HotkeyEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
+import net.labymod.api.client.gui.screen.key.Key;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
@@ -15,8 +18,8 @@ import java.util.regex.Matcher;
 @UCEvent
 public class AdListener {
 
-    private static String adIssuer;
-    private static long adTime;
+    private String adIssuer;
+    private long adTime;
 
     private final UnicacityAddon unicacityAddon;
 
@@ -28,15 +31,26 @@ public class AdListener {
     public void onChatReceive(ChatReceiveEvent e) {
         Matcher matcher = PatternHandler.AD_CONTROL_PATTERN.matcher(e.chatMessage().getPlainText());
         if (matcher.find()) {
-            adIssuer = matcher.group(1);
-            adTime = System.currentTimeMillis();
+            this.adIssuer = matcher.group(1);
+            this.adTime = System.currentTimeMillis();
         }
     }
 
-    public static void handleAd(String type, UnicacityAddon unicacityAddon) {
-        if (adIssuer != null && System.currentTimeMillis() - adTime < TimeUnit.SECONDS.toMillis(20)) {
-            unicacityAddon.player().sendServerMessage("/adcontrol " + adIssuer + " " + type);
-            adIssuer = null;
+    @Subscribe
+    public void onHotkey(HotkeyEvent e) {
+        Key key = e.key();
+        HotkeySetting hotkeySetting = e.hotkeySetting();
+        if (key.equals(hotkeySetting.acceptAd().get())) {
+            this.handleAd("freigeben");
+        } else if (key.equals(hotkeySetting.declineAd().get())) {
+            this.handleAd("blockieren");
+        }
+    }
+
+    private void handleAd(String type) {
+        if (this.adIssuer != null && System.currentTimeMillis() - this.adTime < TimeUnit.SECONDS.toMillis(20)) {
+            this.unicacityAddon.player().sendServerMessage("/adcontrol " + this.adIssuer + " " + type);
+            this.adIssuer = null;
         }
     }
 }
