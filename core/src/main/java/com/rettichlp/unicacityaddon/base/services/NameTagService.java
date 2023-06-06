@@ -28,6 +28,7 @@ import java.util.Map;
 public class NameTagService {
 
     private Map<String, Boolean> blacklistPlayerMap;
+    private Map<String, WantedListener.Wanted> wantedPlayerMap;
     private Collection<String> noPushPlayerList;
     private Collection<String> maskedPlayerList;
 
@@ -36,6 +37,7 @@ public class NameTagService {
     public NameTagService(UnicacityAddon unicacityAddon) {
         this.unicacityAddon = unicacityAddon;
         this.blacklistPlayerMap = new HashMap<>();
+        this.wantedPlayerMap = new HashMap<>();
         this.noPushPlayerList = Collections.emptyList();
         this.maskedPlayerList = Collections.emptyList();
     }
@@ -77,7 +79,7 @@ public class NameTagService {
 
         SpecificNameTagSetting specificNameTagSetting = nameTagSetting.specificNameTagSetting();
         if (specificNameTagSetting.enabled().get()) {
-            WantedListener.Wanted wanted = WantedListener.WANTED_MAP.get(playerName);
+            WantedListener.Wanted wanted = this.wantedPlayerMap.get(playerName);
             if (wanted != null) {
                 prefix.append(this.getWpColor(wanted.getAmount()).getCode());
             }

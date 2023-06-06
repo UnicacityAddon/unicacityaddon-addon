@@ -34,7 +34,7 @@ public class ModifyWantedsCommand extends UnicacityCommand {
 
         String target = arguments[0];
 
-        WantedListener.Wanted wanted = WantedListener.WANTED_MAP.get(target);
+        WantedListener.Wanted wanted = this.unicacityAddon.services().nametagService().getWantedPlayerMap().get(target);
         if (wanted == null) {
             p.sendErrorMessage("Du hast /wanteds noch nicht ausgeführt!");
             return true;

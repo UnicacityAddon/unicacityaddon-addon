@@ -5,6 +5,9 @@ import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
@@ -19,7 +22,6 @@ import java.util.regex.Matcher;
 @UCEvent
 public class WantedListener {
 
-    public static final Map<String, Wanted> WANTED_MAP = new HashMap<>();
     private static long wantedsShown;
 
     private final UnicacityAddon unicacityAddon;
@@ -37,7 +39,10 @@ public class WantedListener {
             String name = wantedsGivenReasonMatcher.group(1);
             String reason = wantedsGivenReasonMatcher.group(2);
 
-            WANTED_MAP.put(name, new Wanted(reason, 0));
+            Map<String, Wanted> wantedPlayerMap = this.unicacityAddon.services().nametagService().getWantedPlayerMap();
+            wantedPlayerMap.put(name, new Wanted(reason, 0));
+            this.unicacityAddon.services().nametagService().setWantedPlayerMap(wantedPlayerMap);
+
             return;
         }
 
@@ -46,7 +51,7 @@ public class WantedListener {
             String name = wantedsGivenPointsMatcher.group(1);
             int wantedPoints = Integer.parseInt(wantedsGivenPointsMatcher.group(2));
 
-            Wanted wanted = WANTED_MAP.get(name);
+            Wanted wanted = this.unicacityAddon.services().nametagService().getWantedPlayerMap().get(name);
             if (wanted == null)
                 return;
 
@@ -65,7 +70,10 @@ public class WantedListener {
                 break;
             }
 
-            WANTED_MAP.remove(name);
+            Map<String, Wanted> wantedPlayerMap = this.unicacityAddon.services().nametagService().getWantedPlayerMap();
+            wantedPlayerMap.remove(name);
+            this.unicacityAddon.services().nametagService().setWantedPlayerMap(wantedPlayerMap);
+
             return;
         }
 
@@ -90,40 +98,25 @@ public class WantedListener {
                     .of(isAfk ? "AFK" : "").color(ColorCode.GRAY).advance()
                     .createComponent());
 
-            WANTED_MAP.put(playerName, new Wanted(wpReason, wpAmount));
+            Map<String, Wanted> wantedPlayerMap = this.unicacityAddon.services().nametagService().getWantedPlayerMap();
+            wantedPlayerMap.put(playerName, new Wanted(wpReason, wpAmount));
+            this.unicacityAddon.services().nametagService().setWantedPlayerMap(wantedPlayerMap);
+
             return;
         }
 
         if (msg.equals("Online Spieler mit WantedPunkten:")) {
-            WANTED_MAP.clear();
+            this.unicacityAddon.services().nametagService().setWantedPlayerMap(new HashMap<>());
             wantedsShown = System.currentTimeMillis();
         }
     }
 
+    @Getter
+    @Setter
+    @AllArgsConstructor
     public static class Wanted {
 
         private String reason;
         private int amount;
-
-        public Wanted(String reason, int amount) {
-            this.reason = reason;
-            this.amount = amount;
-        }
-
-        public String getReason() {
-            return reason;
-        }
-
-        public void setReason(String reason) {
-            this.reason = reason;
-        }
-
-        public int getAmount() {
-            return amount;
-        }
-
-        public void setAmount(int amount) {
-            this.amount = amount;
-        }
     }
 }
