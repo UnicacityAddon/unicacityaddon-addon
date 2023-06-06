@@ -10,17 +10,23 @@ import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.FormattingCode;
 import com.rettichlp.unicacityaddon.listener.faction.ContractListener;
-import com.rettichlp.unicacityaddon.listener.faction.badfaction.blacklist.BlacklistListener;
 import com.rettichlp.unicacityaddon.listener.faction.state.WantedListener;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author RettichLP
  */
+@Getter
+@Setter
 public class NameTagService {
 
+    private Map<String, Boolean> blacklistPlayerMap;
     private Collection<String> noPushPlayerList;
     private Collection<String> maskedPlayerList;
 
@@ -28,24 +34,9 @@ public class NameTagService {
 
     public NameTagService(UnicacityAddon unicacityAddon) {
         this.unicacityAddon = unicacityAddon;
+        this.blacklistPlayerMap = new HashMap<>();
         this.noPushPlayerList = Collections.emptyList();
         this.maskedPlayerList = Collections.emptyList();
-    }
-
-    public Collection<String> getNoPushPlayerList() {
-        return noPushPlayerList;
-    }
-
-    public void setNoPushPlayerList(Collection<String> noPushPlayerList) {
-        this.noPushPlayerList = noPushPlayerList;
-    }
-
-    public Collection<String> getMaskedPlayerList() {
-        return maskedPlayerList;
-    }
-
-    public void setMaskedPlayerList(Collection<String> maskedPlayerList) {
-        this.maskedPlayerList = maskedPlayerList;
     }
 
     public String getPrefix(String playerName, boolean isCorpse) {
@@ -90,7 +81,7 @@ public class NameTagService {
                 prefix.append(this.getWpColor(wanted.getAmount()).getCode());
             }
 
-            if (BlacklistListener.BLACKLIST_MAP.get(playerName) != null)
+            if (this.blacklistPlayerMap.get(playerName) != null)
                 prefix.append(specificNameTagSetting.color().getOrDefault(ColorCode.DARK_RED).getCode());
 
             if (ContractListener.CONTRACT_LIST.contains(playerName))

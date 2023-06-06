@@ -60,11 +60,7 @@ public class HotkeyListener {
     private void handleHotkey(Key key, HotkeySetting hotkeySetting) {
         AddonPlayer p = this.unicacityAddon.player();
 
-        if (key.equals(hotkeySetting.acceptAd().getOrDefault(Key.NONE))) {
-            AdListener.handleAd("freigeben", this.unicacityAddon);
-        } else if (key.equals(hotkeySetting.declineAd().getOrDefault(Key.NONE))) {
-            AdListener.handleAd("blockieren", this.unicacityAddon);
-        } else if (key.equals(hotkeySetting.acceptReport().getOrDefault(Key.NONE))) {
+        if (key.equals(hotkeySetting.acceptReport().getOrDefault(Key.NONE))) {
             p.sendServerMessage("/ar");
         } else if (key.equals(hotkeySetting.cancelReport().getOrDefault(Key.NONE))) {
             String farewell = this.unicacityAddon.configuration().reportMessageSetting().farewell().getOrDefault("");
