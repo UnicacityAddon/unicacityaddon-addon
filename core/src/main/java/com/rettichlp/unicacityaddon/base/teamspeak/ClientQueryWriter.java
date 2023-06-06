@@ -2,7 +2,6 @@ package com.rettichlp.unicacityaddon.base.teamspeak;
 
 import com.google.common.util.concurrent.Uninterruptibles;
 import com.rettichlp.unicacityaddon.base.teamspeak.commands.BaseCommand;
-import org.apache.commons.io.IOUtils;
 
 import java.io.Closeable;
 import java.io.PrintWriter;
@@ -49,7 +48,7 @@ public class ClientQueryWriter extends Thread implements Closeable {
     @Override
     public void close() {
         closed = true;
-        IOUtils.closeQuietly(writer);
+        writer.close();
     }
 
     public BlockingQueue<BaseCommand<?>> getQueue() {

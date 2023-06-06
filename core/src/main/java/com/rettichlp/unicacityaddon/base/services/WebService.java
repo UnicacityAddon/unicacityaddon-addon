@@ -41,7 +41,7 @@ public class WebService {
             return websiteSource;
         } else {
             throw new APIResponseException(this.unicacityAddon, urlString, responseCode, isApiRequest
-                    ? new JsonParser().parse(websiteSource).getAsJsonObject().get("info").getAsString()
+                    ? JsonParser.parseString(websiteSource).getAsJsonObject().get("info").getAsString()
                     : HttpStatus.valueOf(responseCode).getReasonPhrase());
         }
     }

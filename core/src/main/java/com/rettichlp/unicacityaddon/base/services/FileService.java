@@ -74,6 +74,7 @@ public class FileService {
         return dataFile.exists() || dataFile.createNewFile() ? dataFile : null;
     }
 
+    @Deprecated(forRemoval = true)
     public File getNewImageFile() throws IOException {
         if (getAddonScreenshotDir() == null)
             return null;
@@ -136,7 +137,7 @@ public class FileService {
         }
 
         try {
-            new JsonParser().parse(jsonData); // validate check
+            JsonParser.parseString(jsonData); // validate check
             if (!jsonData.isEmpty()) {
                 this.data = new Gson().fromJson(jsonData, Data.class);
             }

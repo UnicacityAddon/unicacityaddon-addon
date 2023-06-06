@@ -117,7 +117,7 @@ public class ChatLogCommand extends UnicacityCommand {
             Reader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), StandardCharsets.UTF_8));
             JsonReader jsonReader = new JsonReader(in);
             jsonReader.setLenient(true);
-            JsonElement jsonElement = new JsonParser().parse(jsonReader);
+            JsonElement jsonElement = JsonParser.parseReader(jsonReader);
             if (!jsonElement.getAsJsonObject().has("key")) {
                 this.unicacityAddon.logger().error("Error while uploading chatlog");
                 return null;

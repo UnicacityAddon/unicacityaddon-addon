@@ -8,7 +8,6 @@ import com.rettichlp.unicacityaddon.base.teamspeak.commands.ClientNotifyRegister
 import com.rettichlp.unicacityaddon.base.teamspeak.commands.CurrentSchandlerIDCommand;
 import com.rettichlp.unicacityaddon.base.teamspeak.exceptions.ClientQueryAuthenticationException;
 import com.rettichlp.unicacityaddon.base.teamspeak.exceptions.ClientQueryConnectionException;
-import org.apache.commons.io.IOUtils;
 
 import java.io.BufferedReader;
 import java.io.Closeable;
@@ -144,7 +143,14 @@ public class TSClientQuery implements Closeable {
 
     @Override
     public void close() {
-        IOUtils.closeQuietly(socket, writer, reader, keepAliveThread);
+        try {
+            socket.close();
+            writer.close();
+            reader.close();
+            keepAliveThread.close();
+        } catch (IOException e) {
+            this.unicacityAddon.logger().warn("TSClientQuery failed to close");
+        }
         TSClientQuery.instance = null;
     }
 }

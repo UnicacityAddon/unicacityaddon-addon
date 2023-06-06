@@ -4,7 +4,6 @@ import com.google.common.util.concurrent.Uninterruptibles;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.teamspeak.commands.BaseCommand;
 import com.rettichlp.unicacityaddon.base.teamspeak.events.TSEvent;
-import org.apache.commons.io.IOUtils;
 
 import java.io.BufferedReader;
 import java.io.Closeable;
@@ -98,7 +97,11 @@ public class ClientQueryReader extends Thread implements Closeable {
     @Override
     public void close() {
         closed = true;
-        IOUtils.closeQuietly(reader);
+        try {
+            reader.close();
+        } catch (IOException e) {
+            this.unicacityAddon.logger().warn("ClientQueryReader failed to close");
+        }
     }
 
     public BlockingQueue<BaseCommand<?>> getQueue() {
