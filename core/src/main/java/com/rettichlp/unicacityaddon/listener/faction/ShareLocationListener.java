@@ -65,6 +65,7 @@ public class ShareLocationListener {
             navipointString = doubleNaviPointEntry.getValue().getName().replace("-", " ");
         }
 
+        FloatVector3 position = this.unicacityAddon.player().getLocation();
         p.sendMessage(this.unicacityAddon.configuration().slocSetting().sloc().getOrDefault(DefaultSlocSetting.SLOC)
                 .replace("&", "§")
                 .replace("%sender%", senderName)

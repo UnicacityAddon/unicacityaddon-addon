@@ -2,6 +2,7 @@ package com.rettichlp.unicacityaddon.base.enums.location;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import net.labymod.api.util.math.vector.FloatVector3;
 
 /**
  * The following code is based on MPL-licensed code by Paul Zhang.
@@ -40,5 +41,9 @@ public enum Job {
 
     public String getNaviCommand() {
         return "/navi " + getX() + "/" + getY() + "/" + getZ();
+    }
+
+    public FloatVector3 getLocation() {
+        return new FloatVector3(x, y, z);
     }
 }

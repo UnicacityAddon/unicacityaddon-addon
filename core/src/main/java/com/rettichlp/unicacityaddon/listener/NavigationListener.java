@@ -49,8 +49,8 @@ public class NavigationListener {
                 p.sendServerMessage("/droptabak");
             }
 
-            if (EmergencyServiceListener.distanceToService > 0) {
-                FloatVector3 pos = p.getPosition();
+            if (EmergencyServiceListener.distanceToService > 0 && p.getLocation() != null) {
+                FloatVector3 pos = p.getLocation();
 
                 double distanceFromServiceAcceptPositionToHere = EmergencyServiceListener.serviceAcceptPosition.distance(new FloatVector3(pos.getX(), pos.getY(), pos.getZ()));
                 if (Math.abs(EmergencyServiceListener.distanceToService - distanceFromServiceAcceptPositionToHere) <= 5) {

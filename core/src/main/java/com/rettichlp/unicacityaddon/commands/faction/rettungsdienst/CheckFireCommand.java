@@ -33,7 +33,7 @@ public class CheckFireCommand extends UnicacityCommand {
     @Override
     public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
-        FloatVector3 pos = p.getPosition();
+        FloatVector3 pos = p.getLocation();
 
         if (pos != null) {
             FloatVector3 one = pos.copy().add(-30, -30, -30);

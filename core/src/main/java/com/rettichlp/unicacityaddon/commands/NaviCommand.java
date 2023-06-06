@@ -40,7 +40,7 @@ public class NaviCommand extends UnicacityCommand {
             return false;
         }
 
-        p.setNaviRoute(naviPoint.getBlockPos());
+        p.setNaviRoute(naviPoint.getLocation());
         return true;
     }
 

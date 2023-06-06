@@ -81,7 +81,7 @@ public class FishermanListener {
         if (PatternHandler.FISHER_END.matcher(msg).find()) {
             count = 0;
             fisherManJob = onTargetLocation = canCatchFish = false;
-            if (p.getPosition().distance(FISHER_START_POSITION) < 2) {
+            if (p.getLocation() != null && p.getLocation().distance(FISHER_START_POSITION) < 2) {
                 p.sendServerMessage("/dropfish");
                 return;
             }

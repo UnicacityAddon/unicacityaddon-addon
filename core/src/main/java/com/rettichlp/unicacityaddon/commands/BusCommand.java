@@ -45,7 +45,7 @@ public class BusCommand extends UnicacityCommand {
             return false;
         }
 
-        destination = this.unicacityAddon.services().navigationService().getNearestBus(naviPoint.getBlockPos()).getValue();
+        destination = this.unicacityAddon.services().navigationService().getNearestBus(naviPoint.getLocation()).getValue();
 
         limiter = 0;
         p.sendServerMessage("/bus");
@@ -61,7 +61,7 @@ public class BusCommand extends UnicacityCommand {
 
     public static Bus getNearestBusToDestination(Collection<Bus> busList) {
         return busList.stream()
-                .collect(Collectors.toMap(bus -> bus, bus -> bus.getBlockPos().distance(new FloatVector3(destination.getX(), destination.getY(), destination.getZ()))))
+                .collect(Collectors.toMap(bus -> bus, bus -> bus.getLocation().distance(new FloatVector3(destination.getX(), destination.getY(), destination.getZ()))))
                 .entrySet().stream()
                 .sorted(Map.Entry.comparingByValue())
                 .map(Map.Entry::getKey)

@@ -1,7 +1,6 @@
 package com.rettichlp.unicacityaddon.base.services;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.enums.location.ATM;
 import com.rettichlp.unicacityaddon.base.enums.location.Bus;
 import com.rettichlp.unicacityaddon.base.enums.location.Job;
@@ -9,7 +8,10 @@ import com.rettichlp.unicacityaddon.base.models.api.NaviPoint;
 import net.labymod.api.util.math.vector.FloatVector3;
 import org.spongepowered.include.com.google.common.collect.Maps;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 /**
  * @author RettichLP
@@ -24,74 +26,41 @@ public class NavigationService {
     }
 
     public Map.Entry<Double, ATM> getNearestATM() {
-        ATM nearestATM = null;
-        double nearestDistance = Double.MAX_VALUE;
-
-        for (ATM atm : ATM.values()) {
-            double distance = this.unicacityAddon.player().getPosition().distance(new FloatVector3(atm.getX(), atm.getY(), atm.getZ()));
-            if (distance < nearestDistance) {
-                nearestDistance = distance;
-                nearestATM = atm;
-            }
-        }
-
-        return Maps.immutableEntry(nearestDistance, nearestATM);
+        return getNearest(this.unicacityAddon.player().getLocation(), ATM.values(), ATM::getLocation);
     }
 
     public Map.Entry<Double, Job> getNearestJob() {
-        Job nearestJob = null;
-        double nearestDistance = Double.MAX_VALUE;
-
-        for (Job job : Job.values()) {
-            double distance = this.unicacityAddon.player().getPosition().distance(new FloatVector3(job.getX(), job.getY(), job.getZ()));
-            if (distance < nearestDistance) {
-                nearestDistance = distance;
-                nearestJob = job;
-            }
-        }
-
-        return Maps.immutableEntry(nearestDistance, nearestJob);
+        return getNearest(this.unicacityAddon.player().getLocation(), Job.values(), Job::getLocation);
     }
 
-    public Map.Entry<Double, Bus> getNearestBus() {
-        return getNearestBus(this.unicacityAddon.player().getPosition());
-    }
-
-    public Map.Entry<Double, Bus> getNearestBus(FloatVector3 blockPos) {
-        Bus nearestBus = null;
-        double nearestDistance = Double.MAX_VALUE;
-
-        for (Bus bus : Bus.values()) {
-            double distance = blockPos.distance(new FloatVector3(bus.getX(), bus.getY(), bus.getZ()));
-            if (distance < nearestDistance) {
-                nearestDistance = distance;
-                nearestBus = bus;
-            }
-        }
-
-        return Maps.immutableEntry(nearestDistance, nearestBus);
+    public Map.Entry<Double, Bus> getNearestBus(FloatVector3 position) {
+        return getNearest(position, Bus.values(), Bus::getLocation);
     }
 
     public Map.Entry<Double, NaviPoint> getNearestNaviPoint(int x, int y, int z) {
         return getNearestNaviPoint(new FloatVector3(x, y, z));
     }
 
-    public Map.Entry<Double, NaviPoint> getNearestNaviPoint(AddonPlayer p) {
-        return getNearestNaviPoint(p.getPosition());
+    public Map.Entry<Double, NaviPoint> getNearestNaviPoint(FloatVector3 position) {
+        return getNearest(position, this.unicacityAddon.api().getNaviPointList(), NaviPoint::getLocation);
     }
 
-    public Map.Entry<Double, NaviPoint> getNearestNaviPoint(FloatVector3 blockPos) {
-        NaviPoint nearestNaviPoint = null;
+    public <T> Map.Entry<Double, T> getNearest(FloatVector3 position, T[] elements, Function<T, FloatVector3> positionExtractor) {
+        return getNearest(position, List.of(elements), positionExtractor);
+    }
+
+    public <T> Map.Entry<Double, T> getNearest(FloatVector3 position, Collection<T> elements, Function<T, FloatVector3> positionExtractor) {
+        T nearestElement = null;
         double nearestDistance = Double.MAX_VALUE;
 
-        for (NaviPoint naviPointEntry : this.unicacityAddon.api().getNaviPointList()) {
-            double distance = blockPos.distance(new FloatVector3(naviPointEntry.getX(), naviPointEntry.getY(), naviPointEntry.getZ()));
+        for (T element : elements) {
+            double distance = position.distance(positionExtractor.apply(element));
             if (distance < nearestDistance) {
                 nearestDistance = distance;
-                nearestNaviPoint = naviPointEntry;
+                nearestElement = element;
             }
         }
 
-        return Maps.immutableEntry(nearestDistance, nearestNaviPoint);
+        return Maps.immutableEntry(nearestDistance, nearestElement);
     }
 }

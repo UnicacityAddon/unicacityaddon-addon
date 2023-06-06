@@ -26,7 +26,7 @@ public interface AddonPlayer {
 
     @Nullable Float getHealth();
 
-    @Nullable FloatVector3 getPosition();
+    @Nullable FloatVector3 getLocation();
 
     @Nullable Inventory getInventory();
 

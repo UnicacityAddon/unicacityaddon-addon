@@ -62,7 +62,7 @@ public class DefaultAddonPlayer implements AddonPlayer {
     }
 
     @Override
-    public FloatVector3 getPosition() {
+    public FloatVector3 getLocation() {
         return getPlayer() != null ? getPlayer().position() : null;
     }
 

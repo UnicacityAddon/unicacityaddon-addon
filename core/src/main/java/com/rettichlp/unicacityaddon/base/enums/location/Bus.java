@@ -62,7 +62,7 @@ public enum Bus {
     private final int y;
     private final int z;
 
-    public FloatVector3 getBlockPos() {
+    public FloatVector3 getLocation() {
         return new FloatVector3(x, y, z);
     }
 

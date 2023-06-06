@@ -26,7 +26,7 @@ public class NaviPoint {
         return article.replace("der", "den");
     }
 
-    public FloatVector3 getBlockPos() {
+    public FloatVector3 getLocation() {
         return new FloatVector3(x, y, z);
     }
 

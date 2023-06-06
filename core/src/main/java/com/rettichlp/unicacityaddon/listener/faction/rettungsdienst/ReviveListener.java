@@ -42,11 +42,12 @@ public class ReviveListener {
         if (reviveByMedicStartMatcher.find()) {
             playerReviveStartTime = System.currentTimeMillis();
 
-            FloatVector3 playerReviveLocation = this.unicacityAddon.player().getPosition();
+            FloatVector3 playerReviveLocation = this.unicacityAddon.player().getLocation();
             new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    if (ReviveListener.this.unicacityAddon.player().getPosition().distance(playerReviveLocation) > 50) {
+                    FloatVector3 position = ReviveListener.this.unicacityAddon.player().getLocation();
+                    if (position != null && position.distance(playerReviveLocation) > 50) {
                         AddonPlayer p = ReviveListener.this.unicacityAddon.player();
                         ReviveListener.this.unicacityAddon.services().fileService().data().setTimer(0);
                         isDead = false;

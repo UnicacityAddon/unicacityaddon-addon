@@ -44,7 +44,7 @@ public class NaviPointCommand extends UnicacityCommand {
 
     @Override
     public List<String> complete(String[] arguments) {
-        FloatVector3 targetPos = this.unicacityAddon.player().getPosition();
+        FloatVector3 targetPos = this.unicacityAddon.player().getLocation();
         return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments)
                 .addAtIndex(1, "add", "remove")
                 .addAtIndex(2, this.unicacityAddon.api().getNaviPointList().stream().map(NaviPoint::getName).sorted().collect(Collectors.toList()))

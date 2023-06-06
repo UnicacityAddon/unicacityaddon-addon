@@ -33,7 +33,7 @@ public class VersionedDeadBodyController extends DeadBodyController {
 
     @Override
     public void updateDisplayName(UnicacityAddon unicacityAddon) {
-        FloatVector3 position = unicacityAddon.player().getPosition();
+        FloatVector3 position = unicacityAddon.player().getLocation();
 
         assert position != null;
         AABB aabb = new AABB(

@@ -124,7 +124,7 @@ public class EmergencyServiceListener {
 
             if (serviceAcceptedMatcher.group(1).equals(p.getName())) {
                 distanceToService = Integer.parseInt(serviceAcceptedMatcher.group(3));
-                serviceAcceptPosition = p.getPosition();
+                serviceAcceptPosition = p.getLocation();
             }
 
             if (this.unicacityAddon.configuration().factionMessageSetting().service().get())
@@ -164,12 +164,12 @@ public class EmergencyServiceListener {
         Matcher serviceCallBoxMatcher = PatternHandler.SERVICE_CALL_BOX_PATTERN.matcher(msg);
         if (serviceCallBoxMatcher.find()) {
             ServiceCallBox serviceCallBox = ServiceCallBox.getServiceCallBoxByLocationName(serviceCallBoxMatcher.group(2));
-            if (serviceCallBox != null) {
+            if (serviceCallBox != null && p.getLocation() != null) {
                 activeEmergencyCallBoxList.add(serviceCallBox);
                 e.setMessage(Message.getBuilder()
                         .add(chatMessage.getFormattedText()).space()
                         .of("[").color(ColorCode.DARK_GRAY).advance()
-                        .of("Unterwegs - " + serviceCallBox.getDistance(p.getPosition()) + "m").color(ColorCode.RED)
+                        .of("Unterwegs - " + serviceCallBox.getDistance(p.getLocation()) + "m").color(ColorCode.RED)
                                 .clickEvent(ClickEvent.Action.RUN_COMMAND, serviceCallBox.getNaviCommand())
                                 .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Unterwegs").color(ColorCode.RED).advance().createComponent())
                                 .advance()
