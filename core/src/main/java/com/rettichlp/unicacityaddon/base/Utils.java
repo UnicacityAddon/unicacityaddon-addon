@@ -22,7 +22,6 @@ import java.util.stream.Collectors;
 
 public class Utils {
 
-    private final String VERSION = "2.0.0-alpha.4";
     private final Icon ICON = Icon.texture(ResourceLocation.create("unicacityaddon", "textures/uc.png")).resolution(64, 64);
 
     public final CommandUtils commandUtils;
@@ -41,7 +40,7 @@ public class Utils {
     }
 
     public String version() {
-        return VERSION;
+        return "2.0.0-alpha.4";
     }
 
     public Icon icon() {
@@ -72,6 +71,7 @@ public class Utils {
         return false;
     }
 
+    @SuppressWarnings("unused")
     public void debug(String debugMessage) {
         this.unicacityAddon.player().sendMessage(Message.getBuilder()
                 .of("[").color(ColorCode.DARK_GRAY).advance()
