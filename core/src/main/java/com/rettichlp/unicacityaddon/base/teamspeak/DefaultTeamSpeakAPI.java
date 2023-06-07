@@ -18,7 +18,15 @@ package com.rettichlp.unicacityaddon.base.teamspeak;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.config.UnicacityAddonConfiguration;
+import com.rettichlp.unicacityaddon.base.teamspeak.listener.ChannelEditedListener;
+import com.rettichlp.unicacityaddon.base.teamspeak.listener.ClientEnterViewListener;
+import com.rettichlp.unicacityaddon.base.teamspeak.listener.ClientLeftViewListener;
 import com.rettichlp.unicacityaddon.base.teamspeak.listener.ClientMovedListener;
+import com.rettichlp.unicacityaddon.base.teamspeak.listener.ClientUpdatedListener;
+import com.rettichlp.unicacityaddon.base.teamspeak.listener.ConnectStatusChange;
+import com.rettichlp.unicacityaddon.base.teamspeak.listener.CurrentServerConnectionChangedListener;
+import com.rettichlp.unicacityaddon.base.teamspeak.listener.SelectedListener;
+import com.rettichlp.unicacityaddon.base.teamspeak.listener.TalkStatusChangeListener;
 import com.rettichlp.unicacityaddon.base.teamspeak.misc.ReconnectController;
 import com.rettichlp.unicacityaddon.base.teamspeak.misc.TeamSpeakController;
 import com.rettichlp.unicacityaddon.base.teamspeak.models.DefaultServer;
@@ -79,7 +87,15 @@ public class DefaultTeamSpeakAPI implements TeamSpeakAPI {
     this.requests = new ArrayList<>();
     this.listeners = new ArrayList<>();
 
+    this.listeners.add(new ChannelEditedListener());
+    this.listeners.add(new ClientEnterViewListener());
+    this.listeners.add(new ClientLeftViewListener());
     this.listeners.add(new ClientMovedListener(unicacityAddon));
+    this.listeners.add(new ClientUpdatedListener());
+    this.listeners.add(new ConnectStatusChange());
+    this.listeners.add(new CurrentServerConnectionChangedListener());
+    this.listeners.add(new SelectedListener());
+    this.listeners.add(new TalkStatusChangeListener());
   }
 
   public void initialize() throws IOException {

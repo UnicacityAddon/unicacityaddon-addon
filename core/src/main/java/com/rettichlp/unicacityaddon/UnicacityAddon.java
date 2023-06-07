@@ -44,7 +44,9 @@ import net.labymod.api.client.entity.player.tag.PositionType;
 import net.labymod.api.client.entity.player.tag.TagRegistry;
 import net.labymod.api.client.gui.hud.HudWidgetRegistry;
 import net.labymod.api.models.addon.annotation.AddonMain;
+import net.labymod.api.reference.annotation.Referenceable;
 
+import javax.inject.Singleton;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -99,6 +101,8 @@ import java.util.stream.Collectors;
  * @author RettichLP
  */
 @AddonMain
+@Singleton
+@Referenceable
 @Setter
 public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration> {
 
