@@ -3,9 +3,11 @@ package com.rettichlp.unicacityaddon.listener.faction.terroristen;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
+import com.rettichlp.unicacityaddon.base.builder.ScreenshotBuilder;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.events.BombPlantedEvent;
 import com.rettichlp.unicacityaddon.base.events.BombRemovedEvent;
+import com.rettichlp.unicacityaddon.base.events.UnicacityAddonTickEvent;
 import com.rettichlp.unicacityaddon.base.models.api.NaviPoint;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
@@ -16,6 +18,8 @@ import net.labymod.api.client.component.event.HoverEvent;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 
@@ -26,7 +30,9 @@ import java.util.regex.Matcher;
 public class BombListener {
 
     private Long bombPlantedTime;
-    private static String location;
+    private String location;
+    private long activeBomb = -1;
+    private long currentTick;
 
     private final UnicacityAddon unicacityAddon;
 
@@ -51,14 +57,14 @@ public class BombListener {
             this.unicacityAddon.soundController().playBombPlantedSound();
 
             if (((p.getFaction().equals(Faction.POLIZEI) || p.getFaction().equals(Faction.FBI)) && p.getRank() > 3) || p.isSuperUser()) {
-                location = bombPlantedMatcher.group("location");
+                this.location = bombPlantedMatcher.group("location");
                 e.setMessage(Message.getBuilder()
                         .add(formattedMsg)
                         .space()
                         .of("[").color(ColorCode.DARK_GRAY).advance()
                         .of("Sperrgebiet ausrufen").color(ColorCode.RED)
                                 .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Sperrgebiet ausrufen").color(ColorCode.RED).advance().createComponent())
-                                .clickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/sperrgebiet " + getLocationWithArticle(location))
+                                .clickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/sperrgebiet " + getLocationWithArticle(this.location))
                                 .advance()
                         .of("]").color(ColorCode.DARK_GRAY).advance()
                         .createComponent());
@@ -87,13 +93,30 @@ public class BombListener {
                     .of(timeString).color(state.equals("nicht") ? ColorCode.RED : ColorCode.GREEN).advance()
                     .of(timeString.isEmpty() ? "" : ")").color(ColorCode.DARK_GRAY).advance()
                     .space()
-                    .of(location != null ? "[" : "").color(ColorCode.DARK_GRAY).advance()
-                    .of(location != null ? "Sperrgebiet aufheben" : "").color(ColorCode.RED)
+                    .of(this.location != null ? "[" : "").color(ColorCode.DARK_GRAY).advance()
+                    .of(this.location != null ? "Sperrgebiet aufheben" : "").color(ColorCode.RED)
                             .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Sperrgebiet aufheben").color(ColorCode.RED).advance().createComponent())
-                            .clickEvent(ClickEvent.Action.SUGGEST_COMMAND, location != null ? "/removesperrgebiet " + getLocationWithArticle(location) : "")
+                            .clickEvent(ClickEvent.Action.SUGGEST_COMMAND, location != null ? "/removesperrgebiet " + getLocationWithArticle(this.location) : "")
                             .advance()
-                    .of(location != null ? "]" : "").color(ColorCode.DARK_GRAY).advance()
+                    .of(this.location != null ? "]" : "").color(ColorCode.DARK_GRAY).advance()
                     .createComponent());
+
+            if (this.unicacityAddon.configuration().bombScreenshot().get()) {
+                this.activeBomb = this.currentTick;
+            }
+        }
+    }
+
+    @Subscribe
+    public void onUnicacityAddonTick(UnicacityAddonTickEvent e) {
+        this.currentTick = e.getCurrentTick();
+        if (e.isIngame() && e.isPhase(UnicacityAddonTickEvent.Phase.TICK) && this.activeBomb >= 0 && this.activeBomb + 15 == e.getCurrentTick()) {
+            try {
+                File file = this.unicacityAddon.services().fileService().getNewActivityImageFile("großeinsatz");
+                ScreenshotBuilder.getBuilder(this.unicacityAddon).file(file).save();
+            } catch (IOException ex) {
+                this.unicacityAddon.logger().warn(ex.getMessage());
+            }
         }
     }
 
