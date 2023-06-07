@@ -22,9 +22,12 @@ import com.rettichlp.unicacityaddon.base.teamspeak.DefaultTeamSpeakAPI;
 import com.rettichlp.unicacityaddon.base.teamspeak.misc.TeamSpeakController;
 import com.rettichlp.unicacityaddon.base.teamspeak.models.DefaultChannel;
 import com.rettichlp.unicacityaddon.base.teamspeak.models.DefaultServer;
-import net.labymod.addons.teamspeak.models.User;
+import com.rettichlp.unicacityaddon.base.teamspeak.models.DefaultUser;
 import net.labymod.addons.teamspeak.util.ArgumentParser;
 import net.labymod.addons.teamspeak.util.Request;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * The original code is available at: <a href="https://github.com/labymod-addons/teamspeak">https://github.com/labymod-addons/teamspeak</a>.
@@ -32,8 +35,12 @@ import net.labymod.addons.teamspeak.util.Request;
  * The following code is subject to the LGPL Version 2.1.
  *
  * @author jumpingpxl
+ * @author RettichLP
  */
 public class ClientMovedListener extends DefaultListener {
+
+  private DefaultUser currentUser;
+  private DefaultChannel currentChannel;
 
   private final UnicacityAddon unicacityAddon;
 
@@ -60,22 +67,16 @@ public class ClientMovedListener extends DefaultListener {
       return;
     }
 
-    System.out.println("trigger event");
-    // todo check selected server is uc
-    this.unicacityAddon.labyAPI().eventBus().fire(new TeamspeakClientMoveEvent(selectedServer.getChannel(channelId), selectedServer.getChannel(channelId).getUser(clientId)));
-
     if (clientId == teamSpeakAPI.getClientId()) {
       DefaultChannel selectedChannel = selectedServer.getSelectedChannel();
       if (selectedChannel != null && selectedChannel.getId() != channelId) {
         selectedChannel.getUsers().clear();
       }
 
-      DefaultChannel channel = selectedServer.getChannel(channelId);
-      if (channel == null) {
-        channel = selectedServer.addChannel(channelId);
+      this.currentChannel = selectedServer.getChannel(channelId);
+      if (this.currentChannel == null) {
+        this.currentChannel = selectedServer.addChannel(channelId);
       }
-
-      DefaultChannel finalChannel = channel;
 
       teamSpeakAPI.request(Request.firstParamStartsWith(
           "channelconnectinfo",
@@ -85,29 +86,32 @@ public class ClientMovedListener extends DefaultListener {
             String path = this.get(split, "path", String.class);
             String name = ArgumentParser.unescape(
                 TeamSpeakController.getLastChannel(path.length(), path));
-            finalChannel.setName(name);
-            selectedServer.setSelectedChannel(finalChannel);
-            teamSpeakAPI.controller().refreshUsers(finalChannel);
+            this.currentChannel.setName(name);
+            selectedServer.setSelectedChannel(this.currentChannel);
+            teamSpeakAPI.controller().refreshUsers(this.currentChannel);
           }
       ));
 
+      this.unicacityAddon.labyAPI().eventBus().fire(new TeamspeakClientMoveEvent(this.unicacityAddon, this.currentChannel));
       return;
     }
 
-    DefaultChannel selectedChannel = selectedServer.getSelectedChannel();
-    if (selectedChannel == null) {
-      return;
+    this.currentChannel = selectedServer.getChannel(channelId);
+    if (this.currentChannel == null) {
+      this.currentChannel = selectedServer.addChannel(channelId);
     }
 
-    boolean sameChannel = channelId == selectedChannel.getId();
-    User user = selectedChannel.getUser(clientId);
-    if (user == null && sameChannel) {
-      teamSpeakAPI.controller().refreshUsers(selectedChannel);
-      return;
+    this.currentUser = this.currentChannel.getUser(clientId);
+    if (this.currentUser == null) {
+      teamSpeakAPI.controller().refreshUsers(this.currentChannel);
     }
 
-    if (user != null && !sameChannel) {
-      selectedChannel.getUsers().remove(user);
-    }
+    new Timer().schedule(new TimerTask() {
+      @Override
+      public void run() {
+        ClientMovedListener.this.currentUser = ClientMovedListener.this.currentChannel.getUser(clientId);
+        ClientMovedListener.this.unicacityAddon.labyAPI().eventBus().fire(new TeamspeakClientMoveEvent(ClientMovedListener.this.unicacityAddon, ClientMovedListener.this.currentChannel, ClientMovedListener.this.currentUser));
+      }
+    }, 0);
   }
 }
