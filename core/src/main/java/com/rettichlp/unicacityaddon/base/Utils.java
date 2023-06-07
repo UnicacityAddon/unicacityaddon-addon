@@ -1,7 +1,6 @@
 package com.rettichlp.unicacityaddon.base;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.teamspeak.TSUtils;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.utils.CommandUtils;
@@ -27,7 +26,6 @@ public class Utils {
     public final CommandUtils commandUtils;
     private final ListUtils listUtils;
     private final TextUtils textUtils;
-    private final TSUtils tsUtils;
 
     private final UnicacityAddon unicacityAddon;
 
@@ -36,7 +34,6 @@ public class Utils {
         this.commandUtils = new CommandUtils(unicacityAddon);
         this.listUtils = new ListUtils();
         this.textUtils = new TextUtils();
-        this.tsUtils = new TSUtils(unicacityAddon);
     }
 
     public String version() {
@@ -57,10 +54,6 @@ public class Utils {
 
     public TextUtils textUtils() {
         return textUtils;
-    }
-
-    public TSUtils tsUtils() {
-        return tsUtils;
     }
 
     public boolean isUnicacity() {
