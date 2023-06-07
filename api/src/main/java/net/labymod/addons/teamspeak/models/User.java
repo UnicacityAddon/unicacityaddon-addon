@@ -20,6 +20,13 @@ import net.labymod.api.client.component.Component;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * The original code is available at: <a href="https://github.com/labymod-addons/teamspeak">https://github.com/labymod-addons/teamspeak</a>.
+ * <p>
+ * The following code is subject to the LGPL Version 2.1.
+ *
+ * @author jumpingpxl
+ */
 public interface User {
 
   int getId();

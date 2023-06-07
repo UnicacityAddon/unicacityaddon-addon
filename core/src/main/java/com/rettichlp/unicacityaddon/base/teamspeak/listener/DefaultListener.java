@@ -14,13 +14,11 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package net.labymod.addons.teamspeak;
+package com.rettichlp.unicacityaddon.base.teamspeak.listener;
 
-import net.labymod.addons.teamspeak.models.Server;
-import net.labymod.addons.teamspeak.util.Request;
-import net.labymod.api.reference.annotation.Referenceable;
-
-import java.util.List;
+import com.rettichlp.unicacityaddon.base.teamspeak.DefaultTeamSpeakAPI;
+import net.labymod.addons.teamspeak.TeamSpeakAPI;
+import net.labymod.addons.teamspeak.listener.Listener;
 
 /**
  * The original code is available at: <a href="https://github.com/labymod-addons/teamspeak">https://github.com/labymod-addons/teamspeak</a>.
@@ -29,22 +27,16 @@ import java.util.List;
  *
  * @author jumpingpxl
  */
-@Referenceable
-public interface TeamSpeakAPI {
+public abstract class DefaultListener extends Listener {
 
-  boolean isConnected();
+  protected DefaultListener(String identifier) {
+    super(identifier);
+  }
 
-  boolean hasInvalidKey();
+  @Override
+  public final void execute(TeamSpeakAPI teamSpeakAPI, String[] args) {
+    this.execute((DefaultTeamSpeakAPI) teamSpeakAPI, args);
+  }
 
-  void request(Request request);
-
-  void query(String query);
-
-  Server getSelectedServer();
-
-  List<Server> getServers();
-
-  Server getServer(int id);
-
-  int getClientId();
+  public abstract void execute(DefaultTeamSpeakAPI teamSpeakAPI, String[] args);
 }

@@ -16,6 +16,13 @@
 
 package net.labymod.addons.teamspeak.util;
 
+/**
+ * The original code is available at: <a href="https://github.com/labymod-addons/teamspeak">https://github.com/labymod-addons/teamspeak</a>.
+ * <p>
+ * The following code is subject to the LGPL Version 2.1.
+ *
+ * @author jumpingpxl
+ */
 public class ArgumentParser {
 
   public static <T> T parse(String[] arguments, String identifier, Class<T> clazz) {

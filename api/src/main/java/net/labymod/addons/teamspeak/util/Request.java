@@ -19,6 +19,13 @@ package net.labymod.addons.teamspeak.util;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
+/**
+ * The original code is available at: <a href="https://github.com/labymod-addons/teamspeak">https://github.com/labymod-addons/teamspeak</a>.
+ * <p>
+ * The following code is subject to the LGPL Version 2.1.
+ *
+ * @author jumpingpxl
+ */
 public class Request {
 
   private final String query;
