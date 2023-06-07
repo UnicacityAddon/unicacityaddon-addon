@@ -5,17 +5,14 @@ import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.enums.teamspeak.TSChannelCategory;
-import com.rettichlp.unicacityaddon.base.teamspeak.TSClientQuery;
-import com.rettichlp.unicacityaddon.base.teamspeak.commands.ChannelListCommand;
-import com.rettichlp.unicacityaddon.base.teamspeak.objects.Channel;
-import com.rettichlp.unicacityaddon.base.teamspeak.objects.Client;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
+import net.labymod.addons.teamspeak.models.Channel;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Fuzzlemann
@@ -41,44 +38,27 @@ public class TSFindCommand extends UnicacityCommand {
                 return;
             }
 
-            if (!this.unicacityAddon.configuration().tsApiKey().getOrDefault("").matches("([A-Z0-9]{4}(-*)){6}")) {
-                p.sendErrorMessage("Teamspeak API Key ist nicht gültig!");
-                return;
-            }
+            Optional<Channel> optionalChannel = this.unicacityAddon.teamSpeakAPI().getServers().stream()
+                    .flatMap(server -> server.getChannels().stream())
+                    .filter(channel -> channel.getUsers().stream()
+                            .map(user -> user.displayName().toString())
+                            .anyMatch(s -> s.toLowerCase().contains(arguments[0].toLowerCase()))
+                    )
+                    .findFirst();
 
-            if (!TSClientQuery.clientQueryConnected) {
-                p.sendErrorMessage("Keine Verbindung zur TeamSpeak ClientQuery!");
-                TSClientQuery.reconnect(this.unicacityAddon);
-                return;
-            }
-
-            String name = arguments[0];
-
-            List<Client> clients = this.unicacityAddon.utils().tsUtils().getClientsByName(Collections.singletonList(name));
-            if (clients.isEmpty()) {
+            if (optionalChannel.isPresent()) {
+                Channel channel = optionalChannel.get();
+                p.sendMessage(Message.getBuilder()
+                        .prefix()
+                        .of(arguments[0]).color(ColorCode.AQUA).advance().space()
+                        .of("befindet sich im Channel").color(ColorCode.GRAY).advance().space()
+                        .of(channel.getName()).color(ColorCode.AQUA).advance()
+                        .add(getChannelCategoryString(channel.getId()))
+                        .of(".").color(ColorCode.GRAY).advance()
+                        .createComponent());
+            } else {
                 p.sendErrorMessage("Es wurde kein Spieler auf dem TeamSpeak mit diesem Namen gefunden.");
-                return;
             }
-
-            Client client = clients.get(0);
-
-            ChannelListCommand.Response channelListResponse = new ChannelListCommand(this.unicacityAddon).getResponse();
-            Channel channel = channelListResponse.getChannels().stream()
-                    .filter(channelIter -> client.getChannelID() == channelIter.getChannelID())
-                    .findFirst()
-                    .orElse(null);
-
-            if (channel == null)
-                throw new IllegalStateException();
-
-            p.sendMessage(Message.getBuilder()
-                    .prefix()
-                    .of(name).color(ColorCode.AQUA).advance().space()
-                    .of("befindet sich im Channel").color(ColorCode.GRAY).advance().space()
-                    .of(channel.getName()).color(ColorCode.AQUA).advance()
-                    .add(getChannelCategoryString(channel.getPid()))
-                    .of(".").color(ColorCode.GRAY).advance()
-                    .createComponent());
         }).start();
         return true;
     }

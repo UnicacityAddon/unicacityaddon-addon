@@ -16,7 +16,7 @@ import com.rettichlp.unicacityaddon.base.nametags.HouseBanTag;
 import com.rettichlp.unicacityaddon.base.nametags.NoPushTag;
 import com.rettichlp.unicacityaddon.base.nametags.OutlawTag;
 import com.rettichlp.unicacityaddon.base.services.FileService;
-import com.rettichlp.unicacityaddon.base.teamspeak.TSClientQuery;
+import com.rettichlp.unicacityaddon.base.teamspeak.DefaultTeamSpeakAPI;
 import com.rettichlp.unicacityaddon.controller.DeadBodyController;
 import com.rettichlp.unicacityaddon.controller.GuiController;
 import com.rettichlp.unicacityaddon.controller.ScreenshotController;
@@ -37,6 +37,7 @@ import com.rettichlp.unicacityaddon.hudwidgets.PayDayHudWidget;
 import com.rettichlp.unicacityaddon.hudwidgets.PlantHudWidget;
 import com.rettichlp.unicacityaddon.hudwidgets.TimerHudWidget;
 import lombok.Setter;
+import net.labymod.addons.teamspeak.TeamSpeakAPI;
 import net.labymod.api.addon.LabyAddon;
 import net.labymod.api.client.chat.command.Command;
 import net.labymod.api.client.entity.player.tag.PositionType;
@@ -130,7 +131,15 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
         this.registerListeners();
         this.registerCommands();
 
-        new Thread(() -> TSClientQuery.getInstance(this)).start();
+        DefaultTeamSpeakAPI teamSpeakAPI = (DefaultTeamSpeakAPI) this.controller().teamSpeakAPI();
+
+        new Thread(() -> {
+            try {
+                teamSpeakAPI.initialize();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
 
     @Override
@@ -176,6 +185,10 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
 
     public TabListController tabListController() {
         return controller().getTabListController();
+    }
+
+    public TeamSpeakAPI teamSpeakAPI() {
+        return controller().teamSpeakAPI();
     }
 
     public TransportController transportController() {

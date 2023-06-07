@@ -3,10 +3,11 @@ package com.rettichlp.unicacityaddon.listener.teamspeak;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
-import com.rettichlp.unicacityaddon.base.teamspeak.commands.ClientVariableCommand;
-import com.rettichlp.unicacityaddon.base.teamspeak.events.ClientMovedEvent;
+import com.rettichlp.unicacityaddon.base.events.TeamspeakClientMoveEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
+import net.labymod.addons.teamspeak.models.Channel;
+import net.labymod.addons.teamspeak.models.User;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.event.HoverEvent;
 import net.labymod.api.event.Subscribe;
@@ -25,51 +26,34 @@ public class TSNotificationListener {
     }
 
     @Subscribe
-    public void onClientMoved(ClientMovedEvent e) {
+    public void onTeamspeakClientMove(TeamspeakClientMoveEvent e) {
         AddonPlayer p = this.unicacityAddon.player();
 
-        if (!this.unicacityAddon.utils().isUnicacity())
-            return;
+        System.out.println("executed client move listener");
 
-        int clientID = e.getClientID();
-        int targetChannelID = e.getTargetChannelID();
+        Channel channel = e.getChannel();
+        User user = e.getUser();
+        String userName = this.unicacityAddon.utils().textUtils().plain(user.displayName());
 
-        if (this.unicacityAddon.configuration().tsNotificationSupport().get() && targetChannelID == 41) {
-            handleEnterSupportChannel(p, clientID);
-            this.unicacityAddon.soundController().playTSNotificationSupportChannelSound();
-        } else if (this.unicacityAddon.configuration().tsNotificationPublic().get() && targetChannelID == p.getFaction().getPublicChannelId()) {
-            handleEnterPublicChannel(p, clientID);
-            this.unicacityAddon.soundController().playTSNotificationPublicChannelSound();
-        }
-    }
-
-    private void handleEnterSupportChannel(AddonPlayer p, int clientID) {
-        new Thread(() -> {
-            ClientVariableCommand.Response response = new ClientVariableCommand(this.unicacityAddon, clientID).getResponse();
-            String name = response.getDescription();
-
+        if (this.unicacityAddon.configuration().tsNotificationSupport().get() && channel.getId() == 41) {
             p.sendMessage(Message.getBuilder()
                     .prefix()
-                    .of(name).color(ColorCode.AQUA).advance().space()
+                    .of(userName).color(ColorCode.AQUA).advance().space()
                     .of("hat das").color(ColorCode.GRAY).advance().space()
                     .of("Wartezimmer").color(ColorCode.AQUA).advance().space()
                     .of("betreten.").color(ColorCode.GRAY).advance().space()
                     .of("[↓]").color(ColorCode.BLUE)
-                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Move " + name + " zu dir").color(ColorCode.RED).advance().createComponent())
-                            .clickEvent(ClickEvent.Action.RUN_COMMAND, "/movehere " + name)
+                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Move " + userName + " zu dir").color(ColorCode.RED).advance().createComponent())
+                            .clickEvent(ClickEvent.Action.RUN_COMMAND, "/movehere " + userName)
                             .advance()
                     .createComponent());
-        }).start();
-    }
 
-    private void handleEnterPublicChannel(AddonPlayer p, int clientID) {
-        new Thread(() -> {
-            ClientVariableCommand.Response response = new ClientVariableCommand(this.unicacityAddon, clientID).getResponse();
-            String name = response.getDescription();
-
+            this.unicacityAddon.soundController().playTSNotificationSupportChannelSound();
+            this.unicacityAddon.logger().info("Client joined support channel: " + userName);
+        } else if (this.unicacityAddon.configuration().tsNotificationPublic().get() && channel.getId() == p.getFaction().getPublicChannelId()) {
             p.sendMessage(Message.getBuilder()
                     .prefix()
-                    .of(String.valueOf(name)).color(ColorCode.AQUA).advance().space()
+                    .of(userName).color(ColorCode.AQUA).advance().space()
                     .of("hat den").color(ColorCode.GRAY).advance().space()
                     .of("Öffentlich-Channel").color(ColorCode.AQUA).advance().space()
                     .of("betreten.").color(ColorCode.GRAY).advance().space()
@@ -78,12 +62,13 @@ public class TSNotificationListener {
                             .clickEvent(ClickEvent.Action.RUN_COMMAND, "/tsjoin Öffentlich")
                             .advance().space()
                     .of("[↓]").color(ColorCode.BLUE)
-                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Move " + name + " zu dir").color(ColorCode.RED).advance().createComponent())
-                            .clickEvent(ClickEvent.Action.RUN_COMMAND, "/movehere " + name)
+                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Move " + userName + " zu dir").color(ColorCode.RED).advance().createComponent())
+                            .clickEvent(ClickEvent.Action.RUN_COMMAND, "/movehere " + userName)
                             .advance()
                     .createComponent());
 
-            this.unicacityAddon.logger().info("Client joined public channel: " + name);
-        }).start();
+            this.unicacityAddon.soundController().playTSNotificationPublicChannelSound();
+            this.unicacityAddon.logger().info("Client joined public channel: " + userName);
+        }
     }
 }
