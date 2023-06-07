@@ -72,6 +72,9 @@ public class DefaultUnicacityAddonConfiguration extends AddonConfig implements U
     private final ConfigProperty<Integer> aBuyAmount = new ConfigProperty<>(10);
 
     @SettingSection("teamspeak")
+    @SwitchSetting
+    private final ConfigProperty<Boolean> resolveAPIKey = new ConfigProperty<>(true);
+
     @TextFieldSetting
     private final ConfigProperty<String> tsApiKey = new ConfigProperty<>("");
 
@@ -164,6 +167,11 @@ public class DefaultUnicacityAddonConfiguration extends AddonConfig implements U
     @Override
     public ConfigProperty<Integer> aBuyAmount() {
         return this.aBuyAmount;
+    }
+
+    @Override
+    public ConfigProperty<Boolean> resolveAPIKey() {
+        return this.resolveAPIKey;
     }
 
     @Override
