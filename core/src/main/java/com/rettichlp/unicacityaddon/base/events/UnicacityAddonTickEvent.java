@@ -9,12 +9,14 @@ import net.labymod.api.event.Event;
 public class UnicacityAddonTickEvent implements Event {
 
     private final Phase phase;
+    private final long currentTick;
 
     private final UnicacityAddon unicacityAddon;
 
-    public UnicacityAddonTickEvent(UnicacityAddon unicacityAddon, Phase phase) {
+    public UnicacityAddonTickEvent(UnicacityAddon unicacityAddon, Phase phase, long currentTick) {
         this.unicacityAddon = unicacityAddon;
         this.phase = phase;
+        this.currentTick = currentTick;
     }
 
     public boolean isIngame() {
@@ -27,6 +29,10 @@ public class UnicacityAddonTickEvent implements Event {
 
     public boolean isPhase(Phase phase) {
         return this.phase.equals(phase);
+    }
+
+    public long getCurrentTick() {
+        return this.currentTick;
     }
 
     public enum Phase {
