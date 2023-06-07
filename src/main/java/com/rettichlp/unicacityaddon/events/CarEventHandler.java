@@ -5,10 +5,12 @@ import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.config.ConfigElements;
 import com.rettichlp.unicacityaddon.base.manager.FileManager;
+import com.rettichlp.unicacityaddon.base.models.NaviPoint;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
+import com.rettichlp.unicacityaddon.base.utils.NavigationUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.ContainerChest;
@@ -22,12 +24,15 @@ import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.client.event.GuiContainerEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 
 /**
  * @author RettichLP
+ * @author Gelegenheitscode
  */
 @UCEvent
 public class CarEventHandler {
@@ -50,6 +55,27 @@ public class CarEventHandler {
         }
 
         Matcher carPositionMatcher = PatternHandler.CAR_POSITION_PATTERN.matcher(msg);
+        if(carPositionMatcher.find()) {
+            Map.Entry<Double, NaviPoint> nearestNaviPoint = NavigationUtils.getNearestNaviPoint(Integer.parseInt(carPositionMatcher.group(1)), Integer.parseInt(carPositionMatcher.group(2)), Integer.parseInt(carPositionMatcher.group(3)));
+            NaviPoint navipoint = nearestNaviPoint.getValue();
+            String navipointString;
+            if (navipoint == null) {
+                navipointString = "unbekannter Ort";
+                p.sendErrorMessage("Navipunkte wurden nicht geladen. Versuche /syncdata um diese neu zu laden!");
+            } else {
+                navipointString = navipoint.getName().replace("-", " ");
+            }
+            e.setMessage(Message.getBuilder()
+                    .of("[").color(ColorCode.DARK_GRAY).advance()
+                    .of("Car").color(ColorCode.GOLD).advance()
+                    .of("]").color(ColorCode.DARK_GRAY).advance().space()
+                    .of("Das Fahrzeug befindet sich in der Nähe von").color(ColorCode.GRAY).advance().space()
+                    .of(navipointString).color(ColorCode.AQUA)
+                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of(carPositionMatcher.group(1) + "/" + carPositionMatcher.group(2) + "/" + carPositionMatcher.group(3)).color(ColorCode.GOLD).advance().createComponent())
+                            .advance()
+                    .of(".").color(ColorCode.GRAY).advance()
+                    .createComponent());
+        }
         if (carPositionMatcher.find() && ConfigElements.getEventCarFind()) {
             p.setNaviRoute(Integer.parseInt(carPositionMatcher.group(1)), Integer.parseInt(carPositionMatcher.group(2)), Integer.parseInt(carPositionMatcher.group(3)));
             return;
