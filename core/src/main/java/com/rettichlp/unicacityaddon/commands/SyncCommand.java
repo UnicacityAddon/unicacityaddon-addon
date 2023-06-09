@@ -22,7 +22,7 @@ public class SyncCommand extends UnicacityCommand {
     @Override
     public boolean execute(String[] arguments) {
         this.unicacityAddon.player().sendInfoMessage("Synchronisierung gestartet.");
-        this.unicacityAddon.api().sync();
+        this.unicacityAddon.api().sync(this.unicacityAddon.player());
         return true;
     }
 

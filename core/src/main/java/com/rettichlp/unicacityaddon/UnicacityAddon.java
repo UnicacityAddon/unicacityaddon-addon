@@ -118,12 +118,12 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
         this.utils = new Utils(this);
         this.commands = new ArrayList<>();
 
-        this.logger().info("Enabled UnicacityAddon");
+        this.logger().info("Loaded UnicacityAddon");
     }
 
     @Override
     protected void enable() {
-        this.api.sync();
+        this.api.sync(this.player);
         this.registerSettingCategory();
         this.registerTags();
         this.registerHudWidgets();
@@ -131,6 +131,8 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
         this.registerCommands();
 
         new Thread(() -> TSClientQuery.getInstance(this)).start();
+
+        this.logger().info("Enabled UnicacityAddon");
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.rettichlp.unicacityaddon.base.api.request;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.api.exception.APIResponseException;
 import com.rettichlp.unicacityaddon.base.builder.RequestBuilder;
 import com.rettichlp.unicacityaddon.base.enums.api.AddonGroup;
@@ -45,17 +46,17 @@ import java.util.Map;
 @Getter
 public class API {
 
-    private static final boolean NON_PROD = false;
-    private static final String ADD_SUB_PATH = "add";
-    private static final String REMOVE_SUB_PATH = "remove";
-    private static final String QUEUE_SUB_PATH = "queue";
-    private static final String SEND_SUB_PATH = "send";
-    private static final String TOP_SUB_PATH = "top";
-    private static final String CREATE_SUB_PATH = "create";
-    private static final String DONE_SUB_PATH = "done";
-    private static final String USERS_SUB_PATH = "users";
-    private static final String BOMB_SUB_PATH = "bomb";
-    private static final String GANGWAR_SUB_PATH = "gangwar";
+    private final boolean NON_PROD = false;
+    private final String ADD_SUB_PATH = "add";
+    private final String REMOVE_SUB_PATH = "remove";
+    private final String QUEUE_SUB_PATH = "queue";
+    private final String SEND_SUB_PATH = "send";
+    private final String TOP_SUB_PATH = "top";
+    private final String CREATE_SUB_PATH = "create";
+    private final String DONE_SUB_PATH = "done";
+    private final String USERS_SUB_PATH = "users";
+    private final String BOMB_SUB_PATH = "bomb";
+    private final String GANGWAR_SUB_PATH = "gangwar";
 
     private final Map<String, Faction> playerFactionMap = new HashMap<>();
     private final Map<String, Integer> playerRankMap = new HashMap<>();
@@ -68,6 +69,7 @@ public class API {
     @Setter private List<WantedReason> wantedReasonList = new ArrayList<>();
 
     private String token;
+    private AddonPlayer addonPlayer;
 
     private final UnicacityAddon unicacityAddon;
 
@@ -75,7 +77,9 @@ public class API {
         this.unicacityAddon = unicacityAddon;
     }
 
-    public void sync() {
+    public void sync(AddonPlayer addonPlayer) {
+        this.addonPlayer = addonPlayer;
+
         this.unicacityAddon.labyAPI().notificationController().push(syncNotification(Type.STARTED));
 
         new Thread(() -> {
@@ -86,7 +90,7 @@ public class API {
                 this.loadPlayerData();
 
                 this.blacklistReasonList = this.sendBlacklistReasonRequest();
-                this.houseBanList = this.sendHouseBanRequest(this.unicacityAddon.player().getFaction().equals(Faction.RETTUNGSDIENST));
+                this.houseBanList = this.sendHouseBanRequest(this.addonPlayer.getFaction().equals(Faction.RETTUNGSDIENST));
                 this.houseBanReasonList = this.sendHouseBanReasonRequest();
                 this.managementUserList = this.sendManagementUserRequest();
                 this.naviPointList = this.sendNaviPointRequest();
@@ -183,10 +187,10 @@ public class API {
 
     public List<BlacklistReason> sendBlacklistReasonRequest() {
         return RequestBuilder.getBuilder(this.unicacityAddon)
-                .preCondition(this.unicacityAddon.player().getFaction().isBadFaction())
+                .preCondition(this.addonPlayer.getFaction().isBadFaction())
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.BLACKLISTREASON)
-                .subPath(this.unicacityAddon.player().getFaction().name())
+                .subPath(this.addonPlayer.getFaction().name())
                 .getAsJsonArrayAndParse(BlacklistReason.class);
     }
 
@@ -194,7 +198,7 @@ public class API {
         return RequestBuilder.getBuilder(this.unicacityAddon)
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.BLACKLISTREASON)
-                .subPath(this.unicacityAddon.player().getFaction() + "/add")
+                .subPath(this.addonPlayer.getFaction() + "/add")
                 .parameter(mapOf(
                         "reason", reason,
                         "price", price,
@@ -206,7 +210,7 @@ public class API {
         return RequestBuilder.getBuilder(this.unicacityAddon)
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.BLACKLISTREASON)
-                .subPath(this.unicacityAddon.player().getFaction() + "/remove")
+                .subPath(this.addonPlayer.getFaction() + "/remove")
                 .parameter(mapOf("reason", reason))
                 .getAsJsonObjectAndParse(Success.class);
     }
@@ -412,7 +416,7 @@ public class API {
         return RequestBuilder.getBuilder(this.unicacityAddon)
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.STATISTIC)
-                .subPath(this.unicacityAddon.player().getName())
+                .subPath(this.addonPlayer.getName())
                 .getAsJsonObjectAndParse(Statistic.class);
     }
 
@@ -421,7 +425,7 @@ public class API {
                 .preCondition(this.unicacityAddon.utils().isUnicacity())
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.STATISTIC)
-                .subPath(this.unicacityAddon.player().getName() + "/add")
+                .subPath(this.addonPlayer.getName() + "/add")
                 .parameter(mapOf("type", statisticType.name()))
                 .sendAsync();
     }
@@ -446,7 +450,7 @@ public class API {
     }
 
     public List<WantedReason> sendWantedReasonRequest() {
-        Faction faction = this.unicacityAddon.player().getFaction();
+        Faction faction = this.addonPlayer.getFaction();
         return RequestBuilder.getBuilder(this.unicacityAddon)
                 .preCondition(faction.equals(Faction.POLIZEI) || faction.equals(Faction.FBI))
                 .nonProd(NON_PROD)
