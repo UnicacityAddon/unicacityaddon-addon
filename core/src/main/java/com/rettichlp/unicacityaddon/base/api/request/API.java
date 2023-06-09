@@ -129,7 +129,7 @@ public class API {
         return Notification.builder()
                 .title(Message.getBuilder().of("Synchronisierung").color(colorCode).bold().advance().createComponent())
                 .text(text)
-                .icon(this.unicacityAddon.services().utilService().icon())
+                .icon(this.unicacityAddon.services().util().icon())
                 .type(Notification.Type.ADVANCEMENT)
                 .build();
     }
@@ -144,9 +144,9 @@ public class API {
         playerFactionMap.clear();
         playerRankMap.clear();
         for (Faction faction : Faction.values()) {
-            String factionWebsiteSource = this.unicacityAddon.services().factionService().getWebsiteSource(faction);
-            List<String> nameList = this.unicacityAddon.services().utilService().listUtils().getAllMatchesFromString(PatternHandler.NAME_PATTERN, factionWebsiteSource);
-            List<String> rankList = this.unicacityAddon.services().utilService().listUtils().getAllMatchesFromString(PatternHandler.RANK_PATTERN, factionWebsiteSource);
+            String factionWebsiteSource = this.unicacityAddon.services().faction().getWebsiteSource(faction);
+            List<String> nameList = this.unicacityAddon.services().util().listUtils().getAllMatchesFromString(PatternHandler.NAME_PATTERN, factionWebsiteSource);
+            List<String> rankList = this.unicacityAddon.services().util().listUtils().getAllMatchesFromString(PatternHandler.RANK_PATTERN, factionWebsiteSource);
             nameList.forEach(name -> {
                 String formattedName = name.replace("<h4 class=\"h5 g-mb-5\"><strong>", "");
                 playerFactionMap.put(formattedName, faction);
@@ -422,7 +422,7 @@ public class API {
 
     public void sendStatisticAddRequest(StatisticType statisticType) {
         RequestBuilder.getBuilder(this.unicacityAddon)
-                .preCondition(this.unicacityAddon.services().utilService().isUnicacity())
+                .preCondition(this.unicacityAddon.services().util().isUnicacity())
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.STATISTIC)
                 .subPath(this.addonPlayer.getName() + "/add")
@@ -445,7 +445,7 @@ public class API {
                 .subPath(CREATE_SUB_PATH)
                 .parameter(mapOf(
                         "authToken", this.unicacityAddon.labyAPI().minecraft().sessionAccessor().session().getAccessToken(),
-                        "version", this.unicacityAddon.services().utilService().version()))
+                        "version", this.unicacityAddon.services().util().version()))
                 .send();
     }
 

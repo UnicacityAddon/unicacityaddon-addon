@@ -111,7 +111,7 @@ public class TabCompletionListener {
                 suggestedString = commandParameterList.get(lastSuggestedCommandParameter);
                 lastSuggestedCommandParameter++;
 
-                Laby.references().chatExecutor().suggestCommand("/" + this.unicacityAddon.services().utilService().textUtils().makeStringByArgs(argumentsWithoutLast, " ") + " " + suggestedString);
+                Laby.references().chatExecutor().suggestCommand("/" + this.unicacityAddon.services().util().textUtils().makeStringByArgs(argumentsWithoutLast, " ") + " " + suggestedString);
             }
         }
     }

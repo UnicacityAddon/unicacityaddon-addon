@@ -77,8 +77,8 @@ public class RequestBuilder {
         public JsonElement send() throws APIResponseException {
             this.preConditionList.removeIf(preCondition -> preCondition);
             if (this.preConditionList.isEmpty()) {
-                String urlString = this.unicacityAddon.services().webService().createUrl(this.nonProd, this.applicationPath, this.subPath, this.parameter);
-                String response = this.unicacityAddon.services().webService().sendRequest(urlString);
+                String urlString = this.unicacityAddon.services().web().createUrl(this.nonProd, this.applicationPath, this.subPath, this.parameter);
+                String response = this.unicacityAddon.services().web().sendRequest(urlString);
                 return new JsonParser().parse(response);
             }
             return JsonNull.INSTANCE;

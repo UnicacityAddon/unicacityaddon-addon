@@ -241,7 +241,7 @@ public class EmergencyServiceListener {
         }
 
         if (PatternHandler.SERVICE_DONE_PATTERN.matcher(msg).find()) {
-            this.unicacityAddon.services().fileService().data().setServiceCount(this.unicacityAddon.services().fileService().data().getServiceCount() + 1);
+            this.unicacityAddon.services().file().data().setServiceCount(this.unicacityAddon.services().file().data().getServiceCount() + 1);
             distanceToService = 0;
             this.unicacityAddon.api().sendStatisticAddRequest(StatisticType.SERVICE);
         }

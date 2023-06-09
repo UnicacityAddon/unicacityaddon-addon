@@ -82,7 +82,7 @@ public class BombListener {
             this.unicacityAddon.labyAPI().eventBus().fire(new BombRemovedEvent());
 
             Long timeSinceBombPlanted = this.bombPlantedTime != null ? System.currentTimeMillis() - this.bombPlantedTime : null;
-            String timeString = timeSinceBombPlanted != null ? this.unicacityAddon.services().utilService().textUtils().parseTimer(TimeUnit.MILLISECONDS.toSeconds(timeSinceBombPlanted)) : "";
+            String timeString = timeSinceBombPlanted != null ? this.unicacityAddon.services().util().textUtils().parseTimer(TimeUnit.MILLISECONDS.toSeconds(timeSinceBombPlanted)) : "";
 
             String state = bombRemovedMatcher.group(1);
 
@@ -112,7 +112,7 @@ public class BombListener {
         this.currentTick = e.getCurrentTick();
         if (e.isIngame() && e.isPhase(UnicacityAddonTickEvent.Phase.TICK) && this.activeBomb >= 0 && this.activeBomb + 15 == e.getCurrentTick()) {
             try {
-                File file = this.unicacityAddon.services().fileService().getNewActivityImageFile("großeinsatz");
+                File file = this.unicacityAddon.services().file().getNewActivityImageFile("großeinsatz");
                 ScreenshotBuilder.getBuilder(this.unicacityAddon).file(file).save();
             } catch (IOException ex) {
                 this.unicacityAddon.logger().warn(ex.getMessage());

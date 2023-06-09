@@ -31,7 +31,7 @@ public class ScreenRenderListener {
 
         if (GetGunPatternCommand.armament != null) {
             Weapon weapon = GetGunPatternCommand.armament.getWeapon();
-            String unformattedWeaponDisplayName = this.unicacityAddon.services().utilService().textUtils().stripColor(weapon.getDisplayName());
+            String unformattedWeaponDisplayName = this.unicacityAddon.services().util().textUtils().stripColor(weapon.getDisplayName());
             int weaponSlotNumber = this.unicacityAddon.guiController().getSlotNumberByDisplayName(unformattedWeaponDisplayName);
 
             this.unicacityAddon.guiController().inventoryClick(this.unicacityAddon, weaponSlotNumber);
@@ -47,6 +47,6 @@ public class ScreenRenderListener {
     @Subscribe
     public void onItemStackTooltip(ItemStackTooltipEvent e) {
         ItemStack itemStack = e.itemStack();
-        lastHoveredSlotNumber = this.unicacityAddon.guiController().getSlotNumberByDisplayName(this.unicacityAddon.services().utilService().textUtils().plain(itemStack.getDisplayName()));
+        lastHoveredSlotNumber = this.unicacityAddon.guiController().getSlotNumberByDisplayName(this.unicacityAddon.services().util().textUtils().plain(itemStack.getDisplayName()));
     }
 }

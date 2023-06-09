@@ -35,7 +35,7 @@ public class KorruptionsrechnerCommand extends UnicacityCommand {
 
         String target = arguments[0];
 
-        WantedListener.Wanted wanted = this.unicacityAddon.services().nametagService().getWantedPlayerMap().get(target);
+        WantedListener.Wanted wanted = this.unicacityAddon.services().nametag().getWantedPlayerMap().get(target);
         if (wanted == null) {
             p.sendErrorMessage("Du hast /wanteds noch nicht ausgeführt!");
             return true;

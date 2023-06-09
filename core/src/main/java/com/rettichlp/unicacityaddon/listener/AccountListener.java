@@ -49,7 +49,7 @@ public class AccountListener {
         String msg = chatMessage.getPlainText();
         String formattedMsg = chatMessage.getFormattedText();
 
-        if (!this.unicacityAddon.services().utilService().isUnicacity())
+        if (!this.unicacityAddon.services().util().isUnicacity())
             return;
 
         if (PatternHandler.ACCOUNT_WELCOME_BACK_PATTERN.matcher(msg).find()) {
@@ -186,7 +186,7 @@ public class AccountListener {
 
         Matcher accountPayDayMatcher = PatternHandler.ACCOUNT_PAYDAY_PATTERN.matcher(msg);
         if (accountPayDayMatcher.find())
-            this.unicacityAddon.services().fileService().data().setPayDayTime(Integer.parseInt(accountPayDayMatcher.group(1)));
+            this.unicacityAddon.services().file().data().setPayDayTime(Integer.parseInt(accountPayDayMatcher.group(1)));
     }
 
     @Subscribe
@@ -219,7 +219,7 @@ public class AccountListener {
     @Subscribe
     public void onUnicacityAddonTick(UnicacityAddonTickEvent e) {
         if (e.isUnicacity() && e.isPhase(UnicacityAddonTickEvent.Phase.MINUTE) && !isAfk) {
-            this.unicacityAddon.services().fileService().data().addPayDayTime(1);
+            this.unicacityAddon.services().file().data().addPayDayTime(1);
         }
     }
 

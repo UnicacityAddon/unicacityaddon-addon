@@ -31,19 +31,19 @@ public class TimerHudWidget extends TextHudWidget<TextHudWidgetConfig> {
     @Override
     public void load(TextHudWidgetConfig config) {
         super.load(config);
-        this.textLine = super.createLine("Timer", this.unicacityAddon.services().utilService().textUtils().parseTimer(this.unicacityAddon.services().fileService().data().getTimer()));
-        this.setIcon(this.unicacityAddon.services().utilService().icon());
+        this.textLine = super.createLine("Timer", this.unicacityAddon.services().util().textUtils().parseTimer(this.unicacityAddon.services().file().data().getTimer()));
+        this.setIcon(this.unicacityAddon.services().util().icon());
     }
 
     @Override
     public boolean isVisibleInGame() {
-        return this.unicacityAddon.services().fileService().data().getTimer() > 0;
+        return this.unicacityAddon.services().file().data().getTimer() > 0;
     }
 
     @Subscribe
     public void onUnicacityAddonTick(UnicacityAddonTickEvent e) {
         if (e.isPhase(UnicacityAddonTickEvent.Phase.SECOND)) {
-            this.textLine.updateAndFlush(this.unicacityAddon.services().utilService().textUtils().parseTimer(this.unicacityAddon.services().fileService().data().getTimer()));
+            this.textLine.updateAndFlush(this.unicacityAddon.services().util().textUtils().parseTimer(this.unicacityAddon.services().file().data().getTimer()));
         }
     }
 }

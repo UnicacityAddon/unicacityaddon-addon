@@ -34,8 +34,8 @@ public class TickListener {
         }
 
         if (e.isPhase(UnicacityAddonTickEvent.Phase.SECOND)) {
-            if (this.unicacityAddon.services().fileService().data().getTimer() > 0) {
-                this.unicacityAddon.services().fileService().data().setTimer(this.unicacityAddon.services().fileService().data().getTimer() - 1);
+            if (this.unicacityAddon.services().file().data().getTimer() > 0) {
+                this.unicacityAddon.services().file().data().setTimer(this.unicacityAddon.services().file().data().getTimer() - 1);
             }
         }
 

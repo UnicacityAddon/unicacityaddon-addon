@@ -31,7 +31,7 @@ public class DutyCommand extends UnicacityCommand {
             return true;
         }
 
-        boolean isDuty = this.unicacityAddon.services().factionService().checkPlayerDuty(arguments[0]);
+        boolean isDuty = this.unicacityAddon.services().faction().checkPlayerDuty(arguments[0]);
 
         p.sendMessage(Message.getBuilder()
                 .of("Der Spieler").color(ColorCode.GRAY).advance().space()

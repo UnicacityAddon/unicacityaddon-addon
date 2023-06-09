@@ -25,7 +25,7 @@ public class ScreenshotListener {
     public void onReinforcementAccepted(ReinforcementAcceptedEvent e) {
         if (this.unicacityAddon.configuration().reinforcementSetting().screen().get()) {
             try {
-                File file = this.unicacityAddon.services().fileService().getNewActivityImageFile("reinforcement");
+                File file = this.unicacityAddon.services().file().getNewActivityImageFile("reinforcement");
                 ScreenshotBuilder.getBuilder(this.unicacityAddon).file(file).save();
             } catch (IOException ex) {
                 this.unicacityAddon.logger().warn(ex.getMessage());

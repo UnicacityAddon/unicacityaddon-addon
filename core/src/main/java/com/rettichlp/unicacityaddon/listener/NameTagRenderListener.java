@@ -42,10 +42,10 @@ public class NameTagRenderListener {
         String playerName = networkPlayerInfo.profile().getUsername();
 
         if (context.equals(PlayerNameTagRenderEvent.Context.PLAYER_RENDER)) {
-            if (this.unicacityAddon.services().nametagService().getMaskedPlayerList().contains(playerName)) {
+            if (this.unicacityAddon.services().nametag().getMaskedPlayerList().contains(playerName)) {
                 e.setNameTag(Message.getBuilder().of(playerName).obfuscated().advance().createComponent());
             } else {
-                String prefix = this.unicacityAddon.services().nametagService().getPrefix(playerName, false);
+                String prefix = this.unicacityAddon.services().nametag().getPrefix(playerName, false);
                 if (!prefix.equals(FormattingCode.RESET.getCode())) {
                     // prevent to add the pencil to players whose name was not visible changed
                     e.setNameTag(Message.getBuilder().add(prefix + playerName).createComponent());
@@ -53,8 +53,8 @@ public class NameTagRenderListener {
             }
         } else if (context.equals(PlayerNameTagRenderEvent.Context.TAB_LIST)) {
             Component nameTagComponent = e.nameTag();
-            String legacyNameTagComponent = this.unicacityAddon.services().utilService().textUtils().legacy(nameTagComponent);
-            if (this.unicacityAddon.services().nametagService().getNoPushPlayerList().contains(playerName) && !legacyNameTagComponent.contains(" §7§oAFK")) {
+            String legacyNameTagComponent = this.unicacityAddon.services().util().textUtils().legacy(nameTagComponent);
+            if (this.unicacityAddon.services().nametag().getNoPushPlayerList().contains(playerName) && !legacyNameTagComponent.contains(" §7§oAFK")) {
                 e.setNameTag(nameTagComponent.append(AFK_COMPONENT));
             }
         }
@@ -65,11 +65,11 @@ public class NameTagRenderListener {
         this.unicacityAddon.player().getScoreboard().getTeams().stream()
                 .filter(scoreboardTeam -> scoreboardTeam.getTeamName().equals("nopush"))
                 .findFirst()
-                .ifPresent(scoreboardTeam -> this.unicacityAddon.services().nametagService().setNoPushPlayerList(scoreboardTeam.getEntries()));
+                .ifPresent(scoreboardTeam -> this.unicacityAddon.services().nametag().setNoPushPlayerList(scoreboardTeam.getEntries()));
 
         this.unicacityAddon.player().getScoreboard().getTeams().stream()
                 .filter(scoreboardTeam -> scoreboardTeam.getTeamName().equals("masked"))
                 .findFirst()
-                .ifPresent(scoreboardTeam -> this.unicacityAddon.services().nametagService().setMaskedPlayerList(scoreboardTeam.getEntries()));
+                .ifPresent(scoreboardTeam -> this.unicacityAddon.services().nametag().setMaskedPlayerList(scoreboardTeam.getEntries()));
     }
 }

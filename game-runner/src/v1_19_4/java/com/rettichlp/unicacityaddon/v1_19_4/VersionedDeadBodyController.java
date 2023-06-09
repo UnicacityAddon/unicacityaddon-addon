@@ -59,7 +59,7 @@ public class VersionedDeadBodyController extends DeadBodyController {
 
                 String playerName = originalCorpseName.getContents().toString().substring(1);
 
-                String prefix = unicacityAddon.services().nametagService().getPrefix(playerName, true);
+                String prefix = unicacityAddon.services().nametag().getPrefix(playerName, true);
                 String factionInfo = unicacityAddon.api().getPlayerFactionMap().getOrDefault(playerName, Faction.NULL).getNameTagSuffix();
 
                 String ndn = Message.getBuilder()

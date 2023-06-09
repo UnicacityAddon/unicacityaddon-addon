@@ -157,7 +157,7 @@ public class ClientVariableCommand extends BaseCommand<ClientVariableCommand.Res
             if (description == null)
                 return null;
 
-            return this.unicacityAddon.services().utilService().textUtils().stripPrefix(description);
+            return this.unicacityAddon.services().util().textUtils().stripPrefix(description);
         }
 
         public int getID() {

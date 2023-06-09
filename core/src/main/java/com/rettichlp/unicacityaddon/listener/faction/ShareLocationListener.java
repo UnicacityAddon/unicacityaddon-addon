@@ -47,7 +47,7 @@ public class ShareLocationListener {
         int posY = Integer.parseInt(shareLocationMatcher.group(4));
         int posZ = Integer.parseInt(shareLocationMatcher.group(5));
 
-        Map.Entry<Double, NaviPoint> doubleNaviPointEntry = this.unicacityAddon.services().navigationService().getNearestNaviPoint(posX, posY, posZ);
+        Map.Entry<Double, NaviPoint> doubleNaviPointEntry = this.unicacityAddon.services().navigation().getNearestNaviPoint(posX, posY, posZ);
 
         String navipointString;
         if (doubleNaviPointEntry.getValue() == null) {
@@ -67,7 +67,7 @@ public class ShareLocationListener {
         p.sendMessage(Message.getBuilder()
                 .of("»").color(ColorCode.GRAY).advance().space()
                 .of("Route Anzeigen").color(ColorCode.RED)
-                        .hoverEvent(HoverEvent.Action.SHOW_TEXT, this.unicacityAddon.services().utilService().commandUtils().locationHoverMessage(posX, posY, posZ))
+                        .hoverEvent(HoverEvent.Action.SHOW_TEXT, this.unicacityAddon.services().util().commandUtils().locationHoverMessage(posX, posY, posZ))
                         .clickEvent(ClickEvent.Action.RUN_COMMAND, "/navi " + posX + "/" + posY + "/" + posZ)
                         .advance()
                 .createComponent());

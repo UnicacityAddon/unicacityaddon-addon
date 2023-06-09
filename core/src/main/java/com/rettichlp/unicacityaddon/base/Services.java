@@ -26,27 +26,27 @@ public class Services {
         this.webService = new WebService(unicacityAddon);
     }
 
-    public FactionService factionService() {
+    public FactionService faction() {
         return factionService;
     }
 
-    public FileService fileService() {
+    public FileService file() {
         return fileService;
     }
 
-    public NameTagService nametagService() {
+    public NameTagService nametag() {
         return nametagService;
     }
 
-    public NavigationService navigationService() {
+    public NavigationService navigation() {
         return navigationService;
     }
 
-    public UtilService utilService() {
+    public UtilService util() {
         return utilService;
     }
 
-    public WebService webService() {
+    public WebService web() {
         return webService;
     }
 }

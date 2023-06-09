@@ -33,7 +33,7 @@ public class EquipListCommand extends UnicacityCommand {
     public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
         if (arguments.length == 1 && arguments[0].equalsIgnoreCase("reset")) {
-            this.unicacityAddon.services().fileService().data().setEquipMap(new HashMap<>());
+            this.unicacityAddon.services().file().data().setEquipMap(new HashMap<>());
             p.sendInfoMessage("Equipliste gelöscht.");
         } else
             equipList(p);
@@ -53,12 +53,12 @@ public class EquipListCommand extends UnicacityCommand {
         p.sendMessage(Message.getBuilder()
                 .of("Equip:").color(ColorCode.DARK_AQUA).bold().advance()
                 .createComponent());
-        this.unicacityAddon.services().fileService().data().getEquipMap().forEach((equip, integer) -> p.sendMessage(Message.getBuilder()
+        this.unicacityAddon.services().file().data().getEquipMap().forEach((equip, integer) -> p.sendMessage(Message.getBuilder()
                 .of("» " + integer + "x " + equip.getEquipName() + ": ").color(ColorCode.GRAY).advance()
                 .of(numberFormat.format(equip.getPrice(this.unicacityAddon.configuration())) + "$").color(ColorCode.AQUA).advance()
                 .createComponent()));
 
-        int totalAmount = this.unicacityAddon.services().fileService().data().getEquipMap().entrySet().stream()
+        int totalAmount = this.unicacityAddon.services().file().data().getEquipMap().entrySet().stream()
                 .map(equipIntegerEntry -> equipIntegerEntry.getKey().getPrice(this.unicacityAddon.configuration()) * equipIntegerEntry.getValue())
                 .reduce(0, Integer::sum);
 

@@ -35,9 +35,9 @@ public class BlacklistListener {
         if (blacklistAddedMatcher.find()) {
             String name = blacklistAddedMatcher.group(1);
 
-            Map<String, Boolean> blacklistMap = this.unicacityAddon.services().nametagService().getBlacklistPlayerMap();
+            Map<String, Boolean> blacklistMap = this.unicacityAddon.services().nametag().getBlacklistPlayerMap();
             blacklistMap.put(name, false);
-            this.unicacityAddon.services().nametagService().setBlacklistPlayerMap(blacklistMap);
+            this.unicacityAddon.services().nametag().setBlacklistPlayerMap(blacklistMap);
 
             return;
         }
@@ -46,16 +46,16 @@ public class BlacklistListener {
         if (blacklistRemovedMatcher.find()) {
             String name = blacklistRemovedMatcher.group(1);
 
-            Map<String, Boolean> blacklistMap = this.unicacityAddon.services().nametagService().getBlacklistPlayerMap();
+            Map<String, Boolean> blacklistMap = this.unicacityAddon.services().nametag().getBlacklistPlayerMap();
             blacklistMap.remove(name);
-            this.unicacityAddon.services().nametagService().setBlacklistPlayerMap(blacklistMap);
+            this.unicacityAddon.services().nametag().setBlacklistPlayerMap(blacklistMap);
 
             return;
         }
 
         Matcher blacklistStartMatcher = PatternHandler.BLACKLIST_START_PATTERN.matcher(msg);
         if (blacklistStartMatcher.find()) {
-            this.unicacityAddon.services().nametagService().setBlacklistPlayerMap(new HashMap<>());
+            this.unicacityAddon.services().nametag().setBlacklistPlayerMap(new HashMap<>());
             blacklistShown = System.currentTimeMillis();
             return;
         }
@@ -65,9 +65,9 @@ public class BlacklistListener {
             String name = blacklistListMatcher.group(1);
             String reason = blacklistListMatcher.group(2);
 
-            Map<String, Boolean> blacklistMap = this.unicacityAddon.services().nametagService().getBlacklistPlayerMap();
+            Map<String, Boolean> blacklistMap = this.unicacityAddon.services().nametag().getBlacklistPlayerMap();
             blacklistMap.put(name, reason.toLowerCase().contains("vogelfrei"));
-            this.unicacityAddon.services().nametagService().setBlacklistPlayerMap(blacklistMap);
+            this.unicacityAddon.services().nametag().setBlacklistPlayerMap(blacklistMap);
 
             // BlacklistInfoCommand: hide all but one
             if (System.currentTimeMillis() - BlacklistInfoCommand.executedTime < 1000 && !name.equalsIgnoreCase(BlacklistInfoCommand.target))

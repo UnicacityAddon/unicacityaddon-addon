@@ -23,7 +23,7 @@ public class ChatLogReceiveChatListener {
     public void onChatReceive(ChatReceiveEvent e) {
         String msg = e.chatMessage().getPlainText();
 
-        if (this.unicacityAddon.services().utilService().isUnicacity() && !PatternHandler.BLACKLIST_LIST_PATTERN.matcher(msg).find() && !PatternHandler.CONTRACT_LIST_PATTERN.matcher(msg).find() && !PatternHandler.WANTED_LIST_PATTERN.matcher(msg).find())
+        if (this.unicacityAddon.services().util().isUnicacity() && !PatternHandler.BLACKLIST_LIST_PATTERN.matcher(msg).find() && !PatternHandler.CONTRACT_LIST_PATTERN.matcher(msg).find() && !PatternHandler.WANTED_LIST_PATTERN.matcher(msg).find())
             ChatLogCommand.chatLogMap.put(System.currentTimeMillis(), "[CHAT] " + msg);
     }
 }

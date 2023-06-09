@@ -29,7 +29,7 @@ public class MaskInfoCommand extends UnicacityCommand {
 
         if (startTime > 0) {
             long timeLeft = System.currentTimeMillis() - startTime;
-            String maskDuration = this.unicacityAddon.services().utilService().textUtils().parseTimer(1200 - TimeUnit.MILLISECONDS.toSeconds(timeLeft));
+            String maskDuration = this.unicacityAddon.services().util().textUtils().parseTimer(1200 - TimeUnit.MILLISECONDS.toSeconds(timeLeft));
             String[] splittedMaskDurytion = maskDuration.split(":");
             int minutes = Integer.parseInt(splittedMaskDurytion[0]);
             int seconds = Integer.parseInt(splittedMaskDurytion[1]);
