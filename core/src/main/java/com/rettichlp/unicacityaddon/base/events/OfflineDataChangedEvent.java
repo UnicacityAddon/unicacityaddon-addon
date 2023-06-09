@@ -1,6 +1,6 @@
 package com.rettichlp.unicacityaddon.base.events;
 
-import com.rettichlp.unicacityaddon.base.models.file.Data;
+import com.rettichlp.unicacityaddon.file.Data;
 import net.labymod.api.event.Event;
 
 /**

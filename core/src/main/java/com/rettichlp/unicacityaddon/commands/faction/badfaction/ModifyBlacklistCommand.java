@@ -1,11 +1,11 @@
 package com.rettichlp.unicacityaddon.commands.faction.badfaction;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.api.BlacklistReason;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.enums.faction.ModifyBlacklistType;
-import com.rettichlp.unicacityaddon.base.models.api.BlacklistReason;
 import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
 
 import java.util.List;

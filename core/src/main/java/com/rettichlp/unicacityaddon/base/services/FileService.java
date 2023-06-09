@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.models.file.Data;
+import com.rettichlp.unicacityaddon.file.Data;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;

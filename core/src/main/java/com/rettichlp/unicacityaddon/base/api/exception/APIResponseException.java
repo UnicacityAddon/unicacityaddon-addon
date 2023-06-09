@@ -1,8 +1,8 @@
 package com.rettichlp.unicacityaddon.base.api.exception;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.api.response.Failure;
 import com.rettichlp.unicacityaddon.base.api.HttpStatus;
-import com.rettichlp.unicacityaddon.base.models.api.response.Failure;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import net.labymod.api.notification.Notification;

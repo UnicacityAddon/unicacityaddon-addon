@@ -1,10 +1,10 @@
 package com.rettichlp.unicacityaddon.base.services;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.api.NaviPoint;
 import com.rettichlp.unicacityaddon.base.enums.location.ATM;
 import com.rettichlp.unicacityaddon.base.enums.location.Bus;
 import com.rettichlp.unicacityaddon.base.enums.location.Job;
-import com.rettichlp.unicacityaddon.base.models.api.NaviPoint;
 import net.labymod.api.util.math.vector.FloatVector3;
 import org.spongepowered.include.com.google.common.collect.Maps;
 
