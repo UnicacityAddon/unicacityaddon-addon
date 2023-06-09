@@ -27,7 +27,7 @@ public class MoneyHudWidget extends TextHudWidget<TextHudWidgetConfig> {
         super.load(config);
         this.bank = super.createLine("Bank", this.unicacityAddon.services().fileService().data().getBankBalance() + "$");
         this.cash = super.createLine("Bargeld", this.unicacityAddon.services().fileService().data().getCashBalance() + "$");
-        this.setIcon(this.unicacityAddon.utils().icon());
+        this.setIcon(this.unicacityAddon.services().utilService().icon());
     }
 
     @Subscribe

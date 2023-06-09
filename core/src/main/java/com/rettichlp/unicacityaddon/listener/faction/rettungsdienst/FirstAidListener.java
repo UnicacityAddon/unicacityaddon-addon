@@ -43,7 +43,7 @@ public class FirstAidListener {
                     .of("Erste-Hilfe-Schein").color(ColorCode.BLUE).advance()
                     .of(":").color(ColorCode.DARK_GRAY).advance().space()
                     .of("Vorhanden").color(ColorCode.AQUA)
-                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of(this.unicacityAddon.utils().textUtils().parseTimerWithTimeUnit(timeLeft)).color(ColorCode.RED).advance().createComponent())
+                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of(this.unicacityAddon.services().utilService().textUtils().parseTimerWithTimeUnit(timeLeft)).color(ColorCode.RED).advance().createComponent())
                             .advance()
                     .createComponent());
             return;

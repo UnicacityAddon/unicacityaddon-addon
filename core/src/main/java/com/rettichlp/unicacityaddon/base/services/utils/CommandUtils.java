@@ -1,4 +1,4 @@
-package com.rettichlp.unicacityaddon.base.utils;
+package com.rettichlp.unicacityaddon.base.services.utils;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;

@@ -50,7 +50,7 @@ public class VersionedTabListController extends TabListController {
                 .filter(networkPlayerInfo -> networkPlayerInfo.displayName() != null)
                 .filter(networkPlayerInfo -> networkPlayerInfo.getTeam() == null || (!networkPlayerInfo.getTeam().getTeamName().equals("nopush") && !networkPlayerInfo.getTeam().getTeamName().equals("masked")))
                 .forEach(networkPlayerInfo -> {
-                    String displayName = unicacityAddon.utils().textUtils().legacy(networkPlayerInfo.displayName());
+                    String displayName = unicacityAddon.services().utilService().textUtils().legacy(networkPlayerInfo.displayName());
                     TabPrefix tabPrefix = TabPrefix.getTypeByDisplayName(displayName);
                     PlayerTeam playerTeam = tabPrefixScorePlayerTeamMap.get(tabPrefix);
                     scoreboard.addPlayerToTeam(networkPlayerInfo.profile().getUsername(), playerTeam);

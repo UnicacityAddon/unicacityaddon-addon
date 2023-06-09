@@ -81,7 +81,7 @@ public class ReviveListener {
             this.unicacityAddon.services().fileService().data().setCashBalance(0);
 
             if (ShutdownGraveyardCommand.shutdownGraveyard)
-                this.unicacityAddon.utils().shutdownPC();
+                this.unicacityAddon.services().utilService().shutdownPC();
 
             return;
         }
@@ -92,7 +92,7 @@ public class ReviveListener {
             return;
         }
 
-        if (PatternHandler.REVIVE_START_PATTERN.matcher(msg).find() && this.unicacityAddon.utils().isUnicacity())
+        if (PatternHandler.REVIVE_START_PATTERN.matcher(msg).find() && this.unicacityAddon.services().utilService().isUnicacity())
             medicReviveStartTime = System.currentTimeMillis();
     }
 }

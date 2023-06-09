@@ -1,12 +1,12 @@
-package com.rettichlp.unicacityaddon.base;
+package com.rettichlp.unicacityaddon.base.services;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.base.services.utils.CommandUtils;
+import com.rettichlp.unicacityaddon.base.services.utils.ListUtils;
+import com.rettichlp.unicacityaddon.base.services.utils.TextUtils;
 import com.rettichlp.unicacityaddon.base.teamspeak.TSUtils;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
-import com.rettichlp.unicacityaddon.base.utils.CommandUtils;
-import com.rettichlp.unicacityaddon.base.utils.ListUtils;
-import com.rettichlp.unicacityaddon.base.utils.TextUtils;
 import net.labymod.api.client.gui.icon.Icon;
 import net.labymod.api.client.network.ClientPacketListener;
 import net.labymod.api.client.network.NetworkPlayerInfo;
@@ -20,7 +20,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Utils {
+public class UtilService {
 
     private final Icon ICON = Icon.texture(ResourceLocation.create("unicacityaddon", "textures/uc.png")).resolution(64, 64);
 
@@ -31,7 +31,7 @@ public class Utils {
 
     private final UnicacityAddon unicacityAddon;
 
-    public Utils(UnicacityAddon unicacityAddon) {
+    public UtilService(UnicacityAddon unicacityAddon) {
         this.unicacityAddon = unicacityAddon;
         this.commandUtils = new CommandUtils(unicacityAddon);
         this.listUtils = new ListUtils();

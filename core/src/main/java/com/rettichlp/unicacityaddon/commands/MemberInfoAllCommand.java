@@ -62,7 +62,7 @@ public class MemberInfoAllCommand extends UnicacityCommand {
                                 .of("» Rang:").color(ColorCode.GRAY).advance().space()
                                 .of(rank != null ? String.valueOf(rank) : "X").color(ColorCode.AQUA).advance().space()
                                 .of("|").color(ColorCode.DARK_GRAY).advance().space()
-                                .of(playername).color(this.unicacityAddon.utils().getOnlinePlayers().contains(playername) ? ColorCode.GREEN : ColorCode.RED).advance()
+                                .of(playername).color(this.unicacityAddon.services().utilService().getOnlinePlayers().contains(playername) ? ColorCode.GREEN : ColorCode.RED).advance()
                                 .createComponent());
                     });
         } else {

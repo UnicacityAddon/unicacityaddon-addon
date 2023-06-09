@@ -65,6 +65,6 @@ public class DropDrugAllCommand extends UnicacityCommand {
                     }
                 }));
 
-        unicacityAddon.utils().commandUtils.sendQueuedCommands(commandQueue);
+        unicacityAddon.services().utilService().commandUtils.sendQueuedCommands(commandQueue);
     }
 }

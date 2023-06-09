@@ -82,7 +82,7 @@ public class BombListener {
             this.unicacityAddon.labyAPI().eventBus().fire(new BombRemovedEvent());
 
             Long timeSinceBombPlanted = this.bombPlantedTime != null ? System.currentTimeMillis() - this.bombPlantedTime : null;
-            String timeString = timeSinceBombPlanted != null ? this.unicacityAddon.utils().textUtils().parseTimer(TimeUnit.MILLISECONDS.toSeconds(timeSinceBombPlanted)) : "";
+            String timeString = timeSinceBombPlanted != null ? this.unicacityAddon.services().utilService().textUtils().parseTimer(TimeUnit.MILLISECONDS.toSeconds(timeSinceBombPlanted)) : "";
 
             String state = bombRemovedMatcher.group(1);
 

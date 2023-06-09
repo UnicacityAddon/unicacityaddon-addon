@@ -18,7 +18,7 @@ public class PatternHandler {
      * Pattern for faction and util data
      *
      * @see com.rettichlp.unicacityaddon.base.api.request.API
-     * @see com.rettichlp.unicacityaddon.base.utils.TextUtils
+     * @see com.rettichlp.unicacityaddon.base.services.utils.TextUtils
      */
     public static final Pattern NAME_PATTERN = Pattern.compile("<h4 class=\"h5 g-mb-5\"><strong>(\\w+)");
     public static final Pattern RANK_PATTERN = Pattern.compile("<strong>Rang (\\d)( \\(Leader\\))*</strong>");

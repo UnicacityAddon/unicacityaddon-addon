@@ -8,10 +8,10 @@ import com.rettichlp.unicacityaddon.base.config.join.CommandSetting;
 import com.rettichlp.unicacityaddon.base.config.join.PasswordSetting;
 import com.rettichlp.unicacityaddon.base.events.OfflineDataChangedEvent;
 import com.rettichlp.unicacityaddon.base.events.UnicacityAddonTickEvent;
+import com.rettichlp.unicacityaddon.base.services.utils.MathUtils;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
-import com.rettichlp.unicacityaddon.base.utils.MathUtils;
 import com.rettichlp.unicacityaddon.commands.MaskInfoCommand;
 import net.labymod.api.client.chat.ChatMessage;
 import net.labymod.api.client.component.event.ClickEvent;
@@ -49,7 +49,7 @@ public class AccountListener {
         String msg = chatMessage.getPlainText();
         String formattedMsg = chatMessage.getFormattedText();
 
-        if (!this.unicacityAddon.utils().isUnicacity())
+        if (!this.unicacityAddon.services().utilService().isUnicacity())
             return;
 
         if (PatternHandler.ACCOUNT_WELCOME_BACK_PATTERN.matcher(msg).find()) {

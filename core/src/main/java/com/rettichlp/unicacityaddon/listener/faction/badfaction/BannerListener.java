@@ -28,7 +28,7 @@ public class BannerListener {
 
     @Subscribe
     public void onClientPlayerInteract(ClientPlayerInteractEvent e) {
-        if (e.type().equals(ClientPlayerInteractEvent.InteractionType.INTERACT) && this.unicacityAddon.utils().isUnicacity()) {
+        if (e.type().equals(ClientPlayerInteractEvent.InteractionType.INTERACT) && this.unicacityAddon.services().utilService().isUnicacity()) {
             FloatVector3 location = this.unicacityAddon.worldInteractionController().getClickedBlockLocation();
 
             if (location != null && this.unicacityAddon.worldInteractionController().isBanner(location)) {

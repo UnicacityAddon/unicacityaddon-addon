@@ -30,7 +30,7 @@ public class ReplyCommand extends UnicacityCommand {
             return true;
         }
 
-        String message = this.unicacityAddon.utils().textUtils().makeStringByArgs(arguments, " ");
+        String message = this.unicacityAddon.services().utilService().textUtils().makeStringByArgs(arguments, " ");
         p.sendServerMessage("/sms " + MobileListener.lastCheckedNumber + " " + message);
         return true;
     }

@@ -49,9 +49,9 @@ public class MoveHereCommand extends UnicacityCommand {
 
         String name = arguments[0];
 
-        int channelID = this.unicacityAddon.utils().tsUtils().getMyChannelID();
+        int channelID = this.unicacityAddon.services().utilService().tsUtils().getMyChannelID();
 
-        List<Client> clients = this.unicacityAddon.utils().tsUtils().getClientsByName(Collections.singletonList(name));
+        List<Client> clients = this.unicacityAddon.services().utilService().tsUtils().getClientsByName(Collections.singletonList(name));
         if (clients.isEmpty()) {
             p.sendErrorMessage("Es wurde kein Spieler auf dem TeamSpeak mit diesem Namen gefunden.");
             return true;

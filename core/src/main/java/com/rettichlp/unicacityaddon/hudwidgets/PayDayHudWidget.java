@@ -25,7 +25,7 @@ public class PayDayHudWidget extends TextHudWidget<TextHudWidgetConfig> {
     public void load(TextHudWidgetConfig config) {
         super.load(config);
         this.textLine = super.createLine("PayDay", this.unicacityAddon.services().fileService().data().getPayDayTime() + "/60");
-        this.setIcon(this.unicacityAddon.utils().icon());
+        this.setIcon(this.unicacityAddon.services().utilService().icon());
     }
 
     @Subscribe

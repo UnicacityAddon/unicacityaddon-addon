@@ -32,7 +32,7 @@ public class InventoryHudWidget extends TextHudWidget<TextHudWidgetConfig> {
                 .reduce(0, Integer::sum);
 
         this.textLine = super.createLine("Inventar", amount);
-        this.setIcon(this.unicacityAddon.utils().icon());
+        this.setIcon(this.unicacityAddon.services().utilService().icon());
     }
 
     @Subscribe

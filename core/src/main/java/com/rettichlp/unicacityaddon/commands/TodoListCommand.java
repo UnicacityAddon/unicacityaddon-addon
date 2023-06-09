@@ -4,9 +4,9 @@ import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
+import com.rettichlp.unicacityaddon.base.services.utils.MathUtils;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
-import com.rettichlp.unicacityaddon.base.services.utils.MathUtils;
 import com.rettichlp.unicacityaddon.file.TodolistEntry;
 import net.labymod.api.client.component.event.ClickEvent;
 
@@ -33,7 +33,7 @@ public class TodoListCommand extends UnicacityCommand {
         if (arguments.length == 0) {
             todoList();
         } else if (arguments.length > 1 && arguments[0].equalsIgnoreCase("done")) {
-            String todo = this.unicacityAddon.utils().textUtils().makeStringByArgs(arguments, " ").replace("done ", "");
+            String todo = this.unicacityAddon.services().utilService().textUtils().makeStringByArgs(arguments, " ").replace("done ", "");
             Optional<TodolistEntry> todolistEntryOptional = this.unicacityAddon.services().fileService().data().getTodolist().stream().filter(todolistEntry -> todolistEntry.getTodo().equals(todo)).findFirst();
             if (todolistEntryOptional.isEmpty()) {
                 p.sendErrorMessage("Keinen Eintrag gefunden.");
@@ -45,7 +45,7 @@ public class TodoListCommand extends UnicacityCommand {
             this.unicacityAddon.services().fileService().data().getTodolist().set(index, todolistEntry);
             p.sendInfoMessage("Aufgabe als erledigt markiert.");
         } else if (arguments.length > 1 && arguments[0].equalsIgnoreCase("delete")) {
-            String todo = this.unicacityAddon.utils().textUtils().makeStringByArgs(arguments, " ").replace("delete ", "");
+            String todo = this.unicacityAddon.services().utilService().textUtils().makeStringByArgs(arguments, " ").replace("delete ", "");
             boolean success = this.unicacityAddon.services().fileService().data().getTodolist().removeIf(todolistEntry -> todolistEntry.getTodo().equals(todo));
             if (!success) {
                 p.sendErrorMessage("Keinen Eintrag mit dieser ID gefunden.");
@@ -58,12 +58,12 @@ public class TodoListCommand extends UnicacityCommand {
                 p.sendErrorMessage("Keinen Eintrag mit dieser ID gefunden.");
                 return true;
             }
-            String todo = this.unicacityAddon.utils().textUtils().makeStringByArgs(arguments, " ").replaceAll("(?i)edit " + arguments[1] + " ", "");
+            String todo = this.unicacityAddon.services().utilService().textUtils().makeStringByArgs(arguments, " ").replaceAll("(?i)edit " + arguments[1] + " ", "");
             TodolistEntry todolistEntry = new TodolistEntry(todo);
             this.unicacityAddon.services().fileService().data().getTodolist().set(index, todolistEntry);
             p.sendInfoMessage("Aufgabe editiert.");
         } else {
-            String todo = this.unicacityAddon.utils().textUtils().makeStringByArgs(arguments, " ");
+            String todo = this.unicacityAddon.services().utilService().textUtils().makeStringByArgs(arguments, " ");
             TodolistEntry todolistEntry = new TodolistEntry(todo);
             if (this.unicacityAddon.services().fileService().data().getTodolist().stream().anyMatch(te -> te.getTodo().equals(todo))) {
                 p.sendErrorMessage("Dieses Todo gibt es bereits!");

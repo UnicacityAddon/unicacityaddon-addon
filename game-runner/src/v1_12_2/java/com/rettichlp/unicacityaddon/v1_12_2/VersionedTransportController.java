@@ -41,8 +41,8 @@ public class VersionedTransportController extends TransportController {
 
                 Map<Bus, Slot> busSlotMap = container.inventorySlots.stream()
                         .filter(slot -> slot.getStack().getDisplayName().startsWith(ColorCode.GOLD.getCode()))
-                        .filter(slot -> Bus.getBus(unicacityAddon.utils().textUtils().stripColor(slot.getStack().getDisplayName())) != null)
-                        .collect(Collectors.toMap(slot -> Bus.getBus(unicacityAddon.utils().textUtils().stripColor(slot.getStack().getDisplayName())), slot -> slot));
+                        .filter(slot -> Bus.getBus(unicacityAddon.services().utilService().textUtils().stripColor(slot.getStack().getDisplayName())) != null)
+                        .collect(Collectors.toMap(slot -> Bus.getBus(unicacityAddon.services().utilService().textUtils().stripColor(slot.getStack().getDisplayName())), slot -> slot));
 
                 Bus nearestBusToDestination = BusCommand.getNearestBusToDestination(busSlotMap.keySet());
                 if (nearestBusToDestination == null) {

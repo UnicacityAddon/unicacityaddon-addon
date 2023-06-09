@@ -39,7 +39,7 @@ public class TSPublicChannelListener {
             }
 
             Channel foundChannel = new Channel(p.getFaction().getPublicChannelId(), "Öffentlich", 0, 0);
-            ClientMoveCommand clientMoveCommand = new ClientMoveCommand(this.unicacityAddon, foundChannel.getChannelID(), this.unicacityAddon.utils().tsUtils().getMyClientID());
+            ClientMoveCommand clientMoveCommand = new ClientMoveCommand(this.unicacityAddon, foundChannel.getChannelID(), this.unicacityAddon.services().utilService().tsUtils().getMyClientID());
 
             CommandResponse commandResponse = clientMoveCommand.getResponse();
             if (commandResponse.failed()) {

@@ -1,6 +1,6 @@
 package com.rettichlp.unicacityaddon.base.enums.faction;
 
-import com.rettichlp.unicacityaddon.base.utils.MathUtils;
+import com.rettichlp.unicacityaddon.base.services.utils.MathUtils;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

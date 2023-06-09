@@ -111,7 +111,7 @@ public class ChannelActivityCommand extends UnicacityCommand {
 
 
     public List<String> getPlayersInChannel() {
-        ChannelClientListCommand.Response channelClientListCommandResponse = new ChannelClientListCommand(this.unicacityAddon, this.unicacityAddon.utils().tsUtils().getMyChannelID()).getResponse();
+        ChannelClientListCommand.Response channelClientListCommandResponse = new ChannelClientListCommand(this.unicacityAddon, this.unicacityAddon.services().utilService().tsUtils().getMyChannelID()).getResponse();
         if (channelClientListCommandResponse.failed())
             return Collections.emptyList();
 
@@ -131,7 +131,7 @@ public class ChannelActivityCommand extends UnicacityCommand {
 
     private Map<String, Boolean> getOnlineStateOfPlayers(List<String> factionPlayers) {
         List<Boolean> onlineStates = factionPlayers.stream()
-                .map(s -> !this.unicacityAddon.utils().tsUtils().getClientsByName(Collections.singletonList(s)).isEmpty()).toList();
+                .map(s -> !this.unicacityAddon.services().utilService().tsUtils().getClientsByName(Collections.singletonList(s)).isEmpty()).toList();
 
         return IntStream.range(0, factionPlayers.size())
                 .boxed()

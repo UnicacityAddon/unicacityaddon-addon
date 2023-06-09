@@ -34,12 +34,12 @@ public class CoordlistCommand extends UnicacityCommand {
         if (arguments.length == 0) {
             listCoords(p);
         } else if (arguments.length > 1 && arguments[0].equalsIgnoreCase("add")) {
-            String name = this.unicacityAddon.utils().textUtils().makeStringByArgs(arguments, "-").replace("add-", "");
+            String name = this.unicacityAddon.services().utilService().textUtils().makeStringByArgs(arguments, "-").replace("add-", "");
             FloatVector3 location = p.getLocation();
             this.unicacityAddon.services().fileService().data().addCoordToCoordlist(name, location != null ? location : new FloatVector3(0, 0, 0));
             p.sendInfoMessage("Koordinaten gespeichert.");
         } else if (arguments.length > 1 && arguments[0].equalsIgnoreCase("remove")) {
-            String name = this.unicacityAddon.utils().textUtils().makeStringByArgs(arguments, "-").replace("remove-", "");
+            String name = this.unicacityAddon.services().utilService().textUtils().makeStringByArgs(arguments, "-").replace("remove-", "");
             if (this.unicacityAddon.services().fileService().data().removeCoordFromCoordlist(name)) {
                 p.sendInfoMessage("Koordinaten gelöscht.");
             }

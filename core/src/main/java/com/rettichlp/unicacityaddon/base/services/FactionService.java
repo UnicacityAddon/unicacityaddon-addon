@@ -18,8 +18,8 @@ public class FactionService {
 
     public boolean checkPlayerDuty(String playerName) {
         ClientPacketListener clientPacketListener = this.unicacityAddon.labyAPI().minecraft().getClientPacketListener();
-        return clientPacketListener != null && this.unicacityAddon.utils().isUnicacity() && clientPacketListener.getNetworkPlayerInfos().stream()
-                .map(networkPlayerInfo -> this.unicacityAddon.utils().textUtils().legacy(networkPlayerInfo.displayName()))
+        return clientPacketListener != null && this.unicacityAddon.services().utilService().isUnicacity() && clientPacketListener.getNetworkPlayerInfos().stream()
+                .map(networkPlayerInfo -> this.unicacityAddon.services().utilService().textUtils().legacy(networkPlayerInfo.displayName()))
                 .filter(s -> s.startsWith("§1") || s.startsWith("§9") || s.startsWith("§4") || s.startsWith("§6"))
                 .anyMatch(s -> s.contains(playerName));
     }

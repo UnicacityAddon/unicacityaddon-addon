@@ -1,4 +1,4 @@
-package com.rettichlp.unicacityaddon.base.utils;
+package com.rettichlp.unicacityaddon.base.services.utils;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;

@@ -55,7 +55,7 @@ public class TSJoinCommand extends UnicacityCommand {
             return true;
         }
 
-        String channelName = this.unicacityAddon.utils().textUtils().makeStringByArgs(arguments, "-");
+        String channelName = this.unicacityAddon.services().utilService().textUtils().makeStringByArgs(arguments, "-");
 
         ChannelListCommand.Response channelListResponse = new ChannelListCommand(this.unicacityAddon).getResponse();
         if (channelListResponse.failed()) {
@@ -88,7 +88,7 @@ public class TSJoinCommand extends UnicacityCommand {
             return true;
         }
 
-        ClientMoveCommand clientMoveCommand = new ClientMoveCommand(this.unicacityAddon, foundChannel.getChannelID(), this.unicacityAddon.utils().tsUtils().getMyClientID());
+        ClientMoveCommand clientMoveCommand = new ClientMoveCommand(this.unicacityAddon, foundChannel.getChannelID(), this.unicacityAddon.services().utilService().tsUtils().getMyClientID());
 
         CommandResponse commandResponse = clientMoveCommand.getResponse();
         if (commandResponse.failed()) {

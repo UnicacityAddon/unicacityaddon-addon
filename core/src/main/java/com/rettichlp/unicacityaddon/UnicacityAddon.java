@@ -4,7 +4,6 @@ import com.google.common.reflect.ClassPath;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.DefaultAddonPlayer;
 import com.rettichlp.unicacityaddon.base.Services;
-import com.rettichlp.unicacityaddon.base.Utils;
 import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.api.request.API;
@@ -104,7 +103,6 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
     private AddonPlayer player;
     private Services services;
     private API api;
-    private Utils utils;
     private List<Command> commands;
 
     public UnicacityAddon() {
@@ -115,7 +113,6 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
         this.player = new DefaultAddonPlayer(this);
         this.services = new Services(this);
         this.api = new API(this);
-        this.utils = new Utils(this);
         this.commands = new ArrayList<>();
 
         this.logger().info("Loaded UnicacityAddon");
@@ -150,10 +147,6 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
 
     public API api() {
         return api;
-    }
-
-    public Utils utils() {
-        return utils;
     }
 
     public List<Command> commands() {

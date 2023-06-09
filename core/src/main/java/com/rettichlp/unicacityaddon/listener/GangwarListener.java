@@ -26,7 +26,7 @@ public class GangwarListener {
         if (e.isPhase(UnicacityAddonTickEvent.Phase.SECOND_30)) {
             AddonPlayer p = this.unicacityAddon.player();
 
-            if (this.unicacityAddon.utils().isUnicacity() && p.hasGangwar() && p.isPrioritizedMember()) {
+            if (this.unicacityAddon.services().utilService().isUnicacity() && p.hasGangwar() && p.isPrioritizedMember()) {
                 Scoreboard scoreboard = p.getScoreboard();
 
                 ScoreboardScore attackerScore = scoreboard.getScores(scoreboard.getObjective(DisplaySlot.SIDEBAR)).stream()

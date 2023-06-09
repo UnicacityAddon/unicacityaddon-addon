@@ -13,7 +13,7 @@ import net.labymod.api.client.component.event.HoverEvent;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static com.rettichlp.unicacityaddon.base.utils.MathUtils.DECIMAL_FORMAT;
+import static com.rettichlp.unicacityaddon.base.services.utils.MathUtils.DECIMAL_FORMAT;
 
 /**
  * @author RettichLP

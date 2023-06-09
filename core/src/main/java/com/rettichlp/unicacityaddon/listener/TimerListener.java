@@ -69,7 +69,7 @@ public class TimerListener {
             this.unicacityAddon.services().fileService().data().setTimer(0);
 
             if (ShutdownJailCommand.shutdownJail)
-                this.unicacityAddon.utils().shutdownPC();
+                this.unicacityAddon.services().utilService().shutdownPC();
         }
     }
 }
