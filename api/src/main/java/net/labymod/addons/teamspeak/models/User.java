@@ -16,9 +16,12 @@
 
 package net.labymod.addons.teamspeak.models;
 
+import net.labymod.addons.teamspeak.TeamSpeakAPI;
 import net.labymod.api.client.component.Component;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.concurrent.CompletableFuture;
 
 /**
  * The original code is available at: <a href="https://github.com/labymod-addons/teamspeak">https://github.com/labymod-addons/teamspeak</a>.
@@ -52,4 +55,6 @@ public interface User {
   boolean isQuery();
 
   @Nullable String getAwayMessage();
+
+  CompletableFuture<String> getDescription(TeamSpeakAPI teamSpeakAPI);
 }
