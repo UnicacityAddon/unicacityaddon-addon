@@ -10,6 +10,8 @@ import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.rettichlp.unicacityaddon.base.io.api.API.find;
+
 /**
  * @author RettichLP
  */
@@ -31,7 +33,7 @@ public class ASetBlacklistCommand extends UnicacityCommand {
             return true;
         }
 
-        BlacklistReason blacklistReason = BlacklistReason.getBlacklistReasonEntryByReason(arguments[arguments.length - 1], this.unicacityAddon);
+        BlacklistReason blacklistReason = find(this.unicacityAddon.api().getBlacklistReasonList(), b -> b.getReason().equalsIgnoreCase(arguments[arguments.length - 1]));
         if (blacklistReason == null) {
             p.sendErrorMessage("Der Blacklistgrund wurde nicht gefunden!");
             return true;

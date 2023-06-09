@@ -1,6 +1,5 @@
 package com.rettichlp.unicacityaddon.api;
 
-import com.rettichlp.unicacityaddon.UnicacityAddon;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import net.labymod.api.util.math.vector.FloatVector3;
@@ -28,12 +27,5 @@ public class NaviPoint {
 
     public FloatVector3 getLocation() {
         return new FloatVector3(x, y, z);
-    }
-
-    public static NaviPoint getNaviPointByTabName(String tabName, UnicacityAddon unicacityAddon) {
-        return unicacityAddon.api().getNaviPointList().stream()
-                .filter(naviPointEntry -> naviPointEntry.getTabName().equals(tabName))
-                .findFirst()
-                .orElse(null);
     }
 }

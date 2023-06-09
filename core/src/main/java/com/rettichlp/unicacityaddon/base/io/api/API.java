@@ -35,9 +35,11 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Predicate;
 
 /**
  * @author RettichLP
@@ -549,6 +551,13 @@ public class API {
         map.put(k4, v4);
         map.put(k5, v5);
         return map;
+    }
+
+    public static <T> T find(Collection<T> elements, Predicate<T> predicate) {
+        return elements.stream()
+                .filter(predicate)
+                .findFirst()
+                .orElse(null);
     }
 
     public void createToken() throws APIResponseException {

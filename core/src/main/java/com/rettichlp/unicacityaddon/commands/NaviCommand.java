@@ -10,6 +10,8 @@ import com.rettichlp.unicacityaddon.base.services.utils.MathUtils;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.rettichlp.unicacityaddon.base.io.api.API.find;
+
 /**
  * @author RettichLP
  */
@@ -35,7 +37,7 @@ public class NaviCommand extends UnicacityCommand {
             return true;
         }
 
-        NaviPoint naviPoint = NaviPoint.getNaviPointByTabName(arguments[0].trim(), this.unicacityAddon);
+        NaviPoint naviPoint = find(this.unicacityAddon.api().getNaviPointList(), n -> n.getTabName().equalsIgnoreCase(arguments[0]));
         if (naviPoint == null) {
             return false;
         }

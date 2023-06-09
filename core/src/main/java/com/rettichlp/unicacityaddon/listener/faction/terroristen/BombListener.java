@@ -23,6 +23,8 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 
+import static com.rettichlp.unicacityaddon.base.io.api.API.find;
+
 /**
  * @author RettichLP
  */
@@ -121,7 +123,7 @@ public class BombListener {
     }
 
     private String getLocationWithArticle(String location) {
-        NaviPoint naviPoint = NaviPoint.getNaviPointByTabName(location.replace(" ", "-"), this.unicacityAddon);
+        NaviPoint naviPoint = find(this.unicacityAddon.api().getNaviPointList(), n -> n.getTabName().equalsIgnoreCase(location.replace(" ", "-")));
         String article = "der/die/das";
         if (naviPoint != null)
             article = naviPoint.getArticleFourthCase().replace("none", "");

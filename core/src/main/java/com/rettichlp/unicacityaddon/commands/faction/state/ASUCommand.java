@@ -17,6 +17,8 @@ import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
+import static com.rettichlp.unicacityaddon.base.io.api.API.find;
+
 /**
  * @author RettichLP
  * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/commands/faction/police/ASUCommand.java">UCUtils by paulzhng</a>
@@ -45,14 +47,14 @@ public class ASUCommand extends UnicacityCommand {
         int reasonIndex = arguments.length - wantedFlags.size() - 1;
         List<String> players = Arrays.asList(arguments).subList(0, reasonIndex);
 
-        WantedReason wantedReasonEntry = WantedReason.getWantedReasonEntryByReason(arguments[reasonIndex], this.unicacityAddon);
-        if (wantedReasonEntry == null) {
+        WantedReason wantedReason = find(this.unicacityAddon.api().getWantedReasonList(), w -> w.getReason().equalsIgnoreCase(arguments[reasonIndex]));
+        if (wantedReason == null) {
             p.sendErrorMessage("Der Wantedgrund wurde nicht gefunden!");
             return true;
         }
 
-        String wantedReasonString = wantedReasonEntry.getReason().replace("-", " ");
-        int wantedReasonAmount = wantedReasonEntry.getPoints();
+        String wantedReasonString = wantedReason.getReason().replace("-", " ");
+        int wantedReasonAmount = wantedReason.getPoints();
 
         for (WantedFlag wantedFlag : wantedFlags) {
             wantedReasonString = wantedFlag.modifyWantedReasonString(wantedReasonString);
