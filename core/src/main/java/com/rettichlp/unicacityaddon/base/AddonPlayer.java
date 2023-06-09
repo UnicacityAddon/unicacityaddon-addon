@@ -20,7 +20,7 @@ public interface AddonPlayer {
 
     @Nullable ClientPlayer getPlayer();
 
-    @Nullable String getName();
+    String getName();
 
     @Nullable UUID getUniqueId();
 

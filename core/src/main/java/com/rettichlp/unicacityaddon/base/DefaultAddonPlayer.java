@@ -48,7 +48,7 @@ public class DefaultAddonPlayer implements AddonPlayer {
 
     @Override
     public String getName() {
-        return getPlayer() != null ? getPlayer().getName() : null;
+        return this.unicacityAddon.labyAPI().getName();
     }
 
     @Override

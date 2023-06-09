@@ -37,7 +37,7 @@ public class ShareLocationListener {
 
         if (!shareLocationMatcher.find())
             return;
-        if (p.getName() != null && !shareLocationMatcher.group(2).contains(p.getName())) {
+        if (!shareLocationMatcher.group(2).contains(p.getName())) {
             e.setCancelled(true);
             return;
         }

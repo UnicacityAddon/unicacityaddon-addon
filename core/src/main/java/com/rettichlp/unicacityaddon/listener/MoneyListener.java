@@ -130,13 +130,13 @@ public class MoneyListener {
         }
 
         Matcher cashToFBankMatcher = PatternHandler.CASH_TO_FBANK_PATTERN.matcher(msg);
-        if (cashToFBankMatcher.find() && p.getName() != null && msg.contains(p.getName())) {
+        if (cashToFBankMatcher.find() && msg.contains(p.getName())) {
             this.unicacityAddon.services().fileService().data().removeCashBalance(Integer.parseInt(cashToFBankMatcher.group(1)));
             return;
         }
 
         Matcher cashFromFBankMatcher = PatternHandler.CASH_FROM_FBANK_PATTERN.matcher(msg);
-        if (cashFromFBankMatcher.find() && p.getName() != null && msg.contains(p.getName())) {
+        if (cashFromFBankMatcher.find() && msg.contains(p.getName())) {
             this.unicacityAddon.services().fileService().data().addCashBalance(Integer.parseInt(cashFromFBankMatcher.group(1)));
             return;
         }
