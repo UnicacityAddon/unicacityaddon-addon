@@ -5,8 +5,8 @@ import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.enums.Weapon;
+import com.rettichlp.unicacityaddon.base.io.file.Armament;
 import com.rettichlp.unicacityaddon.base.services.utils.MathUtils;
-import com.rettichlp.unicacityaddon.file.Armament;
 
 import java.util.Arrays;
 import java.util.List;

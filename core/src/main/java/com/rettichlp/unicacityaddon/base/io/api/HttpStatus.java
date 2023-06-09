@@ -1,4 +1,4 @@
-package com.rettichlp.unicacityaddon.base.api;
+package com.rettichlp.unicacityaddon.base.io.api;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package com.rettichlp.unicacityaddon.base.api.request;
+package com.rettichlp.unicacityaddon.base.io.api;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.api.BlacklistReason;
@@ -17,7 +17,6 @@ import com.rettichlp.unicacityaddon.api.response.Success;
 import com.rettichlp.unicacityaddon.api.statistic.Statistic;
 import com.rettichlp.unicacityaddon.api.statisticTop.StatisticTop;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
-import com.rettichlp.unicacityaddon.base.api.exception.APIResponseException;
 import com.rettichlp.unicacityaddon.base.builder.RequestBuilder;
 import com.rettichlp.unicacityaddon.base.enums.api.AddonGroup;
 import com.rettichlp.unicacityaddon.base.enums.api.ApplicationPath;

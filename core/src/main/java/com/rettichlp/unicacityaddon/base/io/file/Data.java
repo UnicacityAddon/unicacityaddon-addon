@@ -1,4 +1,4 @@
-package com.rettichlp.unicacityaddon.file;
+package com.rettichlp.unicacityaddon.base.io.file;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
@@ -500,7 +500,7 @@ public class Data {
     }
 
     private void saveAndFireEvent() {
-        unicacityAddon.labyAPI().eventBus().fire(new OfflineDataChangedEvent(unicacityAddon.services().fileService().data()));
-        unicacityAddon.services().fileService().saveData();
+        unicacityAddon.labyAPI().eventBus().fire(new OfflineDataChangedEvent(unicacityAddon.services().file().data()));
+        unicacityAddon.services().file().saveData();
     }
 }

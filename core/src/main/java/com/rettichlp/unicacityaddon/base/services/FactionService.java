@@ -1,8 +1,8 @@
 package com.rettichlp.unicacityaddon.base.services;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.api.exception.APIResponseException;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
+import com.rettichlp.unicacityaddon.base.io.api.APIResponseException;
 import net.labymod.api.client.network.ClientPacketListener;
 
 /**

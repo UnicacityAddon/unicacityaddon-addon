@@ -1,7 +1,8 @@
-package com.rettichlp.unicacityaddon.file;
+package com.rettichlp.unicacityaddon.base.io.file;
 
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
+import com.rettichlp.unicacityaddon.base.io.api.API;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import lombok.Getter;
@@ -10,8 +11,6 @@ import net.labymod.api.client.component.event.HoverEvent;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import static com.rettichlp.unicacityaddon.base.api.request.API.mapOf;
 
 /**
  * @author RettichLP

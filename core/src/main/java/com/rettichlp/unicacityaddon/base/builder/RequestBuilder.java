@@ -10,8 +10,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.api.exception.APIResponseException;
 import com.rettichlp.unicacityaddon.base.enums.api.ApplicationPath;
+import com.rettichlp.unicacityaddon.base.io.api.APIResponseException;
 
 import java.util.Collections;
 import java.util.HashSet;
