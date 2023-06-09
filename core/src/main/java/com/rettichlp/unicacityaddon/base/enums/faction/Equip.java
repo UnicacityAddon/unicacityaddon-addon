@@ -1,6 +1,7 @@
 package com.rettichlp.unicacityaddon.base.enums.faction;
 
 import com.rettichlp.unicacityaddon.base.config.UnicacityAddonConfiguration;
+import com.rettichlp.unicacityaddon.base.enums.Weapon;
 import com.rettichlp.unicacityaddon.base.utils.MathUtils;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,8 +19,8 @@ public enum Equip {
     DONUT("Donut", "Donuts", (configuration) -> configuration.equipSetting().donut().getOrDefault("30")),
     KEVLAR("Leichte Kevlar", "Kevlar", (configuration) -> configuration.equipSetting().lkev().getOrDefault("1450")),
     HEAVY_KEVLAR("Schwere Kevlar", "schwere Kevlar", (configuration) -> configuration.equipSetting().skev().getOrDefault("2200")),
-    PISTOL("Pistole", "Pistole", (configuration) -> configuration.equipSetting().donut().getOrDefault("350")),
-    MP5("MP5", "MP5", (configuration) -> configuration.equipSetting().donut().getOrDefault("550")),
+    PISTOL(Weapon.P_69.getName(), Weapon.P_69.getName(), (configuration) -> configuration.equipSetting().donut().getOrDefault("350")),
+    MP5(Weapon.SCATTER_3.getName(), Weapon.SCATTER_3.getName(), (configuration) -> configuration.equipSetting().donut().getOrDefault("550")),
     BANDAGES("Bandagen", "Bandagen", (configuration) -> configuration.equipSetting().medicSetting().bandage().getOrDefault("0")),
     PAINKILLER("Schmerzpillen", "Schmerzpillen", (configuration) -> configuration.equipSetting().medicSetting().pills().getOrDefault("0")),
     WATER("Wasser", "Wasser", (configuration) -> configuration.equipSetting().water().getOrDefault("0")),
@@ -36,11 +37,11 @@ public enum Equip {
     TAZER("Tazer", "Tazer", (configuration) -> configuration.equipSetting().stateSetting().taser().getOrDefault("0")),
     CUFFS("Handschellen", "Handschellen", (configuration) -> configuration.equipSetting().stateSetting().cuff().getOrDefault("0")),
     WINGSUIT("Elytra", "Fallschirm", (configuration) -> configuration.equipSetting().stateSetting().elytra().getOrDefault("450")),
-    SNIPER("Sniper", "Sniper", (configuration) -> configuration.equipSetting().sniper().getOrDefault("2700")),
+    SNIPER(Weapon.VIPER_9.getName(), Weapon.VIPER_9.getName(), (configuration) -> configuration.equipSetting().sniper().getOrDefault("2700")),
     DEFUSE_KIT("Defuse Kit", "Defuse-Kit", (configuration) -> configuration.equipSetting().stateSetting().defuseKit().getOrDefault("500")),
     TRACKER("Peilsender", "Peilsender", (configuration) -> configuration.equipSetting().stateSetting().tracker().getOrDefault("0")),
     EXPLOSIVEBELT("Sprenggürtel", "Sprenggürtel", (configuration) -> configuration.equipSetting().terrorSetting().explosiveBelt().getOrDefault("0")),
-    RPG7("RPG-7", "RPG-7", (configuration) -> configuration.equipSetting().terrorSetting().rpg7().getOrDefault("0")),
+    RPG7(Weapon.ALPHA_7.getName(), Weapon.ALPHA_7.getName(), (configuration) -> configuration.equipSetting().terrorSetting().rpg7().getOrDefault("0")),
     NOTEPAD("Notizblock", "Notizblock", (configuration) -> configuration.equipSetting().newsSetting().notepad().getOrDefault("0")), // UnicaCity Bug (Nachricht gibt es noch nicht)
     GLASSCUTTER("Glasschneider", "Glasschneider", (configuration) -> configuration.equipSetting().hitmanSetting().glassCutter().getOrDefault("0")),
     LOCKPICK("Dietrich", "Dietrich", (configuration) -> configuration.equipSetting().hitmanSetting().lockPick().getOrDefault("0"));

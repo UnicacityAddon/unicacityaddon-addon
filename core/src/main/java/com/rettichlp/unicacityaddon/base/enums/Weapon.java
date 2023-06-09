@@ -21,7 +21,9 @@ public enum Weapon {
     TS_19("TS-19"), // M4
     SCATTER_3("Scatter-3"), // MP5
     P_69("P-69"), // Pistole
-    EXTENSO_18("Extenso-18"); // Jagdgewehr
+    EXTENSO_18("Extenso-18"), // Jagdgewehr
+    VIPER_9("Viper-9"), // Sniper
+    ALPHA_7("Alpha-7"); // RPG
 
     private final String name;
 
