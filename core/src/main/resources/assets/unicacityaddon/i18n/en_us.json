@@ -1,6 +1,9 @@
 {
   "unicacityaddon": {
     "hudWidget": {
+      "ammunition": {
+        "name": "Ammunition"
+      },
       "bomb": {
         "name": "Bomb Timer"
       },
@@ -152,7 +155,7 @@
           "description": "Show players who are banned from the hospital"
         },
         "duty": {
-          "name": "On duty",
+          "name": "Duty",
           "description": "Shows a green dot when the player is on duty"
         },
         "factionSpecificNameTagSetting": {
@@ -206,7 +209,11 @@
         },
         "dBank": {
           "name": "D-Bank Messages",
-          "description": "Formatting of the D-Bank messages in a clearer design"
+          "description": "Formatting the drug bank messages in a clearer design"
+        },
+        "contract": {
+          "name": "Contract Messages",
+          "description": "Formatting the contract messages in a clearer design"
         }
       },
       "reportMessageSetting": {
@@ -262,7 +269,7 @@
         },
         "grBank": {
           "name": "Group Checkout",
-          "description": "Clicking an ATM executes '/grkasse info'"
+          "description": "Clicking on an ATM executes '/grkasse info'"
         }
       },
       "bombScreenshot": {
@@ -281,56 +288,164 @@
         "name": "Teamspeak API Key"
       },
       "tsNotificationPublic": {
-        "name": "Public-Channel-Join Message"
+        "name": "Join public channel message"
       },
       "tsNotificationSupport": {
-        "name": "Support-Channel-Join Message"
+        "name": "Join support channel message"
       },
       "equipSetting": {
         "header": {
           "global": {
-            "name": "Faction independent"
+            "name": "Cross-Faction"
           },
           "specific": {
             "name": "Faction dependent"
           }
         },
         "name": "Equip",
-        "description": "I'm currently too lazy to enter the individual equipment here... - I did it anyway"
+        "description": "Sets the equipment prices to provide an equipment list",
+        "water": {
+          "name": "Water"
+        },
+        "bread": {
+          "name": "Bread"
+        },
+        "donut":{
+          "name": "Donut"
+        },
+        "mask": {
+          "name": "Mask"
+        },
+        "lkev": {
+          "name": "Light Kevlar"
+        },
+        "skev": {
+          "name": "Heavy Kevlar"
+        },
+        "pepperSpray": {
+          "name": "Pepperspray"
+        },
+        "pistol": {
+          "name": "Pistol"
+        },
+        "mp5": {
+          "name": "Scatter-3"
+        },
+        "sniper": {
+          "name": "Viper-9"
+        },
+        "stateSetting": {
+          "name": "State (Police/FBI)",
+          "cuff": {
+            "name": "Handcuffs"
+          },
+          "defuseKit": {
+            "name": "Defuse-Kit"
+          },
+          "elytra": {
+            "name": "Elytra"
+          },
+          "grenade": {
+            "name": "Flashbang"
+          },
+          "shield": {
+            "name": "Shield"
+          },
+          "smoke": {
+            "name": "Smoke Grenade"
+          },
+          "taser": {
+            "name": "Tazer"
+          },
+          "tracker": {
+            "name": "Tracker"
+          }
+        },
+        "badFactionSetting": {
+          "name": "Bad faction",
+          "baseballBat": {
+            "name": "Baseball Bat"
+          }
+        },
+        "medicSetting": {
+          "name": "Medics",
+          "axe": {
+            "name": "Axe"
+          },
+          "bandage":{
+            "name": "Bandage"
+          },
+          "extinguisher": {
+            "name": "Fire Extinguisher"
+          },
+          "helmet": {
+            "name": "Helmet"
+          },
+          "pills": {
+            "name": "Pain Pills"
+          },
+          "syringe": {
+            "name": "Syringe"
+          }
+        },
+        "newsSetting": {
+          "name": "News",
+          "notepad": {
+            "name": "Notepad"
+          }
+        },
+        "hitmanSetting": {
+          "name": "Hitman",
+          "glassCutter": {
+            "name": "Glass Cutter"
+          },
+          "lockPick": {
+            "name": "Lockpick"
+          }
+        },
+        "terrorSetting": {
+          "name": "Terrorists",
+          "explosiveBelt": {
+            "name": "Explosive Belt"
+          },
+          "rpg7": {
+            "name": "RPG-7"
+          }
+        }
       },
       "ownUseSetting": {
         "name": "Personal use",
         "kokainSetting": {
-          "name": "Cocaine",
+          "name": "Powder",
           "amount": {
             "name": "Quantity",
-            "description": "Amount of cocaine intended for personal use"
+            "description": "Amount to be used for personal use"
           },
           "purity": {
             "name": "Purity",
-            "description": "Purity of cocaine intended for personal use"
+            "description": "Purity to be used for personal use"
           }
         },
         "marihuanaSetting": {
-          "name": "Marijuana",
+          "name": "Herbs",
           "amount": {
             "name": "Quantity",
-            "description": "Amount of marijuana to be used for personal use"
+            "description": "Amount to be used for personal use"
           },
           "purity": {
             "name": "Purity",
-            "description": "Purity of marijuana intended for personal use"
+            "description": "Purity to be used for personal use"
           }
         },
         "methamphetaminSetting": {
-          "name": "Methamphetamine",
+          "name": "Crystals",
           "amount": {
             "name": "Quantity",
-            "description": "Amount of methamphetamine to be used for personal use"
+            "description": "Amount to be used for personal use"
           },
           "purity": {
             "name": "Purity",
-            "description": "Purity of methamphetamine intended for personal use"
+            "description": "Purity to be used for personal use"
           }
         }
       },

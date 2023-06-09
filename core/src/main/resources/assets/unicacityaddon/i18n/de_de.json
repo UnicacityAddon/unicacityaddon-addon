@@ -1,6 +1,9 @@
 {
   "unicacityaddon": {
     "hudWidget": {
+      "ammunition": {
+        "name": "Munition"
+      },
       "bomb": {
         "name": "Bomben Timer"
       },
@@ -61,7 +64,7 @@
       },
       "name": "UnicacityAddon",
       "enabled": {
-        "name": "Enabled",
+        "name": "Aktiv",
         "description": "Aktiviert und deaktiviert das Addon"
       },
       "hotkeySetting": {
@@ -207,6 +210,10 @@
         "dBank": {
           "name": "D-Bank Nachrichten",
           "description": "Formatierung der D-Bank Nachrichten in ein übersichtlicheres Design"
+        },
+        "contract": {
+          "name": "Contract Nachrichten",
+          "description": "Formatierung der Contract Nachrichten in ein übersichtlicheres Design"
         }
       },
       "reportMessageSetting": {
@@ -274,7 +281,7 @@
         "description": "Nach Ausführung des '/car find' Commands wird direkt die Route angezeigt"
       },
       "aBuyAmount": {
-        "name": "Mange für ABuy und AEquip",
+        "name": "Menge für ABuy und AEquip",
         "description": "Anzahl der Gegenstände/des Equips, das automatisch gekauft oder ausgerüstet werden soll"
       },
       "tsApiKey": {
@@ -296,41 +303,149 @@
           }
         },
         "name": "Equip",
-        "description": "Hier bin ich aktuell zu faul die einzelnen Equipdinger einzutragen"
+        "description": "Legt die Equip-Preise fest um eine Equipliste zu ermöglichen",
+        "water": {
+          "name": "Wasser"
+        },
+        "bread": {
+          "name": "Brot"
+        },
+        "donut":{
+          "name": "Donut"
+        },
+        "mask": {
+          "name": "Maske"
+        },
+        "lkev": {
+          "name": "Leichte Kevlar"
+        },
+        "skev": {
+          "name": "Schwere Kevlar"
+        },
+        "pepperSpray": {
+          "name": "Pfefferspray"
+        },
+        "pistol": {
+          "name": "Pistole"
+        },
+        "mp5": {
+          "name": "Scatter-3"
+        },
+        "sniper": {
+          "name": "Viper-9"
+        },
+        "stateSetting": {
+          "name": "Staat (Polizei/FBI)",
+          "cuff": {
+            "name": "Handschellen"
+          },
+          "defuseKit": {
+            "name": "Entschärfungs-Kit"
+          },
+          "elytra": {
+            "name": "Elytra"
+          },
+          "grenade": {
+            "name": "Blendgranate"
+          },
+          "shield": {
+            "name": "Schild"
+          },
+          "smoke": {
+            "name": "Rauchgranate"
+          },
+          "taser": {
+            "name": "Tazer"
+          },
+          "tracker": {
+            "name": "Peilsender"
+          }
+        },
+        "badFactionSetting": {
+          "name": "Bad-Fraktion",
+          "baseballBat": {
+            "name": "Baseballschläger"
+          }
+        },
+        "medicSetting": {
+          "name": "Rettungsdienst",
+          "axe": {
+            "name": "Axt"
+          },
+          "bandage":{
+            "name": "Bandage"
+          },
+          "extinguisher": {
+            "name": "Feuerlöscher"
+          },
+          "helmet": {
+            "name": "Helm"
+          },
+          "pills": {
+            "name": "Schmerzpillen"
+          },
+          "syringe": {
+            "name": "Spritze"
+          }
+        },
+        "newsSetting": {
+          "name": "News",
+          "notepad": {
+            "name": "Notizblock"
+          }
+        },
+        "hitmanSetting": {
+          "name": "Hitman",
+          "glassCutter": {
+            "name": "Glasschneider"
+          },
+          "lockPick": {
+            "name": "Dietrich"
+          }
+        },
+        "terrorSetting": {
+          "name": "Terroristen",
+          "explosiveBelt": {
+            "name": "Sprengstoffgürtel"
+          },
+          "rpg7": {
+            "name": "RPG-7"
+          }
+        }
       },
       "ownUseSetting": {
         "name": "Eigenbedarf",
         "kokainSetting": {
-          "name": "Kokain",
+          "name": "Pulver",
           "amount": {
             "name": "Menge",
-            "description": "Menge an Kokain, das als Eigenbedarf genutzt werden soll"
+            "description": "Menge, die als Eigenbedarf genutzt werden soll"
           },
           "purity": {
             "name": "Reinheit",
-            "description": "Reinheit des Kokains, das als Eigenbedarf genutzt werden soll"
+            "description": "Reinheit, die als Eigenbedarf genutzt werden soll"
           }
         },
         "marihuanaSetting": {
-          "name": "Marihuana",
+          "name": "Kräuter",
           "amount": {
             "name": "Menge",
-            "description": "Menge an Marihuana, das als Eigenbedarf genutzt werden soll"
+            "description": "Menge, die als Eigenbedarf genutzt werden soll"
           },
           "purity": {
             "name": "Reinheit",
-            "description": "Reinheit des Marihuanas, das als Eigenbedarf genutzt werden soll"
+            "description": "Reinheit, die als Eigenbedarf genutzt werden soll"
           }
         },
         "methamphetaminSetting": {
-          "name": "Methamphetamin",
+          "name": "Kristalle",
           "amount": {
             "name": "Menge",
-            "description": "Menge an Methamphetamin, das als Eigenbedarf genutzt werden soll"
+            "description": "Menge, die als Eigenbedarf genutzt werden soll"
           },
           "purity": {
             "name": "Reinheit",
-            "description": "Reinheit des Methamphetamins, das als Eigenbedarf genutzt werden soll"
+            "description": "Reinheit, die als Eigenbedarf genutzt werden soll"
           }
         }
       },
