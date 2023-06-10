@@ -4,11 +4,9 @@ import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.api.NaviPoint;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
-import com.rettichlp.unicacityaddon.base.builder.ScreenshotBuilder;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.events.BombPlantedEvent;
 import com.rettichlp.unicacityaddon.base.events.BombRemovedEvent;
-import com.rettichlp.unicacityaddon.base.events.UnicacityAddonTickEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
@@ -18,8 +16,6 @@ import net.labymod.api.client.component.event.HoverEvent;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 
@@ -33,8 +29,6 @@ public class BombListener {
 
     private Long bombPlantedTime;
     private String location;
-    private long activeBomb = -1;
-    private long currentTick;
 
     private final UnicacityAddon unicacityAddon;
 
@@ -103,22 +97,7 @@ public class BombListener {
                     .of(this.location != null ? "]" : "").color(ColorCode.DARK_GRAY).advance()
                     .createComponent());
 
-            if (this.unicacityAddon.configuration().bombScreenshot().get()) {
-                this.activeBomb = this.currentTick;
-            }
-        }
-    }
-
-    @Subscribe
-    public void onUnicacityAddonTick(UnicacityAddonTickEvent e) {
-        this.currentTick = e.getCurrentTick();
-        if (e.isIngame() && e.isPhase(UnicacityAddonTickEvent.Phase.TICK) && this.activeBomb >= 0 && this.activeBomb + 15 == e.getCurrentTick()) {
-            try {
-                File file = this.unicacityAddon.services().file().getNewActivityImageFile("großeinsatz");
-                ScreenshotBuilder.getBuilder(this.unicacityAddon).file(file).save();
-            } catch (IOException ex) {
-                this.unicacityAddon.logger().warn(ex.getMessage());
-            }
+            this.unicacityAddon.labyAPI().eventBus().fire(new BombRemovedEvent());
         }
     }
 

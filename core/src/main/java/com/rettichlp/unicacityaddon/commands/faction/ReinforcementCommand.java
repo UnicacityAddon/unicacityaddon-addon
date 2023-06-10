@@ -65,9 +65,7 @@ public class ReinforcementCommand extends UnicacityCommand {
                 p.sendServerMessage(chatType.getChatCommand() + " " + name + ", ich bin zu deinem Verstärkungsruf unterwegs! (" + (int) p.getLocation().distance(new FloatVector3(x, y, z)) + " Meter entfernt)");
                 p.setNaviRoute(x, y, z);
 
-                // activity screenshot
-                if (this.unicacityAddon.configuration().reinforcementSetting().screen().get())
-                    this.unicacityAddon.labyAPI().eventBus().fire(new ReinforcementAcceptedEvent());
+                ReinforcementCommand.this.unicacityAddon.labyAPI().eventBus().fire(new ReinforcementAcceptedEvent());
 
                 return true;
             }

@@ -2,8 +2,8 @@ package com.rettichlp.unicacityaddon.v1_16_5;
 
 import com.mojang.blaze3d.platform.NativeImage;
 import com.rettichlp.unicacityaddon.controller.ScreenshotController;
+import net.labymod.api.Laby;
 import net.labymod.api.models.Implements;
-import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Screenshot;
 
@@ -28,14 +28,11 @@ public class VersionedScreenshotController extends ScreenshotController {
         if (file != null) {
             Minecraft minecraft = Minecraft.getInstance();
 
-            NativeImage nativeImage = Screenshot.takeScreenshot(minecraft.getWindow().getWidth(), minecraft.getWindow().getHeight(), minecraft.getMainRenderTarget());
-            Util.ioPool().execute(() -> {
-                try {
+            Laby.labyAPI().minecraft().executeOnRenderThread(() -> {
+                try (NativeImage nativeImage = Screenshot.takeScreenshot(minecraft.getWindow().getWidth(), minecraft.getWindow().getHeight(), minecraft.getMainRenderTarget())) {
                     nativeImage.writeToFile(file);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
-                } finally {
-                    nativeImage.close();
                 }
             });
         }
