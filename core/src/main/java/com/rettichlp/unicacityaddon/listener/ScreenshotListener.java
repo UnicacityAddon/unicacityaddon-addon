@@ -9,8 +9,6 @@ import net.labymod.api.event.Subscribe;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * @author RettichLP
@@ -47,22 +45,27 @@ public class ScreenshotListener {
         // activity screenshot
         if (this.unicacityAddon.configuration().bombScreenshot().get()) {
 
-            try {
-                File file = this.unicacityAddon.services().file().getNewActivityImageFile("großeinsatz");
-                ScreenshotBuilder.getBuilder(this.unicacityAddon).file(file).save();
-            } catch (IOException ex) {
-                this.unicacityAddon.logger().warn(ex.getMessage());
-            }
+            // wait until bomb-removed message was sent (important for valid activity)
+            runDelayed(() -> {
+                try {
+                    File file = this.unicacityAddon.services().file().getNewActivityImageFile("großeinsatz");
+                    ScreenshotBuilder.getBuilder(this.unicacityAddon).file(file).save();
+                } catch (IOException ex) {
+                    this.unicacityAddon.logger().warn(ex.getMessage());
+                }
+            });
 
         }
     }
 
     private void runDelayed(Runnable runnable) {
-        new Timer().schedule(new TimerTask() {
-            @Override
-            public void run() {
+        new Thread(() -> {
+            try {
+                Thread.sleep(500);
                 runnable.run();
+            } catch (InterruptedException e) {
+                this.unicacityAddon.logger().warn("Delayed execution of activity screenshot failed");
             }
-        }, 500);
+        }).start();
     }
 }
