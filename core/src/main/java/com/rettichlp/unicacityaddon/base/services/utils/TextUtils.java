@@ -20,7 +20,7 @@ public class TextUtils {
      * @param component Component to be converted to formatted string
      * @return converted string of component
      */
-    public String legacy(Component component) {
+    public String legacy(Component component) { // TODO ist kaputt
         return Laby.references().renderPipeline().componentRenderer().legacySectionSerializer().serialize(component);
     }
 
