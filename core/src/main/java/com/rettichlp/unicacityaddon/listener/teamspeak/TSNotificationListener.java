@@ -39,7 +39,7 @@ public class TSNotificationListener {
             int cid = channel.getId();
             String name = user.getDescription();
 
-            this.unicacityAddon.utils().debug(user.getDescription() + " -> " + channel.getName() + " (" + channel.getChannelCategory() + ")");
+            this.unicacityAddon.services().util().debug(user.getDescription() + " -> " + channel.getName() + " (" + channel.getChannelCategory() + ")");
 
             if (TSNotificationListener.this.unicacityAddon.configuration().tsNotificationSupport().get() && cid == 41) {
                 p.sendMessage(Message.getBuilder()

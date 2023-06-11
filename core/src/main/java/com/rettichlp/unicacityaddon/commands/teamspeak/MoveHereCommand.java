@@ -34,11 +34,14 @@ public class MoveHereCommand extends UnicacityCommand {
 
         String playerName = arguments[0];
 
-        User user = this.unicacityAddon.utils().teamspeak().getUserByDescription(playerName);
-        Channel channel = this.unicacityAddon.utils().teamspeak().getOwnChannel();
+        User user = this.unicacityAddon.services().util().teamSpeakUtils().getUserByDescription(playerName);
+        Channel channel = this.unicacityAddon.services().util().teamSpeakUtils().getOwnChannel();
 
         if (user != null && channel != null) {
-            this.unicacityAddon.teamSpeakAPI().controller().move(user.getId(), channel.getId());
+            boolean success = this.unicacityAddon.teamSpeakAPI().controller().move(user.getId(), channel.getId());
+            if (!success) {
+                p.sendErrorMessage("Der Move ist fehlgeschlagen!");
+            }
         } else {
             p.sendErrorMessage("Der Spieler " + playerName + " wurde nicht auf dem TeamSpeak gefunden.");
         }

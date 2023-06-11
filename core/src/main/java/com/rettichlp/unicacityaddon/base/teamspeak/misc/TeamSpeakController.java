@@ -25,6 +25,8 @@ import com.rettichlp.unicacityaddon.base.teamspeak.util.Request;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 /**
  * This code was modified. The original code is available at: <a href="https://github.com/labymod-addons/teamspeak">https://github.com/labymod-addons/teamspeak</a>.
@@ -177,12 +179,33 @@ public class TeamSpeakController {
         }));
     }
 
-    public void move(int cid) {
-        move(teamSpeakAPI.getClientId(), cid);
+    public boolean move(int cid) {
+        return move(teamSpeakAPI.getClientId(), cid);
     }
 
-    public void move(int clid, int cid) {
-        this.teamSpeakAPI.request(Request.unknown("clientmove cid=" + cid + " clid=" + clid,
-                response -> true));
+    public boolean move(int clid, int cid) {
+        boolean success;
+
+        try {
+            success = moveFuture(clid, cid).get();
+        } catch (InterruptedException | ExecutionException e) {
+            success = false;
+        }
+
+        return success;
+    }
+
+    private CompletableFuture<Boolean> moveFuture(int clid, int cid) {
+        CompletableFuture<Boolean> future = new CompletableFuture<>();
+
+        this.teamSpeakAPI.request(Request.firstParamEquals(
+                "clientmove cid=" + cid + " clid=" + clid,
+                "error",
+                response -> {
+                    boolean result = response.equalsIgnoreCase("error id=0 msg=ok");
+                    future.complete(result);
+                }));
+
+        return future;
     }
 }

@@ -34,15 +34,18 @@ public class MoveToCommand extends UnicacityCommand {
 
         String playerName = arguments[0];
 
-        User user = this.unicacityAddon.utils().teamspeak().getUserByDescription(playerName);
+        User user = this.unicacityAddon.services().util().teamSpeakUtils().getUserByDescription(playerName);
 
         Channel channel = null;
         if (user != null) {
-            channel = this.unicacityAddon.utils().teamspeak().getChannelByUser(user);
+            channel = this.unicacityAddon.services().util().teamSpeakUtils().getChannelByUser(user);
         }
 
         if (channel != null) {
-            this.unicacityAddon.teamSpeakAPI().controller().move(channel.getId());
+            boolean success = this.unicacityAddon.teamSpeakAPI().controller().move(channel.getId());
+            if (!success) {
+                p.sendErrorMessage("Der Move ist fehlgeschlagen!");
+            }
         } else {
             p.sendErrorMessage("Der Spieler " + playerName + " wurde nicht auf dem TeamSpeak gefunden.");
         }

@@ -4,6 +4,7 @@ import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
+import com.rettichlp.unicacityaddon.base.teamspeak.models.Channel;
 import com.rettichlp.unicacityaddon.base.teamspeak.models.User;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
@@ -11,6 +12,7 @@ import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.event.HoverEvent;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.StringJoiner;
@@ -37,7 +39,8 @@ public class ChannelActivityCommand extends UnicacityCommand {
 
             p.sendInfoMessage("Channel-Aktivität wird erstellt.");
 
-            List<User> playersInChannel = this.unicacityAddon.utils().teamspeak().getOwnChannel().getUsers();
+            Channel channel = this.unicacityAddon.services().util().teamSpeakUtils().getOwnChannel();
+            List<String> playersInChannel = channel != null ? channel.getUsers().stream().map(User::getDescription).toList() : Collections.emptyList();
 
             List<String> factionPlayers = this.unicacityAddon.api().getPlayerFactionMap().entrySet().stream()
                     .filter(stringFactionEntry -> stringFactionEntry.getValue().equals(p.getFaction()))
@@ -94,6 +97,6 @@ public class ChannelActivityCommand extends UnicacityCommand {
     }
 
     private Map<String, Boolean> getOnlineStateOfPlayers(List<String> factionPlayers) {
-        return factionPlayers.stream().collect(Collectors.toMap(s -> s, s -> this.unicacityAddon.utils().teamspeak().isOnline(s)));
+        return factionPlayers.stream().collect(Collectors.toMap(s -> s, s -> this.unicacityAddon.services().util().teamSpeakUtils().isOnline(s)));
     }
 }

@@ -35,16 +35,19 @@ public class MoveCommand extends UnicacityCommand {
         String playerName = arguments[0];
         String targetName = arguments[1];
 
-        User user = this.unicacityAddon.utils().teamspeak().getUserByDescription(playerName);
-        User targetUser = this.unicacityAddon.utils().teamspeak().getUserByDescription(targetName);
+        User user = this.unicacityAddon.services().util().teamSpeakUtils().getUserByDescription(playerName);
+        User targetUser = this.unicacityAddon.services().util().teamSpeakUtils().getUserByDescription(targetName);
 
         Channel targetChannel = null;
         if (user != null && targetUser != null) {
-            targetChannel = this.unicacityAddon.utils().teamspeak().getChannelByUser(targetUser);
+            targetChannel = this.unicacityAddon.services().util().teamSpeakUtils().getChannelByUser(targetUser);
         }
 
         if (user != null && targetChannel != null) {
-            this.unicacityAddon.teamSpeakAPI().controller().move(user.getId(), targetChannel.getId());
+            boolean success = this.unicacityAddon.teamSpeakAPI().controller().move(user.getId(), targetChannel.getId());
+            if (!success) {
+                p.sendErrorMessage("Der Move ist fehlgeschlagen!");
+            }
         } else {
             p.sendErrorMessage("Der Spieler " + playerName + " oder " + targetName + " wurde nicht auf dem TeamSpeak gefunden.");
         }
