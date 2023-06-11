@@ -35,7 +35,6 @@ public class TeamSpeakUtils {
     public User getUserByDescription(String description) {
         for (Channel channel : this.unicacityAddon.teamSpeakAPI().getServer().getChannels()) {
             for (User user : channel.getUsers()) {
-                System.out.println("USER=" + user);
                 if (user != null && user.getDescription() != null) {
                     if (user.getDescription().toLowerCase().contains(description.toLowerCase())) {
                         return user;
