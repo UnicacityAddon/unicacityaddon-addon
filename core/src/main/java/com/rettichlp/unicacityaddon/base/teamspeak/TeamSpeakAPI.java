@@ -22,7 +22,7 @@ import com.rettichlp.unicacityaddon.base.teamspeak.listener.ChannelEditedListene
 import com.rettichlp.unicacityaddon.base.teamspeak.listener.ClientEnterViewListener;
 import com.rettichlp.unicacityaddon.base.teamspeak.listener.ClientLeftViewListener;
 import com.rettichlp.unicacityaddon.base.teamspeak.listener.ClientMovedListener;
-import com.rettichlp.unicacityaddon.base.teamspeak.listener.ConnectStatusChange;
+import com.rettichlp.unicacityaddon.base.teamspeak.listener.ConnectStatusChangeListener;
 import com.rettichlp.unicacityaddon.base.teamspeak.listener.CurrentServerConnectionChangedListener;
 import com.rettichlp.unicacityaddon.base.teamspeak.listener.Listener;
 import com.rettichlp.unicacityaddon.base.teamspeak.listener.SelectedListener;
@@ -84,7 +84,7 @@ public class TeamSpeakAPI {
         this.listeners.add(new ClientEnterViewListener());
         this.listeners.add(new ClientLeftViewListener());
         this.listeners.add(new ClientMovedListener());
-        this.listeners.add(new ConnectStatusChange());
+        this.listeners.add(new ConnectStatusChangeListener());
         this.listeners.add(new CurrentServerConnectionChangedListener());
         this.listeners.add(new SelectedListener());
     }

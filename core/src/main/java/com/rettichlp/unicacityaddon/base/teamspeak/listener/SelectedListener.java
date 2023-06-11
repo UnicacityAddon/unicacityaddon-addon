@@ -32,7 +32,7 @@ public class SelectedListener extends Listener {
 
     public SelectedListener() {
         super("selected");
-        this.registerNotify(false);
+        this.noRegistration();
     }
 
     @Override

@@ -54,7 +54,7 @@ public abstract class Listener {
         return this.register;
     }
 
-    protected void registerNotify(boolean register) {
-        this.register = register;
+    protected void noRegistration() {
+        this.register = false;
     }
 }

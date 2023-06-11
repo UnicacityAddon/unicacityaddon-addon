@@ -27,9 +27,9 @@ import com.rettichlp.unicacityaddon.base.teamspeak.models.Server;
  * @author jumpingpxl
  * @author RettichLP
  */
-public class ConnectStatusChange extends Listener {
+public class ConnectStatusChangeListener extends Listener {
 
-    public ConnectStatusChange() {
+    public ConnectStatusChangeListener() {
         super("notifyconnectstatuschange");
     }
 

@@ -17,7 +17,6 @@
 package com.rettichlp.unicacityaddon.base.teamspeak.listener;
 
 import com.rettichlp.unicacityaddon.base.teamspeak.TeamSpeakAPI;
-import com.rettichlp.unicacityaddon.base.teamspeak.models.Server;
 
 /**
  * This code was modified. The original code is available at: <a href="https://github.com/labymod-addons/teamspeak">https://github.com/labymod-addons/teamspeak</a>.
@@ -35,12 +34,6 @@ public class ChannelEditedListener extends Listener {
 
     @Override
     public void execute(TeamSpeakAPI teamSpeakAPI, String[] args) {
-        Integer schandlerId = this.get(args, "schandlerid", Integer.class);
-        Server server = teamSpeakAPI.getSelectedServer();
-        if (server == null || schandlerId == null || server.getId() != schandlerId) {
-            return;
-        }
-
-        teamSpeakAPI.controller().refreshCurrentServer(schandlerId);
+        teamSpeakAPI.controller().refreshCurrentServer(args);
     }
 }

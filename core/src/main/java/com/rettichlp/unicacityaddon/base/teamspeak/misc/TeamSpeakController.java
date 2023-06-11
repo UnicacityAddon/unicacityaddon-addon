@@ -78,6 +78,20 @@ public class TeamSpeakController {
         return null;
     }
 
+    public void refreshCurrentServer(String[] args) {
+        Integer schandlerId = this.get(args, "schandlerid", Integer.class);
+        if (schandlerId == null) {
+            return;
+        }
+
+        Server selectedServer = teamSpeakAPI.getSelectedServer();
+        if (selectedServer == null || selectedServer.getId() != schandlerId) {
+            return;
+        }
+
+        refreshCurrentServer(schandlerId);
+    }
+
     public void refreshCurrentServer(int schandlerId) {
         this.teamSpeakAPI.request(Request.firstParamEquals(
                 "use " + schandlerId,
