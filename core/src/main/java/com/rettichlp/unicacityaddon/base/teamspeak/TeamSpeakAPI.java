@@ -30,6 +30,7 @@ import com.rettichlp.unicacityaddon.base.teamspeak.misc.ReconnectController;
 import com.rettichlp.unicacityaddon.base.teamspeak.misc.TeamSpeakController;
 import com.rettichlp.unicacityaddon.base.teamspeak.models.Server;
 import com.rettichlp.unicacityaddon.base.teamspeak.util.Request;
+import lombok.Getter;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -63,6 +64,7 @@ public class TeamSpeakAPI {
 
     private boolean connected;
 
+    @Getter
     private int clientId;
     private int channelId;
 

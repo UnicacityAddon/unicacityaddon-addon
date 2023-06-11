@@ -77,19 +77,18 @@ public class TeamSpeakController {
         return null;
     }
 
-    public boolean refreshCurrentServer(String[] args) {
+    public void refreshCurrentServer(String[] args) {
         Integer schandlerId = this.get(args, "schandlerid", Integer.class);
         if (schandlerId == null) {
-            return false;
+            return;
         }
 
         Server server = teamSpeakAPI.getServer();
         if (server == null || server.getId() != schandlerId) {
-            return false;
+            return;
         }
 
         refreshCurrentServer(schandlerId);
-        return true;
     }
 
     public void refreshCurrentServer(int schandlerId) {
@@ -176,5 +175,14 @@ public class TeamSpeakController {
 
             return true;
         }));
+    }
+
+    public void move(int cid) {
+        move(teamSpeakAPI.getClientId(), cid);
+    }
+
+    public void move(int clid, int cid) {
+        this.teamSpeakAPI.request(Request.unknown("clientmove cid=" + cid + " clid=" + clid,
+                response -> true));
     }
 }

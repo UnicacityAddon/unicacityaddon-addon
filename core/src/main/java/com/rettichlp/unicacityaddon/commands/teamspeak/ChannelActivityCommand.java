@@ -1,140 +1,99 @@
-//package com.rettichlp.unicacityaddon.commands.teamspeak;
-//
-//import com.rettichlp.unicacityaddon.UnicacityAddon;
-//import com.rettichlp.unicacityaddon.base.AddonPlayer;
-//import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
-//import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
-//import com.rettichlp.unicacityaddon.base.teamspeak.TSClientQuery;
-//import com.rettichlp.unicacityaddon.base.teamspeak.commands.ChannelClientListCommand;
-//import com.rettichlp.unicacityaddon.base.teamspeak.commands.ClientVariableCommand;
-//import com.rettichlp.unicacityaddon.base.teamspeak.objects.Client;
-//import com.rettichlp.unicacityaddon.base.text.ColorCode;
-//import com.rettichlp.unicacityaddon.base.text.Message;
-//import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
-//import net.labymod.api.client.component.event.ClickEvent;
-//import net.labymod.api.client.component.event.HoverEvent;
-//
-//import java.util.ArrayList;
-//import java.util.Collections;
-//import java.util.List;
-//import java.util.Map;
-//import java.util.StringJoiner;
-//import java.util.stream.Collectors;
-//import java.util.stream.IntStream;
-//
-///**
-// * @author Fuzzlemann
-// * @author RettichLP
-// */
-//@UCCommand(prefix = "channelactivity", onlyOnUnicacity = false)
-//public class ChannelActivityCommand extends UnicacityCommand {
-//
-//    private final UnicacityAddon unicacityAddon;
-//
-//    public ChannelActivityCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
-//        super(unicacityAddon, ucCommand);
-//        this.unicacityAddon = unicacityAddon;
-//    }
-//
-//    @Override
-//    public boolean execute(String[] arguments) {
-//        new Thread(() -> {
-//            AddonPlayer p = this.unicacityAddon.player();
-//
-//            if (!TSClientQuery.clientQueryConnected) {
-//                p.sendErrorMessage("Keine Verbindung zur TeamSpeak ClientQuery!");
-//                TSClientQuery.reconnect(this.unicacityAddon);
-//                return;
-//            }
-//
-//            p.sendInfoMessage("Channel-Aktivität wird erstellt.");
-//
-//            List<String> playersInChannel = getPlayersInChannel();
-//            if (playersInChannel.isEmpty()) {
-//                p.sendErrorMessage("Du bist mit keinen Spielern in einem Channel!");
-//                return;
-//            }
-//
-//            List<String> factionPlayers = this.unicacityAddon.api().getPlayerFactionMap().entrySet().stream()
-//                    .filter(stringFactionEntry -> stringFactionEntry.getValue().equals(p.getFaction()))
-//                    .map(Map.Entry::getKey)
-//                    .collect(Collectors.toList());
-//
-//            factionPlayers.removeAll(playersInChannel);
-//
-//            if (arguments.length > 0 && arguments[0].equalsIgnoreCase("copy")) {
-//                StringJoiner stringJoiner = new StringJoiner("\n");
-//                stringJoiner.add("Nicht anwesende Spieler:");
-//                factionPlayers.forEach(stringJoiner::add);
-//                p.copyToClipboard(stringJoiner.toString());
-//                p.sendInfoMessage("Fehlende Spieler in Zwischenablage kopiert.");
-//                return;
-//            }
-//
-//            Map<String, Boolean> playerOnlineMap = getOnlineStateOfPlayers(factionPlayers);
-//
-//            p.sendEmptyMessage();
-//            p.sendMessage(Message.getBuilder()
-//                    .of("Nicht im Channel:").color(ColorCode.DARK_AQUA).bold().advance()
-//                    .createComponent());
-//
-//            playerOnlineMap.forEach((playerName, isOnline) -> p.sendMessage(Message.getBuilder()
-//                    .of("»").color(ColorCode.GRAY).advance().space()
-//                    .of(playerName).color(isOnline ? ColorCode.GREEN : ColorCode.RED).advance().space()
-//                    .of(isOnline ? "[¡]" : "").color(ColorCode.BLUE)
-//                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Finde " + playerName + " auf dem TS").color(ColorCode.RED).advance().createComponent())
-//                            .clickEvent(ClickEvent.Action.RUN_COMMAND, "/tsfind " + playerName)
-//                            .advance().space()
-//                    .of(isOnline ? "[↓]" : "").color(ColorCode.BLUE)
-//                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Move " + playerName + " zu dir").color(ColorCode.RED).advance().createComponent())
-//                            .clickEvent(ClickEvent.Action.RUN_COMMAND, "/movehere " + playerName)
-//                            .advance()
-//                    .createComponent()));
-//
-//            p.sendMessage(Message.getBuilder()
-//                    .of("➡").color(ColorCode.GRAY).advance().space()
-//                    .of("Nicht anwesende Spieler kopieren").color(ColorCode.GREEN)
-//                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Nicht anwesende Spieler kopieren").color(ColorCode.RED).advance().createComponent())
-//                            .clickEvent(ClickEvent.Action.RUN_COMMAND, "/channelactivity copy")
-//                            .advance()
-//                    .createComponent());
-//
-//            p.sendEmptyMessage();
-//        }).start();
-//        return true;
-//    }
-//
-//    @Override
-//    public List<String> complete(String[] arguments) {
-//        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments).build();
-//    }
-//
-//
-//    public List<String> getPlayersInChannel() {
-//        ChannelClientListCommand.Response channelClientListCommandResponse = new ChannelClientListCommand(this.unicacityAddon, this.unicacityAddon.utils().tsUtils().getMyChannelID()).getResponse();
-//        if (channelClientListCommandResponse.failed())
-//            return Collections.emptyList();
-//
-//        List<Client> clients = channelClientListCommandResponse.getClients();
-//        List<String> descriptions = new ArrayList<>();
-//        for (Client client : clients) {
-//            ClientVariableCommand.Response clientVariableCommandResponse = new ClientVariableCommand(this.unicacityAddon, client).getResponse();
-//            String minecraftName = clientVariableCommandResponse.getMinecraftName();
-//
-//            if (minecraftName == null)
-//                continue;
-//            descriptions.add(minecraftName);
-//        }
-//
-//        return descriptions;
-//    }
-//
-//    private Map<String, Boolean> getOnlineStateOfPlayers(List<String> factionPlayers) {
-//        List<Boolean> onlineStates = factionPlayers.stream()
-//                .map(s -> !this.unicacityAddon.utils().tsUtils().getClientsByName(Collections.singletonList(s)).isEmpty()).toList();
-//
-//        return IntStream.range(0, factionPlayers.size())
-//                .boxed()
-//                .collect(Collectors.toMap(factionPlayers::get, onlineStates::get));
-//    }
-//}
+package com.rettichlp.unicacityaddon.commands.teamspeak;
+
+import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.base.AddonPlayer;
+import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
+import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
+import com.rettichlp.unicacityaddon.base.teamspeak.models.User;
+import com.rettichlp.unicacityaddon.base.text.ColorCode;
+import com.rettichlp.unicacityaddon.base.text.Message;
+import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
+import net.labymod.api.client.component.event.ClickEvent;
+import net.labymod.api.client.component.event.HoverEvent;
+
+import java.util.List;
+import java.util.Map;
+import java.util.StringJoiner;
+import java.util.stream.Collectors;
+
+/**
+ * @author Fuzzlemann
+ * @author RettichLP
+ */
+@UCCommand(prefix = "channelactivity", onlyOnUnicacity = false)
+public class ChannelActivityCommand extends UnicacityCommand {
+
+    private final UnicacityAddon unicacityAddon;
+
+    public ChannelActivityCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+        super(unicacityAddon, ucCommand);
+        this.unicacityAddon = unicacityAddon;
+    }
+
+    @Override
+    public boolean execute(String[] arguments) {
+        new Thread(() -> {
+            AddonPlayer p = this.unicacityAddon.player();
+
+            p.sendInfoMessage("Channel-Aktivität wird erstellt.");
+
+            List<User> playersInChannel = this.unicacityAddon.utils().teamspeak().getOwnChannel().getUsers();
+
+            List<String> factionPlayers = this.unicacityAddon.api().getPlayerFactionMap().entrySet().stream()
+                    .filter(stringFactionEntry -> stringFactionEntry.getValue().equals(p.getFaction()))
+                    .map(Map.Entry::getKey)
+                    .collect(Collectors.toList());
+
+            factionPlayers.removeAll(playersInChannel);
+
+            if (arguments.length > 0 && arguments[0].equalsIgnoreCase("copy")) {
+                StringJoiner stringJoiner = new StringJoiner("\n");
+                stringJoiner.add("Nicht anwesende Spieler:");
+                factionPlayers.forEach(stringJoiner::add);
+                p.copyToClipboard(stringJoiner.toString());
+                p.sendInfoMessage("Fehlende Spieler in Zwischenablage kopiert.");
+                return;
+            }
+
+            Map<String, Boolean> playerOnlineMap = getOnlineStateOfPlayers(factionPlayers);
+
+            p.sendEmptyMessage();
+            p.sendMessage(Message.getBuilder()
+                    .of("Nicht im Channel:").color(ColorCode.DARK_AQUA).bold().advance()
+                    .createComponent());
+
+            playerOnlineMap.forEach((playerName, isOnline) -> p.sendMessage(Message.getBuilder()
+                    .of("»").color(ColorCode.GRAY).advance().space()
+                    .of(playerName).color(isOnline ? ColorCode.GREEN : ColorCode.RED).advance().space()
+                    .of(isOnline ? "[¡]" : "").color(ColorCode.BLUE)
+                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Finde " + playerName + " auf dem TS").color(ColorCode.RED).advance().createComponent())
+                            .clickEvent(ClickEvent.Action.RUN_COMMAND, "/tsfind " + playerName)
+                            .advance().space()
+                    .of(isOnline ? "[↓]" : "").color(ColorCode.BLUE)
+                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Move " + playerName + " zu dir").color(ColorCode.RED).advance().createComponent())
+                            .clickEvent(ClickEvent.Action.RUN_COMMAND, "/movehere " + playerName)
+                            .advance()
+                    .createComponent()));
+
+            p.sendMessage(Message.getBuilder()
+                    .of("➡").color(ColorCode.GRAY).advance().space()
+                    .of("Nicht anwesende Spieler kopieren").color(ColorCode.GREEN)
+                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Nicht anwesende Spieler kopieren").color(ColorCode.RED).advance().createComponent())
+                            .clickEvent(ClickEvent.Action.RUN_COMMAND, "/channelactivity copy")
+                            .advance()
+                    .createComponent());
+
+            p.sendEmptyMessage();
+        }).start();
+        return true;
+    }
+
+    @Override
+    public List<String> complete(String[] arguments) {
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments).build();
+    }
+
+    private Map<String, Boolean> getOnlineStateOfPlayers(List<String> factionPlayers) {
+        return factionPlayers.stream().collect(Collectors.toMap(s -> s, s -> this.unicacityAddon.utils().teamspeak().isOnline(s)));
+    }
+}
