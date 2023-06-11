@@ -113,11 +113,11 @@ public class VersionedGuiController extends GuiController {
                                 DrugType drugType = DrugType.getDrugType(itemStack.getDisplayName().getString());
 
                                 if (drugType != null) {
-                                    Map<DrugType, Map<DrugPurity, Integer>> drugInventoryMap = unicacityAddon.services().fileService().data().getDrugInventoryMap();
+                                    Map<DrugType, Map<DrugPurity, Integer>> drugInventoryMap = unicacityAddon.services().file().data().getDrugInventoryMap();
                                     Map<DrugPurity, Integer> drugPurityMap = drugInventoryMap.getOrDefault(drugType, new HashMap<>());
                                     drugPurityMap.put(DrugPurity.BEST, amount);
                                     drugInventoryMap.put(drugType, drugPurityMap);
-                                    unicacityAddon.services().fileService().data().setDrugInventoryMap(drugInventoryMap);
+                                    unicacityAddon.services().file().data().setDrugInventoryMap(drugInventoryMap);
                                 }
                             }
                         });
@@ -152,11 +152,11 @@ public class VersionedGuiController extends GuiController {
                             DrugPurity drugPurity = DrugPurity.getDrugPurity(drugPurityNbt);
 
                             if (drugType != null) {
-                                Map<DrugType, Map<DrugPurity, Integer>> drugInventoryMap = unicacityAddon.services().fileService().data().getDrugInventoryMap();
+                                Map<DrugType, Map<DrugPurity, Integer>> drugInventoryMap = unicacityAddon.services().file().data().getDrugInventoryMap();
                                 Map<DrugPurity, Integer> drugPurityMap = drugInventoryMap.getOrDefault(drugType, new HashMap<>());
                                 drugPurityMap.put(drugPurity, amount);
                                 drugInventoryMap.put(drugType, drugPurityMap);
-                                unicacityAddon.services().fileService().data().setDrugInventoryMap(drugInventoryMap);
+                                unicacityAddon.services().file().data().setDrugInventoryMap(drugInventoryMap);
                             }
                         }
                     });

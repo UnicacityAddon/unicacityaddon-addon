@@ -26,19 +26,19 @@ public class InventoryHudWidget extends TextHudWidget<TextHudWidgetConfig> {
     public void load(TextHudWidgetConfig config) {
         super.load(config);
 
-        int amount = this.unicacityAddon.services().fileService().data().getDrugInventoryMap().values().stream()
+        int amount = this.unicacityAddon.services().file().data().getDrugInventoryMap().values().stream()
                 .map(Map::values)
                 .map(integers -> integers.stream().reduce(0, Integer::sum))
                 .reduce(0, Integer::sum);
 
         this.textLine = super.createLine("Inventar", amount);
-        this.setIcon(this.unicacityAddon.utils().icon());
+        this.setIcon(this.unicacityAddon.services().util().icon());
     }
 
     @Subscribe
     public void onUnicacityAddonTick(UnicacityAddonTickEvent e) {
         if (e.isPhase(UnicacityAddonTickEvent.Phase.SECOND)) {
-            int amount = this.unicacityAddon.services().fileService().data().getDrugInventoryMap().values().stream()
+            int amount = this.unicacityAddon.services().file().data().getDrugInventoryMap().values().stream()
                     .map(Map::values)
                     .map(integers -> integers.stream().reduce(0, Integer::sum))
                     .reduce(0, Integer::sum);

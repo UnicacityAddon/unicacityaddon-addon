@@ -33,7 +33,7 @@ public class DyavolCommand extends UnicacityCommand {
                 .createComponent());
 
         AddonGroup.DYAVOL.getMemberList().forEach(s -> {
-            boolean online = this.unicacityAddon.utils().getOnlinePlayers().contains(s);
+            boolean online = this.unicacityAddon.services().util().getOnlinePlayers().contains(s);
             p.sendMessage(Message.getBuilder()
                     .of("»").color(ColorCode.GRAY).advance().space()
                     .of(s).color(online ? ColorCode.GREEN : ColorCode.RED).advance()

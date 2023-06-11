@@ -34,7 +34,7 @@ public class ModifyWantedsCommand extends UnicacityCommand {
 
         String target = arguments[0];
 
-        WantedListener.Wanted wanted = this.unicacityAddon.services().nametagService().getWantedPlayerMap().get(target);
+        WantedListener.Wanted wanted = this.unicacityAddon.services().nametag().getWantedPlayerMap().get(target);
         if (wanted == null) {
             p.sendErrorMessage("Du hast /wanteds noch nicht ausgeführt!");
             return true;
@@ -86,7 +86,7 @@ public class ModifyWantedsCommand extends UnicacityCommand {
     @Override
     public List<String> complete(String[] arguments) {
         if (arguments.length == 1) {
-            List<String> tabCompletions = this.unicacityAddon.utils().getOnlinePlayers();
+            List<String> tabCompletions = this.unicacityAddon.services().util().getOnlinePlayers();
             String input = arguments[arguments.length - 1].toLowerCase();
             tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
             return tabCompletions;

@@ -1,10 +1,10 @@
 package com.rettichlp.unicacityaddon.commands.api;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.api.statisticTop.StatisticTopKdEntry;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
-import com.rettichlp.unicacityaddon.base.models.api.statisticTop.StatisticTopKdEntry;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
@@ -13,7 +13,7 @@ import net.labymod.api.client.component.event.HoverEvent;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static com.rettichlp.unicacityaddon.base.utils.MathUtils.DECIMAL_FORMAT;
+import static com.rettichlp.unicacityaddon.base.services.utils.MathUtils.DECIMAL_FORMAT;
 
 /**
  * @author RettichLP

@@ -17,8 +17,12 @@ import net.minecraft.world.phys.AABB;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.util.AbstractMap;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.UUID;
 
 /**
  * @author RettichLP
@@ -26,6 +30,15 @@ import java.util.Objects;
 @Singleton
 @Implements(DeadBodyController.class)
 public class VersionedDeadBodyController extends DeadBodyController {
+
+    /**
+     * When a corpse is rendered, the display name is automatically changed. The name can reflect the current wanted
+     * level. However, if this state changes while the corpse has already been rendered, the color will not change. In
+     * order to ensure this change anyway, the name must be available in every render process. In order not to waste
+     * performance by calculating the name in every render process, the name that was calculated when the corpse was
+     * first rendered is used. Likewise, the status of whether the corpse can be revived.
+     */
+    private final Map<UUID, Map.Entry<String, Boolean>> corpseMap = new HashMap<>();
 
     @Inject
     public VersionedDeadBodyController() {
@@ -52,24 +65,31 @@ public class VersionedDeadBodyController extends DeadBodyController {
             assert customName != null;
             List<Component> siblings = customName.getSiblings();
 
+            // get player name and revivable status
+            String playerName;
+            boolean nonRevivable;
             if (siblings.size() > 0) { // sibling size only by not formatted corpses greater than 0
                 Component originalCorpseName = siblings.get(0);
-
-                boolean nonRevivable = Objects.equals(originalCorpseName.getStyle().getColor(), TextColor.fromLegacyFormat(ChatFormatting.DARK_GRAY));
-
-                String playerName = originalCorpseName.getContents().substring(1);
-
-                String prefix = unicacityAddon.services().nametagService().getPrefix(playerName, true);
-                String factionInfo = unicacityAddon.api().getPlayerFactionMap().getOrDefault(playerName, Faction.NULL).getNameTagSuffix();
-
-                String ndn = Message.getBuilder()
-                        .of("✟").color(nonRevivable ? ColorCode.DARK_GRAY : ColorCode.GRAY).advance()
-                        .of((nonRevivable ? ColorCode.DARK_GRAY.getCode() : prefix) + playerName).advance().space()
-                        .of(factionInfo).advance()
-                        .create();
-
-                itemEntity.setCustomName(Component.nullToEmpty(ndn));
+                playerName = originalCorpseName.getContents().substring(1);
+                nonRevivable = Objects.equals(originalCorpseName.getStyle().getColor(), TextColor.fromLegacyFormat(ChatFormatting.DARK_GRAY));
+                this.corpseMap.put(itemEntity.getUUID(), new AbstractMap.SimpleEntry<>(playerName, nonRevivable));
+            } else {
+                Map.Entry<String, Boolean> corpse = this.corpseMap.getOrDefault(itemEntity.getUUID(), new AbstractMap.SimpleEntry<>("Unbekannt", false));
+                playerName = corpse.getKey();
+                nonRevivable = corpse.getValue();
             }
+
+            // use player name and revivable status
+            String prefix = unicacityAddon.services().nametag().getPrefix(playerName, true);
+            String factionInfo = unicacityAddon.api().getPlayerFactionMap().getOrDefault(playerName, Faction.NULL).getNameTagSuffix();
+
+            String ndn = Message.getBuilder()
+                    .of("✟").color(nonRevivable ? ColorCode.DARK_GRAY : ColorCode.GRAY).advance()
+                    .of((nonRevivable ? ColorCode.DARK_GRAY.getCode() : prefix) + playerName).advance().space()
+                    .of(factionInfo).advance()
+                    .create();
+
+            itemEntity.setCustomName(Component.nullToEmpty(ndn));
         });
     }
 }

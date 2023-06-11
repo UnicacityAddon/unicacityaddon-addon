@@ -4,9 +4,9 @@ import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
+import com.rettichlp.unicacityaddon.base.services.utils.MathUtils;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
-import com.rettichlp.unicacityaddon.base.utils.MathUtils;
 
 import java.util.List;
 
@@ -31,7 +31,7 @@ public class CalculateCommand extends UnicacityCommand {
             return true;
         }
 
-        String mathString = this.unicacityAddon.utils().textUtils().makeStringByArgs(arguments, " ");
+        String mathString = this.unicacityAddon.services().util().textUtils().makeStringByArgs(arguments, " ");
         MathUtils mathUtils = new MathUtils(mathString);
         try {
             mathUtils.evaluate();

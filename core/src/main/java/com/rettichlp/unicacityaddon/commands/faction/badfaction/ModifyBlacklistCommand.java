@@ -1,15 +1,17 @@
 package com.rettichlp.unicacityaddon.commands.faction.badfaction;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.api.BlacklistReason;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.enums.faction.ModifyBlacklistType;
-import com.rettichlp.unicacityaddon.base.models.api.BlacklistReason;
 import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.rettichlp.unicacityaddon.base.io.api.API.find;
 
 /**
  * @author Dimiikou
@@ -39,8 +41,7 @@ public class ModifyBlacklistCommand extends UnicacityCommand {
         }
 
         String reason = arguments[1];
-
-        BlacklistReason blacklistReason = BlacklistReason.getBlacklistReasonEntryByReason(reason, this.unicacityAddon);
+        BlacklistReason blacklistReason = find(this.unicacityAddon.api().getBlacklistReasonList(), b -> b.getReason().equalsIgnoreCase(reason));
         if (!reason.equalsIgnoreCase("-v") && blacklistReason == null) {
             p.sendErrorMessage("Blacklistgrund wurde nicht gefunden!");
             return true;

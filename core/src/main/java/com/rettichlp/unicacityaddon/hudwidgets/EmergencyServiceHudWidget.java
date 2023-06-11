@@ -24,6 +24,6 @@ public class EmergencyServiceHudWidget extends TextHudWidget<TextHudWidgetConfig
     public void load(TextHudWidgetConfig config) {
         super.load(config);
         textLine = super.createLine("Notrufe", EmergencyServiceListener.openServices);
-        this.setIcon(this.unicacityAddon.utils().icon());
+        this.setIcon(this.unicacityAddon.services().util().icon());
     }
 }

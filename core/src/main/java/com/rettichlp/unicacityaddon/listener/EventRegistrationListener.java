@@ -79,7 +79,7 @@ public class EventRegistrationListener {
             }
 
             HotkeySetting hotkeySetting = configuration.hotkeySetting();
-            if (!Laby.references().chatAccessor().isChatOpen() && this.unicacityAddon.utils().isUnicacity() && hotkeySetting.enabled().get()) {
+            if (!Laby.references().chatAccessor().isChatOpen() && this.unicacityAddon.services().util().isUnicacity() && hotkeySetting.enabled().get()) {
                 this.unicacityAddon.labyAPI().eventBus().fire(new HotkeyEvent(this.unicacityAddon, key));
             }
         }

@@ -1,17 +1,19 @@
 package com.rettichlp.unicacityaddon.commands;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.api.NaviPoint;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.enums.location.Bus;
-import com.rettichlp.unicacityaddon.base.models.api.NaviPoint;
 import net.labymod.api.util.math.vector.FloatVector3;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import static com.rettichlp.unicacityaddon.base.io.api.API.find;
 
 /**
  * @author RettichLP
@@ -39,13 +41,13 @@ public class BusCommand extends UnicacityCommand {
             return false;
         }
 
-        NaviPoint naviPoint = NaviPoint.getNaviPointByTabName(arguments[0], this.unicacityAddon);
+        NaviPoint naviPoint = find(this.unicacityAddon.api().getNaviPointList(), n -> n.getTabName().equalsIgnoreCase(arguments[0]));
         if (naviPoint == null) {
             p.sendErrorMessage("Navipunkt nicht gefunden.");
             return false;
         }
 
-        destination = this.unicacityAddon.services().navigationService().getNearestBus(naviPoint.getLocation()).getValue();
+        destination = this.unicacityAddon.services().navigation().getNearestBus(naviPoint.getLocation()).getValue();
 
         limiter = 0;
         p.sendServerMessage("/bus");

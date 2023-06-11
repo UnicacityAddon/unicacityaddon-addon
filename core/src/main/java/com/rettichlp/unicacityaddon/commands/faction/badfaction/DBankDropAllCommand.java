@@ -29,19 +29,19 @@ public class DBankDropAllCommand extends UnicacityCommand {
 
         // reset drug inventory tracker
         if (arguments.length > 0 && arguments[0].equalsIgnoreCase("reset")) {
-            this.unicacityAddon.services().fileService().data().setDrugInventoryMap(new HashMap<>());
+            this.unicacityAddon.services().file().data().setDrugInventoryMap(new HashMap<>());
             return true;
         }
 
         List<String> commandQueue = new ArrayList<>();
-        this.unicacityAddon.services().fileService().data().getDrugInventoryMap()
+        this.unicacityAddon.services().file().data().getDrugInventoryMap()
                 .forEach((drugType, drugPurityIntegerMap) -> drugPurityIntegerMap
                         .forEach((drugPurity, integer) -> {
                             if (integer > 0)
                                 commandQueue.add("/dbank drop " + drugType.getDrugName() + " " + integer + " " + drugPurity.getPurity());
                         }));
 
-        this.unicacityAddon.utils().commandUtils().sendQueuedCommands(commandQueue);
+        this.unicacityAddon.services().util().commandUtils().sendQueuedCommands(commandQueue);
         return true;
     }
 

@@ -1,8 +1,8 @@
 package com.rettichlp.unicacityaddon.base.services;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.api.exception.APIResponseException;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
+import com.rettichlp.unicacityaddon.base.io.api.APIResponseException;
 import net.labymod.api.client.network.ClientPacketListener;
 
 /**
@@ -18,8 +18,8 @@ public class FactionService {
 
     public boolean checkPlayerDuty(String playerName) {
         ClientPacketListener clientPacketListener = this.unicacityAddon.labyAPI().minecraft().getClientPacketListener();
-        return clientPacketListener != null && this.unicacityAddon.utils().isUnicacity() && clientPacketListener.getNetworkPlayerInfos().stream()
-                .map(networkPlayerInfo -> this.unicacityAddon.utils().textUtils().legacy(networkPlayerInfo.displayName()))
+        return clientPacketListener != null && this.unicacityAddon.services().util().isUnicacity() && clientPacketListener.getNetworkPlayerInfos().stream()
+                .map(networkPlayerInfo -> this.unicacityAddon.services().util().textUtils().legacy(networkPlayerInfo.displayName()))
                 .filter(s -> s.startsWith("§1") || s.startsWith("§9") || s.startsWith("§4") || s.startsWith("§6"))
                 .anyMatch(s -> s.contains(playerName));
     }
@@ -30,7 +30,7 @@ public class FactionService {
 
     public String getWebsiteSource(Faction faction) {
         try {
-            return this.unicacityAddon.services().webService().sendRequest(faction.getWebsiteUrl());
+            return this.unicacityAddon.services().web().sendRequest(faction.getWebsiteUrl());
         } catch (APIResponseException e) {
             return "";
         }

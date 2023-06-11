@@ -8,7 +8,7 @@ import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidgetConfig;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextLine;
 import net.labymod.api.event.Subscribe;
 
-import static com.rettichlp.unicacityaddon.base.utils.MathUtils.HEART_DECIMAL_FORMAT;
+import static com.rettichlp.unicacityaddon.base.services.utils.MathUtils.HEART_DECIMAL_FORMAT;
 
 /**
  * @author RettichLP
@@ -28,7 +28,7 @@ public class HearthHudWidget extends TextHudWidget<TextHudWidgetConfig> {
     public void load(TextHudWidgetConfig config) {
         super.load(config);
         this.textLine = super.createLine("Herzen", "nicht geladen");
-        this.setIcon(this.unicacityAddon.utils().icon());
+        this.setIcon(this.unicacityAddon.services().util().icon());
     }
 
     @Override

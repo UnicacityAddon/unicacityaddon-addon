@@ -1,13 +1,13 @@
 package com.rettichlp.unicacityaddon.listener.faction;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.api.NaviPoint;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.config.hotkey.HotkeySetting;
 import com.rettichlp.unicacityaddon.base.config.reinforcement.DefaultReinforcementSetting;
 import com.rettichlp.unicacityaddon.base.enums.faction.ReinforcementType;
 import com.rettichlp.unicacityaddon.base.events.HotkeyEvent;
-import com.rettichlp.unicacityaddon.base.models.api.NaviPoint;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
@@ -66,7 +66,7 @@ public class ReinforcementListener {
                 type = lastReinforcement.getReinforcementType().getMessage();
             }
 
-            Map.Entry<Double, NaviPoint> nearestNaviPoint = this.unicacityAddon.services().navigationService().getNearestNaviPoint(posX, posY, posZ);
+            Map.Entry<Double, NaviPoint> nearestNaviPoint = this.unicacityAddon.services().navigation().getNearestNaviPoint(posX, posY, posZ);
             NaviPoint navipoint = nearestNaviPoint.getValue();
 
             String navipointString;
@@ -90,7 +90,7 @@ public class ReinforcementListener {
             p.sendMessage(Message.getBuilder()
                     .of("»").color(ColorCode.GRAY).advance().space()
                     .of("Route Anzeigen").color(ColorCode.RED)
-                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, this.unicacityAddon.utils().commandUtils.locationHoverMessage(posX, posY, posZ))
+                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, this.unicacityAddon.services().util().commandUtils.locationHoverMessage(posX, posY, posZ))
                             .clickEvent(ClickEvent.Action.RUN_COMMAND, "/navi " + posX + "/" + posY + "/" + posZ)
                             .advance()
                     .of(" | ").color(ColorCode.GRAY).advance()

@@ -3,7 +3,7 @@ package com.rettichlp.unicacityaddon.commands.house;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
-import com.rettichlp.unicacityaddon.base.utils.MathUtils;
+import com.rettichlp.unicacityaddon.base.services.utils.MathUtils;
 import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
 
 import java.util.List;
@@ -24,11 +24,11 @@ public class HouseBankCommand extends UnicacityCommand {
     @Override
     public boolean execute(String[] arguments) {
         if (arguments.length > 1 && arguments[0].equalsIgnoreCase("remove") && MathUtils.isInteger(arguments[1])) {
-            this.unicacityAddon.services().fileService().data().removeHouseData(Integer.parseInt(arguments[1]));
+            this.unicacityAddon.services().file().data().removeHouseData(Integer.parseInt(arguments[1]));
             return true;
         }
 
-        this.unicacityAddon.services().fileService().data().sendAllHouseBankMessage();
+        this.unicacityAddon.services().file().data().sendAllHouseBankMessage();
         return true;
     }
 

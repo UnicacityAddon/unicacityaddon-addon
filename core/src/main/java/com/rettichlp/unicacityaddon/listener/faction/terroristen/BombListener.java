@@ -1,14 +1,12 @@
 package com.rettichlp.unicacityaddon.listener.faction.terroristen;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.api.NaviPoint;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
-import com.rettichlp.unicacityaddon.base.builder.ScreenshotBuilder;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.events.BombPlantedEvent;
 import com.rettichlp.unicacityaddon.base.events.BombRemovedEvent;
-import com.rettichlp.unicacityaddon.base.events.UnicacityAddonTickEvent;
-import com.rettichlp.unicacityaddon.base.models.api.NaviPoint;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
@@ -18,10 +16,10 @@ import net.labymod.api.client.component.event.HoverEvent;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
+
+import static com.rettichlp.unicacityaddon.base.io.api.API.find;
 
 /**
  * @author RettichLP
@@ -31,8 +29,6 @@ public class BombListener {
 
     private Long bombPlantedTime;
     private String location;
-    private long activeBomb = -1;
-    private long currentTick;
 
     private final UnicacityAddon unicacityAddon;
 
@@ -79,10 +75,8 @@ public class BombListener {
 
         Matcher bombRemovedMatcher = PatternHandler.BOMB_REMOVED_PATTERN.matcher(msg);
         if (bombRemovedMatcher.find()) {
-            this.unicacityAddon.labyAPI().eventBus().fire(new BombRemovedEvent());
-
             Long timeSinceBombPlanted = this.bombPlantedTime != null ? System.currentTimeMillis() - this.bombPlantedTime : null;
-            String timeString = timeSinceBombPlanted != null ? this.unicacityAddon.utils().textUtils().parseTimer(TimeUnit.MILLISECONDS.toSeconds(timeSinceBombPlanted)) : "";
+            String timeString = timeSinceBombPlanted != null ? this.unicacityAddon.services().util().textUtils().parseTimer(TimeUnit.MILLISECONDS.toSeconds(timeSinceBombPlanted)) : "";
 
             String state = bombRemovedMatcher.group(1);
 
@@ -101,27 +95,12 @@ public class BombListener {
                     .of(this.location != null ? "]" : "").color(ColorCode.DARK_GRAY).advance()
                     .createComponent());
 
-            if (this.unicacityAddon.configuration().bombScreenshot().get()) {
-                this.activeBomb = this.currentTick;
-            }
-        }
-    }
-
-    @Subscribe
-    public void onUnicacityAddonTick(UnicacityAddonTickEvent e) {
-        this.currentTick = e.getCurrentTick();
-        if (e.isIngame() && e.isPhase(UnicacityAddonTickEvent.Phase.TICK) && this.activeBomb >= 0 && this.activeBomb + 15 == e.getCurrentTick()) {
-            try {
-                File file = this.unicacityAddon.services().fileService().getNewActivityImageFile("großeinsatz");
-                ScreenshotBuilder.getBuilder(this.unicacityAddon).file(file).save();
-            } catch (IOException ex) {
-                this.unicacityAddon.logger().warn(ex.getMessage());
-            }
+            this.unicacityAddon.labyAPI().eventBus().fire(new BombRemovedEvent());
         }
     }
 
     private String getLocationWithArticle(String location) {
-        NaviPoint naviPoint = NaviPoint.getNaviPointByTabName(location.replace(" ", "-"), this.unicacityAddon);
+        NaviPoint naviPoint = find(this.unicacityAddon.api().getNaviPointList(), n -> n.getTabName().equalsIgnoreCase(location.replace(" ", "-")));
         String article = "der/die/das";
         if (naviPoint != null)
             article = naviPoint.getArticleFourthCase().replace("none", "");

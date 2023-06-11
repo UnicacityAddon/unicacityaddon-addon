@@ -4,11 +4,10 @@ import com.google.common.reflect.ClassPath;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.DefaultAddonPlayer;
 import com.rettichlp.unicacityaddon.base.Services;
-import com.rettichlp.unicacityaddon.base.Utils;
 import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
-import com.rettichlp.unicacityaddon.base.api.request.API;
 import com.rettichlp.unicacityaddon.base.config.DefaultUnicacityAddonConfiguration;
+import com.rettichlp.unicacityaddon.base.io.api.API;
 import com.rettichlp.unicacityaddon.base.nametags.AddonTag;
 import com.rettichlp.unicacityaddon.base.nametags.DutyTag;
 import com.rettichlp.unicacityaddon.base.nametags.FactionInfoTag;
@@ -105,7 +104,6 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
     private Services services;
     private API api;
     private TeamSpeakAPI teamSpeakAPI;
-    private Utils utils;
     private List<Command> commands;
 
     public UnicacityAddon() {
@@ -117,15 +115,14 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
         this.services = new Services(this);
         this.api = new API(this);
         this.teamSpeakAPI = new TeamSpeakAPI(this);
-        this.utils = new Utils(this);
         this.commands = new ArrayList<>();
 
-        this.logger().info("Enabled UnicacityAddon");
+        this.logger().info("Loaded UnicacityAddon");
     }
 
     @Override
     protected void enable() {
-        this.api.sync();
+        this.api.sync(this.player);
         this.registerSettingCategory();
         this.registerTags();
         this.registerHudWidgets();
@@ -139,6 +136,8 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
                 e.printStackTrace();
             }
         }).start();
+
+        this.logger().info("Enabled UnicacityAddon");
     }
 
     @Override
@@ -160,10 +159,6 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
 
     public TeamSpeakAPI teamSpeakAPI() {
         return teamSpeakAPI;
-    }
-
-    public Utils utils() {
-        return utils;
     }
 
     public List<Command> commands() {

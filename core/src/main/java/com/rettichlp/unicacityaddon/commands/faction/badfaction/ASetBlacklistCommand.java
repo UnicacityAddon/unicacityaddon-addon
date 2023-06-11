@@ -1,14 +1,16 @@
 package com.rettichlp.unicacityaddon.commands.faction.badfaction;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.api.BlacklistReason;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
-import com.rettichlp.unicacityaddon.base.models.api.BlacklistReason;
 import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.rettichlp.unicacityaddon.base.io.api.API.find;
 
 /**
  * @author RettichLP
@@ -31,7 +33,7 @@ public class ASetBlacklistCommand extends UnicacityCommand {
             return true;
         }
 
-        BlacklistReason blacklistReason = BlacklistReason.getBlacklistReasonEntryByReason(arguments[arguments.length - 1], this.unicacityAddon);
+        BlacklistReason blacklistReason = find(this.unicacityAddon.api().getBlacklistReasonList(), b -> b.getReason().equalsIgnoreCase(arguments[arguments.length - 1]));
         if (blacklistReason == null) {
             p.sendErrorMessage("Der Blacklistgrund wurde nicht gefunden!");
             return true;
@@ -46,7 +48,7 @@ public class ASetBlacklistCommand extends UnicacityCommand {
     @Override
     public List<String> complete(String[] arguments) {
         return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments)
-                .addToAllFromIndex(2, this.unicacityAddon.utils().getOnlinePlayers())
+                .addToAllFromIndex(2, this.unicacityAddon.services().util().getOnlinePlayers())
                 .addToAllFromIndex(2, this.unicacityAddon.api().getBlacklistReasonList().stream().map(BlacklistReason::getReason).sorted().collect(Collectors.toList()))
                 .build();
     }

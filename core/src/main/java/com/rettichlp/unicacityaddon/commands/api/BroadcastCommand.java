@@ -60,7 +60,7 @@ public class BroadcastCommand extends UnicacityCommand {
             } else if (arguments.length > 3 && arguments[0].equalsIgnoreCase("send")) {
                 String date = arguments[1]; // TT.MM.JJJJ
                 String time = arguments[2]; // HH:MM:SS
-                String message = this.unicacityAddon.utils().textUtils().makeStringByArgs(arguments, " ")
+                String message = this.unicacityAddon.services().util().textUtils().makeStringByArgs(arguments, " ")
                         .replace("send ", "")
                         .replace(date + " ", "")
                         .replace(time + " ", "");

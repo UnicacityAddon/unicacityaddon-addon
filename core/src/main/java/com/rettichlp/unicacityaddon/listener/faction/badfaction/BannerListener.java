@@ -1,9 +1,9 @@
 package com.rettichlp.unicacityaddon.listener.faction.badfaction;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.api.NaviPoint;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
-import com.rettichlp.unicacityaddon.base.models.api.NaviPoint;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
@@ -28,7 +28,7 @@ public class BannerListener {
 
     @Subscribe
     public void onClientPlayerInteract(ClientPlayerInteractEvent e) {
-        if (e.type().equals(ClientPlayerInteractEvent.InteractionType.INTERACT) && this.unicacityAddon.utils().isUnicacity()) {
+        if (e.type().equals(ClientPlayerInteractEvent.InteractionType.INTERACT) && this.unicacityAddon.services().util().isUnicacity()) {
             FloatVector3 location = this.unicacityAddon.worldInteractionController().getClickedBlockLocation();
 
             if (location != null && this.unicacityAddon.worldInteractionController().isBanner(location)) {
@@ -43,7 +43,7 @@ public class BannerListener {
 
         Matcher bannerStartMatcher = PatternHandler.BANNER_SPRAYED_PATTERN.matcher(e.chatMessage().getPlainText());
         if (bannerStartMatcher.find() && lastClickedBannerLocation != null) {
-            NaviPoint naviPoint = this.unicacityAddon.services().navigationService().getNearestNaviPoint(lastClickedBannerLocation).getValue();
+            NaviPoint naviPoint = this.unicacityAddon.services().navigation().getNearestNaviPoint(lastClickedBannerLocation).getValue();
             this.unicacityAddon.api().sendBannerAddRequest(p.getFaction(), (int) lastClickedBannerLocation.getX(), (int) lastClickedBannerLocation.getY(), (int) lastClickedBannerLocation.getZ(), naviPoint.getName());
         }
     }

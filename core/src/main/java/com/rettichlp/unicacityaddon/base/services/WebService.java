@@ -3,9 +3,9 @@ package com.rettichlp.unicacityaddon.base.services;
 import com.google.common.collect.Maps;
 import com.google.gson.JsonParser;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.api.HttpStatus;
-import com.rettichlp.unicacityaddon.base.api.exception.APIResponseException;
 import com.rettichlp.unicacityaddon.base.enums.api.ApplicationPath;
+import com.rettichlp.unicacityaddon.base.io.api.APIResponseException;
+import com.rettichlp.unicacityaddon.base.io.api.HttpStatus;
 
 import java.io.IOException;
 import java.io.InputStreamReader;

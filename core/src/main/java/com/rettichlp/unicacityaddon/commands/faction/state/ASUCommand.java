@@ -1,11 +1,11 @@
 package com.rettichlp.unicacityaddon.commands.faction.state;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.api.WantedReason;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.enums.faction.WantedFlag;
-import com.rettichlp.unicacityaddon.base.models.api.WantedReason;
 import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
 
 import java.util.Arrays;
@@ -16,6 +16,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
+
+import static com.rettichlp.unicacityaddon.base.io.api.API.find;
 
 /**
  * @author RettichLP
@@ -45,14 +47,14 @@ public class ASUCommand extends UnicacityCommand {
         int reasonIndex = arguments.length - wantedFlags.size() - 1;
         List<String> players = Arrays.asList(arguments).subList(0, reasonIndex);
 
-        WantedReason wantedReasonEntry = WantedReason.getWantedReasonEntryByReason(arguments[reasonIndex], this.unicacityAddon);
-        if (wantedReasonEntry == null) {
+        WantedReason wantedReason = find(this.unicacityAddon.api().getWantedReasonList(), w -> w.getReason().equalsIgnoreCase(arguments[reasonIndex]));
+        if (wantedReason == null) {
             p.sendErrorMessage("Der Wantedgrund wurde nicht gefunden!");
             return true;
         }
 
-        String wantedReasonString = wantedReasonEntry.getReason().replace("-", " ");
-        int wantedReasonAmount = wantedReasonEntry.getPoints();
+        String wantedReasonString = wantedReason.getReason().replace("-", " ");
+        int wantedReasonAmount = wantedReason.getPoints();
 
         for (WantedFlag wantedFlag : wantedFlags) {
             wantedReasonString = wantedFlag.modifyWantedReasonString(wantedReasonString);
@@ -93,7 +95,7 @@ public class ASUCommand extends UnicacityCommand {
     public List<String> complete(String[] arguments) {
         return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments)
                 .addToAllFromIndex(2, this.unicacityAddon.api().getWantedReasonList().stream().map(WantedReason::getReason).sorted().collect(Collectors.toList()))
-                .addToAllFromIndex(2, this.unicacityAddon.utils().getOnlinePlayers())
+                .addToAllFromIndex(2, this.unicacityAddon.services().util().getOnlinePlayers())
                 .addToAllFromIndex(3, Arrays.stream(WantedFlag.values()).map(WantedFlag::getFlagArgument).sorted().collect(Collectors.toList()))
                 .build();
     }

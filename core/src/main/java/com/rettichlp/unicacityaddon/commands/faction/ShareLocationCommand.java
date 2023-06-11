@@ -45,7 +45,7 @@ public class ShareLocationCommand extends UnicacityCommand {
                 allianceChat = true;
                 break;
             }
-            if (this.unicacityAddon.utils().getOnlinePlayers().contains(argument))
+            if (this.unicacityAddon.services().util().getOnlinePlayers().contains(argument))
                 playerNames.add(argument);
         }
 

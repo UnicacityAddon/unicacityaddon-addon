@@ -46,7 +46,7 @@ public class ScreenCommand extends UnicacityCommand {
         }
 
         try {
-            File file = this.unicacityAddon.services().fileService().getNewActivityImageFile(arguments[0]);
+            File file = this.unicacityAddon.services().file().getNewActivityImageFile(arguments[0]);
             ScreenshotBuilder.getBuilder(this.unicacityAddon).file(file).save();
         } catch (IOException e) {
             throw new RuntimeException(e);

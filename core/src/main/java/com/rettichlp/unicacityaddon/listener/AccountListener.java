@@ -1,17 +1,17 @@
 package com.rettichlp.unicacityaddon.listener;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.api.statistic.GamePlay;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.config.join.CommandSetting;
 import com.rettichlp.unicacityaddon.base.config.join.PasswordSetting;
 import com.rettichlp.unicacityaddon.base.events.OfflineDataChangedEvent;
 import com.rettichlp.unicacityaddon.base.events.UnicacityAddonTickEvent;
-import com.rettichlp.unicacityaddon.base.models.api.statistic.GamePlay;
+import com.rettichlp.unicacityaddon.base.services.utils.MathUtils;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
-import com.rettichlp.unicacityaddon.base.utils.MathUtils;
 import com.rettichlp.unicacityaddon.commands.MaskInfoCommand;
 import net.labymod.api.client.chat.ChatMessage;
 import net.labymod.api.client.component.event.ClickEvent;
@@ -49,7 +49,7 @@ public class AccountListener {
         String msg = chatMessage.getPlainText();
         String formattedMsg = chatMessage.getFormattedText();
 
-        if (!this.unicacityAddon.utils().isUnicacity())
+        if (!this.unicacityAddon.services().util().isUnicacity())
             return;
 
         if (PatternHandler.ACCOUNT_WELCOME_BACK_PATTERN.matcher(msg).find()) {
@@ -186,7 +186,7 @@ public class AccountListener {
 
         Matcher accountPayDayMatcher = PatternHandler.ACCOUNT_PAYDAY_PATTERN.matcher(msg);
         if (accountPayDayMatcher.find())
-            this.unicacityAddon.services().fileService().data().setPayDayTime(Integer.parseInt(accountPayDayMatcher.group(1)));
+            this.unicacityAddon.services().file().data().setPayDayTime(Integer.parseInt(accountPayDayMatcher.group(1)));
     }
 
     @Subscribe
@@ -219,7 +219,7 @@ public class AccountListener {
     @Subscribe
     public void onUnicacityAddonTick(UnicacityAddonTickEvent e) {
         if (e.isUnicacity() && e.isPhase(UnicacityAddonTickEvent.Phase.MINUTE) && !isAfk) {
-            this.unicacityAddon.services().fileService().data().addPayDayTime(1);
+            this.unicacityAddon.services().file().data().addPayDayTime(1);
         }
     }
 

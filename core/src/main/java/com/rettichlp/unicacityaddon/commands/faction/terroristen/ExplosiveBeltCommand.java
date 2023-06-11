@@ -4,7 +4,7 @@ import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
-import com.rettichlp.unicacityaddon.base.utils.MathUtils;
+import com.rettichlp.unicacityaddon.base.services.utils.MathUtils;
 import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
 
 import java.util.List;
@@ -31,7 +31,7 @@ public class ExplosiveBeltCommand extends UnicacityCommand {
             return true;
         }
 
-        this.unicacityAddon.services().fileService().data().setTimer(Integer.parseInt(arguments[0]));
+        this.unicacityAddon.services().file().data().setTimer(Integer.parseInt(arguments[0]));
         p.sendServerMessage("/sprenggürtel " + arguments[0]);
         return true;
     }
