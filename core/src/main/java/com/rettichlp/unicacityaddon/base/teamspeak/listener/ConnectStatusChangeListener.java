@@ -50,9 +50,9 @@ public class ConnectStatusChangeListener extends Listener {
             if (server != null) {
                 teamSpeakAPI.controller().getServers().remove(server);
 
-                Server selectedServer = teamSpeakAPI.getSelectedServer();
+                Server selectedServer = teamSpeakAPI.getServer();
                 if (selectedServer != null && selectedServer.getId() == schandlerId) {
-                    teamSpeakAPI.controller().setSelectedServer(null);
+                    teamSpeakAPI.controller().setServer(null);
                 }
             }
 

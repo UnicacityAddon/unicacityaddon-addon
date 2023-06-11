@@ -60,7 +60,6 @@ public class TeamSpeakAPI {
     private final List<Request> requests;
     private Socket socket;
     private PrintWriter outputStream;
-    private BufferedReader inputStream;
 
     private boolean connected;
 
@@ -83,7 +82,7 @@ public class TeamSpeakAPI {
         this.listeners.add(new ChannelEditedListener());
         this.listeners.add(new ClientEnterViewListener());
         this.listeners.add(new ClientLeftViewListener());
-        this.listeners.add(new ClientMovedListener());
+        this.listeners.add(new ClientMovedListener(this.unicacityAddon));
         this.listeners.add(new ConnectStatusChangeListener());
         this.listeners.add(new CurrentServerConnectionChangedListener());
         this.listeners.add(new SelectedListener());
@@ -111,7 +110,7 @@ public class TeamSpeakAPI {
                 true
         );
 
-        this.inputStream = new BufferedReader(
+        BufferedReader inputStream = new BufferedReader(
                 new InputStreamReader(this.socket.getInputStream(), StandardCharsets.UTF_8)
         );
 
@@ -172,8 +171,8 @@ public class TeamSpeakAPI {
         while (!this.manualStop && this.socket.isConnected() && !this.socket.isClosed()) {
             String line = null;
             try {
-                if (this.connected && this.inputStream.ready() && !this.socket.isClosed()) {
-                    while ((line = this.inputStream.readLine()) != null) {
+                if (this.connected && inputStream.ready() && !this.socket.isClosed()) {
+                    while ((line = inputStream.readLine()) != null) {
                         this.messageReceived(line);
                     }
                 }
@@ -199,7 +198,7 @@ public class TeamSpeakAPI {
     }
 
     private void messageReceived(String line) {
-        System.out.println("Received: " + line);
+        //System.out.println("Received: " + line);
         if (line.isEmpty()) {
             return;
         }
@@ -264,13 +263,12 @@ public class TeamSpeakAPI {
         this.connected = connected;
     }
 
-    public boolean authenticate(String apiKey) {
+    public void authenticate(String apiKey) {
         if (this.socket == null || this.socket.isClosed()) {
-            return false;
+            return;
         }
 
         this.outputStream.println("auth apikey=" + apiKey);
-        return true;
     }
 
     public void request(Request request) {
@@ -290,8 +288,8 @@ public class TeamSpeakAPI {
         this.outputStream.println(query);
     }
 
-    public Server getSelectedServer() {
-        return this.controller.getSelectedServer();
+    public Server getServer() {
+        return this.controller.getServer();
     }
 
     public List<Server> getServers() {
@@ -308,7 +306,7 @@ public class TeamSpeakAPI {
 
     private void reset() {
         this.controller.getServers().clear();
-        this.controller.setSelectedServer(null);
+        this.controller.setServer(null);
         this.clientId = 0;
         this.channelId = 0;
     }

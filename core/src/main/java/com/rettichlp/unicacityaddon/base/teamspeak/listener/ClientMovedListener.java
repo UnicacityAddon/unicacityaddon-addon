@@ -16,7 +16,13 @@
 
 package com.rettichlp.unicacityaddon.base.teamspeak.listener;
 
+import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.base.events.TeamSpeakClientMoveEvent;
 import com.rettichlp.unicacityaddon.base.teamspeak.TeamSpeakAPI;
+import com.rettichlp.unicacityaddon.base.teamspeak.models.Channel;
+import com.rettichlp.unicacityaddon.base.teamspeak.models.Server;
+import com.rettichlp.unicacityaddon.base.teamspeak.models.User;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * This code was modified. The original code is available at: <a href="https://github.com/labymod-addons/teamspeak">https://github.com/labymod-addons/teamspeak</a>.
@@ -28,12 +34,50 @@ import com.rettichlp.unicacityaddon.base.teamspeak.TeamSpeakAPI;
  */
 public class ClientMovedListener extends Listener {
 
-    public ClientMovedListener() {
+    private final UnicacityAddon unicacityAddon;
+
+    public ClientMovedListener(UnicacityAddon unicacityAddon) {
         super("notifyclientmoved");
+        this.unicacityAddon = unicacityAddon;
     }
 
     @Override
     public void execute(TeamSpeakAPI teamSpeakAPI, String[] args) {
-        teamSpeakAPI.controller().refreshCurrentServer(args);
+        Integer schandlerId = this.get(args, "schandlerid", Integer.class);
+        if (schandlerId == null) {
+            return;
+        }
+
+        Server server = teamSpeakAPI.getServer();
+        if (server == null || server.getId() != schandlerId) {
+            return;
+        }
+
+        Integer clid = this.get(args, "clid", Integer.class);
+        Integer cid = this.get(args, "ctid", Integer.class);
+        if (clid == null || cid == null) {
+            return;
+        }
+
+        Channel oldClientChannel = getOldClientChannel(clid);
+        Channel newClientChannel = server.getChannel(cid);
+
+        if (oldClientChannel != null && newClientChannel != null) {
+            User user = oldClientChannel.getUser(clid);
+            oldClientChannel.getUsers().remove(user);
+            newClientChannel.getUsers().add(user);
+        } else {
+            teamSpeakAPI.controller().refreshCurrentServer(args);
+        }
+
+        unicacityAddon.labyAPI().eventBus().fire(new TeamSpeakClientMoveEvent(clid, cid));
+    }
+
+    @Nullable
+    private Channel getOldClientChannel(Integer clid) {
+        return this.unicacityAddon.teamSpeakAPI().getServer().getChannels().stream()
+                .filter(channel -> channel.getUser(clid) != null)
+                .findFirst()
+                .orElse(null);
     }
 }

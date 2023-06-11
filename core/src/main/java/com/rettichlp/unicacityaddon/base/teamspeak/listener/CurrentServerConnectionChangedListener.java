@@ -42,7 +42,7 @@ public class CurrentServerConnectionChangedListener extends Listener {
 
         Server server = teamSpeakAPI.getServer(schandlerId);
         if (server == null) {
-            teamSpeakAPI.controller().setSelectedServer(null);
+            teamSpeakAPI.controller().setServer(null);
             return;
         }
 

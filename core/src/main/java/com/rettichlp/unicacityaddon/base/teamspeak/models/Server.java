@@ -18,7 +18,6 @@ package com.rettichlp.unicacityaddon.base.teamspeak.models;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 import org.jetbrains.annotations.Nullable;
 
@@ -40,9 +39,6 @@ public class Server {
 
     private final int id;
     private final List<Channel> channels = new ArrayList<>();
-
-    @Setter
-    private Channel selectedChannel;
 
     public @Nullable Channel getChannel(int id) {
         return this.channels.stream()

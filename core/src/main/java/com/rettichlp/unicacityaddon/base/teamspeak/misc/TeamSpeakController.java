@@ -38,21 +38,20 @@ public class TeamSpeakController {
 
     private final TeamSpeakAPI teamSpeakAPI;
     private final List<Server> servers;
-    private Server selectedServer;
+    private Server server;
 
     public TeamSpeakController(TeamSpeakAPI teamSpeakAPI) {
         this.teamSpeakAPI = teamSpeakAPI;
         this.servers = new ArrayList<>();
     }
 
-    public Server getSelectedServer() {
-        return this.selectedServer;
+    public Server getServer() {
+        return this.server;
     }
 
-    public void setSelectedServer(Server server) {
-        System.out.println("SERVER=" + server);
+    public void setServer(Server server) {
         if (server == null) {
-            this.selectedServer = null;
+            this.server = null;
             return;
         }
 
@@ -60,7 +59,7 @@ public class TeamSpeakController {
             throw new IllegalArgumentException("Server is not in the list of servers!");
         }
 
-        this.selectedServer = server;
+        this.server = server;
         this.teamSpeakAPI.clientNotifyRegister(server.getId());
     }
 
@@ -78,18 +77,19 @@ public class TeamSpeakController {
         return null;
     }
 
-    public void refreshCurrentServer(String[] args) {
+    public boolean refreshCurrentServer(String[] args) {
         Integer schandlerId = this.get(args, "schandlerid", Integer.class);
         if (schandlerId == null) {
-            return;
+            return false;
         }
 
-        Server selectedServer = teamSpeakAPI.getSelectedServer();
-        if (selectedServer == null || selectedServer.getId() != schandlerId) {
-            return;
+        Server server = teamSpeakAPI.getServer();
+        if (server == null || server.getId() != schandlerId) {
+            return false;
         }
 
         refreshCurrentServer(schandlerId);
+        return true;
     }
 
     public void refreshCurrentServer(int schandlerId) {
@@ -122,7 +122,7 @@ public class TeamSpeakController {
             }
 
             server.getChannels().clear();
-            this.teamSpeakAPI.controller().setSelectedServer(server);
+            this.teamSpeakAPI.controller().setServer(server);
             for (String rawChannel : channels) {
                 String[] channel = rawChannel.split(" ");
                 Integer channelId = this.get(channel, "cid", Integer.class);
@@ -160,13 +160,10 @@ public class TeamSpeakController {
                                     "clientvariable clid=" + clientId + " client_description",
                                     "clid=" + clientId,
                                     clientProperties -> {
-                                        System.out.println("CL_ID=" + clientId);
-                                        System.out.println("PROPS=" + clientProperties);
                                         String[] arguments = clientProperties.split(" ");
                                         String description = ArgumentParser.parse(arguments, "client_description", String.class);
 
                                         user.setDescription(description);
-                                        System.out.println(description);
                                     }));
 
                             channel.addUser(user);

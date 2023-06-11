@@ -16,12 +16,17 @@
 
 package com.rettichlp.unicacityaddon.base.teamspeak.models;
 
+import com.rettichlp.unicacityaddon.base.enums.teamspeak.TSChannelCategory;
+import com.rettichlp.unicacityaddon.base.text.ColorCode;
+import com.rettichlp.unicacityaddon.base.text.Message;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -47,5 +52,32 @@ public class Channel {
 
     public void addUser(User user) {
         this.users.add(user);
+    }
+
+    @Nullable
+    public User getUser(Integer clid) {
+        return this.users.stream()
+                .filter(user -> user.getId() == clid)
+                .findAny()
+                .orElse(null);
+    }
+
+    @Nullable
+    public String getChannelCategory() {
+        return this.pid != null ? Arrays.stream(TSChannelCategory.values())
+                .filter(tsChannelCategory -> tsChannelCategory.getPid() == this.pid)
+                .findFirst()
+                .map(TSChannelCategory::getCategoryName)
+                .orElse(null) : null;
+    }
+
+    public String getChannelCategoryMessage() {
+        String channelCategory = getChannelCategory();
+
+        return channelCategory != null ? Message.getBuilder().space()
+                .of("(").color(ColorCode.GRAY).advance()
+                .of(channelCategory).color(ColorCode.AQUA).advance()
+                .of(")").color(ColorCode.GRAY).advance()
+                .create() : "";
     }
 }
