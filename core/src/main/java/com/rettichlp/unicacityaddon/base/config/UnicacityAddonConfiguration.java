@@ -46,6 +46,8 @@ public interface UnicacityAddonConfiguration {
 
     ConfigProperty<Integer> aBuyAmount();
 
+    ConfigProperty<Boolean> resolveAPIKey();
+
     ConfigProperty<String> tsApiKey();
 
     ConfigProperty<Boolean> tsNotificationPublic();

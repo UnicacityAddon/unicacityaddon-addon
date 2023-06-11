@@ -3,8 +3,8 @@ package com.rettichlp.unicacityaddon.base.services;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.services.utils.CommandUtils;
 import com.rettichlp.unicacityaddon.base.services.utils.ListUtils;
+import com.rettichlp.unicacityaddon.base.services.utils.TeamSpeakUtils;
 import com.rettichlp.unicacityaddon.base.services.utils.TextUtils;
-import com.rettichlp.unicacityaddon.base.teamspeak.TSUtils;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import net.labymod.api.client.gui.icon.Icon;
@@ -26,8 +26,8 @@ public class UtilService {
 
     public final CommandUtils commandUtils;
     private final ListUtils listUtils;
+    private final TeamSpeakUtils teamSpeakUtils;
     private final TextUtils textUtils;
-    private final TSUtils tsUtils;
 
     private final UnicacityAddon unicacityAddon;
 
@@ -35,8 +35,8 @@ public class UtilService {
         this.unicacityAddon = unicacityAddon;
         this.commandUtils = new CommandUtils(unicacityAddon);
         this.listUtils = new ListUtils();
+        this.teamSpeakUtils = new TeamSpeakUtils(unicacityAddon);
         this.textUtils = new TextUtils();
-        this.tsUtils = new TSUtils(unicacityAddon);
     }
 
     public String version() {
@@ -55,12 +55,12 @@ public class UtilService {
         return listUtils;
     }
 
-    public TextUtils textUtils() {
-        return textUtils;
+    public TeamSpeakUtils teamSpeakUtils() {
+        return teamSpeakUtils;
     }
 
-    public TSUtils tsUtils() {
-        return tsUtils;
+    public TextUtils textUtils() {
+        return textUtils;
     }
 
     public boolean isUnicacity() {

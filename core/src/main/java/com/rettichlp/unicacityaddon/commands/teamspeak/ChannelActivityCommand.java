@@ -4,23 +4,19 @@ import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
-import com.rettichlp.unicacityaddon.base.teamspeak.TSClientQuery;
-import com.rettichlp.unicacityaddon.base.teamspeak.commands.ChannelClientListCommand;
-import com.rettichlp.unicacityaddon.base.teamspeak.commands.ClientVariableCommand;
-import com.rettichlp.unicacityaddon.base.teamspeak.objects.Client;
+import com.rettichlp.unicacityaddon.base.teamspeak.models.Channel;
+import com.rettichlp.unicacityaddon.base.teamspeak.models.User;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.event.HoverEvent;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.StringJoiner;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 /**
  * @author Fuzzlemann
@@ -41,19 +37,10 @@ public class ChannelActivityCommand extends UnicacityCommand {
         new Thread(() -> {
             AddonPlayer p = this.unicacityAddon.player();
 
-            if (!TSClientQuery.clientQueryConnected) {
-                p.sendErrorMessage("Keine Verbindung zur TeamSpeak ClientQuery!");
-                TSClientQuery.reconnect(this.unicacityAddon);
-                return;
-            }
-
             p.sendInfoMessage("Channel-Aktivität wird erstellt.");
 
-            List<String> playersInChannel = getPlayersInChannel();
-            if (playersInChannel.isEmpty()) {
-                p.sendErrorMessage("Du bist mit keinen Spielern in einem Channel!");
-                return;
-            }
+            Channel channel = this.unicacityAddon.services().util().teamSpeakUtils().getOwnChannel();
+            List<String> playersInChannel = channel != null ? channel.getUsers().stream().map(User::getDescription).toList() : Collections.emptyList();
 
             List<String> factionPlayers = this.unicacityAddon.api().getPlayerFactionMap().entrySet().stream()
                     .filter(stringFactionEntry -> stringFactionEntry.getValue().equals(p.getFaction()))
@@ -109,32 +96,7 @@ public class ChannelActivityCommand extends UnicacityCommand {
         return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments).build();
     }
 
-
-    public List<String> getPlayersInChannel() {
-        ChannelClientListCommand.Response channelClientListCommandResponse = new ChannelClientListCommand(this.unicacityAddon, this.unicacityAddon.services().util().tsUtils().getMyChannelID()).getResponse();
-        if (channelClientListCommandResponse.failed())
-            return Collections.emptyList();
-
-        List<Client> clients = channelClientListCommandResponse.getClients();
-        List<String> descriptions = new ArrayList<>();
-        for (Client client : clients) {
-            ClientVariableCommand.Response clientVariableCommandResponse = new ClientVariableCommand(this.unicacityAddon, client).getResponse();
-            String minecraftName = clientVariableCommandResponse.getMinecraftName();
-
-            if (minecraftName == null)
-                continue;
-            descriptions.add(minecraftName);
-        }
-
-        return descriptions;
-    }
-
     private Map<String, Boolean> getOnlineStateOfPlayers(List<String> factionPlayers) {
-        List<Boolean> onlineStates = factionPlayers.stream()
-                .map(s -> !this.unicacityAddon.services().util().tsUtils().getClientsByName(Collections.singletonList(s)).isEmpty()).toList();
-
-        return IntStream.range(0, factionPlayers.size())
-                .boxed()
-                .collect(Collectors.toMap(factionPlayers::get, onlineStates::get));
+        return factionPlayers.stream().collect(Collectors.toMap(s -> s, s -> this.unicacityAddon.services().util().teamSpeakUtils().isOnline(s)));
     }
 }

@@ -43,7 +43,6 @@ public class BombListener {
     public void onChatReceive(ChatReceiveEvent e) {
         AddonPlayer p = this.unicacityAddon.player();
         ChatMessage chatMessage = e.chatMessage();
-        String formattedMsg = e.chatMessage().getFormattedText();
         String msg = chatMessage.getPlainText();
 
         Matcher bombPlantedMatcher = PatternHandler.BOMB_PLANTED_PATTERN.matcher(msg);
@@ -55,7 +54,7 @@ public class BombListener {
             if (((p.getFaction().equals(Faction.POLIZEI) || p.getFaction().equals(Faction.FBI)) && p.getRank() > 3) || p.isSuperUser()) {
                 this.location = bombPlantedMatcher.group("location");
                 e.setMessage(Message.getBuilder()
-                        .add(formattedMsg)
+                        .add(chatMessage.getFormattedText())
                         .space()
                         .of("[").color(ColorCode.DARK_GRAY).advance()
                         .of("Sperrgebiet ausrufen").color(ColorCode.RED)
@@ -81,7 +80,7 @@ public class BombListener {
             String state = bombRemovedMatcher.group(1);
 
             e.setMessage(Message.getBuilder()
-                    .add(formattedMsg)
+                    .add(chatMessage.getFormattedText())
                     .space()
                     .of(timeString.isEmpty() ? "" : "(").color(ColorCode.DARK_GRAY).advance()
                     .of(timeString).color(state.equals("nicht") ? ColorCode.RED : ColorCode.GREEN).advance()

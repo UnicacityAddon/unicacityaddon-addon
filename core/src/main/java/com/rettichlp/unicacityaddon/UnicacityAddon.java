@@ -15,7 +15,7 @@ import com.rettichlp.unicacityaddon.base.nametags.HouseBanTag;
 import com.rettichlp.unicacityaddon.base.nametags.NoPushTag;
 import com.rettichlp.unicacityaddon.base.nametags.OutlawTag;
 import com.rettichlp.unicacityaddon.base.services.FileService;
-import com.rettichlp.unicacityaddon.base.teamspeak.TSClientQuery;
+import com.rettichlp.unicacityaddon.base.teamspeak.TeamSpeakAPI;
 import com.rettichlp.unicacityaddon.controller.DeadBodyController;
 import com.rettichlp.unicacityaddon.controller.GuiController;
 import com.rettichlp.unicacityaddon.controller.ScreenshotController;
@@ -103,6 +103,7 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
     private AddonPlayer player;
     private Services services;
     private API api;
+    private TeamSpeakAPI teamSpeakAPI;
     private List<Command> commands;
 
     public UnicacityAddon() {
@@ -113,6 +114,7 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
         this.player = new DefaultAddonPlayer(this);
         this.services = new Services(this);
         this.api = new API(this);
+        this.teamSpeakAPI = new TeamSpeakAPI(this);
         this.commands = new ArrayList<>();
 
         this.logger().info("Loaded UnicacityAddon");
@@ -127,7 +129,13 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
         this.registerListeners();
         this.registerCommands();
 
-        new Thread(() -> TSClientQuery.getInstance(this)).start();
+        new Thread(() -> {
+            try {
+                this.teamSpeakAPI.initialize();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }).start();
 
         this.logger().info("Enabled UnicacityAddon");
     }
@@ -147,6 +155,10 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
 
     public API api() {
         return api;
+    }
+
+    public TeamSpeakAPI teamSpeakAPI() {
+        return teamSpeakAPI;
     }
 
     public List<Command> commands() {

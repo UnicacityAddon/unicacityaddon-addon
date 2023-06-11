@@ -4,20 +4,16 @@ import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
-import com.rettichlp.unicacityaddon.base.teamspeak.CommandResponse;
-import com.rettichlp.unicacityaddon.base.teamspeak.TSClientQuery;
-import com.rettichlp.unicacityaddon.base.teamspeak.commands.ClientMoveCommand;
-import com.rettichlp.unicacityaddon.base.teamspeak.objects.Client;
+import com.rettichlp.unicacityaddon.base.teamspeak.models.Channel;
+import com.rettichlp.unicacityaddon.base.teamspeak.models.User;
 import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
 
-import java.util.Collections;
 import java.util.List;
 
 /**
- * @author Fuzzlemann
  * @author RettichLP
  */
-@UCCommand(prefix = "move", onlyOnUnicacity = false, usage = "[Spieler] [Channel]")
+@UCCommand(prefix = "move", onlyOnUnicacity = false, usage = "[Spieler] [Spieler]")
 public class MoveCommand extends UnicacityCommand {
 
     private final UnicacityAddon unicacityAddon;
@@ -31,41 +27,31 @@ public class MoveCommand extends UnicacityCommand {
     public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
 
-        if (arguments.length < 2) {
+        if (arguments.length < 1) {
             sendUsage();
             return true;
         }
 
-        if (!this.unicacityAddon.configuration().tsApiKey().getOrDefault("").matches("([A-Z0-9]{4}(-*)){6}")) {
-            p.sendErrorMessage("Teamspeak API Key ist nicht gültig!");
-            return true;
+        String playerName = arguments[0];
+        String targetName = arguments[1];
+
+        User user = this.unicacityAddon.services().util().teamSpeakUtils().getUserByDescription(playerName);
+        User targetUser = this.unicacityAddon.services().util().teamSpeakUtils().getUserByDescription(targetName);
+
+        Channel targetChannel = null;
+        if (user != null && targetUser != null) {
+            targetChannel = this.unicacityAddon.services().util().teamSpeakUtils().getChannelByUser(targetUser);
         }
 
-        if (!TSClientQuery.clientQueryConnected) {
-            p.sendErrorMessage("Keine Verbindung zur TeamSpeak ClientQuery!");
-            TSClientQuery.reconnect(this.unicacityAddon);
-            return true;
+        if (user != null && targetChannel != null) {
+            boolean success = this.unicacityAddon.teamSpeakAPI().controller().move(user.getId(), targetChannel.getId());
+            if (!success) {
+                p.sendErrorMessage("Der Move ist fehlgeschlagen!");
+            }
+        } else {
+            p.sendErrorMessage("Der Spieler " + playerName + " oder " + targetName + " wurde nicht auf dem TeamSpeak gefunden.");
         }
 
-        String name = arguments[0];
-        String target = arguments[1];
-
-        List<Client> clientsMoved = this.unicacityAddon.services().util().tsUtils().getClientsByName(Collections.singletonList(name));
-        List<Client> clientsMoveTo = this.unicacityAddon.services().util().tsUtils().getClientsByName(Collections.singletonList(target));
-
-        if (clientsMoved.isEmpty() || clientsMoveTo.isEmpty()) {
-            p.sendErrorMessage("Einer der Spieler befindet sich nicht auf dem TeamSpeak.");
-            return true;
-        }
-
-        Client moveToClient = clientsMoveTo.get(0);
-        CommandResponse response = new ClientMoveCommand(this.unicacityAddon, moveToClient.getChannelID(), clientsMoved).getResponse();
-        if (response.failed()) {
-            p.sendErrorMessage("Das Moven ist fehlgeschlagen.");
-            return true;
-        }
-
-        p.sendInfoMessage("Du hast die Person gemoved.");
         return true;
     }
 
