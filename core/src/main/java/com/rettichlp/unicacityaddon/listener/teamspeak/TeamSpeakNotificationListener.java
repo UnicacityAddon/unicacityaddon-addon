@@ -16,11 +16,11 @@ import net.labymod.api.event.Subscribe;
  * @author RettichLP
  */
 @UCEvent
-public class TSNotificationListener {
+public class TeamSpeakNotificationListener {
 
     private final UnicacityAddon unicacityAddon;
 
-    public TSNotificationListener(UnicacityAddon unicacityAddon) {
+    public TeamSpeakNotificationListener(UnicacityAddon unicacityAddon) {
         this.unicacityAddon = unicacityAddon;
     }
 
@@ -28,7 +28,7 @@ public class TSNotificationListener {
     public void onTeamSpeakClientMove(TeamSpeakClientMoveEvent e) {
         AddonPlayer p = this.unicacityAddon.player();
 
-        Channel channel = TSNotificationListener.this.unicacityAddon.teamSpeakAPI().getServer().getChannel(e.getCid());
+        Channel channel = this.unicacityAddon.teamSpeakAPI().getServer().getChannel(e.getCid());
 
         User user = null;
         if (channel != null) {
@@ -41,7 +41,7 @@ public class TSNotificationListener {
 
             this.unicacityAddon.services().util().debug(user.getDescription() + " -> " + channel.getName() + " (" + channel.getChannelCategory() + ")");
 
-            if (TSNotificationListener.this.unicacityAddon.configuration().tsNotificationSupport().get() && cid == 41) {
+            if (this.unicacityAddon.configuration().tsNotificationSupport().get() && cid == 41) {
                 p.sendMessage(Message.getBuilder()
                         .prefix()
                         .of(name).color(ColorCode.AQUA).advance().space()
@@ -54,9 +54,9 @@ public class TSNotificationListener {
                                 .advance()
                         .createComponent());
 
-                TSNotificationListener.this.unicacityAddon.soundController().playTSNotificationSupportChannelSound();
-                TSNotificationListener.this.unicacityAddon.logger().info("Client joined support channel: " + name);
-            } else if (TSNotificationListener.this.unicacityAddon.configuration().tsNotificationPublic().get() && cid == p.getFaction().getPublicChannelId()) {
+                this.unicacityAddon.soundController().playTSNotificationSupportChannelSound();
+                this.unicacityAddon.logger().info("Client joined support channel: " + name);
+            } else if (this.unicacityAddon.configuration().tsNotificationPublic().get() && cid == p.getFaction().getPublicChannelId()) {
                 p.sendMessage(Message.getBuilder()
                         .prefix()
                         .of(name).color(ColorCode.AQUA).advance().space()
@@ -73,8 +73,8 @@ public class TSNotificationListener {
                                 .advance()
                         .createComponent());
 
-                TSNotificationListener.this.unicacityAddon.soundController().playTSNotificationPublicChannelSound();
-                TSNotificationListener.this.unicacityAddon.logger().info("Client joined public channel: " + name);
+                this.unicacityAddon.soundController().playTSNotificationPublicChannelSound();
+                this.unicacityAddon.logger().info("Client joined public channel: " + name);
             }
         }
     }
