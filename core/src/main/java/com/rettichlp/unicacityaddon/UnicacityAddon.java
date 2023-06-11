@@ -16,7 +16,7 @@ import com.rettichlp.unicacityaddon.base.nametags.HouseBanTag;
 import com.rettichlp.unicacityaddon.base.nametags.NoPushTag;
 import com.rettichlp.unicacityaddon.base.nametags.OutlawTag;
 import com.rettichlp.unicacityaddon.base.services.FileService;
-import com.rettichlp.unicacityaddon.base.teamspeak.DefaultTeamSpeakAPI;
+import com.rettichlp.unicacityaddon.base.teamspeak.TeamSpeakAPI;
 import com.rettichlp.unicacityaddon.controller.DeadBodyController;
 import com.rettichlp.unicacityaddon.controller.GuiController;
 import com.rettichlp.unicacityaddon.controller.ScreenshotController;
@@ -37,16 +37,13 @@ import com.rettichlp.unicacityaddon.hudwidgets.PayDayHudWidget;
 import com.rettichlp.unicacityaddon.hudwidgets.PlantHudWidget;
 import com.rettichlp.unicacityaddon.hudwidgets.TimerHudWidget;
 import lombok.Setter;
-import net.labymod.addons.teamspeak.TeamSpeakAPI;
 import net.labymod.api.addon.LabyAddon;
 import net.labymod.api.client.chat.command.Command;
 import net.labymod.api.client.entity.player.tag.PositionType;
 import net.labymod.api.client.entity.player.tag.TagRegistry;
 import net.labymod.api.client.gui.hud.HudWidgetRegistry;
 import net.labymod.api.models.addon.annotation.AddonMain;
-import net.labymod.api.reference.annotation.Referenceable;
 
-import javax.inject.Singleton;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -101,14 +98,13 @@ import java.util.stream.Collectors;
  * @author RettichLP
  */
 @AddonMain
-@Singleton
-@Referenceable
 @Setter
 public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration> {
 
     private AddonPlayer player;
     private Services services;
     private API api;
+    private TeamSpeakAPI teamSpeakAPI;
     private Utils utils;
     private List<Command> commands;
 
@@ -120,6 +116,7 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
         this.player = new DefaultAddonPlayer(this);
         this.services = new Services(this);
         this.api = new API(this);
+        this.teamSpeakAPI = new TeamSpeakAPI(this);
         this.utils = new Utils(this);
         this.commands = new ArrayList<>();
 
@@ -135,11 +132,9 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
         this.registerListeners();
         this.registerCommands();
 
-        DefaultTeamSpeakAPI teamSpeakAPI = (DefaultTeamSpeakAPI) this.controller().teamSpeakAPI();
-
         new Thread(() -> {
             try {
-                teamSpeakAPI.initialize();
+                this.teamSpeakAPI.initialize();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -161,6 +156,10 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
 
     public API api() {
         return api;
+    }
+
+    public TeamSpeakAPI teamSpeakAPI() {
+        return teamSpeakAPI;
     }
 
     public Utils utils() {
@@ -189,10 +188,6 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
 
     public TabListController tabListController() {
         return controller().getTabListController();
-    }
-
-    public TeamSpeakAPI teamSpeakAPI() {
-        return controller().teamSpeakAPI();
     }
 
     public TransportController transportController() {

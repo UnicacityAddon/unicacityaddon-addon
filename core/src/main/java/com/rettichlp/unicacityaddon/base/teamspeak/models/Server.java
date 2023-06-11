@@ -14,10 +14,16 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package com.rettichlp.unicacityaddon.base.teamspeak.listener;
+package com.rettichlp.unicacityaddon.base.teamspeak.models;
 
-import com.rettichlp.unicacityaddon.base.teamspeak.TeamSpeakAPI;
-import com.rettichlp.unicacityaddon.base.teamspeak.models.Server;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This code was modified. The original code is available at: <a href="https://github.com/labymod-addons/teamspeak">https://github.com/labymod-addons/teamspeak</a>.
@@ -27,20 +33,26 @@ import com.rettichlp.unicacityaddon.base.teamspeak.models.Server;
  * @author jumpingpxl
  * @author RettichLP
  */
-public class ChannelEditedListener extends Listener {
+@Getter
+@RequiredArgsConstructor
+@ToString
+public class Server {
 
-    public ChannelEditedListener() {
-        super("notifychanneledited");
+    private final int id;
+    private final List<Channel> channels = new ArrayList<>();
+
+    @Setter
+    private Channel selectedChannel;
+
+    public @Nullable Channel getChannel(int id) {
+        return this.channels.stream()
+                .filter(defaultChannel -> defaultChannel.getId() == id)
+                .findAny().orElse(null);
     }
 
-    @Override
-    public void execute(TeamSpeakAPI teamSpeakAPI, String[] args) {
-        Integer schandlerId = this.get(args, "schandlerid", Integer.class);
-        Server server = teamSpeakAPI.getSelectedServer();
-        if (server == null || schandlerId == null || server.getId() != schandlerId) {
-            return;
-        }
-
-        teamSpeakAPI.controller().refreshCurrentServer(schandlerId);
+    public Channel addChannel(int id) {
+        Channel channel = new Channel(id);
+        this.channels.add(channel);
+        return channel;
     }
 }

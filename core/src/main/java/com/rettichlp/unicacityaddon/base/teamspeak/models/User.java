@@ -14,26 +14,27 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package net.labymod.addons.teamspeak.models;
+package com.rettichlp.unicacityaddon.base.teamspeak.models;
 
-import java.util.List;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
- * The original code is available at: <a href="https://github.com/labymod-addons/teamspeak">https://github.com/labymod-addons/teamspeak</a>.
+ * This code was modified. The original code is available at: <a href="https://github.com/labymod-addons/teamspeak">https://github.com/labymod-addons/teamspeak</a>.
  * <p>
  * The following code is subject to the LGPL Version 2.1.
  *
  * @author jumpingpxl
+ * @author RettichLP
  */
-public interface Server {
+@Getter
+@RequiredArgsConstructor
+@ToString
+public class User {
 
-  int getId();
-
-  @NotNull List<Channel> getChannels();
-
-  @Nullable Channel getSelectedChannel();
-
-  @Nullable Channel getChannel(int id);
+    private final int id;
+    @Setter
+    private String description;
 }

@@ -16,35 +16,36 @@
 
 package com.rettichlp.unicacityaddon.base.teamspeak.listener;
 
-import com.rettichlp.unicacityaddon.base.teamspeak.DefaultTeamSpeakAPI;
-import com.rettichlp.unicacityaddon.base.teamspeak.models.DefaultServer;
+import com.rettichlp.unicacityaddon.base.teamspeak.TeamSpeakAPI;
+import com.rettichlp.unicacityaddon.base.teamspeak.models.Server;
 
 /**
- * The original code is available at: <a href="https://github.com/labymod-addons/teamspeak">https://github.com/labymod-addons/teamspeak</a>.
+ * This code was modified. The original code is available at: <a href="https://github.com/labymod-addons/teamspeak">https://github.com/labymod-addons/teamspeak</a>.
  * <p>
  * The following code is subject to the LGPL Version 2.1.
  *
  * @author jumpingpxl
+ * @author RettichLP
  */
-public class CurrentServerConnectionChangedListener extends DefaultListener {
+public class CurrentServerConnectionChangedListener extends Listener {
 
-  public CurrentServerConnectionChangedListener() {
-    super("notifycurrentserverconnectionchanged");
-  }
-
-  @Override
-  public void execute(DefaultTeamSpeakAPI teamSpeakAPI, String[] args) {
-    Integer schandlerId = this.get(args, "schandlerid", Integer.class);
-    if (schandlerId == null) {
-      return;
+    public CurrentServerConnectionChangedListener() {
+        super("notifycurrentserverconnectionchanged");
     }
 
-    DefaultServer server = teamSpeakAPI.getServer(schandlerId);
-    if (server == null) {
-      teamSpeakAPI.controller().setSelectedServer(null);
-      return;
-    }
+    @Override
+    public void execute(TeamSpeakAPI teamSpeakAPI, String[] args) {
+        Integer schandlerId = this.get(args, "schandlerid", Integer.class);
+        if (schandlerId == null) {
+            return;
+        }
 
-    teamSpeakAPI.controller().refreshCurrentServer(schandlerId);
-  }
+        Server server = teamSpeakAPI.getServer(schandlerId);
+        if (server == null) {
+            teamSpeakAPI.controller().setSelectedServer(null);
+            return;
+        }
+
+        teamSpeakAPI.controller().refreshCurrentServer(schandlerId);
+    }
 }

@@ -14,10 +14,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package com.rettichlp.unicacityaddon.base.teamspeak.listener;
-
-import com.rettichlp.unicacityaddon.base.teamspeak.TeamSpeakAPI;
-import com.rettichlp.unicacityaddon.base.teamspeak.models.Server;
+package com.rettichlp.unicacityaddon.base.teamspeak.util;
 
 /**
  * This code was modified. The original code is available at: <a href="https://github.com/labymod-addons/teamspeak">https://github.com/labymod-addons/teamspeak</a>.
@@ -27,20 +24,37 @@ import com.rettichlp.unicacityaddon.base.teamspeak.models.Server;
  * @author jumpingpxl
  * @author RettichLP
  */
-public class ChannelEditedListener extends Listener {
+public class ArgumentParser {
 
-    public ChannelEditedListener() {
-        super("notifychanneledited");
-    }
-
-    @Override
-    public void execute(TeamSpeakAPI teamSpeakAPI, String[] args) {
-        Integer schandlerId = this.get(args, "schandlerid", Integer.class);
-        Server server = teamSpeakAPI.getSelectedServer();
-        if (server == null || schandlerId == null || server.getId() != schandlerId) {
-            return;
+    public static <T> T parse(String[] arguments, String identifier, Class<T> clazz) {
+        for (String argument : arguments) {
+            T value = ArgumentParser.parse(argument, identifier, clazz);
+            if (value != null) {
+                return value;
+            }
         }
 
-        teamSpeakAPI.controller().refreshCurrentServer(schandlerId);
+        return null;
+    }
+
+    public static <T> T parse(String argument, String identifier, Class<T> clazz) {
+        int length = identifier.length();
+        if (argument.length() == length || !argument.startsWith(identifier + "=")) {
+            return null;
+        }
+
+        String rawValue = argument.substring(length + 1);
+        Object value = null;
+        if (clazz == String.class) {
+            value = rawValue.replace("\\s", " ").replace("\\p", "|");
+        } else if (clazz == Integer.class) {
+            value = Integer.parseInt(rawValue);
+        }
+
+        if (value == null) {
+            return null;
+        }
+
+        return clazz.cast(value);
     }
 }

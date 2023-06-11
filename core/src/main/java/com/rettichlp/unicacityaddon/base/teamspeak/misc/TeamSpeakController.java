@@ -16,264 +16,154 @@
 
 package com.rettichlp.unicacityaddon.base.teamspeak.misc;
 
-import com.rettichlp.unicacityaddon.base.teamspeak.DefaultTeamSpeakAPI;
-import com.rettichlp.unicacityaddon.base.teamspeak.models.DefaultChannel;
-import com.rettichlp.unicacityaddon.base.teamspeak.models.DefaultServer;
-import com.rettichlp.unicacityaddon.base.teamspeak.models.DefaultUser;
-import net.labymod.addons.teamspeak.util.ArgumentParser;
-import net.labymod.addons.teamspeak.util.Request;
+import com.rettichlp.unicacityaddon.base.teamspeak.TeamSpeakAPI;
+import com.rettichlp.unicacityaddon.base.teamspeak.models.Channel;
+import com.rettichlp.unicacityaddon.base.teamspeak.models.Server;
+import com.rettichlp.unicacityaddon.base.teamspeak.models.User;
+import com.rettichlp.unicacityaddon.base.teamspeak.util.ArgumentParser;
+import com.rettichlp.unicacityaddon.base.teamspeak.util.Request;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The original code is available at: <a href="https://github.com/labymod-addons/teamspeak">https://github.com/labymod-addons/teamspeak</a>.
+ * This code was modified. The original code is available at: <a href="https://github.com/labymod-addons/teamspeak">https://github.com/labymod-addons/teamspeak</a>.
  * <p>
  * The following code is subject to the LGPL Version 2.1.
  *
  * @author jumpingpxl
+ * @author RettichLP
  */
 public class TeamSpeakController {
 
-  private final DefaultTeamSpeakAPI teamSpeakAPI;
-  private final List<DefaultServer> servers;
-  private DefaultServer selectedServer;
+    private final TeamSpeakAPI teamSpeakAPI;
+    private final List<Server> servers;
+    private Server selectedServer;
 
-  public TeamSpeakController(DefaultTeamSpeakAPI teamSpeakAPI) {
-    this.teamSpeakAPI = teamSpeakAPI;
-    this.servers = new ArrayList<>();
-  }
-
-  public DefaultServer getSelectedServer() {
-    return this.selectedServer;
-  }
-
-  public void setSelectedServer(DefaultServer server) {
-    if (server == null) {
-      this.selectedServer = null;
-      return;
+    public TeamSpeakController(TeamSpeakAPI teamSpeakAPI) {
+        this.teamSpeakAPI = teamSpeakAPI;
+        this.servers = new ArrayList<>();
     }
 
-    if (!this.servers.contains(server)) {
-      throw new IllegalArgumentException("Server is not in the list of servers!");
+    public Server getSelectedServer() {
+        return this.selectedServer;
     }
 
-    this.selectedServer = server;
-    this.teamSpeakAPI.clientNotifyRegister(server.getId());
-  }
-
-  public List<DefaultServer> getServers() {
-    return this.servers;
-  }
-
-  public DefaultServer getServer(int id) {
-    for (DefaultServer server : this.servers) {
-      if (server.getId() == id) {
-        return server;
-      }
-    }
-
-    return null;
-  }
-
-  public void refreshUsers(DefaultChannel channel) {
-    this.refreshUsers(channel, null);
-  }
-
-  public static String getLastChannel(int start, String path) {
-    int possibleSplit = path.lastIndexOf("\\/", start);
-    if (possibleSplit == -1) {
-      return path;
-    }
-
-    if (possibleSplit == 0) {
-      return path;
-    }
-
-    if (path.charAt(possibleSplit - 1) == '\\') {
-      return getLastChannel(possibleSplit - 1, path);
-    }
-
-    return path.substring(possibleSplit + 2);
-  }
-
-  public void refreshCurrentServer(int schandlerId) {
-    this.teamSpeakAPI.request(Request.firstParamEquals(
-        "use " + schandlerId,
-        "selected",
-        response -> {
-          this.teamSpeakAPI.query("whoami");
-          this.refreshCurrentServer0(schandlerId);
+    public void setSelectedServer(Server server) {
+        System.out.println("SERVER=" + server);
+        if (server == null) {
+            this.selectedServer = null;
+            return;
         }
-    ));
-  }
 
-  public void refreshUsers(DefaultChannel channel, Runnable runnable) {
-    this.teamSpeakAPI.request(Request.unknown(
-        "channelclientlist cid=" + channel.getId() + " -voice -away",
-        channelClientList -> {
-          String[] clients = channelClientList.split("\\|");
-          for (String rawClient : clients) {
-            if (!rawClient.startsWith("clid=")) {
-              return false;
-            }
-          }
+        if (!this.servers.contains(server)) {
+            throw new IllegalArgumentException("Server is not in the list of servers!");
+        }
 
-          for (String rawClient : clients) {
-            String[] client = rawClient.split(" ");
-            Integer clientId = this.get(client, "clid", Integer.class);
-            if (clientId == null) {
-              continue;
-            }
-
-            DefaultUser user = channel.getUser(clientId);
-            if (user != null) {
-              continue;
-            }
-
-            user = channel.addUser(clientId);
-            String clientNickname = this.get(client, "client_nickname", String.class);
-            if (clientNickname != null) {
-              user.setNickname(ArgumentParser.unescape(clientNickname));
-            }
-
-            Integer clientType = this.get(client, "client_type", Integer.class);
-            if (clientType != null) {
-              user.setQuery(clientType == 1);
-            }
-
-            Integer clientFlagTalking = this.get(client, "client_flag_talking", Integer.class);
-            if (clientFlagTalking != null) {
-              user.setTalking(clientFlagTalking == 1);
-            }
-
-            Integer clientAway = this.get(client, "client_away", Integer.class);
-            if (clientAway != null) {
-              user.setAway(clientAway == 1);
-              String clientAwayMessage = this.get(client, "client_away_message", String.class);
-              if (clientAwayMessage != null) {
-                user.setAwayMessage(clientAwayMessage);
-              }
-            }
-
-            // hardware muted
-            Integer clientInputHardware = this.get(client, "client_input_hardware",
-                Integer.class);
-            if (clientInputHardware != null) {
-              user.setHardwareMuted(clientInputHardware == 0);
-            }
-
-            // hardware deafened
-            Integer clientOutputHardware = this.get(client, "client_output_hardware",
-                Integer.class);
-            if (clientOutputHardware != null) {
-              user.setHardwareDeafened(clientOutputHardware == 0);
-            }
-
-            Integer clientInputMuted = this.get(client, "client_input_muted", Integer.class);
-            if (clientInputMuted != null) {
-              user.setMuted(clientInputMuted == 1);
-            }
-
-            Integer clientOutputMuted = this.get(client, "client_output_muted", Integer.class);
-            if (clientOutputMuted != null) {
-              user.setDeafened(clientOutputMuted == 1);
-            }
-
-            Integer clientTalkPower = this.get(client, "client_talk_power", Integer.class);
-            if (clientTalkPower != null) {
-              user.setTalkPower(clientTalkPower);
-            }
-          }
-
-          channel.getUsers().sort(((o1, o2) -> {
-            int firstTalkPower = o1.getTalkPower();
-            int secondTalkPower = o2.getTalkPower();
-            if (firstTalkPower == secondTalkPower) {
-              return this.compareNickName(o1.getNickname(), o2.getNickname());
-            }
-
-            return Integer.compare(secondTalkPower, firstTalkPower);
-          }));
-
-          channel.getUsers().sort(((o1, o2) -> {
-            boolean firstQuery = o1.isQuery();
-            boolean secondQuery = o2.isQuery();
-            if (firstQuery && secondQuery) {
-              return this.compareNickName(o1.getNickname(), o2.getNickname());
-            }
-
-            return Boolean.compare(secondQuery, firstQuery);
-          }));
-
-          if (runnable != null) {
-            runnable.run();
-          }
-
-          return true;
-        }));
-  }
-
-  private <T> T get(String[] arguments, String identifier, Class<T> clazz) {
-    return ArgumentParser.parse(arguments, identifier, clazz);
-  }
-
-  private int compareNickName(String firstNickname, String secondNickname) {
-    if (firstNickname == null || secondNickname == null) {
-      return 0;
+        this.selectedServer = server;
+        this.teamSpeakAPI.clientNotifyRegister(server.getId());
     }
 
-    return firstNickname.toLowerCase().compareTo(secondNickname.toLowerCase());
-  }
-
-  public void refreshCurrentServer0(int schandlerId) {
-    DefaultServer server = this.teamSpeakAPI.getServer(schandlerId);
-    if (server == null) {
-      return;
+    public List<Server> getServers() {
+        return this.servers;
     }
 
-    this.teamSpeakAPI.request(Request.unknown("channellist", channelListAnswer -> {
-      String[] channels = channelListAnswer.split("\\|");
-      for (String rawChannel : channels) {
-        if (!rawChannel.startsWith("cid=")) {
-          return false;
+    public Server getServer(int id) {
+        for (Server server : this.servers) {
+            if (server.getId() == id) {
+                return server;
+            }
         }
-      }
 
-      server.getChannels().clear();
-      this.teamSpeakAPI.controller().setSelectedServer(server);
-      for (String rawChannel : channels) {
-        String[] channel = rawChannel.split(" ");
-        Integer channelId = this.get(channel, "cid", Integer.class);
-        String channelName = this.get(channel, "channel_name", String.class);
-        if (channelId != null) {
-          DefaultChannel defaultChannel = server.addChannel(channelId);
-          if (channelName != null) {
-            defaultChannel.setName(channelName);
-          }
-        }
-      }
+        return null;
+    }
 
-      this.teamSpeakAPI.request(Request.firstParamStartsWith(
-          "channelconnectinfo",
-          "path=",
-          channelConnectInfoAnswer -> {
-            String[] split = channelConnectInfoAnswer.split(" ");
-            String path = this.get(split, "path", String.class);
-            if (path != null) {
-              String name = ArgumentParser.unescape(getLastChannel(path.length(), path));
-              for (DefaultChannel channel : server.getDefaultChannels()) {
-                if (name.equals(channel.getName())) {
-                  server.setSelectedChannel(channel);
-                  this.refreshUsers(channel);
-                  break;
+    public void refreshCurrentServer(int schandlerId) {
+        this.teamSpeakAPI.request(Request.firstParamEquals(
+                "use " + schandlerId,
+                "selected",
+                response -> {
+                    this.teamSpeakAPI.query("whoami");
+                    this.refreshCurrentServer0(schandlerId);
                 }
-              }
-            }
-          }
-      ));
+        ));
+    }
 
-      return true;
-    }));
-  }
+    private <T> T get(String[] arguments, String identifier, Class<T> clazz) {
+        return ArgumentParser.parse(arguments, identifier, clazz);
+    }
+
+    public void refreshCurrentServer0(int schandlerId) {
+        Server server = this.teamSpeakAPI.getServer(schandlerId);
+        if (server == null) {
+            return;
+        }
+
+        this.teamSpeakAPI.request(Request.unknown("channellist", channelListAnswer -> {
+            String[] channels = channelListAnswer.split("\\|");
+            for (String rawChannel : channels) {
+                if (!rawChannel.startsWith("cid=")) {
+                    return false;
+                }
+            }
+
+            server.getChannels().clear();
+            this.teamSpeakAPI.controller().setSelectedServer(server);
+            for (String rawChannel : channels) {
+                String[] channel = rawChannel.split(" ");
+                Integer channelId = this.get(channel, "cid", Integer.class);
+                String channelName = this.get(channel, "channel_name", String.class);
+                Integer channelPid = this.get(channel, "pid", Integer.class);
+                if (channelId != null) {
+                    Channel defaultChannel = server.addChannel(channelId);
+                    if (channelName != null) {
+                        defaultChannel.setName(channelName);
+                    }
+                    if (channelPid != null) {
+                        defaultChannel.setPid(channelPid);
+                    }
+                }
+            }
+
+            this.teamSpeakAPI.request(Request.unknown("clientlist -voice", clientListAnswer -> {
+                String[] clients = clientListAnswer.split("\\|");
+                for (String rawClient : clients) {
+                    if (!rawClient.startsWith("clid=")) {
+                        return false;
+                    }
+                }
+
+                for (String rawClient : clients) {
+                    String[] client = rawClient.split(" ");
+                    Integer clientId = this.get(client, "clid", Integer.class);
+                    Integer channelId = this.get(client, "cid", Integer.class);
+                    if (clientId != null && channelId != null) {
+                        Channel channel = server.getChannel(channelId);
+                        if (channel != null) {
+                            User user = new User(clientId);
+
+                            this.teamSpeakAPI.request(Request.firstParamStartsWith(
+                                    "clientvariable clid=" + clientId + " client_description",
+                                    "clid=" + clientId,
+                                    clientProperties -> {
+                                        System.out.println("CL_ID=" + clientId);
+                                        System.out.println("PROPS=" + clientProperties);
+                                        String[] arguments = clientProperties.split(" ");
+                                        String description = ArgumentParser.parse(arguments, "client_description", String.class);
+
+                                        user.setDescription(description);
+                                        System.out.println(description);
+                                    }));
+
+                            channel.addUser(user);
+                        }
+                    }
+                }
+
+                return true;
+            }));
+
+            return true;
+        }));
+    }
 }

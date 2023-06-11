@@ -16,55 +16,54 @@
 
 package com.rettichlp.unicacityaddon.base.teamspeak.listener;
 
-import com.rettichlp.unicacityaddon.base.teamspeak.DefaultTeamSpeakAPI;
-import com.rettichlp.unicacityaddon.base.teamspeak.models.DefaultServer;
-import net.labymod.addons.teamspeak.util.Request;
+import com.rettichlp.unicacityaddon.base.teamspeak.TeamSpeakAPI;
+import com.rettichlp.unicacityaddon.base.teamspeak.models.Server;
+import com.rettichlp.unicacityaddon.base.teamspeak.util.Request;
 
 /**
- * The original code is available at: <a href="https://github.com/labymod-addons/teamspeak">https://github.com/labymod-addons/teamspeak</a>.
+ * This code was modified. The original code is available at: <a href="https://github.com/labymod-addons/teamspeak">https://github.com/labymod-addons/teamspeak</a>.
  * <p>
  * The following code is subject to the LGPL Version 2.1.
  *
  * @author jumpingpxl
+ * @author RettichLP
  */
-public class SelectedListener extends DefaultListener {
+public class SelectedListener extends Listener {
 
-  public SelectedListener() {
-    super("selected");
-    this.registerNotify(false);
-  }
+    public SelectedListener() {
+        super("selected");
+        this.registerNotify(false);
+    }
 
-  @Override
-  public void execute(DefaultTeamSpeakAPI teamSpeakAPI, String[] args) {
-    Integer selectedSchandlerId = this.get(args, "schandlerid", Integer.class);
-    teamSpeakAPI.request(Request.unknown("serverconnectionhandlerlist", schandlerListAnswer -> {
-      if (schandlerListAnswer.equals("error id=1538 msg=invalid\\sparameter")) {
-        teamSpeakAPI.setInvalidKey(true);
-        return true;
-      }
+    @Override
+    public void execute(TeamSpeakAPI teamSpeakAPI, String[] args) {
+        Integer selectedSchandlerId = this.get(args, "schandlerid", Integer.class);
+        teamSpeakAPI.request(Request.unknown("serverconnectionhandlerlist", schandlerListAnswer -> {
+            if (schandlerListAnswer.equals("error id=1538 msg=invalid\\sparameter")) {
+                return true;
+            }
 
-      teamSpeakAPI.setInvalidKey(false);
-      String[] schandlers = schandlerListAnswer.split("\\|");
-      for (String schandler : schandlers) {
-        if (!schandler.startsWith("schandlerid=")) {
-          return false;
-        }
-      }
+            String[] schandlers = schandlerListAnswer.split("\\|");
+            for (String schandler : schandlers) {
+                if (!schandler.startsWith("schandlerid=")) {
+                    return false;
+                }
+            }
 
-      for (String schandler : schandlers) {
-        Integer schandlerId = this.get(schandler, "schandlerid", Integer.class);
-        DefaultServer server = teamSpeakAPI.getServer(schandlerId);
-        if (server == null) {
-          server = new DefaultServer(schandlerId);
-          teamSpeakAPI.getServers().add(server);
-        }
-      }
+            for (String schandler : schandlers) {
+                Integer schandlerId = this.get(schandler, "schandlerid", Integer.class);
+                Server server = teamSpeakAPI.getServer(schandlerId);
+                if (server == null) {
+                    server = new Server(schandlerId);
+                    teamSpeakAPI.getServers().add(server);
+                }
+            }
 
-      if (selectedSchandlerId != null) {
-        teamSpeakAPI.controller().refreshCurrentServer0(selectedSchandlerId);
-      }
+            if (selectedSchandlerId != null) {
+                teamSpeakAPI.controller().refreshCurrentServer0(selectedSchandlerId);
+            }
 
-      return true;
-    }));
-  }
+            return true;
+        }));
+    }
 }

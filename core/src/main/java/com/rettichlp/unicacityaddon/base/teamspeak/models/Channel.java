@@ -14,37 +14,38 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package net.labymod.addons.teamspeak;
+package com.rettichlp.unicacityaddon.base.teamspeak.models;
 
-import net.labymod.addons.teamspeak.models.Server;
-import net.labymod.addons.teamspeak.util.Request;
-import net.labymod.api.reference.annotation.Referenceable;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The original code is available at: <a href="https://github.com/labymod-addons/teamspeak">https://github.com/labymod-addons/teamspeak</a>.
+ * This code was modified. The original code is available at: <a href="https://github.com/labymod-addons/teamspeak">https://github.com/labymod-addons/teamspeak</a>.
  * <p>
  * The following code is subject to the LGPL Version 2.1.
  *
  * @author jumpingpxl
+ * @author RettichLP
  */
-@Referenceable
-public interface TeamSpeakAPI {
+@Getter
+@RequiredArgsConstructor
+@ToString
+public class Channel {
 
-  boolean isConnected();
+    private final int id;
+    private final List<User> users = new ArrayList<>();
 
-  boolean hasInvalidKey();
+    @Setter
+    private String name;
+    @Setter
+    private Integer pid;
 
-  void request(Request request);
-
-  void query(String query);
-
-  Server getSelectedServer();
-
-  List<Server> getServers();
-
-  Server getServer(int id);
-
-  int getClientId();
+    public void addUser(User user) {
+        this.users.add(user);
+    }
 }

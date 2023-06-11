@@ -16,48 +16,35 @@
 
 package com.rettichlp.unicacityaddon.base.teamspeak.listener;
 
-import com.rettichlp.unicacityaddon.base.teamspeak.DefaultTeamSpeakAPI;
-import com.rettichlp.unicacityaddon.base.teamspeak.models.DefaultChannel;
-import com.rettichlp.unicacityaddon.base.teamspeak.models.DefaultServer;
-import com.rettichlp.unicacityaddon.base.teamspeak.models.DefaultUser;
+import com.rettichlp.unicacityaddon.base.teamspeak.TeamSpeakAPI;
+import com.rettichlp.unicacityaddon.base.teamspeak.models.Server;
 
 /**
- * The original code is available at: <a href="https://github.com/labymod-addons/teamspeak">https://github.com/labymod-addons/teamspeak</a>.
+ * This code was modified. The original code is available at: <a href="https://github.com/labymod-addons/teamspeak">https://github.com/labymod-addons/teamspeak</a>.
  * <p>
  * The following code is subject to the LGPL Version 2.1.
  *
  * @author jumpingpxl
+ * @author RettichLP
  */
-public class ClientEnterViewListener extends DefaultListener {
+public class ClientEnterViewListener extends Listener {
 
-  public ClientEnterViewListener() {
-    super("notifycliententerview");
-  }
-
-  @Override
-  public void execute(DefaultTeamSpeakAPI teamSpeakAPI, String[] args) {
-    Integer schandlerId = this.get(args, "schandlerid", Integer.class);
-    if (schandlerId == null) {
-      return;
+    public ClientEnterViewListener() {
+        super("notifycliententerview");
     }
 
-    DefaultServer selectedServer = teamSpeakAPI.getSelectedServer();
-    if (selectedServer == null || selectedServer.getId() != schandlerId) {
-      return;
-    }
+    @Override
+    public void execute(TeamSpeakAPI teamSpeakAPI, String[] args) {
+        Integer schandlerId = this.get(args, "schandlerid", Integer.class);
+        if (schandlerId == null) {
+            return;
+        }
 
-    DefaultChannel selectedChannel = selectedServer.getSelectedChannel();
-    Integer channelId = this.get(args, "ctid", Integer.class);
-    if (channelId == null || selectedChannel == null || selectedChannel.getId() != channelId) {
-      return;
-    }
+        Server selectedServer = teamSpeakAPI.getSelectedServer();
+        if (selectedServer == null || selectedServer.getId() != schandlerId) {
+            return;
+        }
 
-    Integer clientId = this.get(args, "clid", Integer.class);
-    DefaultUser user = selectedChannel.getUser(clientId);
-    if (user != null) {
-      return;
+        teamSpeakAPI.controller().refreshCurrentServer(schandlerId);
     }
-
-    teamSpeakAPI.controller().refreshUsers(selectedChannel);
-  }
 }

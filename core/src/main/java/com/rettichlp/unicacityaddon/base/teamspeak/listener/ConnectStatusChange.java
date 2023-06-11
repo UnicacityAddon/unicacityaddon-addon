@@ -16,55 +16,56 @@
 
 package com.rettichlp.unicacityaddon.base.teamspeak.listener;
 
-import com.rettichlp.unicacityaddon.base.teamspeak.DefaultTeamSpeakAPI;
-import com.rettichlp.unicacityaddon.base.teamspeak.models.DefaultServer;
+import com.rettichlp.unicacityaddon.base.teamspeak.TeamSpeakAPI;
+import com.rettichlp.unicacityaddon.base.teamspeak.models.Server;
 
 /**
- * The original code is available at: <a href="https://github.com/labymod-addons/teamspeak">https://github.com/labymod-addons/teamspeak</a>.
+ * This code was modified. The original code is available at: <a href="https://github.com/labymod-addons/teamspeak">https://github.com/labymod-addons/teamspeak</a>.
  * <p>
  * The following code is subject to the LGPL Version 2.1.
  *
  * @author jumpingpxl
+ * @author RettichLP
  */
-public class ConnectStatusChange extends DefaultListener {
+public class ConnectStatusChange extends Listener {
 
-  public ConnectStatusChange() {
-    super("notifyconnectstatuschange");
-  }
-
-  @Override
-  public void execute(DefaultTeamSpeakAPI teamSpeakAPI, String[] args) {
-    Integer schandlerId = this.get(args, "schandlerid", Integer.class);
-    if (schandlerId == null) {
-      return;
+    public ConnectStatusChange() {
+        super("notifyconnectstatuschange");
     }
 
-    String status = this.get(args, "status", String.class);
-    if (status == null) {
-      return;
-    }
-
-    DefaultServer server = teamSpeakAPI.controller().getServer(schandlerId);
-    if (status.equals("disconnected")) {
-      if (server != null) {
-        teamSpeakAPI.controller().getServers().remove(server);
-
-        DefaultServer selectedServer = teamSpeakAPI.getSelectedServer();
-        if (selectedServer != null && selectedServer.getId() == schandlerId) {
-          teamSpeakAPI.controller().setSelectedServer(null);
+    @Override
+    public void execute(TeamSpeakAPI teamSpeakAPI, String[] args) {
+        Integer schandlerId = this.get(args, "schandlerid", Integer.class);
+        if (schandlerId == null) {
+            return;
         }
-      }
 
-      return;
+        String status = this.get(args, "status", String.class);
+        if (status == null) {
+            return;
+        }
+
+        Server server = teamSpeakAPI.controller().getServer(schandlerId);
+        if (status.equals("disconnected")) {
+            if (server != null) {
+                teamSpeakAPI.controller().getServers().remove(server);
+
+                Server selectedServer = teamSpeakAPI.getSelectedServer();
+                if (selectedServer != null && selectedServer.getId() == schandlerId) {
+                    teamSpeakAPI.controller().setSelectedServer(null);
+                }
+            }
+
+            return;
+        }
+
+        if (status.equals("connection_established")) {
+            if (server == null) {
+                server = new Server(schandlerId);
+                teamSpeakAPI.controller().getServers().add(server);
+            }
+
+            teamSpeakAPI.controller().refreshCurrentServer(schandlerId);
+        }
     }
-
-    if (status.equals("connection_established")) {
-      if (server == null) {
-        server = new DefaultServer(schandlerId);
-        teamSpeakAPI.controller().getServers().add(server);
-      }
-
-      teamSpeakAPI.controller().refreshCurrentServer(schandlerId);
-    }
-  }
 }

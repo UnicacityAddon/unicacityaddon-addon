@@ -17,7 +17,7 @@
 package com.rettichlp.unicacityaddon.base.teamspeak.listener;
 
 import com.rettichlp.unicacityaddon.base.teamspeak.TeamSpeakAPI;
-import com.rettichlp.unicacityaddon.base.teamspeak.models.Server;
+import com.rettichlp.unicacityaddon.base.teamspeak.util.ArgumentParser;
 
 /**
  * This code was modified. The original code is available at: <a href="https://github.com/labymod-addons/teamspeak">https://github.com/labymod-addons/teamspeak</a>.
@@ -27,20 +27,34 @@ import com.rettichlp.unicacityaddon.base.teamspeak.models.Server;
  * @author jumpingpxl
  * @author RettichLP
  */
-public class ChannelEditedListener extends Listener {
+public abstract class Listener {
 
-    public ChannelEditedListener() {
-        super("notifychanneledited");
+    private final String identifier;
+    private boolean register = true;
+
+    protected Listener(String identifier) {
+        this.identifier = identifier;
     }
 
-    @Override
-    public void execute(TeamSpeakAPI teamSpeakAPI, String[] args) {
-        Integer schandlerId = this.get(args, "schandlerid", Integer.class);
-        Server server = teamSpeakAPI.getSelectedServer();
-        if (server == null || schandlerId == null || server.getId() != schandlerId) {
-            return;
-        }
+    public abstract void execute(TeamSpeakAPI teamSpeakAPI, String[] args);
 
-        teamSpeakAPI.controller().refreshCurrentServer(schandlerId);
+    protected <T> T get(String[] arguments, String identifier, Class<T> clazz) {
+        return ArgumentParser.parse(arguments, identifier, clazz);
+    }
+
+    protected <T> T get(String argument, String identifier, Class<T> clazz) {
+        return ArgumentParser.parse(argument, identifier, clazz);
+    }
+
+    public String getIdentifier() {
+        return this.identifier;
+    }
+
+    public boolean needsToBeRegistered() {
+        return this.register;
+    }
+
+    protected void registerNotify(boolean register) {
+        this.register = register;
     }
 }

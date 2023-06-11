@@ -16,7 +16,7 @@
 
 package com.rettichlp.unicacityaddon.base.teamspeak.misc;
 
-import com.rettichlp.unicacityaddon.base.teamspeak.DefaultTeamSpeakAPI;
+import com.rettichlp.unicacityaddon.base.teamspeak.TeamSpeakAPI;
 import net.labymod.api.Laby;
 import net.labymod.api.util.concurrent.task.Task;
 
@@ -24,43 +24,44 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 /**
- * The original code is available at: <a href="https://github.com/labymod-addons/teamspeak">https://github.com/labymod-addons/teamspeak</a>.
+ * This code was modified. The original code is available at: <a href="https://github.com/labymod-addons/teamspeak">https://github.com/labymod-addons/teamspeak</a>.
  * <p>
  * The following code is subject to the LGPL Version 2.1.
  *
  * @author jumpingpxl
+ * @author RettichLP
  */
 public class ReconnectController {
 
-  private final DefaultTeamSpeakAPI teamSpeakAPI;
-  private Task task;
+    private final TeamSpeakAPI teamSpeakAPI;
+    private Task task;
 
-  public ReconnectController(DefaultTeamSpeakAPI teamSpeakAPI) {
-    this.teamSpeakAPI = teamSpeakAPI;
-  }
+    public ReconnectController(TeamSpeakAPI teamSpeakAPI) {
+        this.teamSpeakAPI = teamSpeakAPI;
+    }
 
-  public void start() {
-    Laby.labyAPI().minecraft().executeOnRenderThread(() -> {
-      if (this.task != null) {
-        return;
-      }
+    public void start() {
+        Laby.labyAPI().minecraft().executeOnRenderThread(() -> {
+            if (this.task != null) {
+                return;
+            }
 
-      this.task = Task.builder(() -> {
-        if (this.teamSpeakAPI.isConnected()) {
-          return;
-        }
+            this.task = Task.builder(() -> {
+                if (this.teamSpeakAPI.isConnected()) {
+                    return;
+                }
 
-        this.task = null;
-        new Thread(() -> {
-          try {
-            this.teamSpeakAPI.initialize();
-          } catch (IOException e) {
-            e.printStackTrace();
-          }
-        }).start();
-      }).delay(10, TimeUnit.SECONDS).build();
+                this.task = null;
+                new Thread(() -> {
+                    try {
+                        this.teamSpeakAPI.initialize();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }).start();
+            }).delay(10, TimeUnit.SECONDS).build();
 
-      this.task.execute();
-    });
-  }
+            this.task.execute();
+        });
+    }
 }
