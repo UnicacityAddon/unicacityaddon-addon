@@ -91,7 +91,7 @@ public class MessagePart {
         }
 
         public Builder underline() {
-            this.formattingCodes.add(FormattingCode.UNDERLINE);
+            this.formattingCodes.add(FormattingCode.UNDERLINED);
             return this;
         }
 

@@ -128,7 +128,7 @@ public class Message {
                     builder.decorate(TextDecoration.STRIKETHROUGH);
                 }
 
-                if (messagePart.getFormattingCodes().contains(FormattingCode.UNDERLINE)) {
+                if (messagePart.getFormattingCodes().contains(FormattingCode.UNDERLINED)) {
                     builder.decorate(TextDecoration.UNDERLINED);
                 }
 

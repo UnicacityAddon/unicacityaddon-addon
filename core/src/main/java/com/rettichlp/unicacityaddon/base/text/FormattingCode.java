@@ -13,7 +13,7 @@ public enum FormattingCode {
     OBFUSCATED("§k"),
     BOLD("§l"),
     STRIKETHROUGH("§m"),
-    UNDERLINE("§n"),
+    UNDERLINED("§n"),
     ITALIC("§o"),
     RESET("§r");
 
