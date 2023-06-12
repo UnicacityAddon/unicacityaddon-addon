@@ -56,8 +56,6 @@ public class TextUtils {
                 stringBuilder.append(legacy(children.get(0)));
             }
 
-            System.out.println("=====================================================");
-            System.out.printf("%s = %s%n%s = %s%n", "Component", component, "Output", stringBuilder);
             return stringBuilder.toString();
         }
 
