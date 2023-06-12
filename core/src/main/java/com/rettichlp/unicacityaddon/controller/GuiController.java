@@ -16,4 +16,6 @@ public abstract class GuiController {
     public abstract void inventoryClick(UnicacityAddon unicacityAddon, int slotNumber);
 
     public abstract void updateDrugInventoryMap(UnicacityAddon unicacityAddon);
+
+    public abstract void setSelectedHotbarSlot(int slotNumber);
 }

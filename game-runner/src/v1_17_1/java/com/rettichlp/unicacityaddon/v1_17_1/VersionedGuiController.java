@@ -165,4 +165,10 @@ public class VersionedGuiController extends GuiController {
             this.inventoryClick(unicacityAddon, 4);
         }
     }
+
+    @Override
+    public void setSelectedHotbarSlot(int slotNumber) {
+        assert Minecraft.getInstance().player != null;
+        Minecraft.getInstance().player.getInventory().selected = slotNumber;
+    }
 }
