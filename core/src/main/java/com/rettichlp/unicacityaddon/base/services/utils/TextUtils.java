@@ -1,9 +1,14 @@
 package com.rettichlp.unicacityaddon.base.services.utils;
 
+import com.rettichlp.unicacityaddon.base.text.ColorCode;
+import com.rettichlp.unicacityaddon.base.text.FormattingCode;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
-import net.labymod.api.Laby;
 import net.labymod.api.client.component.Component;
+import net.labymod.api.client.component.TextComponent;
+import net.labymod.api.client.component.format.Style;
+import net.labymod.api.client.component.format.TextDecoration;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -20,8 +25,43 @@ public class TextUtils {
      * @param component Component to be converted to formatted string
      * @return converted string of component
      */
-    public String legacy(Component component) { // TODO ist kaputt
-        return Laby.references().renderPipeline().componentRenderer().legacySectionSerializer().serialize(component);
+    public String legacy(Component component) {
+        if (component instanceof TextComponent textComponent) {
+            String text = textComponent.getText();
+            Style style = textComponent.style();
+
+            StringBuilder stringBuilder = new StringBuilder();
+            for (TextDecoration textDecoration : TextDecoration.values()) {
+                if (style.isDecorationSet(textDecoration)) {
+                    stringBuilder.append(switch (textDecoration) {
+                        case OBFUSCATED -> FormattingCode.OBFUSCATED.getCode();
+                        case BOLD -> FormattingCode.BOLD.getCode();
+                        case STRIKETHROUGH -> FormattingCode.STRIKETHROUGH.getCode();
+                        case UNDERLINED -> FormattingCode.UNDERLINED.getCode();
+                        case ITALIC -> FormattingCode.ITALIC.getCode();
+                    });
+                }
+            }
+
+            for (ColorCode colorCode : ColorCode.values()) {
+                if (style.getColor() != null && style.getColor().equals(colorCode.getTextColor())) {
+                    stringBuilder.append(colorCode.getCode());
+                }
+            }
+
+            stringBuilder.append(text);
+
+            List<Component> children = component.getChildren();
+            if (!children.isEmpty()) {
+                stringBuilder.append(legacy(children.get(0)));
+            }
+
+            System.out.println("=====================================================");
+            System.out.printf("%s = %s%n%s = %s%n", "Component", component, "Output", stringBuilder);
+            return stringBuilder.toString();
+        }
+
+        return "";
     }
 
     /**
@@ -31,7 +71,21 @@ public class TextUtils {
      * @return converted string of component
      */
     public String plain(Component component) {
-        return Laby.references().renderPipeline().componentRenderer().plainSerializer().serialize(component);
+        if (component instanceof TextComponent textComponent) {
+            String text = textComponent.getText();
+
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append(text);
+
+            List<Component> children = component.getChildren();
+            if (!children.isEmpty()) {
+                stringBuilder.append(" ").append(plain(children.get(0)));
+            }
+
+            return stringBuilder.toString();
+        }
+
+        return "";
     }
 
     /**
