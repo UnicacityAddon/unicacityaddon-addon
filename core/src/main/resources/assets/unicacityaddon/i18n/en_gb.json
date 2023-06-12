@@ -60,6 +60,9 @@
         },
         "others": {
           "name": "Other"
+        },
+        "debug": {
+          "name": "Debug"
         }
       },
       "name": "UnicacityAddon",
@@ -460,6 +463,10 @@
       "addonTag": {
         "name": "Team Tag Addon",
         "description": "Displays the team rank above the name"
+      },
+      "debug": {
+        "name": "Debug",
+        "description": "Displays debug messages"
       }
     }
   }

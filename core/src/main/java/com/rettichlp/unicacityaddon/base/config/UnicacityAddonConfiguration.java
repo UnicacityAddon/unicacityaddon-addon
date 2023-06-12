@@ -65,4 +65,6 @@ public interface UnicacityAddonConfiguration {
 //    SoundSetting soundSetting();
 
     ConfigProperty<Boolean> addonTag();
+
+    ConfigProperty<Boolean> debug();
 }

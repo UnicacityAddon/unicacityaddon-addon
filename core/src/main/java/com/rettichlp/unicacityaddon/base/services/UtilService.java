@@ -71,14 +71,15 @@ public class UtilService {
         return false;
     }
 
-    @SuppressWarnings("unused")
     public void debug(String debugMessage) {
-        this.unicacityAddon.player().sendMessage(Message.getBuilder()
-                .of("[").color(ColorCode.DARK_GRAY).advance()
-                .of("DEBUG").color(ColorCode.YELLOW).advance()
-                .of("]").color(ColorCode.DARK_GRAY).advance().space()
-                .add(debugMessage)
-                .createComponent());
+        if (this.unicacityAddon.configuration().debug().get()) {
+            this.unicacityAddon.player().sendMessage(Message.getBuilder()
+                    .of("[").color(ColorCode.DARK_GRAY).advance()
+                    .of("DEBUG").color(ColorCode.YELLOW).advance()
+                    .of("]").color(ColorCode.DARK_GRAY).advance().space()
+                    .add(debugMessage)
+                    .createComponent());
+        }
     }
 
     public List<String> getOnlinePlayers() {

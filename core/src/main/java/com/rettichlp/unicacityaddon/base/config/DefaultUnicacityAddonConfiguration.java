@@ -99,6 +99,10 @@ public class DefaultUnicacityAddonConfiguration extends AddonConfig implements U
     @SwitchSetting
     private final ConfigProperty<Boolean> addonTag = new ConfigProperty<>(true);
 
+    @SettingSection("debug")
+    @SwitchSetting
+    private final ConfigProperty<Boolean> debug = new ConfigProperty<>(false);
+
     @Override
     public ConfigProperty<Boolean> enabled() {
         return this.enabled;
@@ -212,5 +216,10 @@ public class DefaultUnicacityAddonConfiguration extends AddonConfig implements U
     @Override
     public ConfigProperty<Boolean> addonTag() {
         return this.addonTag;
+    }
+
+    @Override
+    public ConfigProperty<Boolean> debug() {
+        return this.debug;
     }
 }
