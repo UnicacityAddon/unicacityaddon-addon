@@ -3,8 +3,8 @@ package com.rettichlp.unicacityaddon.listener.team;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
-import com.rettichlp.unicacityaddon.base.config.hotkey.Hotkey;
-import com.rettichlp.unicacityaddon.base.config.message.Report;
+import com.rettichlp.unicacityaddon.base.config.hotkey.HotkeyConfiguration;
+import com.rettichlp.unicacityaddon.base.config.message.MessageConfiguration;
 import com.rettichlp.unicacityaddon.base.events.HotkeyEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
@@ -44,18 +44,18 @@ public class ReportListener {
     public void onChatReceive(ChatReceiveEvent e) {
         AddonPlayer p = this.unicacityAddon.player();
         String unformattedMsg = e.chatMessage().getPlainText();
-        Report report = this.unicacityAddon.configuration().report();
+        MessageConfiguration messageConfiguration = this.unicacityAddon.configuration().message();
 
         if (PatternHandler.REPORT_ACCEPTED_PATTERN.matcher(unformattedMsg).find()) {
             isReport = true;
 
-            if (report.greeting().getOrDefault("").isEmpty())
+            if (messageConfiguration.greeting().getOrDefault("").isEmpty())
                 return;
             t.schedule(new TimerTask() {
                 @Override
                 public void run() {
                     if (System.currentTimeMillis() - lastExecution > 1000L) {
-                        p.sendServerMessage(report.greeting().get());
+                        p.sendServerMessage(messageConfiguration.greeting().get());
                         lastExecution = System.currentTimeMillis();
                     }
                 }
@@ -70,7 +70,7 @@ public class ReportListener {
 
         if (unformattedMsg.startsWith(ColorCode.DARK_PURPLE.getCode()) && isReport) {
             Message.Builder messageBuilder = Message.getBuilder()
-                    .add(report.prefix().getOrDefault("").replaceAll("&", "§"));
+                    .add(messageConfiguration.prefix().getOrDefault("").replaceAll("&", "§"));
 
             Arrays.stream(unformattedMsg.split(" ")).forEach(s -> {
                 if (urlPattern.matcher(s).find())
@@ -98,12 +98,12 @@ public class ReportListener {
     public void onHotkey(HotkeyEvent e) {
         AddonPlayer p = this.unicacityAddon.player();
         Key key = e.key();
-        Hotkey hotkey = e.hotkey();
+        HotkeyConfiguration hotkeyConfiguration = e.hotkey();
 
-        if (key.equals(hotkey.acceptReport().get())) {
+        if (key.equals(hotkeyConfiguration.acceptReport().get())) {
             p.sendServerMessage("/ar");
-        } else if (key.equals(hotkey.cancelReport().get())) {
-            String farewell = this.unicacityAddon.configuration().report().farewell().get();
+        } else if (key.equals(hotkeyConfiguration.cancelReport().get())) {
+            String farewell = this.unicacityAddon.configuration().message().farewell().get();
             if (!farewell.isEmpty())
                 p.sendServerMessage(farewell);
             p.sendServerMessage("/cr");

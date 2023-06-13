@@ -1,16 +1,15 @@
 package com.rettichlp.unicacityaddon.base.config;
 
-import com.rettichlp.unicacityaddon.base.config.atm.ATM;
-import com.rettichlp.unicacityaddon.base.config.equip.Equip;
-import com.rettichlp.unicacityaddon.base.config.hotkey.Hotkey;
-import com.rettichlp.unicacityaddon.base.config.join.Command;
-import com.rettichlp.unicacityaddon.base.config.join.Password;
-import com.rettichlp.unicacityaddon.base.config.message.Faction;
-import com.rettichlp.unicacityaddon.base.config.message.Report;
-import com.rettichlp.unicacityaddon.base.config.nametag.NameTag;
-import com.rettichlp.unicacityaddon.base.config.ownUse.OwnUse;
-import com.rettichlp.unicacityaddon.base.config.reinforcement.Reinforcement;
-import com.rettichlp.unicacityaddon.base.config.sloc.Sloc;
+import com.rettichlp.unicacityaddon.base.config.atm.ATMConfiguration;
+import com.rettichlp.unicacityaddon.base.config.equip.EquipConfiguration;
+import com.rettichlp.unicacityaddon.base.config.hotkey.HotkeyConfiguration;
+import com.rettichlp.unicacityaddon.base.config.join.CommandConfiguration;
+import com.rettichlp.unicacityaddon.base.config.join.PasswordConfiguration;
+import com.rettichlp.unicacityaddon.base.config.message.MessageConfiguration;
+import com.rettichlp.unicacityaddon.base.config.nametag.NameTagConfiguration;
+import com.rettichlp.unicacityaddon.base.config.ownUse.OwnUseConfiguration;
+import com.rettichlp.unicacityaddon.base.config.reinforcementsloc.ReinforcementConfiguration;
+import com.rettichlp.unicacityaddon.base.config.reinforcementsloc.SlocConfiguration;
 import net.labymod.api.configuration.loader.property.ConfigProperty;
 
 /**
@@ -20,39 +19,37 @@ public interface UnicacityAddonConfiguration {
 
     ConfigProperty<Boolean> enabled();
 
-    Hotkey hotkey();
+    HotkeyConfiguration hotkey();
 
     // nametags
 
-    NameTag nameTag();
+    NameTagConfiguration nametag();
 
     // faction
 
-    Reinforcement reinforcement();
+    ReinforcementConfiguration reinforcement();
 
-    Sloc sloc();
+    SlocConfiguration sloc();
 
-    Faction faction();
+    EquipConfiguration equip();
 
-    Equip equip();
-
-    OwnUse ownUse();
+    OwnUseConfiguration ownUse();
 
     // message
 
-    Report report();
+    MessageConfiguration message();
 
     // join
 
-    Password password();
+    PasswordConfiguration password();
 
-    Command command();
+    CommandConfiguration command();
 
     ConfigProperty<Boolean> texturePack();
 
     // automation
 
-    ATM atm();
+    ATMConfiguration atm();
 
     ConfigProperty<Boolean> bombScreenshot();
 

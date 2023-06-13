@@ -40,8 +40,8 @@ public enum Equip {
     SNIPER(Weapon.VIPER_9.getName(), Weapon.VIPER_9.getName(), (configuration) -> configuration.equip().sniper().getOrDefault("2700")),
     DEFUSE_KIT("Defuse Kit", "Defuse-Kit", (configuration) -> configuration.equip().state().defuseKit().getOrDefault("500")),
     TRACKER("Peilsender", "Peilsender", (configuration) -> configuration.equip().state().tracker().getOrDefault("0")),
-    EXPLOSIVEBELT("Sprenggürtel", "Sprenggürtel", (configuration) -> configuration.equip().terror().explosiveBelt().getOrDefault("0")),
-    RPG7(Weapon.ALPHA_7.getName(), Weapon.ALPHA_7.getName(), (configuration) -> configuration.equip().terror().rpg7().getOrDefault("0")),
+    EXPLOSIVEBELT("Sprenggürtel", "Sprenggürtel", (configuration) -> configuration.equip().terrorist().explosiveBelt().getOrDefault("0")),
+    RPG7(Weapon.ALPHA_7.getName(), Weapon.ALPHA_7.getName(), (configuration) -> configuration.equip().terrorist().rpg7().getOrDefault("0")),
     NOTEPAD("Notizblock", "Notizblock", (configuration) -> configuration.equip().news().notepad().getOrDefault("0")), // UnicaCity Bug (Nachricht gibt es noch nicht)
     GLASSCUTTER("Glasschneider", "Glasschneider", (configuration) -> configuration.equip().hitman().glassCutter().getOrDefault("0")),
     LOCKPICK("Dietrich", "Dietrich", (configuration) -> configuration.equip().hitman().lockPick().getOrDefault("0"));

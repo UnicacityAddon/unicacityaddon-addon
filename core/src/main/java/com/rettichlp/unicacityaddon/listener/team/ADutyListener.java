@@ -3,7 +3,7 @@ package com.rettichlp.unicacityaddon.listener.team;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
-import com.rettichlp.unicacityaddon.base.config.hotkey.Hotkey;
+import com.rettichlp.unicacityaddon.base.config.hotkey.HotkeyConfiguration;
 import com.rettichlp.unicacityaddon.base.events.HotkeyEvent;
 import net.labymod.api.client.gui.screen.key.Key;
 import net.labymod.api.event.Subscribe;
@@ -24,11 +24,11 @@ public class ADutyListener {
     public void onHotkey(HotkeyEvent e) {
         AddonPlayer p = this.unicacityAddon.player();
         Key key = e.key();
-        Hotkey hotkey = e.hotkey();
+        HotkeyConfiguration hotkeyConfiguration = e.hotkey();
 
-        if (key.equals(hotkey.aDuty().get())) {
+        if (key.equals(hotkeyConfiguration.aDuty().get())) {
             p.sendServerMessage("/aduty");
-        } else if (key.equals(hotkey.aDutySilent().get())) {
+        } else if (key.equals(hotkeyConfiguration.aDutySilent().get())) {
             p.sendServerMessage("/aduty -s");
         }
     }

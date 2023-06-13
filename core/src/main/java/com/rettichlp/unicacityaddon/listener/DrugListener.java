@@ -4,7 +4,7 @@ package com.rettichlp.unicacityaddon.listener;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
-import com.rettichlp.unicacityaddon.base.config.ownUse.OwnUse;
+import com.rettichlp.unicacityaddon.base.config.ownUse.OwnUseConfiguration;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
@@ -46,7 +46,7 @@ public class DrugListener {
         AddonPlayer p = this.unicacityAddon.player();
         String playerName = p.getName();
 
-        boolean hqMessageSetting = this.unicacityAddon.configuration().faction().hq().get();
+        boolean hqMessageSetting = this.unicacityAddon.configuration().message().hq().get();
 
         Matcher drugGetMatcher = PatternHandler.DRUG_GET_PATTERN.matcher(msg);
         if (drugGetMatcher.find()) {
@@ -154,11 +154,11 @@ public class DrugListener {
             DrugPurity drugPurity = DrugPurity.BEST;
 
             if (drugType != null) {
-                OwnUse ownUse = this.unicacityAddon.configuration().ownUse();
+                OwnUseConfiguration ownUseConfiguration = this.unicacityAddon.configuration().ownUse();
                 switch (drugType) {
-                    case COCAINE -> drugPurity = ownUse.cocaine().purity().get();
-                    case MARIJUANA -> drugPurity = ownUse.marijuana().purity().get();
-                    case METH -> drugPurity = ownUse.methamphetamin().purity().get();
+                    case COCAINE -> drugPurity = ownUseConfiguration.cocaine().purity().get();
+                    case MARIJUANA -> drugPurity = ownUseConfiguration.marijuana().purity().get();
+                    case METH -> drugPurity = ownUseConfiguration.methamphetamin().purity().get();
                 }
             }
 
@@ -284,7 +284,7 @@ public class DrugListener {
             }
         }
 
-        if (this.unicacityAddon.configuration().faction().hq().get()) {
+        if (this.unicacityAddon.configuration().message().hq().get()) {
             Matcher plantBurnMatcher = PatternHandler.PLANT_BURN_PATTERN.matcher(msg);
             if (plantBurnMatcher.find()) {
                 e.setMessage(Message.getBuilder().of("Plant-Burn").color(ColorCode.RED).bold().advance().space()

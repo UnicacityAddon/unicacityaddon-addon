@@ -34,7 +34,7 @@ public class HouseBanTag extends NameTag {
     @Override
     protected @Nullable RenderableComponent getRenderableComponent() {
         UnicacityAddonConfiguration unicacityAddonConfiguration = this.unicacityAddon.configuration();
-        boolean isEnabled = unicacityAddonConfiguration.enabled().get() && unicacityAddonConfiguration.nameTag().houseBan().get();
+        boolean isEnabled = unicacityAddonConfiguration.enabled().get() && unicacityAddonConfiguration.nametag().houseban().get();
 
         Optional<Player> playerOptional = this.unicacityAddon.player().getWorld().getPlayers().stream()
                 .filter(p -> p.gameUser().getUniqueId().equals(this.entity.getUniqueId()))

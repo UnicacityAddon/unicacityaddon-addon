@@ -4,8 +4,8 @@ import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.api.NaviPoint;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
-import com.rettichlp.unicacityaddon.base.config.hotkey.Hotkey;
-import com.rettichlp.unicacityaddon.base.config.reinforcement.DefaultReinforcement;
+import com.rettichlp.unicacityaddon.base.config.hotkey.HotkeyConfiguration;
+import com.rettichlp.unicacityaddon.base.config.reinforcementsloc.DefaultReinforcementConfiguration;
 import com.rettichlp.unicacityaddon.base.enums.faction.ReinforcementType;
 import com.rettichlp.unicacityaddon.base.events.HotkeyEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
@@ -77,7 +77,7 @@ public class ReinforcementListener {
                 navipointString = navipoint.getName().replace("-", " ");
             }
 
-            p.sendMessage(this.unicacityAddon.configuration().reinforcement().reinforcement().getOrDefault(DefaultReinforcement.REINFORCEMENT)
+            p.sendMessage(this.unicacityAddon.configuration().reinforcement().reinforcement().getOrDefault(DefaultReinforcementConfiguration.REINFORCEMENT)
                     .replace("&", "§")
                     .replace("%type%", type)
                     .replace("%sender%", fullName)
@@ -110,7 +110,7 @@ public class ReinforcementListener {
             String reinforcementSenderName = onTheWayMatcher.group(3);
             String distance = onTheWayMatcher.group(4);
 
-            p.sendMessage(this.unicacityAddon.configuration().reinforcement().answer().getOrDefault(DefaultReinforcement.ANSWER)
+            p.sendMessage(this.unicacityAddon.configuration().reinforcement().answer().getOrDefault(DefaultReinforcementConfiguration.ANSWER)
                     .replace("&", "§")
                     .replace("%sender%", senderFullName)
                     .replace("%target%", reinforcementSenderName)
@@ -141,11 +141,11 @@ public class ReinforcementListener {
     public void onHotkey(HotkeyEvent e) {
         AddonPlayer p = this.unicacityAddon.player();
         Key key = e.key();
-        Hotkey hotkey = e.hotkey();
+        HotkeyConfiguration hotkeyConfiguration = e.hotkey();
 
-        if (key.equals(hotkey.reinforcementFaction().get())) {
+        if (key.equals(hotkeyConfiguration.reinforcementFaction().get())) {
             p.sendServerMessage("/reinforcement -f");
-        } else if (key.equals(hotkey.reinforcementAlliance().get())) {
+        } else if (key.equals(hotkeyConfiguration.reinforcementAlliance().get())) {
             p.sendServerMessage("/reinforcement -d");
         }
     }

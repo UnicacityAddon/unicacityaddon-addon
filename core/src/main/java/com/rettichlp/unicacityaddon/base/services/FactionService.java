@@ -26,7 +26,7 @@ public class FactionService {
     }
 
     public String getNameTagSuffix(Faction faction) {
-        return this.unicacityAddon.configuration().nameTag().factionInfo().get() ? faction.getNameTagSuffix() : "";
+        return this.unicacityAddon.configuration().nametag().info().get() ? faction.getNameTagSuffix() : "";
     }
 
     public String getWebsiteSource(Faction faction) {

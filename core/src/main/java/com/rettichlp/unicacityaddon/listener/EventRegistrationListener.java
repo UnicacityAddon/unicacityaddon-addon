@@ -3,7 +3,7 @@ package com.rettichlp.unicacityaddon.listener;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.config.UnicacityAddonConfiguration;
-import com.rettichlp.unicacityaddon.base.config.hotkey.Hotkey;
+import com.rettichlp.unicacityaddon.base.config.hotkey.HotkeyConfiguration;
 import com.rettichlp.unicacityaddon.base.events.HotkeyEvent;
 import com.rettichlp.unicacityaddon.base.events.UnicacityAddonTickEvent;
 import net.labymod.api.Laby;
@@ -79,8 +79,8 @@ public class EventRegistrationListener {
                 return;
             }
 
-            Hotkey hotkey = configuration.hotkey();
-            if (!Laby.references().chatAccessor().isChatOpen() && this.unicacityAddon.services().util().isUnicacity() && hotkey.enabled().get()) {
+            HotkeyConfiguration hotkeyConfiguration = configuration.hotkey();
+            if (!Laby.references().chatAccessor().isChatOpen() && this.unicacityAddon.services().util().isUnicacity() && hotkeyConfiguration.enabled().get()) {
                 this.unicacityAddon.labyAPI().eventBus().fire(new HotkeyEvent(this.unicacityAddon, key));
             }
         }

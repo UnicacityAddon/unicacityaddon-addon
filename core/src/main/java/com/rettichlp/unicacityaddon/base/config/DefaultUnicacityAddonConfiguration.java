@@ -1,27 +1,25 @@
 package com.rettichlp.unicacityaddon.base.config;
 
-import com.rettichlp.unicacityaddon.base.config.atm.ATM;
-import com.rettichlp.unicacityaddon.base.config.atm.DefaultATM;
-import com.rettichlp.unicacityaddon.base.config.equip.DefaultEquip;
-import com.rettichlp.unicacityaddon.base.config.equip.Equip;
-import com.rettichlp.unicacityaddon.base.config.hotkey.DefaultHotkey;
-import com.rettichlp.unicacityaddon.base.config.hotkey.Hotkey;
-import com.rettichlp.unicacityaddon.base.config.join.Command;
-import com.rettichlp.unicacityaddon.base.config.join.DefaultCommand;
-import com.rettichlp.unicacityaddon.base.config.join.DefaultPassword;
-import com.rettichlp.unicacityaddon.base.config.join.Password;
-import com.rettichlp.unicacityaddon.base.config.message.DefaultFaction;
-import com.rettichlp.unicacityaddon.base.config.message.DefaultReport;
-import com.rettichlp.unicacityaddon.base.config.message.Faction;
-import com.rettichlp.unicacityaddon.base.config.message.Report;
-import com.rettichlp.unicacityaddon.base.config.nametag.DefaultNameTag;
-import com.rettichlp.unicacityaddon.base.config.nametag.NameTag;
-import com.rettichlp.unicacityaddon.base.config.ownUse.DefaultOwnUse;
-import com.rettichlp.unicacityaddon.base.config.ownUse.OwnUse;
-import com.rettichlp.unicacityaddon.base.config.reinforcement.DefaultReinforcement;
-import com.rettichlp.unicacityaddon.base.config.reinforcement.Reinforcement;
-import com.rettichlp.unicacityaddon.base.config.sloc.DefaultSloc;
-import com.rettichlp.unicacityaddon.base.config.sloc.Sloc;
+import com.rettichlp.unicacityaddon.base.config.atm.ATMConfiguration;
+import com.rettichlp.unicacityaddon.base.config.atm.DefaultATMConfiguration;
+import com.rettichlp.unicacityaddon.base.config.equip.DefaultEquipConfiguration;
+import com.rettichlp.unicacityaddon.base.config.equip.EquipConfiguration;
+import com.rettichlp.unicacityaddon.base.config.hotkey.DefaultHotkeyConfiguration;
+import com.rettichlp.unicacityaddon.base.config.hotkey.HotkeyConfiguration;
+import com.rettichlp.unicacityaddon.base.config.join.CommandConfiguration;
+import com.rettichlp.unicacityaddon.base.config.join.DefaultCommandConfiguration;
+import com.rettichlp.unicacityaddon.base.config.join.DefaultPasswordConfiguration;
+import com.rettichlp.unicacityaddon.base.config.join.PasswordConfiguration;
+import com.rettichlp.unicacityaddon.base.config.message.DefaultMessageConfiguration;
+import com.rettichlp.unicacityaddon.base.config.message.MessageConfiguration;
+import com.rettichlp.unicacityaddon.base.config.nametag.DefaultNameTagConfiguration;
+import com.rettichlp.unicacityaddon.base.config.nametag.NameTagConfiguration;
+import com.rettichlp.unicacityaddon.base.config.ownUse.DefaultOwnUseConfiguration;
+import com.rettichlp.unicacityaddon.base.config.ownUse.OwnUseConfiguration;
+import com.rettichlp.unicacityaddon.base.config.reinforcementsloc.DefaultReinforcementConfiguration;
+import com.rettichlp.unicacityaddon.base.config.reinforcementsloc.DefaultSlocConfiguration;
+import com.rettichlp.unicacityaddon.base.config.reinforcementsloc.ReinforcementConfiguration;
+import com.rettichlp.unicacityaddon.base.config.reinforcementsloc.SlocConfiguration;
 import net.labymod.api.addon.AddonConfig;
 import net.labymod.api.client.gui.screen.widget.widgets.input.SliderWidget.SliderSetting;
 import net.labymod.api.client.gui.screen.widget.widgets.input.SwitchWidget.SwitchSetting;
@@ -36,35 +34,33 @@ public class DefaultUnicacityAddonConfiguration extends AddonConfig implements U
     @SwitchSetting
     private final ConfigProperty<Boolean> enabled = new ConfigProperty<>(true);
 
-    private final DefaultHotkey hotkey = new DefaultHotkey();
+    private final DefaultHotkeyConfiguration hotkey = new DefaultHotkeyConfiguration();
 
     @SettingSection("nametag")
-    private final DefaultNameTag nameTag = new DefaultNameTag();
+    private final DefaultNameTagConfiguration nametag = new DefaultNameTagConfiguration();
 
     @SettingSection("faction")
-    private final DefaultReinforcement reinforcement = new DefaultReinforcement();
+    private final DefaultReinforcementConfiguration reinforcement = new DefaultReinforcementConfiguration();
 
-    private final DefaultSloc sloc = new DefaultSloc();
+    private final DefaultSlocConfiguration sloc = new DefaultSlocConfiguration();
 
-    private final DefaultFaction faction = new DefaultFaction();
+    private final DefaultEquipConfiguration equip = new DefaultEquipConfiguration();
 
-    private final DefaultEquip equip = new DefaultEquip();
+    private final DefaultOwnUseConfiguration ownUse = new DefaultOwnUseConfiguration();
 
-    private final DefaultOwnUse ownUse = new DefaultOwnUse();
-
-    @SettingSection("report")
-    private final DefaultReport report = new DefaultReport();
+    @SettingSection("message")
+    private final DefaultMessageConfiguration message = new DefaultMessageConfiguration();
 
     @SettingSection("join")
-    private final DefaultPassword password = new DefaultPassword();
+    private final DefaultPasswordConfiguration password = new DefaultPasswordConfiguration();
 
-    private final DefaultCommand command = new DefaultCommand();
+    private final DefaultCommandConfiguration command = new DefaultCommandConfiguration();
 
     @SwitchSetting
     private final ConfigProperty<Boolean> texturePack = new ConfigProperty<>(true);
 
     @SettingSection("automation")
-    private final DefaultATM atm = new DefaultATM();
+    private final DefaultATMConfiguration atm = new DefaultATMConfiguration();
 
     @SwitchSetting
     private final ConfigProperty<Boolean> bombScreenshot = new ConfigProperty<>(true);
@@ -105,42 +101,37 @@ public class DefaultUnicacityAddonConfiguration extends AddonConfig implements U
     }
 
     @Override
-    public NameTag nameTag() {
-        return this.nameTag;
+    public NameTagConfiguration nametag() {
+        return this.nametag;
     }
 
     @Override
-    public Hotkey hotkey() {
+    public HotkeyConfiguration hotkey() {
         return this.hotkey;
     }
 
     @Override
-    public Reinforcement reinforcement() {
+    public ReinforcementConfiguration reinforcement() {
         return this.reinforcement;
     }
 
     @Override
-    public Sloc sloc() {
+    public SlocConfiguration sloc() {
         return this.sloc;
     }
 
     @Override
-    public Faction faction() {
-        return this.faction;
+    public MessageConfiguration message() {
+        return this.message;
     }
 
     @Override
-    public Report report() {
-        return this.report;
-    }
-
-    @Override
-    public Password password() {
+    public PasswordConfiguration password() {
         return this.password;
     }
 
     @Override
-    public Command command() {
+    public CommandConfiguration command() {
         return this.command;
     }
 
@@ -150,7 +141,7 @@ public class DefaultUnicacityAddonConfiguration extends AddonConfig implements U
     }
 
     @Override
-    public ATM atm() {
+    public ATMConfiguration atm() {
         return this.atm;
     }
 
@@ -190,12 +181,12 @@ public class DefaultUnicacityAddonConfiguration extends AddonConfig implements U
     }
 
     @Override
-    public Equip equip() {
+    public EquipConfiguration equip() {
         return this.equip;
     }
 
     @Override
-    public OwnUse ownUse() {
+    public OwnUseConfiguration ownUse() {
         return this.ownUse;
     }
 

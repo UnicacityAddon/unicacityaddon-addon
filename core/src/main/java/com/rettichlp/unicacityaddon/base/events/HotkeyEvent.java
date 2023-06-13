@@ -1,7 +1,7 @@
 package com.rettichlp.unicacityaddon.base.events;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.config.hotkey.Hotkey;
+import com.rettichlp.unicacityaddon.base.config.hotkey.HotkeyConfiguration;
 import net.labymod.api.client.gui.screen.key.Key;
 import net.labymod.api.event.Event;
 
@@ -23,7 +23,7 @@ public class HotkeyEvent implements Event {
         return key;
     }
 
-    public Hotkey hotkey() {
+    public HotkeyConfiguration hotkey() {
         return this.unicacityAddon.configuration().hotkey();
     }
 }
