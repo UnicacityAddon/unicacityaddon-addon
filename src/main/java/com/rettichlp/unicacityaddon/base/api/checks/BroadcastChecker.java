@@ -1,5 +1,6 @@
 package com.rettichlp.unicacityaddon.base.api.checks;
 
+import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
 import com.rettichlp.unicacityaddon.base.api.Syncer;
@@ -32,20 +33,22 @@ public class BroadcastChecker {
                 timer.schedule(new TimerTask() {
                     @Override
                     public void run() {
-                        p.sendEmptyMessage();
-                        p.sendEmptyMessage();
+                        if (!UnicacityAddon.isUnicacity()) {
+                            p.sendEmptyMessage();
+                            p.sendEmptyMessage();
 
-                        p.sendMessage(Message.getBuilder()
-                                .of("BROADCAST BY ").color(ColorCode.DARK_AQUA).bold().advance().space()
-                                .of(broadcast.getIssuerName().toUpperCase()).color(ColorCode.DARK_AQUA).bold().advance()
-                                .createComponent());
+                            p.sendMessage(Message.getBuilder()
+                                    .of("BROADCAST BY ").color(ColorCode.DARK_AQUA).bold().advance().space()
+                                    .of(broadcast.getIssuerName().toUpperCase()).color(ColorCode.DARK_AQUA).bold().advance()
+                                    .createComponent());
 
-                        p.sendMessage(Message.getBuilder()
-                                .of(broadcast.getBroadcast()).color(ColorCode.AQUA).advance()
-                                .createComponent());
+                            p.sendMessage(Message.getBuilder()
+                                    .of(broadcast.getBroadcast()).color(ColorCode.AQUA).advance()
+                                    .createComponent());
 
-                        p.sendEmptyMessage();
-                        p.sendEmptyMessage();
+                            p.sendEmptyMessage();
+                            p.sendEmptyMessage();
+                        }
                     }
                 }, new Date(broadcast.getSendTime()));
             }

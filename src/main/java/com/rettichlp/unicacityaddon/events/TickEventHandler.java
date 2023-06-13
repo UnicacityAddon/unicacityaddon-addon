@@ -72,7 +72,9 @@ public class TickEventHandler {
 
             // 30 SECONDS
             if (currentTick % 600 == 0) {
-                BroadcastChecker.checkForBroadcast();
+                if (!UnicacityAddon.isUnicacity()) {
+                    BroadcastChecker.checkForBroadcast();
+                }
                 GangwarEventHandler.sendData();
             }
 

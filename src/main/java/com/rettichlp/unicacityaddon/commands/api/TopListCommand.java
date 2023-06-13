@@ -27,7 +27,7 @@ import static com.rettichlp.unicacityaddon.base.utils.MathUtils.DECIMAL_FORMAT;
 /**
  * @author RettichLP
  */
-@UCCommand
+@Deprecated // deactivated
 public class TopListCommand implements IClientCommand {
 
     @Override

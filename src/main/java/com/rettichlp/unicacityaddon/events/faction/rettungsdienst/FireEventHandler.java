@@ -21,7 +21,7 @@ import java.util.stream.StreamSupport;
 /**
  * @author RettichLP
  */
-@UCEvent
+@Deprecated // deactivated
 public class FireEventHandler {
 
     /**
