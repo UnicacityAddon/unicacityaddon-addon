@@ -20,8 +20,6 @@ import com.rettichlp.unicacityaddon.base.config.reinforcement.DefaultReinforceme
 import com.rettichlp.unicacityaddon.base.config.reinforcement.ReinforcementConfiguration;
 import com.rettichlp.unicacityaddon.base.config.sloc.DefaultSlocConfiguration;
 import com.rettichlp.unicacityaddon.base.config.sloc.SlocConfiguration;
-import com.rettichlp.unicacityaddon.base.config.tablist.DefaultTabListConfiguration;
-import com.rettichlp.unicacityaddon.base.config.tablist.TabListConfiguration;
 import com.rettichlp.unicacityaddon.base.config.teamspeak.DefaultTeamSpeakConfiguration;
 import com.rettichlp.unicacityaddon.base.config.teamspeak.TeamSpeakConfiguration;
 import net.labymod.api.addon.AddonConfig;
@@ -77,7 +75,7 @@ public class DefaultUnicacityAddonConfiguration extends AddonConfig implements U
     @SettingSection("other")
     private final DefaultTeamSpeakConfiguration teamspeak = new DefaultTeamSpeakConfiguration();
 
-    private final DefaultTabListConfiguration tablist = new DefaultTabListConfiguration();
+    private final ConfigProperty<Boolean> tablist = new ConfigProperty<>(true);
 
     @SwitchSetting
     private final ConfigProperty<Boolean> despawnTime = new ConfigProperty<>(true);
@@ -167,7 +165,7 @@ public class DefaultUnicacityAddonConfiguration extends AddonConfig implements U
     }
 
     @Override
-    public TabListConfiguration tablist() {
+    public ConfigProperty<Boolean> tablist() {
         return this.tablist;
     }
 

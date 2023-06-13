@@ -16,7 +16,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Predicate;
 
 /**
  * @author RettichLP
@@ -46,13 +45,10 @@ public class VersionedTabListController extends TabListController {
                 .map(networkPlayerInfo -> networkPlayerInfo.profile().getUsername())
                 .forEach(s -> scoreboard.addPlayerToTeam(s, tabPrefixScorePlayerTeamMap.get(TabPrefix.NONE)));
 
-        boolean showAfk = unicacityAddon.configuration().tablist().afk().get();
-        Predicate<NetworkPlayerInfo> predicate = networkPlayerInfo -> showAfk && (networkPlayerInfo.getTeam() == null || (!networkPlayerInfo.getTeam().getTeamName().equals("nopush") && !networkPlayerInfo.getTeam().getTeamName().equals("masked")));
-
         // add formatted player teams
         networkPlayerInfos.stream()
                 .filter(networkPlayerInfo -> networkPlayerInfo.displayName() != null)
-                .filter(predicate)
+                .filter(networkPlayerInfo -> networkPlayerInfo.getTeam() == null || (!networkPlayerInfo.getTeam().getTeamName().equals("nopush") && !networkPlayerInfo.getTeam().getTeamName().equals("masked")))
                 .forEach(networkPlayerInfo -> {
                     String displayName = unicacityAddon.services().util().textUtils().legacy(networkPlayerInfo.displayName());
                     TabPrefix tabPrefix = TabPrefix.getTypeByDisplayName(displayName);
