@@ -1,4 +1,4 @@
-package com.rettichlp.unicacityaddon.base.config.reinforcementsloc;
+package com.rettichlp.unicacityaddon.base.config.reinforcement;
 
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;

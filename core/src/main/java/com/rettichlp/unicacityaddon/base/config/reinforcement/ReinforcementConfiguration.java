@@ -1,4 +1,4 @@
-package com.rettichlp.unicacityaddon.base.config.reinforcementsloc;
+package com.rettichlp.unicacityaddon.base.config.reinforcement;
 
 import net.labymod.api.configuration.loader.property.ConfigProperty;
 

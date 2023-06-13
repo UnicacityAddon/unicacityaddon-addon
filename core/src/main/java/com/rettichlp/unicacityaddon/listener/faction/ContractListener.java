@@ -45,7 +45,7 @@ public class ContractListener {
             String target = contractSetMatcher.group(1);
             CONTRACT_LIST.add(target);
 
-            if (this.unicacityAddon.configuration().faction().contract().get()) {
+            if (this.unicacityAddon.configuration().message().contract().get()) {
                 e.setMessage(Message.getBuilder()
                         .of("CT-SET").color(ColorCode.RED).bold().advance().space()
                         .of("|").color(ColorCode.GRAY).advance().space()
@@ -70,7 +70,7 @@ public class ContractListener {
                 AFbankEinzahlenCommand.sendClockMessage(this.unicacityAddon);
             }
 
-            if (this.unicacityAddon.configuration().faction().contract().get()) {
+            if (this.unicacityAddon.configuration().message().contract().get()) {
                 e.setMessage(Message.getBuilder().of("CT-KILL").color(ColorCode.RED).bold().advance().space()
                         .of("|").color(ColorCode.GRAY).advance().space()
                         .of(hitman).color(ColorCode.DARK_AQUA).advance().space()
@@ -89,7 +89,7 @@ public class ContractListener {
             String target = contractDeleteMatcher.group(2);
             CONTRACT_LIST.remove(target);
 
-            if (this.unicacityAddon.configuration().faction().contract().get()) {
+            if (this.unicacityAddon.configuration().message().contract().get()) {
                 e.setMessage(Message.getBuilder().of("CT-DELETE").color(ColorCode.RED).bold().advance().space()
                         .of("|").color(ColorCode.GRAY).advance().space()
                         .of(contractDeleteMatcher.group(1)).color(ColorCode.DARK_AQUA).advance().space()

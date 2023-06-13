@@ -16,10 +16,10 @@ import com.rettichlp.unicacityaddon.base.config.nametag.DefaultNameTagConfigurat
 import com.rettichlp.unicacityaddon.base.config.nametag.NameTagConfiguration;
 import com.rettichlp.unicacityaddon.base.config.ownUse.DefaultOwnUseConfiguration;
 import com.rettichlp.unicacityaddon.base.config.ownUse.OwnUseConfiguration;
-import com.rettichlp.unicacityaddon.base.config.reinforcementsloc.DefaultReinforcementConfiguration;
-import com.rettichlp.unicacityaddon.base.config.reinforcementsloc.DefaultSlocConfiguration;
-import com.rettichlp.unicacityaddon.base.config.reinforcementsloc.ReinforcementConfiguration;
-import com.rettichlp.unicacityaddon.base.config.reinforcementsloc.SlocConfiguration;
+import com.rettichlp.unicacityaddon.base.config.reinforcement.DefaultReinforcementConfiguration;
+import com.rettichlp.unicacityaddon.base.config.reinforcement.ReinforcementConfiguration;
+import com.rettichlp.unicacityaddon.base.config.sloc.DefaultSlocConfiguration;
+import com.rettichlp.unicacityaddon.base.config.sloc.SlocConfiguration;
 import net.labymod.api.addon.AddonConfig;
 import net.labymod.api.client.gui.screen.widget.widgets.input.SliderWidget.SliderSetting;
 import net.labymod.api.client.gui.screen.widget.widgets.input.SwitchWidget.SwitchSetting;

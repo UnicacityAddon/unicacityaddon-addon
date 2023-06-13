@@ -8,8 +8,8 @@ import com.rettichlp.unicacityaddon.base.config.join.PasswordConfiguration;
 import com.rettichlp.unicacityaddon.base.config.message.MessageConfiguration;
 import com.rettichlp.unicacityaddon.base.config.nametag.NameTagConfiguration;
 import com.rettichlp.unicacityaddon.base.config.ownUse.OwnUseConfiguration;
-import com.rettichlp.unicacityaddon.base.config.reinforcementsloc.ReinforcementConfiguration;
-import com.rettichlp.unicacityaddon.base.config.reinforcementsloc.SlocConfiguration;
+import com.rettichlp.unicacityaddon.base.config.reinforcement.ReinforcementConfiguration;
+import com.rettichlp.unicacityaddon.base.config.sloc.SlocConfiguration;
 import net.labymod.api.configuration.loader.property.ConfigProperty;
 
 /**

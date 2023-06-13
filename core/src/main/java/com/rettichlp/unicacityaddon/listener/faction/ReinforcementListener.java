@@ -5,7 +5,7 @@ import com.rettichlp.unicacityaddon.api.NaviPoint;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.config.hotkey.HotkeyConfiguration;
-import com.rettichlp.unicacityaddon.base.config.reinforcementsloc.DefaultReinforcementConfiguration;
+import com.rettichlp.unicacityaddon.base.config.reinforcement.DefaultReinforcementConfiguration;
 import com.rettichlp.unicacityaddon.base.enums.faction.ReinforcementType;
 import com.rettichlp.unicacityaddon.base.events.HotkeyEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;

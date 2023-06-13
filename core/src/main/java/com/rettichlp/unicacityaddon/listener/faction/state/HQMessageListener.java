@@ -28,7 +28,7 @@ public class HQMessageListener {
         String msg = e.chatMessage().getPlainText();
 
         Matcher m = PatternHandler.WANTED_REASON.matcher(msg);
-        if (this.unicacityAddon.configuration().faction().hq().get()) {
+        if (this.unicacityAddon.configuration().message().hq().get()) {
             if (m.find()) {
                 e.setMessage(Message.getBuilder().of("➥").color(ColorCode.DARK_GRAY).advance().space()
                         .of(m.group(1)).color(ColorCode.BLUE).advance().space()
