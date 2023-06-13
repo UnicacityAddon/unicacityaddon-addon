@@ -73,7 +73,8 @@ public class EventRegistrationListener {
 
         UnicacityAddonConfiguration configuration = this.unicacityAddon.configuration();
         if (state.equals(KeyEvent.State.PRESS)) {
-            if (key.equals(Key.TAB) && configuration.orderedTablist().get()) {
+            if (key.equals(Key.TAB) && !Laby.references().chatAccessor().isChatOpen() && configuration.orderedTablist().get()) {
+                this.unicacityAddon.services().util().debug("Sorting tab list in process");
                 this.unicacityAddon.tabListController().orderTabList(this.unicacityAddon);
                 return;
             }
