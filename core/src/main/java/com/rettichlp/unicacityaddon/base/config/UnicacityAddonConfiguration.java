@@ -1,16 +1,16 @@
 package com.rettichlp.unicacityaddon.base.config;
 
-import com.rettichlp.unicacityaddon.base.config.atm.ATMSetting;
-import com.rettichlp.unicacityaddon.base.config.equip.EquipSetting;
-import com.rettichlp.unicacityaddon.base.config.hotkey.HotkeySetting;
-import com.rettichlp.unicacityaddon.base.config.join.CommandSetting;
-import com.rettichlp.unicacityaddon.base.config.join.PasswordSetting;
-import com.rettichlp.unicacityaddon.base.config.message.FactionMessageSetting;
-import com.rettichlp.unicacityaddon.base.config.message.ReportMessageSetting;
-import com.rettichlp.unicacityaddon.base.config.nametag.NameTagSetting;
-import com.rettichlp.unicacityaddon.base.config.ownUse.OwnUseSetting;
-import com.rettichlp.unicacityaddon.base.config.reinforcement.ReinforcementSetting;
-import com.rettichlp.unicacityaddon.base.config.sloc.SlocSetting;
+import com.rettichlp.unicacityaddon.base.config.atm.ATM;
+import com.rettichlp.unicacityaddon.base.config.equip.Equip;
+import com.rettichlp.unicacityaddon.base.config.hotkey.Hotkey;
+import com.rettichlp.unicacityaddon.base.config.join.Command;
+import com.rettichlp.unicacityaddon.base.config.join.Password;
+import com.rettichlp.unicacityaddon.base.config.message.Faction;
+import com.rettichlp.unicacityaddon.base.config.message.Report;
+import com.rettichlp.unicacityaddon.base.config.nametag.NameTag;
+import com.rettichlp.unicacityaddon.base.config.ownUse.OwnUse;
+import com.rettichlp.unicacityaddon.base.config.reinforcement.Reinforcement;
+import com.rettichlp.unicacityaddon.base.config.sloc.Sloc;
 import net.labymod.api.configuration.loader.property.ConfigProperty;
 
 /**
@@ -20,31 +20,47 @@ public interface UnicacityAddonConfiguration {
 
     ConfigProperty<Boolean> enabled();
 
-    HotkeySetting hotkeySetting();
+    Hotkey hotkey();
 
-    NameTagSetting nameTagSetting();
+    // nametags
 
-    ReinforcementSetting reinforcementSetting();
+    NameTag nameTag();
 
-    SlocSetting slocSetting();
+    // faction
 
-    FactionMessageSetting factionMessageSetting();
+    Reinforcement reinforcement();
 
-    ReportMessageSetting reportMessageSetting();
+    Sloc sloc();
 
-    PasswordSetting passwordSetting();
+    Faction faction();
 
-    CommandSetting commandSetting();
+    Equip equip();
+
+    OwnUse ownUse();
+
+    // message
+
+    Report report();
+
+    // join
+
+    Password password();
+
+    Command command();
 
     ConfigProperty<Boolean> texturePack();
 
-    ATMSetting atmSetting();
+    // automation
+
+    ATM atm();
 
     ConfigProperty<Boolean> bombScreenshot();
 
     ConfigProperty<Boolean> carRoute();
 
     ConfigProperty<Integer> aBuyAmount();
+
+    // teamspeak
 
     ConfigProperty<Boolean> resolveAPIKey();
 
@@ -54,9 +70,7 @@ public interface UnicacityAddonConfiguration {
 
     ConfigProperty<Boolean> tsNotificationSupport();
 
-    EquipSetting equipSetting();
-
-    OwnUseSetting ownUseSetting();
+    // other
 
     ConfigProperty<Boolean> orderedTablist();
 
@@ -64,7 +78,7 @@ public interface UnicacityAddonConfiguration {
 
 //    SoundSetting soundSetting();
 
-    ConfigProperty<Boolean> addonTag();
+    // debug
 
     ConfigProperty<Boolean> debug();
 }

@@ -3,7 +3,7 @@ package com.rettichlp.unicacityaddon.listener;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.config.UnicacityAddonConfiguration;
-import com.rettichlp.unicacityaddon.base.config.hotkey.HotkeySetting;
+import com.rettichlp.unicacityaddon.base.config.hotkey.Hotkey;
 import com.rettichlp.unicacityaddon.base.events.HotkeyEvent;
 import com.rettichlp.unicacityaddon.base.events.UnicacityAddonTickEvent;
 import net.labymod.api.Laby;
@@ -74,13 +74,13 @@ public class EventRegistrationListener {
         UnicacityAddonConfiguration configuration = this.unicacityAddon.configuration();
         if (state.equals(KeyEvent.State.PRESS)) {
             if (key.equals(Key.TAB) && !Laby.references().chatAccessor().isChatOpen() && configuration.orderedTablist().get()) {
-                this.unicacityAddon.services().util().debug("Sorting tab list in process");
+                this.unicacityAddon.services().util().debug("Sorting tab list");
                 this.unicacityAddon.tabListController().orderTabList(this.unicacityAddon);
                 return;
             }
 
-            HotkeySetting hotkeySetting = configuration.hotkeySetting();
-            if (!Laby.references().chatAccessor().isChatOpen() && this.unicacityAddon.services().util().isUnicacity() && hotkeySetting.enabled().get()) {
+            Hotkey hotkey = configuration.hotkey();
+            if (!Laby.references().chatAccessor().isChatOpen() && this.unicacityAddon.services().util().isUnicacity() && hotkey.enabled().get()) {
                 this.unicacityAddon.labyAPI().eventBus().fire(new HotkeyEvent(this.unicacityAddon, key));
             }
         }

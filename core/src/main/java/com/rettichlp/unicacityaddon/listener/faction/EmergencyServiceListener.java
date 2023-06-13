@@ -54,7 +54,7 @@ public class EmergencyServiceListener {
             openServices++;
             EmergencyServiceHudWidget.textLine.updateAndFlush(openServices);
 
-            if (this.unicacityAddon.configuration().factionMessageSetting().service().get()) {
+            if (this.unicacityAddon.configuration().faction().service().get()) {
                 Component hoverMessage = Message.getBuilder().of("Annehmen").color(ColorCode.RED).advance().createComponent();
                 e.setMessage(Message.getBuilder()
                         .of("Neuer Notruf").color(ColorCode.RED).bold()
@@ -89,7 +89,7 @@ public class EmergencyServiceListener {
             openServices++;
             EmergencyServiceHudWidget.textLine.updateAndFlush(openServices);
 
-            if (this.unicacityAddon.configuration().factionMessageSetting().service().get()) {
+            if (this.unicacityAddon.configuration().faction().service().get()) {
                 Component hoverMessage = Message.getBuilder().of("Annehmen").color(ColorCode.RED).advance().createComponent();
                 e.setMessage(Message.getBuilder()
                         .of("Neu geöffnet").color(ColorCode.GOLD).bold()
@@ -127,7 +127,7 @@ public class EmergencyServiceListener {
                 serviceAcceptLocation = p.getLocation();
             }
 
-            if (this.unicacityAddon.configuration().factionMessageSetting().service().get())
+            if (this.unicacityAddon.configuration().faction().service().get())
                 e.setMessage(Message.getBuilder()
                         .of("Angenommen").color(ColorCode.GREEN).bold().advance().space()
                         .of("-").color(ColorCode.GRAY).advance().space()
@@ -179,7 +179,7 @@ public class EmergencyServiceListener {
             return;
         }
 
-        if (this.unicacityAddon.configuration().factionMessageSetting().service().get()) {
+        if (this.unicacityAddon.configuration().faction().service().get()) {
             Matcher serviceLoactionMatcher = PatternHandler.SERVICE_LOCATION_PATTERN.matcher(msg);
             if (serviceLoactionMatcher.find()) {
                 e.setMessage(Message.getBuilder()

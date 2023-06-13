@@ -1,12 +1,11 @@
 package com.rettichlp.unicacityaddon.base.services;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.config.nametag.NameTagSetting;
-import com.rettichlp.unicacityaddon.base.config.nametag.setting.AllianceFactionNameTagSetting;
-import com.rettichlp.unicacityaddon.base.config.nametag.setting.FactionNameTagSetting;
-import com.rettichlp.unicacityaddon.base.config.nametag.setting.SpecificNameTagSetting;
-import com.rettichlp.unicacityaddon.base.config.nametag.setting.StreetwarNameTagSetting;
-import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
+import com.rettichlp.unicacityaddon.base.config.nametag.NameTag;
+import com.rettichlp.unicacityaddon.base.config.nametag.setting.Alliance;
+import com.rettichlp.unicacityaddon.base.config.nametag.setting.Faction;
+import com.rettichlp.unicacityaddon.base.config.nametag.setting.Specific;
+import com.rettichlp.unicacityaddon.base.config.nametag.setting.Streetwar;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.FormattingCode;
 import com.rettichlp.unicacityaddon.listener.faction.ContractListener;
@@ -48,47 +47,47 @@ public class NameTagService {
         if (isCorpse)
             prefix.append(ColorCode.GRAY.getCode());
 
-        NameTagSetting nameTagSetting = this.unicacityAddon.configuration().nameTagSetting();
+        NameTag nameTag = this.unicacityAddon.configuration().nameTag();
         if (this.unicacityAddon.api().getPlayerFactionMap().containsKey(playerName)) {
-            Faction targetPlayerFaction = this.unicacityAddon.api().getPlayerFactionMap().getOrDefault(playerName, Faction.NULL);
+            com.rettichlp.unicacityaddon.base.enums.faction.Faction targetPlayerFaction = this.unicacityAddon.api().getPlayerFactionMap().getOrDefault(playerName, com.rettichlp.unicacityaddon.base.enums.faction.Faction.NULL);
 
-            FactionNameTagSetting factionNameTagSetting = nameTagSetting.factionNameTagSetting();
-            if (factionNameTagSetting.enabled().get()) {
+            Faction faction = nameTag.faction();
+            if (faction.enabled().get()) {
                 if (targetPlayerFaction.equals(this.unicacityAddon.player().getFaction()))
-                    prefix.append(factionNameTagSetting.color().getOrDefault(ColorCode.BLUE).getCode());
+                    prefix.append(faction.color().getOrDefault(ColorCode.BLUE).getCode());
             }
 
-            AllianceFactionNameTagSetting allianceFactionNameTagSetting = nameTagSetting.allianceFactionNameTagSetting();
-            if (allianceFactionNameTagSetting.enabled().get()) {
-                ColorCode allianceColor = allianceFactionNameTagSetting.color().getOrDefault(ColorCode.DARK_PURPLE);
-                Faction allianceFaction1 = allianceFactionNameTagSetting.faction1().getOrDefault(Faction.NULL);
-                Faction allianceFaction2 = allianceFactionNameTagSetting.faction2().getOrDefault(Faction.NULL);
+            Alliance alliance = nameTag.alliance();
+            if (alliance.enabled().get()) {
+                ColorCode allianceColor = alliance.color().getOrDefault(ColorCode.DARK_PURPLE);
+                com.rettichlp.unicacityaddon.base.enums.faction.Faction allianceFaction1 = alliance.faction1().getOrDefault(com.rettichlp.unicacityaddon.base.enums.faction.Faction.NULL);
+                com.rettichlp.unicacityaddon.base.enums.faction.Faction allianceFaction2 = alliance.faction2().getOrDefault(com.rettichlp.unicacityaddon.base.enums.faction.Faction.NULL);
                 if (targetPlayerFaction.equals(allianceFaction1) || targetPlayerFaction.equals(allianceFaction2))
                     prefix.append(allianceColor.getCode());
             }
 
-            StreetwarNameTagSetting streetwarNameTagSetting = nameTagSetting.streetwarNameTagSetting();
-            if (streetwarNameTagSetting.enabled().get()) {
-                ColorCode streetwarColor = streetwarNameTagSetting.color().getOrDefault(ColorCode.RED);
-                Faction streetwarFaction1 = streetwarNameTagSetting.faction1().getOrDefault(Faction.NULL);
-                Faction streetwarFaction2 = streetwarNameTagSetting.faction2().getOrDefault(Faction.NULL);
+            Streetwar streetwar = nameTag.streetwar();
+            if (streetwar.enabled().get()) {
+                ColorCode streetwarColor = streetwar.color().getOrDefault(ColorCode.RED);
+                com.rettichlp.unicacityaddon.base.enums.faction.Faction streetwarFaction1 = streetwar.faction1().getOrDefault(com.rettichlp.unicacityaddon.base.enums.faction.Faction.NULL);
+                com.rettichlp.unicacityaddon.base.enums.faction.Faction streetwarFaction2 = streetwar.faction2().getOrDefault(com.rettichlp.unicacityaddon.base.enums.faction.Faction.NULL);
                 if (targetPlayerFaction.equals(streetwarFaction1) || targetPlayerFaction.equals(streetwarFaction2))
                     prefix.append(streetwarColor.getCode());
             }
         }
 
-        SpecificNameTagSetting specificNameTagSetting = nameTagSetting.specificNameTagSetting();
-        if (specificNameTagSetting.enabled().get()) {
+        Specific specific = nameTag.specific();
+        if (specific.enabled().get()) {
             WantedListener.Wanted wanted = this.wantedPlayerMap.get(playerName);
             if (wanted != null) {
                 prefix.append(this.getWpColor(wanted.getAmount()).getCode());
             }
 
             if (this.blacklistPlayerMap.get(playerName) != null)
-                prefix.append(specificNameTagSetting.color().getOrDefault(ColorCode.DARK_RED).getCode());
+                prefix.append(specific.color().getOrDefault(ColorCode.DARK_RED).getCode());
 
             if (ContractListener.CONTRACT_LIST.contains(playerName))
-                prefix.append(specificNameTagSetting.color().getOrDefault(ColorCode.DARK_RED).getCode());
+                prefix.append(specific.color().getOrDefault(ColorCode.DARK_RED).getCode());
         }
 
         return prefix.toString();

@@ -2,7 +2,7 @@ package com.rettichlp.unicacityaddon.listener.team;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
-import com.rettichlp.unicacityaddon.base.config.hotkey.HotkeySetting;
+import com.rettichlp.unicacityaddon.base.config.hotkey.Hotkey;
 import com.rettichlp.unicacityaddon.base.events.HotkeyEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import net.labymod.api.client.gui.screen.key.Key;
@@ -39,11 +39,11 @@ public class AdListener {
     @Subscribe
     public void onHotkey(HotkeyEvent e) {
         Key key = e.key();
-        HotkeySetting hotkeySetting = e.hotkeySetting();
+        Hotkey hotkey = e.hotkey();
 
-        if (key.equals(hotkeySetting.acceptAd().get())) {
+        if (key.equals(hotkey.acceptAd().get())) {
             this.handleAd("freigeben");
-        } else if (key.equals(hotkeySetting.declineAd().get())) {
+        } else if (key.equals(hotkey.declineAd().get())) {
             this.handleAd("blockieren");
         }
     }

@@ -25,7 +25,7 @@ public class ScreenshotListener {
     @Subscribe
     public void onReinforcementAccepted(ReinforcementAcceptedEvent e) {
         // activity screenshot
-        if (this.unicacityAddon.configuration().reinforcementSetting().screen().get()) {
+        if (this.unicacityAddon.configuration().reinforcement().screen().get()) {
 
             // wait until on-the-way message was sent (important for valid activity)
             runDelayed(() -> {

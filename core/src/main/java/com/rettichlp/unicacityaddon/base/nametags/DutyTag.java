@@ -27,7 +27,7 @@ public class DutyTag extends NameTag {
     @Override
     protected @Nullable RenderableComponent getRenderableComponent() {
         UnicacityAddonConfiguration unicacityAddonConfiguration = this.unicacityAddon.configuration();
-        boolean isEnabled = unicacityAddonConfiguration.enabled().get() && unicacityAddonConfiguration.nameTagSetting().duty().get();
+        boolean isEnabled = unicacityAddonConfiguration.enabled().get() && unicacityAddonConfiguration.nameTag().duty().get();
 
         return isEnabled ? this.unicacityAddon.player().getWorld().getPlayers().stream()
                 .filter(p -> p.gameUser().getUniqueId().equals(this.entity.getUniqueId()))

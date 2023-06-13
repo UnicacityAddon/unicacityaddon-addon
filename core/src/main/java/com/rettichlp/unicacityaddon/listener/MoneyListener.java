@@ -3,7 +3,7 @@ package com.rettichlp.unicacityaddon.listener;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
-import com.rettichlp.unicacityaddon.base.config.atm.ATMSetting;
+import com.rettichlp.unicacityaddon.base.config.atm.ATM;
 import com.rettichlp.unicacityaddon.base.enums.api.StatisticType;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
@@ -61,17 +61,17 @@ public class MoneyListener {
         if (kontoauszugMatcher.find()) {
             this.unicacityAddon.services().file().data().setBankBalance(Integer.parseInt(kontoauszugMatcher.group(1)));
 
-            ATMSetting atmSetting = this.unicacityAddon.configuration().atmSetting();
-            if (atmSetting.enabled().get()) {
-                if (atmSetting.fBank().get()) {
+            ATM atm = this.unicacityAddon.configuration().atm();
+            if (atm.enabled().get()) {
+                if (atm.fBank().get()) {
                     p.sendServerMessage("/fbank");
                 }
 
-                if (atmSetting.grBank().get()) {
+                if (atm.grBank().get()) {
                     p.sendServerMessage("/grkasse info");
                 }
 
-                if (atmSetting.atmInfo().get()) {
+                if (atm.atmInfo().get()) {
                     p.sendServerMessage("/atminfo");
                 }
             }

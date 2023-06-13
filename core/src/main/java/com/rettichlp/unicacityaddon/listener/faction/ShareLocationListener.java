@@ -4,7 +4,7 @@ import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.api.NaviPoint;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
-import com.rettichlp.unicacityaddon.base.config.sloc.DefaultSlocSetting;
+import com.rettichlp.unicacityaddon.base.config.sloc.DefaultSloc;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
@@ -58,7 +58,7 @@ public class ShareLocationListener {
         }
 
         FloatVector3 location = this.unicacityAddon.player().getLocation();
-        p.sendMessage(this.unicacityAddon.configuration().slocSetting().sloc().getOrDefault(DefaultSlocSetting.SLOC)
+        p.sendMessage(this.unicacityAddon.configuration().sloc().sloc().getOrDefault(DefaultSloc.SLOC)
                 .replace("&", "§")
                 .replace("%sender%", senderName)
                 .replace("%navipoint%", navipointString)

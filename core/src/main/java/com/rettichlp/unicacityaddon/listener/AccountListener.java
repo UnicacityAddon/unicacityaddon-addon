@@ -4,8 +4,8 @@ import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.api.statistic.GamePlay;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
-import com.rettichlp.unicacityaddon.base.config.join.CommandSetting;
-import com.rettichlp.unicacityaddon.base.config.join.PasswordSetting;
+import com.rettichlp.unicacityaddon.base.config.join.Command;
+import com.rettichlp.unicacityaddon.base.config.join.Password;
 import com.rettichlp.unicacityaddon.base.events.OfflineDataChangedEvent;
 import com.rettichlp.unicacityaddon.base.events.UnicacityAddonTickEvent;
 import com.rettichlp.unicacityaddon.base.services.utils.MathUtils;
@@ -223,7 +223,7 @@ public class AccountListener {
     }
 
     private void handleUnlockAccount() {
-        PasswordSetting passwordSetting = this.unicacityAddon.configuration().passwordSetting();
+        Password passwordSetting = this.unicacityAddon.configuration().password();
         String password = passwordSetting.password().getOrDefault("");
         if (passwordSetting.enabled().get() && !password.isBlank())
             this.unicacityAddon.player().sendServerMessage("/passwort " + password);
@@ -239,14 +239,14 @@ public class AccountListener {
                 p.sendServerMessage("/togglephone");
 
                 // AUTOMATE_COMMAND_SETTINGS
-                CommandSetting commandSetting = unicacityAddon.configuration().commandSetting();
-                if (commandSetting.enabled().get()) {
+                Command command = unicacityAddon.configuration().command();
+                if (command.enabled().get()) {
                     // AUTOMATE_COMMAND_FIRST_SETTINGS
                     new Timer().schedule(new TimerTask() {
                         @Override
                         public void run() {
-                            if (!commandSetting.first().getOrDefault("").isEmpty())
-                                p.sendServerMessage(commandSetting.first().get());
+                            if (!command.first().getOrDefault("").isEmpty())
+                                p.sendServerMessage(command.first().get());
                         }
                     }, 1500);
 
@@ -254,8 +254,8 @@ public class AccountListener {
                     new Timer().schedule(new TimerTask() {
                         @Override
                         public void run() {
-                            if (!commandSetting.second().getOrDefault("").isEmpty())
-                                p.sendServerMessage(commandSetting.second().get());
+                            if (!command.second().getOrDefault("").isEmpty())
+                                p.sendServerMessage(command.second().get());
                         }
                     }, 2000);
 
@@ -263,8 +263,8 @@ public class AccountListener {
                     new Timer().schedule(new TimerTask() {
                         @Override
                         public void run() {
-                            if (!commandSetting.third().getOrDefault("").isEmpty())
-                                p.sendServerMessage(commandSetting.third().get());
+                            if (!command.third().getOrDefault("").isEmpty())
+                                p.sendServerMessage(command.third().get());
                         }
                     }, 2500);
                 }

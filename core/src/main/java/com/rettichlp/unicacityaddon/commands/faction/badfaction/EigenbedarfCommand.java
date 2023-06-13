@@ -3,9 +3,9 @@ package com.rettichlp.unicacityaddon.commands.faction.badfaction;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
-import com.rettichlp.unicacityaddon.base.config.ownUse.setting.KokainSetting;
-import com.rettichlp.unicacityaddon.base.config.ownUse.setting.MarihuanaSetting;
-import com.rettichlp.unicacityaddon.base.config.ownUse.setting.MethamphetaminSetting;
+import com.rettichlp.unicacityaddon.base.config.ownUse.setting.Cocaine;
+import com.rettichlp.unicacityaddon.base.config.ownUse.setting.Marijuana;
+import com.rettichlp.unicacityaddon.base.config.ownUse.setting.Methamphetamin;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
 import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
@@ -32,25 +32,25 @@ public class EigenbedarfCommand extends UnicacityCommand {
 
     @Override
     public boolean execute(String[] arguments) {
-        KokainSetting kokainSetting = this.unicacityAddon.configuration().ownUseSetting().kokainSetting();
-        MarihuanaSetting marihuanaSetting = this.unicacityAddon.configuration().ownUseSetting().marihuanaSetting();
-        MethamphetaminSetting methamphetaminSetting = this.unicacityAddon.configuration().ownUseSetting().methamphetaminSetting();
+        Cocaine cocaine = this.unicacityAddon.configuration().ownUse().cocaine();
+        Marijuana marijuana = this.unicacityAddon.configuration().ownUse().marijuana();
+        Methamphetamin methamphetamin = this.unicacityAddon.configuration().ownUse().methamphetamin();
 
-        if (kokainSetting.enabled().get()) {
-            DrugPurity drugPurity = kokainSetting.purity().getOrDefault(DrugPurity.BEST);
-            int amount = kokainSetting.amount().getOrDefault(25);
+        if (cocaine.enabled().get()) {
+            DrugPurity drugPurity = cocaine.purity().getOrDefault(DrugPurity.BEST);
+            int amount = cocaine.amount().getOrDefault(25);
             scheduledTasks.add("/dbank get " + DrugType.COCAINE.getDrugName() + " " + amount + " " + drugPurity.getPurity());
         }
 
-        if (marihuanaSetting.enabled().get()) {
-            DrugPurity drugPurity = marihuanaSetting.purity().getOrDefault(DrugPurity.GOOD);
-            int amount = marihuanaSetting.amount().getOrDefault(25);
+        if (marijuana.enabled().get()) {
+            DrugPurity drugPurity = marijuana.purity().getOrDefault(DrugPurity.GOOD);
+            int amount = marijuana.amount().getOrDefault(25);
             scheduledTasks.add("/dbank get " + DrugType.MARIJUANA.getDrugName() + " " + amount + " " + drugPurity.getPurity());
         }
 
-        if (methamphetaminSetting.enabled().get()) {
-            DrugPurity drugPurity = methamphetaminSetting.purity().getOrDefault(DrugPurity.BEST);
-            int amount = methamphetaminSetting.amount().getOrDefault(5);
+        if (methamphetamin.enabled().get()) {
+            DrugPurity drugPurity = methamphetamin.purity().getOrDefault(DrugPurity.BEST);
+            int amount = methamphetamin.amount().getOrDefault(5);
             scheduledTasks.add("/dbank get " + DrugType.METH.getDrugName() + " " + amount + " " + drugPurity.getPurity());
         }
 

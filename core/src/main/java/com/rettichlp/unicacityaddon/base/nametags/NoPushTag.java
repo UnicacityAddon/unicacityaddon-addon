@@ -35,7 +35,7 @@ public class NoPushTag extends NameTag {
     @Override
     protected @Nullable RenderableComponent getRenderableComponent() {
         UnicacityAddonConfiguration unicacityAddonConfiguration = this.unicacityAddon.configuration();
-        boolean isEnabled = unicacityAddonConfiguration.enabled().get() && unicacityAddonConfiguration.nameTagSetting().noPushInfo().get();
+        boolean isEnabled = unicacityAddonConfiguration.enabled().get() && unicacityAddonConfiguration.nameTag().noPushInfo().get();
 
         return isEnabled ? this.unicacityAddon.player().getWorld().getPlayers().stream()
                 .filter(p -> p.gameUser().getUniqueId().equals(this.entity.getUniqueId()))

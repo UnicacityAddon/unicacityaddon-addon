@@ -66,7 +66,7 @@ public class EquipShopListener {
 
     @Subscribe
     public void onHotkey(HotkeyEvent e) {
-        if (e.key().equals(e.hotkeySetting().aBuy().get())) {
+        if (e.key().equals(e.hotkey().aBuy().get())) {
             this.amountLeft = this.unicacityAddon.configuration().aBuyAmount().getOrDefault(5);
             slotNumber = ScreenRenderListener.lastHoveredSlotNumber;
 

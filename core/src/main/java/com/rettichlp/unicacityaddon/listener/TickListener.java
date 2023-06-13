@@ -39,7 +39,7 @@ public class TickListener {
             }
         }
 
-        if (e.isUnicacity() && e.isPhase(UnicacityAddonTickEvent.Phase.SECOND) && this.unicacityAddon.configuration().nameTagSetting().corpse().get()) {
+        if (e.isUnicacity() && e.isPhase(UnicacityAddonTickEvent.Phase.SECOND) && this.unicacityAddon.configuration().nameTag().corpse().get()) {
             this.unicacityAddon.deadBodyController().updateDisplayName(this.unicacityAddon);
         }
     }
