@@ -98,7 +98,12 @@ public class SchmarzmarktLocationsCommand implements IClientCommand {
             Maps.immutableEntry("Alcatraz", "1154/83/695"),
             Maps.immutableEntry("Flughafen Las Unicas", "1694/69/557"),
             Maps.immutableEntry("Shishabar", "-136/74/-74"),
-            Maps.immutableEntry("Freibad", "-269/69/-521")
+            Maps.immutableEntry("Freibad", "-269/69/-521"),
+            Maps.immutableEntry("Gefängnis", "-772/64/149"),
+            Maps.immutableEntry("Ruine", "985/105/433"),
+            Maps.immutableEntry("Farm (Chinatown)", "1282/64/-526"),
+            Maps.immutableEntry("", "//"), // TODO
+            Maps.immutableEntry("", "//") // TODO
     );
 
     @Override
