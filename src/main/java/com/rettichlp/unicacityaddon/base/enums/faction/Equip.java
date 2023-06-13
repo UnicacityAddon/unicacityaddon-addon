@@ -33,7 +33,9 @@ public enum Equip {
     RPG7("RPG-7", "RPG-7", ConfigElements.getRPG7Price()),
     NOTEPAD("Notizblock", "Notizblock", ConfigElements.getNotePadPrice()), // UnicaCity Bug (Nachricht gibt es noch nicht)
     GLASSCUTTER("Glasschneider", "Glasschneider", ConfigElements.getGlassCutterPrice()), // TODO: Equipname
-    LOCKPICK("Dietrich", "Dietrich", ConfigElements.getLockPickPrice()); // TODO: Equipname
+    LOCKPICK("Dietrich", "Dietrich", ConfigElements.getLockPickPrice()), // TODO: Equipname
+    WINE("Wein", "Wein", ConfigElements.getWinePrice()),
+    COFFEE("Kaffee", "Kaffee", ConfigElements.getCoffeePrice()); // TODO: Equipname
 
     private final String equipName;
     private final String messageName;

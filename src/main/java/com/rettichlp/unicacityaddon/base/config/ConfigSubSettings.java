@@ -208,6 +208,9 @@ public class ConfigSubSettings {
         StringElement waterSettings = new StringElement(Equip.WATER.getName(), unicacityAddon, new ControlElement.IconData(Material.GLASS_BOTTLE), "EQUIP_WATER_SETTING", ConfigElements.getWaterPrice());
         settings.add(waterSettings);
 
+        StringElement wineSettings = new StringElement(Equip.WINE.getName(), unicacityAddon, new ControlElement.IconData(Material.POTION), "EQUIP_WINE_SETTING", ConfigElements.getWinePrice());
+        settings.add(wineSettings);
+
         return settings;
     }
 
@@ -219,6 +222,9 @@ public class ConfigSubSettings {
 
         StringElement notepadSettings = new StringElement(Equip.NOTEPAD.getName(), unicacityAddon, new ControlElement.IconData(Material.BOOK_AND_QUILL), "EQUIP_NOTEPAD_SETTING", ConfigElements.getNotePadPrice());
         settings.add(notepadSettings);
+
+        StringElement coffeeSettings = new StringElement(Equip.COFFEE.getName(), unicacityAddon, new ControlElement.IconData(Material.POTION), "EQUIP_COFFEE_SETTING", ConfigElements.getCoffeePrice());
+        settings.add(coffeeSettings);
 
         return settings;
     }
