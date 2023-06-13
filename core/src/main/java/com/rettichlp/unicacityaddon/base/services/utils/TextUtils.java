@@ -52,9 +52,7 @@ public class TextUtils {
             stringBuilder.append(text);
 
             List<Component> children = component.getChildren();
-            if (!children.isEmpty()) {
-                stringBuilder.append(legacy(children.get(0)));
-            }
+            children.forEach(c -> stringBuilder.append(legacy(c)));
 
             return stringBuilder.toString();
         }
@@ -76,9 +74,7 @@ public class TextUtils {
             stringBuilder.append(text);
 
             List<Component> children = component.getChildren();
-            if (!children.isEmpty()) {
-                stringBuilder.append(" ").append(plain(children.get(0)));
-            }
+            children.forEach(c -> stringBuilder.append(plain(c)));
 
             return stringBuilder.toString();
         }
