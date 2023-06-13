@@ -37,9 +37,9 @@ public class TeamSpeakNotificationListener {
 
         if (user != null) {
             int cid = channel.getId();
-            String name = user.getDescription();
+            String name = user.getDescription() != null ? user.getDescription() : "Unbekannt";
 
-            this.unicacityAddon.services().util().debug(user.getDescription() + " -> " + channel.getName() + " (" + channel.getChannelCategory() + ")");
+            this.unicacityAddon.services().util().debug(name + " -> " + channel.getName() + " (" + channel.getChannelCategory() + ")");
 
             if (this.unicacityAddon.configuration().tsNotificationSupport().get() && cid == 41) {
                 p.sendMessage(Message.getBuilder()

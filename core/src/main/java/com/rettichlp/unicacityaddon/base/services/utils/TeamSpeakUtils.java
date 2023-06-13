@@ -22,7 +22,6 @@ public class TeamSpeakUtils {
         this.unicacityAddon = unicacityAddon;
     }
 
-    // failed
     public boolean isOnline(String description) {
         return this.unicacityAddon.teamSpeakAPI().getServer().getChannels().stream()
                 .flatMap(channel -> channel.getUsers().stream())
@@ -31,7 +30,7 @@ public class TeamSpeakUtils {
                 .anyMatch(s -> s.toLowerCase().contains(description.toLowerCase()));
     }
 
-    @Nullable // failed
+    @Nullable
     public User getUserByDescription(String description) {
         for (Channel channel : this.unicacityAddon.teamSpeakAPI().getServer().getChannels()) {
             for (User user : channel.getUsers()) {
