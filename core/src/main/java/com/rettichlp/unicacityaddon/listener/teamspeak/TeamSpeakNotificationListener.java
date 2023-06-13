@@ -41,7 +41,7 @@ public class TeamSpeakNotificationListener {
 
             this.unicacityAddon.services().util().debug(name + " -> " + channel.getName() + " (" + channel.getChannelCategory() + ")");
 
-            if (this.unicacityAddon.configuration().teamspeak().tsNotificationSupport().get() && cid == 41) {
+            if (this.unicacityAddon.configuration().teamspeak().support().get() && cid == 41) {
                 p.sendMessage(Message.getBuilder()
                         .prefix()
                         .of(name).color(ColorCode.AQUA).advance().space()
@@ -56,7 +56,7 @@ public class TeamSpeakNotificationListener {
 
                 this.unicacityAddon.soundController().playTSNotificationSupportChannelSound();
                 this.unicacityAddon.logger().info("Client joined support channel: " + name);
-            } else if (this.unicacityAddon.configuration().teamspeak().tsNotificationPublic().get() && cid == p.getFaction().getPublicChannelId()) {
+            } else if (this.unicacityAddon.configuration().teamspeak().publicity().get() && cid == p.getFaction().getPublicChannelId()) {
                 p.sendMessage(Message.getBuilder()
                         .prefix()
                         .of(name).color(ColorCode.AQUA).advance().space()

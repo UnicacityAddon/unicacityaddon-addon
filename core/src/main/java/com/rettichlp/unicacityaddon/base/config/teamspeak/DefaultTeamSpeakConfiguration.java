@@ -11,34 +11,34 @@ import net.labymod.api.configuration.loader.property.ConfigProperty;
 public class DefaultTeamSpeakConfiguration extends Config implements TeamSpeakConfiguration {
 
     @SwitchSetting
-    private final ConfigProperty<Boolean> resolveAPIKey = new ConfigProperty<>(true);
+    private final ConfigProperty<Boolean> resolve = new ConfigProperty<>(true);
 
     @TextFieldSetting
-    private final ConfigProperty<String> tsApiKey = new ConfigProperty<>("");
+    private final ConfigProperty<String> key = new ConfigProperty<>("");
 
     @SwitchSetting
-    private final ConfigProperty<Boolean> tsNotificationPublic = new ConfigProperty<>(true);
+    private final ConfigProperty<Boolean> publicity = new ConfigProperty<>(true);
 
     @SwitchSetting
-    private final ConfigProperty<Boolean> tsNotificationSupport = new ConfigProperty<>(false);
+    private final ConfigProperty<Boolean> support = new ConfigProperty<>(false);
 
     @Override
-    public ConfigProperty<Boolean> resolveAPIKey() {
-        return this.resolveAPIKey;
+    public ConfigProperty<Boolean> resolve() {
+        return this.resolve;
     }
 
     @Override
-    public ConfigProperty<String> tsApiKey() {
-        return this.tsApiKey;
+    public ConfigProperty<String> key() {
+        return this.key;
     }
 
     @Override
-    public ConfigProperty<Boolean> tsNotificationPublic() {
-        return this.tsNotificationPublic;
+    public ConfigProperty<Boolean> publicity() {
+        return this.publicity;
     }
 
     @Override
-    public ConfigProperty<Boolean> tsNotificationSupport() {
-        return this.tsNotificationSupport;
+    public ConfigProperty<Boolean> support() {
+        return this.support;
     }
 }

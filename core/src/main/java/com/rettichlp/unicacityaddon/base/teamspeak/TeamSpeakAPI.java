@@ -155,10 +155,10 @@ public class TeamSpeakAPI {
         }).start();
 
         TeamSpeakConfiguration teamSpeakConfiguration = this.unicacityAddon.configuration().teamspeak();
-        if (teamSpeakConfiguration.resolveAPIKey().get()) {
+        if (teamSpeakConfiguration.resolve().get()) {
             this.authenticator.authenticate();
         } else {
-            String apiKey = teamSpeakConfiguration.tsApiKey().get().trim();
+            String apiKey = teamSpeakConfiguration.key().get().trim();
             if (apiKey.isEmpty()) {
                 throw new IllegalStateException("Cannot authenticate with an empty API key!");
             }

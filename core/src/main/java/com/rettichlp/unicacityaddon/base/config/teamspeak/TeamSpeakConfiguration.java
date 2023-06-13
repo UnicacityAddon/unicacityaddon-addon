@@ -7,11 +7,11 @@ import net.labymod.api.configuration.loader.property.ConfigProperty;
  */
 public interface TeamSpeakConfiguration {
 
-    ConfigProperty<Boolean> resolveAPIKey();
+    ConfigProperty<Boolean> resolve();
 
-    ConfigProperty<String> tsApiKey();
+    ConfigProperty<String> key();
 
-    ConfigProperty<Boolean> tsNotificationPublic();
+    ConfigProperty<Boolean> publicity();
 
-    ConfigProperty<Boolean> tsNotificationSupport();
+    ConfigProperty<Boolean> support();
 }

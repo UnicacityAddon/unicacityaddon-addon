@@ -37,13 +37,13 @@
     },
     "settings": {
       "header": {
-        "nametags": {
+        "nametag": {
           "name": "NameTags"
         },
-        "reinforcement_and_sloc": {
+        "faction": {
           "name": "Reinforcement & Sloc"
         },
-        "messages": {
+        "message": {
           "name": "Nachrichten"
         },
         "join": {
@@ -52,13 +52,7 @@
         "automation": {
           "name": "Automatisierung"
         },
-        "teamspeak": {
-          "name": "Teamspeak"
-        },
-        "equip": {
-          "name": "Equip"
-        },
-        "others": {
+        "other": {
           "name": "Sonstiges"
         },
         "debug": {
@@ -70,7 +64,7 @@
         "name": "Aktiv",
         "description": "Aktiviert und deaktiviert das Addon"
       },
-      "hotkeySetting": {
+      "hotkey": {
         "name": "Hotkeys",
         "acceptAd": {
           "name": "Werbung akzeptieren",
@@ -113,20 +107,20 @@
           "description": "Kauft automatisch die eingestellte Menge, wenn über ein kaufbares/ausrüstbares Item mit der Maus gegangen wird und dieser Hotkey statt der linken Maustaste gedrückt wird"
         }
       },
-      "nameTagSetting": {
+      "nametag": {
         "name": "NameTags",
-        "factionInfo": {
+        "info": {
           "name": "Fraktionsinfo",
           "description": "Zeigt die Fraktion hinter dem Namen an"
         },
-        "factionNameTagSetting": {
+        "faction": {
           "name": "Fraktion",
           "color": {
             "name": "Farbe",
             "description": "Farbe in der Fraktionsmitglieder angezeigt werden"
           }
         },
-        "allianceFactionNameTagSetting": {
+        "alliance": {
           "name": "Bündnis",
           "color": {
             "name": "Farbe",
@@ -140,7 +134,7 @@
             "name": "Bündnisfraktion (optional)"
           }
         },
-        "streetwarNameTagSetting": {
+        "streetwar": {
           "name": "Streetwar",
           "color": {
             "name": "Farbe",
@@ -153,7 +147,7 @@
             "name": "Streetwarfraktion (optional)"
           }
         },
-        "houseBan": {
+        "houseban": {
           "name": "Hausverbot",
           "description": "Zeigt Spieler mit Hausverbot im Krankenhaus an"
         },
@@ -161,7 +155,7 @@
           "name": "im Dienst",
           "description": "Zeigt einen grünen Punkt an, wenn der Spieler im Dienst ist"
         },
-        "factionSpecificNameTagSetting": {
+        "specific": {
           "name": "Blacklist/Contract/WPs anzeigen",
           "description": "Zeigt fraktionsspezifische NameTags farbig",
           "color": {
@@ -173,12 +167,16 @@
           "name": "Farbige Leichennamen",
           "description": "Zeigt den Namen der Leiche in den Fraktionsfarben und fügt die Fraktionsinfo am Ende hinzu"
         },
-        "noPushInfo": {
+        "afk": {
           "name": "AFK und ADMIN-DIENST Info",
           "description": "Zeigt an, wenn ein Spieler AFK oder im Admin-Dienst ist"
+        },
+        "team": {
+          "name": "Addon Team Tag",
+          "description": "Zeigt den Team Rang über dem Namen an"
         }
       },
-      "reinforcementSetting": {
+      "reinforcement": {
         "name": "Reinforcement",
         "reinforcement": {
           "name": "Reinforcement",
@@ -193,110 +191,14 @@
           "description": "Erstellt beim Annehmen eines Reinforcement einen Screenshot und speichert ihn als Reinforcement Aktivität ab"
         }
       },
-      "slocSetting": {
+      "sloc": {
         "name": "Sloc",
         "sloc": {
           "name": "Sloc",
           "description": "Vorlage für einen Sloc"
         }
       },
-      "factionMessageSetting": {
-        "name": "Fraktion",
-        "hq": {
-          "name": "HQ Nachrichten",
-          "description": "Formatierung der HQ Nachrichten in ein übersichtlicheres Design"
-        },
-        "service": {
-          "name": "Service Nachrichten",
-          "description": "Formatierung der Service Nachrichten in ein übersichtlicheres Design"
-        },
-        "dBank": {
-          "name": "D-Bank Nachrichten",
-          "description": "Formatierung der D-Bank Nachrichten in ein übersichtlicheres Design"
-        },
-        "contract": {
-          "name": "Contract Nachrichten",
-          "description": "Formatierung der Contract Nachrichten in ein übersichtlicheres Design"
-        }
-      },
-      "reportMessageSetting": {
-        "name": "Report",
-        "greeting": {
-          "name": "Begrüßung",
-          "description": "Nachricht die bei der Annahme eines Reports gesendet wird"
-        },
-        "farewell": {
-          "name": "Verabschiedung",
-          "description": "Nachricht die vor der Beendung eines Reports gesendet wird"
-        },
-        "prefix": {
-          "name": "Prefix",
-          "description": "Prefix für den Report um eine Filterung für ein Chat-Fenster zu ermöglichen"
-        }
-      },
-      "passwordSetting": {
-        "name": "Passwort",
-        "password": {
-          "name": "Passwort",
-          "description": "Dieses passwort wird zum Serverbeitritt automatisch an den Server gesendet."
-        }
-      },
-      "commandSetting": {
-        "name": "Start-Befehle",
-        "first": {
-          "name": "Erster Befehl",
-          "description": "Legt den ersten Befehl fest der nach dem Serverbeitritt ausgeführt wird (z. B. '/mi')"
-        },
-        "second": {
-          "name": "Zweiter Befehl",
-          "description": "Legt den zweiten Befehl fest der nach dem Serverbeitritt ausgeführt wird (z. B. '/bl')"
-        },
-        "third": {
-          "name": "Dritter Befehl",
-          "description": "Legt den dritten Befehl fest der nach dem Serverbeitritt ausgeführt wird (z. B. '/afk')"
-        }
-      },
-      "texturePack": {
-        "name": "TexturePack Nachricht deaktivieren",
-        "description": "Deaktiviert die TexturePack Nachricht"
-      },
-      "atmSetting": {
-        "name": "ATM Einstellungen",
-        "atmInfo": {
-          "name": "ATM Info",
-          "description": "Beim Anklicken eines ATMs wird '/atminfo' ausgeführt"
-        },
-        "fBank": {
-          "name": "F-Bank",
-          "description": "Beim Anklicken eines ATMs wird '/fbank' ausgeführt"
-        },
-        "grBank": {
-          "name": "Gruppierungs-Kasse",
-          "description": "Beim Anklicken eines ATMs wird '/grkasse info' ausgeführt"
-        }
-      },
-      "bombScreenshot": {
-        "name": "Bomben Screenshot",
-        "description": "Erstellt am Ende einer Bombe automatisch einen Großeinsatz-Screenshot"
-      },
-      "carRoute": {
-        "name": "Automatisch die Route zum Auto anzeigen",
-        "description": "Nach Ausführung des '/car find' Commands wird direkt die Route angezeigt"
-      },
-      "aBuyAmount": {
-        "name": "Menge für ABuy und AEquip",
-        "description": "Anzahl der Gegenstände/des Equips, das automatisch gekauft oder ausgerüstet werden soll"
-      },
-      "tsApiKey": {
-        "name": "Teamspeak API Key"
-      },
-      "tsNotificationPublic": {
-        "name": "Öffentlich-Channel-betreten Nachricht"
-      },
-      "tsNotificationSupport": {
-        "name": "Support-Channel-betreten Nachricht"
-      },
-      "equipSetting": {
+      "equip": {
         "header": {
           "global": {
             "name": "Fraktionsübergreifend"
@@ -337,7 +239,7 @@
         "sniper": {
           "name": "Viper-9"
         },
-        "stateSetting": {
+        "state": {
           "name": "Staat (Polizei/FBI)",
           "cuff": {
             "name": "Handschellen"
@@ -364,13 +266,13 @@
             "name": "Peilsender"
           }
         },
-        "badFactionSetting": {
+        "badFaction": {
           "name": "Bad-Fraktion",
           "baseballBat": {
             "name": "Baseballschläger"
           }
         },
-        "medicSetting": {
+        "medic": {
           "name": "Rettungsdienst",
           "axe": {
             "name": "Axt"
@@ -391,13 +293,13 @@
             "name": "Spritze"
           }
         },
-        "newsSetting": {
+        "news": {
           "name": "News",
           "notepad": {
             "name": "Notizblock"
           }
         },
-        "hitmanSetting": {
+        "hitman": {
           "name": "Hitman",
           "glassCutter": {
             "name": "Glasschneider"
@@ -406,7 +308,7 @@
             "name": "Dietrich"
           }
         },
-        "terrorSetting": {
+        "terrorist": {
           "name": "Terroristen",
           "explosiveBelt": {
             "name": "Sprengstoffgürtel"
@@ -416,9 +318,9 @@
           }
         }
       },
-      "ownUseSetting": {
+      "ownUse": {
         "name": "Eigenbedarf",
-        "kokainSetting": {
+        "cocaine": {
           "name": "Pulver",
           "amount": {
             "name": "Menge",
@@ -429,7 +331,7 @@
             "description": "Reinheit, die als Eigenbedarf genutzt werden soll"
           }
         },
-        "marihuanaSetting": {
+        "marijuana": {
           "name": "Kräuter",
           "amount": {
             "name": "Menge",
@@ -440,7 +342,7 @@
             "description": "Reinheit, die als Eigenbedarf genutzt werden soll"
           }
         },
-        "methamphetaminSetting": {
+        "methamphetamin": {
           "name": "Kristalle",
           "amount": {
             "name": "Menge",
@@ -452,17 +354,120 @@
           }
         }
       },
-      "orderedTablist": {
+      "message": {
+        "header": {
+          "faction": {
+            "name": "Fraktion"
+          },
+          "report": {
+            "name": "Report"
+          }
+        },
+        "name": "Nachrichten",
+        "hq": {
+          "name": "HQ Nachrichten",
+          "description": "Formatierung der HQ Nachrichten in ein übersichtlicheres Design"
+        },
+        "service": {
+          "name": "Service Nachrichten",
+          "description": "Formatierung der Service Nachrichten in ein übersichtlicheres Design"
+        },
+        "dBank": {
+          "name": "D-Bank Nachrichten",
+          "description": "Formatierung der D-Bank Nachrichten in ein übersichtlicheres Design"
+        },
+        "contract": {
+          "name": "Contract Nachrichten",
+          "description": "Formatierung der Contract Nachrichten in ein übersichtlicheres Design"
+        },
+        "greeting": {
+          "name": "Begrüßung",
+          "description": "Nachricht die bei der Annahme eines Reports gesendet wird"
+        },
+        "farewell": {
+          "name": "Verabschiedung",
+          "description": "Nachricht die vor der Beendung eines Reports gesendet wird"
+        },
+        "prefix": {
+          "name": "Prefix",
+          "description": "Prefix für den Report um eine Filterung für ein Chat-Fenster zu ermöglichen"
+        }
+      },
+      "password": {
+        "name": "Passwort",
+        "password": {
+          "name": "Passwort",
+          "description": "Dieses passwort wird zum Serverbeitritt automatisch an den Server gesendet."
+        }
+      },
+      "command": {
+        "name": "Start-Befehle",
+        "first": {
+          "name": "Erster Befehl",
+          "description": "Legt den ersten Befehl fest der nach dem Serverbeitritt ausgeführt wird (z. B. '/mi')"
+        },
+        "second": {
+          "name": "Zweiter Befehl",
+          "description": "Legt den zweiten Befehl fest der nach dem Serverbeitritt ausgeführt wird (z. B. '/bl')"
+        },
+        "third": {
+          "name": "Dritter Befehl",
+          "description": "Legt den dritten Befehl fest der nach dem Serverbeitritt ausgeführt wird (z. B. '/afk')"
+        }
+      },
+      "texturePack": {
+        "name": "TexturePack Nachricht deaktivieren",
+        "description": "Deaktiviert die TexturePack Nachricht"
+      },
+      "atm": {
+        "name": "ATM Einstellungen",
+        "info": {
+          "name": "ATM Info",
+          "description": "Beim Anklicken eines ATMs wird '/atminfo' ausgeführt"
+        },
+        "faction": {
+          "name": "F-Bank",
+          "description": "Beim Anklicken eines ATMs wird '/fbank' ausgeführt"
+        },
+        "grouping": {
+          "name": "Gruppierungs-Kasse",
+          "description": "Beim Anklicken eines ATMs wird '/grkasse info' ausgeführt"
+        }
+      },
+      "bombScreenshot": {
+        "name": "Bomben Screenshot",
+        "description": "Erstellt am Ende einer Bombe automatisch einen Großeinsatz-Screenshot"
+      },
+      "carRoute": {
+        "name": "Automatisch die Route zum Auto anzeigen",
+        "description": "Nach Ausführung des '/car find' Commands wird direkt die Route angezeigt"
+      },
+      "aBuyAmount": {
+        "name": "Menge für ABuy und AEquip",
+        "description": "Anzahl der Gegenstände/des Equips, das automatisch gekauft oder ausgerüstet werden soll"
+      },
+      "teamspeak": {
+        "name": "TeamSpeak",
+        "resolve": {
+          "name": "API Key automatisch setzen"
+        },
+        "key": {
+          "name": "Teamspeak API Key"
+        },
+        "publicity": {
+          "name": "Öffentlich-Channel-betreten Nachricht"
+        },
+        "support": {
+          "name": "Support-Channel-betreten Nachricht"
+        }
+      },
+      "tablist": {
         "name": "Sortierte Tabliste",
         "description": "Sortiert die Tabliste nach Duty-Fraktionen, UC's, Buildern und aktiven Reports"
       },
       "despawnTime": {
         "name": "Despawn Zeitpunkt",
         "description": "Zeigt in der Karma Nachricht nach einem Kill den Despawn Zeitpunkt an"
-      },
-      "addonTag": {
-        "name": "Addon Team Tag",
-        "description": "Zeigt den Team Rang über dem Namen an"
       },
       "debug": {
         "name": "Debug",
