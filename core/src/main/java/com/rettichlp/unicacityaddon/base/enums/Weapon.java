@@ -28,7 +28,7 @@ public enum Weapon {
     private final String name;
 
     public String getDisplayName() {
-        return "§8" + name;
+        return "§o§8" + name;
     }
 
     public int getLoadedAmmunition(UnicacityAddon unicacityAddon) {
