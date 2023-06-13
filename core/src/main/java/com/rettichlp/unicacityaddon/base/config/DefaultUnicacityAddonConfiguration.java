@@ -20,10 +20,13 @@ import com.rettichlp.unicacityaddon.base.config.reinforcement.DefaultReinforceme
 import com.rettichlp.unicacityaddon.base.config.reinforcement.ReinforcementConfiguration;
 import com.rettichlp.unicacityaddon.base.config.sloc.DefaultSlocConfiguration;
 import com.rettichlp.unicacityaddon.base.config.sloc.SlocConfiguration;
+import com.rettichlp.unicacityaddon.base.config.tablist.DefaultTabListConfiguration;
+import com.rettichlp.unicacityaddon.base.config.tablist.TabListConfiguration;
+import com.rettichlp.unicacityaddon.base.config.teamspeak.DefaultTeamSpeakConfiguration;
+import com.rettichlp.unicacityaddon.base.config.teamspeak.TeamSpeakConfiguration;
 import net.labymod.api.addon.AddonConfig;
 import net.labymod.api.client.gui.screen.widget.widgets.input.SliderWidget.SliderSetting;
 import net.labymod.api.client.gui.screen.widget.widgets.input.SwitchWidget.SwitchSetting;
-import net.labymod.api.client.gui.screen.widget.widgets.input.TextFieldWidget.TextFieldSetting;
 import net.labymod.api.configuration.loader.annotation.ConfigName;
 import net.labymod.api.configuration.loader.property.ConfigProperty;
 import net.labymod.api.configuration.settings.annotation.SettingSection;
@@ -71,22 +74,10 @@ public class DefaultUnicacityAddonConfiguration extends AddonConfig implements U
     @SliderSetting(min = 1, max = 20)
     private final ConfigProperty<Integer> aBuyAmount = new ConfigProperty<>(10);
 
-    @SettingSection("teamspeak")
-    @SwitchSetting
-    private final ConfigProperty<Boolean> resolveAPIKey = new ConfigProperty<>(true);
-
-    @TextFieldSetting
-    private final ConfigProperty<String> tsApiKey = new ConfigProperty<>("");
-
-    @SwitchSetting
-    private final ConfigProperty<Boolean> tsNotificationPublic = new ConfigProperty<>(true);
-
-    @SwitchSetting
-    private final ConfigProperty<Boolean> tsNotificationSupport = new ConfigProperty<>(false);
-
     @SettingSection("other")
-    @SwitchSetting
-    private final ConfigProperty<Boolean> orderedTablist = new ConfigProperty<>(true);
+    private final DefaultTeamSpeakConfiguration teamspeak = new DefaultTeamSpeakConfiguration();
+
+    private final DefaultTabListConfiguration tablist = new DefaultTabListConfiguration();
 
     @SwitchSetting
     private final ConfigProperty<Boolean> despawnTime = new ConfigProperty<>(true);
@@ -118,6 +109,16 @@ public class DefaultUnicacityAddonConfiguration extends AddonConfig implements U
     @Override
     public SlocConfiguration sloc() {
         return this.sloc;
+    }
+
+    @Override
+    public EquipConfiguration equip() {
+        return this.equip;
+    }
+
+    @Override
+    public OwnUseConfiguration ownUse() {
+        return this.ownUse;
     }
 
     @Override
@@ -161,38 +162,13 @@ public class DefaultUnicacityAddonConfiguration extends AddonConfig implements U
     }
 
     @Override
-    public ConfigProperty<Boolean> resolveAPIKey() {
-        return this.resolveAPIKey;
+    public TeamSpeakConfiguration teamspeak() {
+        return this.teamspeak;
     }
 
     @Override
-    public ConfigProperty<String> tsApiKey() {
-        return this.tsApiKey;
-    }
-
-    @Override
-    public ConfigProperty<Boolean> tsNotificationPublic() {
-        return this.tsNotificationPublic;
-    }
-
-    @Override
-    public ConfigProperty<Boolean> tsNotificationSupport() {
-        return this.tsNotificationSupport;
-    }
-
-    @Override
-    public EquipConfiguration equip() {
-        return this.equip;
-    }
-
-    @Override
-    public OwnUseConfiguration ownUse() {
-        return this.ownUse;
-    }
-
-    @Override
-    public ConfigProperty<Boolean> orderedTablist() {
-        return this.orderedTablist;
+    public TabListConfiguration tablist() {
+        return this.tablist;
     }
 
     @Override

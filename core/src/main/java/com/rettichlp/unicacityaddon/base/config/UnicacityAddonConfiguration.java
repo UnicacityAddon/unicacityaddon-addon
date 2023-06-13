@@ -10,6 +10,8 @@ import com.rettichlp.unicacityaddon.base.config.nametag.NameTagConfiguration;
 import com.rettichlp.unicacityaddon.base.config.ownUse.OwnUseConfiguration;
 import com.rettichlp.unicacityaddon.base.config.reinforcement.ReinforcementConfiguration;
 import com.rettichlp.unicacityaddon.base.config.sloc.SlocConfiguration;
+import com.rettichlp.unicacityaddon.base.config.tablist.TabListConfiguration;
+import com.rettichlp.unicacityaddon.base.config.teamspeak.TeamSpeakConfiguration;
 import net.labymod.api.configuration.loader.property.ConfigProperty;
 
 /**
@@ -57,19 +59,11 @@ public interface UnicacityAddonConfiguration {
 
     ConfigProperty<Integer> aBuyAmount();
 
-    // teamspeak
-
-    ConfigProperty<Boolean> resolveAPIKey();
-
-    ConfigProperty<String> tsApiKey();
-
-    ConfigProperty<Boolean> tsNotificationPublic();
-
-    ConfigProperty<Boolean> tsNotificationSupport();
-
     // other
 
-    ConfigProperty<Boolean> orderedTablist();
+    TeamSpeakConfiguration teamspeak();
+
+    TabListConfiguration tablist();
 
     ConfigProperty<Boolean> despawnTime();
 

@@ -17,7 +17,7 @@
 package com.rettichlp.unicacityaddon.base.teamspeak;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.config.UnicacityAddonConfiguration;
+import com.rettichlp.unicacityaddon.base.config.teamspeak.TeamSpeakConfiguration;
 import com.rettichlp.unicacityaddon.base.teamspeak.listener.ChannelEditedListener;
 import com.rettichlp.unicacityaddon.base.teamspeak.listener.ClientEnterViewListener;
 import com.rettichlp.unicacityaddon.base.teamspeak.listener.ClientLeftViewListener;
@@ -154,11 +154,11 @@ public class TeamSpeakAPI {
             }
         }).start();
 
-        UnicacityAddonConfiguration configuration = this.unicacityAddon.configuration();
-        if (configuration.resolveAPIKey().get()) {
+        TeamSpeakConfiguration teamSpeakConfiguration = this.unicacityAddon.configuration().teamspeak();
+        if (teamSpeakConfiguration.resolveAPIKey().get()) {
             this.authenticator.authenticate();
         } else {
-            String apiKey = configuration.tsApiKey().get().trim();
+            String apiKey = teamSpeakConfiguration.tsApiKey().get().trim();
             if (apiKey.isEmpty()) {
                 throw new IllegalStateException("Cannot authenticate with an empty API key!");
             }
