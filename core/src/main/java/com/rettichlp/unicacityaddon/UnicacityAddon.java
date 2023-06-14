@@ -16,6 +16,7 @@ import com.rettichlp.unicacityaddon.base.nametags.NoPushTag;
 import com.rettichlp.unicacityaddon.base.nametags.OutlawTag;
 import com.rettichlp.unicacityaddon.base.services.FileService;
 import com.rettichlp.unicacityaddon.base.teamspeak.TeamSpeakAPI;
+import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
 import com.rettichlp.unicacityaddon.controller.DeadBodyController;
 import com.rettichlp.unicacityaddon.controller.GuiController;
 import com.rettichlp.unicacityaddon.controller.ScreenshotController;
@@ -272,6 +273,7 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
     private void registerCommands() {
         AtomicInteger registeredCommandCount = new AtomicInteger();
         Set<Class<?>> commandClassSet = getAllClassesFromPackage("com.rettichlp.unicacityaddon.commands");
+        commandClassSet.remove(UnicacityCommand.class);
         commandClassSet.stream()
                 .filter(commandClass -> commandClass.isAnnotationPresent(UCCommand.class))
                 .forEach(commandClass -> {

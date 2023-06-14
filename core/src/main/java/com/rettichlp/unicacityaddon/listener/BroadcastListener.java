@@ -2,6 +2,7 @@ package com.rettichlp.unicacityaddon.listener;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
+import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.events.UnicacityAddonTickEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
@@ -16,10 +17,11 @@ import java.util.TimerTask;
 /**
  * @author RettichLP
  */
+@UCEvent
 public class BroadcastListener {
 
-    private static final Timer timer = new Timer();
-    private static final List<Integer> receivedBroadcasts = new ArrayList<>();
+    private final Timer timer = new Timer();
+    private final List<Integer> receivedBroadcasts = new ArrayList<>();
 
     private final UnicacityAddon unicacityAddon;
 
