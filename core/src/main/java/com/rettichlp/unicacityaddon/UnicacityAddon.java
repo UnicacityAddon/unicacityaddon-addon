@@ -36,6 +36,7 @@ import com.rettichlp.unicacityaddon.hudwidgets.PayDayHudWidget;
 import com.rettichlp.unicacityaddon.hudwidgets.PlantHudWidget;
 import com.rettichlp.unicacityaddon.hudwidgets.TimerHudWidget;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import net.labymod.api.addon.LabyAddon;
 import net.labymod.api.client.chat.command.Command;
@@ -98,6 +99,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 @AddonMain
 @Accessors(fluent = true)
 @Getter
+@NoArgsConstructor
 public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration> {
 
     private AddonPlayer player;
@@ -105,9 +107,6 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
     private API api;
     private TeamSpeakAPI teamSpeakAPI;
     private List<Command> commands;
-
-    public UnicacityAddon() {
-    }
 
     @Override
     public void load() {
