@@ -30,7 +30,7 @@ public class DForceCommand extends UnicacityCommand {
             return true;
         }
 
-        String message = this.unicacityAddon.services().util().textUtils().makeStringByArgs(arguments, " ");
+        String message = this.unicacityAddon.services().util().text().makeStringByArgs(arguments, " ");
         p.sendServerMessage("/d " + message);
         return true;
     }

@@ -8,6 +8,8 @@ import com.rettichlp.unicacityaddon.base.services.utils.TeamSpeakUtils;
 import com.rettichlp.unicacityaddon.base.services.utils.TextUtils;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
+import lombok.Getter;
+import lombok.experimental.Accessors;
 import net.labymod.api.client.gui.icon.Icon;
 import net.labymod.api.client.network.ClientPacketListener;
 import net.labymod.api.client.network.NetworkPlayerInfo;
@@ -23,47 +25,32 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * @author RettichLP
+ */
+@Accessors(fluent = true)
+@Getter
 public class UtilService {
 
-    private final Icon ICON = Icon.texture(ResourceLocation.create("unicacityaddon", "textures/uc.png")).resolution(64, 64);
+    private final Icon icon = Icon.texture(ResourceLocation.create("unicacityaddon", "textures/uc.png")).resolution(64, 64);
 
-    public final CommandUtils commandUtils;
-    private final ListUtils listUtils;
-    private final TeamSpeakUtils teamSpeakUtils;
-    private final TextUtils textUtils;
+    private final CommandUtils command;
+    private final ListUtils list;
+    private final TeamSpeakUtils teamSpeak;
+    private final TextUtils text;
 
     private final UnicacityAddon unicacityAddon;
 
     public UtilService(UnicacityAddon unicacityAddon) {
         this.unicacityAddon = unicacityAddon;
-        this.commandUtils = new CommandUtils(unicacityAddon);
-        this.listUtils = new ListUtils();
-        this.teamSpeakUtils = new TeamSpeakUtils(unicacityAddon);
-        this.textUtils = new TextUtils();
+        this.command = new CommandUtils(unicacityAddon);
+        this.list = new ListUtils();
+        this.teamSpeak = new TeamSpeakUtils(unicacityAddon);
+        this.text = new TextUtils();
     }
 
     public String version() {
         return "2.0.0-alpha.4";
-    }
-
-    public Icon icon() {
-        return ICON;
-    }
-
-    public CommandUtils commandUtils() {
-        return commandUtils;
-    }
-
-    public ListUtils listUtils() {
-        return listUtils;
-    }
-
-    public TeamSpeakUtils teamSpeakUtils() {
-        return teamSpeakUtils;
-    }
-
-    public TextUtils textUtils() {
-        return textUtils;
     }
 
     public boolean isUnicacity() {
@@ -94,8 +81,8 @@ public class UtilService {
 
         return networkPlayerInfoCollection.stream()
                 .map(networkPlayerInfo -> networkPlayerInfo.profile().getUsername())
-                .map(this.textUtils::stripColor)
-                .map(this.textUtils::stripPrefix)
+                .map(this.text::stripColor)
+                .map(this.text::stripPrefix)
                 .sorted()
                 .collect(Collectors.toList());
     }

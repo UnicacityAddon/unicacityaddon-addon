@@ -35,7 +35,8 @@ import com.rettichlp.unicacityaddon.hudwidgets.MoneyHudWidget;
 import com.rettichlp.unicacityaddon.hudwidgets.PayDayHudWidget;
 import com.rettichlp.unicacityaddon.hudwidgets.PlantHudWidget;
 import com.rettichlp.unicacityaddon.hudwidgets.TimerHudWidget;
-import lombok.Setter;
+import lombok.Getter;
+import lombok.experimental.Accessors;
 import net.labymod.api.addon.LabyAddon;
 import net.labymod.api.client.chat.command.Command;
 import net.labymod.api.client.entity.player.tag.PositionType;
@@ -95,7 +96,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author RettichLP
  */
 @AddonMain
-@Setter
+@Accessors(fluent = true)
+@Getter
 public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration> {
 
     private AddonPlayer player;
@@ -141,26 +143,6 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
     @Override
     protected Class<DefaultUnicacityAddonConfiguration> configurationClass() {
         return DefaultUnicacityAddonConfiguration.class;
-    }
-
-    public AddonPlayer player() {
-        return player;
-    }
-
-    public Services services() {
-        return services;
-    }
-
-    public API api() {
-        return api;
-    }
-
-    public TeamSpeakAPI teamSpeakAPI() {
-        return teamSpeakAPI;
-    }
-
-    public List<Command> commands() {
-        return commands;
     }
 
     public GuiController guiController() {

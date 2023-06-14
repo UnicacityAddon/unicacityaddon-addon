@@ -7,46 +7,29 @@ import com.rettichlp.unicacityaddon.base.services.NameTagService;
 import com.rettichlp.unicacityaddon.base.services.NavigationService;
 import com.rettichlp.unicacityaddon.base.services.UtilService;
 import com.rettichlp.unicacityaddon.base.services.WebService;
+import lombok.Getter;
+import lombok.experimental.Accessors;
 
+/**
+ * @author RettichLP
+ */
+@Accessors(fluent = true)
+@Getter
 public class Services {
 
-    private final FactionService factionService;
-    private final FileService fileService;
-    private final NameTagService nametagService;
-    private final NavigationService navigationService;
-    private final UtilService utilService;
-    private final WebService webService;
+    private final FactionService faction;
+    private final FileService file;
+    private final NameTagService nametag;
+    private final NavigationService navigation;
+    private final UtilService util;
+    private final WebService web;
 
     public Services(UnicacityAddon unicacityAddon) {
-        this.factionService = new FactionService(unicacityAddon);
-        this.fileService = new FileService(unicacityAddon);
-        this.nametagService = new NameTagService(unicacityAddon);
-        this.navigationService = new NavigationService(unicacityAddon);
-        this.utilService = new UtilService(unicacityAddon);
-        this.webService = new WebService(unicacityAddon);
-    }
-
-    public FactionService faction() {
-        return factionService;
-    }
-
-    public FileService file() {
-        return fileService;
-    }
-
-    public NameTagService nametag() {
-        return nametagService;
-    }
-
-    public NavigationService navigation() {
-        return navigationService;
-    }
-
-    public UtilService util() {
-        return utilService;
-    }
-
-    public WebService web() {
-        return webService;
+        this.faction = new FactionService(unicacityAddon);
+        this.file = new FileService(unicacityAddon);
+        this.nametag = new NameTagService(unicacityAddon);
+        this.navigation = new NavigationService(unicacityAddon);
+        this.util = new UtilService(unicacityAddon);
+        this.web = new WebService(unicacityAddon);
     }
 }

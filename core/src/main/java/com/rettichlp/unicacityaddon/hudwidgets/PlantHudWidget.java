@@ -49,8 +49,8 @@ public class PlantHudWidget extends TextHudWidget<TextHudWidgetConfig> {
             long fertilizeTimeLeft = TimeUnit.MINUTES.toMillis(70) - timeSinceLastFertilizeInteraction;
             long waterTimeLeft = TimeUnit.MINUTES.toMillis(50) - timeSinceLastWaterInteraction;
 
-            this.fertilize.updateAndFlush(fertilizeTimeLeft >= 0 ? this.unicacityAddon.services().util().textUtils().parseTimer((int) TimeUnit.MILLISECONDS.toSeconds(fertilizeTimeLeft)) : ColorCode.RED.getCode() + "-" + this.unicacityAddon.services().util().textUtils().parseTimer((int) TimeUnit.MILLISECONDS.toSeconds(-fertilizeTimeLeft)));
-            this.water.updateAndFlush(waterTimeLeft >= 0 ? this.unicacityAddon.services().util().textUtils().parseTimer((int) TimeUnit.MILLISECONDS.toSeconds(waterTimeLeft)) : ColorCode.RED.getCode() + "-" + this.unicacityAddon.services().util().textUtils().parseTimer((int) TimeUnit.MILLISECONDS.toSeconds(-waterTimeLeft)));
+            this.fertilize.updateAndFlush(fertilizeTimeLeft >= 0 ? this.unicacityAddon.services().util().text().parseTimer((int) TimeUnit.MILLISECONDS.toSeconds(fertilizeTimeLeft)) : ColorCode.RED.getCode() + "-" + this.unicacityAddon.services().util().text().parseTimer((int) TimeUnit.MILLISECONDS.toSeconds(-fertilizeTimeLeft)));
+            this.water.updateAndFlush(waterTimeLeft >= 0 ? this.unicacityAddon.services().util().text().parseTimer((int) TimeUnit.MILLISECONDS.toSeconds(waterTimeLeft)) : ColorCode.RED.getCode() + "-" + this.unicacityAddon.services().util().text().parseTimer((int) TimeUnit.MILLISECONDS.toSeconds(-waterTimeLeft)));
         }
     }
 }

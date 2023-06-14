@@ -75,7 +75,7 @@ public class BombListener {
         Matcher bombRemovedMatcher = PatternHandler.BOMB_REMOVED_PATTERN.matcher(msg);
         if (bombRemovedMatcher.find()) {
             Long timeSinceBombPlanted = this.bombPlantedTime != null ? System.currentTimeMillis() - this.bombPlantedTime : null;
-            String timeString = timeSinceBombPlanted != null ? this.unicacityAddon.services().util().textUtils().parseTimer(TimeUnit.MILLISECONDS.toSeconds(timeSinceBombPlanted)) : "";
+            String timeString = timeSinceBombPlanted != null ? this.unicacityAddon.services().util().text().parseTimer(TimeUnit.MILLISECONDS.toSeconds(timeSinceBombPlanted)) : "";
 
             String state = bombRemovedMatcher.group(1);
 

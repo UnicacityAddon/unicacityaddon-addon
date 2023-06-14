@@ -35,12 +35,12 @@ public class MoveCommand extends UnicacityCommand {
         String playerName = arguments[0];
         String targetName = arguments[1];
 
-        User user = this.unicacityAddon.services().util().teamSpeakUtils().getUserByDescription(playerName);
-        User targetUser = this.unicacityAddon.services().util().teamSpeakUtils().getUserByDescription(targetName);
+        User user = this.unicacityAddon.services().util().teamSpeak().getUserByDescription(playerName);
+        User targetUser = this.unicacityAddon.services().util().teamSpeak().getUserByDescription(targetName);
 
         Channel targetChannel = null;
         if (user != null && targetUser != null) {
-            targetChannel = this.unicacityAddon.services().util().teamSpeakUtils().getChannelByUser(targetUser);
+            targetChannel = this.unicacityAddon.services().util().teamSpeak().getChannelByUser(targetUser);
         }
 
         if (user != null && targetChannel != null) {

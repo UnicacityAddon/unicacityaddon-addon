@@ -146,8 +146,8 @@ public class API {
         playerRankMap.clear();
         for (Faction faction : Faction.values()) {
             String factionWebsiteSource = this.unicacityAddon.services().faction().getWebsiteSource(faction);
-            List<String> nameList = this.unicacityAddon.services().util().listUtils().getAllMatchesFromString(PatternHandler.NAME_PATTERN, factionWebsiteSource);
-            List<String> rankList = this.unicacityAddon.services().util().listUtils().getAllMatchesFromString(PatternHandler.RANK_PATTERN, factionWebsiteSource);
+            List<String> nameList = this.unicacityAddon.services().util().list().getAllMatchesFromString(PatternHandler.NAME_PATTERN, factionWebsiteSource);
+            List<String> rankList = this.unicacityAddon.services().util().list().getAllMatchesFromString(PatternHandler.RANK_PATTERN, factionWebsiteSource);
             nameList.forEach(name -> {
                 String formattedName = name.replace("<h4 class=\"h5 g-mb-5\"><strong>", "");
                 playerFactionMap.put(formattedName, faction);
