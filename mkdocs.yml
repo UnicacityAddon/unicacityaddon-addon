@@ -1,0 +1,116 @@
+# Project information
+site_name: UnicacityAddon Wiki
+site_url: https://unicacityaddon.rettichlp.de/wiki
+
+# Repository
+repo_url: https://github.com/UnicacityAddon/unicacityaddon-addon
+repo_name: UnicacityAddon
+
+extra:
+  homepage: https://unicacityaddon.rettichlp.de/
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/UnicacityAddon/
+    - icon: fontawesome/brands/discord
+      link: https://discord.gg/A9u5eY7CbS
+
+copyright: Copyright &copy; 2022 - 2023 UnicacityAddon
+
+plugins:
+  - search:
+      lang:
+        - en
+        - de
+
+extra_css:
+  - stylesheets/extra.css
+
+# Configuration
+theme:
+  name: material
+  custom_dir: docs/overrides
+  logo: icon.png
+  favicon: icon.png
+  palette:
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/weather-night
+        name: Dark-Mode
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/weather-sunny
+        name: Light-Mode
+  icon:
+    repo: fontawesome/brands/github
+  features:
+    - announce.dismiss
+    - header.autohide
+    - navigation.tabs
+    - navigation.sections
+    - navigation.indexes
+    - navigation.top
+    - navigation.footer
+    - toc.follow
+
+# Extensions
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.details
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - admonition
+  - def_list
+
+# Page tree
+nav:
+  - UnicacityAddon: https://unicacityaddon.rettichlp.de
+  - API:
+      - Funktion:
+          - Grundlagen: api/function/grundlagen.md
+          - Autorisierung: api/function/autorisierung.md
+          - Daten: api/function/daten-und-speicherung.md
+      - Endpunkte:
+          - Addon Group: api/endpoints/addon-group.md
+          - Banner: api/endpoints/banner.md
+          - Blacklist: api/endpoints/blacklist.md
+          - Broadcast: api/endpoints/broadcast.md
+          - Event: api/endpoints/event.md
+          - Faction Member: api/endpoints/faction-member.md
+          - House Ban: api/endpoints/house-ban.md
+          - House Ban Reason: api/endpoints/house-ban-reason.md
+          - Load Data: api/endpoints/load-data.md
+          - Management: api/endpoints/management.md
+          - Navi Point: api/endpoints/navi-point.md
+          - Revive: api/endpoints/revive.md
+          - Statistic: api/endpoints/statistic.md
+          - Token: api/endpoints/token.md
+          - Wanted Reason: api/endpoints/wanted-reason.md
+          - Yasin: api/endpoints/yasin.md
+  - Commands:
+      - Grundlagen: commands/grundlagen.md
+      - Übersicht:
+          - Handy Commands: commands/uebersicht/handy-commands.md
+          - Haus Commands: commands/uebersicht/haus-commands.md
+          - Job Commands: commands/uebersicht/job-commands.md
+      - Implementation:
+          - Command Klasse: commands/implementation/command-klasse.md
+          - Command Annotation: commands/implementation/command-annotation.md
+          - Tab-Completion Builder: commands/implementation/tab-completion-builder.md
+  - Widgets:
+      - widgets/index.md

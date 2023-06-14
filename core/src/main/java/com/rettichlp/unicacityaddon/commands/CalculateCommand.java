@@ -31,7 +31,7 @@ public class CalculateCommand extends UnicacityCommand {
             return true;
         }
 
-        String mathString = this.unicacityAddon.services().util().textUtils().makeStringByArgs(arguments, " ");
+        String mathString = this.unicacityAddon.services().util().text().makeStringByArgs(arguments, " ");
         MathUtils mathUtils = new MathUtils(mathString);
         try {
             mathUtils.evaluate();

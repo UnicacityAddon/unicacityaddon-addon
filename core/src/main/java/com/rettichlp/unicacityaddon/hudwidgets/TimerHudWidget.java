@@ -31,7 +31,7 @@ public class TimerHudWidget extends TextHudWidget<TextHudWidgetConfig> {
     @Override
     public void load(TextHudWidgetConfig config) {
         super.load(config);
-        this.textLine = super.createLine("Timer", this.unicacityAddon.services().util().textUtils().parseTimer(this.unicacityAddon.services().file().data().getTimer()));
+        this.textLine = super.createLine("Timer", this.unicacityAddon.services().util().text().parseTimer(this.unicacityAddon.services().file().data().getTimer()));
         this.setIcon(this.unicacityAddon.services().util().icon());
     }
 
@@ -43,7 +43,7 @@ public class TimerHudWidget extends TextHudWidget<TextHudWidgetConfig> {
     @Subscribe
     public void onUnicacityAddonTick(UnicacityAddonTickEvent e) {
         if (e.isPhase(UnicacityAddonTickEvent.Phase.SECOND)) {
-            this.textLine.updateAndFlush(this.unicacityAddon.services().util().textUtils().parseTimer(this.unicacityAddon.services().file().data().getTimer()));
+            this.textLine.updateAndFlush(this.unicacityAddon.services().util().text().parseTimer(this.unicacityAddon.services().file().data().getTimer()));
         }
     }
 }

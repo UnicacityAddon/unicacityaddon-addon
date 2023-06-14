@@ -116,7 +116,7 @@ public class NameTagService {
     public boolean isAdminDuty(String playerName) {
         ClientPacketListener clientPacketListener = this.unicacityAddon.labyAPI().minecraft().getClientPacketListener();
         return clientPacketListener != null && this.unicacityAddon.services().util().isUnicacity() && clientPacketListener.getNetworkPlayerInfos().stream()
-                .map(networkPlayerInfo -> this.unicacityAddon.services().util().textUtils().legacy(networkPlayerInfo.displayName()))
+                .map(networkPlayerInfo -> this.unicacityAddon.services().util().text().legacy(networkPlayerInfo.displayName()))
                 .anyMatch(s -> s.startsWith("§8[§9UC§8]§c") && s.contains(playerName));
     }
 }

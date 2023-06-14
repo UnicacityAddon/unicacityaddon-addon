@@ -67,7 +67,7 @@ public class ShareLocationListener {
         p.sendMessage(Message.getBuilder()
                 .of("»").color(ColorCode.GRAY).advance().space()
                 .of("Route Anzeigen").color(ColorCode.RED)
-                        .hoverEvent(HoverEvent.Action.SHOW_TEXT, this.unicacityAddon.services().util().commandUtils().locationHoverMessage(posX, posY, posZ))
+                        .hoverEvent(HoverEvent.Action.SHOW_TEXT, this.unicacityAddon.services().util().command().locationHoverMessage(posX, posY, posZ))
                         .clickEvent(ClickEvent.Action.RUN_COMMAND, "/navi " + posX + "/" + posY + "/" + posZ)
                         .advance()
                 .createComponent());

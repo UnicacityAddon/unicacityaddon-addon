@@ -1,6 +1,5 @@
 package com.rettichlp.unicacityaddon;
 
-import com.google.common.reflect.ClassPath;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.DefaultAddonPlayer;
 import com.rettichlp.unicacityaddon.base.Services;
@@ -16,6 +15,7 @@ import com.rettichlp.unicacityaddon.base.nametags.NoPushTag;
 import com.rettichlp.unicacityaddon.base.nametags.OutlawTag;
 import com.rettichlp.unicacityaddon.base.services.FileService;
 import com.rettichlp.unicacityaddon.base.teamspeak.TeamSpeakAPI;
+import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
 import com.rettichlp.unicacityaddon.controller.DeadBodyController;
 import com.rettichlp.unicacityaddon.controller.GuiController;
 import com.rettichlp.unicacityaddon.controller.ScreenshotController;
@@ -35,7 +35,9 @@ import com.rettichlp.unicacityaddon.hudwidgets.MoneyHudWidget;
 import com.rettichlp.unicacityaddon.hudwidgets.PayDayHudWidget;
 import com.rettichlp.unicacityaddon.hudwidgets.PlantHudWidget;
 import com.rettichlp.unicacityaddon.hudwidgets.TimerHudWidget;
-import lombok.Setter;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 import net.labymod.api.addon.LabyAddon;
 import net.labymod.api.client.chat.command.Command;
 import net.labymod.api.client.entity.player.tag.PositionType;
@@ -46,11 +48,9 @@ import net.labymod.api.models.addon.annotation.AddonMain;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 
 /**
  * <h2>Hello Labymod addon reviewers and others,</h2>
@@ -97,7 +97,9 @@ import java.util.stream.Collectors;
  * @author RettichLP
  */
 @AddonMain
-@Setter
+@Accessors(fluent = true)
+@Getter
+@NoArgsConstructor
 public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration> {
 
     private AddonPlayer player;
@@ -105,9 +107,6 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
     private API api;
     private TeamSpeakAPI teamSpeakAPI;
     private List<Command> commands;
-
-    public UnicacityAddon() {
-    }
 
     @Override
     public void load() {
@@ -143,26 +142,6 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
     @Override
     protected Class<DefaultUnicacityAddonConfiguration> configurationClass() {
         return DefaultUnicacityAddonConfiguration.class;
-    }
-
-    public AddonPlayer player() {
-        return player;
-    }
-
-    public Services services() {
-        return services;
-    }
-
-    public API api() {
-        return api;
-    }
-
-    public TeamSpeakAPI teamSpeakAPI() {
-        return teamSpeakAPI;
-    }
-
-    public List<Command> commands() {
-        return commands;
     }
 
     public GuiController guiController() {
@@ -253,7 +232,7 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
 
     private void registerListeners() {
         AtomicInteger registeredListenerCount = new AtomicInteger();
-        Set<Class<?>> listenerClassSet = getAllClassesFromPackage("com.rettichlp.unicacityaddon.listener");
+        Set<Class<?>> listenerClassSet = this.services.util().getAllClassesFromPackage("com.rettichlp.unicacityaddon.listener");
         listenerClassSet.stream()
                 .filter(listenerClass -> listenerClass.isAnnotationPresent(UCEvent.class))
                 .forEach(listenerClass -> {
@@ -271,7 +250,8 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
 
     private void registerCommands() {
         AtomicInteger registeredCommandCount = new AtomicInteger();
-        Set<Class<?>> commandClassSet = getAllClassesFromPackage("com.rettichlp.unicacityaddon.commands");
+        Set<Class<?>> commandClassSet = this.services.util().getAllClassesFromPackage("com.rettichlp.unicacityaddon.commands");
+        commandClassSet.remove(UnicacityCommand.class);
         commandClassSet.stream()
                 .filter(commandClass -> commandClass.isAnnotationPresent(UCCommand.class))
                 .forEach(commandClass -> {
@@ -288,18 +268,5 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
                     }
                 });
         this.logger().info("Registered {}/{} commands", registeredCommandCount, commandClassSet.size());
-    }
-
-    private Set<Class<?>> getAllClassesFromPackage(String packageName) {
-        try {
-            return ClassPath.from(this.getClass().getClassLoader())
-                    .getTopLevelClassesRecursive(packageName)
-                    .stream()
-                    .map(ClassPath.ClassInfo::load)
-                    .collect(Collectors.toSet());
-        } catch (IOException exception) {
-            exception.printStackTrace();
-        }
-        return new HashSet<>();
     }
 }

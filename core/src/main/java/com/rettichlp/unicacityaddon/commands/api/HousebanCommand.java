@@ -47,7 +47,7 @@ public class HousebanCommand extends UnicacityCommand {
                     long durationInMillis = houseBanEntry.getExpirationTime() - System.currentTimeMillis();
 
                     String duration = Message.getBuilder()
-                            .add(ColorCode.AQUA.getCode() + this.unicacityAddon.services().util().textUtils().parseTimerWithTimeUnit(durationInMillis)
+                            .add(ColorCode.AQUA.getCode() + this.unicacityAddon.services().util().text().parseTimerWithTimeUnit(durationInMillis)
                                     .replace("d", ColorCode.DARK_AQUA.getCode() + "d" + ColorCode.AQUA.getCode())
                                     .replace("h", ColorCode.DARK_AQUA.getCode() + "h" + ColorCode.AQUA.getCode())
                                     .replace("m", ColorCode.DARK_AQUA.getCode() + "m" + ColorCode.AQUA.getCode())

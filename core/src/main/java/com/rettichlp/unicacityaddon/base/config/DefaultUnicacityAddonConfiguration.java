@@ -75,6 +75,7 @@ public class DefaultUnicacityAddonConfiguration extends AddonConfig implements U
     @SettingSection("other")
     private final DefaultTeamSpeakConfiguration teamspeak = new DefaultTeamSpeakConfiguration();
 
+    @SwitchSetting
     private final ConfigProperty<Boolean> tablist = new ConfigProperty<>(true);
 
     @SwitchSetting

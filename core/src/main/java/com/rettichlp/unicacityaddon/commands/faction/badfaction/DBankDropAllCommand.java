@@ -41,7 +41,7 @@ public class DBankDropAllCommand extends UnicacityCommand {
                                 commandQueue.add("/dbank drop " + drugType.getDrugName() + " " + integer + " " + drugPurity.getPurity());
                         }));
 
-        this.unicacityAddon.services().util().commandUtils().sendQueuedCommands(commandQueue);
+        this.unicacityAddon.services().util().command().sendQueuedCommands(commandQueue);
         return true;
     }
 
