@@ -3,6 +3,7 @@ package com.rettichlp.unicacityaddon.commands.faction.state;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
+import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.enums.faction.ModifyWantedType;
 import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
 import com.rettichlp.unicacityaddon.listener.faction.state.WantedListener;
@@ -85,18 +86,9 @@ public class ModifyWantedsCommand extends UnicacityCommand {
 
     @Override
     public List<String> complete(String[] arguments) {
-        if (arguments.length == 1) {
-            List<String> tabCompletions = this.unicacityAddon.services().util().getOnlinePlayers();
-            String input = arguments[arguments.length - 1].toLowerCase();
-            tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
-            return tabCompletions;
-        } else {
-            List<String> tabCompletions = Arrays.stream(ModifyWantedType.values()).map(ModifyWantedType::getFlagArgument).sorted().collect(Collectors.toList());
-
-            String input = arguments[arguments.length - 1].toLowerCase().replace('-', ' ');
-            tabCompletions.removeIf(tabComplete -> !tabComplete.toLowerCase().startsWith(input));
-
-            return tabCompletions;
-        }
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments)
+                .addToAllFromIndex(2, Arrays.stream(ModifyWantedType.values()).map(ModifyWantedType::getFlagArgument).sorted().collect(Collectors.toList()))
+                .addToAllFromIndex(2, this.unicacityAddon.services().util().getOnlinePlayers())
+                .build();
     }
 }
