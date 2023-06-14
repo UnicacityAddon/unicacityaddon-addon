@@ -1,5 +1,6 @@
 package com.rettichlp.unicacityaddon.base.services;
 
+import com.google.common.reflect.ClassPath;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.services.utils.CommandUtils;
 import com.rettichlp.unicacityaddon.base.services.utils.ListUtils;
@@ -17,7 +18,9 @@ import org.apache.commons.lang3.SystemUtils;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class UtilService {
@@ -95,6 +98,19 @@ public class UtilService {
                 .map(this.textUtils::stripPrefix)
                 .sorted()
                 .collect(Collectors.toList());
+    }
+
+    public Set<Class<?>> getAllClassesFromPackage(String packageName) {
+        try {
+            return ClassPath.from(UnicacityAddon.class.getClassLoader())
+                    .getTopLevelClassesRecursive(packageName)
+                    .stream()
+                    .map(ClassPath.ClassInfo::load)
+                    .collect(Collectors.toSet());
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
+        return new HashSet<>();
     }
 
     public void shutdownPC() {

@@ -1,6 +1,5 @@
 package com.rettichlp.unicacityaddon;
 
-import com.google.common.reflect.ClassPath;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.DefaultAddonPlayer;
 import com.rettichlp.unicacityaddon.base.Services;
@@ -47,11 +46,9 @@ import net.labymod.api.models.addon.annotation.AddonMain;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 
 /**
  * <h2>Hello Labymod addon reviewers and others,</h2>
@@ -254,7 +251,7 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
 
     private void registerListeners() {
         AtomicInteger registeredListenerCount = new AtomicInteger();
-        Set<Class<?>> listenerClassSet = getAllClassesFromPackage("com.rettichlp.unicacityaddon.listener");
+        Set<Class<?>> listenerClassSet = this.services.util().getAllClassesFromPackage("com.rettichlp.unicacityaddon.listener");
         listenerClassSet.stream()
                 .filter(listenerClass -> listenerClass.isAnnotationPresent(UCEvent.class))
                 .forEach(listenerClass -> {
@@ -272,7 +269,7 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
 
     private void registerCommands() {
         AtomicInteger registeredCommandCount = new AtomicInteger();
-        Set<Class<?>> commandClassSet = getAllClassesFromPackage("com.rettichlp.unicacityaddon.commands");
+        Set<Class<?>> commandClassSet = this.services.util().getAllClassesFromPackage("com.rettichlp.unicacityaddon.commands");
         commandClassSet.remove(UnicacityCommand.class);
         commandClassSet.stream()
                 .filter(commandClass -> commandClass.isAnnotationPresent(UCCommand.class))
@@ -290,18 +287,5 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
                     }
                 });
         this.logger().info("Registered {}/{} commands", registeredCommandCount, commandClassSet.size());
-    }
-
-    private Set<Class<?>> getAllClassesFromPackage(String packageName) {
-        try {
-            return ClassPath.from(this.getClass().getClassLoader())
-                    .getTopLevelClassesRecursive(packageName)
-                    .stream()
-                    .map(ClassPath.ClassInfo::load)
-                    .collect(Collectors.toSet());
-        } catch (IOException exception) {
-            exception.printStackTrace();
-        }
-        return new HashSet<>();
     }
 }
