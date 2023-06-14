@@ -1,15 +1,9 @@
 package com.rettichlp.unicacityaddon.base.enums;
 
-import com.rettichlp.unicacityaddon.UnicacityAddon;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import net.labymod.api.client.entity.player.ClientPlayer;
-import net.labymod.api.nbt.NBTTag;
-import net.labymod.api.nbt.tags.NBTTagCompound;
 
 import java.util.Arrays;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author RettichLP
