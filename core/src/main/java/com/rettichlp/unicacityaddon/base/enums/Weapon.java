@@ -27,46 +27,10 @@ public enum Weapon {
 
     private final String name;
 
-    public String getDisplayName() {
-        return "§o§8" + name;
-    }
-
-    public int getLoadedAmmunition(UnicacityAddon unicacityAddon) {
-        Matcher matcher = getAmmunitionNBTTagMatcher(unicacityAddon);
-        return matcher != null ? Integer.parseInt(matcher.group(1)) : 0;
-    }
-
-    public int getBackupAmmunition(UnicacityAddon unicacityAddon) {
-        Matcher matcher = getAmmunitionNBTTagMatcher(unicacityAddon);
-        return matcher != null ? Integer.parseInt(matcher.group(2)) : 0;
-    }
-
     public static Weapon getWeaponByName(String name) {
         return Arrays.stream(Weapon.values())
                 .filter(weapon -> name.equalsIgnoreCase(weapon.getName()))
                 .findFirst()
                 .orElse(null);
-    }
-
-    public static Weapon getWeaponByItemName(String displayName) {
-        return Arrays.stream(Weapon.values())
-                .filter(weapon -> displayName.equalsIgnoreCase(weapon.getDisplayName()))
-                .findFirst()
-                .orElse(null);
-    }
-
-    private Matcher getAmmunitionNBTTagMatcher(UnicacityAddon unicacityAddon) {
-        ClientPlayer clientPlayer = unicacityAddon.player().getPlayer();
-        if (clientPlayer != null) {
-            NBTTagCompound nbtTagCompound = clientPlayer.getMainHandItemStack().getNBTTag();
-            if (nbtTagCompound != null) {
-                NBTTag<?> nbtTag = nbtTagCompound.get("display");
-                Matcher matcher = Pattern.compile("(\\d+)/(\\d+)").matcher(nbtTag != null ? nbtTag.toString() : "");
-                if (matcher.find()) {
-                    return matcher;
-                }
-            }
-        }
-        return null;
     }
 }

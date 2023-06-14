@@ -31,8 +31,7 @@ public class ScreenRenderListener {
 
         if (GetGunPatternCommand.armament != null) {
             Weapon weapon = GetGunPatternCommand.armament.getWeapon();
-            String unformattedWeaponDisplayName = this.unicacityAddon.services().util().text().stripColor(weapon.getDisplayName());
-            int weaponSlotNumber = this.unicacityAddon.guiController().getSlotNumberByDisplayName(unformattedWeaponDisplayName);
+            int weaponSlotNumber = this.unicacityAddon.guiController().getSlotNumberByDisplayName(weapon.getName());
 
             this.unicacityAddon.guiController().inventoryClick(this.unicacityAddon, weaponSlotNumber);
             this.unicacityAddon.player().sendServerMessage("/getammo " + weapon.getName() + " " + GetGunPatternCommand.armament.getAmount());

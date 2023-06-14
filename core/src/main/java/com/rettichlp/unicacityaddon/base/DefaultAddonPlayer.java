@@ -201,8 +201,8 @@ public class DefaultAddonPlayer implements AddonPlayer {
         Weapon weapon = null;
         if (getPlayer() != null) {
             ItemStack mainHandItemStack = getPlayer().getMainHandItemStack();
-            String displayName = this.unicacityAddon.services().util().text().legacy(mainHandItemStack.getDisplayName());
-            weapon = Weapon.getWeaponByItemName(displayName);
+            String displayName = this.unicacityAddon.services().util().text().plain(mainHandItemStack.getDisplayName());
+            weapon = Weapon.getWeaponByName(displayName);
         }
         return weapon;
     }

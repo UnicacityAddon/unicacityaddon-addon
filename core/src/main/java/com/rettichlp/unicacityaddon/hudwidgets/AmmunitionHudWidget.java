@@ -1,7 +1,7 @@
 package com.rettichlp.unicacityaddon.hudwidgets;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.events.WeaponShotEvent;
+import com.rettichlp.unicacityaddon.base.events.WeaponUpdateEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidget;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidgetConfig;
@@ -35,7 +35,7 @@ public class AmmunitionHudWidget extends TextHudWidget<TextHudWidgetConfig> {
     }
 
     @Subscribe
-    public void onWeaponShot(WeaponShotEvent e) {
+    public void onWeaponShot(WeaponUpdateEvent e) {
         this.textLine.updateAndFlush(e.getWeaponAmmunitionText());
     }
 }
