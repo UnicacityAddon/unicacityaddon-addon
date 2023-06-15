@@ -1,10 +1,10 @@
 package com.rettichlp.unicacityaddon.base.config.ownUse;
 
+import com.rettichlp.unicacityaddon.base.config.ownUse.cocaine.Cocaine;
 import com.rettichlp.unicacityaddon.base.config.ownUse.cocaine.DefaultCocaine;
 import com.rettichlp.unicacityaddon.base.config.ownUse.marijuana.DefaultMarijuana;
-import com.rettichlp.unicacityaddon.base.config.ownUse.methamphetamin.DefaultMethamphetamin;
-import com.rettichlp.unicacityaddon.base.config.ownUse.cocaine.Cocaine;
 import com.rettichlp.unicacityaddon.base.config.ownUse.marijuana.Marijuana;
+import com.rettichlp.unicacityaddon.base.config.ownUse.methamphetamin.DefaultMethamphetamin;
 import com.rettichlp.unicacityaddon.base.config.ownUse.methamphetamin.Methamphetamin;
 import net.labymod.api.configuration.loader.Config;
 
