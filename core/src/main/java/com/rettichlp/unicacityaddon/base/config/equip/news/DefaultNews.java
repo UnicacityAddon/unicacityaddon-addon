@@ -12,8 +12,16 @@ public class DefaultNews extends Config implements News {
     @TextFieldSetting
     private final ConfigProperty<String> notepad = new ConfigProperty<>("4500");
 
+    @TextFieldSetting
+    private final ConfigProperty<String> coffee = new ConfigProperty<>("2");
+
     @Override
     public ConfigProperty<String> notepad() {
+        return this.notepad;
+    }
+
+    @Override
+    public ConfigProperty<String> coffee() {
         return this.notepad;
     }
 }

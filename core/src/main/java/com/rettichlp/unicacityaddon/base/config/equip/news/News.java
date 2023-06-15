@@ -8,4 +8,6 @@ import net.labymod.api.configuration.loader.property.ConfigProperty;
 public interface News {
 
     ConfigProperty<String> notepad();
+
+    ConfigProperty<String> coffee();
 }

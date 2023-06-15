@@ -297,6 +297,9 @@
           "name": "News",
           "notepad": {
             "name": "Notizblock"
+          },
+          "coffee": {
+            "name": "Kaffee"
           }
         },
         "hitman": {
@@ -315,6 +318,12 @@
           },
           "rpg7": {
             "name": "RPG-7"
+          }
+        },
+        "church": {
+          "name": "Kirche",
+          "wine": {
+            "name": "Wein"
           }
         }
       },

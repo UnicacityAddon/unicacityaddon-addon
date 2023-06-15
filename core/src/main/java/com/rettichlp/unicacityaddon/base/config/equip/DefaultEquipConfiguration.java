@@ -2,6 +2,8 @@ package com.rettichlp.unicacityaddon.base.config.equip;
 
 import com.rettichlp.unicacityaddon.base.config.equip.badfaction.BadFaction;
 import com.rettichlp.unicacityaddon.base.config.equip.badfaction.DefaultBadFaction;
+import com.rettichlp.unicacityaddon.base.config.equip.church.Church;
+import com.rettichlp.unicacityaddon.base.config.equip.church.DefaultChurch;
 import com.rettichlp.unicacityaddon.base.config.equip.hitman.DefaultHitman;
 import com.rettichlp.unicacityaddon.base.config.equip.medic.DefaultMedic;
 import com.rettichlp.unicacityaddon.base.config.equip.news.DefaultNews;
@@ -65,6 +67,8 @@ public class DefaultEquipConfiguration extends Config implements EquipConfigurat
     private final DefaultHitman hitman = new DefaultHitman();
 
     private final DefaultTerrorist terrorist = new DefaultTerrorist();
+
+    private final DefaultChurch church = new DefaultChurch();
 
     @Override
     public ConfigProperty<String> water() {
@@ -144,5 +148,10 @@ public class DefaultEquipConfiguration extends Config implements EquipConfigurat
     @Override
     public Terrorist terrorist() {
         return this.terrorist;
+    }
+
+    @Override
+    public Church church() {
+        return this.church;
     }
 }

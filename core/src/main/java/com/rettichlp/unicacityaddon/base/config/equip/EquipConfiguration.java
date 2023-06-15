@@ -1,6 +1,7 @@
 package com.rettichlp.unicacityaddon.base.config.equip;
 
 import com.rettichlp.unicacityaddon.base.config.equip.badfaction.BadFaction;
+import com.rettichlp.unicacityaddon.base.config.equip.church.Church;
 import com.rettichlp.unicacityaddon.base.config.equip.hitman.Hitman;
 import com.rettichlp.unicacityaddon.base.config.equip.medic.Medic;
 import com.rettichlp.unicacityaddon.base.config.equip.news.News;
@@ -44,4 +45,6 @@ public interface EquipConfiguration {
     Hitman hitman();
 
     Terrorist terrorist();
+
+    Church church();
 }

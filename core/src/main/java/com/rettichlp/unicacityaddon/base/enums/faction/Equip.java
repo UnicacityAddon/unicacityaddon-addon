@@ -44,7 +44,9 @@ public enum Equip {
     RPG7(Weapon.ALPHA_7.getName(), Weapon.ALPHA_7.getName(), (configuration) -> configuration.equip().terrorist().rpg7().getOrDefault("0")),
     NOTEPAD("Notizblock", "Notizblock", (configuration) -> configuration.equip().news().notepad().getOrDefault("0")), // UnicaCity Bug (Nachricht gibt es noch nicht)
     GLASSCUTTER("Glasschneider", "Glasschneider", (configuration) -> configuration.equip().hitman().glassCutter().getOrDefault("0")),
-    LOCKPICK("Dietrich", "Dietrich", (configuration) -> configuration.equip().hitman().lockPick().getOrDefault("0"));
+    LOCKPICK("Dietrich", "Dietrich", (configuration) -> configuration.equip().hitman().lockPick().getOrDefault("0")),
+    WINE("Wein", "Wein", (configuration) -> configuration.equip().church().wine().getOrDefault("2")),
+    COFFEE("Kaffee", "Kaffee", (configuration) -> configuration.equip().news().coffee().getOrDefault("2"));
 
     private final String equipName;
     private final String messageName;
