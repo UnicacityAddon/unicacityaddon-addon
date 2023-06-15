@@ -18,7 +18,7 @@ import static com.rettichlp.unicacityaddon.base.services.utils.MathUtils.DECIMAL
 /**
  * @author RettichLP
  */
-@UCCommand(prefix = "toplist")
+@UCCommand(prefix = "toplist", deactivated = true)
 public class TopListCommand extends UnicacityCommand {
 
     private final UnicacityAddon unicacityAddon;

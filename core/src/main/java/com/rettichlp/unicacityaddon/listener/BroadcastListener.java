@@ -31,7 +31,7 @@ public class BroadcastListener {
 
     @Subscribe
     public void onUnicacityAddonTick(UnicacityAddonTickEvent e) {
-        if (e.isPhase(UnicacityAddonTickEvent.Phase.SECOND_30)) {
+        if (e.isPhase(UnicacityAddonTickEvent.Phase.SECOND_30) && !e.isUnicacity()) { // not on Unicacity
             checkForBroadcast();
         }
     }
@@ -48,20 +48,22 @@ public class BroadcastListener {
                     timer.schedule(new TimerTask() {
                         @Override
                         public void run() {
-                            p.sendEmptyMessage();
-                            p.sendEmptyMessage();
+                            if (!BroadcastListener.this.unicacityAddon.services().util().isUnicacity()) {
+                                p.sendEmptyMessage();
+                                p.sendEmptyMessage();
 
-                            p.sendMessage(Message.getBuilder()
-                                    .of("BROADCAST BY ").color(ColorCode.DARK_AQUA).bold().advance().space()
-                                    .of(broadcast.getIssuerName().toUpperCase()).color(ColorCode.DARK_AQUA).bold().advance()
-                                    .createComponent());
+                                p.sendMessage(Message.getBuilder()
+                                        .of("BROADCAST BY ").color(ColorCode.DARK_AQUA).bold().advance().space()
+                                        .of(broadcast.getIssuerName().toUpperCase()).color(ColorCode.DARK_AQUA).bold().advance()
+                                        .createComponent());
 
-                            p.sendMessage(Message.getBuilder()
-                                    .of(broadcast.getBroadcast()).color(ColorCode.AQUA).advance()
-                                    .createComponent());
+                                p.sendMessage(Message.getBuilder()
+                                        .of(broadcast.getBroadcast()).color(ColorCode.AQUA).advance()
+                                        .createComponent());
 
-                            p.sendEmptyMessage();
-                            p.sendEmptyMessage();
+                                p.sendEmptyMessage();
+                                p.sendEmptyMessage();
+                            }
                         }
                     }, new Date(broadcast.getSendTime()));
                 })).start();

@@ -250,23 +250,28 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
 
     private void registerCommands() {
         AtomicInteger registeredCommandCount = new AtomicInteger();
+        AtomicInteger deactivatedCommandCount = new AtomicInteger();
         Set<Class<?>> commandClassSet = this.services.util().getAllClassesFromPackage("com.rettichlp.unicacityaddon.commands");
         commandClassSet.remove(UnicacityCommand.class);
         commandClassSet.stream()
                 .filter(commandClass -> commandClass.isAnnotationPresent(UCCommand.class))
                 .forEach(commandClass -> {
-                    try {
-                        UCCommand ucCommand = commandClass.getAnnotation(UCCommand.class);
-                        Command command = (Command) commandClass.getConstructor(UnicacityAddon.class, UCCommand.class).newInstance(this, ucCommand);
-                        this.commands.add(command);
-                        this.registerCommand(command);
-                        registeredCommandCount.getAndIncrement();
-                    } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException |
-                             InstantiationException e) {
-                        this.logger().warn("Can't register command: {}", commandClass.getSimpleName());
-                        e.printStackTrace();
+                    UCCommand ucCommand = commandClass.getAnnotation(UCCommand.class);
+                    if (ucCommand.deactivated()) {
+                        deactivatedCommandCount.getAndIncrement();
+                    } else {
+                        try {
+                            Command command = (Command) commandClass.getConstructor(UnicacityAddon.class, UCCommand.class).newInstance(this, ucCommand);
+                            this.commands.add(command);
+                            this.registerCommand(command);
+                            registeredCommandCount.getAndIncrement();
+                        } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException |
+                                 InstantiationException e) {
+                            this.logger().warn("Can't register command: {}", commandClass.getSimpleName());
+                            e.printStackTrace();
+                        }
                     }
                 });
-        this.logger().info("Registered {}/{} commands", registeredCommandCount, commandClassSet.size());
+        this.logger().info("Registered {}/{} commands, {} skipped (deactivated)", registeredCommandCount, commandClassSet.size() - deactivatedCommandCount.get(), deactivatedCommandCount.get());
     }
 }

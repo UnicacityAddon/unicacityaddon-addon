@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * @author RettichLP
  */
-@UCCommand(prefix = "checkfire")
+@UCCommand(prefix = "checkfire", deactivated = true)
 public class CheckFireCommand extends UnicacityCommand {
 
     private final UnicacityAddon unicacityAddon;

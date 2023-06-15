@@ -47,4 +47,11 @@ public @interface UCCommand {
      * @return Usage or empty string
      */
     String usage() default "";
+
+    /**
+     * Indicates if the command is deactivated.
+     *
+     * @return true if the command should not be registered, else false
+     */
+    boolean deactivated() default false;
 }
