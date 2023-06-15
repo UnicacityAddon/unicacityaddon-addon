@@ -22,17 +22,35 @@ public class VersionedSoundController extends SoundController {
 
     @Override
     public void playBombPlantedSound() {
+        new Thread(() -> {
+            Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.NOTE_BLOCK_BIT, 1.0F));
 
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+
+            Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.NOTE_BLOCK_BIT, 0.8F));
+
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+
+            Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.NOTE_BLOCK_BIT, 1.4F));
+        }).start();
     }
 
     @Override
     public void playContractSetSound() {
-
+        Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.NOTE_BLOCK_CHIME, 0.5F));
     }
 
     @Override
     public void playContractFulfilledSound() {
-
+        Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.NOTE_BLOCK_CHIME, 1.0F));
     }
 
     @Override
@@ -52,7 +70,7 @@ public class VersionedSoundController extends SoundController {
 
     @Override
     public void playServiceSound() {
-
+        Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.NOTE_BLOCK_CHIME, 1.0F));
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.rettichlp.unicacityaddon.v1_19_3;
+package com.rettichlp.unicacityaddon.v1_19_4;
 
 import com.rettichlp.unicacityaddon.controller.SoundController;
 import net.labymod.api.models.Implements;
