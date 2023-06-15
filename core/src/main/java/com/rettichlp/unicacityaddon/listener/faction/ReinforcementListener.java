@@ -40,7 +40,7 @@ public class ReinforcementListener {
     }
 
     @Subscribe
-    public void onChatReceive(ChatReceiveEvent e)  {
+    public void onChatReceive(ChatReceiveEvent e) {
         AddonPlayer p = this.unicacityAddon.player();
         ChatMessage chatMessage = e.chatMessage();
         String unformattedMsg = chatMessage.getPlainText();
@@ -90,14 +90,14 @@ public class ReinforcementListener {
             p.sendMessage(Message.getBuilder()
                     .of("»").color(ColorCode.GRAY).advance().space()
                     .of("Route Anzeigen").color(ColorCode.RED)
-                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, this.unicacityAddon.services().util().command().locationHoverMessage(posX, posY, posZ))
-                            .clickEvent(ClickEvent.Action.RUN_COMMAND, "/navi " + posX + "/" + posY + "/" + posZ)
-                            .advance()
+                    .hoverEvent(HoverEvent.Action.SHOW_TEXT, this.unicacityAddon.services().util().command().locationHoverMessage(posX, posY, posZ))
+                    .clickEvent(ClickEvent.Action.RUN_COMMAND, "/navi " + posX + "/" + posY + "/" + posZ)
+                    .advance()
                     .of(" | ").color(ColorCode.GRAY).advance()
                     .of("Unterwegs").color(ColorCode.RED)
-                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Unterwegs Nachricht absenden").color(ColorCode.RED).advance().createComponent())
-                            .clickEvent(ClickEvent.Action.RUN_COMMAND, "/reinforcement ontheway " + name + " " + posX + " " + posY + " " + posZ + (dChat ? " -d" : ""))
-                            .advance()
+                    .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Unterwegs Nachricht absenden").color(ColorCode.RED).advance().createComponent())
+                    .clickEvent(ClickEvent.Action.RUN_COMMAND, "/reinforcement ontheway " + name + " " + posX + " " + posY + " " + posZ + (dChat ? " -d" : ""))
+                    .advance()
                     .createComponent());
 
             e.setCancelled(true);

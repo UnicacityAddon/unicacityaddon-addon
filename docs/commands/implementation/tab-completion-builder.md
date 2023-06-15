@@ -1,8 +1,10 @@
 # Tab-Completion Builder
+
 Um eine Tab-Completion zur Verfügung zu stellen, kann das weiterhin manuell getan werden oder mit einem
 `TabCompletionBuilder`.
 
 Dieser kann in der `UnicacityCommand#copmlete(String[])` Methode als Rückgabewert eingefügt werden:
+
 ```java
 @Override
 public List<String> complete(String[] arguments) {

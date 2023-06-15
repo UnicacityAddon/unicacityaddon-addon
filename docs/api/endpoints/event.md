@@ -4,15 +4,15 @@ OpenAPI: (noch nicht verfügbar)
 
 ## [/event](http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/event)
 
-Zeigt die Daten für aktuelle Events. 
+Zeigt die Daten für aktuelle Events.
 
 **Einschränkung**: 🔓
 
 **GET** `/unicacityaddon/v1/{tokenString}/event`
 
-| Parameter       | Beschreibung |
-|-----------------|--------------|
-| `tokenString`   | Addon-Token  |
+| Parameter     | Beschreibung |
+|---------------|--------------|
+| `tokenString` | Addon-Token  |
 
 ## [/event/bomb](http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/event/bomb?startTime=1684868332000)
 

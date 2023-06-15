@@ -44,6 +44,7 @@ public @interface UCCommand {
      * <br>
      * The complete syntax with prefix is generated in {@link UnicacityCommand#sendUsage()}<br>
      * <br>
+     *
      * @return Usage or empty string
      */
     String usage() default "";

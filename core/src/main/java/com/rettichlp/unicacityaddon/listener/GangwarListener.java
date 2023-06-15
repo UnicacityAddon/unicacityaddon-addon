@@ -35,9 +35,9 @@ public class GangwarListener {
                         .orElse(null);
 
                 ScoreboardScore defenderScore = scoreboard.getScores(scoreboard.getObjective(DisplaySlot.SIDEBAR)).stream()
-                    .filter(score -> score.getName().contains("Verteidiger"))
-                    .findFirst()
-                    .orElse(null);
+                        .filter(score -> score.getName().contains("Verteidiger"))
+                        .findFirst()
+                        .orElse(null);
 
                 if (attackerScore != null && defenderScore != null) {
                     this.unicacityAddon.api().sendEventGangwarRequest(attackerScore.getValue(), defenderScore.getValue());

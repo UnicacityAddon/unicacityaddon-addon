@@ -10,11 +10,7 @@ public class PatternHandler {
 
     /**
      * Quote: Rettich: "In welchem Forum ist der Vorschlag drin?" Dimiikou: "In Vorschläge" - RettichLP und Dimiikou, 09.10.2022
-     *
-     * <br>
-     * <br>
-     * <br>
-     *
+     * <p><p>
      * Pattern for faction and util data
      *
      * @see com.rettichlp.unicacityaddon.base.io.api.API

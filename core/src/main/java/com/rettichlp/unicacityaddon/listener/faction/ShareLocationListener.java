@@ -31,9 +31,9 @@ public class ShareLocationListener {
     }
 
     @Subscribe
-    public void onChatReceive(ChatReceiveEvent e)  {
+    public void onChatReceive(ChatReceiveEvent e) {
         AddonPlayer p = this.unicacityAddon.player();
-        Matcher shareLocationMatcher = PatternHandler.SHARE_LOCATION_PATTERN.matcher(e.chatMessage ().getPlainText());
+        Matcher shareLocationMatcher = PatternHandler.SHARE_LOCATION_PATTERN.matcher(e.chatMessage().getPlainText());
 
         if (!shareLocationMatcher.find())
             return;
@@ -67,9 +67,9 @@ public class ShareLocationListener {
         p.sendMessage(Message.getBuilder()
                 .of("»").color(ColorCode.GRAY).advance().space()
                 .of("Route Anzeigen").color(ColorCode.RED)
-                        .hoverEvent(HoverEvent.Action.SHOW_TEXT, this.unicacityAddon.services().util().command().locationHoverMessage(posX, posY, posZ))
-                        .clickEvent(ClickEvent.Action.RUN_COMMAND, "/navi " + posX + "/" + posY + "/" + posZ)
-                        .advance()
+                .hoverEvent(HoverEvent.Action.SHOW_TEXT, this.unicacityAddon.services().util().command().locationHoverMessage(posX, posY, posZ))
+                .clickEvent(ClickEvent.Action.RUN_COMMAND, "/navi " + posX + "/" + posY + "/" + posZ)
+                .advance()
                 .createComponent());
         e.setCancelled(true);
     }

@@ -58,8 +58,9 @@ handelt. Wenn dies der Fall ist, wird diese Nachricht nicht im Chat gezeigt.
 
 ## Reply
 
-Um einem Spieler auf eine SMS zu antworten, müsste eine neue SMS geschrieben werden. Entweder über den [UnicaCity](https://unicacity.de/) Command
-`/sms [Nummer] [Nachricht]` oder den Addon Command `/asms [Spieler] [Nachricht]`.
+Um einem Spieler auf eine SMS zu antworten, müsste eine neue SMS geschrieben werden. Entweder über den
+[UnicaCity](https://unicacity.de/) Command `/sms [Nummer] [Nachricht]` oder den Addon Command
+`/asms [Spieler] [Nachricht]`.
 
 Dieser Command ermöglicht das direkte antworten auf eine SMS ohne die Angabe eines Spielers.
 

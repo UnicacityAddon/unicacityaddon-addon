@@ -18,17 +18,22 @@ import java.util.UUID;
  */
 public interface AddonPlayer {
 
-    @Nullable ClientPlayer getPlayer();
+    @Nullable
+    ClientPlayer getPlayer();
 
     String getName();
 
-    @Nullable UUID getUniqueId();
+    @Nullable
+    UUID getUniqueId();
 
-    @Nullable Float getHealth();
+    @Nullable
+    Float getHealth();
 
-    @Nullable FloatVector3 getLocation();
+    @Nullable
+    FloatVector3 getLocation();
 
-    @Nullable Inventory getInventory();
+    @Nullable
+    Inventory getInventory();
 
     void sendMessage(String message);
 
@@ -72,7 +77,8 @@ public interface AddonPlayer {
 
     boolean hasGangwar();
 
-    @Nullable Weapon getWeaponInMainHand();
+    @Nullable
+    Weapon getWeaponInMainHand();
 
     boolean isGagged();
 

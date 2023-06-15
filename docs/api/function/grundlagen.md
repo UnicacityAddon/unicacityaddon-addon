@@ -1,6 +1,7 @@
 # Grundlagen
 
 ## Wozu wird eine API benötigt?
+
 Für manche Funktionen wie zum Beispiel Hausverbote, braucht man einen zentralen Speicher, um diese allen Spielern zur
 Verfügung zu stellen. Des Weiteren ist durch einen zentralen Speicher auch eine schnellere Anpassung möglich. Wenn
 beispielsweise ein neuer Navipunkt hinzugefügt werden soll, muss man nicht auf ein Update warten. Durch die API kann
@@ -9,8 +10,8 @@ direkt über das Spiel, durch einen Command, der Navipunkte hinzugefügt werden.
 Ein weiterer wichtiger Grund war die Sicherheit von Daten. Wir haben eine Liste von Navipunkten von
 [UnicaCity](https://unicacity.de/) bekommen unter der Voraussetzung, dass diese nicht veröffentlicht wird. Vor der API
 haben wir das über ein Environment Secret in GitHub gelöst. Durch die API ist es möglich die Liste über einen
-[Endpunkt](../endpoints/navi-point.md) bereitzustellen. Den Zugriff auf diese Endpunkte können wir besser schützen und die
-Liste ist nicht mehr durch Dekompilierung der `.jar` Datei zu finden.
+[Endpunkt](../endpoints/navi-point.md) bereitzustellen. Den Zugriff auf diese Endpunkte können wir besser schützen und
+die Liste ist nicht mehr durch Dekompilierung der `.jar` Datei zu finden.
 
 ## Endpunkte
 
@@ -21,6 +22,7 @@ jeden Endpunkt haben soll, muss das Addon-Token angegeben werden (siehe
 übergeben.
 
 Base-Url:
+
 ```
 http://rettichlp.de:8888/unicacityaddon/v1/{addon-token}/...
 ```

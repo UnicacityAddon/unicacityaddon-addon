@@ -5,12 +5,12 @@
 [![Discord](https://discord.com/api/guilds/1008928645185810463/widget.png)](https://discord.gg/A9u5eY7CbS)
 
 * [Basic Overview](#basic-overview)
-  * [Supported Versions](#supported-versions)
-    * [LabyMod 3](#labymod-3)
-    * [LabyMod 4](#labymod-4)
+    * [Supported Versions](#supported-versions)
+        * [LabyMod 3](#labymod-3)
+        * [LabyMod 4](#labymod-4)
 * [Installation](#installation)
-  * [Release](#release)
-  * [Development versions and manual installation](#development-versions-and-manual-installation)
+    * [Release](#release)
+    * [Development versions and manual installation](#development-versions-and-manual-installation)
 * [Contribute](#contribute)
 
 ## Basic Overview
@@ -41,13 +41,15 @@ and on the other hand the support for Minecraft version 1.16.5+.
 
 ### Supported Versions
 
-> In LabyMod 3 there was no command implementation, so there was used Minecraft Forge for this. In LabyMod 4 is an own command implementation so Minecraft Forge isn't longer needed.
+> In LabyMod 3 there was no command implementation, so there was used Minecraft Forge for this. In LabyMod 4 is an own
+> command implementation so Minecraft Forge isn't longer needed.
 
 #### LabyMod 3
 
 Addon releases: `v1.0.0` - `v1.9.2`<br>
 Requires Minecraft Forge: ✔️<br>
 Supported Minecraft versions:
+
 - `1.12.2`
 
 #### LabyMod 4
@@ -55,6 +57,7 @@ Supported Minecraft versions:
 Addon releases: `v2.0.0` - `latest`<br>
 Requires Minecraft Forge: ❌<br>
 Supported Minecraft versions:
+
 - `1.12.2`
 - `1.16.5`
 - `1.17.1`

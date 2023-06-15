@@ -10,9 +10,9 @@ Zeigt die Top-Liste mit verschiedenen Kategorien an.
 
 **GET** `/unicacityaddon/v1/{tokenString}/statistic/top`
 
-| Parameter     | Beschreibung                                                            |
-|---------------|-------------------------------------------------------------------------|
-| `tokenString` | Addon-Token                                                             |
+| Parameter     | Beschreibung |
+|---------------|--------------|
+| `tokenString` | Addon-Token  |
 
 ## [/statistic/{player}](http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/statistic/RettichLP)
 

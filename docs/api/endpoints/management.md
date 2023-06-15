@@ -22,9 +22,9 @@ Zeigt alle registrierten Clients mit der Aktivität, Version, UUID und Versionsa
 
 **GET** `/unicacityaddon/v1/{tokenString}/mgmt/users`
 
-| Parameter     | Beschreibung     |
-|---------------|------------------|
-| `tokenString` | Addon-Token      |
+| Parameter     | Beschreibung |
+|---------------|--------------|
+| `tokenString` | Addon-Token  |
 
 ## [/mgmt/version](http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/mgmt/version?type=add&version=1.0.0)
 

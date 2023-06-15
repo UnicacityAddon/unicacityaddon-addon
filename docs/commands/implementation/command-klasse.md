@@ -5,6 +5,7 @@ Commands rufen in ihrem Konstruktor die `UnicacityCommand` Klasse auf und überg
 [Command Annotation](command-annotation.md).
 
 Beispiel Command:
+
 ```java linenums="1"
 @UCCommand(prefix = "beispiel", aliases = {"bspiel", "bs"})
 public class BeispielCommand extends UnicacityCommand {

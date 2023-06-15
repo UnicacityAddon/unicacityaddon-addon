@@ -12,6 +12,7 @@ Eine klare und präzise Beschreibung der Idee oder Erweiterung.
 
 **Was soll passieren, wie soll die Idee oder Erweiterung umgesetzt werden?**
 Eine klare und präzise Beschreibung dessen, was passieren soll.
+
 - [ ] ...
 - [ ] ...
 

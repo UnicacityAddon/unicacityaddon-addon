@@ -12,6 +12,7 @@ Füge hier eine klare und präzise Beschreibung des Fehlers ein.
 
 **Wie kann der Bug oder Fehler reproduziert werden?**
 Schritte zum Reproduzieren des Verhaltens:
+
 1. Gehen zu "..."
 2. Klicke auf "..."
 3. Scrolle nach unten zu "..."

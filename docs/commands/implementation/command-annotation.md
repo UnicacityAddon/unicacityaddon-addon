@@ -4,6 +4,7 @@ Um die Zuordnung von Command Präfix, Aliases und weiterer Command abhängiger D
 Annotation. Mit dieser können `prefix`, `aliases`, `onlyOnUnicacity` und `usage` zugeordnet werden.
 
 ## Prefix
+
 Gibt das Präfix des Commands an. Ein Command Präfix ist der Text, der in Kombination mit einem Schrägstrich (`/`)
 die Command Ausführung einleitet. Mit diesem Präfix wird auch der Hilfetext generiert.
 
@@ -14,22 +15,27 @@ Type: `String`
     `prefix` ist verpflichtend. Die restlichen Einstellungen sind optional.
 
 ## Aliases
+
 Gibt die Aliases des Commands an. Command Aliase sind alternative Präfixe des Commands. Der Wert ist standardmäßig
 ein leeres Array.
 
 Type: `String[]`
 
 ## OnlyOnUnicacity
-Legt fest ob der Command nur auf [UnicaCity](https://unicacity.de/) funktionieren soll. Der Wert ist standardmäßig auf `true`. Wenn der
-Command auch auf anderen Servern oder im Singleplayer funktionieren soll, muss dieser auf `false` gesetzt werden.
+
+Legt fest ob der Command nur auf [UnicaCity](https://unicacity.de/) funktionieren soll. Der Wert ist standardmäßig auf
+`true`. Wenn der Command auch auf anderen Servern oder im Singleplayer funktionieren soll, muss dieser auf `false`
+gesetzt werden.
 
 Type: `Boolean (true)`
 
 ## Usage
+
 Zeigt die Command Parameter als Text an. Der Hilfetext, der durch die `usage` angezeigt wird, besteht nur aus den
 Command Parametern. Das Präfix wird weggelassen. Der Wert ist standardmäßig ein leerer `String`.
 
 Beispiel für den Teleport Command (`/tp RettichLP 1 2 3`):
+
 ```java
 @UCCommand(prefix = "tp", usage = "[Spieler] [x] [y] [z]")
 ```

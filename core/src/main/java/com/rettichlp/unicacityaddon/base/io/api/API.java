@@ -62,12 +62,18 @@ public class API {
     private final Map<String, Faction> playerFactionMap = new HashMap<>();
     private final Map<String, Integer> playerRankMap = new HashMap<>();
 
-    @Setter private List<BlacklistReason> blacklistReasonList = new ArrayList<>();
-    @Setter private List<HouseBan> houseBanList = new ArrayList<>();
-    @Setter private List<HouseBanReason> houseBanReasonList = new ArrayList<>();
-    @Setter private List<ManagementUser> managementUserList = new ArrayList<>();
-    @Setter private List<NaviPoint> naviPointList = new ArrayList<>();
-    @Setter private List<WantedReason> wantedReasonList = new ArrayList<>();
+    @Setter
+    private List<BlacklistReason> blacklistReasonList = new ArrayList<>();
+    @Setter
+    private List<HouseBan> houseBanList = new ArrayList<>();
+    @Setter
+    private List<HouseBanReason> houseBanReasonList = new ArrayList<>();
+    @Setter
+    private List<ManagementUser> managementUserList = new ArrayList<>();
+    @Setter
+    private List<NaviPoint> naviPointList = new ArrayList<>();
+    @Setter
+    private List<WantedReason> wantedReasonList = new ArrayList<>();
 
     private String token;
     private AddonPlayer addonPlayer;

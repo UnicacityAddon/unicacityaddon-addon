@@ -79,9 +79,9 @@ public class VersionedTransportController extends TransportController {
             if (containerScreen.getTitle().getString().contains("CarControl")) {
                 ChestMenu chestMenu = containerScreen.getMenu();
                 int numberOfCars = (int) chestMenu.slots.stream()
-                    .map(slot -> slot.getItem().getItem())
-                    .filter(item -> item.equals(Items.MINECART) || item.equals(Items.EMERALD) || item.equals(Items.REDSTONE))
-                    .count();
+                        .map(slot -> slot.getItem().getItem())
+                        .filter(item -> item.equals(Items.MINECART) || item.equals(Items.EMERALD) || item.equals(Items.REDSTONE))
+                        .count();
 
                 if (numberOfCars == 1) {
                     LocalPlayer localPlayer = Minecraft.getInstance().player;
