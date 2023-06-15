@@ -2,12 +2,14 @@ package com.rettichlp.unicacityaddon.base.events;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.config.hotkey.HotkeyConfiguration;
+import lombok.Getter;
 import net.labymod.api.client.gui.screen.key.Key;
 import net.labymod.api.event.Event;
 
 /**
  * @author RettichLP
  */
+@Getter
 public class HotkeyEvent implements Event {
 
     private final Key key;
@@ -19,11 +21,7 @@ public class HotkeyEvent implements Event {
         this.key = key;
     }
 
-    public Key key() {
-        return key;
-    }
-
-    public HotkeyConfiguration hotkey() {
+    public HotkeyConfiguration hotkeyConfiguration() {
         return this.unicacityAddon.configuration().hotkey();
     }
 }

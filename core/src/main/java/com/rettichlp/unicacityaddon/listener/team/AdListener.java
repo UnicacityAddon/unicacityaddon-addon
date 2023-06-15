@@ -38,8 +38,8 @@ public class AdListener {
 
     @Subscribe
     public void onHotkey(HotkeyEvent e) {
-        Key key = e.key();
-        HotkeyConfiguration hotkeyConfiguration = e.hotkey();
+        Key key = e.getKey();
+        HotkeyConfiguration hotkeyConfiguration = e.hotkeyConfiguration();
 
         if (key.equals(hotkeyConfiguration.acceptAd().get())) {
             this.handleAd("freigeben");

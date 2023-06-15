@@ -23,8 +23,8 @@ public class ADutyListener {
     @Subscribe
     public void onHotkey(HotkeyEvent e) {
         AddonPlayer p = this.unicacityAddon.player();
-        Key key = e.key();
-        HotkeyConfiguration hotkeyConfiguration = e.hotkey();
+        Key key = e.getKey();
+        HotkeyConfiguration hotkeyConfiguration = e.hotkeyConfiguration();
 
         if (key.equals(hotkeyConfiguration.aDuty().get())) {
             p.sendServerMessage("/aduty");
