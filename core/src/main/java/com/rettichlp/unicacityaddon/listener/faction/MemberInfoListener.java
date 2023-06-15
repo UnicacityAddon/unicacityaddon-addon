@@ -23,10 +23,10 @@ import java.util.regex.Pattern;
 @UCEvent
 public class MemberInfoListener {
 
+    public static CompletableFuture<Map<Boolean, Integer>> future;
     private static final Timer TIMER = new Timer();
     private static final Pattern FACTION_MEMBERS_PATTERN = Pattern.compile("^ {2}=== Fraktionsmitglieder \\[(.+)] ===$");
     private static final Map<Boolean, Integer> MEMBER_MAP = new HashMap<>();
-    public static CompletableFuture<Map<Boolean, Integer>> future;
     private static long memberlistShown;
 
     private final UnicacityAddon unicacityAddon;

@@ -19,16 +19,14 @@ public class MathUtils {
     public static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("###.##");
     private static final DecimalFormat CALCULATOR_DECIMAL_FORMAT = new DecimalFormat("###,###.###", DecimalFormatSymbols.getInstance(Locale.GERMAN));
     private static double lastResult = 0;
+    private double result = Double.NaN;
+    private String expression;
+    private int pos = -1;
+    private int ch;
 
     static {
         CALCULATOR_DECIMAL_FORMAT.setMaximumFractionDigits(5);
     }
-
-    private double result = Double.NaN;
-    private String expression;
-
-    private int pos = -1;
-    private int ch;
 
     public MathUtils(String expression) {
         this.expression = expression;

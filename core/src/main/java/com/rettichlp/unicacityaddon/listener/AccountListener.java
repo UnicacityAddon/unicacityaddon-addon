@@ -31,7 +31,6 @@ import java.util.regex.Matcher;
 public class AccountListener {
 
     public static boolean isAfk = false;
-
     private boolean isMessageLocked = false;
     private long lastAfkTry = 0;
 

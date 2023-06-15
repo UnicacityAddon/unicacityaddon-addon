@@ -26,7 +26,6 @@ import java.util.Objects;
 public class FileService {
 
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
-
     private Data data;
 
     private final UnicacityAddon unicacityAddon;

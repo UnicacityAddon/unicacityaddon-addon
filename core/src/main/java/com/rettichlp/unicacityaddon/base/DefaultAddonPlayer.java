@@ -32,7 +32,6 @@ import java.util.stream.Collectors;
 public class DefaultAddonPlayer implements AddonPlayer {
 
     private static String latestVersion = null;
-
     private boolean gagged = false;
 
     private final UnicacityAddon unicacityAddon;

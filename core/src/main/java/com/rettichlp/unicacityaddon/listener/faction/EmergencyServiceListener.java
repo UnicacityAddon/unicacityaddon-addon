@@ -29,10 +29,10 @@ import java.util.regex.Matcher;
 @UCEvent
 public class EmergencyServiceListener {
 
-    private static final List<ServiceCallBox> activeEmergencyCallBoxList = new ArrayList<>();
     public static int openServices = 0;
     public static int distanceToService = 0;
     public static FloatVector3 serviceAcceptLocation;
+    private static final List<ServiceCallBox> activeEmergencyCallBoxList = new ArrayList<>();
 
     private final UnicacityAddon unicacityAddon;
 
