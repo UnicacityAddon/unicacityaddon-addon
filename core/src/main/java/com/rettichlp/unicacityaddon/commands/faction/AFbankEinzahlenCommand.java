@@ -24,9 +24,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 @UCCommand(prefix = "afbank", usage = "[einzahlen|auszahlen] [Betrag]")
 public class AFbankEinzahlenCommand extends UnicacityCommand {
 
-    public static int amount;
     public static final AtomicBoolean STARTED = new AtomicBoolean();
     public static final Timer timer = new Timer();
+    public static int amount;
 
     private final UnicacityAddon unicacityAddon;
 

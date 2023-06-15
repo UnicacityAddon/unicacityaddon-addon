@@ -27,10 +27,6 @@ public class HouseBanTag extends NameTag {
         this.unicacityAddon = unicacityAddon;
     }
 
-    public static HouseBanTag create(UnicacityAddon unicacityAddon) {
-        return new HouseBanTag(unicacityAddon);
-    }
-
     @Override
     protected @Nullable RenderableComponent getRenderableComponent() {
         UnicacityAddonConfiguration unicacityAddonConfiguration = this.unicacityAddon.configuration();
@@ -59,5 +55,9 @@ public class HouseBanTag extends NameTag {
                 .anyMatch(houseBanEntry -> houseBanEntry.getName().equals(playerName));
 
         return hasHouseBan ? RenderableComponent.of(component) : null;
+    }
+
+    public static HouseBanTag create(UnicacityAddon unicacityAddon) {
+        return new HouseBanTag(unicacityAddon);
     }
 }

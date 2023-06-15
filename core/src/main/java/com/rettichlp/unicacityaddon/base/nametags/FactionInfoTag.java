@@ -19,10 +19,6 @@ public class FactionInfoTag extends NameTag {
         this.unicacityAddon = unicacityAddon;
     }
 
-    public static FactionInfoTag create(UnicacityAddon unicacityAddon) {
-        return new FactionInfoTag(unicacityAddon);
-    }
-
     @Override
     protected @Nullable RenderableComponent getRenderableComponent() {
         UnicacityAddonConfiguration unicacityAddonConfiguration = this.unicacityAddon.configuration();
@@ -38,5 +34,9 @@ public class FactionInfoTag extends NameTag {
         Faction faction = this.unicacityAddon.api().getPlayerFactionMap().getOrDefault(playerName, Faction.NULL);
         String nameTagSuffix = this.unicacityAddon.services().faction().getNameTagSuffix(faction);
         return !nameTagSuffix.isEmpty() ? RenderableComponent.of(Component.text(nameTagSuffix)) : null;
+    }
+
+    public static FactionInfoTag create(UnicacityAddon unicacityAddon) {
+        return new FactionInfoTag(unicacityAddon);
     }
 }

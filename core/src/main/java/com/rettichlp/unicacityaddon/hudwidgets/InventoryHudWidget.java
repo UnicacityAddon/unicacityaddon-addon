@@ -15,6 +15,7 @@ import java.util.Map;
 public class InventoryHudWidget extends TextHudWidget<TextHudWidgetConfig> {
 
     private TextLine textLine;
+
     private final UnicacityAddon unicacityAddon;
 
     public InventoryHudWidget(String id, UnicacityAddon unicacityAddon) {

@@ -51,6 +51,41 @@ public class Request {
         this.responsePredicate = responsePredicate;
     }
 
+    public boolean handle(String firstArgument, String response) {
+        switch (this.responseSchema) {
+            case UNKNOWN -> {
+                if (this.responsePredicate.test(response)) {
+                    this.remainingAnswers--;
+                    return true;
+                }
+            }
+            case FIRST_PARAM_STARTS_WITH -> {
+                if (firstArgument.startsWith(this.responseIdentifier)) {
+                    this.responsePredicate.test(response);
+                    this.remainingAnswers--;
+                    return true;
+                }
+            }
+            case FIRST_PARAM_EQUALS -> {
+                if (firstArgument.equals(this.responseIdentifier)) {
+                    this.responsePredicate.test(response);
+                    this.remainingAnswers--;
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public String getQuery() {
+        return this.query;
+    }
+
+    public boolean isFinished() {
+        return this.remainingAnswers <= 0;
+    }
+
     public static Request unknown(
             String query,
             int remainingAnswers,
@@ -113,41 +148,6 @@ public class Request {
             Consumer<String> response
     ) {
         return Request.firstParamStartsWith(query, 1, responseIdentifier, response);
-    }
-
-    public boolean handle(String firstArgument, String response) {
-        switch (this.responseSchema) {
-            case UNKNOWN -> {
-                if (this.responsePredicate.test(response)) {
-                    this.remainingAnswers--;
-                    return true;
-                }
-            }
-            case FIRST_PARAM_STARTS_WITH -> {
-                if (firstArgument.startsWith(this.responseIdentifier)) {
-                    this.responsePredicate.test(response);
-                    this.remainingAnswers--;
-                    return true;
-                }
-            }
-            case FIRST_PARAM_EQUALS -> {
-                if (firstArgument.equals(this.responseIdentifier)) {
-                    this.responsePredicate.test(response);
-                    this.remainingAnswers--;
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
-
-    public String getQuery() {
-        return this.query;
-    }
-
-    public boolean isFinished() {
-        return this.remainingAnswers <= 0;
     }
 
     public enum ResponseSchema {

@@ -22,8 +22,8 @@ public class ScreenshotBuilder {
 
     public static class Builder {
 
-        private File file;
         private final UnicacityAddon unicacityAddon;
+        private File file;
 
         public Builder(UnicacityAddon unicacityAddon) {
             this.unicacityAddon = unicacityAddon;

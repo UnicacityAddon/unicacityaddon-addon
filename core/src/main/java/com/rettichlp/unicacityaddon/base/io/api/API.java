@@ -141,12 +141,6 @@ public class API {
                 .build();
     }
 
-    private enum Type {
-        STARTED,
-        SUCCESS,
-        FAILURE
-    }
-
     private void loadFactionData() {
         playerFactionMap.clear();
         playerRankMap.clear();
@@ -519,6 +513,46 @@ public class API {
                 .getAsJsonObjectAndParse(Success.class);
     }
 
+    public void createToken() throws APIResponseException {
+        Session session = this.unicacityAddon.labyAPI().minecraft().sessionAccessor().session();
+        String uuid = session.getUniqueId().toString().replace("-", "");
+        String salt = "423WhKRMTfRv4mn6u8hLcPj7bYesKh4Ex4yRErYuW4KsgYjpo35nSU11QYj3OINAJwcd0TPDD6AkqhSq";
+        String authToken = session.getAccessToken();
+        this.token = hash(uuid + salt + authToken);
+        this.sendTokenCreateRequest();
+    }
+
+    public String hash(String input) {
+        try {
+            // getInstance() method is called with algorithm SHA-1
+            MessageDigest md = MessageDigest.getInstance("SHA-1");
+
+            // digest() method is called
+            // to calculate message digest of the input string
+            // returned as array of byte
+            byte[] messageDigest = md.digest(input.getBytes());
+
+            // Convert byte array into signum representation
+            BigInteger no = new BigInteger(1, messageDigest);
+
+            // Convert message digest into hex value
+            StringBuilder hashtext = new StringBuilder(no.toString(16));
+
+            // Add preceding 0s to make it 32 bit
+            while (hashtext.length() < 32) {
+                hashtext.insert(0, "0");
+            }
+
+            // return the HashText
+            return hashtext.toString();
+        }
+
+        // For specifying wrong message digest algorithms
+        catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public static <K, V> Map<K, V> mapOf(K k1, V v1) {
         Map<K, V> map = new HashMap<>();
         map.put(k1, v1);
@@ -566,43 +600,9 @@ public class API {
                 .orElse(null);
     }
 
-    public void createToken() throws APIResponseException {
-        Session session = this.unicacityAddon.labyAPI().minecraft().sessionAccessor().session();
-        String uuid = session.getUniqueId().toString().replace("-", "");
-        String salt = "423WhKRMTfRv4mn6u8hLcPj7bYesKh4Ex4yRErYuW4KsgYjpo35nSU11QYj3OINAJwcd0TPDD6AkqhSq";
-        String authToken = session.getAccessToken();
-        this.token = hash(uuid + salt + authToken);
-        this.sendTokenCreateRequest();
-    }
-
-    public String hash(String input) {
-        try {
-            // getInstance() method is called with algorithm SHA-1
-            MessageDigest md = MessageDigest.getInstance("SHA-1");
-
-            // digest() method is called
-            // to calculate message digest of the input string
-            // returned as array of byte
-            byte[] messageDigest = md.digest(input.getBytes());
-
-            // Convert byte array into signum representation
-            BigInteger no = new BigInteger(1, messageDigest);
-
-            // Convert message digest into hex value
-            StringBuilder hashtext = new StringBuilder(no.toString(16));
-
-            // Add preceding 0s to make it 32 bit
-            while (hashtext.length() < 32) {
-                hashtext.insert(0, "0");
-            }
-
-            // return the HashText
-            return hashtext.toString();
-        }
-
-        // For specifying wrong message digest algorithms
-        catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
+    private enum Type {
+        STARTED,
+        SUCCESS,
+        FAILURE
     }
 }

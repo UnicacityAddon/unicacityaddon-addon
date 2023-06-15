@@ -22,11 +22,10 @@ import java.util.regex.Matcher;
 @UCEvent
 public class ReviveListener {
 
+    private static final Timer timer = new Timer();
     public static boolean isDead = false;
     public static long medicReviveStartTime = 0; // revive time if you are the medic
-
     private static long playerReviveStartTime = 0; // revive time if you are dead
-    private static final Timer timer = new Timer();
 
     private final UnicacityAddon unicacityAddon;
 

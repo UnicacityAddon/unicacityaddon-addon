@@ -22,12 +22,12 @@ import java.util.regex.Matcher;
 @UCEvent
 public class MobileListener {
 
+    public static final List<String> blockedPlayerList = new ArrayList<>();
     public static int lastCheckedNumber = 0;
     public static boolean isActive = false;
     public static boolean hasCommunications = false;
     public static boolean muted = false;
     public static boolean activeCommunicationsCheck;
-    public static final List<String> blockedPlayerList = new ArrayList<>();
     private boolean blockNextMessage = false;
 
     private final UnicacityAddon unicacityAddon;

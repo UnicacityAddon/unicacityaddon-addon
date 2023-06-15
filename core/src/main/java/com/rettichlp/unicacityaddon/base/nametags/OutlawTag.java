@@ -20,10 +20,6 @@ public class OutlawTag extends NameTag {
         this.unicacityAddon = unicacityAddon;
     }
 
-    public static OutlawTag create(UnicacityAddon unicacityAddon) {
-        return new OutlawTag(unicacityAddon);
-    }
-
     @Override
     protected @Nullable RenderableComponent getRenderableComponent() {
         UnicacityAddonConfiguration unicacityAddonConfiguration = this.unicacityAddon.configuration();
@@ -44,5 +40,9 @@ public class OutlawTag extends NameTag {
 
         boolean isOutlaw = this.unicacityAddon.services().nametag().getBlacklistPlayerMap().getOrDefault(playerName, false);
         return isOutlaw ? RenderableComponent.of(component) : null;
+    }
+
+    public static OutlawTag create(UnicacityAddon unicacityAddon) {
+        return new OutlawTag(unicacityAddon);
     }
 }

@@ -18,11 +18,6 @@ import java.util.List;
 public class FishermanListener {
 
     public static boolean dropFish = false;
-
-    private boolean onTargetLocation = false;
-    private boolean canCatchFish = false;
-    private boolean fisherManJob = false;
-    private int count = 0;
     private final FloatVector3 FISHER_START_LOCATION = new FloatVector3(-504, 63, 197);
     private final List<FloatVector3> FISHER_LOCATION_LIST = Arrays.asList(
             new FloatVector3(-570, 63, 160),
@@ -31,6 +26,10 @@ public class FishermanListener {
             new FloatVector3(-569, 63, 50),
             new FloatVector3(-522, 63, 10)
     );
+    private boolean onTargetLocation = false;
+    private boolean canCatchFish = false;
+    private boolean fisherManJob = false;
+    private int count = 0;
 
     private final UnicacityAddon unicacityAddon;
 

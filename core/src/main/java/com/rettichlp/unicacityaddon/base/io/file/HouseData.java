@@ -19,10 +19,9 @@ import static com.rettichlp.unicacityaddon.base.io.api.API.mapOf;
 public class HouseData {
 
     private final int houseNumber;
+    private final Map<DrugType, Map<DrugPurity, Integer>> storageMap;
     @Getter
     private int houseBank;
-
-    private final Map<DrugType, Map<DrugPurity, Integer>> storageMap;
 
     public HouseData(int houseNumber) {
         this.houseNumber = houseNumber;

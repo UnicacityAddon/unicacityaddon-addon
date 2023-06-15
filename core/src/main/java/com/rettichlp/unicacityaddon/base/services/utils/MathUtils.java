@@ -144,13 +144,6 @@ public class MathUtils {
         return false;
     }
 
-    public static class ExpressionException extends ArithmeticException {
-
-        ExpressionException(String message) {
-            super(message);
-        }
-    }
-
     public static boolean isInteger(String s) {
         if (s.isEmpty())
             return false;
@@ -165,5 +158,12 @@ public class MathUtils {
                 return false;
         }
         return true;
+    }
+
+    public static class ExpressionException extends ArithmeticException {
+
+        ExpressionException(String message) {
+            super(message);
+        }
     }
 }

@@ -16,13 +16,12 @@ import java.util.List;
 @UCEvent
 public class FDoorListener {
 
-    private static long lastClick;
-
     private static final List<FDoor> F_DOORS = Arrays.asList(
             new FDoor(new FloatVector3(-167, 69, 204), new FloatVector3(-167, 71, 205)), // Ballas HQ
             new FDoor(new FloatVector3(878, 62, -89), new FloatVector3(880, 64, -89)), // FBI HQ
             new FDoor(new FloatVector3(273, 69, -273), new FloatVector3(273, 72, -275)) // le Milieu Garage
     );
+    private static long lastClick;
 
     private final UnicacityAddon unicacityAddon;
 

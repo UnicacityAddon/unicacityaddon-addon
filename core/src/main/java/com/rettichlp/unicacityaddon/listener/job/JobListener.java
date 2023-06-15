@@ -22,12 +22,11 @@ import java.util.regex.Matcher;
 public class JobListener {
 
     public static boolean isTabakJob = false;
-
+    private final Timer timer = new Timer();
     private boolean isNewspaperJob = false;
     private boolean isWasteJob = false;
     private boolean isDropState = false;
     private long lastUse = -1;
-    private final Timer timer = new Timer();
 
     private final UnicacityAddon unicacityAddon;
 

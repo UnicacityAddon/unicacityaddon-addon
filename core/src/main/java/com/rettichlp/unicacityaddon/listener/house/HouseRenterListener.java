@@ -31,13 +31,10 @@ import java.util.regex.Matcher;
 public class HouseRenterListener {
 
     public static final Map<Integer, Map.Entry<Integer, Integer>> HOUSE_RENTER_MAP = new HashMap<>();
-
+    private final Timer TIMER = new Timer();
     private int lastHouseNumber = 0;
     private int lastRenterAmount = 0;
-
     private int lastRenterOnlineAmount = 0;
-
-    final Timer TIMER = new Timer();
 
     private final UnicacityAddon unicacityAddon;
 

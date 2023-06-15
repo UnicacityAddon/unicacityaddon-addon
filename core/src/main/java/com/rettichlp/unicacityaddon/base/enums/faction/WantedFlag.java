@@ -21,6 +21,14 @@ public enum WantedFlag {
     private final String postponeReason;
     private final String wantedModification;
 
+    public String modifyWantedReasonString(String wantedReasonString) {
+        return prependReason + wantedReasonString + postponeReason;
+    }
+
+    public int modifyWantedReasonAmount(int wantedReasonAmount) {
+        return (int) new MathUtils(wantedModification.replace("x", String.valueOf(wantedReasonAmount))).evaluate();
+    }
+
     public static WantedFlag getFlag(String string) {
         for (WantedFlag wantedFlag : WantedFlag.values()) {
             if (wantedFlag.flagArgument.equalsIgnoreCase(string))
@@ -28,13 +36,5 @@ public enum WantedFlag {
         }
 
         return null;
-    }
-
-    public String modifyWantedReasonString(String wantedReasonString) {
-        return prependReason + wantedReasonString + postponeReason;
-    }
-
-    public int modifyWantedReasonAmount(int wantedReasonAmount) {
-        return (int) new MathUtils(wantedModification.replace("x", String.valueOf(wantedReasonAmount))).evaluate();
     }
 }

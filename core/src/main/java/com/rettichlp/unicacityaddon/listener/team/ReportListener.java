@@ -26,13 +26,13 @@ import java.util.regex.Pattern;
 public class ReportListener {
 
     private static final Timer t = new Timer();
-    private long lastExecution = -1;
-    private boolean isReport = false;
     private final Pattern urlPattern = Pattern.compile(
             //        schema                       ipv4            OR      namespace              port     path       ends
             //   |-------------|        |-------------------------|  |--------------------|    |---------| |--|   |----------|
             "((?:[a-z0-9]{2,}://)?(?:(?:[0-9]{1,3}\\.){3}[0-9]{1,3}|([-\\w_]+\\.[a-z]{2,}?))(?::[0-9]{1,5})?.*?(?=[!\"§ \n]|$))",
             Pattern.CASE_INSENSITIVE);
+    private long lastExecution = -1;
+    private boolean isReport = false;
 
     private final UnicacityAddon unicacityAddon;
 

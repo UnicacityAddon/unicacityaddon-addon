@@ -28,10 +28,6 @@ public class NoPushTag extends NameTag {
         this.unicacityAddon = unicacityAddon;
     }
 
-    public static NoPushTag create(UnicacityAddon unicacityAddon) {
-        return new NoPushTag(unicacityAddon);
-    }
-
     @Override
     protected @Nullable RenderableComponent getRenderableComponent() {
         UnicacityAddonConfiguration unicacityAddonConfiguration = this.unicacityAddon.configuration();
@@ -57,5 +53,9 @@ public class NoPushTag extends NameTag {
         } else {
             return null;
         }
+    }
+
+    public static NoPushTag create(UnicacityAddon unicacityAddon) {
+        return new NoPushTag(unicacityAddon);
     }
 }

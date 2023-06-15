@@ -13,16 +13,16 @@ import java.util.List;
  */
 public class MessagePart {
 
+    private final List<FormattingCode> formattingCodes;
     private final String message;
     private final ColorCode colorCode;
-    private final List<FormattingCode> formattingCodes;
     private final ClickEvent clickEvent;
     private final HoverEvent<?> hoverEvent;
 
     private MessagePart(Builder builder) {
+        this.formattingCodes = builder.formattingCodes;
         this.message = builder.message;
         this.colorCode = builder.colorCode;
-        this.formattingCodes = builder.formattingCodes;
         this.clickEvent = builder.clickEvent;
         this.hoverEvent = builder.hoverEvent;
     }
@@ -53,9 +53,9 @@ public class MessagePart {
 
     public static class Builder {
 
+        private final List<FormattingCode> formattingCodes = new ArrayList<>();
         private String message;
         private ColorCode colorCode;
-        private final List<FormattingCode> formattingCodes = new ArrayList<>();
         private ClickEvent clickEvent;
         private HoverEvent<?> hoverEvent;
         private Message.Builder messageBuilder;

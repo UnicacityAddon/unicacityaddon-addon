@@ -20,10 +20,6 @@ public class DutyTag extends NameTag {
         this.unicacityAddon = unicacityAddon;
     }
 
-    public static DutyTag create(UnicacityAddon unicacityAddon) {
-        return new DutyTag(unicacityAddon);
-    }
-
     @Override
     protected @Nullable RenderableComponent getRenderableComponent() {
         UnicacityAddonConfiguration unicacityAddonConfiguration = this.unicacityAddon.configuration();
@@ -41,5 +37,9 @@ public class DutyTag extends NameTag {
                 .createComponent();
 
         return this.unicacityAddon.services().faction().checkPlayerDuty(playerName) ? RenderableComponent.of(component) : null;
+    }
+
+    public static DutyTag create(UnicacityAddon unicacityAddon) {
+        return new DutyTag(unicacityAddon);
     }
 }

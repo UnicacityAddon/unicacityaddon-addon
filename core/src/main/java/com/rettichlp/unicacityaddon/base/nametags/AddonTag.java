@@ -22,10 +22,6 @@ public class AddonTag extends NameTag {
         this.unicacityAddon = unicacityAddon;
     }
 
-    public static AddonTag create(UnicacityAddon unicacityAddon) {
-        return new AddonTag(unicacityAddon);
-    }
-
     @Override
     protected @Nullable RenderableComponent getRenderableComponent() {
         UnicacityAddonConfiguration unicacityAddonConfiguration = this.unicacityAddon.configuration();
@@ -49,5 +45,9 @@ public class AddonTag extends NameTag {
                 .of("UCAddon").color(ColorCode.WHITE).bold().advance().space()
                 .of(addonGroupList.get(0).getDisplayName()).color(addonGroupList.get(0).getColorCode()).advance()
                 .createComponent()) : null;
+    }
+
+    public static AddonTag create(UnicacityAddon unicacityAddon) {
+        return new AddonTag(unicacityAddon);
     }
 }
