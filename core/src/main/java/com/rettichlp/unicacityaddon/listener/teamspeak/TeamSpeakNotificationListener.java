@@ -54,7 +54,7 @@ public class TeamSpeakNotificationListener {
                                 .advance()
                         .createComponent());
 
-                this.unicacityAddon.soundController().playTSNotificationSupportChannelSound();
+                this.unicacityAddon.soundController().playTeamSpeakSupportSound();
                 this.unicacityAddon.logger().info("Client joined support channel: " + name);
             } else if (this.unicacityAddon.configuration().teamspeak().publicity().get() && cid == p.getFaction().getPublicChannelId()) {
                 p.sendMessage(Message.getBuilder()
@@ -73,7 +73,7 @@ public class TeamSpeakNotificationListener {
                                 .advance()
                         .createComponent());
 
-                this.unicacityAddon.soundController().playTSNotificationPublicChannelSound();
+                this.unicacityAddon.soundController().playTeamSpeakPublicitySound();
                 this.unicacityAddon.logger().info("Client joined public channel: " + name);
             }
         }

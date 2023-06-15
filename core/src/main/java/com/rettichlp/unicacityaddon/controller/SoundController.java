@@ -12,8 +12,6 @@ public abstract class SoundController {
 
     public abstract void playBombPlantedSound();
 
-    public abstract void playBombRemovedSound();
-
     public abstract void playContractSetSound();
 
     public abstract void playContractFulfilledSound();
@@ -30,7 +28,7 @@ public abstract class SoundController {
 
     public abstract void playTimerExpiredSound();
 
-    public abstract void playTSNotificationSupportChannelSound();
+    public abstract void playTeamSpeakSupportSound();
 
-    public abstract void playTSNotificationPublicChannelSound();
+    public abstract void playTeamSpeakPublicitySound();
 }

@@ -71,12 +71,12 @@ public class VersionedSoundController extends SoundController {
     }
 
     @Override
-    public void playTSNotificationSupportChannelSound() {
+    public void playTeamSpeakSupportSound() {
         Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.NOTE_BLOCK_PLING, 1.5F));
     }
 
     @Override
-    public void playTSNotificationPublicChannelSound() {
+    public void playTeamSpeakPublicitySound() {
         Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.NOTE_BLOCK_PLING, 1.0F));
     }
 }

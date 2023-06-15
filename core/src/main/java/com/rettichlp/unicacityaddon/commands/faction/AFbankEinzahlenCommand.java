@@ -110,7 +110,7 @@ public class AFbankEinzahlenCommand extends UnicacityCommand {
                 .of(dayString).color(ColorCode.BLUE).advance()
                 .of(", der ").color(ColorCode.GRAY).advance()
                 .of(dateString).color(ColorCode.BLUE).advance()
-                .of(" und wir haben ").color(ColorCode.GRAY).advance()
+                .of(" und es ist ").color(ColorCode.GRAY).advance()
                 .of(timeString).color(ColorCode.BLUE).advance()
                 .of(".").color(ColorCode.GRAY).advance()
                 .createComponent());

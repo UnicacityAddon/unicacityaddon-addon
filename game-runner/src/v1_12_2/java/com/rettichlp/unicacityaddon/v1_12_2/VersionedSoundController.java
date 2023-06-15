@@ -26,11 +26,6 @@ public class VersionedSoundController extends SoundController {
     }
 
     @Override
-    public void playBombRemovedSound() {
-
-    }
-
-    @Override
     public void playContractSetSound() {
 
     }
@@ -71,12 +66,12 @@ public class VersionedSoundController extends SoundController {
     }
 
     @Override
-    public void playTSNotificationSupportChannelSound() {
+    public void playTeamSpeakSupportSound() {
         Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(this.create("block.note.pling"), 1.5F));
     }
 
     @Override
-    public void playTSNotificationPublicChannelSound() {
+    public void playTeamSpeakPublicitySound() {
         Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(this.create("block.note.pling"), 1.0F));
     }
 
