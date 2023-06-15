@@ -31,7 +31,7 @@ public class WeaponListener {
 
     @Subscribe
     public void onHotkey(HotkeyEvent e) {
-        Key key = e.key();
+        Key key = e.getKey();
 
         Weapon weapon = this.unicacityAddon.player().getWeaponInMainHand();
         if (key.equals(Key.Q) && weapon != null) {
