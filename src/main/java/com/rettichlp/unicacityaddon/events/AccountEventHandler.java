@@ -12,7 +12,6 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
-import com.rettichlp.unicacityaddon.base.utils.MathUtils;
 import com.rettichlp.unicacityaddon.base.utils.UpdateUtils;
 import com.rettichlp.unicacityaddon.commands.MaskInfoCommand;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
@@ -97,7 +96,6 @@ public class AccountEventHandler {
                     JsonObject gameplayJsonObject = APIRequest.sendStatisticRequest().getAsJsonObject("gameplay");
                     int deaths = gameplayJsonObject.get("deaths").getAsInt();
                     int kills = gameplayJsonObject.get("kills").getAsInt();
-                    float kd = gameplayJsonObject.get("kd").getAsFloat();
                     int playTime = gameplayJsonObject.get("playTime").getAsInt();
 
                     p.sendMessage(Message.getBuilder()
@@ -114,14 +112,6 @@ public class AccountEventHandler {
                             .of("Kills").color(ColorCode.GOLD).advance()
                             .of(":").color(ColorCode.DARK_GRAY).advance().space()
                             .of(kills + " Kills").color(ColorCode.RED).advance()
-                            .createComponent());
-
-                    p.sendMessage(Message.getBuilder()
-                            .space().space()
-                            .of("-").color(ColorCode.DARK_GRAY).advance().space()
-                            .of("K/D").color(ColorCode.GOLD).advance()
-                            .of(":").color(ColorCode.DARK_GRAY).advance().space()
-                            .of(MathUtils.DECIMAL_FORMAT.format(kd)).color(ColorCode.RED).advance()
                             .createComponent());
 
                     p.sendMessage(Message.getBuilder()

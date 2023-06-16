@@ -605,6 +605,18 @@ public class ConfigElements {
                 : "4500";
     }
 
+    public static String getWinePrice() {
+        return UnicacityAddon.ADDON.getConfig().has("EQUIP_WINE_SETTING") && !UnicacityAddon.ADDON.getConfig().get("EQUIP_WINE_SETTING").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("EQUIP_WINE_SETTING").getAsString().startsWith("-")
+                ? UnicacityAddon.ADDON.getConfig().get("EQUIP_WINE_SETTING").getAsString()
+                : "2";
+    }
+
+    public static String getCoffeePrice() {
+        return UnicacityAddon.ADDON.getConfig().has("EQUIP_COFFEE_SETTING") && !UnicacityAddon.ADDON.getConfig().get("EQUIP_COFFEE_SETTING").getAsString().isEmpty() && !UnicacityAddon.ADDON.getConfig().get("EQUIP_COFFEE_SETTING").getAsString().startsWith("-")
+                ? UnicacityAddon.ADDON.getConfig().get("EQUIP_COFFEE_SETTING").getAsString()
+                : "2";
+    }
+
     public static boolean getRemoveResourcePackMessage() {
         return !UnicacityAddon.ADDON.getConfig().has("REMOVE_RESOURCEPACK_MESSAGE_SETTINGS") || UnicacityAddon.ADDON.getConfig().get("REMOVE_RESOURCEPACK_MESSAGE_SETTINGS")
                 .getAsBoolean(); // default = true

@@ -7,6 +7,7 @@ import com.rettichlp.unicacityaddon.base.api.exception.APIResponseException;
 import com.rettichlp.unicacityaddon.base.api.request.APIRequest;
 import com.rettichlp.unicacityaddon.base.enums.api.AddonGroup;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
+import com.rettichlp.unicacityaddon.base.models.BlackMarketLocation;
 import com.rettichlp.unicacityaddon.base.models.BlacklistReason;
 import com.rettichlp.unicacityaddon.base.models.Broadcast;
 import com.rettichlp.unicacityaddon.base.models.HouseBan;
@@ -30,6 +31,7 @@ public class Syncer {
     public static final Map<String, Faction> PLAYERFACTIONMAP = new HashMap<>();
     public static final Map<String, Integer> PLAYERRANKMAP = new HashMap<>();
     public static List<BlacklistReason> BLACKLISTREASONLIST = new ArrayList<>();
+    public static List<BlackMarketLocation> BLACKMARKETLOCATIONLIST = new ArrayList<>();
     public static List<HouseBan> HOUSEBANLIST = new ArrayList<>();
     public static List<HouseBanReason> HOUSEBANREASONLIST = new ArrayList<>();
     public static List<ManagementUser> MANAGEMENTUSERLIST = new ArrayList<>();
@@ -75,6 +77,11 @@ public class Syncer {
         new Thread(() -> {
             if (!(BLACKLISTREASONLIST = getBlacklistReasonList()).isEmpty())
                 LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Blacklist-Gründe aktualisiert.");
+        }).start();
+
+        new Thread(() -> {
+            if (!(BLACKMARKETLOCATIONLIST = getBlackMarketLocationList()).isEmpty())
+                LabyMod.getInstance().notifyMessageRaw(ColorCode.AQUA.getCode() + "Synchronisierung", "Schwarzmarkt-Orte aktualisiert.");
         }).start();
 
         new Thread(() -> {
@@ -137,6 +144,25 @@ public class Syncer {
             e.sendInfo();
         }
         return blacklistReasonList;
+    }
+
+    public static List<BlackMarketLocation> getBlackMarketLocationList() {
+        List<BlackMarketLocation> blackMarketLocationList = new ArrayList<>();
+        try {
+            APIRequest.sendBlackMarketLocationRequest().forEach(jsonElement -> {
+                JsonObject o = jsonElement.getAsJsonObject();
+
+                String name = o.get("name").getAsString();
+                int x = o.get("x").getAsInt();
+                int y = o.get("y").getAsInt();
+                int z = o.get("z").getAsInt();
+
+                blackMarketLocationList.add(new BlackMarketLocation(name, x, y, z));
+            });
+        } catch (APIResponseException e) {
+            e.sendInfo();
+        }
+        return blackMarketLocationList;
     }
 
     public static List<Broadcast> getBroadcastList() {

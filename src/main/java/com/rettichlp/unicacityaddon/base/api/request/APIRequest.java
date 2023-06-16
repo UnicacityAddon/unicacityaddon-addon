@@ -70,6 +70,13 @@ public class APIRequest {
                 .getAsJsonObject();
     }
 
+    public static JsonArray sendBlackMarketLocationRequest() throws APIResponseException {
+        return RequestBuilder.getBuilder()
+                .nonProd(NON_PROD)
+                .applicationPath(ApplicationPath.BLACKMARKETLOCATION)
+                .getAsJsonArray();
+    }
+
     public static JsonArray sendBroadcastQueueRequest() throws APIResponseException {
         return RequestBuilder.getBuilder()
                 .nonProd(NON_PROD)
