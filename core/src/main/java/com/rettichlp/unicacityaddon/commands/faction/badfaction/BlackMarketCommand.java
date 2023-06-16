@@ -36,11 +36,11 @@ public class BlackMarketCommand extends UnicacityCommand {
 
         this.unicacityAddon.api().getBlackMarketLocationList().forEach(blackMarketLocation -> p.sendMessage(Message.getBuilder()
                 .of("»").color(ColorCode.GRAY).advance().space()
-                .of(blackMarketLocation.getName()).color(ColorCode.DARK_AQUA).advance().space()
+                .of(blackMarketLocation.getName()).color(ColorCode.AQUA).advance().space()
                 .of("[➤]").color(ColorCode.GREEN)
-                .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Route anzeigen").color(ColorCode.RED).advance().createComponent())
-                .clickEvent(ClickEvent.Action.RUN_COMMAND, "/navi " + blackMarketLocation.getX() + "/" + blackMarketLocation.getY() + "/" + blackMarketLocation.getZ())
-                .advance()
+                        .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Route anzeigen").color(ColorCode.RED).advance().createComponent())
+                        .clickEvent(ClickEvent.Action.RUN_COMMAND, "/navi " + blackMarketLocation.getX() + "/" + blackMarketLocation.getY() + "/" + blackMarketLocation.getZ())
+                        .advance()
                 .createComponent()));
 
         p.sendEmptyMessage();
