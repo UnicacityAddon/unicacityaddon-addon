@@ -1,6 +1,7 @@
 package com.rettichlp.unicacityaddon.base.io.api;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.api.BlackMarketLocation;
 import com.rettichlp.unicacityaddon.api.BlacklistReason;
 import com.rettichlp.unicacityaddon.api.Broadcast;
 import com.rettichlp.unicacityaddon.api.NaviPoint;
@@ -65,6 +66,8 @@ public class API {
     @Setter
     private List<BlacklistReason> blacklistReasonList = new ArrayList<>();
     @Setter
+    private List<BlackMarketLocation> blackMarketLocationList = new ArrayList<>();
+    @Setter
     private List<HouseBan> houseBanList = new ArrayList<>();
     @Setter
     private List<HouseBanReason> houseBanReasonList = new ArrayList<>();
@@ -97,6 +100,7 @@ public class API {
                 this.loadPlayerData();
 
                 this.blacklistReasonList = this.sendBlacklistReasonRequest();
+                this.blackMarketLocationList = this.sendBlackMarketLocationRequest();
                 this.houseBanList = this.sendHouseBanRequest(this.addonPlayer.getFaction().equals(Faction.RETTUNGSDIENST));
                 this.houseBanReasonList = this.sendHouseBanReasonRequest();
                 this.managementUserList = this.sendManagementUserRequest();
@@ -193,6 +197,13 @@ public class API {
                 .applicationPath(ApplicationPath.BLACKLISTREASON)
                 .subPath(this.addonPlayer.getFaction().name())
                 .getAsJsonArrayAndParse(BlacklistReason.class);
+    }
+
+    public List<BlackMarketLocation> sendBlackMarketLocationRequest() {
+        return RequestBuilder.getBuilder(this.unicacityAddon)
+                .nonProd(NON_PROD)
+                .applicationPath(ApplicationPath.BLACKMARKETLOCATION)
+                .getAsJsonArrayAndParse(BlackMarketLocation.class);
     }
 
     public Success sendBlacklistReasonAddRequest(String reason, String price, String kills) {
