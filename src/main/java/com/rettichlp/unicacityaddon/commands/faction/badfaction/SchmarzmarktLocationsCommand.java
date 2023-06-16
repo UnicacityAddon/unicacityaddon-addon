@@ -1,9 +1,8 @@
 package com.rettichlp.unicacityaddon.commands.faction.badfaction;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import com.rettichlp.unicacityaddon.base.abstraction.AbstractionLayer;
 import com.rettichlp.unicacityaddon.base.abstraction.UPlayer;
+import com.rettichlp.unicacityaddon.base.api.Syncer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
@@ -20,7 +19,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 
 /**
@@ -72,39 +70,18 @@ public class SchmarzmarktLocationsCommand implements IClientCommand {
                 .of("Positionen aller möglichen Schwarzmärkte").color(ColorCode.GRAY).advance()
                 .sendTo(p.getPlayer());
 
-        for (Map.Entry<String, String> blackMarket : BLACK_MARKET_LIST) {
-            String coords = blackMarket.getValue();
-
+        Syncer.getBlackMarketLocationList().forEach(blackMarketLocation -> {
+            String naviCommand = "/navi " + blackMarketLocation.getX() + "/" + blackMarketLocation.getY() + "/" + blackMarketLocation.getZ();
             p.sendMessage(Message.getBuilder()
                     .of("» ").color(ColorCode.DARK_GRAY).advance()
-                    .of(blackMarket.getKey()).color(ColorCode.GRAY).advance().space()
+                    .of(blackMarketLocation.getName()).color(ColorCode.GRAY).advance().space()
                     .of("-").color(ColorCode.DARK_GRAY).advance().space()
                     .of("Route anzeigen").color(ColorCode.RED).bold()
-                    .clickEvent(ClickEvent.Action.RUN_COMMAND, "/navi " + coords)
-                    .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of(coords).color(ColorCode.GRAY).advance().createComponent())
+                    .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Route anzeigen").color(ColorCode.RED).advance().createComponent())
+                    .clickEvent(ClickEvent.Action.RUN_COMMAND, naviCommand)
                     .advance().createComponent());
-
-        }
+        });
     }
-
-    private static final List<Map.Entry<String, String>> BLACK_MARKET_LIST = Lists.newArrayList(
-            Maps.immutableEntry("Psychiatrie", "1689/66/-390"),
-            Maps.immutableEntry("Hafen (Chinatown)", "1172/69/-464"),
-            Maps.immutableEntry("Haus 472 (Chinatown)", "1205/69/-118"),
-            Maps.immutableEntry("Mex U-Bahn", "-92/52/-33"),
-            Maps.immutableEntry("Kino (Ruine)", "743/69/315"),
-            Maps.immutableEntry("Fußballplatz (Gang)", "-468/69/425"),
-            Maps.immutableEntry("SH Park (Höhle)", "64/67/347"),
-            Maps.immutableEntry("Alcatraz", "1154/83/695"),
-            Maps.immutableEntry("Flughafen Las Unicas", "1694/69/557"),
-            Maps.immutableEntry("Shishabar", "-136/74/-74"),
-            Maps.immutableEntry("Freibad", "-269/69/-521"),
-            Maps.immutableEntry("Gefängnis", "-772/64/149"),
-            Maps.immutableEntry("Ruine", "985/105/433"),
-            Maps.immutableEntry("Farm (Chinatown)", "1282/64/-526"),
-            Maps.immutableEntry("", "//"), // TODO
-            Maps.immutableEntry("", "//") // TODO
-    );
 
     @Override
     public boolean allowUsageWithoutPrefix(ICommandSender sender, String message) {
