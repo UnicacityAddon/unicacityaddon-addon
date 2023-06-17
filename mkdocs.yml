@@ -89,6 +89,7 @@ nav:
           - Addon Group: api/endpoints/addon-group.md
           - Banner: api/endpoints/banner.md
           - Blacklist: api/endpoints/blacklist.md
+          - Blackmarket: api/endpoints/blackmarket.md
           - Broadcast: api/endpoints/broadcast.md
           - Event: api/endpoints/event.md
           - Faction Member: api/endpoints/faction-member.md
