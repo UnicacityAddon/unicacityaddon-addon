@@ -45,7 +45,6 @@ import net.labymod.api.client.entity.player.tag.TagRegistry;
 import net.labymod.api.client.gui.hud.HudWidgetRegistry;
 import net.labymod.api.models.addon.annotation.AddonMain;
 
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
@@ -143,7 +142,7 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
         this.registerListeners();
         this.registerCommands();
 
-        new Thread(() -> this.teamSpeakAPI.initialize()).start();
+        new Thread(this.teamSpeakAPI::initialize).start();
 
         this.logger().info("Enabled UnicacityAddon");
     }

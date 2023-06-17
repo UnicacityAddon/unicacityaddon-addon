@@ -20,7 +20,6 @@ import com.rettichlp.unicacityaddon.base.teamspeak.TeamSpeakAPI;
 import net.labymod.api.Laby;
 import net.labymod.api.util.concurrent.task.Task;
 
-import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -52,13 +51,7 @@ public class ReconnectController {
                 }
 
                 this.task = null;
-                new Thread(() -> {
-                    try {
-                        this.teamSpeakAPI.initialize();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }).start();
+                new Thread(this.teamSpeakAPI::initialize).start();
             }).delay(10, TimeUnit.SECONDS).build();
 
             this.task.execute();
