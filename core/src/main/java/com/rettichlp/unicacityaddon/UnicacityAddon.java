@@ -143,13 +143,7 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
         this.registerListeners();
         this.registerCommands();
 
-        new Thread(() -> {
-            try {
-                this.teamSpeakAPI.initialize();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }).start();
+        new Thread(() -> this.teamSpeakAPI.initialize()).start();
 
         this.logger().info("Enabled UnicacityAddon");
     }

@@ -90,7 +90,8 @@ public class TeamSpeakAPI {
         this.listeners.add(new SelectedListener());
     }
 
-    public void initialize() throws IOException {
+    @SuppressWarnings("BusyWait")
+    public void initialize() {
         if (this.socket != null && !this.socket.isClosed()) {
             throw new IllegalStateException("Socket is already initialized!");
         }
@@ -98,23 +99,26 @@ public class TeamSpeakAPI {
         this.manualStop = false;
         this.reset();
 
+        BufferedReader inputStream = null;
         try {
             this.unicacityAddon.logger().info("Connecting to TeamSpeak client...");
             this.socket = new Socket("127.0.0.1", 25639);
+
+            this.outputStream = new PrintWriter(
+                    new OutputStreamWriter(this.socket.getOutputStream(), StandardCharsets.UTF_8),
+                    true
+            );
+
+            inputStream = new BufferedReader(
+                    new InputStreamReader(this.socket.getInputStream(), StandardCharsets.UTF_8)
+            );
         } catch (ConnectException e) {
             this.unicacityAddon.logger().warn("Could not connect to TeamSpeak client!");
             this.reconnectController.start();
             return;
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
-        this.outputStream = new PrintWriter(
-                new OutputStreamWriter(this.socket.getOutputStream(), StandardCharsets.UTF_8),
-                true
-        );
-
-        BufferedReader inputStream = new BufferedReader(
-                new InputStreamReader(this.socket.getInputStream(), StandardCharsets.UTF_8)
-        );
 
         new Thread(() -> {
             while (!this.manualStop && this.socket.isConnected() && !this.socket.isClosed()) {
@@ -171,9 +175,9 @@ public class TeamSpeakAPI {
         this.unicacityAddon.logger().info("Successfully connected to the TeamSpeak client.");
 
         while (!this.manualStop && this.socket.isConnected() && !this.socket.isClosed()) {
-            String line = null;
+            String line;
             try {
-                if (this.connected && inputStream.ready() && !this.socket.isClosed()) {
+                if (this.connected && inputStream != null && inputStream.ready() && !this.socket.isClosed()) {
                     while ((line = inputStream.readLine()) != null) {
                         this.messageReceived(line);
                     }
