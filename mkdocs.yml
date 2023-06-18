@@ -80,6 +80,7 @@ markdown_extensions:
 # Page tree
 nav:
   - UnicacityAddon: https://unicacityaddon.rettichlp.de
+  - Inhalt: index.md
   - API:
       - Funktion:
           - Grundlagen: api/function/grundlagen.md
@@ -106,9 +107,11 @@ nav:
   - Commands:
       - Grundlagen: commands/grundlagen.md
       - Übersicht:
+          - Geld Commands: commands/uebersicht/geld-commands.md
           - Handy Commands: commands/uebersicht/handy-commands.md
           - Haus Commands: commands/uebersicht/haus-commands.md
           - Job Commands: commands/uebersicht/job-commands.md
+          - Supporter Commands: commands/uebersicht/supporter-commands.md
       - Implementation:
           - Command Klasse: commands/implementation/command-klasse.md
           - Command Annotation: commands/implementation/command-annotation.md
