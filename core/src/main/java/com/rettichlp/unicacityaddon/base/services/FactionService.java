@@ -21,8 +21,7 @@ public class FactionService {
         return clientPacketListener != null && this.unicacityAddon.services().util().isUnicacity() && clientPacketListener.getNetworkPlayerInfos().stream()
                 .map(networkPlayerInfo -> this.unicacityAddon.services().util().text().legacy(networkPlayerInfo.displayName()))
                 .filter(s -> s.startsWith("§1") || s.startsWith("§9") || s.startsWith("§4") || s.startsWith("§6"))
-                .map(s -> s.substring(2).trim())
-                .anyMatch(playerName::contains);
+                .anyMatch(s -> s.contains(playerName));
     }
 
     public String getNameTagSuffix(Faction faction) {
