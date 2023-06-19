@@ -13,6 +13,8 @@ import net.labymod.api.event.client.chat.ChatMessageSendEvent;
 @UCEvent
 public class FDSFChatListener {
 
+    public static boolean forceSendNextMessage = false;
+
     private final UnicacityAddon unicacityAddon;
 
     public FDSFChatListener(UnicacityAddon unicacityAddon) {
@@ -24,21 +26,23 @@ public class FDSFChatListener {
         AddonPlayer p = this.unicacityAddon.player();
         String msg = e.getMessage();
 
-        if (msg.startsWith("/f ") && !MobileListener.hasCommunications && this.unicacityAddon.services().util().isUnicacity()) {
-            p.sendErrorMessage("Du hast keine Kommunikationsmittel!");
-            p.sendInfoMessage("Wenn du die Nachricht trotzdem senden möchtest, nutze /fforce [Nachricht]. Die Nachricht ist in der Zwischenablage.");
-            p.copyToClipboard(msg.replace("/f ", ""));
-            e.setCancelled(true);
-        } else if (msg.startsWith("/d ") && !MobileListener.hasCommunications && this.unicacityAddon.services().util().isUnicacity()) {
-            p.sendErrorMessage("Du hast keine Kommunikationsmittel!");
-            p.sendInfoMessage("Wenn du die Nachricht trotzdem senden möchtest, nutze /dforce [Nachricht]. Die Nachricht ist in der Zwischenablage.");
-            p.copyToClipboard(msg.replace("/d ", ""));
-            e.setCancelled(true);
-        } else if (msg.startsWith("/sf ") && !MobileListener.hasCommunications && this.unicacityAddon.services().util().isUnicacity()) {
-            p.sendErrorMessage("Du hast keine Kommunikationsmittel!");
-            p.sendInfoMessage("Wenn du die Nachricht trotzdem senden möchtest, nutze /sfforce [Nachricht]. Die Nachricht ist in der Zwischenablage.");
-            p.copyToClipboard(msg.replace("/sf ", ""));
-            e.setCancelled(true);
+        if (!MobileListener.hasCommunications && this.unicacityAddon.services().util().isUnicacity() && !forceSendNextMessage) {
+            if (msg.startsWith("/f ")) {
+                p.sendErrorMessage("Du hast keine Kommunikationsmittel!");
+                p.sendInfoMessage("Wenn du die Nachricht trotzdem senden möchtest, nutze /fforce [Nachricht]. Die Nachricht ist in der Zwischenablage.");
+                p.copyToClipboard(msg.replace("/f ", ""));
+                e.setCancelled(true);
+            } else if (msg.startsWith("/d ")) {
+                p.sendErrorMessage("Du hast keine Kommunikationsmittel!");
+                p.sendInfoMessage("Wenn du die Nachricht trotzdem senden möchtest, nutze /dforce [Nachricht]. Die Nachricht ist in der Zwischenablage.");
+                p.copyToClipboard(msg.replace("/d ", ""));
+                e.setCancelled(true);
+            } else if (msg.startsWith("/sf ")) {
+                p.sendErrorMessage("Du hast keine Kommunikationsmittel!");
+                p.sendInfoMessage("Wenn du die Nachricht trotzdem senden möchtest, nutze /sfforce [Nachricht]. Die Nachricht ist in der Zwischenablage.");
+                p.copyToClipboard(msg.replace("/sf ", ""));
+                e.setCancelled(true);
+            }
         }
     }
 }

@@ -5,6 +5,7 @@ import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
+import com.rettichlp.unicacityaddon.listener.faction.FDSFChatListener;
 
 import java.util.List;
 
@@ -31,6 +32,7 @@ public class SFForceCommand extends UnicacityCommand {
         }
 
         String message = this.unicacityAddon.services().util().text().makeStringByArgs(arguments, " ");
+        FDSFChatListener.forceSendNextMessage = true;
         p.sendServerMessage("/sf " + message);
         return true;
     }
