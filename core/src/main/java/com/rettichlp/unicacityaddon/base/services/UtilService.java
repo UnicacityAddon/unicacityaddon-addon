@@ -50,7 +50,7 @@ public class UtilService {
     }
 
     public String version() {
-        return "2.0.0-alpha.4";
+        return "2.0.0-alpha.5";
     }
 
     public boolean isUnicacity() {
