@@ -26,4 +26,4 @@ Füge gegebenenfalls Screenshots hinzu, um das Problem zu erläutern.
 
 **Weitere Informationen (bitte ausfüllen):**
 Minecraft Version: `1.12.2`
-Addon Version: `2.0.0-alpha.5`
+Addon Version: `2.0.0-alpha.6`
