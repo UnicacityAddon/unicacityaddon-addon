@@ -9,6 +9,7 @@ import com.rettichlp.unicacityaddon.base.enums.faction.Equip;
 import com.rettichlp.unicacityaddon.base.events.OfflineDataChangedEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
+import lombok.Getter;
 import net.labymod.api.util.math.vector.FloatVector3;
 
 import java.util.ArrayList;
@@ -19,62 +20,32 @@ import java.util.Map;
 /**
  * @author RettichLP
  */
+@Getter
 public class Data {
 
-    private List<Armament> armamentList;
-    private Integer bankBalance;
-    private Boolean carOpen;
-    private Integer cashBalance;
-    private List<CoordlistEntry> coordlist;
-    private Map<DrugType, Map<DrugPurity, Integer>> drugInventoryMap;
-    private Map<Equip, Integer> equipMap;
-    private Long firstAidDate;
-    private Map<Integer, HouseData> houseDataMap;
-    private Integer jobBalance;
-    private Integer jobExperience;
-    private Integer payDayTime;
-    private Long plantFertilizeTime;
-    private Long plantWaterTime;
-    private Integer serviceCount;
-    private Integer timer;
-    private List<TodolistEntry> todolist;
+    private List<Armament> armamentList = new ArrayList<>();
+    private Integer bankBalance = 0;
+    private Boolean carOpen = false;
+    private Integer cashBalance = 0;
+    private List<CoordlistEntry> coordlist = new ArrayList<>();
+    private Map<DrugType, Map<DrugPurity, Integer>> drugInventoryMap = new HashMap<>();
+    private Map<Equip, Integer> equipMap = new HashMap<>();
+    private Long firstAidDate = 0L;
+    private Map<Integer, HouseData> houseDataMap = new HashMap<>();
+    private Integer jobBalance = 0;
+    private Integer jobExperience = 0;
+    private Integer payDayTime = 0;
+    private Long plantFertilizeTime = 0L;
+    private Long plantWaterTime = 0L;
+    private Integer serviceCount = 0;
+    private Integer timer = 0;
+    private final List<TodolistEntry> todolist = new ArrayList<>();
 
     // has to be static, so it will not be overwritten by gson data loading
     private static UnicacityAddon unicacityAddon;
 
     public Data(UnicacityAddon unicacityAddon) {
         Data.unicacityAddon = unicacityAddon;
-
-        this.armamentList = new ArrayList<>();
-        this.bankBalance = 0;
-        this.carOpen = false;
-        this.cashBalance = 0;
-        this.coordlist = new ArrayList<>();
-        this.drugInventoryMap = new HashMap<>();
-        this.equipMap = new HashMap<>();
-        this.firstAidDate = 0L;
-        this.houseDataMap = new HashMap<>();
-        this.jobBalance = 0;
-        this.jobExperience = 0;
-        this.payDayTime = 0;
-        this.plantFertilizeTime = 0L;
-        this.plantWaterTime = 0L;
-        this.serviceCount = 0;
-        this.timer = 0;
-        this.todolist = new ArrayList<>();
-    }
-
-    public List<Armament> getArmamentList() {
-        return armamentList != null ? armamentList : new ArrayList<>();
-    }
-
-    public void setArmamentList(List<Armament> armamentList) {
-        this.armamentList = armamentList;
-        saveAndFireEvent();
-    }
-
-    public int getBankBalance() {
-        return bankBalance != null ? bankBalance : 0;
     }
 
     public void setBankBalance(Integer bankBalance) {
@@ -82,17 +53,9 @@ public class Data {
         saveAndFireEvent();
     }
 
-    public boolean isCarOpen() {
-        return carOpen != null ? carOpen : false;
-    }
-
     public void setCarOpen(boolean carOpen) {
         this.carOpen = carOpen;
         saveAndFireEvent();
-    }
-
-    public int getCashBalance() {
-        return cashBalance != null ? cashBalance : 0;
     }
 
     public void setCashBalance(Integer cashBalance) {
@@ -100,26 +63,9 @@ public class Data {
         saveAndFireEvent();
     }
 
-    public List<CoordlistEntry> getCoordlist() {
-        return coordlist != null ? coordlist : new ArrayList<>();
-    }
-
-    public void setCoordlist(List<CoordlistEntry> coordlist) {
-        this.coordlist = coordlist;
-        saveAndFireEvent();
-    }
-
-    public Map<DrugType, Map<DrugPurity, Integer>> getDrugInventoryMap() {
-        return drugInventoryMap != null ? drugInventoryMap : new HashMap<>();
-    }
-
     public void setDrugInventoryMap(Map<DrugType, Map<DrugPurity, Integer>> drugInventoryMap) {
         this.drugInventoryMap = drugInventoryMap;
         saveAndFireEvent();
-    }
-
-    public Map<Equip, Integer> getEquipMap() {
-        return equipMap != null ? equipMap : new HashMap<>();
     }
 
     public void setEquipMap(Map<Equip, Integer> equipMap) {
@@ -127,26 +73,9 @@ public class Data {
         saveAndFireEvent();
     }
 
-    public long getFirstAidDate() {
-        return firstAidDate != null ? firstAidDate : 0;
-    }
-
     public void setFirstAidDate(Long firstAidDate) {
         this.firstAidDate = firstAidDate;
         saveAndFireEvent();
-    }
-
-    public Map<Integer, HouseData> getHouseDataMap() {
-        return houseDataMap != null ? houseDataMap : new HashMap<>();
-    }
-
-    public void setHouseDataMap(Map<Integer, HouseData> houseDataMap) {
-        this.houseDataMap = houseDataMap;
-        saveAndFireEvent();
-    }
-
-    public int getJobBalance() {
-        return jobBalance != null ? jobBalance : 0;
     }
 
     public void setJobBalance(Integer jobBalance) {
@@ -154,17 +83,9 @@ public class Data {
         saveAndFireEvent();
     }
 
-    public int getJobExperience() {
-        return jobExperience != null ? jobExperience : 0;
-    }
-
     public void setJobExperience(Integer jobExperience) {
         this.jobExperience = jobExperience;
         saveAndFireEvent();
-    }
-
-    public int getPayDayTime() {
-        return payDayTime != null ? payDayTime : 0;
     }
 
     public void setPayDayTime(Integer payDayTime) {
@@ -172,17 +93,9 @@ public class Data {
         saveAndFireEvent();
     }
 
-    public long getPlantFertilizeTime() {
-        return plantFertilizeTime != null ? plantFertilizeTime : 0;
-    }
-
     public void setPlantFertilizeTime(Long plantFertilizeTime) {
         this.plantFertilizeTime = plantFertilizeTime;
         saveAndFireEvent();
-    }
-
-    public long getPlantWaterTime() {
-        return plantWaterTime != null ? plantWaterTime : 0;
     }
 
     public void setPlantWaterTime(Long plantWaterTime) {
@@ -190,30 +103,13 @@ public class Data {
         saveAndFireEvent();
     }
 
-    public int getServiceCount() {
-        return serviceCount != null ? serviceCount : 0;
-    }
-
     public void setServiceCount(Integer serviceCount) {
         this.serviceCount = serviceCount;
         saveAndFireEvent();
     }
 
-    public int getTimer() {
-        return timer != null ? timer : 0;
-    }
-
     public void setTimer(Integer timer) {
         this.timer = timer;
-        saveAndFireEvent();
-    }
-
-    public List<TodolistEntry> getTodolist() {
-        return todolist != null ? todolist : new ArrayList<>();
-    }
-
-    public void setTodolist(List<TodolistEntry> todolist) {
-        this.todolist = todolist;
         saveAndFireEvent();
     }
 
@@ -421,7 +317,6 @@ public class Data {
      */
     public void sendAllHouseBankMessage() {
         AddonPlayer p = unicacityAddon.player();
-
         p.sendEmptyMessage();
         p.sendMessage(Message.getBuilder()
                 .of("Hauskassen:").color(ColorCode.DARK_AQUA).bold().advance()
@@ -439,7 +334,6 @@ public class Data {
      */
     public void sendAllDrugStorageMessage() {
         AddonPlayer p = unicacityAddon.player();
-
         p.sendEmptyMessage();
         p.sendMessage(Message.getBuilder()
                 .of("Drogenlager:").color(ColorCode.DARK_AQUA).bold().advance()
@@ -488,19 +382,11 @@ public class Data {
         saveAndFireEvent();
     }
 
-    /**
-     * Removes the given value <code>i</code> from the <code>serviceCount</code>
-     *
-     * @param i Amount of services to be removed from the <code>serviceCount</code>
-     */
-    public void removeServiceCount(int i) {
-        if (getServiceCount() > 0)
-            serviceCount = getServiceCount() - i;
-        saveAndFireEvent();
-    }
-
     private void saveAndFireEvent() {
-        unicacityAddon.labyAPI().eventBus().fire(new OfflineDataChangedEvent(unicacityAddon.services().file().data()));
         unicacityAddon.services().file().saveData();
+        if (unicacityAddon.labyAPI().addonService().isEnabled("unicacityaddon")) {
+            unicacityAddon.labyAPI().eventBus().fire(new OfflineDataChangedEvent(unicacityAddon.services().file().data()));
+            unicacityAddon.services().util().debug("Triggered OfflineDataChangedEvent");
+        }
     }
 }
