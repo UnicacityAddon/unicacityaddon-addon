@@ -105,6 +105,10 @@
         "aBuy": {
           "name": "Run ABuy and AEquip",
           "description": "Automatically buys the set amount when hovering over a buyable/equipable item and pressing this hotkey instead of the left mouse button"
+        },
+        "screenshot": {
+          "name": "Screenshot with upload to Imgur",
+          "description": "Creates a screenshot, uploads it to Imgur, and copies the link to the clipboard"
         }
       },
       "nametag": {

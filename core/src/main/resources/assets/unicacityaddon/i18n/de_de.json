@@ -105,6 +105,10 @@
         "aBuy": {
           "name": "ABuy und AEquip ausführen",
           "description": "Kauft automatisch die eingestellte Menge, wenn über ein kaufbares/ausrüstbares Item mit der Maus gegangen wird und dieser Hotkey statt der linken Maustaste gedrückt wird"
+        },
+        "screenshot": {
+          "name": "Screenshot mit Upload zu Imgur",
+          "description": "Erstellt einen Screenshot, lädt ihn auf Imgur hoch und kopiert den Link in die Zwischenablage"
         }
       },
       "nametag": {
