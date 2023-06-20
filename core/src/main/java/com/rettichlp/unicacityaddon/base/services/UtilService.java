@@ -53,7 +53,7 @@ public class UtilService {
     }
 
     public String version() {
-        return "2.0.0-alpha.6";
+        return "2.0.0-alpha.7";
     }
 
     public boolean isUnicacity() {
