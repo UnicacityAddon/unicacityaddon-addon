@@ -9,37 +9,36 @@ import com.rettichlp.unicacityaddon.base.enums.faction.Equip;
 import com.rettichlp.unicacityaddon.base.events.OfflineDataChangedEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
-import lombok.Getter;
 import net.labymod.api.util.math.vector.FloatVector3;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * @author RettichLP
  */
-@Getter
 public class Data {
 
-    private List<Armament> armamentList = new ArrayList<>();
-    private Integer bankBalance = 0;
-    private Boolean carOpen = false;
-    private Integer cashBalance = 0;
-    private List<CoordlistEntry> coordlist = new ArrayList<>();
-    private Map<DrugType, Map<DrugPurity, Integer>> drugInventoryMap = new HashMap<>();
-    private Map<Equip, Integer> equipMap = new HashMap<>();
-    private Long firstAidDate = 0L;
-    private Map<Integer, HouseData> houseDataMap = new HashMap<>();
-    private Integer jobBalance = 0;
-    private Integer jobExperience = 0;
-    private Integer payDayTime = 0;
-    private Long plantFertilizeTime = 0L;
-    private Long plantWaterTime = 0L;
-    private Integer serviceCount = 0;
-    private Integer timer = 0;
-    private final List<TodolistEntry> todolist = new ArrayList<>();
+    private List<Armament> armamentList;
+    private Integer bankBalance;
+    private Boolean carOpen;
+    private Integer cashBalance;
+    private List<CoordlistEntry> coordlist;
+    private Map<DrugType, Map<DrugPurity, Integer>> drugInventoryMap;
+    private Map<Equip, Integer> equipMap;
+    private Long firstAidDate;
+    private Map<Integer, HouseData> houseDataMap;
+    private Integer jobBalance;
+    private Integer jobExperience;
+    private Integer payDayTime;
+    private Long plantFertilizeTime;
+    private Long plantWaterTime;
+    private Integer serviceCount;
+    private Integer timer;
+    private List<TodolistEntry> todolist;
 
     // has to be static, so it will not be overwritten by gson data loading
     private static UnicacityAddon unicacityAddon;
@@ -48,9 +47,21 @@ public class Data {
         Data.unicacityAddon = unicacityAddon;
     }
 
+    public List<Armament> getArmamentList() {
+        return Optional.ofNullable(armamentList).orElse(new ArrayList<>());
+    }
+
+    public int getBankBalance() {
+        return Optional.ofNullable(bankBalance).orElse(0);
+    }
+
     public void setBankBalance(Integer bankBalance) {
         this.bankBalance = bankBalance;
         saveAndFireEvent();
+    }
+
+    public boolean isCarOpen() {
+        return Optional.ofNullable(carOpen).orElse(false);
     }
 
     public void setCarOpen(boolean carOpen) {
@@ -58,9 +69,21 @@ public class Data {
         saveAndFireEvent();
     }
 
+    public int getCashBalance() {
+        return Optional.ofNullable(cashBalance).orElse(0);
+    }
+
     public void setCashBalance(Integer cashBalance) {
         this.cashBalance = cashBalance;
         saveAndFireEvent();
+    }
+
+    public List<CoordlistEntry> getCoordlist() {
+        return Optional.ofNullable(coordlist).orElse(new ArrayList<>());
+    }
+
+    public Map<DrugType, Map<DrugPurity, Integer>> getDrugInventoryMap() {
+        return Optional.ofNullable(drugInventoryMap).orElse(new HashMap<>());
     }
 
     public void setDrugInventoryMap(Map<DrugType, Map<DrugPurity, Integer>> drugInventoryMap) {
@@ -68,9 +91,17 @@ public class Data {
         saveAndFireEvent();
     }
 
+    public Map<Equip, Integer> getEquipMap() {
+        return Optional.ofNullable(equipMap).orElse(new HashMap<>());
+    }
+
     public void setEquipMap(Map<Equip, Integer> equipMap) {
         this.equipMap = equipMap;
         saveAndFireEvent();
+    }
+
+    public long getFirstAidDate() {
+        return Optional.ofNullable(firstAidDate).orElse(0L);
     }
 
     public void setFirstAidDate(Long firstAidDate) {
@@ -78,9 +109,21 @@ public class Data {
         saveAndFireEvent();
     }
 
+    public Map<Integer, HouseData> getHouseDataMap() {
+        return Optional.ofNullable(houseDataMap).orElse(new HashMap<>());
+    }
+
+    public int getJobBalance() {
+        return Optional.ofNullable(jobBalance).orElse(0);
+    }
+
     public void setJobBalance(Integer jobBalance) {
         this.jobBalance = jobBalance;
         saveAndFireEvent();
+    }
+
+    public int getJobExperience() {
+        return Optional.ofNullable(jobExperience).orElse(0);
     }
 
     public void setJobExperience(Integer jobExperience) {
@@ -88,9 +131,17 @@ public class Data {
         saveAndFireEvent();
     }
 
+    public int getPayDayTime() {
+        return Optional.ofNullable(payDayTime).orElse(0);
+    }
+
     public void setPayDayTime(Integer payDayTime) {
         this.payDayTime = payDayTime;
         saveAndFireEvent();
+    }
+
+    public long getPlantFertilizeTime() {
+        return Optional.ofNullable(plantFertilizeTime).orElse(0L);
     }
 
     public void setPlantFertilizeTime(Long plantFertilizeTime) {
@@ -98,9 +149,17 @@ public class Data {
         saveAndFireEvent();
     }
 
+    public long getPlantWaterTime() {
+        return Optional.ofNullable(plantWaterTime).orElse(0L);
+    }
+
     public void setPlantWaterTime(Long plantWaterTime) {
         this.plantWaterTime = plantWaterTime;
         saveAndFireEvent();
+    }
+
+    public int getServiceCount() {
+        return Optional.ofNullable(serviceCount).orElse(0);
     }
 
     public void setServiceCount(Integer serviceCount) {
@@ -108,9 +167,17 @@ public class Data {
         saveAndFireEvent();
     }
 
+    public int getTimer() {
+        return Optional.ofNullable(timer).orElse(0);
+    }
+
     public void setTimer(Integer timer) {
         this.timer = timer;
         saveAndFireEvent();
+    }
+
+    public List<TodolistEntry> getTodolist() {
+        return Optional.ofNullable(todolist).orElse(new ArrayList<>());
     }
 
     /**
