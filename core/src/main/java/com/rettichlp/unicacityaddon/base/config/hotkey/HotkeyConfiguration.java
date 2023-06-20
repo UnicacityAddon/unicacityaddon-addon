@@ -29,4 +29,6 @@ public interface HotkeyConfiguration {
     ConfigProperty<Key> publicChannel();
 
     ConfigProperty<Key> aBuy();
+
+    ConfigProperty<Key> screenshot();
 }

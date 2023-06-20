@@ -73,7 +73,6 @@ public class FileService {
         return dataFile.exists() || dataFile.createNewFile() ? dataFile : null;
     }
 
-    @Deprecated(forRemoval = true)
     public File getNewImageFile() throws IOException {
         if (getAddonScreenshotDir() == null)
             return null;

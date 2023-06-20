@@ -36,17 +36,18 @@ public class ScreenshotBuilder {
 
         public void save() {
             this.file = this.unicacityAddon.screenshotController().createScreenshot(file);
-            if (this.file != null) {
-                Laby.references().notificationController().push(Notification.builder()
-                        .title(Message.getBuilder().of("Screenshot erstellt!").color(ColorCode.GREEN).bold().advance().createComponent())
-                        .text(Message.getBuilder().of("Wird gespeichert...").color(ColorCode.WHITE).advance().createComponent())
-                        .build());
-            } else {
-                Laby.references().notificationController().push(Notification.builder()
-                        .title(Message.getBuilder().of("Fehler!").color(ColorCode.RED).bold().advance().createComponent())
-                        .text(Message.getBuilder().of("Screenshot konnte nicht erstellt werden.").color(ColorCode.WHITE).advance().createComponent())
-                        .build());
-            }
+
+            Notification CREATION_SUCCESS = Notification.builder()
+                    .title(Message.getBuilder().of("Screenshot").color(ColorCode.AQUA).bold().advance().createComponent())
+                    .text(Message.getBuilder().of("Der Screenshot wurde gespeichert.").color(ColorCode.WHITE).advance().createComponent())
+                    .build();
+
+            Notification CREATION_FAILURE = Notification.builder()
+                    .title(Message.getBuilder().of("Fehler!").color(ColorCode.RED).bold().advance().createComponent())
+                    .text(Message.getBuilder().of("Screenshot konnte nicht erstellt werden.").color(ColorCode.WHITE).advance().createComponent())
+                    .build();
+
+            Laby.references().notificationController().push(this.file != null ? CREATION_SUCCESS : CREATION_FAILURE);
         }
     }
 }

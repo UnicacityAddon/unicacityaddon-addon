@@ -3,6 +3,7 @@ package com.rettichlp.unicacityaddon.base.services;
 import com.google.common.reflect.ClassPath;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.services.utils.CommandUtils;
+import com.rettichlp.unicacityaddon.base.services.utils.ImageUploadUtils;
 import com.rettichlp.unicacityaddon.base.services.utils.ListUtils;
 import com.rettichlp.unicacityaddon.base.services.utils.TeamSpeakUtils;
 import com.rettichlp.unicacityaddon.base.services.utils.TextUtils;
@@ -35,6 +36,7 @@ public class UtilService {
     private final Icon icon = Icon.texture(ResourceLocation.create("unicacityaddon", "textures/uc.png")).resolution(64, 64);
 
     private final CommandUtils command;
+    private final ImageUploadUtils imageUpload;
     private final ListUtils list;
     private final TeamSpeakUtils teamSpeak;
     private final TextUtils text;
@@ -44,6 +46,7 @@ public class UtilService {
     public UtilService(UnicacityAddon unicacityAddon) {
         this.unicacityAddon = unicacityAddon;
         this.command = new CommandUtils(unicacityAddon);
+        this.imageUpload = new ImageUploadUtils();
         this.list = new ListUtils();
         this.teamSpeak = new TeamSpeakUtils(unicacityAddon);
         this.text = new TextUtils();
