@@ -48,6 +48,7 @@ public class ScreenshotListener {
                 Laby.references().notificationController().push(Notification.builder()
                         .title(Message.getBuilder().of("Screenshot").color(ColorCode.AQUA).bold().advance().createComponent())
                         .text(Message.getBuilder().of("Der Screenshot wird hochgeladen...").color(ColorCode.WHITE).advance().createComponent())
+                        .icon(this.unicacityAddon.services().util().icon())
                         .build());
 
                 String link = this.unicacityAddon.services().util().imageUpload().uploadToLink(finalFile);
@@ -57,11 +58,13 @@ public class ScreenshotListener {
                     Laby.references().notificationController().push(Notification.builder()
                             .title(Message.getBuilder().of("Hochgeladen!").color(ColorCode.AQUA).bold().advance().createComponent())
                             .text(Message.getBuilder().of("Der Link wurde in die Zwischenablage kopiert.").color(ColorCode.WHITE).advance().createComponent())
+                            .icon(this.unicacityAddon.services().util().icon())
                             .build());
                 } else {
                     Laby.references().notificationController().push(Notification.builder()
                             .title(Message.getBuilder().of("Fehler!").color(ColorCode.RED).bold().advance().createComponent())
                             .text(Message.getBuilder().of("Screenshot konnte nicht hochgeladen werden.").color(ColorCode.WHITE).advance().createComponent())
+                            .icon(this.unicacityAddon.services().util().icon())
                             .build());
                 }
             });

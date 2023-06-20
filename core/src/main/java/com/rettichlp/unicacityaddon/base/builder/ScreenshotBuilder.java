@@ -40,11 +40,13 @@ public class ScreenshotBuilder {
             Notification CREATION_SUCCESS = Notification.builder()
                     .title(Message.getBuilder().of("Screenshot").color(ColorCode.AQUA).bold().advance().createComponent())
                     .text(Message.getBuilder().of("Der Screenshot wurde gespeichert.").color(ColorCode.WHITE).advance().createComponent())
+                    .icon(this.unicacityAddon.services().util().icon())
                     .build();
 
             Notification CREATION_FAILURE = Notification.builder()
                     .title(Message.getBuilder().of("Fehler!").color(ColorCode.RED).bold().advance().createComponent())
                     .text(Message.getBuilder().of("Screenshot konnte nicht erstellt werden.").color(ColorCode.WHITE).advance().createComponent())
+                    .icon(this.unicacityAddon.services().util().icon())
                     .build();
 
             Laby.references().notificationController().push(this.file != null ? CREATION_SUCCESS : CREATION_FAILURE);

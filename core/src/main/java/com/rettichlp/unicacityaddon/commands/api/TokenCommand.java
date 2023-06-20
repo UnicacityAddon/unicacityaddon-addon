@@ -46,6 +46,7 @@ public class TokenCommand extends UnicacityCommand {
                 this.unicacityAddon.labyAPI().notificationController().push(Notification.builder()
                         .title(Message.getBuilder().of("Kopiert!").color(ColorCode.GREEN).bold().advance().createComponent())
                         .text(Message.getBuilder().of("Token in Zwischenablage kopiert.").color(ColorCode.WHITE).advance().createComponent())
+                        .icon(this.unicacityAddon.services().util().icon())
                         .build());
             } else {
                 sendUsage();
