@@ -181,7 +181,7 @@ public class API {
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.BANNER)
                 .subPath(ADD_SUB_PATH)
-                .parameter(mapOf(
+                .parameter(Map.of(
                         "faction", faction.toString(),
                         "x", String.valueOf(x),
                         "y", String.valueOf(y),
@@ -211,7 +211,7 @@ public class API {
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.BLACKLISTREASON)
                 .subPath(this.addonPlayer.getFaction() + "/add")
-                .parameter(mapOf(
+                .parameter(Map.of(
                         "reason", reason,
                         "price", price,
                         "kills", kills))
@@ -223,7 +223,8 @@ public class API {
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.BLACKLISTREASON)
                 .subPath(this.addonPlayer.getFaction() + "/remove")
-                .parameter(mapOf("reason", reason))
+                .parameter(Map.of(
+                        "reason", reason))
                 .getAsJsonObjectAndParse(Success.class);
     }
 
@@ -240,7 +241,7 @@ public class API {
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.BROADCAST)
                 .subPath(SEND_SUB_PATH)
-                .parameter(mapOf(
+                .parameter(Map.of(
                         "message", message,
                         "sendTime", sendTime))
                 .getAsJsonObjectAndParse(Success.class);
@@ -251,7 +252,7 @@ public class API {
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.EVENT)
                 .subPath(BOMB_SUB_PATH)
-                .parameter(mapOf(
+                .parameter(Map.of(
                         "startTime", String.valueOf(startTime)))
                 .sendAsync();
     }
@@ -261,7 +262,7 @@ public class API {
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.EVENT)
                 .subPath(GANGWAR_SUB_PATH)
-                .parameter(mapOf(
+                .parameter(Map.of(
                         "attacker", String.valueOf(attacker),
                         "defender", String.valueOf(defender)))
                 .sendAsync();
@@ -271,7 +272,8 @@ public class API {
         return RequestBuilder.getBuilder(this.unicacityAddon)
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.HOUSEBAN)
-                .parameter(mapOf("advanced", String.valueOf(advanced)))
+                .parameter(Map.of(
+                        "advanced", String.valueOf(advanced)))
                 .getAsJsonArrayAndParse(HouseBan.class);
     }
 
@@ -280,7 +282,7 @@ public class API {
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.HOUSEBAN)
                 .subPath(ADD_SUB_PATH)
-                .parameter(mapOf(
+                .parameter(Map.of(
                         "name", name,
                         "reason", reason))
                 .getAsJsonObjectAndParse(Success.class);
@@ -291,7 +293,7 @@ public class API {
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.HOUSEBAN)
                 .subPath(REMOVE_SUB_PATH)
-                .parameter(mapOf(
+                .parameter(Map.of(
                         "name", name,
                         "reason", reason))
                 .getAsJsonObjectAndParse(Success.class);
@@ -312,7 +314,7 @@ public class API {
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.HOUSEBANREASON)
                 .subPath(ADD_SUB_PATH)
-                .parameter(mapOf(
+                .parameter(Map.of(
                         "reason", reason,
                         "days", days))
                 .getAsJsonObjectAndParse(Success.class);
@@ -323,7 +325,8 @@ public class API {
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.HOUSEBANREASON)
                 .subPath(REMOVE_SUB_PATH)
-                .parameter(mapOf("reason", reason))
+                .parameter(Map.of(
+                        "reason", reason))
                 .getAsJsonObjectAndParse(Success.class);
     }
 
@@ -354,7 +357,7 @@ public class API {
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.NAVIPOINT)
                 .subPath(ADD_SUB_PATH)
-                .parameter(mapOf(
+                .parameter(Map.of(
                         "name", name,
                         "x", x,
                         "y", y,
@@ -368,7 +371,8 @@ public class API {
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.NAVIPOINT)
                 .subPath(REMOVE_SUB_PATH)
-                .parameter(mapOf("name", name))
+                .parameter(Map.of(
+                        "name", name))
                 .getAsJsonObjectAndParse(Success.class);
     }
 
@@ -384,7 +388,7 @@ public class API {
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.PLAYER)
                 .subPath(ADD_SUB_PATH)
-                .parameter(mapOf(
+                .parameter(Map.of(
                         "name", name,
                         "group", group))
                 .getAsJsonObjectAndParse(Success.class);
@@ -395,7 +399,7 @@ public class API {
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.PLAYER)
                 .subPath(REMOVE_SUB_PATH)
-                .parameter(mapOf(
+                .parameter(Map.of(
                         "name", name,
                         "group", group))
                 .getAsJsonObjectAndParse(Success.class);
@@ -438,7 +442,8 @@ public class API {
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.STATISTIC)
                 .subPath(this.addonPlayer.getName() + "/add")
-                .parameter(mapOf("type", statisticType.name()))
+                .parameter(Map.of(
+                        "type", statisticType.name()))
                 .sendAsync();
     }
 
@@ -455,7 +460,7 @@ public class API {
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.TOKEN)
                 .subPath(CREATE_SUB_PATH)
-                .parameter(mapOf(
+                .parameter(Map.of(
                         "authToken", this.unicacityAddon.labyAPI().minecraft().sessionAccessor().session().getAccessToken(),
                         "version", this.unicacityAddon.services().util().version()))
                 .send();
@@ -475,7 +480,7 @@ public class API {
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.WANTEDREASON)
                 .subPath(ADD_SUB_PATH)
-                .parameter(mapOf(
+                .parameter(Map.of(
                         "reason", reason,
                         "points", points))
                 .getAsJsonObjectAndParse(Success.class);
@@ -486,7 +491,8 @@ public class API {
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.WANTEDREASON)
                 .subPath(REMOVE_SUB_PATH)
-                .parameter(mapOf("reason", reason))
+                .parameter(Map.of(
+                        "reason", reason))
                 .getAsJsonObjectAndParse(Success.class);
     }
 
@@ -502,7 +508,8 @@ public class API {
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.YASIN)
                 .subPath(ADD_SUB_PATH)
-                .parameter(mapOf("name", name))
+                .parameter(Map.of(
+                        "name", name))
                 .getAsJsonObjectAndParse(Success.class);
     }
 
@@ -511,7 +518,8 @@ public class API {
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.YASIN)
                 .subPath(REMOVE_SUB_PATH)
-                .parameter(mapOf("name", name))
+                .parameter(Map.of(
+                        "name", name))
                 .getAsJsonObjectAndParse(Success.class);
     }
 
@@ -520,7 +528,8 @@ public class API {
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.YASIN)
                 .subPath(DONE_SUB_PATH)
-                .parameter(mapOf("name", name))
+                .parameter(Map.of(
+                        "name", name))
                 .getAsJsonObjectAndParse(Success.class);
     }
 
@@ -562,46 +571,6 @@ public class API {
         catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public static <K, V> Map<K, V> mapOf(K k1, V v1) {
-        Map<K, V> map = new HashMap<>();
-        map.put(k1, v1);
-        return map;
-    }
-
-    public static <K, V> Map<K, V> mapOf(K k1, V v1, K k2, V v2) {
-        Map<K, V> map = new HashMap<>();
-        map.put(k1, v1);
-        map.put(k2, v2);
-        return map;
-    }
-
-    public static <K, V> Map<K, V> mapOf(K k1, V v1, K k2, V v2, K k3, V v3) {
-        Map<K, V> map = new HashMap<>();
-        map.put(k1, v1);
-        map.put(k2, v2);
-        map.put(k3, v3);
-        return map;
-    }
-
-    public static <K, V> Map<K, V> mapOf(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4) {
-        Map<K, V> map = new HashMap<>();
-        map.put(k1, v1);
-        map.put(k2, v2);
-        map.put(k3, v3);
-        map.put(k4, v4);
-        return map;
-    }
-
-    public static <K, V> Map<K, V> mapOf(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4, K k5, V v5) {
-        Map<K, V> map = new HashMap<>();
-        map.put(k1, v1);
-        map.put(k2, v2);
-        map.put(k3, v3);
-        map.put(k4, v4);
-        map.put(k5, v5);
-        return map;
     }
 
     public static <T> T find(Collection<T> elements, Predicate<T> predicate) {

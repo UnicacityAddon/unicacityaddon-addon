@@ -11,8 +11,6 @@ import net.labymod.api.client.component.event.HoverEvent;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.rettichlp.unicacityaddon.base.io.api.API.mapOf;
-
 /**
  * @author RettichLP
  */
@@ -28,32 +26,32 @@ public class HouseData {
 
         houseBank = 0;
         storageMap = new HashMap<>();
-        storageMap.put(DrugType.COCAINE, mapOf(
+        storageMap.put(DrugType.COCAINE, Map.of(
                 DrugPurity.BEST, 0,
                 DrugPurity.GOOD, 0,
                 DrugPurity.MEDIUM, 0,
                 DrugPurity.BAD, 0));
-        storageMap.put(DrugType.MARIJUANA, mapOf(
+        storageMap.put(DrugType.MARIJUANA, Map.of(
                 DrugPurity.BEST, 0,
                 DrugPurity.GOOD, 0,
                 DrugPurity.MEDIUM, 0,
                 DrugPurity.BAD, 0));
-        storageMap.put(DrugType.METH, mapOf(
+        storageMap.put(DrugType.METH, Map.of(
                 DrugPurity.BEST, 0,
                 DrugPurity.GOOD, 0,
                 DrugPurity.MEDIUM, 0,
                 DrugPurity.BAD, 0));
-        storageMap.put(DrugType.HUSTENSAFT, mapOf(
+        storageMap.put(DrugType.HUSTENSAFT, Map.of(
                 DrugPurity.BEST, 0,
                 DrugPurity.GOOD, 0,
                 DrugPurity.MEDIUM, 0,
                 DrugPurity.BAD, 0));
-        storageMap.put(DrugType.SCHMERZMITTEL, mapOf(
+        storageMap.put(DrugType.SCHMERZMITTEL, Map.of(
                 DrugPurity.BEST, 0,
                 DrugPurity.GOOD, 0,
                 DrugPurity.MEDIUM, 0,
                 DrugPurity.BAD, 0));
-        storageMap.put(DrugType.ANTIBIOTIKA, mapOf(
+        storageMap.put(DrugType.ANTIBIOTIKA, Map.of(
                 DrugPurity.BEST, 0,
                 DrugPurity.GOOD, 0,
                 DrugPurity.MEDIUM, 0,
