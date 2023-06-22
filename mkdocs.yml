@@ -118,3 +118,5 @@ nav:
           - Tab-Completion Builder: commands/implementation/tab-completion-builder.md
   - Widgets:
       - widgets/index.md
+  - Config:
+      - config/index.md
