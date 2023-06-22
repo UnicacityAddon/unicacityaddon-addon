@@ -49,7 +49,7 @@ public class ReinforcementCommand extends UnicacityCommand {
         if (arguments.length == 1 || arguments.length == 6)
             firstType = ReinforcementType.getByArgument(arguments[arguments.length - 1]);
 
-        ChatType chatType = firstType.getChatType(this.unicacityAddon.configuration().nametag());
+        ChatType chatType = firstType.getChatType();
 
         FloatVector3 location = p.getLocation();
         if (location != null) {
