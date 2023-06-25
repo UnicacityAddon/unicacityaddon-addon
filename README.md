@@ -46,7 +46,7 @@ and on the other hand the support for Minecraft version 1.16.5+.
 
 #### LabyMod 3
 
-Addon releases: `v1.0.0` - `v1.9.2`<br>
+Addon releases: `v1.0.0` - `v1.10.3`<br>
 Requires Minecraft Forge: ✔️<br>
 Supported Minecraft versions:
 
@@ -60,11 +60,11 @@ Supported Minecraft versions:
 
 - `1.12.2`
 - `1.16.5`
-- `1.17.1`
-- `1.18.2`
-- `1.19.2`
-- `1.19.3`
-- `1.19.4`
+- ~~`1.17.1`~~ (Unicacity does not currently support this version)
+- ~~`1.18.2`~~ (Unicacity does not currently support this version)
+- ~~`1.19.2`~~ (Unicacity does not currently support this version)
+- ~~`1.19.3`~~ (Unicacity does not currently support this version)
+- ~~`1.19.4`~~ (Unicacity does not currently support this version)
 
 ## Installation
 
@@ -80,11 +80,11 @@ in the `%appdata%/.minecraft/labymod-neo/addons` folder.
 
 ## Contribute
 
-1. Clone the repository with `git clone https://github.com/rettichlp/unicacityaddon-addon.git`
+1. Clone the repository with `git clone https://github.com/UnicacityAddon/unicacityaddon-addon.git`
 2. Open the downloaded folder as IntelliJ Project
 3. IntelliJ will import all necessary stuff
 4. Fork this repository
 5. Make your code changes and push those to your forked repository
 6. Create a pull request
 
-> Read our [Contributing guidelines](https://github.com/rettichlp/unicacityaddon-addon/blob/main/CONTRIBUTING.md)
+> Read our [Contributing guidelines](https://github.com/UnicacityAddon/unicacityaddon-addon/blob/main/CONTRIBUTING.md)
