@@ -8,21 +8,22 @@ assignees: ''
 ---
 
 **Beschreibe den Bug oder Fehler**
-Eine klare und präzise Beschreibung des Fehlers.
+Füge hier eine klare und präzise Beschreibung des Fehlers ein.
 
 **Wie kann der Bug oder Fehler reproduziert werden?**
 Schritte zum Reproduzieren des Verhaltens:
+
 1. Gehen zu "..."
 2. Klicke auf "..."
 3. Scrolle nach unten zu "..."
 4. Dort ist der Fehler
 
 **Erwartetes Verhalten**
-Eine klare und präzise Beschreibung dessen, was erwartet wurde.
+Füge hier eine klare und präzise Beschreibung dessen, was erwartet wurde, ein.
 
 **Screenshots**
 Füge gegebenenfalls Screenshots hinzu, um das Problem zu erläutern.
 
 **Weitere Informationen (bitte ausfüllen):**
 Minecraft Version: `1.12.2`
-Addon Version: `1.10.3`
+Addon Version: `2.0.0`

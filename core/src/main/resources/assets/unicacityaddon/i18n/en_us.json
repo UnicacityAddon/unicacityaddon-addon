@@ -1,0 +1,491 @@
+{
+  "unicacityaddon": {
+    "hudWidget": {
+      "ammunition": {
+        "name": "Ammunition"
+      },
+      "bomb": {
+        "name": "Bomb Timer"
+      },
+      "car": {
+        "name": "Car Info"
+      },
+      "service": {
+        "name": "Open Services"
+      },
+      "hearth": {
+        "name": "Hearts"
+      },
+      "inventory": {
+        "name": "Inventory"
+      },
+      "job": {
+        "name": "Job Rewards"
+      },
+      "money": {
+        "name": "Money"
+      },
+      "payday": {
+        "name": "Time to PayDay"
+      },
+      "plant": {
+        "name": "Plant Timer"
+      },
+      "timer": {
+        "name": "Timer"
+      }
+    },
+    "settings": {
+      "header": {
+        "nametag": {
+          "name": "NameTags"
+        },
+        "faction": {
+          "name": "Faction"
+        },
+        "message": {
+          "name": "Messages"
+        },
+        "join": {
+          "name": "Join"
+        },
+        "automation": {
+          "name": "Automation"
+        },
+        "other": {
+          "name": "Other"
+        },
+        "debug": {
+          "name": "Debug"
+        }
+      },
+      "name": "UnicacityAddon",
+      "enabled": {
+        "name": "Enabled",
+        "description": "Enables and disables the addon"
+      },
+      "hotkey": {
+        "name": "Hotkeys",
+        "acceptAd": {
+          "name": "Accept Ads",
+          "description": "Accepts a player's advertisement"
+        },
+        "declineAd": {
+          "name": "Reject Ads",
+          "description": "Deny a player's advertisement when policy is violated"
+        },
+        "acceptReport": {
+          "name": "Accept report",
+          "description": "Accepts a report and sends the welcome message from 'Report -> Greeting'"
+        },
+        "cancelReport": {
+          "name": "Exit report",
+          "description": "Send the farewell from 'Report -> Farewell' and close the report"
+        },
+        "aDuty": {
+          "name": "ADuty",
+          "description": "Run the '/aduty' command"
+        },
+        "aDutySilent": {
+          "name": "ADuty (no message)",
+          "description": "Run the '/aduty -s' command"
+        },
+        "reinforcementFaction": {
+          "name": "Reinforcement (Faction)",
+          "description": "Send a reinforcement to your faction"
+        },
+        "reinforcementAlliance": {
+          "name": "Reinforcement (alliance)",
+          "description": "Send a reinforcement to your faction and alliance"
+        },
+        "publicChannel": {
+          "name": "Join Public Channel",
+          "description": "Moves the player to their own public channel on Teamspeak"
+        },
+        "aBuy": {
+          "name": "Run ABuy and AEquip",
+          "description": "Automatically buys the set amount when hovering over a buyable/equipable item and pressing this hotkey instead of the left mouse button"
+        },
+        "screenshot": {
+          "name": "Screenshot with upload to Imgur",
+          "description": "Creates a screenshot, uploads it to Imgur, and copies the link to the clipboard"
+        }
+      },
+      "nametag": {
+        "name": "NameTags",
+        "info": {
+          "name": "Faction Info",
+          "description": "Shows the faction behind the name"
+        },
+        "faction": {
+          "name": "Faction",
+          "color": {
+            "name": "Color",
+            "description": "Color in which faction members are displayed"
+          }
+        },
+        "alliance": {
+          "name": "Alliance",
+          "color": {
+            "name": "Color",
+            "description": "Color in which alliance members are displayed"
+          },
+          "faction1": {
+            "name": "Alliance faction",
+            "description": "Note: must be specified to be able to send D-Chat reinforcements"
+          },
+          "faction2": {
+            "name": "Alliance faction (optional)"
+          }
+        },
+        "streetwar": {
+          "name": "Streetwar",
+          "color": {
+            "name": "Color",
+            "description": "Color used to display Streetwar enemies"
+          },
+          "faction1": {
+            "name": "Streetwar faction"
+          },
+          "faction2": {
+            "name": "Streetwar faction (optional)"
+          }
+        },
+        "houseban": {
+          "name": "House ban",
+          "description": "Show players who are banned from the hospital"
+        },
+        "duty": {
+          "name": "Duty",
+          "description": "Shows a green dot when the player is on duty"
+        },
+        "specific": {
+          "name": "Show Blacklist/Contract/WPs",
+          "description": "Shows colored faction-specific NameTags",
+          "color": {
+            "name": "Color",
+            "description": "Color used to display faction-specific nametags (only for Blacklist and Contract)"
+          }
+        },
+        "corpse": {
+          "name": "Colored Corpse Names",
+          "description": "Shows the name of the corpse in the faction colors and adds the faction info at the end"
+        },
+        "afk": {
+          "name": "AFK and ADMIN SERVICE Info",
+          "description": "Indicates when a player is AFK or in admin duty"
+        },
+        "team": {
+          "name": "Addon Team Tag",
+          "description": "Displays the team rank above the name"
+        }
+      },
+      "reinforcement": {
+        "name": "Reinforcement",
+        "reinforcement": {
+          "name": "Reinforcement",
+          "description": "Template for a reinforcement"
+        },
+        "answer": {
+          "name": "Reinforcement Response",
+          "description": "Template for a reinforcement response"
+        },
+        "screen": {
+          "name": "Screenshot",
+          "description": "Takes a screenshot when accepting a reinforcement and saves it as a reinforcement activity"
+        }
+      },
+      "sloc": {
+        "name": "Sloc",
+        "sloc": {
+          "name": "Sloc",
+          "description": "Template for a Sloc"
+        }
+      },
+      "equip": {
+        "header": {
+          "global": {
+            "name": "Cross-Faction"
+          },
+          "specific": {
+            "name": "Faction dependent"
+          }
+        },
+        "name": "Equip",
+        "description": "Sets the equipment prices to provide an equipment list",
+        "water": {
+          "name": "Water"
+        },
+        "bread": {
+          "name": "Bread"
+        },
+        "donut": {
+          "name": "Donut"
+        },
+        "mask": {
+          "name": "Mask"
+        },
+        "lkev": {
+          "name": "Light Kevlar"
+        },
+        "skev": {
+          "name": "Heavy Kevlar"
+        },
+        "pepperSpray": {
+          "name": "Pepperspray"
+        },
+        "pistol": {
+          "name": "Pistol"
+        },
+        "mp5": {
+          "name": "Scatter-3"
+        },
+        "sniper": {
+          "name": "Viper-9"
+        },
+        "state": {
+          "name": "State (Police/FBI)",
+          "cuff": {
+            "name": "Handcuffs"
+          },
+          "defuseKit": {
+            "name": "Defuse-Kit"
+          },
+          "elytra": {
+            "name": "Elytra"
+          },
+          "grenade": {
+            "name": "Flashbang"
+          },
+          "shield": {
+            "name": "Shield"
+          },
+          "smoke": {
+            "name": "Smoke Grenade"
+          },
+          "taser": {
+            "name": "Tazer"
+          },
+          "tracker": {
+            "name": "Tracker"
+          }
+        },
+        "badFaction": {
+          "name": "Bad faction",
+          "baseballBat": {
+            "name": "Baseball Bat"
+          }
+        },
+        "medic": {
+          "name": "Medics",
+          "axe": {
+            "name": "Axe"
+          },
+          "bandage": {
+            "name": "Bandage"
+          },
+          "extinguisher": {
+            "name": "Fire Extinguisher"
+          },
+          "helmet": {
+            "name": "Helmet"
+          },
+          "pills": {
+            "name": "Pain Pills"
+          },
+          "syringe": {
+            "name": "Syringe"
+          }
+        },
+        "news": {
+          "name": "News",
+          "notepad": {
+            "name": "Notepad"
+          },
+          "coffee": {
+            "name": "Coffee"
+          }
+        },
+        "hitman": {
+          "name": "Hitman",
+          "glassCutter": {
+            "name": "Glass Cutter"
+          },
+          "lockPick": {
+            "name": "Lockpick"
+          }
+        },
+        "terrorist": {
+          "name": "Terrorists",
+          "explosiveBelt": {
+            "name": "Explosive Belt"
+          },
+          "rpg7": {
+            "name": "RPG-7"
+          }
+        },
+        "church": {
+          "name": "Church",
+          "wine": {
+            "name": "Wine"
+          }
+        }
+      },
+      "ownUse": {
+        "name": "Personal use",
+        "cocaine": {
+          "name": "Powder",
+          "amount": {
+            "name": "Quantity",
+            "description": "Amount to be used for personal use"
+          },
+          "purity": {
+            "name": "Purity",
+            "description": "Purity to be used for personal use"
+          }
+        },
+        "marijuana": {
+          "name": "Herbs",
+          "amount": {
+            "name": "Quantity",
+            "description": "Amount to be used for personal use"
+          },
+          "purity": {
+            "name": "Purity",
+            "description": "Purity to be used for personal use"
+          }
+        },
+        "methamphetamin": {
+          "name": "Crystals",
+          "amount": {
+            "name": "Quantity",
+            "description": "Amount to be used for personal use"
+          },
+          "purity": {
+            "name": "Purity",
+            "description": "Purity to be used for personal use"
+          }
+        }
+      },
+      "message": {
+        "header": {
+          "faction": {
+            "name": "Faction"
+          },
+          "report": {
+            "name": "Report"
+          }
+        },
+        "name": "Message",
+        "hq": {
+          "name": "HQ News",
+          "description": "Formatting the HQ messages into a clearer design"
+        },
+        "service": {
+          "name": "Service Messages",
+          "description": "Formatting the service messages in a clearer design"
+        },
+        "dBank": {
+          "name": "D-Bank Messages",
+          "description": "Formatting the drug bank messages in a clearer design"
+        },
+        "contract": {
+          "name": "Contract Messages",
+          "description": "Formatting the contract messages in a clearer design"
+        },
+        "greeting": {
+          "name": "Greeting",
+          "description": "Message sent when accepting a report"
+        },
+        "farewell": {
+          "name": "Farewell",
+          "description": "Message sent before terminating a report"
+        },
+        "prefix": {
+          "name": "Prefix",
+          "description": "Prefix for the report to enable filtering for a chat window"
+        }
+      },
+      "password": {
+        "name": "Password",
+        "password": {
+          "name": "Password",
+          "description": "This password is automatically sent to the server when you join the server."
+        }
+      },
+      "command": {
+        "name": "Startup commands",
+        "first": {
+          "name": "First command",
+          "description": "Specifies the first command to run after joining the server (e.g. '/mi')"
+        },
+        "second": {
+          "name": "Second command",
+          "description": "Specifies the second command to run after joining the server (e.g. '/bl')"
+        },
+        "third": {
+          "name": "Third command",
+          "description": "Specifies the third command to run after joining the server (e.g. '/afk')"
+        }
+      },
+      "texturePack": {
+        "name": "Disable TexturePack message",
+        "description": "Disables the TexturePack message"
+      },
+      "atm": {
+        "name": "ATM Settings",
+        "info": {
+          "name": "ATM Info",
+          "description": "Clicking an ATM executes '/atminfo'"
+        },
+        "faction": {
+          "name": "F-Bank",
+          "description": "Clicking an ATM executes '/fbank'"
+        },
+        "grouping": {
+          "name": "Group Checkout",
+          "description": "Clicking on an ATM executes '/grkasse info'"
+        }
+      },
+      "bombScreenshot": {
+        "name": "Bomb Screenshot",
+        "description": "Automatically creates a screenshot at the end of a bomb"
+      },
+      "carRoute": {
+        "name": "Automatically display route to car",
+        "description": "After executing the '/car find' command, the route is displayed directly"
+      },
+      "aBuyAmount": {
+        "name": "Amount for ABuy and AEquip",
+        "description": "Number of items/equip to auto-purchase or equip"
+      },
+      "teamspeak": {
+        "name": "TeamSpeak",
+        "resolve": {
+          "name": "Resolve API Key"
+        },
+        "key": {
+          "name": "Teamspeak API Key"
+        },
+        "publicity": {
+          "name": "Join public channel message"
+        },
+        "support": {
+          "name": "Join support channel message"
+        }
+      },
+      "tablist": {
+        "name": "Sorted Tab List",
+        "description": "Sorts the tab list by duty factions, UC's, builders and active reports"
+      },
+      "despawnTime": {
+        "name": "Despawn Time",
+        "description": "Displays the despawn time in the karma message after a kill"
+      },
+      "debug": {
+        "name": "Debug",
+        "description": "Displays debug messages"
+      }
+    }
+  }
+}
