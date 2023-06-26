@@ -3,19 +3,11 @@ package com.rettichlp.unicacityaddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.DefaultAddonPlayer;
 import com.rettichlp.unicacityaddon.base.Services;
-import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
-import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.config.DefaultUnicacityAddonConfiguration;
 import com.rettichlp.unicacityaddon.base.io.api.API;
-import com.rettichlp.unicacityaddon.base.nametags.AddonTag;
-import com.rettichlp.unicacityaddon.base.nametags.DutyTag;
-import com.rettichlp.unicacityaddon.base.nametags.FactionInfoTag;
-import com.rettichlp.unicacityaddon.base.nametags.HouseBanTag;
-import com.rettichlp.unicacityaddon.base.nametags.NoPushTag;
-import com.rettichlp.unicacityaddon.base.nametags.OutlawTag;
+import com.rettichlp.unicacityaddon.base.registry.Registry;
 import com.rettichlp.unicacityaddon.base.services.FileService;
 import com.rettichlp.unicacityaddon.base.teamspeak.TeamSpeakAPI;
-import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
 import com.rettichlp.unicacityaddon.controller.DeadBodyController;
 import com.rettichlp.unicacityaddon.controller.GuiController;
 import com.rettichlp.unicacityaddon.controller.ScreenshotController;
@@ -24,32 +16,11 @@ import com.rettichlp.unicacityaddon.controller.TabListController;
 import com.rettichlp.unicacityaddon.controller.TransportController;
 import com.rettichlp.unicacityaddon.controller.WorldInteractionController;
 import com.rettichlp.unicacityaddon.core.generated.DefaultReferenceStorage;
-import com.rettichlp.unicacityaddon.hudwidgets.AmmunitionHudWidget;
-import com.rettichlp.unicacityaddon.hudwidgets.BombHudWidget;
-import com.rettichlp.unicacityaddon.hudwidgets.CarHudWidget;
-import com.rettichlp.unicacityaddon.hudwidgets.EmergencyServiceHudWidget;
-import com.rettichlp.unicacityaddon.hudwidgets.HearthHudWidget;
-import com.rettichlp.unicacityaddon.hudwidgets.InventoryHudWidget;
-import com.rettichlp.unicacityaddon.hudwidgets.JobHudWidget;
-import com.rettichlp.unicacityaddon.hudwidgets.MoneyHudWidget;
-import com.rettichlp.unicacityaddon.hudwidgets.PayDayHudWidget;
-import com.rettichlp.unicacityaddon.hudwidgets.PlantHudWidget;
-import com.rettichlp.unicacityaddon.hudwidgets.TimerHudWidget;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import net.labymod.api.addon.LabyAddon;
-import net.labymod.api.client.chat.command.Command;
-import net.labymod.api.client.entity.player.tag.PositionType;
-import net.labymod.api.client.entity.player.tag.TagRegistry;
-import net.labymod.api.client.gui.hud.HudWidgetRegistry;
 import net.labymod.api.models.addon.annotation.AddonMain;
-
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * <h2>Hello Labymod addon reviewers and others,</h2>
@@ -120,7 +91,7 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
     private Services services;
     private API api;
     private TeamSpeakAPI teamSpeakAPI;
-    private List<Command> commands;
+    private Registry registry;
 
     @Override
     public void load() {
@@ -128,7 +99,7 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
         this.services = new Services(this);
         this.api = new API(this);
         this.teamSpeakAPI = new TeamSpeakAPI(this);
-        this.commands = new ArrayList<>();
+        this.registry = new Registry(this);
 
         this.logger().info("Loaded UnicacityAddon");
     }
@@ -137,10 +108,10 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
     protected void enable() {
         this.api.sync(this.player);
         this.registerSettingCategory();
-        this.registerTags();
-        this.registerHudWidgets();
-        this.registerListeners();
-        this.registerCommands();
+        this.registry.registerTags();
+        this.registry.registerHudWidgets();
+        this.registry.registerListeners();
+        this.registry.registerCommands();
 
         new Thread(this.teamSpeakAPI::initialize).start();
 
@@ -182,104 +153,5 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
 
     private DefaultReferenceStorage controller() {
         return this.referenceStorageAccessor();
-    }
-
-    private void registerTags() {
-        TagRegistry tagRegistry = this.labyAPI().tagRegistry();
-        tagRegistry.register(
-                "unicacityaddon_addontag",
-                PositionType.ABOVE_NAME,
-                AddonTag.create(this)
-        );
-
-        tagRegistry.register(
-                "unicacityaddon_nopushtag",
-                PositionType.ABOVE_NAME,
-                NoPushTag.create(this)
-        );
-
-        tagRegistry.register(
-                "unicacityaddon_housebantag",
-                PositionType.BELOW_NAME,
-                HouseBanTag.create(this)
-        );
-
-        tagRegistry.register(
-                "unicacityaddon_outlawtag",
-                PositionType.LEFT_TO_NAME,
-                OutlawTag.create(this)
-        );
-
-        tagRegistry.register(
-                "unicacityaddon_factioninfotag",
-                PositionType.RIGHT_TO_NAME,
-                FactionInfoTag.create(this)
-        );
-
-        tagRegistry.register(
-                "unicacityaddon_dutytag",
-                PositionType.RIGHT_TO_NAME,
-                DutyTag.create(this)
-        );
-    }
-
-    private void registerHudWidgets() {
-        HudWidgetRegistry registry = this.labyAPI().hudWidgetRegistry();
-        registry.register(new AmmunitionHudWidget("ammunition", this));
-        registry.register(new BombHudWidget("bomb", this));
-        registry.register(new CarHudWidget("car", this));
-        registry.register(new EmergencyServiceHudWidget("service", this));
-        registry.register(new HearthHudWidget("hearth", this));
-        registry.register(new InventoryHudWidget("inventory", this));
-        registry.register(new JobHudWidget("job", this));
-        registry.register(new MoneyHudWidget("money", this));
-        registry.register(new PayDayHudWidget("payday", this));
-        registry.register(new PlantHudWidget("plant", this));
-        registry.register(new TimerHudWidget("timer", this));
-    }
-
-    private void registerListeners() {
-        AtomicInteger registeredListenerCount = new AtomicInteger();
-        Set<Class<?>> listenerClassSet = this.services.util().getAllClassesFromPackage("com.rettichlp.unicacityaddon.listener");
-        listenerClassSet.stream()
-                .filter(listenerClass -> listenerClass.isAnnotationPresent(UCEvent.class))
-                .forEach(listenerClass -> {
-                    try {
-                        this.registerListener(listenerClass.getConstructor(UnicacityAddon.class).newInstance(this));
-                        registeredListenerCount.getAndIncrement();
-                    } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException |
-                             InstantiationException e) {
-                        this.logger().warn("Can't register listener: {}", listenerClass.getSimpleName());
-                        e.printStackTrace();
-                    }
-                });
-        this.logger().info("Registered {}/{} listeners", registeredListenerCount, listenerClassSet.size());
-    }
-
-    private void registerCommands() {
-        AtomicInteger registeredCommandCount = new AtomicInteger();
-        AtomicInteger deactivatedCommandCount = new AtomicInteger();
-        Set<Class<?>> commandClassSet = this.services.util().getAllClassesFromPackage("com.rettichlp.unicacityaddon.commands");
-        commandClassSet.remove(UnicacityCommand.class);
-        commandClassSet.stream()
-                .filter(commandClass -> commandClass.isAnnotationPresent(UCCommand.class))
-                .forEach(commandClass -> {
-                    UCCommand ucCommand = commandClass.getAnnotation(UCCommand.class);
-                    if (ucCommand.deactivated()) {
-                        deactivatedCommandCount.getAndIncrement();
-                    } else {
-                        try {
-                            Command command = (Command) commandClass.getConstructor(UnicacityAddon.class, UCCommand.class).newInstance(this, ucCommand);
-                            this.commands.add(command);
-                            this.registerCommand(command);
-                            registeredCommandCount.getAndIncrement();
-                        } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException |
-                                 InstantiationException e) {
-                            this.logger().warn("Can't register command: {}", commandClass.getSimpleName());
-                            e.printStackTrace();
-                        }
-                    }
-                });
-        this.logger().info("Registered {}/{} commands, {} skipped (deactivated)", registeredCommandCount, commandClassSet.size() - deactivatedCommandCount.get(), deactivatedCommandCount.get());
     }
 }

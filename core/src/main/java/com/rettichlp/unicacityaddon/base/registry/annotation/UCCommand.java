@@ -1,6 +1,6 @@
-package com.rettichlp.unicacityaddon.base.annotation;
+package com.rettichlp.unicacityaddon.base.registry.annotation;
 
-import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
+import com.rettichlp.unicacityaddon.base.registry.UnicacityCommand;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -15,14 +15,14 @@ import java.lang.annotation.Target;
 public @interface UCCommand {
 
     /**
-     * Prefix or shortname of the {@link com.rettichlp.unicacityaddon.commands.UnicacityCommand}
+     * Prefix or shortname of the {@link UnicacityCommand}
      *
      * @return Prefix or shortname
      */
     String prefix();
 
     /**
-     * Aliases or empty array of the {@link com.rettichlp.unicacityaddon.commands.UnicacityCommand}
+     * Aliases or empty array of the {@link UnicacityCommand}
      *
      * @return Aliases or empty array
      */
@@ -36,7 +36,7 @@ public @interface UCCommand {
     boolean onlyOnUnicacity() default true;
 
     /**
-     * Usage of the {@link com.rettichlp.unicacityaddon.commands.UnicacityCommand}. Empty if the command has no command parameters.<br>
+     * Usage of the {@link UnicacityCommand}. Empty if the command has no command parameters.<br>
      * The usage is without the prefix of the command. For example:<br>
      * <br>
      * Raw command syntax: <code>/tp RettichLP 1 2 3</code><br>

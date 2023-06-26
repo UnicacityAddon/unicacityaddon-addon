@@ -20,8 +20,8 @@ public class JobHudWidget extends TextHudWidget<TextHudWidgetConfig> {
 
     private final UnicacityAddon unicacityAddon;
 
-    public JobHudWidget(String id, UnicacityAddon unicacityAddon) {
-        super(id);
+    public JobHudWidget(UnicacityAddon unicacityAddon) {
+        super("job");
         this.unicacityAddon = unicacityAddon;
     }
 

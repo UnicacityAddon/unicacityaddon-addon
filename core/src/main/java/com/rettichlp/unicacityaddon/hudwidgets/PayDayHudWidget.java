@@ -16,8 +16,8 @@ public class PayDayHudWidget extends TextHudWidget<TextHudWidgetConfig> {
 
     private final UnicacityAddon unicacityAddon;
 
-    public PayDayHudWidget(String id, UnicacityAddon unicacityAddon) {
-        super(id);
+    public PayDayHudWidget(UnicacityAddon unicacityAddon) {
+        super("payday");
         this.unicacityAddon = unicacityAddon;
     }
 

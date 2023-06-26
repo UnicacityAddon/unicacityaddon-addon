@@ -1,7 +1,7 @@
 package com.rettichlp.unicacityaddon.listener.faction.rettungsdienst;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
+import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.commands.faction.rettungsdienst.ARezeptAnnehmenCommand;
 import com.rettichlp.unicacityaddon.commands.faction.rettungsdienst.ARezeptCommand;

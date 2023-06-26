@@ -18,8 +18,8 @@ public class InventoryHudWidget extends TextHudWidget<TextHudWidgetConfig> {
 
     private final UnicacityAddon unicacityAddon;
 
-    public InventoryHudWidget(String id, UnicacityAddon unicacityAddon) {
-        super(id);
+    public InventoryHudWidget(UnicacityAddon unicacityAddon) {
+        super("inventory");
         this.unicacityAddon = unicacityAddon;
     }
 

@@ -1,10 +1,12 @@
-package com.rettichlp.unicacityaddon.base.nametags;
+package com.rettichlp.unicacityaddon.nametags;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.config.UnicacityAddonConfiguration;
+import com.rettichlp.unicacityaddon.base.registry.annotation.UCNameTag;
 import com.rettichlp.unicacityaddon.base.services.NameTagService;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
+import net.labymod.api.client.entity.player.tag.PositionType;
 import net.labymod.api.client.entity.player.tag.tags.NameTag;
 import net.labymod.api.client.render.font.RenderableComponent;
 import org.jetbrains.annotations.Nullable;
@@ -12,6 +14,7 @@ import org.jetbrains.annotations.Nullable;
 /**
  * @author RettichLP
  */
+@UCNameTag(name = "unicacityaddon_nopushtag", positionType = PositionType.ABOVE_NAME, priority = 20)
 public class NoPushTag extends NameTag {
 
     private final RenderableComponent ADMIN_DUTY_COMPONENT = RenderableComponent.of(Message.getBuilder()
@@ -24,7 +27,7 @@ public class NoPushTag extends NameTag {
 
     private final UnicacityAddon unicacityAddon;
 
-    private NoPushTag(UnicacityAddon unicacityAddon) {
+    public NoPushTag(UnicacityAddon unicacityAddon) {
         this.unicacityAddon = unicacityAddon;
     }
 
@@ -53,9 +56,5 @@ public class NoPushTag extends NameTag {
         } else {
             return null;
         }
-    }
-
-    public static NoPushTag create(UnicacityAddon unicacityAddon) {
-        return new NoPushTag(unicacityAddon);
     }
 }

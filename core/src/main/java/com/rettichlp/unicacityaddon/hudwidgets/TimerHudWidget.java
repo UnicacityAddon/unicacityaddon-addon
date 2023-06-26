@@ -23,8 +23,8 @@ public class TimerHudWidget extends TextHudWidget<TextHudWidgetConfig> {
 
     private final UnicacityAddon unicacityAddon;
 
-    public TimerHudWidget(String id, UnicacityAddon unicacityAddon) {
-        super(id);
+    public TimerHudWidget(UnicacityAddon unicacityAddon) {
+        super("timer");
         this.unicacityAddon = unicacityAddon;
     }
 

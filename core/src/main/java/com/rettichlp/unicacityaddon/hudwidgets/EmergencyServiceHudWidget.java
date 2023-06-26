@@ -15,8 +15,8 @@ public class EmergencyServiceHudWidget extends TextHudWidget<TextHudWidgetConfig
 
     private final UnicacityAddon unicacityAddon;
 
-    public EmergencyServiceHudWidget(String id, UnicacityAddon unicacityAddon) {
-        super(id);
+    public EmergencyServiceHudWidget(UnicacityAddon unicacityAddon) {
+        super("service");
         this.unicacityAddon = unicacityAddon;
     }
 

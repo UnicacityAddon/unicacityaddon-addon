@@ -1,14 +1,14 @@
 package com.rettichlp.unicacityaddon.commands.faction.badfaction;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.config.ownUse.cocaine.Cocaine;
 import com.rettichlp.unicacityaddon.base.config.ownUse.marijuana.Marijuana;
 import com.rettichlp.unicacityaddon.base.config.ownUse.methamphetamin.Methamphetamin;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
-import com.rettichlp.unicacityaddon.commands.UnicacityCommand;
+import com.rettichlp.unicacityaddon.base.registry.UnicacityCommand;
+import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 
 import java.util.ArrayList;
 import java.util.List;

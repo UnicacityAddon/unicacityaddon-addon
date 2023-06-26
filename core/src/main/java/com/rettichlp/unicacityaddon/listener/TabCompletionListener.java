@@ -1,7 +1,7 @@
 package com.rettichlp.unicacityaddon.listener;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
+import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import net.labymod.api.Laby;
 import net.labymod.api.client.chat.command.Command;
 import net.labymod.api.client.gui.screen.key.Key;
@@ -57,7 +57,7 @@ public class TabCompletionListener {
                 }
 
                 List<String> commandPrefixAndAliasesList = new ArrayList<>();
-                this.unicacityAddon.commands().forEach(command -> {
+                this.unicacityAddon.registry().commands().forEach(command -> {
                     commandPrefixAndAliasesList.add(command.getPrefix());
                     commandPrefixAndAliasesList.addAll(Arrays.asList(command.getAliases()));
                 });
@@ -82,7 +82,7 @@ public class TabCompletionListener {
                     lastSuggestedCommandParameterStartString = arguments[arguments.length - 1];
                 }
 
-                Command command = this.unicacityAddon.commands().stream()
+                Command command = this.unicacityAddon.registry().commands().stream()
                         .filter(c -> c.getPrefix().equalsIgnoreCase(arguments[0]) || Arrays.asList(c.getAliases()).contains(arguments[0].toLowerCase()))
                         .findFirst()
                         .orElse(null);

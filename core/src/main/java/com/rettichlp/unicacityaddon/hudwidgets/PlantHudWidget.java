@@ -20,8 +20,8 @@ public class PlantHudWidget extends TextHudWidget<TextHudWidgetConfig> {
 
     private final UnicacityAddon unicacityAddon;
 
-    public PlantHudWidget(String id, UnicacityAddon unicacityAddon) {
-        super(id);
+    public PlantHudWidget(UnicacityAddon unicacityAddon) {
+        super("plant");
         this.unicacityAddon = unicacityAddon;
     }
 

@@ -1,11 +1,13 @@
-package com.rettichlp.unicacityaddon.base.nametags;
+package com.rettichlp.unicacityaddon.nametags;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.config.UnicacityAddonConfiguration;
+import com.rettichlp.unicacityaddon.base.registry.annotation.UCNameTag;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.entity.player.Player;
+import net.labymod.api.client.entity.player.tag.PositionType;
 import net.labymod.api.client.entity.player.tag.tags.NameTag;
 import net.labymod.api.client.render.font.RenderableComponent;
 import net.labymod.api.util.math.vector.FloatVector3;
@@ -16,6 +18,7 @@ import java.util.Optional;
 /**
  * @author RettichLP
  */
+@UCNameTag(name = "unicacityaddon_housebantag", positionType = PositionType.BELOW_NAME)
 public class HouseBanTag extends NameTag {
 
     private final FloatVector3 HOSPITAL = new FloatVector3(265, 69, 215);
@@ -23,7 +26,7 @@ public class HouseBanTag extends NameTag {
 
     private final UnicacityAddon unicacityAddon;
 
-    private HouseBanTag(UnicacityAddon unicacityAddon) {
+    public HouseBanTag(UnicacityAddon unicacityAddon) {
         this.unicacityAddon = unicacityAddon;
     }
 
@@ -55,9 +58,5 @@ public class HouseBanTag extends NameTag {
                 .anyMatch(houseBanEntry -> houseBanEntry.getName().equals(playerName));
 
         return hasHouseBan ? RenderableComponent.of(component) : null;
-    }
-
-    public static HouseBanTag create(UnicacityAddon unicacityAddon) {
-        return new HouseBanTag(unicacityAddon);
     }
 }

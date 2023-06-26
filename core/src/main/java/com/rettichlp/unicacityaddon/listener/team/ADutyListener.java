@@ -2,9 +2,9 @@ package com.rettichlp.unicacityaddon.listener.team;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
-import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.config.hotkey.HotkeyConfiguration;
 import com.rettichlp.unicacityaddon.base.events.HotkeyEvent;
+import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import net.labymod.api.client.gui.screen.key.Key;
 import net.labymod.api.event.Subscribe;
 

@@ -17,8 +17,8 @@ public class AmmunitionHudWidget extends TextHudWidget<TextHudWidgetConfig> {
 
     private final UnicacityAddon unicacityAddon;
 
-    public AmmunitionHudWidget(String id, UnicacityAddon unicacityAddon) {
-        super(id);
+    public AmmunitionHudWidget(UnicacityAddon unicacityAddon) {
+        super("ammunition");
         this.unicacityAddon = unicacityAddon;
     }
 

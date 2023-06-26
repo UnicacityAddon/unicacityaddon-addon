@@ -1,7 +1,7 @@
 package com.rettichlp.unicacityaddon.listener.faction;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
+import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.entity.player.ClientPlayerInteractEvent;
 import net.labymod.api.util.math.AxisAlignedBoundingBox;

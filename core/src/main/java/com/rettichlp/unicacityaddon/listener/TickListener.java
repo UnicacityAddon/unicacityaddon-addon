@@ -1,8 +1,8 @@
 package com.rettichlp.unicacityaddon.listener;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.events.UnicacityAddonTickEvent;
+import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import net.labymod.api.event.Subscribe;
 import org.spongepowered.include.com.google.common.collect.Maps;
 

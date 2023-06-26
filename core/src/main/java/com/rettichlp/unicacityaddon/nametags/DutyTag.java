@@ -1,9 +1,12 @@
-package com.rettichlp.unicacityaddon.base.nametags;
+package com.rettichlp.unicacityaddon.nametags;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.config.UnicacityAddonConfiguration;
-import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
+import com.rettichlp.unicacityaddon.base.registry.annotation.UCNameTag;
+import com.rettichlp.unicacityaddon.base.text.ColorCode;
+import com.rettichlp.unicacityaddon.base.text.Message;
 import net.labymod.api.client.component.Component;
+import net.labymod.api.client.entity.player.tag.PositionType;
 import net.labymod.api.client.entity.player.tag.tags.NameTag;
 import net.labymod.api.client.render.font.RenderableComponent;
 import org.jetbrains.annotations.Nullable;
@@ -11,18 +14,19 @@ import org.jetbrains.annotations.Nullable;
 /**
  * @author RettichLP
  */
-public class FactionInfoTag extends NameTag {
+@UCNameTag(name = "unicacityaddon_dutytag", positionType = PositionType.RIGHT_TO_NAME, priority = 20)
+public class DutyTag extends NameTag {
 
     private final UnicacityAddon unicacityAddon;
 
-    private FactionInfoTag(UnicacityAddon unicacityAddon) {
+    public DutyTag(UnicacityAddon unicacityAddon) {
         this.unicacityAddon = unicacityAddon;
     }
 
     @Override
     protected @Nullable RenderableComponent getRenderableComponent() {
         UnicacityAddonConfiguration unicacityAddonConfiguration = this.unicacityAddon.configuration();
-        boolean isEnabled = unicacityAddonConfiguration.enabled().get() && unicacityAddonConfiguration.nametag().info().get();
+        boolean isEnabled = unicacityAddonConfiguration.enabled().get() && unicacityAddonConfiguration.nametag().duty().get();
 
         return isEnabled ? this.unicacityAddon.player().getWorld().getPlayers().stream()
                 .filter(p -> p.gameUser().getUniqueId().equals(this.entity.getUniqueId()))
@@ -31,12 +35,10 @@ public class FactionInfoTag extends NameTag {
     }
 
     private RenderableComponent getComponent(String playerName) {
-        Faction faction = this.unicacityAddon.api().getPlayerFactionMap().getOrDefault(playerName, Faction.NULL);
-        String nameTagSuffix = this.unicacityAddon.services().faction().getNameTagSuffix(faction);
-        return !nameTagSuffix.isEmpty() ? RenderableComponent.of(Component.text(nameTagSuffix)) : null;
-    }
+        Component component = Message.getBuilder().space()
+                .of("●").color(ColorCode.GREEN).advance().space()
+                .createComponent();
 
-    public static FactionInfoTag create(UnicacityAddon unicacityAddon) {
-        return new FactionInfoTag(unicacityAddon);
+        return this.unicacityAddon.services().faction().checkPlayerDuty(playerName) ? RenderableComponent.of(component) : null;
     }
 }

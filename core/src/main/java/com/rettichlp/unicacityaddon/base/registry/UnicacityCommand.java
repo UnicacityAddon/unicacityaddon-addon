@@ -1,7 +1,7 @@
-package com.rettichlp.unicacityaddon.commands;
+package com.rettichlp.unicacityaddon.base.registry;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
+import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import net.labymod.api.client.chat.command.Command;
 import org.jetbrains.annotations.NotNull;
 
@@ -16,7 +16,7 @@ public abstract class UnicacityCommand extends Command {
     /**
      * Instantiates a new Command.
      */
-    protected UnicacityCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+    public UnicacityCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
         super(ucCommand.prefix(), ucCommand.aliases());
         this.unicacityAddon = unicacityAddon;
         this.ucCommand = ucCommand;

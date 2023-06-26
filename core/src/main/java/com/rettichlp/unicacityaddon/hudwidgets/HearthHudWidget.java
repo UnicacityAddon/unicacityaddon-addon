@@ -19,8 +19,8 @@ public class HearthHudWidget extends TextHudWidget<TextHudWidgetConfig> {
 
     private final UnicacityAddon unicacityAddon;
 
-    public HearthHudWidget(String id, UnicacityAddon unicacityAddon) {
-        super(id);
+    public HearthHudWidget(UnicacityAddon unicacityAddon) {
+        super("hearth");
         this.unicacityAddon = unicacityAddon;
     }
 

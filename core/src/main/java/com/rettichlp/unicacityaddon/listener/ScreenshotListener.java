@@ -1,10 +1,10 @@
 package com.rettichlp.unicacityaddon.listener;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.builder.ScreenshotBuilder;
 import com.rettichlp.unicacityaddon.base.events.BombRemovedEvent;
 import com.rettichlp.unicacityaddon.base.events.ReinforcementAcceptedEvent;
+import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import net.labymod.api.Laby;

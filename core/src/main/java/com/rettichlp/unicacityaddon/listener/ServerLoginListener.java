@@ -1,7 +1,7 @@
 package com.rettichlp.unicacityaddon.listener;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
+import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import net.labymod.api.client.network.server.ServerData;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.network.server.ServerLoginEvent;

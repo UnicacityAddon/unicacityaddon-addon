@@ -2,8 +2,8 @@ package com.rettichlp.unicacityaddon.listener.teamspeak;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
-import com.rettichlp.unicacityaddon.base.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.events.TeamSpeakClientMoveEvent;
+import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.teamspeak.models.Channel;
 import com.rettichlp.unicacityaddon.base.teamspeak.models.User;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;

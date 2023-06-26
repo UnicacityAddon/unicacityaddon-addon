@@ -21,8 +21,8 @@ public class MoneyHudWidget extends TextHudWidget<TextHudWidgetConfig> {
 
     private final UnicacityAddon unicacityAddon;
 
-    public MoneyHudWidget(String id, UnicacityAddon unicacityAddon) {
-        super(id);
+    public MoneyHudWidget(UnicacityAddon unicacityAddon) {
+        super("money");
         this.unicacityAddon = unicacityAddon;
     }
 

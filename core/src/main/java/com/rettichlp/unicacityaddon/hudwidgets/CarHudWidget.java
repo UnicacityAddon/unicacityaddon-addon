@@ -17,8 +17,8 @@ public class CarHudWidget extends TextHudWidget<TextHudWidgetConfig> {
 
     private final UnicacityAddon unicacityAddon;
 
-    public CarHudWidget(String id, UnicacityAddon unicacityAddon) {
-        super(id);
+    public CarHudWidget(UnicacityAddon unicacityAddon) {
+        super("car");
         this.unicacityAddon = unicacityAddon;
     }
 

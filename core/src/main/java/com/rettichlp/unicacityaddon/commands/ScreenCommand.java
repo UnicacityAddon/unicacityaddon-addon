@@ -2,10 +2,11 @@ package com.rettichlp.unicacityaddon.commands;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
-import com.rettichlp.unicacityaddon.base.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.builder.ScreenshotBuilder;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.enums.ScreenshotType;
+import com.rettichlp.unicacityaddon.base.registry.UnicacityCommand;
+import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 
 import java.io.File;
 import java.io.IOException;

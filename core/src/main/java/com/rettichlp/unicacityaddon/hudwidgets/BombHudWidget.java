@@ -20,8 +20,8 @@ public class BombHudWidget extends TextHudWidget<TextHudWidgetConfig> {
 
     private final UnicacityAddon unicacityAddon;
 
-    public BombHudWidget(String id, UnicacityAddon unicacityAddon) {
-        super(id);
+    public BombHudWidget(UnicacityAddon unicacityAddon) {
+        super("bomb");
         this.unicacityAddon = unicacityAddon;
     }
 
