@@ -22,7 +22,7 @@ public class UnicacityAddonTickEvent implements Event {
     }
 
     public boolean isUnicacity() {
-        return this.unicacityAddon.services().util().isUnicacity();
+        return this.unicacityAddon.utilService().isUnicacity();
     }
 
     public boolean isPhase(Phase phase) {

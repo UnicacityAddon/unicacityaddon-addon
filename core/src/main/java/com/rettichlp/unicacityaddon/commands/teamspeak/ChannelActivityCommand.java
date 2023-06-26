@@ -39,7 +39,7 @@ public class ChannelActivityCommand extends UnicacityCommand {
 
             p.sendInfoMessage("Channel-Aktivität wird erstellt.");
 
-            Channel channel = this.unicacityAddon.services().util().teamSpeak().getOwnChannel();
+            Channel channel = this.unicacityAddon.teamSpeakAPI().controller().getOwnChannel();
             List<String> playersInChannel = channel != null ? channel.getUsers().stream().map(User::getDescription).toList() : Collections.emptyList();
 
             List<String> factionPlayers = this.unicacityAddon.api().getPlayerFactionMap().entrySet().stream()
@@ -97,6 +97,6 @@ public class ChannelActivityCommand extends UnicacityCommand {
     }
 
     private Map<String, Boolean> getOnlineStateOfPlayers(List<String> factionPlayers) {
-        return factionPlayers.stream().collect(Collectors.toMap(s -> s, s -> this.unicacityAddon.services().util().teamSpeak().isOnline(s)));
+        return factionPlayers.stream().collect(Collectors.toMap(s -> s, s -> this.unicacityAddon.teamSpeakAPI().controller().isOnline(s)));
     }
 }

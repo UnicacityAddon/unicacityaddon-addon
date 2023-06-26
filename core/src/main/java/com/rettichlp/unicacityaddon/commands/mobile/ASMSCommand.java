@@ -49,7 +49,7 @@ public class ASMSCommand extends UnicacityCommand {
                     return;
                 }
 
-                String message = ASMSCommand.this.unicacityAddon.services().util().text().makeStringByArgs(arguments, " ").replace(arguments[0], "");
+                String message = ASMSCommand.this.unicacityAddon.utilService().text().makeStringByArgs(arguments, " ").replace(arguments[0], "");
                 p.sendServerMessage("/sms " + number + message);
             }
         }, 250L);

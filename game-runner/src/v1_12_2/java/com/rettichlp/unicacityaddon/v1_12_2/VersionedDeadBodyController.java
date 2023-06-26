@@ -33,7 +33,7 @@ public class VersionedDeadBodyController extends DeadBodyController {
 
             Faction faction = unicacityAddon.api().getPlayerFactionMap().getOrDefault(playerName, Faction.NULL);
             if (!faction.equals(Faction.NULL) && !name.contains("◤")) {
-                String prefix = unicacityAddon.services().nametag().getPrefix(playerName, true);
+                String prefix = unicacityAddon.nameTagService().getPrefix(playerName, true);
                 String factionInfo = faction.getNameTagSuffix();
 
                 entityItem.setCustomNameTag((name.startsWith(ColorCode.DARK_GRAY.getCode()) /* non-revivable*/ ? ColorCode.DARK_GRAY.getCode() : prefix) + "✟" + playerName + factionInfo);

@@ -18,8 +18,8 @@ public class FactionService {
 
     public boolean checkPlayerDuty(String playerName) {
         ClientPacketListener clientPacketListener = this.unicacityAddon.labyAPI().minecraft().getClientPacketListener();
-        return clientPacketListener != null && this.unicacityAddon.services().util().isUnicacity() && clientPacketListener.getNetworkPlayerInfos().stream()
-                .map(networkPlayerInfo -> this.unicacityAddon.services().util().text().legacy(networkPlayerInfo.displayName()))
+        return clientPacketListener != null && this.unicacityAddon.utilService().isUnicacity() && clientPacketListener.getNetworkPlayerInfos().stream()
+                .map(networkPlayerInfo -> this.unicacityAddon.utilService().text().legacy(networkPlayerInfo.displayName()))
                 .filter(s -> s.startsWith("§1") || s.startsWith("§9") || s.startsWith("§4") || s.startsWith("§6"))
                 .anyMatch(s -> s.contains(playerName));
     }
@@ -30,7 +30,7 @@ public class FactionService {
 
     public String getWebsiteSource(Faction faction) {
         try {
-            return this.unicacityAddon.services().web().sendRequest(faction.getWebsiteUrl());
+            return this.unicacityAddon.webService().sendRequest(faction.getWebsiteUrl());
         } catch (APIResponseException e) {
             return "";
         }

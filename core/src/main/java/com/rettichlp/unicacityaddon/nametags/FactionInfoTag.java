@@ -35,7 +35,7 @@ public class FactionInfoTag extends NameTag {
 
     private RenderableComponent getComponent(String playerName) {
         Faction faction = this.unicacityAddon.api().getPlayerFactionMap().getOrDefault(playerName, Faction.NULL);
-        String nameTagSuffix = this.unicacityAddon.services().faction().getNameTagSuffix(faction);
+        String nameTagSuffix = this.unicacityAddon.factionService().getNameTagSuffix(faction);
         return !nameTagSuffix.isEmpty() ? RenderableComponent.of(Component.text(nameTagSuffix)) : null;
     }
 }

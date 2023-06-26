@@ -22,7 +22,7 @@ public class ChatLogSendChatListener {
     public void onChatMessageSend(ChatMessageSendEvent e) {
         String msg = e.getMessage();
 
-        if (this.unicacityAddon.services().util().isUnicacity() && !msg.equalsIgnoreCase("/chatlog"))
+        if (this.unicacityAddon.utilService().isUnicacity() && !msg.equalsIgnoreCase("/chatlog"))
             ChatLogCommand.chatLogMap.put(System.currentTimeMillis(), "[SELF] " + msg);
     }
 }

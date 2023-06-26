@@ -143,7 +143,7 @@ public class DefaultAddonPlayer implements AddonPlayer {
 
     @Override
     public boolean inDuty() {
-        return this.unicacityAddon.services().faction().checkPlayerDuty(getName());
+        return this.unicacityAddon.factionService().checkPlayerDuty(getName());
     }
 
     @Override
@@ -200,7 +200,7 @@ public class DefaultAddonPlayer implements AddonPlayer {
         Weapon weapon = null;
         if (getPlayer() != null) {
             ItemStack mainHandItemStack = getPlayer().getMainHandItemStack();
-            String displayName = this.unicacityAddon.services().util().text().plain(mainHandItemStack.getDisplayName());
+            String displayName = this.unicacityAddon.utilService().text().plain(mainHandItemStack.getDisplayName());
             weapon = Weapon.getWeaponByName(displayName);
         }
         return weapon;
@@ -221,7 +221,7 @@ public class DefaultAddonPlayer implements AddonPlayer {
         Map<String, Integer> filteredPlayerMap = this.unicacityAddon.api().getPlayerFactionMap().entrySet().stream()
                 .filter(e -> e.getValue().equals(getFaction())) // name and faction from faction
                 .map(Map.Entry::getKey) // name of players from faction
-                .filter(s -> this.unicacityAddon.services().util().getOnlinePlayers().contains(s)) // is online
+                .filter(s -> this.unicacityAddon.utilService().getOnlinePlayers().contains(s)) // is online
                 .filter(this::hasPlayerLatestAddonVersion) // has supported addon version
                 .collect(Collectors.toMap(s -> s, this.unicacityAddon.api().getPlayerRankMap()::get)); // collect name and rank of players from faction
 

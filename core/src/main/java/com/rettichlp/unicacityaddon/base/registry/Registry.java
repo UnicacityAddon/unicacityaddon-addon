@@ -39,7 +39,7 @@ public class Registry {
         TagRegistry registry = this.unicacityAddon.labyAPI().tagRegistry();
 
         AtomicInteger registeredNameTagCount = new AtomicInteger();
-        Set<Class<?>> nameTagClassSet = this.unicacityAddon.services().util().getAllClassesFromPackage("com.rettichlp.unicacityaddon.nametags");
+        Set<Class<?>> nameTagClassSet = this.unicacityAddon.utilService().getAllClassesFromPackage("com.rettichlp.unicacityaddon.nametags");
         nameTagClassSet.stream()
                 .filter(nameTagClass -> nameTagClass.isAnnotationPresent(UCNameTag.class))
                 .sorted(Comparator.comparing(nameTagClass -> nameTagClass.getAnnotation(UCNameTag.class).priority()))
@@ -61,11 +61,12 @@ public class Registry {
         this.unicacityAddon.logger().info("Registered {}/{} NameTags", registeredNameTagCount, nameTagClassSet.size());
     }
 
+    @SuppressWarnings("unchecked")
     public void registerHudWidgets() {
         HudWidgetRegistry registry = this.unicacityAddon.labyAPI().hudWidgetRegistry();
 
         AtomicInteger registeredHudWidgetCount = new AtomicInteger();
-        Set<Class<?>> hudWidgetClassSet = this.unicacityAddon.services().util().getAllClassesFromPackage("com.rettichlp.unicacityaddon.hudwidgets");
+        Set<Class<?>> hudWidgetClassSet = this.unicacityAddon.utilService().getAllClassesFromPackage("com.rettichlp.unicacityaddon.hudwidgets");
         hudWidgetClassSet.forEach(hudWidgetClass -> {
             try {
                 TextHudWidget<TextHudWidgetConfig> textHudWidget = (TextHudWidget<TextHudWidgetConfig>) hudWidgetClass.getConstructor(UnicacityAddon.class).newInstance(this.unicacityAddon);
@@ -85,7 +86,7 @@ public class Registry {
 
     public void registerListeners() {
         AtomicInteger registeredListenerCount = new AtomicInteger();
-        Set<Class<?>> listenerClassSet = this.unicacityAddon.services().util().getAllClassesFromPackage("com.rettichlp.unicacityaddon.listener");
+        Set<Class<?>> listenerClassSet = this.unicacityAddon.utilService().getAllClassesFromPackage("com.rettichlp.unicacityaddon.listener");
         listenerClassSet.stream()
                 .filter(listenerClass -> listenerClass.isAnnotationPresent(UCEvent.class))
                 .forEach(listenerClass -> {
@@ -108,7 +109,7 @@ public class Registry {
     public void registerCommands() {
         AtomicInteger registeredCommandCount = new AtomicInteger();
         AtomicInteger deactivatedCommandCount = new AtomicInteger();
-        Set<Class<?>> commandClassSet = this.unicacityAddon.services().util().getAllClassesFromPackage("com.rettichlp.unicacityaddon.commands");
+        Set<Class<?>> commandClassSet = this.unicacityAddon.utilService().getAllClassesFromPackage("com.rettichlp.unicacityaddon.commands");
         commandClassSet.remove(UnicacityCommand.class);
         commandClassSet.stream()
                 .filter(commandClass -> commandClass.isAnnotationPresent(UCCommand.class))

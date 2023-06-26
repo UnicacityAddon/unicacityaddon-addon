@@ -41,7 +41,7 @@ public class OutlawTag extends NameTag {
                 .of("]").color(ColorCode.DARK_GRAY).advance()
                 .createComponent();
 
-        boolean isOutlaw = this.unicacityAddon.services().nametag().getBlacklistPlayerMap().getOrDefault(playerName, false);
+        boolean isOutlaw = this.unicacityAddon.nameTagService().getBlacklistPlayerMap().getOrDefault(playerName, false);
         return isOutlaw ? RenderableComponent.of(component) : null;
     }
 }

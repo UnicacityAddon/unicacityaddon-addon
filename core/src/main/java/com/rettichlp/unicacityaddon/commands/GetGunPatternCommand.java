@@ -33,7 +33,7 @@ public class GetGunPatternCommand extends UnicacityCommand {
         AddonPlayer p = this.unicacityAddon.player();
 
         if (arguments.length == 1) {
-            armament = this.unicacityAddon.services().file().data().getArmamentList().stream()
+            armament = this.unicacityAddon.fileService().data().getArmamentList().stream()
                     .filter(a -> a.getName().equalsIgnoreCase(arguments[0]))
                     .findFirst()
                     .orElse(null);
@@ -42,7 +42,7 @@ public class GetGunPatternCommand extends UnicacityCommand {
                 p.sendServerMessage("/getgun");
             }
         } else if (arguments.length == 2 && arguments[0].equalsIgnoreCase("remove")) {
-            boolean success = this.unicacityAddon.services().file().data().removeArmamentPattern(arguments[1]);
+            boolean success = this.unicacityAddon.fileService().data().removeArmamentPattern(arguments[1]);
             if (success) {
                 p.sendInfoMessage("Vorlage gelöscht.");
             } else {
@@ -51,7 +51,7 @@ public class GetGunPatternCommand extends UnicacityCommand {
         } else if (arguments.length == 4 && arguments[0].equalsIgnoreCase("create") && MathUtils.isInteger(arguments[3])) {
             Weapon weapon = Weapon.getWeaponByName(arguments[2]);
             if (weapon != null) {
-                this.unicacityAddon.services().file().data().addArmamentPattern(arguments[1], weapon, Integer.parseInt(arguments[3]));
+                this.unicacityAddon.fileService().data().addArmamentPattern(arguments[1], weapon, Integer.parseInt(arguments[3]));
                 p.sendInfoMessage("Vorlage hinzugefügt.");
             } else {
                 p.sendErrorMessage("Vorlage konnte nicht erstellt werden!");
@@ -66,8 +66,8 @@ public class GetGunPatternCommand extends UnicacityCommand {
     public List<String> complete(String[] arguments) {
         return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments)
                 .addAtIndex(1, "remove", "create")
-                .addAtIndex(1, this.unicacityAddon.services().file().data().getArmamentList().stream().map(Armament::getName).sorted().collect(Collectors.toList()))
-                .addAtIndex(2, this.unicacityAddon.services().file().data().getArmamentList().stream().map(Armament::getName).sorted().collect(Collectors.toList()))
+                .addAtIndex(1, this.unicacityAddon.fileService().data().getArmamentList().stream().map(Armament::getName).sorted().collect(Collectors.toList()))
+                .addAtIndex(2, this.unicacityAddon.fileService().data().getArmamentList().stream().map(Armament::getName).sorted().collect(Collectors.toList()))
                 .addAtIndex(3, Arrays.stream(Weapon.values()).map(Weapon::getName).collect(Collectors.toList()))
                 .build();
     }

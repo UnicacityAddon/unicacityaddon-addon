@@ -26,7 +26,7 @@ public class FDSFChatListener {
         AddonPlayer p = this.unicacityAddon.player();
         String msg = e.getMessage();
 
-        if (!MobileListener.hasCommunications && this.unicacityAddon.services().util().isUnicacity() && !forceSendNextMessage) {
+        if (!MobileListener.hasCommunications && this.unicacityAddon.utilService().isUnicacity() && !forceSendNextMessage) {
             if (msg.startsWith("/f ")) {
                 p.sendErrorMessage("Du hast keine Kommunikationsmittel!");
                 p.sendInfoMessage("Wenn du die Nachricht trotzdem senden möchtest, nutze /fforce [Nachricht]. Die Nachricht ist in der Zwischenablage.");

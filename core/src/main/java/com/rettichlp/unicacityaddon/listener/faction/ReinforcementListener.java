@@ -66,7 +66,7 @@ public class ReinforcementListener {
                 type = lastReinforcement.getReinforcementType().getMessage();
             }
 
-            Map.Entry<Double, NaviPoint> nearestNaviPoint = this.unicacityAddon.services().navigation().getNearestNaviPoint(posX, posY, posZ);
+            Map.Entry<Double, NaviPoint> nearestNaviPoint = this.unicacityAddon.navigationService().getNearestNaviPoint(posX, posY, posZ);
             NaviPoint navipoint = nearestNaviPoint.getValue();
 
             String navipointString;
@@ -90,7 +90,7 @@ public class ReinforcementListener {
             p.sendMessage(Message.getBuilder()
                     .of("»").color(ColorCode.GRAY).advance().space()
                     .of("Route Anzeigen").color(ColorCode.RED)
-                    .hoverEvent(HoverEvent.Action.SHOW_TEXT, this.unicacityAddon.services().util().command().locationHoverMessage(posX, posY, posZ))
+                    .hoverEvent(HoverEvent.Action.SHOW_TEXT, this.unicacityAddon.utilService().command().locationHoverMessage(posX, posY, posZ))
                     .clickEvent(ClickEvent.Action.RUN_COMMAND, "/navi " + posX + "/" + posY + "/" + posZ)
                     .advance()
                     .of(" | ").color(ColorCode.GRAY).advance()

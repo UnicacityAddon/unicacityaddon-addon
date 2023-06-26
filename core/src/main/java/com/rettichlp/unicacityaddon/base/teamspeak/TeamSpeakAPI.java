@@ -76,7 +76,7 @@ public class TeamSpeakAPI {
         this.unicacityAddon = unicacityAddon;
 
         this.authenticator = new TeamSpeakAuthenticator(unicacityAddon, this);
-        this.controller = new TeamSpeakController(this);
+        this.controller = new TeamSpeakController(unicacityAddon, this);
         this.reconnectController = new ReconnectController(this);
         this.requests = new ArrayList<>();
         this.listeners = new ArrayList<>();

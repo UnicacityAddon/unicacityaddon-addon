@@ -450,10 +450,10 @@ public class Data {
     }
 
     private void saveAndFireEvent() {
-        unicacityAddon.services().file().saveData();
+        unicacityAddon.fileService().saveData();
         if (unicacityAddon.labyAPI().addonService().isEnabled("unicacityaddon")) {
-            unicacityAddon.labyAPI().eventBus().fire(new OfflineDataChangedEvent(unicacityAddon.services().file().data()));
-            unicacityAddon.services().util().debug("Triggered OfflineDataChangedEvent");
+            unicacityAddon.labyAPI().eventBus().fire(new OfflineDataChangedEvent(unicacityAddon.fileService().data()));
+            unicacityAddon.utilService().debug("Triggered OfflineDataChangedEvent");
         }
     }
 }

@@ -2,11 +2,15 @@ package com.rettichlp.unicacityaddon;
 
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.DefaultAddonPlayer;
-import com.rettichlp.unicacityaddon.base.Services;
 import com.rettichlp.unicacityaddon.base.config.DefaultUnicacityAddonConfiguration;
 import com.rettichlp.unicacityaddon.base.io.api.API;
 import com.rettichlp.unicacityaddon.base.registry.Registry;
+import com.rettichlp.unicacityaddon.base.services.FactionService;
 import com.rettichlp.unicacityaddon.base.services.FileService;
+import com.rettichlp.unicacityaddon.base.services.NameTagService;
+import com.rettichlp.unicacityaddon.base.services.NavigationService;
+import com.rettichlp.unicacityaddon.base.services.UtilService;
+import com.rettichlp.unicacityaddon.base.services.WebService;
 import com.rettichlp.unicacityaddon.base.teamspeak.TeamSpeakAPI;
 import com.rettichlp.unicacityaddon.controller.DeadBodyController;
 import com.rettichlp.unicacityaddon.controller.GuiController;
@@ -88,18 +92,30 @@ import net.labymod.api.models.addon.annotation.AddonMain;
 public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration> {
 
     private AddonPlayer player;
-    private Services services;
     private API api;
     private TeamSpeakAPI teamSpeakAPI;
     private Registry registry;
 
+    private FactionService factionService;
+    private FileService fileService;
+    private NameTagService nameTagService;
+    private NavigationService navigationService;
+    private UtilService utilService;
+    private WebService webService;
+
     @Override
     public void load() {
         this.player = new DefaultAddonPlayer(this);
-        this.services = new Services(this);
         this.api = new API(this);
         this.teamSpeakAPI = new TeamSpeakAPI(this);
         this.registry = new Registry(this);
+
+        this.factionService = new FactionService(this);
+        this.fileService = new FileService(this);
+        this.nameTagService = new NameTagService(this);
+        this.navigationService = new NavigationService(this);
+        this.utilService = new UtilService(this);
+        this.webService = new WebService(this);
 
         this.logger().info("Loaded UnicacityAddon");
     }

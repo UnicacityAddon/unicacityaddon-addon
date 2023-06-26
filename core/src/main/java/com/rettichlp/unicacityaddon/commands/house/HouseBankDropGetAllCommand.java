@@ -35,7 +35,7 @@ public class HouseBankDropGetAllCommand extends UnicacityCommand {
                 new Timer().schedule(new TimerTask() {
                     @Override
                     public void run() {
-                        int houseBankBalance = HouseBankDropGetAllCommand.this.unicacityAddon.services().file().data().getHouseData(HouseDataListener.lastCheckedHouseNumber).getHouseBank();
+                        int houseBankBalance = HouseBankDropGetAllCommand.this.unicacityAddon.fileService().data().getHouseData(HouseDataListener.lastCheckedHouseNumber).getHouseBank();
                         if (houseBankBalance > 0) {
                             p.sendServerMessage("/hauskasse get " + houseBankBalance);
                         } else {
@@ -48,8 +48,8 @@ public class HouseBankDropGetAllCommand extends UnicacityCommand {
                 new Timer().schedule(new TimerTask() {
                     @Override
                     public void run() {
-                        int houseBankBalance = HouseBankDropGetAllCommand.this.unicacityAddon.services().file().data().getHouseData(HouseDataListener.lastCheckedHouseNumber).getHouseBank();
-                        int toTransfer = Math.min(15000 - houseBankBalance, HouseBankDropGetAllCommand.this.unicacityAddon.services().file().data().getCashBalance());
+                        int houseBankBalance = HouseBankDropGetAllCommand.this.unicacityAddon.fileService().data().getHouseData(HouseDataListener.lastCheckedHouseNumber).getHouseBank();
+                        int toTransfer = Math.min(15000 - houseBankBalance, HouseBankDropGetAllCommand.this.unicacityAddon.fileService().data().getCashBalance());
                         if (toTransfer > 0) {
                             p.sendServerMessage("/hauskasse drop " + toTransfer);
                         } else {

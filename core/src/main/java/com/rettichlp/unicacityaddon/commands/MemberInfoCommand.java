@@ -42,7 +42,7 @@ public class MemberInfoCommand extends UnicacityCommand {
     public List<String> complete(String[] arguments) {
         return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments)
                 .addAtIndex(1, Arrays.stream(Faction.values()).map(Faction::getFactionKey).sorted().collect(Collectors.toList()))
-                .addAtIndex(1, this.unicacityAddon.services().util().getOnlinePlayers())
+                .addAtIndex(1, this.unicacityAddon.utilService().getOnlinePlayers())
                 .build();
     }
 }

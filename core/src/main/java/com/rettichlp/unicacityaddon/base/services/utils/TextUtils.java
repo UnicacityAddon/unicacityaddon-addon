@@ -10,6 +10,7 @@ import net.labymod.api.client.component.format.TextDecoration;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
 
 /**
  * @author RettichLP
@@ -160,5 +161,28 @@ public class TextUtils {
             stringBuilder.append(o).append(space);
         }
         return stringBuilder.substring(0, stringBuilder.length() - space.length());
+    }
+
+    public <T> T getMostMatching(Iterable<T> list, String input, Function<T, String> toStringFunction) {
+        input = input.toLowerCase();
+
+        int delta = Integer.MAX_VALUE;
+        T found = null;
+        for (T t : list) {
+            String string = toStringFunction.apply(t).toLowerCase();
+            if (!string.startsWith(input))
+                continue;
+
+            int curDelta = Math.abs(string.length() - input.length());
+            if (curDelta < delta) {
+                found = t;
+                delta = curDelta;
+            }
+
+            if (curDelta == 0)
+                break;
+        }
+
+        return found;
     }
 }

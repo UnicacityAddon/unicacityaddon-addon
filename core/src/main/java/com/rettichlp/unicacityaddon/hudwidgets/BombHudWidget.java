@@ -28,8 +28,8 @@ public class BombHudWidget extends TextHudWidget<TextHudWidgetConfig> {
     @Override
     public void load(TextHudWidgetConfig config) {
         super.load(config);
-        this.textLine = super.createLine("Bombe", this.unicacityAddon.services().util().text().parseTimer(0));
-        this.setIcon(this.unicacityAddon.services().util().icon());
+        this.textLine = super.createLine("Bombe", this.unicacityAddon.utilService().text().parseTimer(0));
+        this.setIcon(this.unicacityAddon.utilService().icon());
     }
 
     @Override
@@ -50,7 +50,7 @@ public class BombHudWidget extends TextHudWidget<TextHudWidgetConfig> {
     @Subscribe
     public void onUnicacityAddonTick(UnicacityAddonTickEvent e) {
         if (e.isPhase(UnicacityAddonTickEvent.Phase.SECOND) && this.time != null) {
-            textLine.updateAndFlush((this.time >= 780 ? ColorCode.RED.getCode() : "") + this.unicacityAddon.services().util().text().parseTimer(this.time));
+            textLine.updateAndFlush((this.time >= 780 ? ColorCode.RED.getCode() : "") + this.unicacityAddon.utilService().text().parseTimer(this.time));
             this.time = this.time >= 1200 ? null : this.time + 1;
         }
     }

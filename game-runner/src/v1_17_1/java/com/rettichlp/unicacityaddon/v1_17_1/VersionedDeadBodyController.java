@@ -80,7 +80,7 @@ public class VersionedDeadBodyController extends DeadBodyController {
             }
 
             // use player name and revivable status
-            String prefix = unicacityAddon.services().nametag().getPrefix(playerName, true);
+            String prefix = unicacityAddon.nameTagService().getPrefix(playerName, true);
             String factionInfo = unicacityAddon.api().getPlayerFactionMap().getOrDefault(playerName, Faction.NULL).getNameTagSuffix();
 
             String ndn = Message.getBuilder()

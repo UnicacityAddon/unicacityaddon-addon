@@ -5,7 +5,6 @@ import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.services.utils.CommandUtils;
 import com.rettichlp.unicacityaddon.base.services.utils.ImageUploadUtils;
 import com.rettichlp.unicacityaddon.base.services.utils.ListUtils;
-import com.rettichlp.unicacityaddon.base.services.utils.TeamSpeakUtils;
 import com.rettichlp.unicacityaddon.base.services.utils.TextUtils;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
@@ -38,7 +37,6 @@ public class UtilService {
     private final CommandUtils command;
     private final ImageUploadUtils imageUpload;
     private final ListUtils list;
-    private final TeamSpeakUtils teamSpeak;
     private final TextUtils text;
 
     private final UnicacityAddon unicacityAddon;
@@ -48,7 +46,6 @@ public class UtilService {
         this.command = new CommandUtils(unicacityAddon);
         this.imageUpload = new ImageUploadUtils();
         this.list = new ListUtils();
-        this.teamSpeak = new TeamSpeakUtils(unicacityAddon);
         this.text = new TextUtils();
     }
 

@@ -36,7 +36,7 @@ public class ScreenshotListener {
             File file = null;
 
             try {
-                file = this.unicacityAddon.services().file().getNewImageFile();
+                file = this.unicacityAddon.fileService().getNewImageFile();
                 ScreenshotBuilder.getBuilder(this.unicacityAddon).file(file).save();
             } catch (IOException ex) {
                 this.unicacityAddon.logger().warn(ex.getMessage());
@@ -48,23 +48,23 @@ public class ScreenshotListener {
                 Laby.references().notificationController().push(Notification.builder()
                         .title(Message.getBuilder().of("Screenshot").color(ColorCode.AQUA).bold().advance().createComponent())
                         .text(Message.getBuilder().of("Der Screenshot wird hochgeladen...").color(ColorCode.WHITE).advance().createComponent())
-                        .icon(this.unicacityAddon.services().util().icon())
+                        .icon(this.unicacityAddon.utilService().icon())
                         .build());
 
-                String link = this.unicacityAddon.services().util().imageUpload().uploadToLink(finalFile);
+                String link = this.unicacityAddon.utilService().imageUpload().uploadToLink(finalFile);
 
                 if (link != null) {
                     this.unicacityAddon.player().copyToClipboard(link);
                     Laby.references().notificationController().push(Notification.builder()
                             .title(Message.getBuilder().of("Hochgeladen!").color(ColorCode.AQUA).bold().advance().createComponent())
                             .text(Message.getBuilder().of("Der Link wurde in die Zwischenablage kopiert.").color(ColorCode.WHITE).advance().createComponent())
-                            .icon(this.unicacityAddon.services().util().icon())
+                            .icon(this.unicacityAddon.utilService().icon())
                             .build());
                 } else {
                     Laby.references().notificationController().push(Notification.builder()
                             .title(Message.getBuilder().of("Fehler!").color(ColorCode.RED).bold().advance().createComponent())
                             .text(Message.getBuilder().of("Screenshot konnte nicht hochgeladen werden.").color(ColorCode.WHITE).advance().createComponent())
-                            .icon(this.unicacityAddon.services().util().icon())
+                            .icon(this.unicacityAddon.utilService().icon())
                             .build());
                 }
             });
@@ -79,7 +79,7 @@ public class ScreenshotListener {
             // wait until on-the-way message was sent (important for valid activity)
             runDelayed(() -> {
                 try {
-                    File file = this.unicacityAddon.services().file().getNewActivityImageFile("reinforcement");
+                    File file = this.unicacityAddon.fileService().getNewActivityImageFile("reinforcement");
                     ScreenshotBuilder.getBuilder(this.unicacityAddon).file(file).save();
                 } catch (IOException ex) {
                     this.unicacityAddon.logger().warn(ex.getMessage());
@@ -97,7 +97,7 @@ public class ScreenshotListener {
             // wait until bomb-removed message was sent (important for valid activity)
             runDelayed(() -> {
                 try {
-                    File file = this.unicacityAddon.services().file().getNewActivityImageFile("großeinsatz");
+                    File file = this.unicacityAddon.fileService().getNewActivityImageFile("großeinsatz");
                     ScreenshotBuilder.getBuilder(this.unicacityAddon).file(file).save();
                 } catch (IOException ex) {
                     this.unicacityAddon.logger().warn(ex.getMessage());

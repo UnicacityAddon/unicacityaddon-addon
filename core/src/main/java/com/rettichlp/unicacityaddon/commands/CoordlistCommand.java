@@ -35,13 +35,13 @@ public class CoordlistCommand extends UnicacityCommand {
         if (arguments.length == 0) {
             listCoords(p);
         } else if (arguments.length > 1 && arguments[0].equalsIgnoreCase("add")) {
-            String name = this.unicacityAddon.services().util().text().makeStringByArgs(arguments, "-").replace("add-", "");
+            String name = this.unicacityAddon.utilService().text().makeStringByArgs(arguments, "-").replace("add-", "");
             FloatVector3 location = p.getLocation();
-            this.unicacityAddon.services().file().data().addCoordToCoordlist(name, location != null ? location : new FloatVector3(0, 0, 0));
+            this.unicacityAddon.fileService().data().addCoordToCoordlist(name, location != null ? location : new FloatVector3(0, 0, 0));
             p.sendInfoMessage("Koordinaten gespeichert.");
         } else if (arguments.length > 1 && arguments[0].equalsIgnoreCase("remove")) {
-            String name = this.unicacityAddon.services().util().text().makeStringByArgs(arguments, "-").replace("remove-", "");
-            if (this.unicacityAddon.services().file().data().removeCoordFromCoordlist(name)) {
+            String name = this.unicacityAddon.utilService().text().makeStringByArgs(arguments, "-").replace("remove-", "");
+            if (this.unicacityAddon.fileService().data().removeCoordFromCoordlist(name)) {
                 p.sendInfoMessage("Koordinaten gelöscht.");
             }
         } else {
@@ -55,7 +55,7 @@ public class CoordlistCommand extends UnicacityCommand {
         return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments)
                 .addAtIndex(1, "add")
                 .addAtIndex(1, "remove")
-                .addAtIndex(2, this.unicacityAddon.services().file().data().getCoordlist().stream().map(CoordlistEntry::getName).collect(Collectors.toList()))
+                .addAtIndex(2, this.unicacityAddon.fileService().data().getCoordlist().stream().map(CoordlistEntry::getName).collect(Collectors.toList()))
                 .build();
     }
 
@@ -65,7 +65,7 @@ public class CoordlistCommand extends UnicacityCommand {
                 .of("Koordinaten:").color(ColorCode.DARK_AQUA).bold().advance()
                 .createComponent());
 
-        this.unicacityAddon.services().file().data().getCoordlist().forEach(coordlistEntry -> p.sendMessage(Message.getBuilder()
+        this.unicacityAddon.fileService().data().getCoordlist().forEach(coordlistEntry -> p.sendMessage(Message.getBuilder()
                 .of("»").color(ColorCode.GRAY).advance().space()
                 .of(coordlistEntry.getName().replace("-", " ")).color(ColorCode.AQUA).advance().space()
                 .of("-").color(ColorCode.GRAY).advance().space()

@@ -74,13 +74,13 @@ public class EventRegistrationListener {
         UnicacityAddonConfiguration configuration = this.unicacityAddon.configuration();
         if (state.equals(KeyEvent.State.PRESS)) {
             if (key.equals(Key.TAB) && !Laby.references().chatAccessor().isChatOpen() && configuration.tablist().get()) {
-                this.unicacityAddon.services().util().debug("Sorting tab list");
+                this.unicacityAddon.utilService().debug("Sorting tab list");
                 this.unicacityAddon.tabListController().orderTabList(this.unicacityAddon);
                 return;
             }
 
             HotkeyConfiguration hotkeyConfiguration = configuration.hotkey();
-            if (!Laby.references().chatAccessor().isChatOpen() && this.unicacityAddon.services().util().isUnicacity() && hotkeyConfiguration.enabled().get()) {
+            if (!Laby.references().chatAccessor().isChatOpen() && this.unicacityAddon.utilService().isUnicacity() && hotkeyConfiguration.enabled().get()) {
                 this.unicacityAddon.labyAPI().eventBus().fire(new HotkeyEvent(this.unicacityAddon, key));
             }
         }

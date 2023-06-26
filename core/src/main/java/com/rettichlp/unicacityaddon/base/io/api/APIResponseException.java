@@ -36,7 +36,7 @@ public class APIResponseException extends Throwable {
         this.unicacityAddon.labyAPI().notificationController().push(Notification.builder()
                 .title(Message.getBuilder().of("API Fehler - " + responseCode).color(ColorCode.RED).bold().advance().createComponent())
                 .text(Message.getBuilder().of(infoMessage).advance().createComponent())
-                .icon(this.unicacityAddon.services().util().icon())
+                .icon(this.unicacityAddon.utilService().icon())
                 .type(Notification.Type.ADVANCEMENT)
                 .build());
     }

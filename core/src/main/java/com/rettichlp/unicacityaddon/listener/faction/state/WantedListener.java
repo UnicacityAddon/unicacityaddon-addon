@@ -39,9 +39,9 @@ public class WantedListener {
             String name = wantedsGivenReasonMatcher.group(1);
             String reason = wantedsGivenReasonMatcher.group(2);
 
-            Map<String, Wanted> wantedPlayerMap = this.unicacityAddon.services().nametag().getWantedPlayerMap();
+            Map<String, Wanted> wantedPlayerMap = this.unicacityAddon.nameTagService().getWantedPlayerMap();
             wantedPlayerMap.put(name, new Wanted(reason, 0));
-            this.unicacityAddon.services().nametag().setWantedPlayerMap(wantedPlayerMap);
+            this.unicacityAddon.nameTagService().setWantedPlayerMap(wantedPlayerMap);
 
             return;
         }
@@ -51,7 +51,7 @@ public class WantedListener {
             String name = wantedsGivenPointsMatcher.group(1);
             int wantedPoints = Integer.parseInt(wantedsGivenPointsMatcher.group(2));
 
-            Wanted wanted = this.unicacityAddon.services().nametag().getWantedPlayerMap().get(name);
+            Wanted wanted = this.unicacityAddon.nameTagService().getWantedPlayerMap().get(name);
             if (wanted == null)
                 return;
 
@@ -70,9 +70,9 @@ public class WantedListener {
                 break;
             }
 
-            Map<String, Wanted> wantedPlayerMap = this.unicacityAddon.services().nametag().getWantedPlayerMap();
+            Map<String, Wanted> wantedPlayerMap = this.unicacityAddon.nameTagService().getWantedPlayerMap();
             wantedPlayerMap.remove(name);
-            this.unicacityAddon.services().nametag().setWantedPlayerMap(wantedPlayerMap);
+            this.unicacityAddon.nameTagService().setWantedPlayerMap(wantedPlayerMap);
 
             return;
         }
@@ -84,7 +84,7 @@ public class WantedListener {
             int wpAmount = Integer.parseInt(wantedListEntryMatcher.group(2));
             boolean isAfk = wantedListEntryMatcher.group(4).contains("AFK");
 
-            ColorCode colorCode = this.unicacityAddon.services().nametag().getWpColor(wpAmount);
+            ColorCode colorCode = this.unicacityAddon.nameTagService().getWpColor(wpAmount);
 
             e.setMessage(Message.getBuilder().space().space()
                     .of("»").color(ColorCode.DARK_GRAY).advance().space()
@@ -98,15 +98,15 @@ public class WantedListener {
                     .of(isAfk ? "AFK" : "").color(ColorCode.GRAY).advance()
                     .createComponent());
 
-            Map<String, Wanted> wantedPlayerMap = this.unicacityAddon.services().nametag().getWantedPlayerMap();
+            Map<String, Wanted> wantedPlayerMap = this.unicacityAddon.nameTagService().getWantedPlayerMap();
             wantedPlayerMap.put(playerName, new Wanted(wpReason, wpAmount));
-            this.unicacityAddon.services().nametag().setWantedPlayerMap(wantedPlayerMap);
+            this.unicacityAddon.nameTagService().setWantedPlayerMap(wantedPlayerMap);
 
             return;
         }
 
         if (msg.equals("Online Spieler mit WantedPunkten:")) {
-            this.unicacityAddon.services().nametag().setWantedPlayerMap(new HashMap<>());
+            this.unicacityAddon.nameTagService().setWantedPlayerMap(new HashMap<>());
             wantedsShown = System.currentTimeMillis();
         }
     }

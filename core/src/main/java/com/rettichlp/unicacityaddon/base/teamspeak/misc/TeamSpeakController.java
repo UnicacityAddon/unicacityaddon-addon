@@ -16,15 +16,22 @@
 
 package com.rettichlp.unicacityaddon.base.teamspeak.misc;
 
+import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.teamspeak.TeamSpeakAPI;
 import com.rettichlp.unicacityaddon.base.teamspeak.models.Channel;
 import com.rettichlp.unicacityaddon.base.teamspeak.models.Server;
 import com.rettichlp.unicacityaddon.base.teamspeak.models.User;
 import com.rettichlp.unicacityaddon.base.teamspeak.util.ArgumentParser;
 import com.rettichlp.unicacityaddon.base.teamspeak.util.Request;
+import lombok.Getter;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -39,16 +46,17 @@ import java.util.concurrent.ExecutionException;
 public class TeamSpeakController {
 
     private final TeamSpeakAPI teamSpeakAPI;
+    @Getter
     private final List<Server> servers;
+    @Getter
     private Server server;
 
-    public TeamSpeakController(TeamSpeakAPI teamSpeakAPI) {
+    private final UnicacityAddon unicacityAddon;
+
+    public TeamSpeakController(UnicacityAddon unicacityAddon, TeamSpeakAPI teamSpeakAPI) {
+        this.unicacityAddon = unicacityAddon;
         this.teamSpeakAPI = teamSpeakAPI;
         this.servers = new ArrayList<>();
-    }
-
-    public Server getServer() {
-        return this.server;
     }
 
     public void setServer(Server server) {
@@ -63,10 +71,6 @@ public class TeamSpeakController {
 
         this.server = server;
         this.teamSpeakAPI.clientNotifyRegister(server.getId());
-    }
-
-    public List<Server> getServers() {
-        return this.servers;
     }
 
     public Server getServer(int id) {
@@ -102,10 +106,6 @@ public class TeamSpeakController {
                     this.refreshCurrentServer0(schandlerId);
                 }
         ));
-    }
-
-    private <T> T get(String[] arguments, String identifier, Class<T> clazz) {
-        return ArgumentParser.parse(arguments, identifier, clazz);
     }
 
     public void refreshCurrentServer0(int schandlerId) {
@@ -179,6 +179,10 @@ public class TeamSpeakController {
         }));
     }
 
+    private <T> T get(String[] arguments, String identifier, Class<T> clazz) {
+        return ArgumentParser.parse(arguments, identifier, clazz);
+    }
+
     public boolean move(int cid) {
         return move(teamSpeakAPI.getClientId(), cid);
     }
@@ -207,5 +211,77 @@ public class TeamSpeakController {
                 }));
 
         return future;
+    }
+
+    public boolean isOnline(String description) {
+        return this.unicacityAddon.teamSpeakAPI().getServer().getChannels().stream()
+                .flatMap(channel -> channel.getUsers().stream())
+                .map(User::getDescription)
+                .filter(Objects::nonNull)
+                .anyMatch(s -> s.toLowerCase().contains(description.toLowerCase()));
+    }
+
+    @Nullable
+    public User getUserByDescription(String description) {
+        for (Channel channel : this.unicacityAddon.teamSpeakAPI().getServer().getChannels()) {
+            for (User user : channel.getUsers()) {
+                if (user != null && user.getDescription() != null) {
+                    if (user.getDescription().toLowerCase().contains(description.toLowerCase())) {
+                        return user;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    @Nullable
+    public Channel getOwnChannel() {
+        return getChannelByClientId(this.unicacityAddon.teamSpeakAPI().getClientId());
+    }
+
+    @Nullable
+    public Channel getChannelByUser(User user) {
+        return this.unicacityAddon.teamSpeakAPI().getServer().getChannels().stream()
+                .filter(channel -> channel.getUsers().contains(user))
+                .findAny()
+                .orElse(null);
+    }
+
+    @Nullable
+    public Channel getChannelByClientId(int clid) {
+        return this.unicacityAddon.teamSpeakAPI().getServer().getChannels().stream()
+                .filter(channel -> channel.getUsers().stream()
+                        .map(User::getId)
+                        .map(integer -> integer == clid)
+                        .toList()
+                        .contains(true))
+                .findAny()
+                .orElse(null);
+    }
+
+    @Nullable
+    public Channel getChannelByName(String name) {
+        Map<String, Channel> stringChannelMap = new HashMap<>();
+
+        for (Channel channel : this.unicacityAddon.teamSpeakAPI().getServer().getChannels()) {
+            String channelName = channel.getName();
+            if (channelName.startsWith("[cspacer"))
+                continue;
+            if (channelName.startsWith("[spacer"))
+                continue;
+
+            stringChannelMap.put(channelName.replace("»", "").trim().replace(" ", "-"), channel);
+        }
+
+        Faction faction = this.unicacityAddon.player().getFaction();
+        Channel channel;
+        if (name.equalsIgnoreCase("Öffentlich") && !faction.equals(Faction.NULL)) {
+            channel = this.unicacityAddon.teamSpeakAPI().getServer().getChannel(faction.getPublicChannelId());
+        } else {
+            channel = this.unicacityAddon.utilService().text().getMostMatching(stringChannelMap.values(), name, (chn) -> chn.getName().replace("»", "").trim().replace(" ", "-"));
+        }
+
+        return channel;
     }
 }

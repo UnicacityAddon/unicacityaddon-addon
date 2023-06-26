@@ -48,7 +48,7 @@ public class BroadcastListener {
                     timer.schedule(new TimerTask() {
                         @Override
                         public void run() {
-                            if (!BroadcastListener.this.unicacityAddon.services().util().isUnicacity()) {
+                            if (!BroadcastListener.this.unicacityAddon.utilService().isUnicacity()) {
                                 p.sendEmptyMessage();
                                 p.sendEmptyMessage();
 

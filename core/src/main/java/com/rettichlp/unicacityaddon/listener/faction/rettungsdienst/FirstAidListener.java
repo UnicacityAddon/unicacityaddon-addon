@@ -30,12 +30,12 @@ public class FirstAidListener {
         String msg = e.chatMessage().getPlainText();
 
         if (PatternHandler.FIRST_AID_RECEIVE_PATTERN.matcher(msg).find()) {
-            this.unicacityAddon.services().file().data().setFirstAidDate(System.currentTimeMillis());
+            this.unicacityAddon.fileService().data().setFirstAidDate(System.currentTimeMillis());
             return;
         }
 
         if (PatternHandler.FIRST_AID_LICENCE_PATTERN.matcher(msg).find()) {
-            long expirationTime = this.unicacityAddon.services().file().data().getFirstAidDate() + TimeUnit.DAYS.toMillis(14); // Erhaltsdatum + 14 Tage = Auslaufdatum
+            long expirationTime = this.unicacityAddon.fileService().data().getFirstAidDate() + TimeUnit.DAYS.toMillis(14); // Erhaltsdatum + 14 Tage = Auslaufdatum
             long timeLeft = expirationTime - System.currentTimeMillis(); // Auslaufdatum - aktuelle Datum = Dauer des Scheins
             e.setMessage(Message.getBuilder()
                     .space().space()
@@ -43,7 +43,7 @@ public class FirstAidListener {
                     .of("Erste-Hilfe-Schein").color(ColorCode.BLUE).advance()
                     .of(":").color(ColorCode.DARK_GRAY).advance().space()
                     .of("Vorhanden").color(ColorCode.AQUA)
-                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of(this.unicacityAddon.services().util().text().parseTimerWithTimeUnit(timeLeft)).color(ColorCode.RED).advance().createComponent())
+                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of(this.unicacityAddon.utilService().text().parseTimerWithTimeUnit(timeLeft)).color(ColorCode.RED).advance().createComponent())
                             .advance()
                     .createComponent());
             return;

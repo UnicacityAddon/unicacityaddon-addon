@@ -48,7 +48,7 @@ public class NoPushTag extends NameTag {
     }
 
     private RenderableComponent getComponent(String playerName) {
-        NameTagService nameTagService = this.unicacityAddon.services().nametag();
+        NameTagService nameTagService = this.unicacityAddon.nameTagService();
         if (nameTagService.isAdminDuty(playerName)) {
             return ADMIN_DUTY_COMPONENT;
         } else if (nameTagService.getNoPushPlayerList().contains(playerName)) {

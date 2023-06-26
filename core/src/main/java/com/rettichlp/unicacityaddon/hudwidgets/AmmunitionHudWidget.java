@@ -26,7 +26,7 @@ public class AmmunitionHudWidget extends TextHudWidget<TextHudWidgetConfig> {
     public void load(TextHudWidgetConfig config) {
         super.load(config);
         this.textLine = super.createLine("Munition", ColorCode.RED.getCode() + "0" + ColorCode.DARK_GRAY.getCode() + "/" + ColorCode.GOLD.getCode() + "0");
-        this.setIcon(this.unicacityAddon.services().util().icon());
+        this.setIcon(this.unicacityAddon.utilService().icon());
     }
 
     @Override

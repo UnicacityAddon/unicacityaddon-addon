@@ -31,7 +31,7 @@ public class FForceCommand extends UnicacityCommand {
             return true;
         }
 
-        String message = this.unicacityAddon.services().util().text().makeStringByArgs(arguments, " ");
+        String message = this.unicacityAddon.utilService().text().makeStringByArgs(arguments, " ");
         FDSFChatListener.forceSendNextMessage = true;
         p.sendServerMessage("/f " + message);
         return true;

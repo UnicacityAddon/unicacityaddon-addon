@@ -34,8 +34,8 @@ public class MoveHereCommand extends UnicacityCommand {
 
         String playerName = arguments[0];
 
-        User user = this.unicacityAddon.services().util().teamSpeak().getUserByDescription(playerName);
-        Channel channel = this.unicacityAddon.services().util().teamSpeak().getOwnChannel();
+        User user = this.unicacityAddon.teamSpeakAPI().controller().getUserByDescription(playerName);
+        Channel channel = this.unicacityAddon.teamSpeakAPI().controller().getOwnChannel();
 
         if (user != null && channel != null) {
             boolean success = this.unicacityAddon.teamSpeakAPI().controller().move(user.getId(), channel.getId());

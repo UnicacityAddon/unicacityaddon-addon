@@ -46,6 +46,6 @@ public class ScreenRenderListener {
     @Subscribe
     public void onItemStackTooltip(ItemStackTooltipEvent e) {
         ItemStack itemStack = e.itemStack();
-        lastHoveredSlotNumber = this.unicacityAddon.guiController().getSlotNumberByDisplayName(this.unicacityAddon.services().util().text().plain(itemStack.getDisplayName()));
+        lastHoveredSlotNumber = this.unicacityAddon.guiController().getSlotNumberByDisplayName(this.unicacityAddon.utilService().text().plain(itemStack.getDisplayName()));
     }
 }

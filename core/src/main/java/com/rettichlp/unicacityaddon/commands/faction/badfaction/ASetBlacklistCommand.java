@@ -48,7 +48,7 @@ public class ASetBlacklistCommand extends UnicacityCommand {
     @Override
     public List<String> complete(String[] arguments) {
         return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments)
-                .addToAllFromIndex(2, this.unicacityAddon.services().util().getOnlinePlayers())
+                .addToAllFromIndex(2, this.unicacityAddon.utilService().getOnlinePlayers())
                 .addToAllFromIndex(2, this.unicacityAddon.api().getBlacklistReasonList().stream().map(BlacklistReason::getReason).sorted().collect(Collectors.toList()))
                 .build();
     }
