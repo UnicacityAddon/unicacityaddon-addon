@@ -43,6 +43,45 @@ import java.util.Map;
 import java.util.function.Predicate;
 
 /**
+ * <h3>Session token</h3>
+ * An important function of the addon is to collect statistics and make data available to all players. In order to offer
+ * a high level of user-friendliness, an update should not have to be created due to small changes. That's why I use an
+ * API through which I make some data available. I use a private server for this. This provides data for:
+ * <ul>
+ *     <li>addon groups <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/player">API</a></li>
+ *     <li>banners <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/banner">API</a></li>
+ *     <li>blacklist reasons <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/blacklistreason/LEMILIEU">API</a> (unauthorized)</li>
+ *     <li>blackmarket locations <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/blackmarket">API</a></li>
+ *     <li>broadcasts <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/broadcast/queue">API</a></li>
+ *     <li>events <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/event">API</a></li>
+ *     <li>house bans <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/houseban?advanced=false">API</a> (unauthorized for <code>advanced=true</code>)</li>
+ *     <li>house ban reasons <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/housebanreason">API</a></li>
+ *     <li>users <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/mgmt/users">API</a></li>
+ *     <li>navi points <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/navipoint">API</a></li>
+ *     <li>revives <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/revive">API</a> (unauthorized)</li>
+ *     <li>statistics <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/statistic/RettichLP">API</a></li>
+ *     <li>wanted reasons <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/wantedreason">API</a></li>
+ *     <li>yasin <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/yasin">API</a></li>
+ * </ul>
+ * This data can change constantly and can therefore not be entered statically in the code.
+ * <p>
+ * Why i need the session token for this? For example, the number of revives should only be seen by medics, as well as
+ * the name of the person who entered a house ban (advanced house ban view). For editing any data, a certain faction and
+ * rank in this faction is required.
+ * <p>
+ * I can read the faction and rank from the Unicacity website
+ * (<a href="https://unicacity.de/fraktionen">https://unicacity.de/fraktionen</a>). But in order to be able to assign
+ * the faction information to a player, I need his UUID. I could pass these as parameters in the api call, but you could
+ * mess that up by calling the endpoint with a different UUID that isn't your own. I needed a way to pass the UUID so
+ * that it cannot (so easily) be falsified. For this I use the session token, because I can use it to read the UUID via
+ * the Mojang API and nobody else knows the session token.
+ * <p>
+ * A more detailed overview of how the authorization works can be found
+ * <a href="https://wiki.unicacityaddon.rettichlp.de/api/function/autorisierung/">here</a> and an overview of all data I
+ * store can be found <a href="https://wiki.unicacityaddon.rettichlp.de/api/function/daten-und-speicherung/">here</a>.
+ * The session token is never saved ore logged. Only my specially generated token is saved in a database. If necessary I
+ * can give access to the server code and give an insight into all stored data.
+ *
  * @author RettichLP
  */
 @Getter
