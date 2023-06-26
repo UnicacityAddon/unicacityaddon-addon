@@ -1,8 +1,7 @@
 name: Release
 
 on:
-  pull_request:
-    types: [ "closed" ]
+  push:
     branches: [ "main" ]
   workflow_dispatch:
 
@@ -13,7 +12,6 @@ env:
 jobs:
   labyaddon:
 
-    if: ${{ github.event.pull_request.merged }}
     runs-on: ubuntu-latest
 
     steps:
@@ -39,7 +37,6 @@ jobs:
 
   wiki:
 
-    if: ${{ github.event.pull_request.merged }}
     runs-on: ubuntu-latest
 
     steps:
