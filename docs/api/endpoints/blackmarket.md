@@ -10,6 +10,6 @@ Zeigt die Schwarzmarkt-Positionen.
 
 **GET** `/unicacityaddon/v1/{tokenString}/blackmarket`
 
-| Parameter       | Beschreibung |
-|-----------------|--------------|
-| `tokenString`   | Addon-Token  |
+| Parameter     | Beschreibung |
+|---------------|--------------|
+| `tokenString` | Addon-Token  |
