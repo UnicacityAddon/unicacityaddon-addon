@@ -1,7 +1,8 @@
 # UnicacityAddon
 
-![Build](https://github.com/rettichlp/unicacityaddon-addon/actions/workflows/build.yml/badge.svg)
-![Release](https://github.com/rettichlp/unicacityaddon-addon/actions/workflows/release.yml/badge.svg)
+![Build](https://github.com/UnicacityAddon/unicacityaddon-addon/actions/workflows/build.yml/badge.svg)
+![Build](https://github.com/UnicacityAddon/unicacityaddon-addon/actions/workflows/wiki.yml/badge.svg)
+![Release](https://github.com/UnicacityAddon/unicacityaddon-addon/actions/workflows/release.yml/badge.svg)
 [![Discord](https://discord.com/api/guilds/1008928645185810463/widget.png)](https://discord.gg/A9u5eY7CbS)
 
 * [Basic Overview](#basic-overview)
