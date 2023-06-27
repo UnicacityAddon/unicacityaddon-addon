@@ -52,63 +52,64 @@ public class CarListener {
 
         Matcher carPositionMatcher = PatternHandler.CAR_POSITION_PATTERN.matcher(msg);
         if (carPositionMatcher.find() && this.unicacityAddon.configuration().carRoute().get()) {
-            p.setNaviRoute(Integer.parseInt(carPositionMatcher.group(1)), Integer.parseInt(carPositionMatcher.group(2)), Integer.parseInt(carPositionMatcher.group(3)));
+            int x = Integer.parseInt(carPositionMatcher.group(1));
+            int y = Integer.parseInt(carPositionMatcher.group(2));
+            int z = Integer.parseInt(carPositionMatcher.group(3));
 
-            Map.Entry<Double, NaviPoint> nearestNaviPoint = this.unicacityAddon.navigationService().getNearestNaviPoint(Integer.parseInt(carPositionMatcher.group(1)), Integer.parseInt(carPositionMatcher.group(2)), Integer.parseInt(carPositionMatcher.group(3)));
+            // set route
+            p.setNaviRoute(x, y, z);
+
+            // modify message
+            Map.Entry<Double, NaviPoint> nearestNaviPoint = this.unicacityAddon.navigationService().getNearestNaviPoint(x, y, z);
             NaviPoint navipoint = nearestNaviPoint.getValue();
-            String navipointString;
-            if (navipoint == null) {
-                navipointString = "unbekannter Ort";
-                p.sendErrorMessage("Navipunkte wurden nicht geladen. Versuche /syncdata um diese neu zu laden!");
-            } else {
-                navipointString = navipoint.getName().replace("-", " ");
-            }
+
             e.setMessage(Message.getBuilder()
                     .of("[").color(ColorCode.DARK_GRAY).advance()
                     .of("Car").color(ColorCode.GOLD).advance()
                     .of("]").color(ColorCode.DARK_GRAY).advance().space()
                     .of("Das Fahrzeug befindet sich in der Nähe von").color(ColorCode.GRAY).advance().space()
-                    .of(navipointString).color(ColorCode.AQUA)
-                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of(carPositionMatcher.group(1) + "/" + carPositionMatcher.group(2) + "/" + carPositionMatcher.group(3)).color(ColorCode.GOLD).advance().createComponent())
+                    .of(navipoint != null ? navipoint.getDisplayName() : "unbekannter Ort").color(ColorCode.AQUA)
+                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, this.unicacityAddon.utilService().command().locationHoverMessage(x, y, z))
                             .advance()
                     .of(".").color(ColorCode.GRAY).advance()
                     .createComponent());
 
+            return;
+        }
 
-            Matcher carTicketMatcher = PatternHandler.CAR_TICKET_PATTERN.matcher(msg);
-            if (carTicketMatcher.find()) {
-                int fine = Integer.parseInt(carTicketMatcher.group(2));
+        Matcher carTicketMatcher = PatternHandler.CAR_TICKET_PATTERN.matcher(msg);
+        if (carTicketMatcher.find()) {
+            int fine = Integer.parseInt(carTicketMatcher.group(2));
 
-                if (this.unicacityAddon.fileService().data().getCashBalance() >= fine) {
-                    e.setMessage(Message.getBuilder()
-                            .of("[").color(ColorCode.DARK_GRAY).advance()
-                            .of("Car").color(ColorCode.GOLD).advance()
-                            .of("]").color(ColorCode.DARK_GRAY).advance().space()
-                            .of("Dein Fahrzeug hat ein Strafzettel").color(ColorCode.GRAY).advance().space()
-                            .of("[").color(ColorCode.DARK_GRAY).advance()
-                            .of(carTicketMatcher.group(1)).color(ColorCode.GOLD).advance().space()
-                            .of("|").color(ColorCode.GRAY).advance().space()
-                            .of(String.valueOf(fine)).color(ColorCode.GOLD).advance()
-                            .of("]").color(ColorCode.DARK_GRAY).advance().space()
-                            .of("[").color(ColorCode.DARK_GRAY).advance()
-                            .of("Bezahlen").color(ColorCode.GREEN)
-                                    .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of(fine + "$ bezahlen").color(ColorCode.RED).advance().createComponent())
-                                    .clickEvent(ClickEvent.Action.RUN_COMMAND, "/payticket " + fine)
-                                    .advance()
-                            .of("]").color(ColorCode.DARK_GRAY).advance()
-                            .createComponent());
-                }
-
-                return;
+            if (this.unicacityAddon.fileService().data().getCashBalance() >= fine) {
+                e.setMessage(Message.getBuilder()
+                        .of("[").color(ColorCode.DARK_GRAY).advance()
+                        .of("Car").color(ColorCode.GOLD).advance()
+                        .of("]").color(ColorCode.DARK_GRAY).advance().space()
+                        .of("Dein Fahrzeug hat ein Strafzettel").color(ColorCode.GRAY).advance().space()
+                        .of("[").color(ColorCode.DARK_GRAY).advance()
+                        .of(carTicketMatcher.group(1)).color(ColorCode.GOLD).advance().space()
+                        .of("|").color(ColorCode.GRAY).advance().space()
+                        .of(String.valueOf(fine)).color(ColorCode.GOLD).advance()
+                        .of("]").color(ColorCode.DARK_GRAY).advance().space()
+                        .of("[").color(ColorCode.DARK_GRAY).advance()
+                        .of("Bezahlen").color(ColorCode.GREEN)
+                        .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of(fine + "$ bezahlen").color(ColorCode.RED).advance().createComponent())
+                        .clickEvent(ClickEvent.Action.RUN_COMMAND, "/payticket " + fine)
+                        .advance()
+                        .of("]").color(ColorCode.DARK_GRAY).advance()
+                        .createComponent());
             }
 
-            Matcher checkKFZMatcher = PatternHandler.CAR_CHECK_KFZ_PATTERN.matcher(msg);
-            if (checkKFZMatcher.find()) {
-                String name = checkKFZMatcher.group(1);
-                if (name == null)
-                    name = checkKFZMatcher.group(2);
-                p.sendServerMessage("/memberinfo " + name);
-            }
+            return;
+        }
+
+        Matcher checkKFZMatcher = PatternHandler.CAR_CHECK_KFZ_PATTERN.matcher(msg);
+        if (checkKFZMatcher.find()) {
+            String name = checkKFZMatcher.group(1);
+            if (name == null)
+                name = checkKFZMatcher.group(2);
+            p.sendServerMessage("/memberinfo " + name);
         }
     }
 
