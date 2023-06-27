@@ -94,9 +94,9 @@ public class CarListener {
                         .of("]").color(ColorCode.DARK_GRAY).advance().space()
                         .of("[").color(ColorCode.DARK_GRAY).advance()
                         .of("Bezahlen").color(ColorCode.GREEN)
-                        .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of(fine + "$ bezahlen").color(ColorCode.RED).advance().createComponent())
-                        .clickEvent(ClickEvent.Action.RUN_COMMAND, "/payticket " + fine)
-                        .advance()
+                                .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of(fine + "$ bezahlen").color(ColorCode.RED).advance().createComponent())
+                                .clickEvent(ClickEvent.Action.RUN_COMMAND, "/payticket " + fine)
+                                .advance()
                         .of("]").color(ColorCode.DARK_GRAY).advance()
                         .createComponent());
             }
