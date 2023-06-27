@@ -54,7 +54,7 @@ public class ShareLocationListener {
             navipointString = "unbekannter Ort";
             p.sendErrorMessage("Navipunkte wurden nicht geladen. Versuche /sync um diese neu zu laden!");
         } else {
-            navipointString = doubleNaviPointEntry.getValue().getName().replace("-", " ");
+            navipointString = doubleNaviPointEntry.getValue().getDisplayName();
         }
 
         FloatVector3 location = this.unicacityAddon.player().getLocation();
