@@ -485,7 +485,7 @@ public class API {
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.ROLEPLAY)
                 .subPath(UPDATE_SUB_PATH)
-                .parameter(Map.of("set", roleplayName))
+                .parameter(Map.of("name", roleplayName))
                 .getAsJsonObjectAndParse(Success.class);
     }
 

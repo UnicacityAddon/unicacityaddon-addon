@@ -34,7 +34,7 @@ public class RoleplayNameCommand extends UnicacityCommand {
                 String info = this.unicacityAddon.api().sendRoleplayNameSetRequest(roleplayName).getInfo();
                 p.sendAPIMessage(info, true);
             } else {
-                p.sendErrorMessage("Der Name muss zwischen (einschließlich) 3 und 30 Zeichen lang sein und darf nur aus Buchstaben, \"-\" und \"'\" bestehen.");
+                p.sendErrorMessage("Der Name muss zwischen (einschließlich) 3 und 30 Zeichen lang sein und darf nur aus Buchstaben, Bindestrichen und Apostrophen bestehen.");
             }
 
         }).start();
