@@ -485,6 +485,10 @@
       "debug": {
         "name": "Debug",
         "description": "Displays debug messages"
+      },
+      "local": {
+        "name": "Local API connection",
+        "description": "Connects the addon to a local API instance (localhost)"
       }
     }
   }
