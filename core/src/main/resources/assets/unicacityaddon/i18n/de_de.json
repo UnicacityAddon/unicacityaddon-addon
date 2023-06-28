@@ -489,6 +489,10 @@
       "debug": {
         "name": "Debug",
         "description": "Zeigt Debug Nachrichten an"
+      },
+      "local": {
+        "name": "Lokale API Verbindung",
+        "description": "Verbindet das Addon mit einer lokalen API Instanz (localhost)"
       }
     }
   }

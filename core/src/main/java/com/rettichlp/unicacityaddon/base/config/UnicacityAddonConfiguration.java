@@ -71,4 +71,6 @@ public interface UnicacityAddonConfiguration {
     // debug
 
     ConfigProperty<Boolean> debug();
+
+    ConfigProperty<Boolean> local();
 }
