@@ -480,13 +480,13 @@ public class API {
                 .getAsJsonArrayAndParse(RoleplayName.class);
     }
 
-    public List<RoleplayName> sendRoleplayNameSetRequest(String roleplayName) {
+    public Success sendRoleplayNameSetRequest(String roleplayName) {
         return RequestBuilder.getBuilder(this.unicacityAddon)
                 .nonProd(NON_PROD)
                 .applicationPath(ApplicationPath.ROLEPLAY)
                 .subPath(UPDATE_SUB_PATH)
                 .parameter(Map.of("set", roleplayName))
-                .getAsJsonArrayAndParse(RoleplayName.class);
+                .getAsJsonObjectAndParse(Success.class);
     }
 
     public Statistic sendStatisticRequest() {
