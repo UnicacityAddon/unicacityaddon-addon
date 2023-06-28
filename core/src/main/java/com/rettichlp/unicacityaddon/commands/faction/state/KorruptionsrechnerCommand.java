@@ -34,48 +34,48 @@ public class KorruptionsrechnerCommand extends UnicacityCommand {
         }
 
         String target = arguments[0];
+        this.unicacityAddon.nameTagService().getWantedList().stream()
+                .filter(w -> w.getName().equals(target))
+                .findFirst()
+                .ifPresentOrElse(wanted -> {
+                    int money = wanted.getAmount() * 150;
+                    int drugs = money / 40;
+                    int methDrugs0 = money / 110;
+                    int methDrugs1 = money / 100;
+                    int methDrugs2 = money / 50;
 
-        WantedListener.Wanted wanted = this.unicacityAddon.nameTagService().getWantedPlayerMap().get(target);
-        if (wanted == null) {
-            p.sendErrorMessage("Du hast /wanteds noch nicht ausgeführt!");
-            return true;
-        }
+                    p.sendMessage(Message.getBuilder()
+                            .of("Korruptionspreise für").color(ColorCode.DARK_AQUA).advance().space()
+                            .of(target).color(ColorCode.DARK_AQUA).advance()
+                            .of(":").color(ColorCode.DARK_GRAY).advance().space()
+                            .createComponent());
 
-        int money = wanted.getAmount() * 150;
-        int drugs = money / 40;
-        int methDrugs0 = money / 110;
-        int methDrugs1 = money / 100;
-        int methDrugs2 = money / 50;
+                    p.sendMessage(Message.getBuilder()
+                            .of("»").color(ColorCode.GRAY).advance().space()
+                            .of("Geld").color(ColorCode.DARK_AQUA).advance()
+                            .of(":").color(ColorCode.DARK_GRAY).advance().space()
+                            .of(money + "$").color(ColorCode.AQUA).advance()
+                            .createComponent());
 
-        p.sendMessage(Message.getBuilder()
-                .of("Korruptionspreise für").color(ColorCode.DARK_AQUA).advance().space()
-                .of(target).color(ColorCode.DARK_AQUA).advance()
-                .of(":").color(ColorCode.DARK_GRAY).advance().space()
-                .createComponent());
+                    p.sendMessage(Message.getBuilder()
+                            .of("»").color(ColorCode.GRAY).advance().space()
+                            .of("Drogen").color(ColorCode.DARK_AQUA).advance()
+                            .of(":").color(ColorCode.DARK_GRAY).advance().space()
+                            .of(drugs + "g").color(ColorCode.AQUA).advance()
+                            .createComponent());
 
-        p.sendMessage(Message.getBuilder()
-                .of("»").color(ColorCode.GRAY).advance().space()
-                .of("Geld").color(ColorCode.DARK_AQUA).advance()
-                .of(":").color(ColorCode.DARK_GRAY).advance().space()
-                .of(money + "$").color(ColorCode.AQUA).advance()
-                .createComponent());
+                    p.sendMessage(Message.getBuilder()
+                            .of("»").color(ColorCode.GRAY).advance().space()
+                            .of("Kristalle").color(ColorCode.DARK_AQUA).advance()
+                            .of(":").color(ColorCode.DARK_GRAY).advance().space()
+                            .of(methDrugs0 + "g").color(ColorCode.AQUA).advance().space()
+                            .of("|").color(ColorCode.DARK_GRAY).advance().space()
+                            .of(methDrugs1 + "g").color(ColorCode.AQUA).advance().space()
+                            .of("|").color(ColorCode.DARK_GRAY).advance().space()
+                            .of(methDrugs2 + "g").color(ColorCode.AQUA).advance()
+                            .createComponent());
+                }, () -> p.sendErrorMessage("Du hast /wanteds noch nicht ausgeführt!"));
 
-        p.sendMessage(Message.getBuilder()
-                .of("»").color(ColorCode.GRAY).advance().space()
-                .of("Drogen").color(ColorCode.DARK_AQUA).advance()
-                .of(":").color(ColorCode.DARK_GRAY).advance().space()
-                .of(drugs + "g").color(ColorCode.AQUA).advance()
-                .createComponent());
-        p.sendMessage(Message.getBuilder()
-                .of("»").color(ColorCode.GRAY).advance().space()
-                .of("Kristalle").color(ColorCode.DARK_AQUA).advance()
-                .of(":").color(ColorCode.DARK_GRAY).advance().space()
-                .of(methDrugs0 + "g").color(ColorCode.AQUA).advance().space()
-                .of("|").color(ColorCode.DARK_GRAY).advance().space()
-                .of(methDrugs1 + "g").color(ColorCode.AQUA).advance().space()
-                .of("|").color(ColorCode.DARK_GRAY).advance().space()
-                .of(methDrugs2 + "g").color(ColorCode.AQUA).advance()
-                .createComponent());
         return true;
     }
 
