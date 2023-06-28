@@ -474,14 +474,14 @@ public class API {
 
     public List<RoleplayName> sendRoleplayNameRequest() {
         return RequestBuilder.getBuilder(this.unicacityAddon)
-                .nonProd(NON_PROD)
+                .nonProd(this.unicacityAddon.configuration().local().get())
                 .applicationPath(ApplicationPath.ROLEPLAY)
                 .getAsJsonArrayAndParse(RoleplayName.class);
     }
 
     public Success sendRoleplayNameSetRequest(String roleplayName) {
         return RequestBuilder.getBuilder(this.unicacityAddon)
-                .nonProd(NON_PROD)
+                .nonProd(this.unicacityAddon.configuration().local().get())
                 .applicationPath(ApplicationPath.ROLEPLAY)
                 .subPath(UPDATE_SUB_PATH)
                 .parameter(Map.of("name", roleplayName))
