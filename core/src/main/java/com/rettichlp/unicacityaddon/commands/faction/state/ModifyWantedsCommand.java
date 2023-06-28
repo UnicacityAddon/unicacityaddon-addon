@@ -6,7 +6,6 @@ import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.enums.faction.ModifyWantedType;
 import com.rettichlp.unicacityaddon.base.registry.UnicacityCommand;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
-import com.rettichlp.unicacityaddon.listener.faction.state.WantedListener;
 
 import java.util.Arrays;
 import java.util.List;
@@ -34,53 +33,52 @@ public class ModifyWantedsCommand extends UnicacityCommand {
             return true;
 
         String target = arguments[0];
+        this.unicacityAddon.nameTagService().getWantedList().stream()
+                .filter(wanted -> wanted.getName().equals(target))
+                .findFirst()
+                .ifPresentOrElse(wanted -> {
+                    String wantedReason = wanted.getReason();
+                    int wantedAmount = wanted.getAmount();
 
-        WantedListener.Wanted wanted = this.unicacityAddon.nameTagService().getWantedPlayerMap().get(target);
-        if (wanted == null) {
-            p.sendErrorMessage("Du hast /wanteds noch nicht ausgeführt!");
-            return true;
-        }
+                    for (String argument : arguments) {
+                        ModifyWantedType type = ModifyWantedType.getModifyWantedType(argument);
 
-        String wantedReason = wanted.getReason();
-        int wantedAmount = wanted.getAmount();
+                        if (type == null || wantedReason.contains(type.getReason()))
+                            continue;
 
-        for (String argument : arguments) {
-            ModifyWantedType type = ModifyWantedType.getModifyWantedType(argument);
+                        if (argument.equals(ModifyWantedType.VERY_BAD_CONDUCT.getFlagArgument())) {
+                            if (wantedReason.contains(ModifyWantedType.BAD_CONDUCT.getReason())) {
+                                wantedReason = wantedReason.replace(ModifyWantedType.BAD_CONDUCT.getReason(), "");
+                                wantedAmount -= 10;
+                            }
+                        }
 
-            if (type == null || wantedReason.contains(type.getReason()))
-                continue;
+                        if (argument.equals(ModifyWantedType.BAD_CONDUCT.getFlagArgument())) {
+                            if (wantedReason.contains(ModifyWantedType.VERY_BAD_CONDUCT.getReason())) {
+                                wantedReason = wantedReason.replace(ModifyWantedType.VERY_BAD_CONDUCT.getReason(), "");
+                                wantedAmount -= 15;
+                            }
+                        }
 
-            if (argument.equals(ModifyWantedType.VERY_BAD_CONDUCT.getFlagArgument())) {
-                if (wantedReason.contains(ModifyWantedType.BAD_CONDUCT.getReason())) {
-                    wantedReason = wantedReason.replace(ModifyWantedType.BAD_CONDUCT.getReason(), "");
-                    wantedAmount -= 10;
-                }
-            }
+                        wantedReason = type.modifyReason(wantedReason);
+                        wantedAmount = type.modifyWanteds(wantedAmount);
+                    }
 
-            if (argument.equals(ModifyWantedType.BAD_CONDUCT.getFlagArgument())) {
-                if (wantedReason.contains(ModifyWantedType.VERY_BAD_CONDUCT.getReason())) {
-                    wantedReason = wantedReason.replace(ModifyWantedType.VERY_BAD_CONDUCT.getReason(), "");
-                    wantedAmount -= 15;
-                }
-            }
+                    if (wanted.getAmount() > wantedAmount) {
+                        p.sendServerMessage("/clear " + target);
+                    }
 
-            wantedReason = type.modifyReason(wantedReason);
-            wantedAmount = type.modifyWanteds(wantedAmount);
-        }
+                    if (wantedAmount > 69) {
+                        wantedAmount = 69;
+                    }
 
-        if (wanted.getAmount() > wantedAmount) {
-            p.sendServerMessage("/clear " + target);
-        }
+                    if (wantedAmount == wanted.getAmount() && wantedReason.equals(wanted.getReason())) {
+                        p.sendErrorMessage("Der Spieler besitzt bereits diese Modifikatoren.");
+                    }
 
-        if (wantedAmount > 69)
-            wantedAmount = 69;
+                    p.sendServerMessage("/su " + wantedAmount + " " + target + " " + wantedReason);
+                }, () -> p.sendErrorMessage("Du hast /wanteds noch nicht ausgeführt!"));
 
-        if (wantedAmount == wanted.getAmount() && wantedReason.equals(wanted.getReason())) {
-            p.sendErrorMessage("Der Spieler besitzt bereits diese Modifikatoren.");
-            return true;
-        }
-
-        p.sendServerMessage("/su " + wantedAmount + " " + target + " " + wantedReason);
         return true;
     }
 

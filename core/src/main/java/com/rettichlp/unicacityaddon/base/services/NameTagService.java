@@ -14,6 +14,7 @@ import lombok.Getter;
 import lombok.Setter;
 import net.labymod.api.client.network.ClientPacketListener;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -27,7 +28,7 @@ import java.util.Map;
 public class NameTagService {
 
     private Map<String, Boolean> blacklistPlayerMap;
-    private Map<String, WantedListener.Wanted> wantedPlayerMap;
+    private Collection<WantedListener.Wanted> wantedList;
     private Collection<String> noPushPlayerList;
     private Collection<String> maskedPlayerList;
 
@@ -36,7 +37,7 @@ public class NameTagService {
     public NameTagService(UnicacityAddon unicacityAddon) {
         this.unicacityAddon = unicacityAddon;
         this.blacklistPlayerMap = new HashMap<>();
-        this.wantedPlayerMap = new HashMap<>();
+        this.wantedList = new ArrayList<>();
         this.noPushPlayerList = Collections.emptyList();
         this.maskedPlayerList = Collections.emptyList();
     }
@@ -78,10 +79,10 @@ public class NameTagService {
 
         Specific specific = nameTagConfiguration.specific();
         if (specific.enabled().get()) {
-            WantedListener.Wanted wanted = this.wantedPlayerMap.get(playerName);
-            if (wanted != null) {
-                prefix.append(this.getWpColor(wanted.getAmount()).getCode());
-            }
+            this.wantedList.stream()
+                    .filter(wanted -> wanted.getName().equals(playerName))
+                    .findFirst()
+                    .ifPresent(wanted -> prefix.append(this.getWpColor(wanted.getAmount()).getCode()));
 
             if (this.blacklistPlayerMap.get(playerName) != null)
                 prefix.append(specific.color().getOrDefault(ColorCode.DARK_RED).getCode());
