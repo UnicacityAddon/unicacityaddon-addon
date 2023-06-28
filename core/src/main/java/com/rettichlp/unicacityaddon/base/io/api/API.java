@@ -6,6 +6,7 @@ import com.rettichlp.unicacityaddon.api.BlacklistReason;
 import com.rettichlp.unicacityaddon.api.Broadcast;
 import com.rettichlp.unicacityaddon.api.NaviPoint;
 import com.rettichlp.unicacityaddon.api.Revive;
+import com.rettichlp.unicacityaddon.api.RoleplayName;
 import com.rettichlp.unicacityaddon.api.WantedReason;
 import com.rettichlp.unicacityaddon.api.Yasin;
 import com.rettichlp.unicacityaddon.api.houseBan.HouseBan;
@@ -59,6 +60,7 @@ import java.util.function.Predicate;
  *     <li>users <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/mgmt/users">API</a></li>
  *     <li>navi points <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/navipoint">API</a></li>
  *     <li>revives <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/revive">API</a> (unauthorized)</li>
+ *     <li>roleplay <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/roleplay">API</a></li>
  *     <li>statistics <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/statistic/RettichLP">API</a></li>
  *     <li>wanted reasons <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/wantedreason">API</a></li>
  *     <li>yasin <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/yasin">API</a></li>
@@ -98,6 +100,7 @@ public class API {
     private final String USERS_SUB_PATH = "users";
     private final String BOMB_SUB_PATH = "bomb";
     private final String GANGWAR_SUB_PATH = "gangwar";
+    private final String UPDATE_SUB_PATH = "update";
 
     private final Map<String, Faction> playerFactionMap = new HashMap<>();
     private final Map<String, Integer> playerRankMap = new HashMap<>();
@@ -114,6 +117,8 @@ public class API {
     private List<ManagementUser> managementUserList = new ArrayList<>();
     @Setter
     private List<NaviPoint> naviPointList = new ArrayList<>();
+    @Setter
+    private List<RoleplayName> roleplayNameList = new ArrayList<>();
     @Setter
     private List<WantedReason> wantedReasonList = new ArrayList<>();
 
@@ -144,6 +149,7 @@ public class API {
                 this.houseBanReasonList = this.sendHouseBanReasonRequest();
                 this.managementUserList = this.sendManagementUserRequest();
                 this.naviPointList = this.sendNaviPointRequest();
+                this.roleplayNameList = this.sendRoleplayNameRequest();
                 this.wantedReasonList = this.sendWantedReasonRequest();
 
                 this.unicacityAddon.labyAPI().notificationController().pop(syncNotification(Type.STARTED));
@@ -465,6 +471,22 @@ public class API {
                 .applicationPath(ApplicationPath.REVIVE)
                 .subPath(minecraftName)
                 .getAsJsonObjectAndParse(Revive.class);
+    }
+
+    public List<RoleplayName> sendRoleplayNameRequest() {
+        return RequestBuilder.getBuilder(this.unicacityAddon)
+                .nonProd(NON_PROD)
+                .applicationPath(ApplicationPath.ROLEPLAY)
+                .getAsJsonArrayAndParse(RoleplayName.class);
+    }
+
+    public List<RoleplayName> sendRoleplayNameSetRequest(String roleplayName) {
+        return RequestBuilder.getBuilder(this.unicacityAddon)
+                .nonProd(NON_PROD)
+                .applicationPath(ApplicationPath.ROLEPLAY)
+                .subPath(UPDATE_SUB_PATH)
+                .parameter(Map.of("set", roleplayName))
+                .getAsJsonArrayAndParse(RoleplayName.class);
     }
 
     public Statistic sendStatisticRequest() {

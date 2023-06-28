@@ -21,6 +21,7 @@ public enum ApplicationPath {
     NAVIPOINT("/navipoint"),
     PLAYER("/player"),
     REVIVE("/revive"),
+    ROLEPLAY("/roleplay"),
     STATISTIC("/statistic"),
     TOKEN(""),
     WANTEDREASON("/wantedreason"),
