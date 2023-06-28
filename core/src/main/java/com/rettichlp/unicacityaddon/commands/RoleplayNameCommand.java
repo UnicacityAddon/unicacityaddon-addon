@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 /**
- * @author Dimiikou
+ * @author RettichLP
  */
 @UCCommand(prefix = "roleplayname", aliases = {"rpname"}, onlyOnUnicacity = false)
 public class RoleplayNameCommand extends UnicacityCommand {
@@ -34,7 +34,7 @@ public class RoleplayNameCommand extends UnicacityCommand {
                 String info = this.unicacityAddon.api().sendRoleplayNameSetRequest(roleplayName).getInfo();
                 p.sendAPIMessage(info, true);
             } else {
-                p.sendErrorMessage("Der Name muss zwischen (einschließlich) 3 und 30 Zeichen lang sein und darf nur aus Buchstaben, Bindestrichen und Apostrophen bestehen.");
+                p.sendErrorMessage("Der Name muss zwischen (einschließlich) 3 und 30 Zeichen lang sein und darf nur aus Buchstaben, Bindestrichen und Apostrophen bestehen!");
             }
 
         }).start();
