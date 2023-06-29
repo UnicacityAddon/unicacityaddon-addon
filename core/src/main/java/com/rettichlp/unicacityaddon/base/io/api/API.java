@@ -8,6 +8,7 @@ import com.rettichlp.unicacityaddon.api.NaviPoint;
 import com.rettichlp.unicacityaddon.api.Revive;
 import com.rettichlp.unicacityaddon.api.WantedReason;
 import com.rettichlp.unicacityaddon.api.Yasin;
+import com.rettichlp.unicacityaddon.api.event.Event;
 import com.rettichlp.unicacityaddon.api.houseBan.HouseBan;
 import com.rettichlp.unicacityaddon.api.houseBan.HouseBanReason;
 import com.rettichlp.unicacityaddon.api.management.Management;
@@ -283,6 +284,13 @@ public class API {
                         "message", message,
                         "sendTime", sendTime))
                 .getAsJsonObjectAndParse(Success.class);
+    }
+
+    public Event sendEventRequest() {
+        return RequestBuilder.getBuilder(this.unicacityAddon)
+                .nonProd(this.unicacityAddon.configuration().local().get())
+                .applicationPath(ApplicationPath.EVENT)
+                .getAsJsonObjectAndParse(Event.class);
     }
 
     public void sendEventBombRequest(long startTime) {
