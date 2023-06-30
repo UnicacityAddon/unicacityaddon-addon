@@ -9,6 +9,7 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
+import net.labymod.api.client.chat.ChatMessage;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.gui.screen.key.Key;
 import net.labymod.api.event.Subscribe;
@@ -43,14 +44,17 @@ public class ReportListener {
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {
         AddonPlayer p = this.unicacityAddon.player();
-        String unformattedMsg = e.chatMessage().getPlainText();
+        ChatMessage chatMessage = e.chatMessage();
+        String msg = chatMessage.getPlainText();
         MessageConfiguration messageConfiguration = this.unicacityAddon.configuration().message();
 
-        if (PatternHandler.REPORT_ACCEPTED_PATTERN.matcher(unformattedMsg).find()) {
+        if (PatternHandler.REPORT_ACCEPTED_PATTERN.matcher(msg).find()) {
             isReport = true;
 
-            if (messageConfiguration.greeting().getOrDefault("").isEmpty())
+            if (messageConfiguration.greeting().getOrDefault("").isEmpty()) {
                 return;
+            }
+
             t.schedule(new TimerTask() {
                 @Override
                 public void run() {
@@ -60,19 +64,20 @@ public class ReportListener {
                     }
                 }
             }, 1000);
+
             return;
         }
 
-        if (PatternHandler.REPORT_END_PATTERN.matcher(unformattedMsg).find()) {
+        if (PatternHandler.REPORT_END_PATTERN.matcher(msg).find()) {
             isReport = false;
             return;
         }
 
-        if (unformattedMsg.startsWith(ColorCode.DARK_PURPLE.getCode()) && isReport) {
+        if (chatMessage.getFormattedText().startsWith(ColorCode.DARK_PURPLE.getCode()) && isReport) {
             Message.Builder messageBuilder = Message.getBuilder()
                     .add(messageConfiguration.prefix().getOrDefault("").replaceAll("&", "§"));
 
-            Arrays.stream(unformattedMsg.split(" ")).forEach(s -> {
+            Arrays.stream(msg.split(" ")).forEach(s -> {
                 if (urlPattern.matcher(s).find())
                     messageBuilder
                             .of(s).color(ColorCode.BLUE)
@@ -89,7 +94,7 @@ public class ReportListener {
             e.setMessage(messageBuilder.createComponent());
         }
 
-        if (PatternHandler.REPORT_PATTERN.matcher(unformattedMsg).find()) {
+        if (PatternHandler.REPORT_PATTERN.matcher(msg).find()) {
             this.unicacityAddon.soundController().playReportSound();
         }
     }
