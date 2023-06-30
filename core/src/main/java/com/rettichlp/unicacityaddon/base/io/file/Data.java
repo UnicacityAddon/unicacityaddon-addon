@@ -334,6 +334,8 @@ public class Data {
         newEquipMap.put(equip, newEquipMap.getOrDefault(equip, 0) + 1);
         equipMap = newEquipMap;
         saveAndFireEvent();
+
+        //this.unicacityAddon.api().sendBlacklistReasonAddRequest(itemName, price(aus config)).getInfo()
     }
 
     /**

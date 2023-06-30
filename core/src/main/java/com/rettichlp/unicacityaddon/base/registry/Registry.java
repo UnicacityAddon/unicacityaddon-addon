@@ -36,6 +36,11 @@ import com.rettichlp.unicacityaddon.commands.api.TokenCommand;
 import com.rettichlp.unicacityaddon.commands.api.TopListCommand;
 import com.rettichlp.unicacityaddon.commands.api.WantedReasonCommand;
 import com.rettichlp.unicacityaddon.commands.api.YasinCommand;
+import com.rettichlp.unicacityaddon.commands.api.activity.DrugActivityCommand;
+import com.rettichlp.unicacityaddon.commands.api.activity.MoneyActivityCommand;
+import com.rettichlp.unicacityaddon.commands.api.activity.PayEquipCommand;
+import com.rettichlp.unicacityaddon.commands.api.activity.ResetPasswortCommand;
+import com.rettichlp.unicacityaddon.commands.api.activity.RoleplayActivityCommand;
 import com.rettichlp.unicacityaddon.commands.faction.AFbankEinzahlenCommand;
 import com.rettichlp.unicacityaddon.commands.faction.CheckActiveMembersCommand;
 import com.rettichlp.unicacityaddon.commands.faction.DropDrugAllCommand;
@@ -284,6 +289,7 @@ public class Registry {
             CoordlistCommand.class,
             CountdownCommand.class,
             DBankDropAllCommand.class,
+            DrugActivityCommand.class,
             DiscordCommand.class,
             DutyCommand.class,
             DyavolCommand.class,
@@ -317,6 +323,7 @@ public class Registry {
             MemberInfoAllCommand.class,
             MemberInfoCommand.class,
             MobileListener.class,
+            MoneyActivityCommand.class,
             MoneyHudWidget.class,
             MoneyListener.class,
             MoveCommand.class,
@@ -328,6 +335,7 @@ public class Registry {
             NearestJobCommand.class,
             NameTagRenderListener.class,
             PayDayHudWidget.class,
+            PayEquipCommand.class,
             PlayerGroupCommand.class,
             PlantHudWidget.class,
             PlantListener.class,
@@ -335,10 +343,12 @@ public class Registry {
             ReinforcementCommand.class,
             ReinforcementListener.class,
             ReichensteuerCommand.class,
+            ResetPasswortCommand.class,
             ReportListener.class,
             ReplyCommand.class,
             ReviveListener.class,
             ReviveStatsCommand.class,
+            RoleplayActivityCommand.class,
             ScreenCommand.class,
             ScreenRenderListener.class,
             ScreenshotListener.class,

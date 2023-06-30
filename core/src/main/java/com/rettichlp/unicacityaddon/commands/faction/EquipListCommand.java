@@ -69,4 +69,27 @@ public class EquipListCommand extends UnicacityCommand {
 
         p.sendEmptyMessage();
     }
+
+    private void equipListLeMilieu(AddonPlayer p) {
+        NumberFormat numberFormat = NumberFormat.getNumberInstance(new Locale("da", "DK"));
+        p.sendEmptyMessage();
+        p.sendMessage(Message.getBuilder()
+                .of("Equip:").color(ColorCode.DARK_AQUA).bold().advance()
+                .createComponent());
+        this.unicacityAddon.fileService().data().getEquipMap().forEach((equip, integer) -> p.sendMessage(Message.getBuilder()
+                .of("» " + integer + "x " + equip.getEquipName() + ": ").color(ColorCode.GRAY).advance()
+                .of(numberFormat.format(equip.getPrice(this.unicacityAddon.configuration())) + "$").color(ColorCode.AQUA).advance()
+                .createComponent()));
+
+        int totalAmount = this.unicacityAddon.fileService().data().getEquipMap().entrySet().stream()
+                .map(equipIntegerEntry -> equipIntegerEntry.getKey().getPrice(this.unicacityAddon.configuration()) * equipIntegerEntry.getValue())
+                .reduce(0, Integer::sum);
+
+        p.sendMessage(Message.getBuilder()
+                .of("» ").color(ColorCode.GRAY).advance()
+                .of(numberFormat.format(totalAmount) + "$").color(ColorCode.AQUA).bold().advance()
+                .createComponent());
+
+        p.sendEmptyMessage();
+    }
 }
