@@ -23,6 +23,8 @@ public class DefaultMessageConfiguration extends Config implements MessageConfig
 
     @SwitchSetting
     private final ConfigProperty<Boolean> contract = new ConfigProperty<>(true);
+    @SwitchSetting
+    private final ConfigProperty<Boolean> filteredContractlist = new ConfigProperty<>(true);
 
     @SettingSection("report")
     @TextFieldSetting
@@ -52,6 +54,11 @@ public class DefaultMessageConfiguration extends Config implements MessageConfig
     @Override
     public ConfigProperty<Boolean> contract() {
         return this.contract;
+    }
+
+    @Override
+    public ConfigProperty<Boolean> filteredContractlist() {
+        return this.filteredContractlist;
     }
 
     @Override

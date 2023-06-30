@@ -393,6 +393,10 @@
           "name": "Contract Nachrichten",
           "description": "Formatierung der Contract Nachrichten in ein übersichtlicheres Design"
         },
+        "filteredContractlist": {
+          "name": "Gefilterte Contractliste",
+          "description": "Zeigt nur die Onlineziele auf der Contractliste an"
+        },
         "greeting": {
           "name": "Begrüßung",
           "description": "Nachricht die bei der Annahme eines Reports gesendet wird"

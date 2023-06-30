@@ -8,6 +8,7 @@ import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.commands.faction.AFbankEinzahlenCommand;
+import net.labymod.api.configuration.loader.property.ConfigProperty;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
@@ -37,6 +38,7 @@ public class ContractListener {
     public void onChatReceive(ChatReceiveEvent e) {
         AddonPlayer p = this.unicacityAddon.player();
         String msg = e.chatMessage().getPlainText();
+        String coloredmsg = e.chatMessage().getOriginalFormattedText();
         long currentTime = System.currentTimeMillis();
 
         Matcher contractSetMatcher = PatternHandler.CONTRACT_SET_PATTERN.matcher(msg);
@@ -108,9 +110,16 @@ public class ContractListener {
         }
 
         Matcher contractListMatcher = PatternHandler.CONTRACT_LIST_PATTERN.matcher(msg);
-        if (contractListMatcher.find() && currentTime - hitlistShown < 5000) {
-            String name = contractListMatcher.group("name");
-            CONTRACT_LIST.add(name);
+        if (contractListMatcher.find()) {
+            if(this.unicacityAddon.configuration().message().filteredContractlist().get()) {
+                if(coloredmsg.contains(ColorCode.RED.getCode())) {
+                    e.setCancelled(true);
+                }
+            }
+            if(currentTime - hitlistShown < 5000) {
+                String name = contractListMatcher.group("name");
+                CONTRACT_LIST.add(name);
+            }
         }
     }
 }
