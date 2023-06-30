@@ -55,7 +55,7 @@ Supported Minecraft versions:
 
 #### LabyMod 4
 
-Addon releases: `v2.0.0` - `latest`<br>
+Addon releases: `v2.0.0-dev` - `latest`<br>
 Requires Minecraft Forge: ❌<br>
 Supported Minecraft versions:
 
