@@ -80,7 +80,7 @@ public class EventRegistrationListener {
             }
 
             HotkeyConfiguration hotkeyConfiguration = configuration.hotkey();
-            if (!Laby.references().chatAccessor().isChatOpen() && this.unicacityAddon.utilService().isUnicacity() && hotkeyConfiguration.enabled().get()) {
+            if (!Laby.references().chatAccessor().isChatOpen() && this.unicacityAddon.utilService().isUnicacity() && hotkeyConfiguration.enabled().get() && !this.unicacityAddon.labyAPI().minecraft().minecraftWindow().isScreenOpened()) {
                 this.unicacityAddon.labyAPI().eventBus().fire(new HotkeyEvent(this.unicacityAddon, key));
             }
         }
