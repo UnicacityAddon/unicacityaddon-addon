@@ -90,14 +90,6 @@
           "name": "ADuty (ohne Nachricht)",
           "description": "Führt den '/aduty -s' Befehl aus"
         },
-        "reinforcementFaction": {
-          "name": "Reinforcement (Fraktion)",
-          "description": "Sendet einen Reinforcement an die eigene Fraktion"
-        },
-        "reinforcementAlliance": {
-          "name": "Reinforcement (Bündnis)",
-          "description": "Sendet einen Reinforcement an die eigene Fraktion und das Bündnis"
-        },
         "publicChannel": {
           "name": "Öffentlichen Channel betreten",
           "description": "Bewegt den Spieler in den eigenen öffentlichen Channel auf dem Teamspeak"
