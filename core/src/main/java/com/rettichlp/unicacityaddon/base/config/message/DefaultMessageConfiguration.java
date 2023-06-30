@@ -23,6 +23,7 @@ public class DefaultMessageConfiguration extends Config implements MessageConfig
 
     @SwitchSetting
     private final ConfigProperty<Boolean> contract = new ConfigProperty<>(true);
+
     @SwitchSetting
     private final ConfigProperty<Boolean> filteredContractlist = new ConfigProperty<>(true);
 
