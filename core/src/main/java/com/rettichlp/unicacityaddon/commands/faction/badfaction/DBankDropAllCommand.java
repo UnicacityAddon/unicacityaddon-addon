@@ -25,8 +25,6 @@ public class DBankDropAllCommand extends UnicacityCommand {
 
     @Override
     public boolean execute(String[] arguments) {
-        AddonPlayer p = this.unicacityAddon.player();
-
         // reset drug inventory tracker
         if (arguments.length > 0 && arguments[0].equalsIgnoreCase("reset")) {
             this.unicacityAddon.fileService().data().setDrugInventoryMap(new HashMap<>());
