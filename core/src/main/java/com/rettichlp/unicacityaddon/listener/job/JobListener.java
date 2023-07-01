@@ -139,10 +139,6 @@ public class JobListener {
             return;
         }
 
-        if (PatternHandler.LUMBERJACK_END_PATTERN.matcher(msg).find()) {
-            return;
-        }
-
         if (PatternHandler.LUMBERJACK_NEW_TREE_PATTERN.matcher(msg).find()) {
             p.sendServerMessage("/findtree");
             return;
