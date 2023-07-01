@@ -23,7 +23,6 @@ import java.util.regex.Matcher;
 public class JobListener {
 
     public static boolean isTabakJob = false;
-    public static boolean isLumberjackJob = false;
     private final Timer timer = new Timer();
     private boolean isNewspaperJob = false;
     private boolean isWasteJob = false;
@@ -136,13 +135,11 @@ public class JobListener {
         }
 
         if (PatternHandler.LUMBERJACK_START_PATTERN.matcher(msg).find()) {
-            isLumberjackJob = true;
             p.sendServerMessage("/findtree");
             return;
         }
 
         if (PatternHandler.LUMBERJACK_END_PATTERN.matcher(msg).find()) {
-            isLumberjackJob = false;
             return;
         }
 
