@@ -17,11 +17,13 @@ import java.util.regex.Matcher;
 
 /**
  * @author RettichLP
+ * @author Gelegenheitscode
  */
 @UCEvent
 public class JobListener {
 
     public static boolean isTabakJob = false;
+    public static boolean isLumberjackJob = false;
     private final Timer timer = new Timer();
     private boolean isNewspaperJob = false;
     private boolean isWasteJob = false;
@@ -46,6 +48,12 @@ public class JobListener {
             if (isDropState && System.currentTimeMillis() - lastUse > 1000 && location != null && onDump(location)) {
                 lastUse = System.currentTimeMillis();
                 p.sendServerMessage("/dropwaste");
+                return;
+            }
+
+            if (System.currentTimeMillis() - lastUse > 1000 && location != null && onWoodProcessing(location)) {
+                lastUse = System.currentTimeMillis();
+                p.sendServerMessage("/sägewerk");
                 return;
             }
 
@@ -127,6 +135,22 @@ public class JobListener {
             return;
         }
 
+        if (PatternHandler.LUMBERJACK_START_PATTERN.matcher(msg).find()) {
+            isLumberjackJob = true;
+            p.sendServerMessage("/findtree");
+            return;
+        }
+
+        if (PatternHandler.LUMBERJACK_END_PATTERN.matcher(msg).find()) {
+            isLumberjackJob = false;
+            return;
+        }
+
+        if (PatternHandler.LUMBERJACK_NEW_TREE_PATTERN.matcher(msg).find()) {
+            p.sendServerMessage("/findtree");
+            return;
+        }
+
         Matcher pizzaPickupMatcher = PatternHandler.PIZZA_PICKUP_PATTERN.matcher(msg);
         if (pizzaPickupMatcher.find() && Integer.parseInt(pizzaPickupMatcher.group("count")) < 15)
             new Timer().schedule(new TimerTask() {
@@ -142,6 +166,11 @@ public class JobListener {
                 location.distance(new FloatVector3(DropLocation.WASTE.getX(), DropLocation.WASTE.getY(), DropLocation.WASTE.getZ())) < 3 ||
                 location.distance(new FloatVector3(DropLocation.METAL.getX(), DropLocation.METAL.getY(), DropLocation.METAL.getZ())) < 3 ||
                 location.distance(new FloatVector3(DropLocation.WOOD.getX(), DropLocation.WOOD.getY(), DropLocation.WOOD.getZ())) < 3;
+    }
+
+    private boolean onWoodProcessing(FloatVector3 location) {
+        return location.distance(new FloatVector3(DropLocation.SAWMILL1.getX(), DropLocation.SAWMILL1.getY(), DropLocation.SAWMILL1.getZ())) < 3 ||
+                location.distance(new FloatVector3(DropLocation.SAWMILL2.getX(), DropLocation.SAWMILL2.getY(), DropLocation.SAWMILL2.getZ())) < 3;
     }
 
     private void drop() {
