@@ -83,10 +83,13 @@ public class CarListener {
 
         Matcher checkKFZMatcher = PatternHandler.CAR_CHECK_KFZ_PATTERN.matcher(msg);
         if (checkKFZMatcher.find()) {
-            String name = checkKFZMatcher.group(1);
-            if (name == null)
-                name = checkKFZMatcher.group(2);
-            p.sendServerMessage("/memberinfo " + name);
+            String group1 = checkKFZMatcher.group(1);
+            String name = group1 != null ? group1 : checkKFZMatcher.group(2);
+
+            if (!name.equals(p.getName())) {
+                p.sendServerMessage("/memberinfo " + name);
+                p.sendServerMessage("/searchtrunk");
+            }
         }
     }
 
