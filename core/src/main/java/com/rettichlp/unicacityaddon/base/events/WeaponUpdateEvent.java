@@ -45,7 +45,7 @@ public class WeaponUpdateEvent implements Event {
             NBTTagCompound nbtTagCompound = clientPlayer.getMainHandItemStack().getNBTTag();
             if (nbtTagCompound != null) {
                 NBTTag<?> nbtTag = nbtTagCompound.get("display");
-                Matcher matcher = Pattern.compile("(\\d+)/(\\d+)").matcher(nbtTag != null ? nbtTag.toString() : "");
+                Matcher matcher = Pattern.compile("(?:§6)*(\\d+)/(\\d+)").matcher(nbtTag != null ? nbtTag.toString() : "");
                 if (matcher.find()) {
                     return matcher;
                 }
