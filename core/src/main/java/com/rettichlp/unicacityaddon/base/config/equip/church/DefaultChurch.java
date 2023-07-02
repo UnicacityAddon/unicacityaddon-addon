@@ -10,10 +10,10 @@ import net.labymod.api.configuration.loader.property.ConfigProperty;
 public class DefaultChurch extends Config implements Church {
 
     @TextFieldSetting
-    private final ConfigProperty<String> wine = new ConfigProperty<>("2");
+    private final ConfigProperty<String> soup = new ConfigProperty<>("2");
 
     @Override
-    public ConfigProperty<String> wine() {
-        return this.wine;
+    public ConfigProperty<String> soup() {
+        return this.soup;
     }
 }
