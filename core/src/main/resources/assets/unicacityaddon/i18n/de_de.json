@@ -318,8 +318,8 @@
         },
         "church": {
           "name": "Kirche",
-          "wine": {
-            "name": "Wein"
+          "soup": {
+            "name": "Suppe"
           }
         }
       },
