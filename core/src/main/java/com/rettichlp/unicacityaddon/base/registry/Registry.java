@@ -137,7 +137,6 @@ import com.rettichlp.unicacityaddon.listener.faction.kirche.PrayListener;
 import com.rettichlp.unicacityaddon.listener.faction.rettungsdienst.FirstAidListener;
 import com.rettichlp.unicacityaddon.listener.faction.rettungsdienst.MedicationListener;
 import com.rettichlp.unicacityaddon.listener.faction.rettungsdienst.ReviveListener;
-import com.rettichlp.unicacityaddon.listener.faction.state.HQMessageListener;
 import com.rettichlp.unicacityaddon.listener.faction.state.WantedListener;
 import com.rettichlp.unicacityaddon.listener.faction.terroristen.BombListener;
 import com.rettichlp.unicacityaddon.listener.house.HouseDataListener;
@@ -232,7 +231,6 @@ public class Registry {
             HouseDataListener.class,
             HouseInteractionListener.class,
             HouseRenterListener.class,
-            HQMessageListener.class,
             JobListener.class,
             KarmaMessageListener.class,
             MedicationListener.class,
