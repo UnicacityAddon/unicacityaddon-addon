@@ -22,10 +22,6 @@ public interface HotkeyConfiguration {
 
     ConfigProperty<Key> aDutySilent();
 
-    ConfigProperty<Key> reinforcementFaction();
-
-    ConfigProperty<Key> reinforcementAlliance();
-
     ConfigProperty<Key> publicChannel();
 
     ConfigProperty<Key> aBuy();

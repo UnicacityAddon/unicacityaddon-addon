@@ -299,7 +299,7 @@ public class DrugListener {
     }
 
     @Subscribe
-    public void onChatReceive(ChatMessageSendEvent e) {
+    public void onChatMessageSend(ChatMessageSendEvent e) {
         String msg = e.getMessage();
 
         Matcher trunkGetMatcher = PatternHandler.TRUNK_GET_COMMAND_PATTERN.matcher(msg);
