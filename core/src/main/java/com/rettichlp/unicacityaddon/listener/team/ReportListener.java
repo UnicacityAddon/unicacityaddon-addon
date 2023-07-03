@@ -105,13 +105,15 @@ public class ReportListener {
         Key key = e.getKey();
         HotkeyConfiguration hotkeyConfiguration = e.hotkeyConfiguration();
 
-        if (key.equals(hotkeyConfiguration.acceptReport().get())) {
-            p.sendServerMessage("/ar");
-        } else if (key.equals(hotkeyConfiguration.cancelReport().get())) {
-            String farewell = this.unicacityAddon.configuration().message().farewell().get();
-            if (!farewell.isEmpty())
-                p.sendServerMessage(farewell);
-            p.sendServerMessage("/cr");
+        if (e.isRealIngame()) {
+            if (key.equals(hotkeyConfiguration.acceptReport().get())) {
+                p.sendServerMessage("/ar");
+            } else if (key.equals(hotkeyConfiguration.cancelReport().get())) {
+                String farewell = this.unicacityAddon.configuration().message().farewell().get();
+                if (!farewell.isEmpty())
+                    p.sendServerMessage(farewell);
+                p.sendServerMessage("/cr");
+            }
         }
     }
 }
