@@ -62,7 +62,7 @@ public class ImageUploadUtils {
      * @param file The image to be uploaded to Imgur.
      * @return The JSON response from Imgur.
      */
-    public String upload(File file) {
+    private String upload(File file) {
         HttpURLConnection conn = null;
         try {
             conn = getHttpConnection(UPLOAD_API_URL);

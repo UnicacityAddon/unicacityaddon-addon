@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 public class GetGunPatternCommand extends UnicacityCommand {
 
     public static Armament armament = null;
+    public static long startTime = 0;
 
     private final UnicacityAddon unicacityAddon;
 
@@ -39,6 +40,7 @@ public class GetGunPatternCommand extends UnicacityCommand {
                     .orElse(null);
 
             if (armament != null) {
+                startTime = System.currentTimeMillis();
                 p.sendServerMessage("/getgun");
             }
         } else if (arguments.length == 2 && arguments[0].equalsIgnoreCase("remove")) {

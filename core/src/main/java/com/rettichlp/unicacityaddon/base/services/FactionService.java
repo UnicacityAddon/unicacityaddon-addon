@@ -23,11 +23,19 @@ public class FactionService {
     }
 
     public boolean checkPlayerDuty(String playerName) {
-        ClientPacketListener clientPacketListener = this.unicacityAddon.labyAPI().minecraft().getClientPacketListener();
-        return tempDuty || (clientPacketListener != null && this.unicacityAddon.utilService().isUnicacity() && clientPacketListener.getNetworkPlayerInfos().stream()
-                .map(networkPlayerInfo -> this.unicacityAddon.utilService().text().legacy(networkPlayerInfo.displayName()))
-                .filter(s -> s.startsWith("§1") || s.startsWith("§9") || s.startsWith("§4") || s.startsWith("§6"))
-                .anyMatch(s -> s.contains(playerName)));
+        boolean duty = false;
+
+        try {
+            ClientPacketListener clientPacketListener = this.unicacityAddon.labyAPI().minecraft().getClientPacketListener();
+            duty = tempDuty || (clientPacketListener != null && this.unicacityAddon.utilService().isUnicacity() && clientPacketListener.getNetworkPlayerInfos().stream()
+                    .map(networkPlayerInfo -> this.unicacityAddon.utilService().text().legacy(networkPlayerInfo.displayName()))
+                    .anyMatch(s -> s.contains(playerName) && (s.startsWith("§1") || s.startsWith("§9") || s.startsWith("§4") || s.startsWith("§6"))));
+        } catch (IllegalStateException e) {
+            this.unicacityAddon.utilService().debug("Can't retrieve player duty for " + playerName);
+            this.unicacityAddon.logger().warn(e.getMessage());
+        }
+
+        return duty;
     }
 
     public String getNameTagSuffix(Faction faction) {

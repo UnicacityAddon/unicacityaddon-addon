@@ -35,12 +35,6 @@ public class DefaultHotkeyConfiguration extends Config implements HotkeyConfigur
     private final ConfigProperty<Key> aDutySilent = new ConfigProperty<>(Key.NONE);
 
     @KeyBindSetting
-    private final ConfigProperty<Key> reinforcementFaction = new ConfigProperty<>(Key.NONE);
-
-    @KeyBindSetting
-    private final ConfigProperty<Key> reinforcementAlliance = new ConfigProperty<>(Key.NONE);
-
-    @KeyBindSetting
     private final ConfigProperty<Key> publicChannel = new ConfigProperty<>(Key.NONE);
 
     @KeyBindSetting
@@ -82,16 +76,6 @@ public class DefaultHotkeyConfiguration extends Config implements HotkeyConfigur
     @Override
     public ConfigProperty<Key> aDutySilent() {
         return this.aDutySilent;
-    }
-
-    @Override
-    public ConfigProperty<Key> reinforcementFaction() {
-        return this.reinforcementFaction;
-    }
-
-    @Override
-    public ConfigProperty<Key> reinforcementAlliance() {
-        return this.reinforcementAlliance;
     }
 
     @Override
