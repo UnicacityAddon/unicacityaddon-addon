@@ -82,7 +82,7 @@ public class TeamSpeakNotificationListener {
                             .of("Öffentlich-Channel").color(ColorCode.AQUA).advance().space()
                             .of("betreten.").color(ColorCode.GRAY).advance().space()
                             .of("[↑]").color(ColorCode.BLUE)
-                                    .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Betritt deinen vorhierigen Channel §7(§b" + ClientMovedListener.oldChannel.replace("» ", "") + "§7)").color(ColorCode.RED).advance().createComponent())
+                                    .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of(ColorCode.RED + "Betritt deinen vorhierigen Channel" + ColorCode.GRAY + "(" + ColorCode.AQUA + ClientMovedListener.oldChannel.replace("» ", "") + ColorCode.GRAY + ")").advance().createComponent())
                                     .clickEvent(ClickEvent.Action.RUN_COMMAND, "/tsjoin " + ClientMovedListener.oldChannel.replace("» ", ""))
                                     .advance()
                             .createComponent());
