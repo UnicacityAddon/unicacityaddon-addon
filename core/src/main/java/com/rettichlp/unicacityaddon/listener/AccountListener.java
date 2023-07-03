@@ -5,6 +5,7 @@ import com.rettichlp.unicacityaddon.api.statistic.GamePlay;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.config.join.CommandConfiguration;
 import com.rettichlp.unicacityaddon.base.config.join.PasswordConfiguration;
+import com.rettichlp.unicacityaddon.base.events.BombPlantedEvent;
 import com.rettichlp.unicacityaddon.base.events.OfflineDataChangedEvent;
 import com.rettichlp.unicacityaddon.base.events.UnicacityAddonTickEvent;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
@@ -52,6 +53,13 @@ public class AccountListener {
         if (PatternHandler.ACCOUNT_WELCOME_BACK_PATTERN.matcher(msg).find()) {
             MobileListener.activeCommunicationsCheck = true;
             isAfk = false;
+
+            new Thread(() -> {
+                this.unicacityAddon.utilService().debug("Loading bomb place time");
+                long placeTime = this.unicacityAddon.api().sendEventRequest().getBomb();
+                this.unicacityAddon.labyAPI().eventBus().fire(new BombPlantedEvent(placeTime));
+            }).start();
+
             return;
         }
 
