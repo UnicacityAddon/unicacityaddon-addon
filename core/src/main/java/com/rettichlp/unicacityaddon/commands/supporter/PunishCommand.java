@@ -73,16 +73,6 @@ public class PunishCommand extends UnicacityCommand {
                 .build();
     }
 
-    private String getBanDurationString(int banDuration) {
-        int minutes = banDuration;
-        int hours = minutes / 60;
-        minutes -= hours * 60;
-        int days = hours / 60;
-        hours -= days * 60;
-
-        return days + " " + hours + " " + minutes;
-    }
-
     private Punishment getPunishmentByName(String s) {
         for (Punishment punishment : Punishment.values()) {
             if (punishment.getTabReason().equals(s))

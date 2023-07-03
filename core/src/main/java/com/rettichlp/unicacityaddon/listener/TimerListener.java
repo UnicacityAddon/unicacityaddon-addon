@@ -5,7 +5,6 @@ import com.rettichlp.unicacityaddon.base.enums.api.StatisticType;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.commands.ShutdownJailCommand;
-import com.rettichlp.unicacityaddon.listener.faction.rettungsdienst.ReviveListener;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
@@ -38,7 +37,6 @@ public class TimerListener {
 
         Matcher timerGraveyardStartMatcher = PatternHandler.TIMER_GRAVEYARD_START_PATTERN.matcher(msg);
         if (timerGraveyardStartMatcher.find()) {
-            ReviveListener.isDead = true;
             this.unicacityAddon.api().sendStatisticAddRequest(StatisticType.DEATH);
 
             if (!isJail) {
