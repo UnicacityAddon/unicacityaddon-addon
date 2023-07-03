@@ -97,7 +97,7 @@ public class AccountListener {
         if (accountFriendJoinMatcher.find()) {
             String name = accountFriendJoinMatcher.group("name");
             e.setMessage(Message.getBuilder()
-                    .add(chatMessage.getFormattedText())
+                    .add(chatMessage.getOriginalFormattedText())
                     .space()
                     .of("[☎]").color(ColorCode.DARK_GREEN)
                             .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of(name + " anrufen").color(ColorCode.DARK_GREEN).advance().createComponent())
@@ -121,7 +121,7 @@ public class AccountListener {
         if (accountFriendLeaveMatcher.find()) {
             String name = accountFriendLeaveMatcher.group("name");
             e.setMessage(Message.getBuilder()
-                    .add(chatMessage.getFormattedText())
+                    .add(chatMessage.getOriginalFormattedText())
                     .space()
                     .of("[✕]").color(ColorCode.RED)
                             .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of(name + " aus der Freundesliste entfernen").color(ColorCode.RED).advance().createComponent())

@@ -73,7 +73,7 @@ public class ReportListener {
             return;
         }
 
-        if (chatMessage.getFormattedText().startsWith(ColorCode.DARK_PURPLE.getCode()) && isReport) {
+        if (chatMessage.getOriginalFormattedText().startsWith(ColorCode.DARK_PURPLE.getCode()) && isReport) {
             Message.Builder messageBuilder = Message.getBuilder()
                     .add(messageConfiguration.prefix().getOrDefault("").replaceAll("&", "§"));
 
