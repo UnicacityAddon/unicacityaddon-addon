@@ -73,7 +73,7 @@ public class ReportListener {
             return;
         }
 
-        if (chatMessage.getFormattedText().startsWith(ColorCode.DARK_PURPLE.getCode()) && isReport) {
+        if (chatMessage.getOriginalFormattedText().startsWith(ColorCode.DARK_PURPLE.getCode()) && isReport) {
             Message.Builder messageBuilder = Message.getBuilder()
                     .add(messageConfiguration.prefix().getOrDefault("").replaceAll("&", "§"));
 
@@ -105,13 +105,15 @@ public class ReportListener {
         Key key = e.getKey();
         HotkeyConfiguration hotkeyConfiguration = e.hotkeyConfiguration();
 
-        if (key.equals(hotkeyConfiguration.acceptReport().get())) {
-            p.sendServerMessage("/ar");
-        } else if (key.equals(hotkeyConfiguration.cancelReport().get())) {
-            String farewell = this.unicacityAddon.configuration().message().farewell().get();
-            if (!farewell.isEmpty())
-                p.sendServerMessage(farewell);
-            p.sendServerMessage("/cr");
+        if (e.isRealIngame()) {
+            if (key.equals(hotkeyConfiguration.acceptReport().get())) {
+                p.sendServerMessage("/ar");
+            } else if (key.equals(hotkeyConfiguration.cancelReport().get())) {
+                String farewell = this.unicacityAddon.configuration().message().farewell().get();
+                if (!farewell.isEmpty())
+                    p.sendServerMessage(farewell);
+                p.sendServerMessage("/cr");
+            }
         }
     }
 }
