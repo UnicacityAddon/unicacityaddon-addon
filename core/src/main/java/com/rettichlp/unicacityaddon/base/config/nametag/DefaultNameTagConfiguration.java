@@ -43,6 +43,9 @@ public class DefaultNameTagConfiguration extends Config implements NameTagConfig
     @SwitchSetting
     private final ConfigProperty<Boolean> team = new ConfigProperty<>(true);
 
+    @SwitchSetting
+    private final ConfigProperty<Boolean> roleplay = new ConfigProperty<>(true);
+
     @Override
     public ConfigProperty<Boolean> info() {
         return this.info;
@@ -91,5 +94,10 @@ public class DefaultNameTagConfiguration extends Config implements NameTagConfig
     @Override
     public ConfigProperty<Boolean> team() {
         return this.team;
+    }
+
+    @Override
+    public ConfigProperty<Boolean> roleplay() {
+        return this.roleplay;
     }
 }
