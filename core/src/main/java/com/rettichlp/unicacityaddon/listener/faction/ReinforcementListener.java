@@ -71,7 +71,7 @@ public class ReinforcementListener {
                 navipointString = "unbekannter Ort";
                 p.sendErrorMessage("Navipunkte wurden nicht geladen. Versuche /sync um diese neu zu laden!");
             } else {
-                navipointString = navipoint.getName().replace("-", " ");
+                navipointString = navipoint.getDisplayName();
             }
 
             p.sendMessage(this.unicacityAddon.configuration().reinforcement().reinforcement().getOrDefault(DefaultReinforcementConfiguration.REINFORCEMENT)

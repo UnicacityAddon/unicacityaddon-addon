@@ -99,7 +99,7 @@ public class BombListener {
     }
 
     private String getLocationWithArticle(String location) {
-        NaviPoint naviPoint = find(this.unicacityAddon.api().getNaviPointList(), n -> n.getTabName().equalsIgnoreCase(location.replace(" ", "-")));
+        NaviPoint naviPoint = find(this.unicacityAddon.api().getNaviPointList(), n -> n.getName().equalsIgnoreCase(location.replace(" ", "-")));
         String article = "der/die/das";
         if (naviPoint != null)
             article = naviPoint.getArticleFourthCase().replace("none", "");
