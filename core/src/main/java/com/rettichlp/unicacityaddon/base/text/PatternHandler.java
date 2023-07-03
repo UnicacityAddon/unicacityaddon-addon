@@ -211,6 +211,7 @@ public class PatternHandler {
     public static final Pattern CASH_REMOVE_PATTERN = Pattern.compile("^ {2}-(\\d+)\\$$");
     public static final Pattern CASH_STATS_PATTERN = Pattern.compile("^ {2}- Geld: (\\d+)\\$$");
     public static final Pattern LOTTO_WIN = Pattern.compile("^\\[Lotto] Du hast im Lotto gewonnen! \\((\\d+)\\$\\)$");
+    public static final Pattern WEAPON_TRAINING_START = Pattern.compile("^\\[Waffentraining] Du hast ein Waffentraining für die Waffe (\\w+) gestartet\\.$");
 
     /**
      * Pattern karma interaction
