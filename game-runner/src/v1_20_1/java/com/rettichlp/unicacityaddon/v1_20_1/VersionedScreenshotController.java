@@ -1,16 +1,14 @@
-package com.rettichlp.unicacityaddon.v1_12_2;
+package com.rettichlp.unicacityaddon.v1_20_1;
 
+import com.mojang.blaze3d.platform.NativeImage;
 import com.rettichlp.unicacityaddon.controller.ScreenshotController;
-import net.labymod.api.Laby;
 import net.labymod.api.models.Implements;
+import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.shader.Framebuffer;
-import net.minecraft.util.ScreenShotHelper;
+import net.minecraft.client.Screenshot;
 
-import javax.imageio.ImageIO;
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -28,16 +26,16 @@ public class VersionedScreenshotController extends ScreenshotController {
     @Override
     public File createScreenshot(File file) {
         if (file != null) {
-            Laby.labyAPI().minecraft().executeOnRenderThread(() -> {
+            Minecraft minecraft = Minecraft.getInstance();
+
+            NativeImage nativeImage = Screenshot.takeScreenshot(minecraft.getMainRenderTarget());
+            Util.ioPool().execute(() -> {
                 try {
-                    Minecraft minecraft = Minecraft.getMinecraft();
-
-                    Framebuffer framebuffer = minecraft.getFramebuffer();
-                    BufferedImage bufferedImage = ScreenShotHelper.createScreenshot(minecraft.displayWidth, minecraft.displayHeight, framebuffer);
-
-                    ImageIO.write(bufferedImage, "jpg", file);
+                    nativeImage.writeToFile(file);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
+                } finally {
+                    nativeImage.close();
                 }
             });
         }

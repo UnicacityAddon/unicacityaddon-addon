@@ -45,7 +45,7 @@ public enum Equip {
     NOTEPAD("Notizblock", "Notizblock", (configuration) -> configuration.equip().news().notepad().getOrDefault("0")), // UnicaCity Bug (Nachricht gibt es noch nicht)
     GLASSCUTTER("Glasschneider", "Glasschneider", (configuration) -> configuration.equip().hitman().glassCutter().getOrDefault("0")),
     LOCKPICK("Dietrich", "Dietrich", (configuration) -> configuration.equip().hitman().lockPick().getOrDefault("0")),
-    WINE("Wein", "Wein", (configuration) -> configuration.equip().church().wine().getOrDefault("2")),
+    SOUP("Suppe", "Suppe", (configuration) -> configuration.equip().church().soup().getOrDefault("2")),
     COFFEE("Kaffee", "Kaffee", (configuration) -> configuration.equip().news().coffee().getOrDefault("2"));
 
     private final String equipName;

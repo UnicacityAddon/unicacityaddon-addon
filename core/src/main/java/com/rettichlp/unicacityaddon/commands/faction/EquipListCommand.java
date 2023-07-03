@@ -53,10 +53,15 @@ public class EquipListCommand extends UnicacityCommand {
         p.sendMessage(Message.getBuilder()
                 .of("Equip:").color(ColorCode.DARK_AQUA).bold().advance()
                 .createComponent());
-        this.unicacityAddon.fileService().data().getEquipMap().forEach((equip, integer) -> p.sendMessage(Message.getBuilder()
-                .of("» " + integer + "x " + equip.getEquipName() + ": ").color(ColorCode.GRAY).advance()
-                .of(numberFormat.format(equip.getPrice(this.unicacityAddon.configuration())) + "$").color(ColorCode.AQUA).advance()
-                .createComponent()));
+
+        this.unicacityAddon.fileService().data().getEquipMap().forEach((equip, integer) -> {
+            String equipName = equip != null ? equip.getEquipName() : "unbekanntes Equip";
+            int equipPrice = equip != null ? equip.getPrice(this.unicacityAddon.configuration()) : 0;
+            p.sendMessage(Message.getBuilder()
+                    .of("» " + integer + "x " + equipName + ": ").color(ColorCode.GRAY).advance()
+                    .of(numberFormat.format(equipPrice) + "$").color(ColorCode.AQUA).advance()
+                    .createComponent());
+        });
 
         int totalAmount = this.unicacityAddon.fileService().data().getEquipMap().entrySet().stream()
                 .map(equipIntegerEntry -> equipIntegerEntry.getKey().getPrice(this.unicacityAddon.configuration()) * equipIntegerEntry.getValue())

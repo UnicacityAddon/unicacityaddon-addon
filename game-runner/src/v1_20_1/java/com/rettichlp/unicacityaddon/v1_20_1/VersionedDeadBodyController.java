@@ -1,4 +1,4 @@
-package com.rettichlp.unicacityaddon.v1_17_1;
+package com.rettichlp.unicacityaddon.v1_20_1;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
@@ -70,7 +70,7 @@ public class VersionedDeadBodyController extends DeadBodyController {
             boolean nonRevivable;
             if (siblings.size() > 0) { // sibling size only by not formatted corpses greater than 0
                 Component originalCorpseName = siblings.get(0);
-                playerName = originalCorpseName.getContents().substring(1);
+                playerName = originalCorpseName.getContents().toString().substring(1);
                 nonRevivable = Objects.equals(originalCorpseName.getStyle().getColor(), TextColor.fromLegacyFormat(ChatFormatting.DARK_GRAY));
                 this.corpseMap.put(itemEntity.getUUID(), new AbstractMap.SimpleEntry<>(playerName, nonRevivable));
             } else {

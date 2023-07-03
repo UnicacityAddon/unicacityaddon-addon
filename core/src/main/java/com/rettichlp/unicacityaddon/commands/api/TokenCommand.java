@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * @author RettichLP
  */
-@UCCommand(prefix = "token", onlyOnUnicacity = false, usage = "(create)")
+@UCCommand(prefix = "token", onlyOnUnicacity = false)
 public class TokenCommand extends UnicacityCommand {
 
     private final UnicacityAddon unicacityAddon;
@@ -57,8 +57,6 @@ public class TokenCommand extends UnicacityCommand {
 
     @Override
     public List<String> complete(String[] arguments) {
-        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments)
-                .addAtIndex(1, "create")
-                .build();
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments).build();
     }
 }
