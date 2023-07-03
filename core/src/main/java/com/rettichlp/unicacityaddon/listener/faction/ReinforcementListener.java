@@ -3,10 +3,8 @@ package com.rettichlp.unicacityaddon.listener.faction;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.api.NaviPoint;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
-import com.rettichlp.unicacityaddon.base.config.hotkey.HotkeyConfiguration;
 import com.rettichlp.unicacityaddon.base.config.reinforcement.DefaultReinforcementConfiguration;
 import com.rettichlp.unicacityaddon.base.enums.faction.ReinforcementType;
-import com.rettichlp.unicacityaddon.base.events.HotkeyEvent;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
@@ -15,7 +13,6 @@ import lombok.Getter;
 import net.labymod.api.client.chat.ChatMessage;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.event.HoverEvent;
-import net.labymod.api.client.gui.screen.key.Key;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 import net.labymod.api.util.math.vector.FloatVector3;
@@ -43,13 +40,13 @@ public class ReinforcementListener {
     public void onChatReceive(ChatReceiveEvent e) {
         AddonPlayer p = this.unicacityAddon.player();
         ChatMessage chatMessage = e.chatMessage();
-        String unformattedMsg = chatMessage.getPlainText();
+        String msg = chatMessage.getPlainText();
 
-        Matcher reinforcementMatcher = PatternHandler.REINFORCEMENT_PATTERN.matcher(unformattedMsg);
+        Matcher reinforcementMatcher = PatternHandler.REINFORCEMENT_PATTERN.matcher(msg);
         if (reinforcementMatcher.find()) {
             String fullName = reinforcementMatcher.group(1);
             String name = reinforcementMatcher.group(2);
-            String[] splitFormattedMsg = chatMessage.getFormattedText().split(":");
+            String[] splitFormattedMsg = chatMessage.getOriginalFormattedText().split(":");
 
             int posX = Integer.parseInt(reinforcementMatcher.group(3));
             int posY = Integer.parseInt(reinforcementMatcher.group(4));
@@ -104,7 +101,7 @@ public class ReinforcementListener {
             return;
         }
 
-        Matcher onTheWayMatcher = PatternHandler.ON_THE_WAY_PATTERN.matcher(unformattedMsg);
+        Matcher onTheWayMatcher = PatternHandler.ON_THE_WAY_PATTERN.matcher(msg);
         if (onTheWayMatcher.find()) {
             String senderFullName = onTheWayMatcher.group(1);
             String reinforcementSenderName = onTheWayMatcher.group(3);
@@ -125,7 +122,7 @@ public class ReinforcementListener {
             if (pattern == null)
                 continue;
 
-            Matcher matcher = pattern.matcher(unformattedMsg);
+            Matcher matcher = pattern.matcher(msg);
             if (!matcher.find())
                 continue;
 
@@ -134,19 +131,6 @@ public class ReinforcementListener {
             lastReinforcement = new Reinforcement(name, type);
             e.setCancelled(true);
             return;
-        }
-    }
-
-    @Subscribe
-    public void onHotkey(HotkeyEvent e) {
-        AddonPlayer p = this.unicacityAddon.player();
-        Key key = e.getKey();
-        HotkeyConfiguration hotkeyConfiguration = e.hotkeyConfiguration();
-
-        if (key.equals(hotkeyConfiguration.reinforcementFaction().get())) {
-            p.sendServerMessage("/reinforcement -f");
-        } else if (key.equals(hotkeyConfiguration.reinforcementAlliance().get())) {
-            p.sendServerMessage("/reinforcement -d");
         }
     }
 

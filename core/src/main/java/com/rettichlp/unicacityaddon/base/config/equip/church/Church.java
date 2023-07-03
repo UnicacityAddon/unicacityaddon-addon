@@ -7,5 +7,5 @@ import net.labymod.api.configuration.loader.property.ConfigProperty;
  */
 public interface Church {
 
-    ConfigProperty<String> wine();
+    ConfigProperty<String> soup();
 }

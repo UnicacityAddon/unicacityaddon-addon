@@ -90,14 +90,6 @@
           "name": "ADuty (no message)",
           "description": "Run the '/aduty -s' command"
         },
-        "reinforcementFaction": {
-          "name": "Reinforcement (Faction)",
-          "description": "Send a reinforcement to your faction"
-        },
-        "reinforcementAlliance": {
-          "name": "Reinforcement (alliance)",
-          "description": "Send a reinforcement to your faction and alliance"
-        },
         "publicChannel": {
           "name": "Join Public Channel",
           "description": "Moves the player to their own public channel on Teamspeak"
@@ -326,8 +318,8 @@
         },
         "church": {
           "name": "Church",
-          "wine": {
-            "name": "Wine"
+          "soup": {
+            "name": "Soup"
           }
         }
       },
@@ -485,6 +477,10 @@
       "debug": {
         "name": "Debug",
         "description": "Displays debug messages"
+      },
+      "local": {
+        "name": "Local API connection",
+        "description": "Connects the addon to a local API instance (localhost)"
       }
     }
   }

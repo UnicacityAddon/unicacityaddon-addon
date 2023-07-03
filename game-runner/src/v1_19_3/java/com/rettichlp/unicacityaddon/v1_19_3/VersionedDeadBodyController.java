@@ -81,7 +81,7 @@ public class VersionedDeadBodyController extends DeadBodyController {
 
             // use player name and revivable status
             String prefix = unicacityAddon.nameTagService().getPrefix(playerName, true);
-            String factionInfo = unicacityAddon.api().getPlayerFactionMap().getOrDefault(playerName, Faction.NULL).getNameTagSuffix();
+            String factionInfo = unicacityAddon.configuration().nametag().info().get() ? unicacityAddon.api().getPlayerFactionMap().getOrDefault(playerName, Faction.NULL).getNameTagSuffix() : "";
 
             String ndn = Message.getBuilder()
                     .of("✟").color(nonRevivable ? ColorCode.DARK_GRAY : ColorCode.GRAY).advance()
