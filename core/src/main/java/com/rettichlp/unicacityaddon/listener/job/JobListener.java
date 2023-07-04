@@ -2,7 +2,7 @@ package com.rettichlp.unicacityaddon.listener.job;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
-import com.rettichlp.unicacityaddon.base.enums.DropLocation;
+import com.rettichlp.unicacityaddon.base.enums.JobDropLocation;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import net.labymod.api.event.Subscribe;
@@ -17,6 +17,7 @@ import java.util.regex.Matcher;
 
 /**
  * @author RettichLP
+ * @author Gelegenheitscode
  */
 @UCEvent
 public class JobListener {
@@ -46,6 +47,12 @@ public class JobListener {
             if (isDropState && System.currentTimeMillis() - lastUse > 1000 && location != null && onDump(location)) {
                 lastUse = System.currentTimeMillis();
                 p.sendServerMessage("/dropwaste");
+                return;
+            }
+
+            if (System.currentTimeMillis() - lastUse > 1000 && location != null && onSawMill(location)) {
+                lastUse = System.currentTimeMillis();
+                p.sendServerMessage("/sägewerk");
                 return;
             }
 
@@ -122,6 +129,11 @@ public class JobListener {
             }, TimeUnit.SECONDS.toMillis((long) 2.5));
         }
 
+        if (PatternHandler.LUMBERJACK_START_PATTERN.matcher(msg).find() || PatternHandler.LUMBERJACK_NEW_TREE_PATTERN.matcher(msg).find()) {
+            p.sendServerMessage("/findtree");
+            return;
+        }
+
         if (PatternHandler.PIZZA_START_PATTERN.matcher(msg).find()) {
             p.sendServerMessage("/getpizza");
             return;
@@ -138,10 +150,15 @@ public class JobListener {
     }
 
     private boolean onDump(FloatVector3 location) {
-        return location.distance(new FloatVector3(DropLocation.GLAS.getX(), DropLocation.GLAS.getY(), DropLocation.GLAS.getZ())) < 3 ||
-                location.distance(new FloatVector3(DropLocation.WASTE.getX(), DropLocation.WASTE.getY(), DropLocation.WASTE.getZ())) < 3 ||
-                location.distance(new FloatVector3(DropLocation.METAL.getX(), DropLocation.METAL.getY(), DropLocation.METAL.getZ())) < 3 ||
-                location.distance(new FloatVector3(DropLocation.WOOD.getX(), DropLocation.WOOD.getY(), DropLocation.WOOD.getZ())) < 3;
+        return location.distance(new FloatVector3(JobDropLocation.WASTE_GLAS.getX(), JobDropLocation.WASTE_GLAS.getY(), JobDropLocation.WASTE_GLAS.getZ())) < 3 ||
+                location.distance(new FloatVector3(JobDropLocation.WASTE_WASTE.getX(), JobDropLocation.WASTE_WASTE.getY(), JobDropLocation.WASTE_WASTE.getZ())) < 3 ||
+                location.distance(new FloatVector3(JobDropLocation.WASTE_METAL.getX(), JobDropLocation.WASTE_METAL.getY(), JobDropLocation.WASTE_METAL.getZ())) < 3 ||
+                location.distance(new FloatVector3(JobDropLocation.WASTE_WOOD.getX(), JobDropLocation.WASTE_WOOD.getY(), JobDropLocation.WASTE_WOOD.getZ())) < 3;
+    }
+
+    private boolean onSawMill(FloatVector3 location) {
+        return location.distance(new FloatVector3(JobDropLocation.LUMBERJACK_SAWMILL_1.getX(), JobDropLocation.LUMBERJACK_SAWMILL_1.getY(), JobDropLocation.LUMBERJACK_SAWMILL_1.getZ())) < 3 ||
+                location.distance(new FloatVector3(JobDropLocation.LUMBERJACK_SAWMILL_2.getX(), JobDropLocation.LUMBERJACK_SAWMILL_2.getY(), JobDropLocation.LUMBERJACK_SAWMILL_2.getZ())) < 3;
     }
 
     private void drop() {

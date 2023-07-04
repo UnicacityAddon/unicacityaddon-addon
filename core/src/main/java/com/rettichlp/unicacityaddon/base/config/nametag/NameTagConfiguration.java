@@ -30,4 +30,6 @@ public interface NameTagConfiguration {
     ConfigProperty<Boolean> afk();
 
     ConfigProperty<Boolean> team();
+
+    ConfigProperty<Boolean> roleplay();
 }

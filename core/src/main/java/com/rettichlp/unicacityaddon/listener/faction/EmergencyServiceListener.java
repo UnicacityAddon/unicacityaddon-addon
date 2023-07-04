@@ -92,25 +92,25 @@ public class EmergencyServiceListener {
                 Component hoverMessage = Message.getBuilder().of("Annehmen").color(ColorCode.RED).advance().createComponent();
                 e.setMessage(Message.getBuilder()
                         .of("Neu geöffnet").color(ColorCode.GOLD).bold()
-                        .hoverEvent(HoverEvent.Action.SHOW_TEXT, hoverMessage) // Grund
-                        .clickEvent(ClickEvent.Action.RUN_COMMAND, "/acceptservice " + serviceRequeuedMatcher.group(2).replace("[UC]", ""))
-                        .advance().space()
+                                .hoverEvent(HoverEvent.Action.SHOW_TEXT, hoverMessage) // Grund
+                                .clickEvent(ClickEvent.Action.RUN_COMMAND, "/acceptservice " + serviceRequeuedMatcher.group(2).replace("[UC]", ""))
+                                .advance().space()
                         .of("-").color(ColorCode.GRAY)
-                        .hoverEvent(HoverEvent.Action.SHOW_TEXT, hoverMessage) // Grund
-                        .clickEvent(ClickEvent.Action.RUN_COMMAND, "/acceptservice " + serviceRequeuedMatcher.group(2).replace("[UC]", ""))
-                        .advance().space()
+                                .hoverEvent(HoverEvent.Action.SHOW_TEXT, hoverMessage) // Grund
+                                .clickEvent(ClickEvent.Action.RUN_COMMAND, "/acceptservice " + serviceRequeuedMatcher.group(2).replace("[UC]", ""))
+                                .advance().space()
                         .of(serviceRequeuedMatcher.group(1)).color(ColorCode.DARK_RED)
-                        .hoverEvent(HoverEvent.Action.SHOW_TEXT, hoverMessage) // Grund
-                        .clickEvent(ClickEvent.Action.RUN_COMMAND, "/acceptservice " + serviceRequeuedMatcher.group(2).replace("[UC]", ""))
-                        .advance().space() // Öffner
+                                .hoverEvent(HoverEvent.Action.SHOW_TEXT, hoverMessage) // Grund
+                                .clickEvent(ClickEvent.Action.RUN_COMMAND, "/acceptservice " + serviceRequeuedMatcher.group(2).replace("[UC]", ""))
+                                .advance().space() // Öffner
                         .of("-").color(ColorCode.GRAY)
-                        .hoverEvent(HoverEvent.Action.SHOW_TEXT, hoverMessage) // Grund
-                        .clickEvent(ClickEvent.Action.RUN_COMMAND, "/acceptservice " + serviceRequeuedMatcher.group(2).replace("[UC]", ""))
-                        .advance().space()
+                                .hoverEvent(HoverEvent.Action.SHOW_TEXT, hoverMessage) // Grund
+                                .clickEvent(ClickEvent.Action.RUN_COMMAND, "/acceptservice " + serviceRequeuedMatcher.group(2).replace("[UC]", ""))
+                                .advance().space()
                         .of(serviceRequeuedMatcher.group(2)).color(ColorCode.DARK_RED)
-                        .hoverEvent(HoverEvent.Action.SHOW_TEXT, hoverMessage) // Grund
-                        .clickEvent(ClickEvent.Action.RUN_COMMAND, "/acceptservice " + serviceRequeuedMatcher.group(2).replace("[UC]", ""))
-                        .advance().space() // Notruf sender
+                                .hoverEvent(HoverEvent.Action.SHOW_TEXT, hoverMessage) // Grund
+                                .clickEvent(ClickEvent.Action.RUN_COMMAND, "/acceptservice " + serviceRequeuedMatcher.group(2).replace("[UC]", ""))
+                                .advance().space() // Notruf sender
                         .createComponent());
             }
             return;
@@ -166,7 +166,7 @@ public class EmergencyServiceListener {
             if (serviceCallBox != null && p.getLocation() != null) {
                 activeEmergencyCallBoxList.add(serviceCallBox);
                 e.setMessage(Message.getBuilder()
-                        .add(chatMessage.getFormattedText()).space()
+                        .add(chatMessage.getOriginalFormattedText()).space()
                         .of("[").color(ColorCode.DARK_GRAY).advance()
                         .of("Unterwegs - " + serviceCallBox.getDistance(p.getLocation()) + "m").color(ColorCode.RED)
                                 .clickEvent(ClickEvent.Action.RUN_COMMAND, serviceCallBox.getNaviCommand())

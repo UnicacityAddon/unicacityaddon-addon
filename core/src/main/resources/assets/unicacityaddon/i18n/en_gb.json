@@ -90,14 +90,6 @@
           "name": "ADuty (no message)",
           "description": "Run the '/aduty -s' command"
         },
-        "reinforcementFaction": {
-          "name": "Reinforcement (Faction)",
-          "description": "Send a reinforcement to your faction"
-        },
-        "reinforcementAlliance": {
-          "name": "Reinforcement (alliance)",
-          "description": "Send a reinforcement to your faction and alliance"
-        },
         "publicChannel": {
           "name": "Join Public Channel",
           "description": "Moves the player to their own public channel on Teamspeak"
@@ -178,6 +170,10 @@
         "team": {
           "name": "Addon Team Tag",
           "description": "Displays the team rank above the name"
+        },
+        "roleplay": {
+          "name": "Roleplay name",
+          "description": "Displays the roleplay name of other players"
         }
       },
       "reinforcement": {
@@ -326,8 +322,8 @@
         },
         "church": {
           "name": "Church",
-          "wine": {
-            "name": "Wine"
+          "soup": {
+            "name": "Soup"
           }
         }
       },
@@ -392,6 +388,10 @@
         "contract": {
           "name": "Contract Messages",
           "description": "Formatting the contract messages in a clearer design"
+        },
+        "filteredContractlist": {
+          "name": "Filtered Contractlist",
+          "description": "Only shows the online targets on the contractlist"
         },
         "greeting": {
           "name": "Greeting",

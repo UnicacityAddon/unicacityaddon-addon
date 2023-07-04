@@ -24,7 +24,6 @@ public class MobileListener {
 
     public static final List<String> blockedPlayerList = new ArrayList<>();
     public static int lastCheckedNumber = 0;
-    public static boolean isActive = false;
     public static boolean hasCommunications = false;
     public static boolean muted = false;
     public static boolean activeCommunicationsCheck;
@@ -49,8 +48,8 @@ public class MobileListener {
         String msg = e.chatMessage().getPlainText();
 
         // blocks next SMS message (because SMS messages has two independent message parts)
-        if (blockNextMessage && msg.matches("^(?:\\[UC])*\\w+: .*$")) {
-            blockNextMessage = false;
+        if (this.blockNextMessage && msg.matches("^(?:\\[UC])*\\w+: .*$")) {
+            this.blockNextMessage = false;
             e.setCancelled(true);
             return;
         }
@@ -90,19 +89,16 @@ public class MobileListener {
         Matcher numberMatcher = PatternHandler.MOBILE_NUMBER_PATTERN.matcher(msg);
         if (numberMatcher.find()) {
             lastCheckedNumber = Integer.parseInt(numberMatcher.group(1));
-            if (ACallCommand.isActive || ASMSCommand.isActive || isActive) {
+            if (ACallCommand.isActive || ASMSCommand.isActive) {
                 e.setCancelled(true);
-                ACallCommand.isActive = ASMSCommand.isActive = isActive = false;
+                ACallCommand.isActive = ASMSCommand.isActive = false;
             }
             return;
         }
 
         Matcher mobileSmsMatcher = PatternHandler.MOBILE_SMS_PATTERN.matcher(msg);
         if (mobileSmsMatcher.find()) {
-            String playerName = mobileSmsMatcher.group(1);
-            if (!AccountListener.isAfk)
-                p.sendServerMessage("/nummer " + playerName);
-            isActive = true;
+            lastCheckedNumber = Integer.parseInt(mobileSmsMatcher.group(2));
         }
     }
 }

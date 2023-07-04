@@ -1,6 +1,7 @@
 package com.rettichlp.unicacityaddon.v1_12_2;
 
 import com.rettichlp.unicacityaddon.controller.ScreenshotController;
+import net.labymod.api.Laby;
 import net.labymod.api.models.Implements;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.shader.Framebuffer;
@@ -27,16 +28,18 @@ public class VersionedScreenshotController extends ScreenshotController {
     @Override
     public File createScreenshot(File file) {
         if (file != null) {
-            try {
-                Minecraft minecraft = Minecraft.getMinecraft();
+            Laby.labyAPI().minecraft().executeOnRenderThread(() -> {
+                try {
+                    Minecraft minecraft = Minecraft.getMinecraft();
 
-                Framebuffer framebuffer = minecraft.getFramebuffer();
-                BufferedImage bufferedImage = ScreenShotHelper.createScreenshot(minecraft.displayWidth, minecraft.displayHeight, framebuffer);
+                    Framebuffer framebuffer = minecraft.getFramebuffer();
+                    BufferedImage bufferedImage = ScreenShotHelper.createScreenshot(minecraft.displayWidth, minecraft.displayHeight, framebuffer);
 
-                ImageIO.write(bufferedImage, "jpg", file);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+                    ImageIO.write(bufferedImage, "jpg", file);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
         }
         return file;
     }
