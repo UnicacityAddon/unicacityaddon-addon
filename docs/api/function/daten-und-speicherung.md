@@ -84,6 +84,12 @@ passiert, werden Revives maximal 2 Wochen gespeichert. Anschließend werden dies
     Hier wird statt der Minecraft UUID der User genommen. Das liegt daran, dass dieses Datenbank Entity neu ist und die
     älteren noch nicht von Minecraft UUID auf User geändert wurden.
 
+## Roleplay
+
+Speichert die Roleplay Daten der [User](#user).
+
+- `name` Roleplay Name des Users
+
 ## Statistic
 
 Speichert die Statistik der [User](#user).

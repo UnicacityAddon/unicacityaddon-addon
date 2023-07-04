@@ -100,6 +100,7 @@ nav:
           - Management: api/endpoints/management.md
           - Navi Point: api/endpoints/navi-point.md
           - Revive: api/endpoints/revive.md
+          - Roleplay: api/endpoints/roleplay.md
           - Statistic: api/endpoints/statistic.md
           - Token: api/endpoints/token.md
           - Wanted Reason: api/endpoints/wanted-reason.md

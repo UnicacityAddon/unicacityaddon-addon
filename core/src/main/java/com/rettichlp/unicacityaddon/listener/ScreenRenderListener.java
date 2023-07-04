@@ -10,6 +10,8 @@ import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.render.ScreenRenderEvent;
 import net.labymod.api.event.client.world.ItemStackTooltipEvent;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * @author RettichLP
  */
@@ -29,7 +31,7 @@ public class ScreenRenderListener {
         this.unicacityAddon.transportController().carInteract();
         this.unicacityAddon.transportController().processBusRouting(this.unicacityAddon);
 
-        if (GetGunPatternCommand.armament != null) {
+        if (GetGunPatternCommand.armament != null && System.currentTimeMillis() - GetGunPatternCommand.startTime < TimeUnit.SECONDS.toMillis(5)) {
             Weapon weapon = GetGunPatternCommand.armament.getWeapon();
             int weaponSlotNumber = this.unicacityAddon.guiController().getSlotNumberByDisplayName(weapon.getName());
 

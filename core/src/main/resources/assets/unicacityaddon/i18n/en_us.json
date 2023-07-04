@@ -170,6 +170,10 @@
         "team": {
           "name": "Addon Team Tag",
           "description": "Displays the team rank above the name"
+        },
+        "roleplay": {
+          "name": "Roleplay name",
+          "description": "Displays the roleplay name of other players"
         }
       },
       "reinforcement": {

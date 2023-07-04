@@ -17,8 +17,8 @@ public class NaviPoint {
     private final int z;
     private final String article;
 
-    public String getTabName() {
-        return name.replace(" ", "-");
+    public String getDisplayName() {
+        return name.replace("-", " ");
     }
 
     public String getArticleFourthCase() {

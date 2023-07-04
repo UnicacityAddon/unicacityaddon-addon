@@ -138,7 +138,6 @@ import com.rettichlp.unicacityaddon.listener.faction.kirche.PrayListener;
 import com.rettichlp.unicacityaddon.listener.faction.rettungsdienst.FirstAidListener;
 import com.rettichlp.unicacityaddon.listener.faction.rettungsdienst.MedicationListener;
 import com.rettichlp.unicacityaddon.listener.faction.rettungsdienst.ReviveListener;
-import com.rettichlp.unicacityaddon.listener.faction.state.HQMessageListener;
 import com.rettichlp.unicacityaddon.listener.faction.state.WantedListener;
 import com.rettichlp.unicacityaddon.listener.faction.terroristen.BombListener;
 import com.rettichlp.unicacityaddon.listener.house.HouseDataListener;
@@ -157,6 +156,7 @@ import com.rettichlp.unicacityaddon.nametags.FactionInfoTag;
 import com.rettichlp.unicacityaddon.nametags.HouseBanTag;
 import com.rettichlp.unicacityaddon.nametags.NoPushTag;
 import com.rettichlp.unicacityaddon.nametags.OutlawTag;
+import com.rettichlp.unicacityaddon.nametags.RoleplayNameTag;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import net.labymod.api.client.chat.command.Command;
@@ -188,7 +188,8 @@ public class Registry {
             FactionInfoTag.class,
             HouseBanTag.class,
             NoPushTag.class,
-            OutlawTag.class
+            OutlawTag.class,
+            RoleplayNameTag.class
     );
 
     private final HashSet<Class<?>> hudWidgetList = Sets.newHashSet(
@@ -233,7 +234,6 @@ public class Registry {
             HouseDataListener.class,
             HouseInteractionListener.class,
             HouseRenterListener.class,
-            HQMessageListener.class,
             JobListener.class,
             KarmaMessageListener.class,
             MedicationListener.class,

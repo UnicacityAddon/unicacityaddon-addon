@@ -46,7 +46,7 @@ public class DrugListener {
         AddonPlayer p = this.unicacityAddon.player();
         String playerName = p.getName();
 
-        boolean hqMessageSetting = this.unicacityAddon.configuration().message().hq().get();
+        boolean dBankMessageSetting = this.unicacityAddon.configuration().message().dBank().get();
 
         Matcher drugGetMatcher = PatternHandler.DRUG_GET_PATTERN.matcher(msg);
         if (drugGetMatcher.find()) {
@@ -92,7 +92,7 @@ public class DrugListener {
                 this.unicacityAddon.fileService().data().addDrugToInventory(drugType, drugPurity, amount);
             }
 
-            if (hqMessageSetting) {
+            if (dBankMessageSetting) {
                 NumberFormat numberFormat = NumberFormat.getNumberInstance(new Locale("da", "DK"));
                 e.setMessage(Message.getBuilder().of("D").color(ColorCode.GOLD).bold().advance()
                         .of("-").color(ColorCode.GRAY).advance()
@@ -121,7 +121,7 @@ public class DrugListener {
                 this.unicacityAddon.fileService().data().removeDrugFromInventory(drugType, drugPurity, amount);
             }
 
-            if (hqMessageSetting) {
+            if (dBankMessageSetting) {
                 NumberFormat numberFormat = NumberFormat.getNumberInstance(new Locale("da", "DK"));
                 e.setMessage(Message.getBuilder().of("D").color(ColorCode.GOLD).bold().advance()
                         .of("-").color(ColorCode.GRAY).advance()
@@ -177,7 +177,7 @@ public class DrugListener {
             return;
         }
 
-        if (hqMessageSetting) {
+        if (dBankMessageSetting) {
             Matcher drugVaultDropMatcher = PatternHandler.DRUG_VAULT_DROP_PATTERN.matcher(msg);
             if (drugVaultDropMatcher.find()) {
                 e.setMessage(Message.getBuilder().of("Asservatenkammer").color(ColorCode.DARK_AQUA).bold().advance().space()

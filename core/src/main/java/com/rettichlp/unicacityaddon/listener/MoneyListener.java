@@ -168,6 +168,12 @@ public class MoneyListener {
             return;
         }
 
+        Matcher weaponTrainingStart = PatternHandler.WEAPON_TRAINING_START.matcher(msg);
+        if (weaponTrainingStart.find()) {
+            this.unicacityAddon.fileService().data().removeCashBalance(230);
+            return;
+        }
+
         Matcher cashStatsMatcher = PatternHandler.CASH_STATS_PATTERN.matcher(msg);
         if (cashStatsMatcher.find()) {
             this.unicacityAddon.fileService().data().setCashBalance(Integer.parseInt(cashStatsMatcher.group(1)));
