@@ -15,6 +15,8 @@ public interface MessageConfiguration {
 
     ConfigProperty<Boolean> contract();
 
+    ConfigProperty<Boolean> filteredContractlist();
+
     ConfigProperty<String> greeting();
 
     ConfigProperty<String> farewell();

@@ -389,6 +389,10 @@
           "name": "Contract Messages",
           "description": "Formatting the contract messages in a clearer design"
         },
+        "filteredContractlist": {
+          "name": "Filtered Contractlist",
+          "description": "Only shows the online targets on the contractlist"
+        },
         "greeting": {
           "name": "Greeting",
           "description": "Message sent when accepting a report"
