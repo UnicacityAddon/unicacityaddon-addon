@@ -43,10 +43,10 @@ public class ReportListener {
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {
         AddonPlayer p = this.unicacityAddon.player();
-        String unformattedMsg = e.chatMessage().getPlainText();
+        String msg = e.chatMessage().getPlainText();
         MessageConfiguration messageConfiguration = this.unicacityAddon.configuration().message();
 
-        if (PatternHandler.REPORT_ACCEPTED_PATTERN.matcher(unformattedMsg).find()) {
+        if (PatternHandler.REPORT_ACCEPTED_PATTERN.matcher(msg).find()) {
             isReport = true;
 
             if (messageConfiguration.greeting().getOrDefault("").isEmpty())
@@ -63,16 +63,16 @@ public class ReportListener {
             return;
         }
 
-        if (PatternHandler.REPORT_END_PATTERN.matcher(unformattedMsg).find()) {
+        if (PatternHandler.REPORT_END_PATTERN.matcher(msg).find()) {
             isReport = false;
             return;
         }
 
-        if (unformattedMsg.startsWith(ColorCode.DARK_PURPLE.getCode()) && isReport) {
+        if (msg.startsWith(ColorCode.DARK_PURPLE.getCode()) && isReport) {
             Message.Builder messageBuilder = Message.getBuilder()
                     .add(messageConfiguration.prefix().getOrDefault("").replaceAll("&", "§"));
 
-            Arrays.stream(unformattedMsg.split(" ")).forEach(s -> {
+            Arrays.stream(msg.split(" ")).forEach(s -> {
                 if (urlPattern.matcher(s).find())
                     messageBuilder
                             .of(s).color(ColorCode.BLUE)
@@ -89,7 +89,7 @@ public class ReportListener {
             e.setMessage(messageBuilder.createComponent());
         }
 
-        if (PatternHandler.REPORT_PATTERN.matcher(unformattedMsg).find()) {
+        if (PatternHandler.REPORT_PATTERN.matcher(msg).find()) {
             this.unicacityAddon.soundController().playReportSound();
         }
     }
