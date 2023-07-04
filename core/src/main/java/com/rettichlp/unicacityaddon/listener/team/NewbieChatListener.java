@@ -62,9 +62,10 @@ public class NewbieChatListener {
         String msg = e.getOriginalMessage();
 
         // duplicate check
-        boolean isSameMessage = this.lastNewbieChatMessage.contains(msg.replace("/nc ", ""));
-        e.setCancelled(isSameMessage);
-
-        this.unicacityAddon.logger().info("Newbie chat message aborted because another message is equal to this message.");
+        boolean isSameMessage = msg.startsWith("/nc ") && this.lastNewbieChatMessage.equalsIgnoreCase(msg.substring(4));
+        if (isSameMessage) {
+            e.changeMessage("/nc Ich hätte es nicht besser ausdrücken können!");
+            this.unicacityAddon.logger().info("Newbie chat message aborted because another message is equal to this message.");
+        }
     }
 }
