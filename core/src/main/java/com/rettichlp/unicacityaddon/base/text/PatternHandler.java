@@ -131,6 +131,9 @@ public class PatternHandler {
     public static final Pattern TABAK_DROP_PATTERN = Pattern.compile("^\\[Tabakplantage] Bringe es nun zur Shishabar und gib es mit /droptabak ab\\.$");
     public static final Pattern TABAK_FINISH_PATTERN = Pattern.compile("^\\[Tabakplantage] Du hast (\\d+)g Tabak abgegeben\\.$");
     public static final Pattern MINERS_JOB_END_PATTERN = Pattern.compile("^\\[Steinbruch] Bring alles nun zum Lagerraum\\.$");
+    public static final Pattern LUMBERJACK_START_PATTERN = Pattern.compile("^\\[Holzfäller] Fälle (.+) Bäume und bringe sie zu den Sägen zur Weiterverarbeitung!$");
+    public static final Pattern LUMBERJACK_NEW_TREE_PATTERN = Pattern.compile("^\\[Holzfäller] Du hast den Baumstamm zur Weiterverarbeitung in die Säge gelegt\\.$");
+    public static final Pattern LUMBERJACK_END_PATTERN = Pattern.compile("^\\[Holzfäller] Du hast sehr gute Arbeit geleistet! Du hast dir deinen Lohn vedient\\.$");
 
     /**
      * Pattern for medic interaction
