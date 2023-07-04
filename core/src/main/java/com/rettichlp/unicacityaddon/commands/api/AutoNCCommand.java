@@ -54,7 +54,7 @@ public class AutoNCCommand extends UnicacityCommand {
                             .of("»").color(ColorCode.GRAY).advance().space()
                             .of(Joiner.on(", ").join(autoNC.getWords())).color(ColorCode.AQUA)
                                     .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder()
-                                            .of("Antwort:").color(ColorCode.GRAY).advance().newline()
+                                            .of("Antwort (ID=" + autoNC.getId() + "):").color(ColorCode.GRAY).advance().newline()
                                             .of(autoNC.getAnswer()).color(ColorCode.RED).advance()
                                             .createComponent())
                                     .advance().space()
