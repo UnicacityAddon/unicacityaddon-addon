@@ -8,6 +8,7 @@ import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.commands.faction.AFbankEinzahlenCommand;
+import net.labymod.api.client.chat.ChatMessage;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
@@ -25,7 +26,7 @@ import java.util.regex.Matcher;
 public class ContractListener {
 
     public static final List<String> CONTRACT_LIST = new ArrayList<>();
-    private static long hitlistShown;
+    private long hitlistShown;
 
     private final UnicacityAddon unicacityAddon;
 
@@ -36,8 +37,8 @@ public class ContractListener {
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {
         AddonPlayer p = this.unicacityAddon.player();
-        String msg = e.chatMessage().getPlainText();
-        String coloredmsg = e.chatMessage().getOriginalFormattedText();
+        ChatMessage chatMessage = e.chatMessage();
+        String msg = chatMessage.getPlainText();
         long currentTime = System.currentTimeMillis();
 
         Matcher contractSetMatcher = PatternHandler.CONTRACT_SET_PATTERN.matcher(msg);
@@ -104,20 +105,21 @@ public class ContractListener {
         Matcher contractListHeaderMatcher = PatternHandler.CONTRACT_LIST_HEADER_PATTERN.matcher(msg);
         if (contractListHeaderMatcher.find()) {
             CONTRACT_LIST.clear();
-            hitlistShown = currentTime;
+            this.hitlistShown = currentTime;
             return;
         }
 
         Matcher contractListMatcher = PatternHandler.CONTRACT_LIST_PATTERN.matcher(msg);
         if (contractListMatcher.find()) {
-            if (this.unicacityAddon.configuration().message().filteredContractlist().get()) {
-                if (coloredmsg.contains(ColorCode.RED.getCode())) {
-                    e.setCancelled(true);
-                }
-            }
-            if (currentTime - hitlistShown < 5000) {
+            // update contract list
+            if (currentTime - this.hitlistShown < 5000) {
                 String name = contractListMatcher.group("name");
                 CONTRACT_LIST.add(name);
+            }
+
+            // show list entry dependent on configuration
+            if (this.unicacityAddon.configuration().message().filteredContractlist().get() && chatMessage.getOriginalFormattedText().startsWith(ColorCode.RED.getCode())) {
+                e.setCancelled(true);
             }
         }
     }
