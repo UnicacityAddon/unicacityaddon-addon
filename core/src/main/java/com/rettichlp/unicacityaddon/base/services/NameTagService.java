@@ -13,8 +13,8 @@ import lombok.Getter;
 import lombok.Setter;
 import net.labymod.api.client.network.ClientPacketListener;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,10 +36,10 @@ public class NameTagService {
     public NameTagService(UnicacityAddon unicacityAddon) {
         this.unicacityAddon = unicacityAddon;
         this.blacklistPlayerMap = new HashMap<>();
-        this.contractList = Collections.emptyList();
-        this.maskedList = Collections.emptyList();
-        this.noPushList = Collections.emptyList();
-        this.wantedList = Collections.emptyList();
+        this.contractList = new ArrayList<>();
+        this.maskedList = new ArrayList<>();
+        this.noPushList = new ArrayList<>();
+        this.wantedList = new ArrayList<>();
     }
 
     public String getPrefix(String playerName, boolean isCorpse) {
