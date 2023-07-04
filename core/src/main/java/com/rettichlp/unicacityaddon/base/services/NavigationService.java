@@ -37,12 +37,17 @@ public class NavigationService {
         return getNearest(location, Bus.values(), Bus::getLocation);
     }
 
+    public Map.Entry<Double, NaviPoint> getNearestNaviPoint() {
+        return getNearestNaviPoint(this.unicacityAddon.player().getLocation());
+    }
+
     public Map.Entry<Double, NaviPoint> getNearestNaviPoint(int x, int y, int z) {
         return getNearestNaviPoint(new FloatVector3(x, y, z));
     }
 
     public Map.Entry<Double, NaviPoint> getNearestNaviPoint(FloatVector3 location) {
-        return getNearest(location, this.unicacityAddon.api().getNaviPointList(), NaviPoint::getLocation);
+        Collection<NaviPoint> naviPoints = this.unicacityAddon.api().getNaviPointList();
+        return !naviPoints.isEmpty() ? getNearest(location, naviPoints, NaviPoint::getLocation) : Maps.immutableEntry(0D, new NaviPoint("Unbekannt", 0, 0, 0, ""));
     }
 
     public <T> Map.Entry<Double, T> getNearest(FloatVector3 location, T[] elements, Function<T, FloatVector3> locationExtractor) {

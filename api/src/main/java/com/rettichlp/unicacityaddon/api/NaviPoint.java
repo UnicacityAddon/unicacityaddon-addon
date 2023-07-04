@@ -28,4 +28,8 @@ public class NaviPoint {
     public FloatVector3 getLocation() {
         return new FloatVector3(x, y, z);
     }
+
+    public String getNaviCommand() {
+        return "/navi " + x + "/" + y + "/" + z;
+    }
 }
