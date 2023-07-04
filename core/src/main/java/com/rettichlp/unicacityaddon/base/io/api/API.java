@@ -1,6 +1,7 @@
 package com.rettichlp.unicacityaddon.base.io.api;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.api.AutoNC;
 import com.rettichlp.unicacityaddon.api.BlackMarketLocation;
 import com.rettichlp.unicacityaddon.api.BlacklistReason;
 import com.rettichlp.unicacityaddon.api.Broadcast;
@@ -50,6 +51,7 @@ import java.util.function.Predicate;
  * a high level of user-friendliness, an update should not have to be created due to small changes. That's why I use an
  * API through which I make some data available. I use a private server for this. This provides data for:
  * <ul>
+ *     <li>auto nc <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/autonc">API</a> (unauthorized)</li>
  *     <li>addon groups <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/player">API</a></li>
  *     <li>banners <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/banner">API</a></li>
  *     <li>blacklist reasons <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/blacklistreason/LEMILIEU">API</a> (unauthorized)</li>
@@ -106,6 +108,8 @@ public class API {
     private final Map<String, Integer> playerRankMap = new HashMap<>();
 
     @Setter
+    private List<AutoNC> autoNCList = new ArrayList<>();
+    @Setter
     private List<BlacklistReason> blacklistReasonList = new ArrayList<>();
     @Setter
     private List<BlackMarketLocation> blackMarketLocationList = new ArrayList<>();
@@ -143,6 +147,7 @@ public class API {
                 this.loadFactionData();
                 this.loadPlayerData();
 
+                this.autoNCList = this.sendAutoNCRequest();
                 this.blacklistReasonList = this.sendBlacklistReasonRequest();
                 this.blackMarketLocationList = this.sendBlackMarketLocationRequest();
                 this.houseBanList = this.sendHouseBanRequest(this.addonPlayer.getFaction().equals(Faction.RETTUNGSDIENST));
@@ -219,6 +224,33 @@ public class API {
             AddonGroup.BLACKLIST.getMemberList().addAll(player.getBLACKLIST().stream().map(PlayerEntry::getName).toList());
             AddonGroup.DYAVOL.getMemberList().addAll(player.getDYAVOL().stream().map(PlayerEntry::getName).toList());
         }
+    }
+
+    public List<AutoNC> sendAutoNCRequest() {
+        return RequestBuilder.getBuilder(this.unicacityAddon)
+                .nonProd(this.unicacityAddon.configuration().local().get())
+                .applicationPath(ApplicationPath.AUTO_NC)
+                .getAsJsonArrayAndParse(AutoNC.class);
+    }
+
+    public Success sendAutoNCAddRequest(String words, String answer) {
+        return RequestBuilder.getBuilder(this.unicacityAddon)
+                .nonProd(this.unicacityAddon.configuration().local().get())
+                .applicationPath(ApplicationPath.AUTO_NC)
+                .subPath(ADD_SUB_PATH)
+                .parameter(Map.of(
+                        "words", words,
+                        "answer", answer))
+                .getAsJsonObjectAndParse(Success.class);
+    }
+
+    public Success sendAutoNCRemoveRequest(Long id) {
+        return RequestBuilder.getBuilder(this.unicacityAddon)
+                .nonProd(this.unicacityAddon.configuration().local().get())
+                .applicationPath(ApplicationPath.AUTO_NC)
+                .subPath(REMOVE_SUB_PATH)
+                .parameter(Map.of("id", String.valueOf(id)))
+                .getAsJsonObjectAndParse(Success.class);
     }
 
     public void sendBannerAddRequest(Faction faction, int x, int y, int z, String navipoint) {
