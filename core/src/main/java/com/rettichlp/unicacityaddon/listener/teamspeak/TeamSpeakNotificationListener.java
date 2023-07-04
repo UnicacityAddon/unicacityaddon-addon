@@ -39,9 +39,11 @@ public class TeamSpeakNotificationListener {
         if (user != null) {
             int cid = channel.getId();
             String name = user.getDescription() != null ? user.getDescription() : "Unbekannt";
+            boolean isAddonUser = name.endsWith(p.getName());
 
             this.unicacityAddon.utilService().debug(name + " -> " + channel.getName() + " (" + channel.getChannelCategory() + ")");
 
+            // support waiting room
             if (this.unicacityAddon.configuration().teamspeak().support().get() && cid == 41) {
                 p.sendMessage(Message.getBuilder()
                         .prefix()
@@ -57,43 +59,39 @@ public class TeamSpeakNotificationListener {
 
                 this.unicacityAddon.soundController().playTeamSpeakSupportSound();
                 this.unicacityAddon.logger().info("Client joined support channel: " + name);
+            // public channel
             } else if (this.unicacityAddon.configuration().teamspeak().publicity().get() && cid == p.getFaction().getPublicChannelId()) {
-                if (!name.equals(p.getName())) {
-                    p.sendMessage(Message.getBuilder()
-                            .prefix()
-                            .of(name).color(ColorCode.AQUA).advance().space()
-                            .of("hat den").color(ColorCode.GRAY).advance().space()
-                            .of("Öffentlich-Channel").color(ColorCode.AQUA).advance().space()
-                            .of("betreten.").color(ColorCode.GRAY).advance().space()
+                Message.Builder messageBuilder = Message.getBuilder()
+                        .prefix()
+                        .of(isAddonUser ? "Du" : name).color(ColorCode.AQUA).advance().space()
+                        .of(isAddonUser ? "hast deinen" : "hat deinen").color(ColorCode.GRAY).advance().space()
+                        .of("Öffentlich-Channel").color(ColorCode.AQUA).advance().space()
+                        .of("betreten.").color(ColorCode.GRAY).advance().space();
+
+                if (isAddonUser) {
+                    messageBuilder
+                            .of("[←]").color(ColorCode.BLUE)
+                                    .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Betritt deinen vorherigen Channel").color(ColorCode.RED).advance().createComponent())
+                                    .clickEvent(ClickEvent.Action.RUN_COMMAND, "/tsjoin id=" + e.getOldChannel().getId())
+                                    .advance()
+                            .createComponent();
+                } else {
+                    messageBuilder
                             .of("[↑]").color(ColorCode.BLUE)
-                                    .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Betritt den Öffentlich-Channel").color(ColorCode.RED).advance().createComponent())
+                                    .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Betritt deinen Öffentlich-Channel").color(ColorCode.RED).advance().createComponent())
                                     .clickEvent(ClickEvent.Action.RUN_COMMAND, "/tsjoin Öffentlich")
                                     .advance().space()
                             .of("[↓]").color(ColorCode.BLUE)
                                     .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Move " + name + " zu dir").color(ColorCode.RED).advance().createComponent())
                                     .clickEvent(ClickEvent.Action.RUN_COMMAND, "/movehere " + name)
                                     .advance()
-                            .createComponent());
-                } else {
-                    p.sendMessage(Message.getBuilder()
-                            .prefix()
-                            .of("Du").color(ColorCode.AQUA).advance().space()
-                            .of("hast deinen").color(ColorCode.GRAY).advance().space()
-                            .of("Öffentlich-Channel").color(ColorCode.AQUA).advance().space()
-                            .of("betreten.").color(ColorCode.GRAY).advance().space()
-                            .of("[↑]").color(ColorCode.BLUE)
-                                    .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder()
-                                            .of("Betritt deinen vorhierigen Channel").color(ColorCode.RED).advance().space()
-                                            .of("(").color(ColorCode.GRAY).advance()
-                                            .of(ClientMovedListener.oldChannel.replace("» ", "")).color(ColorCode.AQUA).advance()
-                                            .of(")").color(ColorCode.GRAY).advance()
-                                            .createComponent())
-                                    .clickEvent(ClickEvent.Action.RUN_COMMAND, "/tsjoin " + ClientMovedListener.oldChannel.replace("» ", ""))
-                                    .advance()
-                            .createComponent());
+                            .createComponent();
+
+                    this.unicacityAddon.soundController().playTeamSpeakPublicitySound();
+                    this.unicacityAddon.logger().info("Client joined public channel: " + name);
                 }
-                this.unicacityAddon.soundController().playTeamSpeakPublicitySound();
-                this.unicacityAddon.logger().info("Client joined public channel: " + name);
+
+                p.sendMessage(messageBuilder.createComponent());
             }
         }
     }

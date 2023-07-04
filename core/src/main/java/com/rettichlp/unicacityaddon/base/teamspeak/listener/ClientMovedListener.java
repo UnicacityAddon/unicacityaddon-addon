@@ -36,8 +36,6 @@ public class ClientMovedListener extends Listener {
 
     private final UnicacityAddon unicacityAddon;
 
-    public static String oldChannel = null;
-
     public ClientMovedListener(UnicacityAddon unicacityAddon) {
         super("notifyclientmoved");
         this.unicacityAddon = unicacityAddon;
@@ -64,8 +62,6 @@ public class ClientMovedListener extends Listener {
         Channel oldClientChannel = getOldClientChannel(clid);
         Channel newClientChannel = server.getChannel(cid);
 
-        oldChannel = getOldClientChannel(clid).getName();
-
         if (oldClientChannel != null && newClientChannel != null) {
             User user = oldClientChannel.getUser(clid);
             oldClientChannel.getUsers().remove(user);
@@ -74,7 +70,7 @@ public class ClientMovedListener extends Listener {
             teamSpeakAPI.controller().refreshCurrentServer(args);
         }
 
-        unicacityAddon.labyAPI().eventBus().fire(new TeamSpeakClientMoveEvent(clid, cid));
+        unicacityAddon.labyAPI().eventBus().fire(new TeamSpeakClientMoveEvent(clid, cid, oldClientChannel));
     }
 
     @Nullable
