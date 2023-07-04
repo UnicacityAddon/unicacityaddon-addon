@@ -46,7 +46,8 @@ public class NavigationService {
     }
 
     public Map.Entry<Double, NaviPoint> getNearestNaviPoint(FloatVector3 location) {
-        return getNearest(location, this.unicacityAddon.api().getNaviPointList(), NaviPoint::getLocation);
+        Collection<NaviPoint> naviPoints = this.unicacityAddon.api().getNaviPointList();
+        return !naviPoints.isEmpty() ? getNearest(location, naviPoints, NaviPoint::getLocation) : Maps.immutableEntry(0D, new NaviPoint("Unbekannt", 0, 0, 0, ""));
     }
 
     public <T> Map.Entry<Double, T> getNearest(FloatVector3 location, T[] elements, Function<T, FloatVector3> locationExtractor) {
