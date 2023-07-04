@@ -1,6 +1,7 @@
 package com.rettichlp.unicacityaddon.listener.faction.state;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.base.enums.api.StatisticType;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
@@ -11,9 +12,7 @@ import lombok.Setter;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
-import java.util.Objects;
 import java.util.regex.Matcher;
-import java.util.stream.IntStream;
 
 /**
  * @author RettichLP
@@ -33,22 +32,12 @@ public class WantedListener {
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {
         String msg = e.chatMessage().getPlainText();
+        boolean hqMessages = this.unicacityAddon.configuration().message().hq().get();
 
-        Matcher wantedsGivenReasonMatcher = PatternHandler.WANTED_GIVEN_REASON_PATTERN.matcher(msg);
-        if (wantedsGivenReasonMatcher.find()) {
-            String name = wantedsGivenReasonMatcher.group(1);
-            String reason = wantedsGivenReasonMatcher.group(2);
-
-            this.unicacityAddon.nameTagService().getWantedList().add(new Wanted(name, reason, 0));
-            this.unicacityAddon.utilService().debug("[WANTED] " + name + " (set [" + reason + "] = " + 0 + ")");
-
-            return;
-        }
-
-        Matcher wantedsGivenPointsMatcher = PatternHandler.WANTED_GIVEN_POINTS_PATTERN.matcher(msg);
-        if (wantedsGivenPointsMatcher.find()) {
-            String name = wantedsGivenPointsMatcher.group(1);
-            int wantedPoints = Integer.parseInt(wantedsGivenPointsMatcher.group(2));
+        Matcher wantedGivenPointsMatcher = PatternHandler.WANTED_GIVEN_POINTS_PATTERN.matcher(msg);
+        if (wantedGivenPointsMatcher.find()) {
+            String name = wantedGivenPointsMatcher.group(1);
+            int wantedPoints = Integer.parseInt(wantedGivenPointsMatcher.group(2));
 
             this.unicacityAddon.nameTagService().getWantedList().stream()
                     .filter(wanted -> wanted.getName().equals(name))
@@ -57,20 +46,111 @@ public class WantedListener {
 
             this.unicacityAddon.utilService().debug("[WANTED] " + name + " (set [REASON] = " + wantedPoints + ")");
 
+            if (hqMessages) {
+                e.setMessage(Message.getBuilder().of("➥").color(ColorCode.DARK_GRAY).advance().space()
+                        .of(wantedGivenPointsMatcher.group(2)).color(ColorCode.BLUE).advance().space()
+                        .of("Wanteds").color(ColorCode.BLUE).advance().createComponent());
+            }
+
             return;
         }
 
-        Matcher wantedDeletedMatcher = PatternHandler.WANTED_DELETED_PATTERN.matcher(msg);
-        if (wantedDeletedMatcher.find()) {
-            String name = IntStream.range(1, wantedDeletedMatcher.groupCount() + 1)
-                    .mapToObj(wantedDeletedMatcher::group)
-                    .filter(Objects::nonNull)
-                    .findFirst()
-                    .orElse(null);
+        Matcher wantedGivenReasonMatcher = PatternHandler.WANTED_GIVEN_REASON_PATTERN.matcher(msg);
+        if (wantedGivenReasonMatcher.find()) {
+            String name = wantedGivenReasonMatcher.group(1);
+            String reason = wantedGivenReasonMatcher.group(2);
 
-            this.unicacityAddon.nameTagService().getWantedList().removeIf(wanted -> wanted.getName().equals(name));
-            this.unicacityAddon.utilService().debug("[WANTED] " + name + " (remove)");
+            this.unicacityAddon.nameTagService().getWantedList().add(new Wanted(name, reason, 0));
+            this.unicacityAddon.utilService().debug("[WANTED] " + name + " (set [" + reason + "] = " + 0 + ")");
 
+            if (hqMessages) {
+                e.setMessage(Message.getBuilder().of("Gesucht").color(ColorCode.RED).advance().space()
+                        .of("-").color(ColorCode.GRAY).advance().space()
+                        .of(wantedGivenReasonMatcher.group(1)).color(ColorCode.BLUE).advance().space()
+                        .of("-").color(ColorCode.GRAY).advance().space()
+                        .of(wantedGivenReasonMatcher.group(2)).color(ColorCode.BLUE).advance().createComponent());
+            }
+
+            return;
+        }
+
+        Matcher wantedReasonMatcher = PatternHandler.WANTED_REASON_PATTERN.matcher(msg);
+        if (wantedReasonMatcher.find() && hqMessages) {
+            e.setMessage(Message.getBuilder().of("➥").color(ColorCode.DARK_GRAY).advance().space()
+                    .of(wantedReasonMatcher.group(1)).color(ColorCode.BLUE).advance().space()
+                    .of("-").color(ColorCode.GRAY).advance().space()
+                    .of(wantedReasonMatcher.group(2)).color(ColorCode.BLUE).advance().createComponent());
+            return;
+        }
+
+        Matcher wantedDeleteMatcher = PatternHandler.WANTED_DELETE_PATTERN.matcher(msg);
+        if (wantedDeleteMatcher.find()) {
+            String playerName = wantedDeleteMatcher.group(1);
+            String targetName = wantedDeleteMatcher.group(2);
+
+            this.unicacityAddon.nameTagService().getWantedList().removeIf(wanted -> wanted.getName().equals(targetName));
+            this.unicacityAddon.utilService().debug("[WANTED] " + targetName + " (remove)");
+
+            if (hqMessages) {
+                e.setMessage(Message.getBuilder().of("Gelöscht").color(ColorCode.RED).advance().space()
+                        .of("-").color(ColorCode.GRAY).advance().space()
+                        .of(targetName).color(ColorCode.BLUE).advance().space()
+                        .of("-").color(ColorCode.GRAY).advance().space()
+                        .of(playerName).color(ColorCode.BLUE).advance().createComponent());
+            }
+
+            return;
+        }
+
+        Matcher wantedKillMatcher = PatternHandler.WANTED_KILL_PATTERN.matcher(msg);
+        if (wantedKillMatcher.find()) {
+            String targetName = wantedKillMatcher.group(1);
+            String playerName = wantedKillMatcher.group(2);
+
+            this.unicacityAddon.nameTagService().getWantedList().removeIf(wanted -> wanted.getName().equals(targetName));
+            this.unicacityAddon.utilService().debug("[WANTED] " + targetName + " (remove)");
+
+            if (playerName.equals(this.unicacityAddon.player().getName())) {
+                this.unicacityAddon.api().sendStatisticAddRequest(StatisticType.KILL);
+            }
+
+            if (hqMessages) {
+                e.setMessage(Message.getBuilder().of("Getötet").color(ColorCode.RED).advance().space()
+                        .of("-").color(ColorCode.GRAY).advance().space()
+                        .of(targetName).color(ColorCode.BLUE).advance().space()
+                        .of("-").color(ColorCode.GRAY).advance().space()
+                        .of(playerName).color(ColorCode.BLUE).advance().createComponent());
+            }
+
+            return;
+        }
+
+        Matcher wantedJailMatcher = PatternHandler.WANTED_ARREST_PATTERN.matcher(msg);
+        if (wantedJailMatcher.find()) {
+            String targetName = wantedJailMatcher.group(1);
+            String playerName = wantedJailMatcher.group(2);
+
+            this.unicacityAddon.nameTagService().getWantedList().removeIf(wanted -> wanted.getName().equals(targetName));
+            this.unicacityAddon.utilService().debug("[WANTED] " + targetName + " (remove)");
+
+            if (hqMessages) {
+                e.setMessage(Message.getBuilder().of("Eingesperrt").color(ColorCode.RED).advance().space()
+                        .of("-").color(ColorCode.GRAY).advance().space()
+                        .of(targetName).color(ColorCode.BLUE).advance().space()
+                        .of("-").color(ColorCode.GRAY).advance().space()
+                        .of(playerName).color(ColorCode.BLUE).advance().createComponent());
+            }
+
+            return;
+        }
+
+        Matcher wantedUnarrestMatcher = PatternHandler.WANTED_UNARREST_PATTERN.matcher(msg);
+        if (wantedUnarrestMatcher.find() && hqMessages) {
+            e.setMessage(Message.getBuilder().of("Entlassung").color(ColorCode.RED).advance().space()
+                    .of("-").color(ColorCode.GRAY).advance().space()
+                    .of(wantedUnarrestMatcher.group(2)).color(ColorCode.BLUE).advance().space()
+                    .of("-").color(ColorCode.GRAY).advance().space()
+                    .of(wantedUnarrestMatcher.group(1)).color(ColorCode.BLUE).advance().createComponent());
             return;
         }
 
@@ -98,6 +178,76 @@ public class WantedListener {
             this.unicacityAddon.nameTagService().getWantedList().add(new Wanted(name, wpReason, wpAmount));
             this.unicacityAddon.utilService().debug("[WANTED] " + name + " (set [" + wpReason + "] = " + wpAmount + ")");
 
+            return;
+        }
+
+        Matcher giveDrivingLicenseMatcher = PatternHandler.GIVE_DRIVING_LICENSE_PATTERN.matcher(msg);
+        if (giveDrivingLicenseMatcher.find() && hqMessages) {
+            e.setMessage(Message.getBuilder().of("Führerscheinrückgabe").color(ColorCode.RED).advance().space()
+                    .of("-").color(ColorCode.GRAY).advance().space()
+                    .of(giveDrivingLicenseMatcher.group(3)).color(ColorCode.BLUE).advance().space()
+                    .of("-").color(ColorCode.GRAY).advance().space()
+                    .of(giveDrivingLicenseMatcher.group(2)).color(ColorCode.BLUE).advance().createComponent());
+            return;
+        }
+
+        Matcher takeDrivingLicenseMatcher = PatternHandler.TAKE_DRIVING_LICENSE_PATTERN.matcher(msg);
+        if (takeDrivingLicenseMatcher.find() && hqMessages) {
+            e.setMessage(Message.getBuilder().of("Führerscheinabnahme").color(ColorCode.RED).advance().space()
+                    .of("-").color(ColorCode.GRAY).advance().space()
+                    .of(takeDrivingLicenseMatcher.group(3)).color(ColorCode.BLUE).advance().space()
+                    .of("-").color(ColorCode.GRAY).advance().space()
+                    .of(takeDrivingLicenseMatcher.group(2)).color(ColorCode.BLUE).advance().createComponent());
+            return;
+        }
+
+        Matcher giveGunLicenseMatcher = PatternHandler.GIVE_GUN_LICENSE_PATTERN.matcher(msg);
+        if (giveGunLicenseMatcher.find() && hqMessages) {
+            e.setMessage(Message.getBuilder().of("Waffenscheinrückgabe").color(ColorCode.RED).advance().space()
+                    .of("-").color(ColorCode.GRAY).advance().space()
+                    .of(giveGunLicenseMatcher.group(3)).color(ColorCode.BLUE).advance().space()
+                    .of("-").color(ColorCode.GRAY).advance().space()
+                    .of(giveGunLicenseMatcher.group(2)).color(ColorCode.BLUE).advance().createComponent());
+            return;
+        }
+
+        Matcher takeGunLicenseMatcher = PatternHandler.TAKE_GUN_LICENSE_PATTERN.matcher(msg);
+        if (takeGunLicenseMatcher.find() && hqMessages) {
+            e.setMessage(Message.getBuilder().of("Waffenscheinabnahme").color(ColorCode.RED).advance().space()
+                    .of("-").color(ColorCode.GRAY).advance().space()
+                    .of(takeGunLicenseMatcher.group(3)).color(ColorCode.BLUE).advance().space()
+                    .of("-").color(ColorCode.GRAY).advance().space()
+                    .of(takeGunLicenseMatcher.group(2)).color(ColorCode.BLUE).advance().createComponent());
+            return;
+        }
+
+        Matcher takeGunsMatcher = PatternHandler.TAKE_GUNS_PATTERN.matcher(msg);
+        if (takeGunsMatcher.find() && hqMessages) {
+            e.setMessage(Message.getBuilder().of("Waffenabnahme").color(ColorCode.RED).advance().space()
+                    .of("-").color(ColorCode.GRAY).advance().space()
+                    .of(takeGunsMatcher.group(3)).color(ColorCode.BLUE).advance().space()
+                    .of("-").color(ColorCode.GRAY).advance().space()
+                    .of(takeGunsMatcher.group(2)).color(ColorCode.BLUE).advance().createComponent());
+            return;
+        }
+
+        Matcher takeDrugsMatcher = PatternHandler.TAKE_DRUGS_PATTERN.matcher(msg);
+        if (takeDrugsMatcher.find() && hqMessages) {
+            e.setMessage(Message.getBuilder().of("Drogenabnahme").color(ColorCode.RED).advance().space()
+                    .of("-").color(ColorCode.GRAY).advance().space()
+                    .of(takeDrugsMatcher.group(3)).color(ColorCode.BLUE).advance().space()
+                    .of("-").color(ColorCode.GRAY).advance().space()
+                    .of(takeDrugsMatcher.group(2)).color(ColorCode.BLUE).advance().createComponent());
+            return;
+        }
+
+        Matcher trackerMatcher = PatternHandler.TRACKER_AGENT_PATTERN.matcher(msg);
+        if (trackerMatcher.find() && hqMessages) {
+            e.setMessage(Message.getBuilder().of("Peilsender").color(ColorCode.RED).bold().advance().space()
+                    .of("-").color(ColorCode.GRAY).advance().space()
+                    .of(trackerMatcher.group(1)).color(ColorCode.DARK_AQUA).advance().space()
+                    .of("»").color(ColorCode.GRAY).advance().space()
+                    .of(trackerMatcher.group(2)).color(ColorCode.GOLD).advance().createComponent());
             return;
         }
 

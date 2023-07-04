@@ -46,7 +46,7 @@ public class ReinforcementListener {
         if (reinforcementMatcher.find()) {
             String fullName = reinforcementMatcher.group(1);
             String name = reinforcementMatcher.group(2);
-            String[] splitFormattedMsg = chatMessage.getFormattedText().split(":");
+            String[] splitFormattedMsg = chatMessage.getOriginalFormattedText().split(":");
 
             int posX = Integer.parseInt(reinforcementMatcher.group(3));
             int posY = Integer.parseInt(reinforcementMatcher.group(4));
@@ -71,7 +71,7 @@ public class ReinforcementListener {
                 navipointString = "unbekannter Ort";
                 p.sendErrorMessage("Navipunkte wurden nicht geladen. Versuche /sync um diese neu zu laden!");
             } else {
-                navipointString = navipoint.getName().replace("-", " ");
+                navipointString = navipoint.getDisplayName();
             }
 
             p.sendMessage(this.unicacityAddon.configuration().reinforcement().reinforcement().getOrDefault(DefaultReinforcementConfiguration.REINFORCEMENT)

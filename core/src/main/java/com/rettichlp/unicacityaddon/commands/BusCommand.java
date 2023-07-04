@@ -42,7 +42,7 @@ public class BusCommand extends UnicacityCommand {
             return false;
         }
 
-        NaviPoint naviPoint = find(this.unicacityAddon.api().getNaviPointList(), n -> n.getTabName().equalsIgnoreCase(arguments[0]));
+        NaviPoint naviPoint = find(this.unicacityAddon.api().getNaviPointList(), n -> n.getName().equalsIgnoreCase(arguments[0]));
         if (naviPoint == null) {
             p.sendErrorMessage("Navipunkt nicht gefunden.");
             return false;
@@ -58,7 +58,7 @@ public class BusCommand extends UnicacityCommand {
     @Override
     public List<String> complete(String[] arguments) {
         return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments)
-                .addAtIndex(1, this.unicacityAddon.api().getNaviPointList().stream().map(NaviPoint::getTabName).collect(Collectors.toList()))
+                .addAtIndex(1, this.unicacityAddon.api().getNaviPointList().stream().map(NaviPoint::getName).collect(Collectors.toList()))
                 .build();
     }
 

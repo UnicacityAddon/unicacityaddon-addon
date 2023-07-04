@@ -24,4 +24,8 @@ public class HotkeyEvent implements Event {
     public HotkeyConfiguration hotkeyConfiguration() {
         return this.unicacityAddon.configuration().hotkey();
     }
+
+    public boolean isRealIngame() {
+        return !this.unicacityAddon.labyAPI().minecraft().minecraftWindow().isScreenOpened();
+    }
 }

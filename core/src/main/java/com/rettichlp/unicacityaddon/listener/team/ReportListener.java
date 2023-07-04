@@ -13,6 +13,7 @@ import net.labymod.api.client.chat.ChatMessage;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.gui.screen.key.Key;
 import net.labymod.api.event.Subscribe;
+import net.labymod.api.event.client.chat.ChatMessageSendEvent;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
 import java.util.Arrays;
@@ -70,10 +71,11 @@ public class ReportListener {
 
         if (PatternHandler.REPORT_END_PATTERN.matcher(msg).find()) {
             isReport = false;
+            this.unicacityAddon.factionService().setTempDuty(false);
             return;
         }
 
-        if (chatMessage.getFormattedText().startsWith(ColorCode.DARK_PURPLE.getCode()) && isReport) {
+        if (chatMessage.getOriginalFormattedText().startsWith(ColorCode.DARK_PURPLE.getCode()) && isReport) {
             Message.Builder messageBuilder = Message.getBuilder()
                     .add(messageConfiguration.prefix().getOrDefault("").replaceAll("&", "§"));
 
@@ -100,18 +102,30 @@ public class ReportListener {
     }
 
     @Subscribe
+    public void onChatMessageSend(ChatMessageSendEvent e) {
+        AddonPlayer p = this.unicacityAddon.player();
+        String msg = e.getMessage();
+
+        if (msg.startsWith("/ar") || msg.startsWith("/acceptreport")) {
+            this.unicacityAddon.factionService().setTempDuty(p.inDuty());
+        }
+    }
+
+    @Subscribe
     public void onHotkey(HotkeyEvent e) {
         AddonPlayer p = this.unicacityAddon.player();
         Key key = e.getKey();
         HotkeyConfiguration hotkeyConfiguration = e.hotkeyConfiguration();
 
-        if (key.equals(hotkeyConfiguration.acceptReport().get())) {
-            p.sendServerMessage("/ar");
-        } else if (key.equals(hotkeyConfiguration.cancelReport().get())) {
-            String farewell = this.unicacityAddon.configuration().message().farewell().get();
-            if (!farewell.isEmpty())
-                p.sendServerMessage(farewell);
-            p.sendServerMessage("/cr");
+        if (e.isRealIngame()) {
+            if (key.equals(hotkeyConfiguration.acceptReport().get())) {
+                p.sendServerMessage("/ar");
+            } else if (key.equals(hotkeyConfiguration.cancelReport().get())) {
+                String farewell = this.unicacityAddon.configuration().message().farewell().get();
+                if (!farewell.isEmpty())
+                    p.sendServerMessage(farewell);
+                p.sendServerMessage("/cr");
+            }
         }
     }
 }
