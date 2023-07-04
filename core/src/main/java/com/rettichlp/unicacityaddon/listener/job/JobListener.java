@@ -129,12 +129,7 @@ public class JobListener {
             }, TimeUnit.SECONDS.toMillis((long) 2.5));
         }
 
-        if (PatternHandler.LUMBERJACK_START_PATTERN.matcher(msg).find()) {
-            p.sendServerMessage("/findtree");
-            return;
-        }
-
-        if (PatternHandler.LUMBERJACK_NEW_TREE_PATTERN.matcher(msg).find()) {
+        if (PatternHandler.LUMBERJACK_START_PATTERN.matcher(msg).find() || PatternHandler.LUMBERJACK_NEW_TREE_PATTERN.matcher(msg).find()) {
             p.sendServerMessage("/findtree");
             return;
         }
