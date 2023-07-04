@@ -70,7 +70,7 @@ public class ClientMovedListener extends Listener {
             teamSpeakAPI.controller().refreshCurrentServer(args);
         }
 
-        unicacityAddon.labyAPI().eventBus().fire(new TeamSpeakClientMoveEvent(clid, cid));
+        unicacityAddon.labyAPI().eventBus().fire(new TeamSpeakClientMoveEvent(clid, cid, oldClientChannel));
     }
 
     @Nullable

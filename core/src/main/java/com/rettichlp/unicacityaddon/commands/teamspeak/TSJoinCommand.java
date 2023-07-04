@@ -35,7 +35,9 @@ public class TSJoinCommand extends UnicacityCommand {
 
         String channelName = arguments[0];
 
-        Channel channel = this.unicacityAddon.teamSpeakAPI().controller().getChannelByName(channelName);
+        Channel channel = channelName.startsWith("id=")
+                ? this.unicacityAddon.teamSpeakAPI().getServer().getChannel(Integer.parseInt(channelName.split("=")[1]))
+                : this.unicacityAddon.teamSpeakAPI().controller().getChannelByName(channelName);
 
         if (channel != null) {
             boolean success = this.unicacityAddon.teamSpeakAPI().controller().move(channel.getId());
