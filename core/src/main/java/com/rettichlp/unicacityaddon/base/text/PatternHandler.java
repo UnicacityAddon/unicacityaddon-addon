@@ -326,7 +326,7 @@ public class PatternHandler {
     public static final Pattern DRUG_VAULT_GET_PATTERN = Pattern.compile("^HQ: (.+) (?:\\[UC])*(\\w+) hat (\\d+)g (Pulver|Kräuter|Kristalle|Wundertüte) \\((Höchste Reinheit|Gute Reinheit|Mittlere Reinheit|Schlechte Reinheit)\\) aus der Asservatenkammer genommen\\.$");
     public static final Pattern DRUG_VAULT_INFOTITLE_PATTERN = Pattern.compile("^ ===== Asservatenkammer \\((Pulver|Kräuter|Kristalle|Wundertüten)\\) =====$");
     public static final Pattern DRUG_VAULT_INFO_PATTERN = Pattern.compile("^ {2}» (Mittlere|Höchste|Gute|Schlechte) Reinheit: (\\d+)g {2}» (Mittlere|Höchste|Gute|Schlechte) Reinheit: (\\d+)g {2}» (Mittlere|Höchste|Gute|Schlechte) Reinheit: (\\d+)g {2}» (Mittlere|Höchste|Gute|Schlechte) Reinheit: (\\d+)g$");
-    public static final Pattern DRUG_VAULT_INFOLSD_PATTERN = Pattern.compile("^ {2}» (.+): (\\d+) Stück$");
+    public static final Pattern DRUG_VAULT_INFOLSD_PATTERN = Pattern.compile("^ {2}» (LSD|Wundertüte(n*)): (\\d+) Stück$"); // TODO adjust if bug is fixed on Unicacity
     public static final Pattern DRUG_VAULT_BURN_PATTERN = Pattern.compile("^HQ: (.+) (?:\\[UC])*(\\w+) hat (\\d+)g (Pulver|Kräuter|Kristalle|Wundertüte) \\((Höchste Reinheit|Gute Reinheit|Mittlere Reinheit|Schlechte Reinheit)\\) vernichtet\\.$");
     public static final Pattern PLANT_BURN_PATTERN = Pattern.compile("^HQ: (.+) (?:\\[UC])*(\\w+) hat erfolgreich eine (Pulver|Kräuter) Plantage verbrannt, over\\.$");
 }
