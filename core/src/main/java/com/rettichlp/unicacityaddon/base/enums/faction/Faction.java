@@ -73,7 +73,7 @@ public enum Faction {
     private final String factionKey;
     private final boolean isBadFaction;
     private final int publicChannelId;
-    private final int abtractedChannelID;
+    private final int abstractedChannelId;
     private final String nameTagSuffix;
 
     public String getWebsiteUrl() {

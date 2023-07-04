@@ -280,7 +280,7 @@ public class TeamSpeakController {
         if (name.equalsIgnoreCase("Öffentlich") && !faction.equals(Faction.NULL)) {
             channel = this.unicacityAddon.teamSpeakAPI().getServer().getChannel(faction.getPublicChannelId());
         } else if (name.equalsIgnoreCase("Abwesend") && !faction.equals(Faction.NULL)) {
-            channel = this.unicacityAddon.teamSpeakAPI().getServer().getChannel(faction.getAbtractedChannelID());
+            channel = this.unicacityAddon.teamSpeakAPI().getServer().getChannel(faction.getAbstractedChannelId());
         } else {
             channel = this.unicacityAddon.utilService().text().getMostMatching(stringChannelMap.values(), name, (chn) -> chn.getName().replace("»", "").trim().replace(" ", "-"));
         }
