@@ -9,6 +9,7 @@ import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.event.HoverEvent;
 import net.labymod.api.event.Subscribe;
+import net.labymod.api.event.client.chat.ChatMessageSendEvent;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
 import java.util.regex.Matcher;
@@ -19,10 +20,13 @@ import java.util.regex.Matcher;
 @UCEvent
 public class NewbieChatListener {
 
+    private String lastNewbieChatMessage;
+
     private final UnicacityAddon unicacityAddon;
 
     public NewbieChatListener(UnicacityAddon unicacityAddon) {
         this.unicacityAddon = unicacityAddon;
+        this.lastNewbieChatMessage = "";
     }
 
     @Subscribe
@@ -30,11 +34,10 @@ public class NewbieChatListener {
         AddonPlayer p = this.unicacityAddon.player();
         String msg = e.chatMessage().getPlainText();
 
-        System.out.println("trigger event");
-
         Matcher newbieChatMatcher = PatternHandler.NEWBIE_CHAT.matcher(msg);
         if (newbieChatMatcher.find()) {
             String message = newbieChatMatcher.group("message").toLowerCase();
+            this.lastNewbieChatMessage = message;
 
             this.unicacityAddon.api().getAutoNCList().stream()
                     .filter(autoNC -> autoNC.getWords().stream().map(String::toLowerCase).allMatch(message::contains))
@@ -52,5 +55,16 @@ public class NewbieChatListener {
                             .of("]").color(ColorCode.DARK_GRAY).advance()
                             .createComponent()));
         }
+    }
+
+    @Subscribe
+    public void onChatMessageSend(ChatMessageSendEvent e) {
+        String msg = e.getOriginalMessage();
+
+        // duplicate check
+        boolean isSameMessage = this.lastNewbieChatMessage.contains(msg.replace("/nc ", ""));
+        e.setCancelled(isSameMessage);
+
+        this.unicacityAddon.logger().info("Newbie chat message aborted because another message is equal to this message.");
     }
 }
