@@ -12,8 +12,7 @@ import net.labymod.api.client.chat.ChatMessage;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
 import java.util.regex.Matcher;
 
 /**
@@ -25,7 +24,6 @@ import java.util.regex.Matcher;
 @UCEvent
 public class ContractListener {
 
-    public static final List<String> CONTRACT_LIST = new ArrayList<>();
     private long hitlistShown;
 
     private final UnicacityAddon unicacityAddon;
@@ -45,7 +43,7 @@ public class ContractListener {
         if (contractSetMatcher.find()) {
             this.unicacityAddon.soundController().playContractSetSound();
             String target = contractSetMatcher.group(1);
-            CONTRACT_LIST.add(target);
+            this.unicacityAddon.nameTagService().getContractList().add(target);
 
             if (this.unicacityAddon.configuration().message().contract().get()) {
                 e.setMessage(Message.getBuilder()
@@ -64,7 +62,7 @@ public class ContractListener {
         if (contractKillMatcher.find()) {
             this.unicacityAddon.soundController().playContractFulfilledSound();
             String target = contractKillMatcher.group(2);
-            CONTRACT_LIST.remove(target);
+            this.unicacityAddon.nameTagService().getContractList().remove(target);
             String hitman = contractKillMatcher.group(1);
 
             if (hitman.equals(p.getName())) {
@@ -89,7 +87,7 @@ public class ContractListener {
         Matcher contractDeleteMatcher = PatternHandler.CONTRACT_DELETE_PATTERN.matcher(msg);
         if (contractDeleteMatcher.find()) {
             String target = contractDeleteMatcher.group(2);
-            CONTRACT_LIST.remove(target);
+            this.unicacityAddon.nameTagService().getContractList().remove(target);
 
             if (this.unicacityAddon.configuration().message().contract().get()) {
                 e.setMessage(Message.getBuilder().of("CT-DELETE").color(ColorCode.RED).bold().advance().space()
@@ -104,7 +102,7 @@ public class ContractListener {
 
         Matcher contractListHeaderMatcher = PatternHandler.CONTRACT_LIST_HEADER_PATTERN.matcher(msg);
         if (contractListHeaderMatcher.find()) {
-            CONTRACT_LIST.clear();
+            this.unicacityAddon.nameTagService().setContractList(Collections.emptyList());
             this.hitlistShown = currentTime;
             return;
         }
@@ -114,7 +112,7 @@ public class ContractListener {
             // update contract list
             if (currentTime - this.hitlistShown < 5000) {
                 String name = contractListMatcher.group("name");
-                CONTRACT_LIST.add(name);
+                this.unicacityAddon.nameTagService().getContractList().add(name);
             }
 
             // show list entry dependent on configuration

@@ -8,13 +8,11 @@ import com.rettichlp.unicacityaddon.base.config.nametag.specific.Specific;
 import com.rettichlp.unicacityaddon.base.config.nametag.streetwar.Streetwar;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.FormattingCode;
-import com.rettichlp.unicacityaddon.listener.faction.ContractListener;
 import com.rettichlp.unicacityaddon.listener.faction.state.WantedListener;
 import lombok.Getter;
 import lombok.Setter;
 import net.labymod.api.client.network.ClientPacketListener;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -28,18 +26,20 @@ import java.util.Map;
 public class NameTagService {
 
     private Map<String, Boolean> blacklistPlayerMap;
+    private Collection<String> contractList;
+    private Collection<String> maskedList;
+    private Collection<String> noPushList;
     private Collection<WantedListener.Wanted> wantedList;
-    private Collection<String> noPushPlayerList;
-    private Collection<String> maskedPlayerList;
 
     private final UnicacityAddon unicacityAddon;
 
     public NameTagService(UnicacityAddon unicacityAddon) {
         this.unicacityAddon = unicacityAddon;
         this.blacklistPlayerMap = new HashMap<>();
-        this.wantedList = new ArrayList<>();
-        this.noPushPlayerList = Collections.emptyList();
-        this.maskedPlayerList = Collections.emptyList();
+        this.contractList = Collections.emptyList();
+        this.maskedList = Collections.emptyList();
+        this.noPushList = Collections.emptyList();
+        this.wantedList = Collections.emptyList();
     }
 
     public String getPrefix(String playerName, boolean isCorpse) {
@@ -87,7 +87,7 @@ public class NameTagService {
             if (this.blacklistPlayerMap.get(playerName) != null)
                 prefix.append(specific.color().getOrDefault(ColorCode.DARK_RED).getCode());
 
-            if (ContractListener.CONTRACT_LIST.contains(playerName))
+            if (this.contractList.contains(playerName))
                 prefix.append(specific.color().getOrDefault(ColorCode.DARK_RED).getCode());
         }
 
