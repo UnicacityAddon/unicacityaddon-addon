@@ -90,14 +90,6 @@
           "name": "ADuty (ohne Nachricht)",
           "description": "Führt den '/aduty -s' Befehl aus"
         },
-        "reinforcementFaction": {
-          "name": "Reinforcement (Fraktion)",
-          "description": "Sendet einen Reinforcement an die eigene Fraktion"
-        },
-        "reinforcementAlliance": {
-          "name": "Reinforcement (Bündnis)",
-          "description": "Sendet einen Reinforcement an die eigene Fraktion und das Bündnis"
-        },
         "publicChannel": {
           "name": "Öffentlichen Channel betreten",
           "description": "Bewegt den Spieler in den eigenen öffentlichen Channel auf dem Teamspeak"
@@ -178,6 +170,10 @@
         "team": {
           "name": "Addon Team Tag",
           "description": "Zeigt den Team Rang über dem Namen an"
+        },
+        "roleplay": {
+          "name": "Roleplay Name",
+          "description": "Zeigt den Roleplay Namen anderer Spieler an"
         }
       },
       "reinforcement": {
@@ -326,8 +322,8 @@
         },
         "church": {
           "name": "Kirche",
-          "wine": {
-            "name": "Wein"
+          "soup": {
+            "name": "Suppe"
           }
         }
       },

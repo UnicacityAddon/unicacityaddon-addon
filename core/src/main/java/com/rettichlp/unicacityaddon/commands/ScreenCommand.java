@@ -29,8 +29,6 @@ public class ScreenCommand extends UnicacityCommand {
 
     @Override
     public boolean execute(String[] arguments) {
-        AddonPlayer p = this.unicacityAddon.player();
-
         if (arguments.length < 1) {
             sendUsage();
             return true;
