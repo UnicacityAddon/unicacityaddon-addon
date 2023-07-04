@@ -79,7 +79,7 @@ public class TeamSpeakNotificationListener {
                     messageBuilder
                             .of("[↑]").color(ColorCode.BLUE)
                                     .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Betritt deinen Öffentlich-Channel").color(ColorCode.RED).advance().createComponent())
-                                    .clickEvent(ClickEvent.Action.RUN_COMMAND, "/tsjoin Öffentlich")
+                                    .clickEvent(ClickEvent.Action.RUN_COMMAND, "/tsjoin id=" + p.getFaction().getPublicChannelId())
                                     .advance().space()
                             .of("[↓]").color(ColorCode.BLUE)
                                     .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Move " + name + " zu dir").color(ColorCode.RED).advance().createComponent())
