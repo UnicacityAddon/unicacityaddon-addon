@@ -37,6 +37,10 @@ public class NavigationService {
         return getNearest(location, Bus.values(), Bus::getLocation);
     }
 
+    public Map.Entry<Double, NaviPoint> getNearestNaviPoint() {
+        return getNearestNaviPoint(this.unicacityAddon.player().getLocation());
+    }
+
     public Map.Entry<Double, NaviPoint> getNearestNaviPoint(int x, int y, int z) {
         return getNearestNaviPoint(new FloatVector3(x, y, z));
     }

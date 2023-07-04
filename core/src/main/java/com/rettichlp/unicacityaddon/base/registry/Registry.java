@@ -23,7 +23,7 @@ import com.rettichlp.unicacityaddon.commands.MemberInfoCommand;
 import com.rettichlp.unicacityaddon.commands.NaviCommand;
 import com.rettichlp.unicacityaddon.commands.NearestATMCommand;
 import com.rettichlp.unicacityaddon.commands.NearestJobCommand;
-import com.rettichlp.unicacityaddon.commands.NearestNavipointCommand;
+import com.rettichlp.unicacityaddon.commands.NearestNaviPointCommand;
 import com.rettichlp.unicacityaddon.commands.ScreenCommand;
 import com.rettichlp.unicacityaddon.commands.ShutdownGraveyardCommand;
 import com.rettichlp.unicacityaddon.commands.ShutdownJailCommand;
@@ -320,7 +320,7 @@ public class Registry {
             NaviPointCommand.class,
             NearestATMCommand.class,
             NearestJobCommand.class,
-            NearestNavipointCommand.class,
+            NearestNaviPointCommand.class,
             PlayerGroupCommand.class,
             PunishCommand.class,
             ReinforcementCommand.class,
