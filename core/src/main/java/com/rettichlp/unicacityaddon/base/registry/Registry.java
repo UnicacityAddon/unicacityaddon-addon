@@ -155,6 +155,7 @@ import com.rettichlp.unicacityaddon.nametags.FactionInfoTag;
 import com.rettichlp.unicacityaddon.nametags.HouseBanTag;
 import com.rettichlp.unicacityaddon.nametags.NoPushTag;
 import com.rettichlp.unicacityaddon.nametags.OutlawTag;
+import com.rettichlp.unicacityaddon.nametags.RoleplayNameTag;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import net.labymod.api.client.chat.command.Command;
@@ -186,7 +187,8 @@ public class Registry {
             FactionInfoTag.class,
             HouseBanTag.class,
             NoPushTag.class,
-            OutlawTag.class
+            OutlawTag.class,
+            RoleplayNameTag.class
     );
 
     private final HashSet<Class<?>> hudWidgetList = Sets.newHashSet(
