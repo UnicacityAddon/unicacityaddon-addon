@@ -22,7 +22,6 @@ import java.util.regex.Matcher;
 @UCEvent
 public class ReviveListener {
 
-    public static boolean isDead = false;
     public static long medicReviveStartTime = 0; // revive time if you are the medic
     private static final Timer timer = new Timer();
     private static long playerReviveStartTime = 0; // revive time if you are dead
@@ -49,7 +48,6 @@ public class ReviveListener {
                     if (location != null && location.distance(playerReviveLocation) > 50) {
                         AddonPlayer p = ReviveListener.this.unicacityAddon.player();
                         ReviveListener.this.unicacityAddon.fileService().data().setTimer(0);
-                        isDead = false;
 
                         if (System.currentTimeMillis() - playerReviveStartTime < TimeUnit.SECONDS.toMillis(10)) {
                             ReviveListener.this.unicacityAddon.fileService().data().removeBankBalance(50); // successfully revived by medic = 50$
@@ -74,8 +72,6 @@ public class ReviveListener {
 
         Matcher reviveFailureMatcher = PatternHandler.REVIVE_FAILURE_PATTERN.matcher(msg);
         if (reviveFailureMatcher.find()) {
-            isDead = false;
-
             this.unicacityAddon.fileService().data().setTimer(0);
             this.unicacityAddon.fileService().data().setCashBalance(0);
 

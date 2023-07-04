@@ -10,6 +10,8 @@ import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidgetConfig;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextLine;
 import net.labymod.api.event.Subscribe;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * @author RettichLP
  */
@@ -39,7 +41,9 @@ public class BombHudWidget extends TextHudWidget<TextHudWidgetConfig> {
 
     @Subscribe
     public void onBombPlanted(BombPlantedEvent e) {
-        this.time = 0;
+        long delay = e.getDelaySincePlace();
+        this.unicacityAddon.utilService().debug("Start bomb with delay = " + delay);
+        this.time = Math.toIntExact(TimeUnit.MILLISECONDS.toSeconds(delay));
     }
 
     @Subscribe

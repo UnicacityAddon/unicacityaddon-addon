@@ -50,10 +50,7 @@ public class VersionedWorldInteractionController extends WorldInteractionControl
     @Override
     public boolean isBanner(FloatVector3 location) {
         World world = Minecraft.getMinecraft().world;
-
         TileEntity tileEntity = world.getTileEntity(new BlockPos(location.getX(), location.getY(), location.getZ()));
-
-        System.out.println("1.12.2: " + (tileEntity instanceof TileEntityBanner));
         return tileEntity instanceof TileEntityBanner;
     }
 
