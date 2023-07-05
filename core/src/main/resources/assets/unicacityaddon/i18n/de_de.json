@@ -170,6 +170,10 @@
         "team": {
           "name": "Addon Team Tag",
           "description": "Zeigt den Team Rang über dem Namen an"
+        },
+        "roleplay": {
+          "name": "Roleplay Name",
+          "description": "Zeigt den Roleplay Namen anderer Spieler an"
         }
       },
       "reinforcement": {
@@ -318,8 +322,8 @@
         },
         "church": {
           "name": "Kirche",
-          "wine": {
-            "name": "Wein"
+          "soup": {
+            "name": "Suppe"
           }
         }
       },
@@ -384,6 +388,10 @@
         "contract": {
           "name": "Contract Nachrichten",
           "description": "Formatierung der Contract Nachrichten in ein übersichtlicheres Design"
+        },
+        "filteredContractlist": {
+          "name": "Gefilterte Contractliste",
+          "description": "Zeigt nur die Onlineziele auf der Contractliste an"
         },
         "greeting": {
           "name": "Begrüßung",

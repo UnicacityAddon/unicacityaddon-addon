@@ -55,11 +55,12 @@ public class MoneyListener {
             }
 
             this.unicacityAddon.fileService().data().addJobExperience(experience);
+            return;
         }
 
-        Matcher kontoauszugMatcher = PatternHandler.BANK_STATEMENT_PATTERN.matcher(msg);
-        if (kontoauszugMatcher.find()) {
-            this.unicacityAddon.fileService().data().setBankBalance(Integer.parseInt(kontoauszugMatcher.group(1)));
+        Matcher bankStatementMatcher = PatternHandler.BANK_STATEMENT_PATTERN.matcher(msg);
+        if (bankStatementMatcher.find()) {
+            this.unicacityAddon.fileService().data().setBankBalance(Integer.parseInt(bankStatementMatcher.group(1)));
 
             ATMConfiguration atmConfiguration = this.unicacityAddon.configuration().atm();
             if (atmConfiguration.enabled().get()) {
@@ -164,6 +165,12 @@ public class MoneyListener {
         Matcher cashRemoveMatcher = PatternHandler.CASH_REMOVE_PATTERN.matcher(msg);
         if (cashRemoveMatcher.find()) {
             this.unicacityAddon.fileService().data().removeCashBalance(Integer.parseInt(cashRemoveMatcher.group(1)));
+            return;
+        }
+
+        Matcher weaponTrainingStart = PatternHandler.WEAPON_TRAINING_START.matcher(msg);
+        if (weaponTrainingStart.find()) {
+            this.unicacityAddon.fileService().data().removeCashBalance(230);
             return;
         }
 

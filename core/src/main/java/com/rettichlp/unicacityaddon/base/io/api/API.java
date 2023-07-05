@@ -1,13 +1,16 @@
 package com.rettichlp.unicacityaddon.base.io.api;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.api.AutoNC;
 import com.rettichlp.unicacityaddon.api.BlackMarketLocation;
 import com.rettichlp.unicacityaddon.api.BlacklistReason;
 import com.rettichlp.unicacityaddon.api.Broadcast;
 import com.rettichlp.unicacityaddon.api.NaviPoint;
 import com.rettichlp.unicacityaddon.api.Revive;
+import com.rettichlp.unicacityaddon.api.RoleplayName;
 import com.rettichlp.unicacityaddon.api.WantedReason;
 import com.rettichlp.unicacityaddon.api.Yasin;
+import com.rettichlp.unicacityaddon.api.event.Event;
 import com.rettichlp.unicacityaddon.api.houseBan.HouseBan;
 import com.rettichlp.unicacityaddon.api.houseBan.HouseBanReason;
 import com.rettichlp.unicacityaddon.api.management.Management;
@@ -48,6 +51,7 @@ import java.util.function.Predicate;
  * a high level of user-friendliness, an update should not have to be created due to small changes. That's why I use an
  * API through which I make some data available. I use a private server for this. This provides data for:
  * <ul>
+ *     <li>auto nc <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/autonc">API</a> (unauthorized)</li>
  *     <li>addon groups <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/player">API</a></li>
  *     <li>banners <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/banner">API</a></li>
  *     <li>blacklist reasons <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/blacklistreason/LEMILIEU">API</a> (unauthorized)</li>
@@ -59,6 +63,7 @@ import java.util.function.Predicate;
  *     <li>users <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/mgmt/users">API</a></li>
  *     <li>navi points <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/navipoint">API</a></li>
  *     <li>revives <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/revive">API</a> (unauthorized)</li>
+ *     <li>roleplay <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/roleplay">API</a></li>
  *     <li>statistics <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/statistic/RettichLP">API</a></li>
  *     <li>wanted reasons <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/wantedreason">API</a></li>
  *     <li>yasin <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/yasin">API</a></li>
@@ -97,10 +102,13 @@ public class API {
     private final String USERS_SUB_PATH = "users";
     private final String BOMB_SUB_PATH = "bomb";
     private final String GANGWAR_SUB_PATH = "gangwar";
+    private final String UPDATE_SUB_PATH = "update";
 
     private final Map<String, Faction> playerFactionMap = new HashMap<>();
     private final Map<String, Integer> playerRankMap = new HashMap<>();
 
+    @Setter
+    private List<AutoNC> autoNCList = new ArrayList<>();
     @Setter
     private List<BlacklistReason> blacklistReasonList = new ArrayList<>();
     @Setter
@@ -113,6 +121,8 @@ public class API {
     private List<ManagementUser> managementUserList = new ArrayList<>();
     @Setter
     private List<NaviPoint> naviPointList = new ArrayList<>();
+    @Setter
+    private List<RoleplayName> roleplayNameList = new ArrayList<>();
     @Setter
     private List<WantedReason> wantedReasonList = new ArrayList<>();
 
@@ -137,12 +147,14 @@ public class API {
                 this.loadFactionData();
                 this.loadPlayerData();
 
+                this.autoNCList = this.sendAutoNCRequest();
                 this.blacklistReasonList = this.sendBlacklistReasonRequest();
                 this.blackMarketLocationList = this.sendBlackMarketLocationRequest();
                 this.houseBanList = this.sendHouseBanRequest(this.addonPlayer.getFaction().equals(Faction.RETTUNGSDIENST));
                 this.houseBanReasonList = this.sendHouseBanReasonRequest();
                 this.managementUserList = this.sendManagementUserRequest();
                 this.naviPointList = this.sendNaviPointRequest();
+                this.roleplayNameList = this.sendRoleplayNameRequest();
                 this.wantedReasonList = this.sendWantedReasonRequest();
 
                 this.unicacityAddon.labyAPI().notificationController().pop(syncNotification(Type.STARTED));
@@ -214,6 +226,33 @@ public class API {
         }
     }
 
+    public List<AutoNC> sendAutoNCRequest() {
+        return RequestBuilder.getBuilder(this.unicacityAddon)
+                .nonProd(this.unicacityAddon.configuration().local().get())
+                .applicationPath(ApplicationPath.AUTO_NC)
+                .getAsJsonArrayAndParse(AutoNC.class);
+    }
+
+    public Success sendAutoNCAddRequest(String words, String answer) {
+        return RequestBuilder.getBuilder(this.unicacityAddon)
+                .nonProd(this.unicacityAddon.configuration().local().get())
+                .applicationPath(ApplicationPath.AUTO_NC)
+                .subPath(ADD_SUB_PATH)
+                .parameter(Map.of(
+                        "words", words,
+                        "answer", answer))
+                .getAsJsonObjectAndParse(Success.class);
+    }
+
+    public Success sendAutoNCRemoveRequest(Long id) {
+        return RequestBuilder.getBuilder(this.unicacityAddon)
+                .nonProd(this.unicacityAddon.configuration().local().get())
+                .applicationPath(ApplicationPath.AUTO_NC)
+                .subPath(REMOVE_SUB_PATH)
+                .parameter(Map.of("id", String.valueOf(id)))
+                .getAsJsonObjectAndParse(Success.class);
+    }
+
     public void sendBannerAddRequest(Faction faction, int x, int y, int z, String navipoint) {
         RequestBuilder.getBuilder(this.unicacityAddon)
                 .nonProd(this.unicacityAddon.configuration().local().get())
@@ -283,6 +322,13 @@ public class API {
                         "message", message,
                         "sendTime", sendTime))
                 .getAsJsonObjectAndParse(Success.class);
+    }
+
+    public Event sendEventRequest() {
+        return RequestBuilder.getBuilder(this.unicacityAddon)
+                .nonProd(this.unicacityAddon.configuration().local().get())
+                .applicationPath(ApplicationPath.EVENT)
+                .getAsJsonObjectAndParse(Event.class);
     }
 
     public void sendEventBombRequest(long startTime) {
@@ -464,6 +510,22 @@ public class API {
                 .applicationPath(ApplicationPath.REVIVE)
                 .subPath(minecraftName)
                 .getAsJsonObjectAndParse(Revive.class);
+    }
+
+    public List<RoleplayName> sendRoleplayNameRequest() {
+        return RequestBuilder.getBuilder(this.unicacityAddon)
+                .nonProd(this.unicacityAddon.configuration().local().get())
+                .applicationPath(ApplicationPath.ROLEPLAY)
+                .getAsJsonArrayAndParse(RoleplayName.class);
+    }
+
+    public Success sendRoleplayNameSetRequest(String roleplayName) {
+        return RequestBuilder.getBuilder(this.unicacityAddon)
+                .nonProd(this.unicacityAddon.configuration().local().get())
+                .applicationPath(ApplicationPath.ROLEPLAY)
+                .subPath(UPDATE_SUB_PATH)
+                .parameter(Map.of("name", roleplayName))
+                .getAsJsonObjectAndParse(Success.class);
     }
 
     public Statistic sendStatisticRequest() {
