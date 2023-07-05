@@ -30,6 +30,7 @@ import com.rettichlp.unicacityaddon.commands.ShutdownJailCommand;
 import com.rettichlp.unicacityaddon.commands.SyncCommand;
 import com.rettichlp.unicacityaddon.commands.TimerCommand;
 import com.rettichlp.unicacityaddon.commands.TodoListCommand;
+import com.rettichlp.unicacityaddon.commands.api.AutoNCCommand;
 import com.rettichlp.unicacityaddon.commands.api.BlacklistReasonCommand;
 import com.rettichlp.unicacityaddon.commands.api.BroadcastCommand;
 import com.rettichlp.unicacityaddon.commands.api.HousebanCommand;
@@ -147,6 +148,7 @@ import com.rettichlp.unicacityaddon.listener.job.FishermanListener;
 import com.rettichlp.unicacityaddon.listener.job.JobListener;
 import com.rettichlp.unicacityaddon.listener.team.ADutyListener;
 import com.rettichlp.unicacityaddon.listener.team.AdListener;
+import com.rettichlp.unicacityaddon.listener.team.NewbieChatListener;
 import com.rettichlp.unicacityaddon.listener.team.ReportListener;
 import com.rettichlp.unicacityaddon.listener.teamspeak.TeamSpeakKeyListener;
 import com.rettichlp.unicacityaddon.listener.teamspeak.TeamSpeakNotificationListener;
@@ -242,6 +244,7 @@ public class Registry {
             MoneyListener.class,
             NavigationListener.class,
             NameTagRenderListener.class,
+            NewbieChatListener.class,
             PlantListener.class,
             PrayListener.class,
             ReinforcementListener.class,
@@ -272,6 +275,7 @@ public class Registry {
             ATMFillCommand.class,
             ASetBlacklistCommand.class,
             ActivityCommand.class,
+            AutoNCCommand.class,
             BlackMarketCommand.class,
             BlacklistInfoCommand.class,
             BlacklistReasonCommand.class,

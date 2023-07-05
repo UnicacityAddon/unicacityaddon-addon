@@ -267,6 +267,7 @@ public class PatternHandler {
     public static final Pattern REPORT_ACCEPTED_PATTERN = Pattern.compile("^\\[Report] Du hast den Report von \\w+ \\[Level \\d+] angenommen! Thema: [a-zA-Z]+$");
     public static final Pattern REPORT_END_PATTERN = Pattern.compile("^\\[Report] Du hast den Report mit \\w+ beendet! \\(#\\d+\\)$");
     public static final Pattern AD_CONTROL_PATTERN = Pattern.compile("^\\[Werbung] (\\w+) hat eine Werbung geschalten: .+$");
+    public static final Pattern NEWBIE_CHAT = Pattern.compile("^\\[NeulingsChat] (\\w+): (?<message>.+)$");
 
     /**
      * Pattern for house interaction

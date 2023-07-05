@@ -11,6 +11,7 @@ import java.util.List;
 
 /**
  * @author Gelegenheitscode
+ * @author RettichLP
  */
 @UCCommand(prefix = "clear", usage = "[Spieler...]")
 public class ClearCommand extends UnicacityCommand {
@@ -26,12 +27,17 @@ public class ClearCommand extends UnicacityCommand {
     public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
 
-        if (arguments.length < 1) {
-            sendUsage();
-            return true;
+        switch (arguments.length) {
+            case 0 -> // wrong command syntax
+                    sendUsage();
+            case 1 -> {
+                // correct command syntax for Unicacity, command is passed to Unicacity
+                return false;
+            }
+            default -> // call clear command for each parameter (name)
+                    Arrays.stream(arguments).forEach(player -> p.sendServerMessage("/clear " + player));
         }
 
-        Arrays.stream(arguments).forEach(player -> p.sendServerMessage("/clear " + player));
         return true;
     }
 
