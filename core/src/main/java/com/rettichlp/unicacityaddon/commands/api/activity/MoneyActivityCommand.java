@@ -2,12 +2,11 @@ package com.rettichlp.unicacityaddon.commands.api.activity;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
+import com.rettichlp.unicacityaddon.base.builder.ActivityCheckBuilder;
 import com.rettichlp.unicacityaddon.base.builder.ScreenshotBuilder;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.registry.UnicacityCommand;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
-import com.rettichlp.unicacityaddon.base.text.ColorCode;
-import com.rettichlp.unicacityaddon.base.text.Message;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,7 +32,6 @@ public class MoneyActivityCommand extends UnicacityCommand {
         AddonPlayer p = this.unicacityAddon.player();
 
         new Thread(() -> {
-
             if (arguments.length < 2) {
                 sendUsage();
                 return;
@@ -46,7 +44,7 @@ public class MoneyActivityCommand extends UnicacityCommand {
 
             String type = arguments[0];
             int value = Integer.parseInt(arguments[1]);
-            String screenshot;
+            String screenshot = "";
 
             if (arguments.length == 3) {
                 screenshot = arguments[2];
@@ -58,14 +56,17 @@ public class MoneyActivityCommand extends UnicacityCommand {
                 } catch (IOException e) {
                     this.unicacityAddon.logger().warn(e.getMessage());
                 }
-
             }
 
-            //TODO: API Abfrage senden
-            //this.unicacityAddon.api().sendBannerAddRequest(type, value, date, screenshot);
-            p.sendMessage(Message.getBuilder().of("Du hast deine Aktivität").color(ColorCode.GRAY).advance()
-                    .of("erfolgreich").color(ColorCode.GREEN).advance()
-                    .of("eingetragen.").advance().createComponent());
+            String info = ActivityCheckBuilder.getBuilder(this.unicacityAddon)
+                    .activity(ActivityCheckBuilder.Activity.MONEY)
+                    .type(type)
+                    .value(String.valueOf(value))
+                    .date(System.currentTimeMillis())
+                    .screenshot(screenshot)
+                    .send().getInfo();
+
+            p.sendAPIMessage(info, true);
         }).start();
         return true;
     }

@@ -2,14 +2,13 @@ package com.rettichlp.unicacityaddon.commands.api.activity;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
+import com.rettichlp.unicacityaddon.base.builder.ActivityCheckBuilder;
 import com.rettichlp.unicacityaddon.base.builder.ScreenshotBuilder;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
 import com.rettichlp.unicacityaddon.base.registry.UnicacityCommand;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
-import com.rettichlp.unicacityaddon.base.text.ColorCode;
-import com.rettichlp.unicacityaddon.base.text.Message;
 
 import java.io.File;
 import java.io.IOException;
@@ -52,7 +51,7 @@ public class DrugActivityCommand extends UnicacityCommand {
             }
 
             int drugAmount = Integer.parseInt(arguments[2]);
-            String screenshot;
+            String screenshot = "";
 
             if (arguments.length == 4) {
                 screenshot = arguments[3];
@@ -64,14 +63,18 @@ public class DrugActivityCommand extends UnicacityCommand {
                 } catch (IOException e) {
                     this.unicacityAddon.logger().warn(e.getMessage());
                 }
-
             }
 
-            //TODO: API Abfrage senden
-            //this.unicacityAddon.api().sendBannerAddRequest(drugType, drugPurity, drugAmount, date, screenshot);
-            p.sendMessage(Message.getBuilder().of("Du hast deine Aktivität").color(ColorCode.GRAY).advance()
-                    .of("erfolgreich").color(ColorCode.GREEN).advance()
-                    .of("eingetragen.").advance().createComponent());
+            String info = ActivityCheckBuilder.getBuilder(this.unicacityAddon)
+                    .activity(ActivityCheckBuilder.Activity.DRUG)
+                    .value(String.valueOf(drugAmount))
+                    .drugType(drugType)
+                    .drugPurity(drugPurity)
+                    .date(System.currentTimeMillis())
+                    .screenshot(screenshot)
+                    .send().getInfo();
+
+            p.sendAPIMessage(info, true);
         }).start();
         return true;
     }

@@ -45,7 +45,6 @@ import com.rettichlp.unicacityaddon.commands.api.YasinCommand;
 import com.rettichlp.unicacityaddon.commands.api.activity.DrugActivityCommand;
 import com.rettichlp.unicacityaddon.commands.api.activity.MoneyActivityCommand;
 import com.rettichlp.unicacityaddon.commands.api.activity.PayEquipCommand;
-import com.rettichlp.unicacityaddon.commands.api.activity.ResetPasswortCommand;
 import com.rettichlp.unicacityaddon.commands.api.activity.RoleplayActivityCommand;
 import com.rettichlp.unicacityaddon.commands.faction.AFbankEinzahlenCommand;
 import com.rettichlp.unicacityaddon.commands.faction.CheckActiveMembersCommand;
@@ -337,7 +336,6 @@ public class Registry {
             PunishCommand.class,
             ReinforcementCommand.class,
             ReichensteuerCommand.class,
-            ResetPasswortCommand.class,
             ReplyCommand.class,
             ReviveStatsCommand.class,
             RoleplayActivityCommand.class,

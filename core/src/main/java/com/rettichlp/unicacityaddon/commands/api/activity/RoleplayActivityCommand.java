@@ -1,6 +1,8 @@
 package com.rettichlp.unicacityaddon.commands.api.activity;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.base.AddonPlayer;
+import com.rettichlp.unicacityaddon.base.builder.ActivityCheckBuilder;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.registry.UnicacityCommand;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
@@ -25,9 +27,9 @@ public class RoleplayActivityCommand extends UnicacityCommand {
 
     @Override
     public boolean execute(String[] arguments) {
+        AddonPlayer p = this.unicacityAddon.player();
 
         new Thread(() -> {
-
             if (arguments.length < 2) {
                 sendUsage();
                 return;
@@ -38,10 +40,14 @@ public class RoleplayActivityCommand extends UnicacityCommand {
 
             String screenshot = arguments[2];
 
-            //TODO: API Abfrage senden
-            //String response = this.unicacityAddon.api().sendBlacklistReasonAddRequest(type, date, screenshot).getInfo();
-            //p.sendAPIMessage(response, true);
+            String info = ActivityCheckBuilder.getBuilder(this.unicacityAddon)
+                    .activity(ActivityCheckBuilder.Activity.ROLEPLAY)
+                    .type(type)
+                    .date(System.currentTimeMillis())
+                    .screenshot(screenshot)
+                    .send().getInfo();
 
+            p.sendAPIMessage(info, true);
         }).start();
         return true;
     }

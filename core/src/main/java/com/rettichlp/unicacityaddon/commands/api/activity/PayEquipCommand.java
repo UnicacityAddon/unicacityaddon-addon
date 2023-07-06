@@ -2,6 +2,7 @@ package com.rettichlp.unicacityaddon.commands.api.activity;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
+import com.rettichlp.unicacityaddon.base.builder.ActivityCheckBuilder;
 import com.rettichlp.unicacityaddon.base.builder.ScreenshotBuilder;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.registry.UnicacityCommand;
@@ -36,7 +37,6 @@ public class PayEquipCommand extends UnicacityCommand {
         AddonPlayer p = this.unicacityAddon.player();
 
         new Thread(() -> {
-
             if (arguments.length < 2) {
                 sendUsage();
                 return;
@@ -49,7 +49,7 @@ public class PayEquipCommand extends UnicacityCommand {
 
             String type = arguments[0];
             int value = Integer.parseInt(arguments[1]);
-            String screenshot;
+            String screenshot = "";
 
             if (arguments.length == 3) {
                 screenshot = arguments[2];
