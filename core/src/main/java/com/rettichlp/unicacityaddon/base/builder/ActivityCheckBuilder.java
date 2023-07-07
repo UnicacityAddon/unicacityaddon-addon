@@ -82,6 +82,6 @@ public class ActivityCheckBuilder {
 
     public enum Activity {
 
-        NULL, MONEY, DRUG, ROLEPLAY, EQUIP;
+        NULL, MONEY, DRUG, ROLEPLAY, EQUIP_ADD, EQUIP_EDIT
     }
 }
