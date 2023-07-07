@@ -42,7 +42,7 @@ public class EquipListCommand extends UnicacityCommand {
         if (arguments.length == 1 && arguments[0].equalsIgnoreCase("reset")) {
             this.unicacityAddon.fileService().data().setEquipMap(new HashMap<>());
             p.sendInfoMessage("Equipliste gelöscht.");
-        } else if (true/*p.getFaction().equals(Faction.LEMILIEU)*/) {
+        } else if (p.getFaction().equals(Faction.LEMILIEU)) {
             equipListLeMilieu(p);
         } else {
             equipList(p);

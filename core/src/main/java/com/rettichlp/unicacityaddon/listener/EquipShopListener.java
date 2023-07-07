@@ -36,7 +36,6 @@ public class EquipShopListener {
 
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {
-        AddonPlayer p = this.unicacityAddon.player();
         String msg = e.chatMessage().getPlainText();
 
         Matcher buyInterruptedMatcher = PatternHandler.BUY_INTERRUPTED_PATTERN.matcher(msg);
@@ -55,16 +54,7 @@ public class EquipShopListener {
                     .findAny();
 
             if (equipOptional.isPresent()) {
-                Equip equip = equipOptional.get();
                 this.unicacityAddon.fileService().data().addEquipToEquipMap(equipOptional.get());
-
-                if (p.getFaction().equals(Faction.LEMILIEU)) {
-                    ActivityCheckBuilder.getBuilder(this.unicacityAddon)
-                            .activity(ActivityCheckBuilder.Activity.EQUIP_ADD)
-                            .type(equip.getEquipName())
-                            .value(String.valueOf(equip.getPrice(this.unicacityAddon.configuration())))
-                            .send();
-                }
             } else {
                 this.unicacityAddon.player().sendErrorMessage("Equip wurde nicht gefunden.");
             }

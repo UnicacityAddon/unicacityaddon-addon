@@ -2,10 +2,12 @@ package com.rettichlp.unicacityaddon.base.io.file;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
+import com.rettichlp.unicacityaddon.base.builder.ActivityCheckBuilder;
 import com.rettichlp.unicacityaddon.base.enums.Weapon;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
 import com.rettichlp.unicacityaddon.base.enums.faction.Equip;
+import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.events.OfflineDataChangedEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
@@ -335,7 +337,13 @@ public class Data {
         equipMap = newEquipMap;
         saveAndFireEvent();
 
-        //this.unicacityAddon.api().sendBlacklistReasonAddRequest(itemName, price(aus config)).getInfo()
+        if (unicacityAddon.player().getFaction().equals(Faction.LEMILIEU)) {
+            ActivityCheckBuilder.getBuilder(unicacityAddon)
+                    .activity(ActivityCheckBuilder.Activity.EQUIP_ADD)
+                    .type(equip.getEquipName())
+                    .value(String.valueOf(equip.getPrice(unicacityAddon.configuration())))
+                    .send();
+        }
     }
 
     /**
