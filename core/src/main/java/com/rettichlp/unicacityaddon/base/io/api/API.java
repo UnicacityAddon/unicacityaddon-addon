@@ -31,8 +31,10 @@ import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import lombok.Getter;
 import lombok.Setter;
+import net.labymod.api.Laby;
 import net.labymod.api.client.component.Component;
-import net.labymod.api.client.session.Session;
+import net.labymod.api.labyconnect.TokenStorage.Purpose;
+import net.labymod.api.labyconnect.TokenStorage.Token;
 import net.labymod.api.notification.Notification;
 
 import java.math.BigInteger;
@@ -43,8 +45,10 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.function.Predicate;
 
+// TODO update cod comments
 /**
  * <h3>Session token</h3>
  * An important function of the addon is to collect statistics and make data available to all players. In order to offer
@@ -92,12 +96,12 @@ import java.util.function.Predicate;
 @Getter
 public class API {
 
+    private final String AUTHORIZE_SUB_PATH = "authorize";
     private final String ADD_SUB_PATH = "add";
     private final String REMOVE_SUB_PATH = "remove";
     private final String QUEUE_SUB_PATH = "queue";
     private final String SEND_SUB_PATH = "send";
     private final String TOP_SUB_PATH = "top";
-    private final String CREATE_SUB_PATH = "create";
     private final String DONE_SUB_PATH = "done";
     private final String USERS_SUB_PATH = "users";
     private final String BOMB_SUB_PATH = "bomb";
@@ -161,6 +165,7 @@ public class API {
                 this.unicacityAddon.labyAPI().notificationController().push(syncNotification(Type.SUCCESS));
             } catch (APIResponseException e) {
                 this.unicacityAddon.logger().warn("API Token was not generated successfully. Data synchronization cannot be performed!");
+                this.unicacityAddon.logger().warn(e.getMessage());
 
                 this.unicacityAddon.labyAPI().notificationController().pop(syncNotification(Type.STARTED));
                 this.unicacityAddon.labyAPI().notificationController().push(syncNotification(Type.FAILURE));
@@ -555,13 +560,13 @@ public class API {
                 .getAsJsonObjectAndParse(StatisticTop.class);
     }
 
-    public void sendTokenCreateRequest() throws APIResponseException {
+    public void sendTokenCreateRequest(Token token) throws APIResponseException {
         RequestBuilder.getBuilder(this.unicacityAddon)
                 .nonProd(this.unicacityAddon.configuration().local().get())
                 .applicationPath(ApplicationPath.TOKEN)
-                .subPath(CREATE_SUB_PATH)
+                .subPath(AUTHORIZE_SUB_PATH)
                 .parameter(Map.of(
-                        "authToken", this.unicacityAddon.labyAPI().minecraft().sessionAccessor().session().getAccessToken(),
+                        "token", token.getToken(),
                         "version", this.unicacityAddon.utilService().version()))
                 .send();
     }
@@ -634,12 +639,10 @@ public class API {
     }
 
     public void createToken() throws APIResponseException {
-        Session session = this.unicacityAddon.labyAPI().minecraft().sessionAccessor().session();
-        String uuid = session.getUniqueId().toString().replace("-", "");
-        String salt = "423WhKRMTfRv4mn6u8hLcPj7bYesKh4Ex4yRErYuW4KsgYjpo35nSU11QYj3OINAJwcd0TPDD6AkqhSq";
-        String authToken = session.getAccessToken();
-        this.token = hash(uuid + salt + authToken);
-        this.sendTokenCreateRequest();
+        UUID uniqueId = this.unicacityAddon.labyAPI().minecraft().sessionAccessor().session().getUniqueId();
+        Token token = Laby.references().tokenStorage().getToken(Purpose.JWT, uniqueId);
+        this.token = hash(uniqueId.toString().replace("-", "") + token.getToken());
+        this.sendTokenCreateRequest(token);
     }
 
     public String hash(String input) {
