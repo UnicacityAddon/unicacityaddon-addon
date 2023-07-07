@@ -89,7 +89,8 @@ public class RequestBuilder {
                 try {
                     send();
                 } catch (APIResponseException e) {
-                    e.sendInfo();
+                    e.sendNotification();
+                    this.unicacityAddon.logger().warn(e.getMessage());
                 }
             }).start();
         }
@@ -100,7 +101,8 @@ public class RequestBuilder {
                 JsonElement jsonElement = send();
                 return parse(jsonElement.getAsJsonObject(), responseSchemaClass);
             } catch (APIResponseException e) {
-                e.sendInfo();
+                e.sendNotification();
+                this.unicacityAddon.logger().warn(e.getMessage());
                 return (T) e.failureResponse();
             } catch (IllegalStateException e) {
                 this.unicacityAddon.logger().info("Precondition(s) failed! Parsing of JSON response skipped for: {}", responseSchemaClass.getSimpleName());
@@ -113,7 +115,8 @@ public class RequestBuilder {
                 JsonElement jsonElement = send();
                 return parse(jsonElement.getAsJsonArray(), responseSchemaClass);
             } catch (APIResponseException e) {
-                e.sendInfo();
+                e.sendNotification();
+                this.unicacityAddon.logger().warn(e.getMessage());
             } catch (IllegalStateException e) {
                 this.unicacityAddon.logger().info("Precondition(s) failed! Parsing of JSON response skipped for: {}", responseSchemaClass.getSimpleName());
             }

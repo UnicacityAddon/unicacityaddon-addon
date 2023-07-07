@@ -14,6 +14,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Scanner;
 
 /**
@@ -37,7 +38,9 @@ public class WebService {
         boolean isApiRequest = urlString.startsWith("http://rettichlp.de:8888/unicacityaddon/v1/");
 
         if (responseCode == HttpURLConnection.HTTP_OK) {
-            this.unicacityAddon.logger().info("APIResponse - " + responseCode + " [" + urlString.replace(this.unicacityAddon.api().getToken(), "TOKEN") + "]");
+            Optional<String> tokenOptional = Optional.ofNullable(this.unicacityAddon.api().getToken());
+            String hiddenTokenUrl = tokenOptional.map(s -> urlString.replace(s, "TOKEN")).orElse(urlString);
+            this.unicacityAddon.logger().info("APIResponse - " + responseCode + " [" + hiddenTokenUrl + "]");
             return websiteSource;
         } else {
             throw new APIResponseException(this.unicacityAddon, urlString, responseCode, isApiRequest

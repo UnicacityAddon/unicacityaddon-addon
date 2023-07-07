@@ -45,6 +45,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Predicate;
 
@@ -163,9 +164,9 @@ public class API {
 
                 this.unicacityAddon.labyAPI().notificationController().pop(syncNotification(Type.STARTED));
                 this.unicacityAddon.labyAPI().notificationController().push(syncNotification(Type.SUCCESS));
-            } catch (APIResponseException e) {
-                this.unicacityAddon.logger().warn("API Token was not generated successfully. Data synchronization cannot be performed!");
+            } catch (TokenException | APIResponseException e) {
                 this.unicacityAddon.logger().warn(e.getMessage());
+                this.unicacityAddon.logger().warn("Data synchronization cannot be performed!");
 
                 this.unicacityAddon.labyAPI().notificationController().pop(syncNotification(Type.STARTED));
                 this.unicacityAddon.labyAPI().notificationController().push(syncNotification(Type.FAILURE));
@@ -254,7 +255,8 @@ public class API {
                 .nonProd(this.unicacityAddon.configuration().local().get())
                 .applicationPath(ApplicationPath.AUTO_NC)
                 .subPath(REMOVE_SUB_PATH)
-                .parameter(Map.of("id", String.valueOf(id)))
+                .parameter(Map.of(
+                        "id", String.valueOf(id)))
                 .getAsJsonObjectAndParse(Success.class);
     }
 
@@ -529,7 +531,8 @@ public class API {
                 .nonProd(this.unicacityAddon.configuration().local().get())
                 .applicationPath(ApplicationPath.ROLEPLAY)
                 .subPath(UPDATE_SUB_PATH)
-                .parameter(Map.of("name", roleplayName))
+                .parameter(Map.of(
+                        "name", roleplayName))
                 .getAsJsonObjectAndParse(Success.class);
     }
 
@@ -638,10 +641,14 @@ public class API {
                 .getAsJsonObjectAndParse(Success.class);
     }
 
-    public void createToken() throws APIResponseException {
+    public void createToken() throws TokenException, APIResponseException {
         UUID uniqueId = this.unicacityAddon.labyAPI().minecraft().sessionAccessor().session().getUniqueId();
         Token token = Laby.references().tokenStorage().getToken(Purpose.JWT, uniqueId);
-        this.token = hash(uniqueId.toString().replace("-", "") + token.getToken());
+
+        this.token = Optional.ofNullable(token)
+                .map(t -> hash(uniqueId.toString().replace("-", "") + t.getToken()))
+                .orElseThrow(() -> new TokenException(this.unicacityAddon, "Failed to retrieve LabyConnect session token"));
+
         this.sendTokenCreateRequest(token);
     }
 
