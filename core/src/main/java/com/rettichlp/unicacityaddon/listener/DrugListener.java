@@ -167,7 +167,7 @@ public class DrugListener {
 
         Matcher drugDealAcceptedMatcher = PatternHandler.DRUG_DEAL_ACCEPTED.matcher(msg);
         Matcher trunkInteractionAcceptedMatcher = PatternHandler.TRUNK_INTERACTION_ACCEPTED_PATTERN.matcher(msg);
-        if (drugDealAcceptedMatcher.find() || trunkInteractionAcceptedMatcher.find() && System.currentTimeMillis() - time < TimeUnit.MINUTES.toMillis(3)) {
+        if ((drugDealAcceptedMatcher.find() || trunkInteractionAcceptedMatcher.find()) && System.currentTimeMillis() - time < TimeUnit.MINUTES.toMillis(3)) {
             if (type.equals("ADD")) {
                 this.unicacityAddon.fileService().data().addDrugToInventory(lastDrugType, lastDrugPurity, amount);
             } else if (type.equals("REMOVE")) {
