@@ -66,7 +66,6 @@ public class ContractListener {
             String hitman = contractKillMatcher.group(1);
 
             if (hitman.equals(p.getName())) {
-                this.unicacityAddon.api().sendStatisticAddRequest(StatisticType.KILL);
                 AFbankEinzahlenCommand.sendClockMessage(this.unicacityAddon);
             }
 

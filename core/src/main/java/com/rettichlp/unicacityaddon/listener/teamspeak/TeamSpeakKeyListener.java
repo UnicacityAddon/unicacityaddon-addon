@@ -24,10 +24,12 @@ public class TeamSpeakKeyListener {
         Key key = e.getKey();
 
         if (key.equals(this.unicacityAddon.configuration().hotkey().publicChannel().get())) {
-            Faction faction = this.unicacityAddon.player().getFaction();
-            if (!faction.equals(Faction.NULL)) {
-                int cid = faction.getPublicChannelId();
-                this.unicacityAddon.teamSpeakAPI().controller().move(cid);
+            if (e.isRealIngame()) {
+                Faction faction = this.unicacityAddon.player().getFaction();
+                if (!faction.equals(Faction.NULL)) {
+                    int cid = faction.getPublicChannelId();
+                    this.unicacityAddon.teamSpeakAPI().controller().move(cid);
+                }
             }
         }
     }
