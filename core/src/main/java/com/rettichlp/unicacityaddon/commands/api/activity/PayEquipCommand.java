@@ -1,30 +1,26 @@
 package com.rettichlp.unicacityaddon.commands.api.activity;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
-import com.rettichlp.unicacityaddon.base.builder.ActivityCheckBuilder;
-import com.rettichlp.unicacityaddon.base.builder.ScreenshotBuilder;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
+import com.rettichlp.unicacityaddon.base.io.api.APIResponseException;
 import com.rettichlp.unicacityaddon.base.registry.UnicacityCommand;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
-import com.rettichlp.unicacityaddon.base.text.ColorCode;
-import com.rettichlp.unicacityaddon.base.text.Message;
+import com.rettichlp.unicacityaddon.base.services.utils.MathUtils;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author Dimiikou
  */
-@UCCommand(prefix = "payequip", usage = "[id] [price]")
+@UCCommand(prefix = "payequip", usage = "[Id]")
 public class PayEquipCommand extends UnicacityCommand {
-    /**
-     * TODO: Lösung überlegen
-     * Idea A) Generelle Speicherung des Equips in einer API Schnittstelle
-     */
-    private final List<String> typeOptions = Arrays.asList("blacklist", "ausraub", "menschenhandel", "transport", "autoverkauf");
+
     private final UnicacityAddon unicacityAddon;
 
     public PayEquipCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
@@ -36,47 +32,42 @@ public class PayEquipCommand extends UnicacityCommand {
     public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
 
+        if (arguments.length < 1 || !MathUtils.isInteger(arguments[0])) {
+            sendUsage();
+            return true;
+        }
+
         new Thread(() -> {
-            if (arguments.length < 2) {
-                sendUsage();
-                return;
-            }
+            try {
+                String uuid = Optional.ofNullable(p.getUniqueId())
+                        .map(u -> u.toString().replace("-", ""))
+                        .orElse("");
 
-            if (!typeOptions.contains(arguments[0])) {
-                p.sendErrorMessage("Dieser Aktivitätstyp existiert nicht.");
-                return;
-            }
+                String response = this.unicacityAddon.webService().sendRequest("https://lemilieu.de/api/equip/get?member=" + uuid);
 
-            String type = arguments[0];
-            int value = Integer.parseInt(arguments[1]);
-            String screenshot = "";
+                AtomicInteger toPay = new AtomicInteger();
+                JsonArray jsonArray = new JsonParser().parse(response).getAsJsonArray();
+                jsonArray.forEach(jsonElement -> {
+                    JsonObject jsonObject = jsonElement.getAsJsonObject();
+                    if (jsonObject.get("id").getAsString().equals(arguments[0])) {
+                        toPay.set(Integer.parseInt(jsonObject.get("price").getAsString()));
+                    }
+                });
 
-            if (arguments.length == 3) {
-                screenshot = arguments[2];
-            } else {
-                try {
-                    File file = this.unicacityAddon.fileService().getNewImageFile();
-                    ScreenshotBuilder.getBuilder(unicacityAddon).file(file).save();
-                    screenshot = this.unicacityAddon.utilService().imageUpload().uploadToLink(file);
-                } catch (IOException e) {
-                    this.unicacityAddon.logger().warn(e.getMessage());
+                if (toPay.get() > 0) {
+                    p.sendServerMessage("/fbank einzahlen " + toPay.get());
+                } else {
+                    p.sendErrorMessage("Du kannst für die ID kein Equip einzahlen.");
                 }
-
+            } catch (APIResponseException e) {
+                this.unicacityAddon.logger().warn(e.getMessage());
             }
-
-            //TODO: API Abfrage senden
-            //this.unicacityAddon.api().sendBannerAddRequest(type, value, date, screenshot);
-            p.sendMessage(Message.getBuilder().of("Du hast deine Aktivität").color(ColorCode.GRAY).advance()
-                    .of("erfolgreich").color(ColorCode.GREEN).advance()
-                    .of("eingetragen.").advance().createComponent());
         }).start();
         return true;
     }
 
     @Override
     public List<String> complete(String[] arguments) {
-        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments)
-                .addAtIndex(1, typeOptions)
-                .build();
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments).build();
     }
 }

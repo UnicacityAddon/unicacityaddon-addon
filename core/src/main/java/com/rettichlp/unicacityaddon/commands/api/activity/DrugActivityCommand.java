@@ -20,6 +20,7 @@ import java.util.List;
  */
 @UCCommand(prefix = "drugactivity", aliases = {"dact"}, usage = "[Droge] [Reinheit] [Menge] (screenshot)")
 public class DrugActivityCommand extends UnicacityCommand {
+
     private final UnicacityAddon unicacityAddon;
 
     public DrugActivityCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
@@ -31,50 +32,42 @@ public class DrugActivityCommand extends UnicacityCommand {
     public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
 
+        if (arguments.length < 3) {
+            sendUsage();
+            return true;
+        }
+
+        DrugType drugType = DrugType.getDrugType(arguments[0]);
+        if (drugType == null) {
+            p.sendErrorMessage("Diese Droge existiert nicht.");
+            return true;
+        }
+
+        DrugPurity drugPurity = DrugPurity.getDrugPurity(arguments[1]);
+        if (drugPurity == null) {
+            p.sendErrorMessage("Diese Reinheit existiert nicht.");
+            return true;
+        }
+
         new Thread(() -> {
+            try {
+                int drugAmount = Integer.parseInt(arguments[2]);
+                File file = this.unicacityAddon.fileService().getNewImageFile();
+                String screenshot = arguments.length == 4 ? arguments[3] : ScreenshotBuilder.getBuilder(unicacityAddon).file(file).upload();
 
-            if (arguments.length < 3) {
-                sendUsage();
-                return;
+                String info = ActivityCheckBuilder.getBuilder(this.unicacityAddon)
+                        .activity(ActivityCheckBuilder.Activity.DRUG)
+                        .value(String.valueOf(drugAmount))
+                        .drugType(drugType)
+                        .drugPurity(drugPurity)
+                        .date(System.currentTimeMillis())
+                        .screenshot(screenshot)
+                        .send().getInfo();
+
+                p.sendAPIMessage(info, true);
+            } catch (IOException e) {
+                this.unicacityAddon.logger().warn(e.getMessage());
             }
-
-            DrugType drugType = DrugType.getDrugType(arguments[0]);
-            if (drugType == null) {
-                p.sendErrorMessage("Diese Droge existiert nicht.");
-                return;
-            }
-
-            DrugPurity drugPurity = DrugPurity.getDrugPurity(arguments[1]);
-            if (drugPurity == null) {
-                p.sendErrorMessage("Diese Reinheit existiert nicht.");
-                return;
-            }
-
-            int drugAmount = Integer.parseInt(arguments[2]);
-            String screenshot = "";
-
-            if (arguments.length == 4) {
-                screenshot = arguments[3];
-            } else {
-                try {
-                    File file = this.unicacityAddon.fileService().getNewImageFile();
-                    ScreenshotBuilder.getBuilder(unicacityAddon).file(file).save();
-                    screenshot = this.unicacityAddon.utilService().imageUpload().uploadToLink(file);
-                } catch (IOException e) {
-                    this.unicacityAddon.logger().warn(e.getMessage());
-                }
-            }
-
-            String info = ActivityCheckBuilder.getBuilder(this.unicacityAddon)
-                    .activity(ActivityCheckBuilder.Activity.DRUG)
-                    .value(String.valueOf(drugAmount))
-                    .drugType(drugType)
-                    .drugPurity(drugPurity)
-                    .date(System.currentTimeMillis())
-                    .screenshot(screenshot)
-                    .send().getInfo();
-
-            p.sendAPIMessage(info, true);
         }).start();
         return true;
     }

@@ -16,8 +16,8 @@ import java.util.List;
 @UCCommand(prefix = "roleplayactivity", aliases = {"ract"}, usage = "[type] [screenshot]")
 public class RoleplayActivityCommand extends UnicacityCommand {
 
-    private final List<String> typeOptions = Arrays.asList("blacklist", "ausraub", "menschenhandel", "transport", "autoverkauf", "drogenhandel", "verhandlung"
-                                                            + "sonstiges");
+    private final List<String> typeOptions = Arrays.asList("blacklist", "ausraub", "menschenhandel", "transport", "autoverkauf", "drogenhandel", "verhandlung", "sonstiges");
+
     private final UnicacityAddon unicacityAddon;
 
     public RoleplayActivityCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
@@ -29,16 +29,14 @@ public class RoleplayActivityCommand extends UnicacityCommand {
     public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
 
+        if (arguments.length < 2) {
+            sendUsage();
+            return true;
+        }
+
         new Thread(() -> {
-            if (arguments.length < 2) {
-                sendUsage();
-                return;
-            }
-
-            String type = arguments[0];
-            if (!typeOptions.contains(type)) type = "sonstiges";
-
-            String screenshot = arguments[2];
+            String type = typeOptions.contains(arguments[0]) ? arguments[0] : "sonstiges";
+            String screenshot = arguments[1];
 
             String info = ActivityCheckBuilder.getBuilder(this.unicacityAddon)
                     .activity(ActivityCheckBuilder.Activity.ROLEPLAY)

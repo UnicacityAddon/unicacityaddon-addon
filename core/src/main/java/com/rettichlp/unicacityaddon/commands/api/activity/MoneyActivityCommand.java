@@ -7,6 +7,7 @@ import com.rettichlp.unicacityaddon.base.builder.ScreenshotBuilder;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.registry.UnicacityCommand;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
+import com.rettichlp.unicacityaddon.base.services.utils.MathUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,6 +21,7 @@ import java.util.List;
 public class MoneyActivityCommand extends UnicacityCommand {
 
     private final List<String> typeOptions = Arrays.asList("blacklist", "ausraub", "menschenhandel", "transport", "autoverkauf");
+
     private final UnicacityAddon unicacityAddon;
 
     public MoneyActivityCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
@@ -31,42 +33,35 @@ public class MoneyActivityCommand extends UnicacityCommand {
     public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
 
+        if (arguments.length < 2 || !MathUtils.isInteger(arguments[1])) {
+            sendUsage();
+            return true;
+        }
+
+        if (!typeOptions.contains(arguments[0])) {
+            p.sendErrorMessage("Dieser Aktivitätstyp existiert nicht.");
+            return true;
+        }
+
         new Thread(() -> {
-            if (arguments.length < 2) {
-                sendUsage();
-                return;
+            try {
+                String type = arguments[0];
+                int value = Integer.parseInt(arguments[1]);
+                File file = this.unicacityAddon.fileService().getNewImageFile();
+                String screenshot = arguments.length == 3 ? arguments[2] : ScreenshotBuilder.getBuilder(unicacityAddon).file(file).upload();
+
+                String info = ActivityCheckBuilder.getBuilder(this.unicacityAddon)
+                        .activity(ActivityCheckBuilder.Activity.MONEY)
+                        .type(type)
+                        .value(String.valueOf(value))
+                        .date(System.currentTimeMillis())
+                        .screenshot(screenshot)
+                        .send().getInfo();
+
+                p.sendAPIMessage(info, true);
+            } catch (IOException e) {
+                this.unicacityAddon.logger().warn(e.getMessage());
             }
-
-            if (!typeOptions.contains(arguments[0])) {
-                p.sendErrorMessage("Dieser Aktivitätstyp existiert nicht.");
-                return;
-            }
-
-            String type = arguments[0];
-            int value = Integer.parseInt(arguments[1]);
-            String screenshot = "";
-
-            if (arguments.length == 3) {
-                screenshot = arguments[2];
-            } else {
-                try {
-                    File file = this.unicacityAddon.fileService().getNewImageFile();
-                    ScreenshotBuilder.getBuilder(unicacityAddon).file(file).save();
-                    screenshot = this.unicacityAddon.utilService().imageUpload().uploadToLink(file);
-                } catch (IOException e) {
-                    this.unicacityAddon.logger().warn(e.getMessage());
-                }
-            }
-
-            String info = ActivityCheckBuilder.getBuilder(this.unicacityAddon)
-                    .activity(ActivityCheckBuilder.Activity.MONEY)
-                    .type(type)
-                    .value(String.valueOf(value))
-                    .date(System.currentTimeMillis())
-                    .screenshot(screenshot)
-                    .send().getInfo();
-
-            p.sendAPIMessage(info, true);
         }).start();
         return true;
     }
