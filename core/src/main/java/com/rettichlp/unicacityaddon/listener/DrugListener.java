@@ -28,7 +28,6 @@ import java.util.regex.Matcher;
 public class DrugListener {
 
     private static int amount;
-    private static String issuer;
     private static DrugType lastDrugType;
     private static DrugPurity lastDrugPurity;
     private static long time;
@@ -92,10 +91,6 @@ public class DrugListener {
                 this.unicacityAddon.fileService().data().addDrugToInventory(drugType, drugPurity, amount);
             }
 
-            //TODO: API Abfrage senden
-            //String response = this.unicacityAddon.api().sendBlacklistReasonAddRequest(drugType.getDrugName(), drugPurity, amount (negativ)).getInfo();
-            //p.sendAPIMessage(response, true);
-
             if (dBankMessageSetting) {
                 NumberFormat numberFormat = NumberFormat.getNumberInstance(new Locale("da", "DK"));
                 e.setMessage(Message.getBuilder().of("D").color(ColorCode.GOLD).bold().advance()
@@ -124,10 +119,6 @@ public class DrugListener {
             if (playerName != null && msg.contains(playerName)) {
                 this.unicacityAddon.fileService().data().removeDrugFromInventory(drugType, drugPurity, amount);
             }
-
-            //TODO: API Abfrage senden
-            //String response = this.unicacityAddon.api().sendBlacklistReasonAddRequest(drugType.getDrugName(), drugPurity, amount (positiv)).getInfo();
-            //p.sendAPIMessage(response, true);
 
             if (dBankMessageSetting) {
                 NumberFormat numberFormat = NumberFormat.getNumberInstance(new Locale("da", "DK"));
@@ -175,31 +166,8 @@ public class DrugListener {
         }
 
         Matcher drugDealAcceptedMatcher = PatternHandler.DRUG_DEAL_ACCEPTED.matcher(msg);
-        if (drugDealAcceptedMatcher.find() && System.currentTimeMillis() - time < TimeUnit.MINUTES.toMillis(3)) {
-            if (type.equals("ADD")) {
-                if (this.unicacityAddon.api().getPlayerFactionMap().getOrDefault(issuer, Faction.NULL).equals(Faction.LEMILIEU)) {
-
-                    //TODO: API Abfrage senden
-                    //String response = this.unicacityAddon.api().sendBlacklistReasonAddRequest(drugType.getDrugName(), drugPurity, amount (negativ)).getInfo();
-                    //p.sendAPIMessage(response, true);
-                }
-
-                this.unicacityAddon.fileService().data().addDrugToInventory(lastDrugType, lastDrugPurity, amount);
-            } else if (type.equals("REMOVE")) {
-                if (this.unicacityAddon.api().getPlayerFactionMap().getOrDefault(issuer, Faction.NULL).equals(Faction.LEMILIEU)) {
-
-                    //TODO: API Abfrage senden
-                    //String response = this.unicacityAddon.api().sendBlacklistReasonAddRequest(drugType.getDrugName(), drugPurity, amount (positiv)).getInfo();
-                    //p.sendAPIMessage(response, true);
-                }
-
-                this.unicacityAddon.fileService().data().removeDrugFromInventory(lastDrugType, lastDrugPurity, amount);
-            }
-            return;
-        }
-
         Matcher trunkInteractionAcceptedMatcher = PatternHandler.TRUNK_INTERACTION_ACCEPTED_PATTERN.matcher(msg);
-        if (trunkInteractionAcceptedMatcher.find() && System.currentTimeMillis() - time < TimeUnit.MINUTES.toMillis(3)) {
+        if (drugDealAcceptedMatcher.find() || trunkInteractionAcceptedMatcher.find() && System.currentTimeMillis() - time < TimeUnit.MINUTES.toMillis(3)) {
             if (type.equals("ADD")) {
                 this.unicacityAddon.fileService().data().addDrugToInventory(lastDrugType, lastDrugPurity, amount);
             } else if (type.equals("REMOVE")) {
@@ -356,7 +324,6 @@ public class DrugListener {
     }
 
     private void extractDrugData(Matcher matcher) {
-        issuer = matcher.group("issuer");
         amount = Integer.parseInt(matcher.group("amount"));
         lastDrugType = DrugType.getDrugType(matcher.group("drugType"));
         lastDrugPurity = DrugPurity.getDrugPurity(matcher.group("drugPurity"));
