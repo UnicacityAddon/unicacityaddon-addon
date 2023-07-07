@@ -49,12 +49,11 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Predicate;
 
-// TODO update cod comments
 /**
  * <h3>Session token</h3>
- * An important function of the addon is to collect statistics and make data available to all players. In order to offer
- * a high level of user-friendliness, an update should not have to be created due to small changes. That's why I use an
- * API through which I make some data available. I use a private server for this. This provides data for:
+ * An important addon function is to collect statistics and make data available to all players. To ensure
+ * user-friendliness, an update should not always have to be created for changes to content-related data. I utilize an
+ * API to provide data, leveraging a private server. Data is available for the following purposes:
  * <ul>
  *     <li>auto nc <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/autonc">API</a> (unauthorized)</li>
  *     <li>addon groups <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/player">API</a></li>
@@ -73,24 +72,24 @@ import java.util.function.Predicate;
  *     <li>wanted reasons <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/wantedreason">API</a></li>
  *     <li>yasin <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/yasin">API</a></li>
  * </ul>
- * This data can change constantly and can therefore not be entered statically in the code.
+ * This data can change constantly. Therefore, it cannot be statically entered into the code.
  * <p>
- * Why i need the session token for this? For example, the number of revives should only be seen by medics, as well as
- * the name of the person who entered a house ban (advanced house ban view). For editing any data, a certain faction and
- * rank in this faction is required.
+ * Why do I need the LabyConnect session token for this? For example, the number of revives or the player name who
+ * entered a house ban (advanced house ban view) should only be visible to medics. For editing any data, a faction and
+ * rank in this faction is necessary.
  * <p>
  * I can read the faction and rank from the Unicacity website
- * (<a href="https://unicacity.de/fraktionen">https://unicacity.de/fraktionen</a>). But in order to be able to assign
- * the faction information to a player, I need his UUID. I could pass these as parameters in the api call, but you could
- * mess that up by calling the endpoint with a different UUID that isn't your own. I needed a way to pass the UUID so
- * that it cannot (so easily) be falsified. For this I use the session token, because I can use it to read the UUID via
- * the Mojang API and nobody else knows the session token.
+ * (<a href="https://unicacity.de/fraktionen">https://unicacity.de/fraktionen</a>). But to assign the faction
+ * information to a player, I need his UUID. I could pass these as parameters in the API call, but you could mess that
+ * up by calling the endpoint with a different UUID from your own. The LabyMod session token contains the UUID. On the
+ * server, I verify the session token with a public key. If the verification passes, I store the player UUID with my
+ * generated API token.
  * <p>
- * A more detailed overview of how the authorization works can be found
- * <a href="https://wiki.unicacityaddon.rettichlp.de/api/function/autorisierung/">here</a> and an overview of all data I
- * store can be found <a href="https://wiki.unicacityaddon.rettichlp.de/api/function/daten-und-speicherung/">here</a>.
- * The session token is never saved ore logged. Only my specially generated token is saved in a database. If necessary I
- * can give access to the server code and give an insight into all stored data.
+ * An additional overview of the authorization can be found
+ * <a href="https://wiki.unicacityaddon.rettichlp.de/api/function/autorisierung/">here</a>. An overview of all stored
+ * data can be found <a href="https://wiki.unicacityaddon.rettichlp.de/api/function/daten-und-speicherung/">here</a>.
+ * The LabyConnect session token is never saved or logged. Only my specially generated token is stored in a database. If
+ * necessary, I can provide access to the server code and an insight into all stored data.
  *
  * @author RettichLP
  */
