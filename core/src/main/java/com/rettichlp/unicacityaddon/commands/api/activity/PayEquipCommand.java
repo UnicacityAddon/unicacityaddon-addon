@@ -11,15 +11,18 @@ import com.rettichlp.unicacityaddon.base.registry.UnicacityCommand;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.services.utils.MathUtils;
 
+import java.util.AbstractMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author Dimiikou
  */
 @UCCommand(prefix = "payequip", usage = "[Id]")
 public class PayEquipCommand extends UnicacityCommand {
+
+    public static Map.Entry<String, Integer> payEquipMap = new AbstractMap.SimpleEntry<>("0", 0);
 
     private final UnicacityAddon unicacityAddon;
 
@@ -45,17 +48,17 @@ public class PayEquipCommand extends UnicacityCommand {
 
                 String response = this.unicacityAddon.webService().sendRequest("https://lemilieu.de/api/equip/get?member=" + uuid);
 
-                AtomicInteger toPay = new AtomicInteger();
                 JsonArray jsonArray = new JsonParser().parse(response).getAsJsonArray();
                 jsonArray.forEach(jsonElement -> {
                     JsonObject jsonObject = jsonElement.getAsJsonObject();
-                    if (jsonObject.get("id").getAsString().equals(arguments[0])) {
-                        toPay.set(Integer.parseInt(jsonObject.get("price").getAsString()));
+                    String id = jsonObject.get("id").getAsString();
+                    if (id.equals(arguments[0])) {
+                        payEquipMap = new AbstractMap.SimpleEntry<>(id, Integer.parseInt(jsonObject.get("price").getAsString()));
                     }
                 });
 
-                if (toPay.get() > 0) {
-                    p.sendServerMessage("/fbank einzahlen " + toPay.get());
+                if (payEquipMap.getValue() > 0) {
+                    p.sendServerMessage("/fbank einzahlen " + payEquipMap.getValue());
                 } else {
                     p.sendErrorMessage("Du kannst für die ID kein Equip einzahlen.");
                 }

@@ -60,6 +60,7 @@ public class EquipShopListener {
 
                 if (p.getFaction().equals(Faction.LEMILIEU)) {
                     ActivityCheckBuilder.getBuilder(this.unicacityAddon)
+                            .activity(ActivityCheckBuilder.Activity.EQUIP_ADD)
                             .type(equip.getEquipName())
                             .value(String.valueOf(equip.getPrice(this.unicacityAddon.configuration())))
                             .send();
