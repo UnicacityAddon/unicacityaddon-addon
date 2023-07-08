@@ -12,6 +12,7 @@ import com.rettichlp.unicacityaddon.listener.faction.state.WantedListener;
 import lombok.Getter;
 import lombok.Setter;
 import net.labymod.api.client.network.ClientPacketListener;
+import net.labymod.api.client.scoreboard.ScoreboardTeam;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -27,8 +28,6 @@ public class NameTagService {
 
     private Map<String, Boolean> blacklistPlayerMap;
     private Collection<String> contractList;
-    private Collection<String> maskedList;
-    private Collection<String> noPushList;
     private Collection<WantedListener.Wanted> wantedList;
 
     private final UnicacityAddon unicacityAddon;
@@ -37,8 +36,6 @@ public class NameTagService {
         this.unicacityAddon = unicacityAddon;
         this.blacklistPlayerMap = new HashMap<>();
         this.contractList = new ArrayList<>();
-        this.maskedList = new ArrayList<>();
-        this.noPushList = new ArrayList<>();
         this.wantedList = new ArrayList<>();
     }
 
@@ -92,6 +89,24 @@ public class NameTagService {
         }
 
         return prefix.toString();
+    }
+
+    public boolean isMasked(String playerName) {
+        return this.unicacityAddon.player().getScoreboard().getTeams().stream()
+                .filter(scoreboardTeam -> scoreboardTeam.getTeamName().equals("masked"))
+                .findFirst()
+                .map(ScoreboardTeam::getEntries)
+                .map(strings -> strings.contains(playerName))
+                .orElse(false);
+    }
+
+    public boolean isNoPush(String playerName) {
+        return this.unicacityAddon.player().getScoreboard().getTeams().stream()
+                .filter(scoreboardTeam -> scoreboardTeam.getTeamName().equals("nopush"))
+                .findAny()
+                .map(ScoreboardTeam::getEntries)
+                .map(strings -> strings.contains(playerName))
+                .orElse(false);
     }
 
     public ColorCode getWpColor(int wantedPointAmount) {

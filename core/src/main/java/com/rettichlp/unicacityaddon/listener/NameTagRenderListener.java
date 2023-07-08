@@ -42,7 +42,7 @@ public class NameTagRenderListener {
         String playerName = networkPlayerInfo.profile().getUsername();
 
         if (context.equals(PlayerNameTagRenderEvent.Context.PLAYER_RENDER)) {
-            if (this.unicacityAddon.nameTagService().getMaskedList().contains(playerName)) {
+            if (this.unicacityAddon.nameTagService().isMasked(playerName)) {
                 e.setNameTag(Message.getBuilder().of(playerName).obfuscated().advance().createComponent());
             } else {
                 String prefix = this.unicacityAddon.nameTagService().getPrefix(playerName, false);
@@ -58,18 +58,5 @@ public class NameTagRenderListener {
                 e.setNameTag(nameTagComponent.append(AFK_COMPONENT));
             }
         }
-    }
-
-    @Subscribe
-    public void onScoreboardTeamUpdate(ScoreboardTeamUpdateEvent e) {
-        this.unicacityAddon.player().getScoreboard().getTeams().stream()
-                .filter(scoreboardTeam -> scoreboardTeam.getTeamName().equals("nopush"))
-                .findFirst()
-                .ifPresent(scoreboardTeam -> this.unicacityAddon.nameTagService().setNoPushList(scoreboardTeam.getEntries()));
-
-        this.unicacityAddon.player().getScoreboard().getTeams().stream()
-                .filter(scoreboardTeam -> scoreboardTeam.getTeamName().equals("masked"))
-                .findFirst()
-                .ifPresent(scoreboardTeam -> this.unicacityAddon.nameTagService().setMaskedList(scoreboardTeam.getEntries()));
     }
 }
