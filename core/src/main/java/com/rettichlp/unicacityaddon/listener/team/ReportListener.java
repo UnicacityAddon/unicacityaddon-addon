@@ -75,7 +75,7 @@ public class ReportListener {
             return;
         }
 
-        if (chatMessage.getOriginalFormattedText().startsWith(ColorCode.DARK_PURPLE.getCode()) && isReport) {
+        if (this.unicacityAddon.utilService().text().legacy(chatMessage.originalComponent()).startsWith(ColorCode.DARK_PURPLE.getCode()) && isReport) {
             Message.Builder messageBuilder = Message.getBuilder()
                     .add(messageConfiguration.prefix().getOrDefault("").replaceAll("&", "§"));
 

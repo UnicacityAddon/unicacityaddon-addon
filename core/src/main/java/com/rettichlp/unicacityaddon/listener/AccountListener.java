@@ -46,6 +46,7 @@ public class AccountListener {
         AddonPlayer p = this.unicacityAddon.player();
         ChatMessage chatMessage = e.chatMessage();
         String msg = chatMessage.getPlainText();
+        String formattedMsg = this.unicacityAddon.utilService().text().legacy(chatMessage.originalComponent());
 
         if (!this.unicacityAddon.utilService().isUnicacity())
             return;
@@ -98,7 +99,7 @@ public class AccountListener {
         if (accountFriendJoinMatcher.find()) {
             String name = accountFriendJoinMatcher.group("name");
             e.setMessage(Message.getBuilder()
-                    .add(chatMessage.getOriginalFormattedText())
+                    .add(formattedMsg)
                     .space()
                     .of("[☎]").color(ColorCode.DARK_GREEN)
                             .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of(name + " anrufen").color(ColorCode.DARK_GREEN).advance().createComponent())
@@ -122,7 +123,7 @@ public class AccountListener {
         if (accountFriendLeaveMatcher.find()) {
             String name = accountFriendLeaveMatcher.group("name");
             e.setMessage(Message.getBuilder()
-                    .add(chatMessage.getOriginalFormattedText())
+                    .add(formattedMsg)
                     .space()
                     .of("[✕]").color(ColorCode.RED)
                             .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of(name + " aus der Freundesliste entfernen").color(ColorCode.RED).advance().createComponent())
