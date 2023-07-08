@@ -272,7 +272,7 @@ public class API {
                         "activity", String.valueOf(activity),
                         "type", Optional.ofNullable(type).orElse(""),
                         "value", Optional.ofNullable(value).orElse(""),
-                        "drugType", Optional.ofNullable(String.valueOf(drugType)).orElse(""),
+                        "drugType", Optional.ofNullable(drugType).map(DrugType::name).orElse(""),
                         "drugPurity", String.valueOf(Optional.ofNullable(drugPurity).map(DrugPurity::getPurity).orElse(-1)),
                         "date", String.valueOf(date),
                         "screenshot", screenshot))
