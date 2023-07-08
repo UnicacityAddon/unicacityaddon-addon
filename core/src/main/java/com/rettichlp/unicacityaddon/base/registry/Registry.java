@@ -108,6 +108,7 @@ import com.rettichlp.unicacityaddon.listener.EquipShopListener;
 import com.rettichlp.unicacityaddon.listener.EventRegistrationListener;
 import com.rettichlp.unicacityaddon.listener.GangwarListener;
 import com.rettichlp.unicacityaddon.listener.KarmaMessageListener;
+import com.rettichlp.unicacityaddon.listener.LabyConnectListener;
 import com.rettichlp.unicacityaddon.listener.MobileListener;
 import com.rettichlp.unicacityaddon.listener.MoneyListener;
 import com.rettichlp.unicacityaddon.listener.NameTagRenderListener;
@@ -238,6 +239,7 @@ public class Registry {
             HouseRenterListener.class,
             JobListener.class,
             KarmaMessageListener.class,
+            LabyConnectListener.class,
             MedicationListener.class,
             MemberInfoListener.class,
             MobileListener.class,

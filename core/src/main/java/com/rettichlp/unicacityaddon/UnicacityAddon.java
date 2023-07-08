@@ -124,7 +124,6 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
 
     @Override
     protected void enable() {
-        this.api.sync(this.player);
         this.registerSettingCategory();
         this.registry.registerTags();
         this.registry.registerHudWidgets();
