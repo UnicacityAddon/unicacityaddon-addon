@@ -33,6 +33,7 @@ import lombok.Getter;
 import lombok.Setter;
 import net.labymod.api.Laby;
 import net.labymod.api.client.component.Component;
+import net.labymod.api.client.session.Session;
 import net.labymod.api.labyconnect.TokenStorage.Purpose;
 import net.labymod.api.labyconnect.TokenStorage.Token;
 import net.labymod.api.notification.Notification;
@@ -641,14 +642,15 @@ public class API {
     }
 
     public void createToken() throws TokenException, APIResponseException {
-        UUID uniqueId = this.unicacityAddon.labyAPI().minecraft().sessionAccessor().session().getUniqueId();
-        Token token = Laby.references().tokenStorage().getToken(Purpose.JWT, uniqueId);
+        Optional<Session> sessionOptional = Optional.ofNullable(this.unicacityAddon.labyAPI().minecraft().sessionAccessor().getSession());
+        Optional<UUID> uniqueIdOptional = sessionOptional.map(Session::getUniqueId);
+        Optional<Token> tokenOptional = uniqueIdOptional.map(uuid -> Laby.references().tokenStorage().getToken(Purpose.JWT, uuid));
 
-        this.token = Optional.ofNullable(token)
-                .map(t -> hash(uniqueId.toString().replace("-", "") + t.getToken()))
+        this.token = tokenOptional
+                .map(t -> hash(uniqueIdOptional.get().toString().replace("-", "") + t.getToken()))
                 .orElseThrow(() -> new TokenException(this.unicacityAddon, "Failed to retrieve LabyConnect session token"));
 
-        this.sendTokenCreateRequest(token);
+        this.sendTokenCreateRequest(tokenOptional.get());
     }
 
     public String hash(String input) {
