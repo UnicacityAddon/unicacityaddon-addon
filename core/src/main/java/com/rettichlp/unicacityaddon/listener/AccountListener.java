@@ -53,13 +53,6 @@ public class AccountListener {
         if (PatternHandler.ACCOUNT_WELCOME_BACK_PATTERN.matcher(msg).find()) {
             MobileListener.activeCommunicationsCheck = true;
             isAfk = false;
-
-            new Thread(() -> {
-                this.unicacityAddon.utilService().debug("Loading bomb place time");
-                long placeTime = this.unicacityAddon.api().sendEventRequest().getBomb();
-                this.unicacityAddon.labyAPI().eventBus().fire(new BombPlantedEvent(placeTime));
-            }).start();
-
             return;
         }
 
@@ -275,6 +268,13 @@ public class AccountListener {
                         }
                     }, 2500);
                 }
+
+                // LOAD BOMB TIME
+                new Thread(() -> {
+                    AccountListener.this.unicacityAddon.utilService().debug("Loading bomb place time");
+                    long placeTime = AccountListener.this.unicacityAddon.api().sendEventRequest().getBomb();
+                    AccountListener.this.unicacityAddon.labyAPI().eventBus().fire(new BombPlantedEvent(placeTime));
+                }).start();
             }
         }, 1000);
     }
