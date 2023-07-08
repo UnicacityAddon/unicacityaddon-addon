@@ -24,6 +24,7 @@ import com.rettichlp.unicacityaddon.commands.NaviCommand;
 import com.rettichlp.unicacityaddon.commands.NearestATMCommand;
 import com.rettichlp.unicacityaddon.commands.NearestJobCommand;
 import com.rettichlp.unicacityaddon.commands.NearestNaviPointCommand;
+import com.rettichlp.unicacityaddon.commands.RoleplayNameCommand;
 import com.rettichlp.unicacityaddon.commands.ScreenCommand;
 import com.rettichlp.unicacityaddon.commands.ShutdownGraveyardCommand;
 import com.rettichlp.unicacityaddon.commands.ShutdownJailCommand;
@@ -333,6 +334,7 @@ public class Registry {
             ReichensteuerCommand.class,
             ReplyCommand.class,
             ReviveStatsCommand.class,
+            RoleplayNameCommand.class,
             ScreenCommand.class,
             SellDrugCommand.class,
             ServiceCountCommand.class,
