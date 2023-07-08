@@ -38,22 +38,16 @@ public class VersionedTabListController extends TabListController {
         // get teams or create if not present
         Map<TabPrefix, ScorePlayerTeam> tabPrefixScorePlayerTeamMap = getScorePlayerTeamMap(scoreboard);
 
-        // add default player team (m_player)
+        // add player to team
         networkPlayerInfos.stream()
                 .filter(networkPlayerInfo -> networkPlayerInfo.profile() != null)
-                .filter(networkPlayerInfo -> networkPlayerInfo.getTeam() == null || (!networkPlayerInfo.getTeam().getTeamName().equals("nopush") && !networkPlayerInfo.getTeam().getTeamName().equals("masked")))
-                .map(networkPlayerInfo -> networkPlayerInfo.profile().getUsername())
-                .forEach(s -> scoreboard.addPlayerToTeam(s, tabPrefixScorePlayerTeamMap.get(TabPrefix.NONE).getName()));
-
-        // add formatted player teams
-        networkPlayerInfos.stream()
-                .filter(networkPlayerInfo -> networkPlayerInfo.displayName() != null)
-                .filter(networkPlayerInfo -> networkPlayerInfo.getTeam() == null || (!networkPlayerInfo.getTeam().getTeamName().equals("nopush") && !networkPlayerInfo.getTeam().getTeamName().equals("masked")))
                 .forEach(networkPlayerInfo -> {
-                    String displayName = unicacityAddon.utilService().text().legacy(networkPlayerInfo.displayName());
-                    TabPrefix tabPrefix = TabPrefix.getTypeByDisplayName(displayName);
-                    ScorePlayerTeam playerTeam = tabPrefixScorePlayerTeamMap.get(tabPrefix);
-                    scoreboard.addPlayerToTeam(networkPlayerInfo.profile().getUsername(), playerTeam.getName());
+                    String playerName = networkPlayerInfo.profile().getUsername();
+                    if (!unicacityAddon.nameTagService().isMasked(playerName) && !unicacityAddon.nameTagService().isNoPush(playerName)) {
+                        TabPrefix tabPrefix = TabPrefix.getTypeByDisplayName(unicacityAddon.utilService().text().legacy(networkPlayerInfo.displayName()));
+                        ScorePlayerTeam playerTeam = tabPrefixScorePlayerTeamMap.get(tabPrefix);
+                        scoreboard.addPlayerToTeam(playerName, playerTeam.getName());
+                    }
                 });
     }
 

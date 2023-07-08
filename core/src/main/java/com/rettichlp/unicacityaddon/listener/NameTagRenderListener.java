@@ -9,7 +9,6 @@ import net.labymod.api.client.component.Component;
 import net.labymod.api.client.network.NetworkPlayerInfo;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.render.PlayerNameTagRenderEvent;
-import net.labymod.api.event.client.scoreboard.ScoreboardTeamUpdateEvent;
 
 /**
  * @author RettichLP
@@ -42,7 +41,7 @@ public class NameTagRenderListener {
         String playerName = networkPlayerInfo.profile().getUsername();
 
         if (context.equals(PlayerNameTagRenderEvent.Context.PLAYER_RENDER)) {
-            if (this.unicacityAddon.nameTagService().getMaskedList().contains(playerName)) {
+            if (this.unicacityAddon.nameTagService().isMasked(playerName)) {
                 e.setNameTag(Message.getBuilder().of(playerName).obfuscated().advance().createComponent());
             } else {
                 String prefix = this.unicacityAddon.nameTagService().getPrefix(playerName, false);
@@ -51,25 +50,17 @@ public class NameTagRenderListener {
                     e.setNameTag(Message.getBuilder().add(prefix + playerName).createComponent());
                 }
             }
-        } else if (context.equals(PlayerNameTagRenderEvent.Context.TAB_LIST)) {
+        }/* else if (context.equals(PlayerNameTagRenderEvent.Context.TAB_LIST)) {
+            boolean isNoPush = this.unicacityAddon.nameTagService().isNoPush(playerName);
             Component nameTagComponent = e.nameTag();
-            String plainNameTagComponent = this.unicacityAddon.utilService().text().plain(nameTagComponent);
-            if (this.unicacityAddon.nameTagService().getNoPushList().contains(playerName) && !plainNameTagComponent.contains(" AFK")) {
+            String nameTagComponentString = this.unicacityAddon.utilService().text().plain(nameTagComponent);
+
+            if (isNoPush && !nameTagComponentString.contains(" AFK")) {
+                componentComponentMap.put(nameTagComponent, nameTagComponent.append(AFK_COMPONENT));
                 e.setNameTag(nameTagComponent.append(AFK_COMPONENT));
+            } else if (!isNoPush && nameTagComponentString.contains(" AFK")) {
+                e.setNameTag(componentComponentMap.getOrDefault(nameTagComponent, Component.text("failure")));
             }
-        }
-    }
-
-    @Subscribe
-    public void onScoreboardTeamUpdate(ScoreboardTeamUpdateEvent e) {
-        this.unicacityAddon.player().getScoreboard().getTeams().stream()
-                .filter(scoreboardTeam -> scoreboardTeam.getTeamName().equals("nopush"))
-                .findFirst()
-                .ifPresent(scoreboardTeam -> this.unicacityAddon.nameTagService().setNoPushList(scoreboardTeam.getEntries()));
-
-        this.unicacityAddon.player().getScoreboard().getTeams().stream()
-                .filter(scoreboardTeam -> scoreboardTeam.getTeamName().equals("masked"))
-                .findFirst()
-                .ifPresent(scoreboardTeam -> this.unicacityAddon.nameTagService().setMaskedList(scoreboardTeam.getEntries()));
+        }*/
     }
 }

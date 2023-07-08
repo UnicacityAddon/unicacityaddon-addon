@@ -35,10 +35,13 @@ public class FactionService {
             boolean isDuty = Optional.ofNullable(clientPacketListener)
                     .map(ClientPacketListener::getNetworkPlayerInfos).orElse(Collections.emptyList()).stream()
                     .map(NetworkPlayerInfo::displayName)
-                    .collect(Collectors.toMap(component -> this.unicacityAddon.utilService().text().plain(component).replace(" AFK", ""), component -> this.unicacityAddon.utilService().text().legacy(component)))
+                    .collect(Collectors.toMap(component -> this.unicacityAddon.utilService().text().plain(component), component -> this.unicacityAddon.utilService().text().legacy(component)))
                     .entrySet().stream()
                     .filter(plainLegacyEntry -> plainLegacyEntry.getValue().startsWith("§1") || plainLegacyEntry.getValue().startsWith("§9") || plainLegacyEntry.getValue().startsWith("§4") || plainLegacyEntry.getValue().startsWith("§6"))
                     .anyMatch(plainLegacyEntry -> playerName.contains(plainLegacyEntry.getKey()) || plainLegacyEntry.getKey().contains(playerName));
+
+            // playerName Gelegenheitsdieb matches with plain displayName Gelegenheitsd (short tab name)
+            // playerName Joshxa_ matches with plain displayName [UC]Joshxa_ (UC prefix)
 
             duty = tempDuty || (this.unicacityAddon.utilService().isUnicacity() && isDuty);
         } catch (IllegalStateException e) {
