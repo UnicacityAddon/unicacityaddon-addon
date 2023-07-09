@@ -56,7 +56,6 @@ import com.rettichlp.unicacityaddon.commands.faction.EquipListCommand;
 import com.rettichlp.unicacityaddon.commands.faction.ReinforcementCommand;
 import com.rettichlp.unicacityaddon.commands.faction.ServiceCountCommand;
 import com.rettichlp.unicacityaddon.commands.faction.ShareLocationCommand;
-import com.rettichlp.unicacityaddon.commands.faction.badfaction.ACaptureCommand;
 import com.rettichlp.unicacityaddon.commands.faction.badfaction.ASetBlacklistCommand;
 import com.rettichlp.unicacityaddon.commands.faction.badfaction.BlackMarketCommand;
 import com.rettichlp.unicacityaddon.commands.faction.badfaction.BlacklistInfoCommand;
@@ -281,7 +280,6 @@ public class Registry {
 
     private final HashSet<Class<?>> commandList = Sets.newHashSet(
             ACallCommand.class,
-            ACaptureCommand.class,
             ADropMoneyCommand.class,
             AFbankEinzahlenCommand.class,
             ARezeptAnnehmenCommand.class,
