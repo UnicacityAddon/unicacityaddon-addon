@@ -263,7 +263,7 @@ public class API {
                 .getAsJsonObjectAndParse(Success.class);
     }
 
-    public Success sendActivityCheckActivity(ActivityCheckBuilder.Activity activity, String type, String value, DrugType drugType, DrugPurity drugPurity, long date, String screenshot) {
+    public Success sendActivityCheckActivity(ActivityCheckBuilder.Activity activity, String type, String value, DrugType drugType, DrugPurity drugPurity, Long date, String screenshot) {
         return RequestBuilder.getBuilder(this.unicacityAddon)
                 .nonProd(this.unicacityAddon.configuration().local().get())
                 .applicationPath(ApplicationPath.ACTIVITY_CHECK)
@@ -274,8 +274,8 @@ public class API {
                         "value", Optional.ofNullable(value).orElse(""),
                         "drugType", Optional.ofNullable(drugType).map(DrugType::name).orElse(""),
                         "drugPurity", String.valueOf(Optional.ofNullable(drugPurity).map(DrugPurity::getPurity).orElse(-1)),
-                        "date", String.valueOf(date),
-                        "screenshot", screenshot))
+                        "date", String.valueOf(Optional.ofNullable(date).orElse(0L)),
+                        "screenshot", Optional.ofNullable(screenshot).orElse("")))
                 .getAsJsonObjectAndParse(Success.class);
     }
 
