@@ -114,7 +114,7 @@ public class ContractListener {
             }
 
             // show list entry dependent on configuration
-            if (this.unicacityAddon.configuration().message().filteredContractlist().get() && this.unicacityAddon.utilService().text().legacy(chatMessage.originalComponent()).startsWith(ColorCode.RED.getCode())) {
+            if (this.unicacityAddon.configuration().message().filteredContractlist().get() && this.unicacityAddon.utilService().text().legacy(chatMessage.originalComponent()).contains(ColorCode.RED.getCode())) {
                 e.setCancelled(true);
             }
         }
