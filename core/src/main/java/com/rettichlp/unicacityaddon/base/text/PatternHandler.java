@@ -188,6 +188,7 @@ public class PatternHandler {
     public static final Pattern TRUNK_GIVE_COMMAND_PATTERN = Pattern.compile("^/trunk drop (?<drugType>.+) (?<drugPurity>\\d) (?<amount>\\d+)$");
     public static final Pattern TRUNK_INTERACTION_ACCEPTED_PATTERN = Pattern.compile("^\\[Car] Du hast (?<amount>\\d+)g (?<drugType>.+) (aus dem|in den) Kofferraum (genommen|verstaut)\\.$");
     public static final Pattern BANNER_SPRAYED_PATTERN = Pattern.compile("^\\[Graffiti] Du hast das Graffiti mit deiner Fraktionsflagge übersprayt\\.$");
+    public static final Pattern GANGWAR_CAPTURE_START_PATTERN = Pattern.compile("\\[Gangwar] Du hast begonnen den Punkt (\\w+) zu erobern\\.$");
 
     /**
      * Pattern for money interaction
