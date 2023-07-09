@@ -3,8 +3,6 @@ package com.rettichlp.unicacityaddon.base.services;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.io.api.APIResponseException;
-import lombok.Getter;
-import lombok.Setter;
 import net.labymod.api.client.network.ClientPacketListener;
 import net.labymod.api.client.network.NetworkPlayerInfo;
 
@@ -17,10 +15,6 @@ import java.util.stream.Collectors;
  */
 public class FactionService {
 
-    @Getter
-    @Setter
-    private boolean tempDuty = false;
-
     private final UnicacityAddon unicacityAddon;
 
     public FactionService(UnicacityAddon unicacityAddon) {
@@ -32,7 +26,7 @@ public class FactionService {
 
         try {
             ClientPacketListener clientPacketListener = this.unicacityAddon.labyAPI().minecraft().getClientPacketListener();
-            boolean isDuty = Optional.ofNullable(clientPacketListener)
+            duty = this.unicacityAddon.utilService().isUnicacity() && Optional.ofNullable(clientPacketListener)
                     .map(ClientPacketListener::getNetworkPlayerInfos).orElse(Collections.emptyList()).stream()
                     .map(NetworkPlayerInfo::displayName)
                     .collect(Collectors.toMap(component -> this.unicacityAddon.utilService().text().plain(component), component -> this.unicacityAddon.utilService().text().legacy(component)))
@@ -42,8 +36,6 @@ public class FactionService {
 
             // playerName Gelegenheitsdieb matches with plain displayName Gelegenheitsd (short tab name)
             // playerName Joshxa_ matches with plain displayName [UC]Joshxa_ (UC prefix)
-
-            duty = tempDuty || (this.unicacityAddon.utilService().isUnicacity() && isDuty);
         } catch (IllegalStateException e) {
             this.unicacityAddon.utilService().debug("Can't retrieve player duty for " + playerName);
             this.unicacityAddon.logger().warn(e.getMessage());
