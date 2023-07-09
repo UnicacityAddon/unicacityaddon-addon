@@ -11,7 +11,7 @@ import net.labymod.api.client.chat.ChatMessage;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 
 /**
@@ -100,7 +100,7 @@ public class ContractListener {
 
         Matcher contractListHeaderMatcher = PatternHandler.CONTRACT_LIST_HEADER_PATTERN.matcher(msg);
         if (contractListHeaderMatcher.find()) {
-            this.unicacityAddon.nameTagService().setContractList(Collections.emptyList());
+            this.unicacityAddon.nameTagService().setContractList(new ArrayList<>());
             this.hitlistShown = currentTime;
             return;
         }
