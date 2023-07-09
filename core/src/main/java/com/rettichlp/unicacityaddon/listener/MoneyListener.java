@@ -137,7 +137,7 @@ public class MoneyListener {
             int money = Integer.parseInt(cashToFBankMatcher.group(1));
             this.unicacityAddon.fileService().data().removeCashBalance(money);
 
-            if (PayEquipCommand.payEquipMap.getValue() == money) {
+            if (PayEquipCommand.payEquipMap.getValue() == money && this.unicacityAddon.utilService().isUnicacity()) {
                 ActivityCheckBuilder.getBuilder(this.unicacityAddon)
                         .activity(ActivityCheckBuilder.Activity.EQUIP_EDIT)
                         .type(PayEquipCommand.payEquipMap.getKey())
