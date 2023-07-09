@@ -45,6 +45,10 @@ import com.rettichlp.unicacityaddon.commands.api.TokenCommand;
 import com.rettichlp.unicacityaddon.commands.api.TopListCommand;
 import com.rettichlp.unicacityaddon.commands.api.WantedReasonCommand;
 import com.rettichlp.unicacityaddon.commands.api.YasinCommand;
+import com.rettichlp.unicacityaddon.commands.api.activity.DrugActivityCommand;
+import com.rettichlp.unicacityaddon.commands.api.activity.MoneyActivityCommand;
+import com.rettichlp.unicacityaddon.commands.api.activity.PayEquipCommand;
+import com.rettichlp.unicacityaddon.commands.api.activity.RoleplayActivityCommand;
 import com.rettichlp.unicacityaddon.commands.faction.AFbankEinzahlenCommand;
 import com.rettichlp.unicacityaddon.commands.faction.CheckActiveMembersCommand;
 import com.rettichlp.unicacityaddon.commands.faction.DropDrugAllCommand;
@@ -307,6 +311,7 @@ public class Registry {
             DBankDropAllCommand.class,
             DForceCommand.class,
             DiscordCommand.class,
+            DrugActivityCommand.class,
             DutyCommand.class,
             DyavolCommand.class,
             DropDrugAllCommand.class,
@@ -329,6 +334,7 @@ public class Registry {
             MemberInfoCommand.class,
             ModifyBlacklistCommand.class,
             ModifyWantedsCommand.class,
+            MoneyActivityCommand.class,
             MoveCommand.class,
             MoveHereCommand.class,
             MoveToCommand.class,
@@ -337,12 +343,14 @@ public class Registry {
             NearestATMCommand.class,
             NearestJobCommand.class,
             NearestNaviPointCommand.class,
+            PayEquipCommand.class,
             PlayerGroupCommand.class,
             PunishCommand.class,
             ReinforcementCommand.class,
             ReichensteuerCommand.class,
             ReplyCommand.class,
             ReviveStatsCommand.class,
+            RoleplayActivityCommand.class,
             RoleplayNameCommand.class,
             ScreenCommand.class,
             SellDrugCommand.class,

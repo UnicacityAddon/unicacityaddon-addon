@@ -1,6 +1,5 @@
 package com.rettichlp.unicacityaddon.listener;
 
-
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.config.ownUse.OwnUseConfiguration;

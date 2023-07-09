@@ -21,10 +21,13 @@ import com.rettichlp.unicacityaddon.api.response.Success;
 import com.rettichlp.unicacityaddon.api.statistic.Statistic;
 import com.rettichlp.unicacityaddon.api.statisticTop.StatisticTop;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
+import com.rettichlp.unicacityaddon.base.builder.ActivityCheckBuilder;
 import com.rettichlp.unicacityaddon.base.builder.RequestBuilder;
 import com.rettichlp.unicacityaddon.base.enums.api.AddonGroup;
 import com.rettichlp.unicacityaddon.base.enums.api.ApplicationPath;
 import com.rettichlp.unicacityaddon.base.enums.api.StatisticType;
+import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
+import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
@@ -56,6 +59,7 @@ import java.util.function.Predicate;
  * user-friendliness, an update should not always have to be created for changes to content-related data. I utilize an
  * API to provide data, leveraging a private server. Data is available for the following purposes:
  * <ul>
+ *     <li>activity check <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/activitycheck/LEMILIEU/add">API</a> (unauthorized)</li>
  *     <li>auto nc <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/autonc">API</a> (unauthorized)</li>
  *     <li>addon groups <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/player">API</a></li>
  *     <li>banners <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/banner">API</a></li>
@@ -259,6 +263,22 @@ public class API {
                 .subPath(REMOVE_SUB_PATH)
                 .parameter(Map.of(
                         "id", String.valueOf(id)))
+                .getAsJsonObjectAndParse(Success.class);
+    }
+
+    public Success sendActivityCheckActivity(ActivityCheckBuilder.Activity activity, String type, String value, DrugType drugType, DrugPurity drugPurity, Long date, String screenshot) {
+        return RequestBuilder.getBuilder(this.unicacityAddon)
+                .nonProd(this.unicacityAddon.configuration().local().get())
+                .applicationPath(ApplicationPath.ACTIVITY_CHECK)
+                .subPath(this.addonPlayer.getFaction() + "/add")
+                .parameter(Map.of(
+                        "activity", String.valueOf(activity),
+                        "type", Optional.ofNullable(type).orElse(""),
+                        "value", Optional.ofNullable(value).orElse(""),
+                        "drugType", Optional.ofNullable(drugType).map(DrugType::name).orElse(""),
+                        "drugPurity", String.valueOf(Optional.ofNullable(drugPurity).map(DrugPurity::getPurity).orElse(-1)),
+                        "date", String.valueOf(Optional.ofNullable(date).orElse(0L)),
+                        "screenshot", Optional.ofNullable(screenshot).orElse("")))
                 .getAsJsonObjectAndParse(Success.class);
     }
 
