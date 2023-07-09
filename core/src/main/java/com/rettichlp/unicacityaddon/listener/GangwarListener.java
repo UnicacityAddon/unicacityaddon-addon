@@ -37,7 +37,7 @@ public class GangwarListener {
                 public void run() {
                     GangwarListener.this.unicacityAddon.player().sendServerMessage("/capture");
                 }
-            }, TimeUnit.SECONDS.toMillis(15));
+            }, TimeUnit.SECONDS.toMillis(17));
         }
     }
 
