@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 /**
  * @author RettichLP
  */
-@UCCommand(prefix = "roleplayname", aliases = {"rpname"}, onlyOnUnicacity = false)
+@UCCommand(prefix = "roleplayname", aliases = {"rpname"}, usage = "[Name]", onlyOnUnicacity = false)
 public class RoleplayNameCommand extends UnicacityCommand {
 
     private final UnicacityAddon unicacityAddon;
@@ -25,6 +25,11 @@ public class RoleplayNameCommand extends UnicacityCommand {
     @Override
     public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
+
+        if (arguments.length == 0) {
+            sendUsage();
+            return true;
+        }
 
         new Thread(() -> {
             String roleplayName = this.unicacityAddon.utilService().text().makeStringByArgs(arguments, " ");
