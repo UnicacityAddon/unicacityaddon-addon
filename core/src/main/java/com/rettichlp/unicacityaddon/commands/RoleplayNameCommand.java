@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 /**
  * @author RettichLP
  */
-@UCCommand(prefix = "roleplayname", aliases = {"rpname"}, usage = "[Name]", onlyOnUnicacity = false)
+@UCCommand(prefix = "roleplayname", aliases = {"rpname"}, onlyOnUnicacity = false, usage = "[Name]")
 public class RoleplayNameCommand extends UnicacityCommand {
 
     private final UnicacityAddon unicacityAddon;
