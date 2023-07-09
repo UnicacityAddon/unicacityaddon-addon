@@ -51,7 +51,7 @@ public class NoPushTag extends NameTag {
         NameTagService nameTagService = this.unicacityAddon.nameTagService();
         if (nameTagService.isAdminDuty(playerName)) {
             return ADMIN_DUTY_COMPONENT;
-        } else if (nameTagService.getNoPushList().contains(playerName)) {
+        } else if (nameTagService.isNoPush(playerName)) {
             return AFK_COMPONENT;
         } else {
             return null;

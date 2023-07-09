@@ -166,7 +166,7 @@ public class EmergencyServiceListener {
             if (serviceCallBox != null && p.getLocation() != null) {
                 activeEmergencyCallBoxList.add(serviceCallBox);
                 e.setMessage(Message.getBuilder()
-                        .add(chatMessage.getOriginalFormattedText()).space()
+                        .add(this.unicacityAddon.utilService().text().legacy(chatMessage.originalComponent())).space()
                         .of("[").color(ColorCode.DARK_GRAY).advance()
                         .of("Unterwegs - " + serviceCallBox.getDistance(p.getLocation()) + "m").color(ColorCode.RED)
                                 .clickEvent(ClickEvent.Action.RUN_COMMAND, serviceCallBox.getNaviCommand())

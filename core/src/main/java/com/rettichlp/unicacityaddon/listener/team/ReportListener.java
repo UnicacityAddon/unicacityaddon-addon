@@ -71,11 +71,11 @@ public class ReportListener {
 
         if (PatternHandler.REPORT_END_PATTERN.matcher(msg).find()) {
             isReport = false;
-            this.unicacityAddon.factionService().setTempDuty(false);
+            p.setTempDuty(false);
             return;
         }
 
-        if (chatMessage.getOriginalFormattedText().startsWith(ColorCode.DARK_PURPLE.getCode()) && isReport) {
+        if (this.unicacityAddon.utilService().text().legacy(chatMessage.originalComponent()).startsWith(ColorCode.DARK_PURPLE.getCode()) && isReport) {
             Message.Builder messageBuilder = Message.getBuilder()
                     .add(messageConfiguration.prefix().getOrDefault("").replaceAll("&", "§"));
 
@@ -107,7 +107,7 @@ public class ReportListener {
         String msg = e.getMessage();
 
         if (msg.startsWith("/ar") || msg.startsWith("/acceptreport")) {
-            this.unicacityAddon.factionService().setTempDuty(p.inDuty());
+            p.setTempDuty(this.unicacityAddon.factionService().checkPlayerDuty(p.getName()));
         }
     }
 

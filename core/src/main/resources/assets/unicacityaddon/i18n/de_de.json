@@ -475,8 +475,15 @@
         }
       },
       "tablist": {
-        "name": "Sortierte Tabliste",
-        "description": "Sortiert die Tabliste nach Duty-Fraktionen, UC's, Buildern und aktiven Reports"
+        "name": "Tabliste",
+        "sorted": {
+          "name": "Sortierte Tabliste",
+          "description": "Sortiert die Tabliste nach Duty-Fraktionen, UC's, Buildern und aktiven Reports"
+        },
+        "afk": {
+          "name": "AFK Tag in Tabliste",
+          "description": "Zeugt hinter AFK Spielern ein Icon an"
+        }
       },
       "despawnTime": {
         "name": "Despawn Zeitpunkt",

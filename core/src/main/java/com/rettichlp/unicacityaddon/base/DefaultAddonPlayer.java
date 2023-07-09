@@ -33,6 +33,7 @@ public class DefaultAddonPlayer implements AddonPlayer {
 
     private static String latestVersion = null;
     private boolean gagged = false;
+    private boolean tempDuty = false;
 
     private final UnicacityAddon unicacityAddon;
 
@@ -154,8 +155,13 @@ public class DefaultAddonPlayer implements AddonPlayer {
     }
 
     @Override
-    public boolean inDuty() {
-        return this.unicacityAddon.factionService().checkPlayerDuty(getName());
+    public boolean isDuty() {
+        return this.tempDuty || this.unicacityAddon.factionService().checkPlayerDuty(getName());
+    }
+
+    @Override
+    public void setTempDuty(boolean tempDuty) {
+        this.tempDuty = tempDuty;
     }
 
     @Override

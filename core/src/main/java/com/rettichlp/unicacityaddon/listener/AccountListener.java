@@ -46,6 +46,7 @@ public class AccountListener {
         AddonPlayer p = this.unicacityAddon.player();
         ChatMessage chatMessage = e.chatMessage();
         String msg = chatMessage.getPlainText();
+        String formattedMsg = this.unicacityAddon.utilService().text().legacy(chatMessage.originalComponent());
 
         if (!this.unicacityAddon.utilService().isUnicacity())
             return;
@@ -53,13 +54,6 @@ public class AccountListener {
         if (PatternHandler.ACCOUNT_WELCOME_BACK_PATTERN.matcher(msg).find()) {
             MobileListener.activeCommunicationsCheck = true;
             isAfk = false;
-
-            new Thread(() -> {
-                this.unicacityAddon.utilService().debug("Loading bomb place time");
-                long placeTime = this.unicacityAddon.api().sendEventRequest().getBomb();
-                this.unicacityAddon.labyAPI().eventBus().fire(new BombPlantedEvent(placeTime));
-            }).start();
-
             return;
         }
 
@@ -105,7 +99,7 @@ public class AccountListener {
         if (accountFriendJoinMatcher.find()) {
             String name = accountFriendJoinMatcher.group("name");
             e.setMessage(Message.getBuilder()
-                    .add(chatMessage.getOriginalFormattedText())
+                    .add(formattedMsg)
                     .space()
                     .of("[☎]").color(ColorCode.DARK_GREEN)
                             .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of(name + " anrufen").color(ColorCode.DARK_GREEN).advance().createComponent())
@@ -129,7 +123,7 @@ public class AccountListener {
         if (accountFriendLeaveMatcher.find()) {
             String name = accountFriendLeaveMatcher.group("name");
             e.setMessage(Message.getBuilder()
-                    .add(chatMessage.getOriginalFormattedText())
+                    .add(formattedMsg)
                     .space()
                     .of("[✕]").color(ColorCode.RED)
                             .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of(name + " aus der Freundesliste entfernen").color(ColorCode.RED).advance().createComponent())
@@ -275,6 +269,13 @@ public class AccountListener {
                         }
                     }, 2500);
                 }
+
+                // LOAD BOMB TIME
+                new Thread(() -> {
+                    AccountListener.this.unicacityAddon.utilService().debug("Loading bomb place time");
+                    long placeTime = AccountListener.this.unicacityAddon.api().sendEventRequest().getBomb();
+                    AccountListener.this.unicacityAddon.labyAPI().eventBus().fire(new BombPlantedEvent(placeTime));
+                }).start();
             }
         }, 1000);
     }

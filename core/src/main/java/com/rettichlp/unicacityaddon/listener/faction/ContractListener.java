@@ -2,7 +2,6 @@ package com.rettichlp.unicacityaddon.listener.faction;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
-import com.rettichlp.unicacityaddon.base.enums.api.StatisticType;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
@@ -12,7 +11,7 @@ import net.labymod.api.client.chat.ChatMessage;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 
 /**
@@ -101,7 +100,7 @@ public class ContractListener {
 
         Matcher contractListHeaderMatcher = PatternHandler.CONTRACT_LIST_HEADER_PATTERN.matcher(msg);
         if (contractListHeaderMatcher.find()) {
-            this.unicacityAddon.nameTagService().setContractList(Collections.emptyList());
+            this.unicacityAddon.nameTagService().setContractList(new ArrayList<>());
             this.hitlistShown = currentTime;
             return;
         }
@@ -115,7 +114,7 @@ public class ContractListener {
             }
 
             // show list entry dependent on configuration
-            if (this.unicacityAddon.configuration().message().filteredContractlist().get() && chatMessage.getOriginalFormattedText().startsWith(ColorCode.RED.getCode())) {
+            if (this.unicacityAddon.configuration().message().filteredContractlist().get() && this.unicacityAddon.utilService().text().legacy(chatMessage.originalComponent()).contains(ColorCode.RED.getCode())) {
                 e.setCancelled(true);
             }
         }

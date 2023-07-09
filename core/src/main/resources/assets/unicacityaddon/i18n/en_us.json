@@ -475,8 +475,15 @@
         }
       },
       "tablist": {
-        "name": "Sorted Tab List",
-        "description": "Sorts the tab list by duty factions, UC's, builders and active reports"
+        "name": "Tab List",
+        "sorted": {
+          "name": "Sorted Tab List",
+          "description": "Sorts the tab list by duty factions, UC's, builders and active reports"
+        },
+        "afk": {
+          "name": "AFK Tag",
+          "description": "Shows an icon behind AFK players"
+        }
       },
       "despawnTime": {
         "name": "Despawn Time",

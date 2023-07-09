@@ -40,7 +40,8 @@ public class ReinforcementCommand extends UnicacityCommand {
             return true;
         }
 
-        if ((p.getFaction() == Faction.FBI || p.getFaction() == Faction.RETTUNGSDIENST || p.getFaction() == Faction.POLIZEI) && !p.inDuty()) {
+        Faction faction = p.getFaction();
+        if ((faction.equals(Faction.NULL) || faction.equals(Faction.FBI) || faction.equals(Faction.RETTUNGSDIENST) || faction.equals(Faction.POLIZEI)) && !p.isDuty()) {
             p.sendErrorMessage("Du bist nicht im Dienst!");
             return true;
         }

@@ -59,7 +59,9 @@ public interface AddonPlayer {
 
     int getRank();
 
-    boolean inDuty();
+    boolean isDuty();
+
+    void setTempDuty(boolean tempDuty);
 
     void sellMedication(String target, DrugType medication);
 
