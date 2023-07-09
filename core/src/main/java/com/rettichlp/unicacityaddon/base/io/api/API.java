@@ -108,6 +108,8 @@ public class API {
     private final String BOMB_SUB_PATH = "bomb";
     private final String GANGWAR_SUB_PATH = "gangwar";
     private final String UPDATE_SUB_PATH = "update";
+    private final String BLOCK_SUB_PATH = "block";
+    private final String UNBLOCK_SUB_PATH = "unblock";
 
     private final Map<String, Faction> playerFactionMap = new HashMap<>();
     private final Map<String, Integer> playerRankMap = new HashMap<>();
@@ -533,6 +535,26 @@ public class API {
                 .subPath(UPDATE_SUB_PATH)
                 .parameter(Map.of(
                         "name", roleplayName))
+                .getAsJsonObjectAndParse(Success.class);
+    }
+
+    public Success sendRoleplayNameBlockRequest(String minecraftUuid) {
+        return RequestBuilder.getBuilder(this.unicacityAddon)
+                .nonProd(this.unicacityAddon.configuration().local().get())
+                .applicationPath(ApplicationPath.ROLEPLAY)
+                .subPath(BLOCK_SUB_PATH)
+                .parameter(Map.of(
+                        "minecraftUuid", minecraftUuid))
+                .getAsJsonObjectAndParse(Success.class);
+    }
+
+    public Success sendRoleplayNameUnblockRequest(String minecraftUuid) {
+        return RequestBuilder.getBuilder(this.unicacityAddon)
+                .nonProd(this.unicacityAddon.configuration().local().get())
+                .applicationPath(ApplicationPath.ROLEPLAY)
+                .subPath(UNBLOCK_SUB_PATH)
+                .parameter(Map.of(
+                        "minecraftUuid", minecraftUuid))
                 .getAsJsonObjectAndParse(Success.class);
     }
 

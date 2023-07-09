@@ -7,12 +7,13 @@ import com.rettichlp.unicacityaddon.base.registry.UnicacityCommand;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.regex.Pattern;
 
 /**
  * @author RettichLP
  */
-@UCCommand(prefix = "roleplayname", aliases = {"rpname"}, onlyOnUnicacity = false, usage = "[Name]")
+@UCCommand(prefix = "roleplayname", aliases = {"rpname"}, onlyOnUnicacity = false, usage = "[Roleplay Name|reset|block|unblock] (Name)")
 public class RoleplayNameCommand extends UnicacityCommand {
 
     private final UnicacityAddon unicacityAddon;
@@ -32,16 +33,37 @@ public class RoleplayNameCommand extends UnicacityCommand {
         }
 
         new Thread(() -> {
-            String roleplayName = this.unicacityAddon.utilService().text().makeStringByArgs(arguments, " ");
+            String info = null;
 
-            Pattern pattern = Pattern.compile("^[A-Za-z-äöüÄÖÜßâêîôûáéíóúàèìòù'\\s]{3,30}$");
-            if (pattern.matcher(roleplayName).matches()) {
-                String info = this.unicacityAddon.api().sendRoleplayNameSetRequest(roleplayName).getInfo();
-                p.sendAPIMessage(info, true);
+            if (arguments[0].equalsIgnoreCase("reset")) {
+                info = this.unicacityAddon.api().sendRoleplayNameSetRequest("").getInfo();
+            } else if (arguments.length > 1 && arguments[0].equalsIgnoreCase("block")) {
+                String minecraftUuid = Optional.ofNullable(this.unicacityAddon.labyAPI().minecraft().getClientPacketListener())
+                        .map(clientPacketListener -> clientPacketListener.getNetworkPlayerInfo(arguments[1]))
+                        .map(networkPlayerInfo -> networkPlayerInfo.profile().getUniqueId())
+                        .map(uuid -> uuid.toString().replace("-", ""))
+                        .orElse("");
+                info = this.unicacityAddon.api().sendRoleplayNameBlockRequest(minecraftUuid).getInfo();
+            } else if (arguments.length > 1 && arguments[0].equalsIgnoreCase("unblock")) {
+                String minecraftUuid = Optional.ofNullable(this.unicacityAddon.labyAPI().minecraft().getClientPacketListener())
+                        .map(clientPacketListener -> clientPacketListener.getNetworkPlayerInfo(arguments[1]))
+                        .map(networkPlayerInfo -> networkPlayerInfo.profile().getUniqueId())
+                        .map(uuid -> uuid.toString().replace("-", ""))
+                        .orElse("");
+                info = this.unicacityAddon.api().sendRoleplayNameUnblockRequest(minecraftUuid).getInfo();
             } else {
-                p.sendErrorMessage("Der Name muss zwischen (einschließlich) 3 und 30 Zeichen lang sein und darf nur aus Buchstaben, Bindestrichen und Apostrophen bestehen!");
+                String roleplayName = this.unicacityAddon.utilService().text().makeStringByArgs(arguments, " ");
+                Pattern pattern = Pattern.compile("^[A-Za-z-äöüÄÖÜßâêîôûáéíóúàèìòù'\\s]{3,30}$");
+                if (pattern.matcher(roleplayName).find()) {
+                    info = this.unicacityAddon.api().sendRoleplayNameSetRequest(roleplayName).getInfo();
+                } else {
+                    p.sendErrorMessage("Der Name muss zwischen (einschließlich) 3 und 30 Zeichen lang sein und darf nur aus Buchstaben, Bindestrichen und Apostrophen bestehen!");
+                }
             }
 
+            if (info != null) {
+                p.sendAPIMessage(info, true);
+            }
         }).start();
 
         return true;
@@ -49,6 +71,8 @@ public class RoleplayNameCommand extends UnicacityCommand {
 
     @Override
     public List<String> complete(String[] arguments) {
-        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments).build();
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments)
+                .addAtIndex(1, "reset", "block", "unblock")
+                .build();
     }
 }

@@ -44,8 +44,10 @@ public class RoleplayNameTag extends NameTag {
                 .findFirst();
 
         return optionalRoleplayName
-                .map(roleplayName -> RenderableComponent.of(Message.getBuilder()
-                        .of(roleplayName.getRoleplayName()).advance()
+                .map(RoleplayName::getRoleplayName)
+                .filter(s -> !s.equalsIgnoreCase("_blocked"))
+                .map(s -> RenderableComponent.of(Message.getBuilder()
+                        .of(s).advance()
                         .createComponent()))
                 .orElse(null);
     }
