@@ -71,12 +71,12 @@ public class ActivityCheckBuilder {
         public Success send() {
             return this.unicacityAddon.api().sendActivityCheckActivity(
                     this.activity,
-                    this.type,
-                    this.value,
+                    this.type.replace(" ", "-"),
+                    this.value.replace(" ", "-"),
                     this.drugType,
                     this.drugPurity,
                     this.date,
-                    this.screenshot);
+                    this.screenshot.replace(" ", "-"));
         }
     }
 
