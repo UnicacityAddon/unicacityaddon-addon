@@ -2,6 +2,8 @@ package com.rettichlp.unicacityaddon.base.registry;
 
 import com.google.common.collect.Sets;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.badge.NoPushBadge;
+import com.rettichlp.unicacityaddon.base.registry.annotation.UCBadge;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCNameTag;
@@ -163,7 +165,10 @@ import com.rettichlp.unicacityaddon.nametags.OutlawTag;
 import com.rettichlp.unicacityaddon.nametags.RoleplayNameTag;
 import lombok.Getter;
 import lombok.experimental.Accessors;
+import net.labymod.api.Laby;
 import net.labymod.api.client.chat.command.Command;
+import net.labymod.api.client.entity.player.badge.BadgeRegistry;
+import net.labymod.api.client.entity.player.badge.renderer.BadgeRenderer;
 import net.labymod.api.client.entity.player.tag.TagRegistry;
 import net.labymod.api.client.entity.player.tag.tags.NameTag;
 import net.labymod.api.client.gui.hud.HudWidgetRegistry;
@@ -185,6 +190,10 @@ public class Registry {
     @Accessors(fluent = true)
     @Getter
     private final Set<Command> commands = new HashSet<>();
+
+    private final HashSet<Class<?>> badgeList = Sets.newHashSet(
+            NoPushBadge.class
+    );
 
     private final HashSet<Class<?>> nameTagList = Sets.newHashSet(
             AddonTag.class,
@@ -358,6 +367,31 @@ public class Registry {
 
     public Registry(UnicacityAddon unicacityAddon) {
         this.unicacityAddon = unicacityAddon;
+    }
+
+    public void registerBadges() {
+        BadgeRegistry registry = Laby.references().badgeRegistry();
+
+        AtomicInteger registeredBadgeCount = new AtomicInteger();
+        Set<Class<?>> badgeClassSet = this.badgeList; // this.unicacityAddon.utilService().getAllClassesFromPackage("com.rettichlp.unicacityaddon.nametags");
+        badgeClassSet.stream()
+                .filter(badgeClass -> badgeClass.isAnnotationPresent(UCBadge.class))
+                .forEach(badgeClass -> {
+                    UCBadge ucBadge = badgeClass.getAnnotation(UCBadge.class);
+                    try {
+                        BadgeRenderer badgeRenderer = (BadgeRenderer) badgeClass.getConstructor(UnicacityAddon.class).newInstance(this.unicacityAddon);
+
+                        Objects.requireNonNull(badgeRenderer, "Badge");
+                        registry.register(ucBadge.name(), ucBadge.positionType(), badgeRenderer);
+
+                        registeredBadgeCount.getAndIncrement();
+                    } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException |
+                             InstantiationException e) {
+                        this.unicacityAddon.logger().warn("Can't register Badge: {}", badgeClass.getSimpleName());
+                        e.printStackTrace();
+                    }
+                });
+        this.unicacityAddon.logger().info("Registered {}/{} Badges", registeredBadgeCount, badgeClassSet.size());
     }
 
     public void registerTags() {
