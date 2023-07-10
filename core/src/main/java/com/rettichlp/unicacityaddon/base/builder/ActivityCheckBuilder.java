@@ -76,7 +76,7 @@ public class ActivityCheckBuilder {
                     this.drugType,
                     this.drugPurity,
                     this.date,
-                    this.screenshot.replace(" ", "-"));
+                    this.screenshot);
         }
     }
 }

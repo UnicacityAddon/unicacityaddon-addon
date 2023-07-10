@@ -278,7 +278,7 @@ public class API {
                         "drugType", Optional.ofNullable(drugType).map(DrugType::name).orElse(""),
                         "drugPurity", String.valueOf(Optional.ofNullable(drugPurity).map(DrugPurity::getPurity).orElse(-1)),
                         "date", String.valueOf(Optional.ofNullable(date).orElse(0L)),
-                        "screenshot", Optional.ofNullable(screenshot).orElse("")))
+                        "screenshot", Optional.ofNullable(screenshot).orElse("").replace(" ", "-")))
                 .getAsJsonObjectAndParse(Success.class);
     }
 
