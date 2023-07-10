@@ -22,6 +22,7 @@ import com.rettichlp.unicacityaddon.base.teamspeak.TeamSpeakAPI;
 import com.rettichlp.unicacityaddon.base.teamspeak.models.Channel;
 import com.rettichlp.unicacityaddon.base.teamspeak.models.Server;
 import com.rettichlp.unicacityaddon.base.teamspeak.models.User;
+import net.labymod.api.Laby;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -70,7 +71,7 @@ public class ClientMovedListener extends Listener {
             teamSpeakAPI.controller().refreshCurrentServer(args);
         }
 
-        unicacityAddon.labyAPI().eventBus().fire(new TeamSpeakClientMoveEvent(clid, cid, oldClientChannel));
+        Laby.labyAPI().eventBus().fire(new TeamSpeakClientMoveEvent(clid, cid, oldClientChannel));
     }
 
     @Nullable

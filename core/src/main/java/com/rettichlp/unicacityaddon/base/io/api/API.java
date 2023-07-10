@@ -149,7 +149,7 @@ public class API {
     public void sync(AddonPlayer addonPlayer) {
         this.addonPlayer = addonPlayer;
 
-        this.unicacityAddon.labyAPI().notificationController().push(syncNotification(Type.STARTED));
+        Laby.labyAPI().notificationController().push(syncNotification(Type.STARTED));
 
         new Thread(() -> {
             try {
@@ -168,14 +168,14 @@ public class API {
                 this.roleplayNameList = this.sendRoleplayNameRequest();
                 this.wantedReasonList = this.sendWantedReasonRequest();
 
-                this.unicacityAddon.labyAPI().notificationController().pop(syncNotification(Type.STARTED));
-                this.unicacityAddon.labyAPI().notificationController().push(syncNotification(Type.SUCCESS));
+                Laby.labyAPI().notificationController().pop(syncNotification(Type.STARTED));
+                Laby.labyAPI().notificationController().push(syncNotification(Type.SUCCESS));
             } catch (TokenException | APIResponseException e) {
                 this.unicacityAddon.logger().warn(e.getMessage());
                 this.unicacityAddon.logger().warn("Data synchronization cannot be performed!");
 
-                this.unicacityAddon.labyAPI().notificationController().pop(syncNotification(Type.STARTED));
-                this.unicacityAddon.labyAPI().notificationController().push(syncNotification(Type.FAILURE));
+                Laby.labyAPI().notificationController().pop(syncNotification(Type.STARTED));
+                Laby.labyAPI().notificationController().push(syncNotification(Type.FAILURE));
             }
         }).start();
     }
@@ -684,7 +684,7 @@ public class API {
     }
 
     public void createToken() throws TokenException, APIResponseException {
-        Optional<Session> sessionOptional = Optional.ofNullable(this.unicacityAddon.labyAPI().minecraft().sessionAccessor().getSession());
+        Optional<Session> sessionOptional = Optional.ofNullable(Laby.labyAPI().minecraft().sessionAccessor().getSession());
         Optional<UUID> uniqueIdOptional = sessionOptional.map(Session::getUniqueId);
         Optional<Token> tokenOptional = uniqueIdOptional.map(uuid -> Laby.references().tokenStorage().getToken(Purpose.JWT, uuid));
 

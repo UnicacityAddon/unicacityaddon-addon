@@ -5,6 +5,7 @@ import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.registry.UnicacityCommand;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
+import net.labymod.api.Laby;
 
 import java.util.List;
 import java.util.Optional;
@@ -38,14 +39,14 @@ public class RoleplayNameCommand extends UnicacityCommand {
             if (arguments[0].equalsIgnoreCase("reset")) {
                 info = this.unicacityAddon.api().sendRoleplayNameSetRequest("").getInfo();
             } else if (arguments.length > 1 && arguments[0].equalsIgnoreCase("block")) {
-                String minecraftUuid = Optional.ofNullable(this.unicacityAddon.labyAPI().minecraft().getClientPacketListener())
+                String minecraftUuid = Optional.ofNullable(Laby.labyAPI().minecraft().getClientPacketListener())
                         .map(clientPacketListener -> clientPacketListener.getNetworkPlayerInfo(arguments[1]))
                         .map(networkPlayerInfo -> networkPlayerInfo.profile().getUniqueId())
                         .map(uuid -> uuid.toString().replace("-", ""))
                         .orElse("");
                 info = this.unicacityAddon.api().sendRoleplayNameBlockRequest(minecraftUuid).getInfo();
             } else if (arguments.length > 1 && arguments[0].equalsIgnoreCase("unblock")) {
-                String minecraftUuid = Optional.ofNullable(this.unicacityAddon.labyAPI().minecraft().getClientPacketListener())
+                String minecraftUuid = Optional.ofNullable(Laby.labyAPI().minecraft().getClientPacketListener())
                         .map(clientPacketListener -> clientPacketListener.getNetworkPlayerInfo(arguments[1]))
                         .map(networkPlayerInfo -> networkPlayerInfo.profile().getUniqueId())
                         .map(uuid -> uuid.toString().replace("-", ""))

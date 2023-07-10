@@ -11,6 +11,7 @@ import com.rettichlp.unicacityaddon.base.text.FormattingCode;
 import com.rettichlp.unicacityaddon.listener.faction.state.WantedListener;
 import lombok.Getter;
 import lombok.Setter;
+import net.labymod.api.Laby;
 import net.labymod.api.client.network.ClientPacketListener;
 import net.labymod.api.client.scoreboard.ScoreboardTeam;
 
@@ -133,7 +134,7 @@ public class NameTagService {
         boolean duty = false;
 
         try {
-            ClientPacketListener clientPacketListener = this.unicacityAddon.labyAPI().minecraft().getClientPacketListener();
+            ClientPacketListener clientPacketListener = Laby.labyAPI().minecraft().getClientPacketListener();
             duty = clientPacketListener != null && this.unicacityAddon.utilService().isUnicacity() && clientPacketListener.getNetworkPlayerInfos().stream()
                     .map(networkPlayerInfo -> this.unicacityAddon.utilService().text().legacy(networkPlayerInfo.displayName()))
                     .anyMatch(s -> s.contains(playerName) && s.startsWith("§8[§9UC§8]§c"));

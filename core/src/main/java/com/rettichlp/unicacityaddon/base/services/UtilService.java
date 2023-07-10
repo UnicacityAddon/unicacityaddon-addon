@@ -10,6 +10,7 @@ import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import lombok.Getter;
 import lombok.experimental.Accessors;
+import net.labymod.api.Laby;
 import net.labymod.api.client.gui.icon.Icon;
 import net.labymod.api.client.network.ClientPacketListener;
 import net.labymod.api.client.network.NetworkPlayerInfo;
@@ -56,8 +57,8 @@ public class UtilService {
     }
 
     public boolean isUnicacity() {
-        if (this.unicacityAddon.labyAPI().minecraft().isIngame()) {
-            ServerData serverData = this.unicacityAddon.labyAPI().serverController().getCurrentServerData();
+        if (Laby.labyAPI().minecraft().isIngame()) {
+            ServerData serverData = Laby.labyAPI().serverController().getCurrentServerData();
             return serverData != null && serverData.address().matches("unicacity.de", 25565, true);
         }
         return false;
@@ -75,7 +76,7 @@ public class UtilService {
     }
 
     public List<String> getOnlinePlayers() {
-        ClientPacketListener clientPacketListener = this.unicacityAddon.labyAPI().minecraft().getClientPacketListener();
+        ClientPacketListener clientPacketListener = Laby.labyAPI().minecraft().getClientPacketListener();
         if (clientPacketListener == null)
             return Collections.emptyList();
 

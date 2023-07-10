@@ -11,6 +11,7 @@ import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.events.OfflineDataChangedEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
+import net.labymod.api.Laby;
 import net.labymod.api.util.math.vector.FloatVector3;
 
 import java.util.ArrayList;
@@ -461,8 +462,8 @@ public class Data {
 
     private void saveAndFireEvent() {
         unicacityAddon.fileService().saveData();
-        if (unicacityAddon.labyAPI().addonService().isEnabled("unicacityaddon")) {
-            unicacityAddon.labyAPI().eventBus().fire(new OfflineDataChangedEvent(unicacityAddon.fileService().data()));
+        if (Laby.labyAPI().addonService().isEnabled("unicacityaddon")) {
+            Laby.labyAPI().eventBus().fire(new OfflineDataChangedEvent(unicacityAddon.fileService().data()));
             unicacityAddon.utilService().debug("Triggered OfflineDataChangedEvent");
         }
     }

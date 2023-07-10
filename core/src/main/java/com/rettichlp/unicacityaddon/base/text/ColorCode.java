@@ -6,7 +6,6 @@ import net.labymod.api.client.component.format.NamedTextColor;
 import net.labymod.api.client.component.format.TextColor;
 
 import java.awt.Color;
-import java.util.Arrays;
 
 /**
  * @author RettichLP

@@ -3,6 +3,7 @@ package com.rettichlp.unicacityaddon.base.services;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.io.api.APIResponseException;
+import net.labymod.api.Laby;
 import net.labymod.api.client.network.ClientPacketListener;
 import net.labymod.api.client.network.NetworkPlayerInfo;
 
@@ -25,7 +26,7 @@ public class FactionService {
         boolean duty = false;
 
         try {
-            ClientPacketListener clientPacketListener = this.unicacityAddon.labyAPI().minecraft().getClientPacketListener();
+            ClientPacketListener clientPacketListener = Laby.labyAPI().minecraft().getClientPacketListener();
             duty = this.unicacityAddon.utilService().isUnicacity() && Optional.ofNullable(clientPacketListener)
                     .map(ClientPacketListener::getNetworkPlayerInfos).orElse(Collections.emptyList()).stream()
                     .map(NetworkPlayerInfo::displayName)

@@ -10,6 +10,7 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
+import net.labymod.api.Laby;
 import net.labymod.api.client.chat.ChatMessage;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.event.HoverEvent;
@@ -49,7 +50,7 @@ public class BombListener {
         Matcher bombPlantedMatcher = PatternHandler.BOMB_PLANTED_PATTERN.matcher(msg);
         if (bombPlantedMatcher.find()) {
             this.bombPlantedTime = System.currentTimeMillis();
-            this.unicacityAddon.labyAPI().eventBus().fire(new BombPlantedEvent());
+            Laby.labyAPI().eventBus().fire(new BombPlantedEvent());
             this.unicacityAddon.soundController().playBombPlantedSound();
 
             if (((p.getFaction().equals(Faction.POLIZEI) || p.getFaction().equals(Faction.FBI)) && p.getRank() > 3) || p.isSuperUser()) {
@@ -95,7 +96,7 @@ public class BombListener {
                     .of(this.location != null ? "]" : "").color(ColorCode.DARK_GRAY).advance()
                     .createComponent());
 
-            this.unicacityAddon.labyAPI().eventBus().fire(new BombRemovedEvent());
+            Laby.labyAPI().eventBus().fire(new BombRemovedEvent());
         }
     }
 

@@ -5,7 +5,6 @@ import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.entity.player.ClientPlayer;
-import net.labymod.api.client.entity.player.Inventory;
 import net.labymod.api.client.scoreboard.Scoreboard;
 import net.labymod.api.client.world.ClientWorld;
 import net.labymod.api.util.math.vector.FloatVector3;

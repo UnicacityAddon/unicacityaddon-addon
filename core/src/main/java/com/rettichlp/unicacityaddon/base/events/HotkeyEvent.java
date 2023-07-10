@@ -3,6 +3,7 @@ package com.rettichlp.unicacityaddon.base.events;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.config.hotkey.HotkeyConfiguration;
 import lombok.Getter;
+import net.labymod.api.Laby;
 import net.labymod.api.client.gui.screen.key.Key;
 import net.labymod.api.event.Event;
 
@@ -26,6 +27,6 @@ public class HotkeyEvent implements Event {
     }
 
     public boolean isRealIngame() {
-        return !this.unicacityAddon.labyAPI().minecraft().minecraftWindow().isScreenOpened();
+        return !Laby.labyAPI().minecraft().minecraftWindow().isScreenOpened();
     }
 }

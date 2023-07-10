@@ -13,6 +13,7 @@ import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.commands.MaskInfoCommand;
+import net.labymod.api.Laby;
 import net.labymod.api.client.chat.ChatMessage;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.event.HoverEvent;
@@ -265,7 +266,7 @@ public class AccountListener {
                 new Thread(() -> {
                     AccountListener.this.unicacityAddon.utilService().debug("Loading bomb place time");
                     long placeTime = AccountListener.this.unicacityAddon.api().sendEventRequest().getBomb();
-                    AccountListener.this.unicacityAddon.labyAPI().eventBus().fire(new BombPlantedEvent(placeTime));
+                    Laby.labyAPI().eventBus().fire(new BombPlantedEvent(placeTime));
                 }).start();
             }
         }, 1000);

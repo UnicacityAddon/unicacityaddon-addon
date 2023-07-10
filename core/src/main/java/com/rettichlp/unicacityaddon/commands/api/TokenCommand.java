@@ -7,6 +7,7 @@ import com.rettichlp.unicacityaddon.base.registry.UnicacityCommand;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
+import net.labymod.api.Laby;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.event.HoverEvent;
 import net.labymod.api.notification.Notification;
@@ -43,7 +44,7 @@ public class TokenCommand extends UnicacityCommand {
                         .createComponent());
             } else if (arguments.length == 1 && arguments[0].equalsIgnoreCase("copy")) {
                 p.copyToClipboard(this.unicacityAddon.api().getToken());
-                this.unicacityAddon.labyAPI().notificationController().push(Notification.builder()
+                Laby.labyAPI().notificationController().push(Notification.builder()
                         .title(Message.getBuilder().of("Kopiert!").color(ColorCode.GREEN).bold().advance().createComponent())
                         .text(Message.getBuilder().of("Token in Zwischenablage kopiert.").color(ColorCode.WHITE).advance().createComponent())
                         .icon(this.unicacityAddon.utilService().icon())

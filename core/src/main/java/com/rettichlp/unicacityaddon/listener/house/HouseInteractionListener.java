@@ -5,6 +5,7 @@ import com.rettichlp.unicacityaddon.base.events.UnicacityAddonTickEvent;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
+import net.labymod.api.Laby;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
@@ -76,6 +77,6 @@ public class HouseInteractionListener {
                     .append(i < progress ? ColorCode.GREEN.getCode() : ColorCode.GRAY.getCode())
                     .append("█");
         }
-        this.unicacityAddon.labyAPI().minecraft().chatExecutor().displayActionBar(stringBuilder.toString());
+        Laby.labyAPI().minecraft().chatExecutor().displayActionBar(stringBuilder.toString());
     }
 }

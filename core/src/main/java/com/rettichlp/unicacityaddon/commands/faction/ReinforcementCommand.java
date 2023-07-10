@@ -11,6 +11,7 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.services.utils.MathUtils;
 import com.rettichlp.unicacityaddon.base.text.ChatType;
 import com.rettichlp.unicacityaddon.listener.MobileListener;
+import net.labymod.api.Laby;
 import net.labymod.api.util.math.vector.FloatVector3;
 
 import java.util.Arrays;
@@ -66,7 +67,7 @@ public class ReinforcementCommand extends UnicacityCommand {
                 p.sendServerMessage(chatType.getChatCommand() + " " + name + ", ich bin zu deinem Verstärkungsruf unterwegs! (" + (int) p.getLocation().distance(new FloatVector3(x, y, z)) + " Meter entfernt)");
                 p.setNaviRoute(x, y, z);
 
-                this.unicacityAddon.labyAPI().eventBus().fire(new ReinforcementAcceptedEvent());
+                Laby.labyAPI().eventBus().fire(new ReinforcementAcceptedEvent());
 
                 return true;
             }

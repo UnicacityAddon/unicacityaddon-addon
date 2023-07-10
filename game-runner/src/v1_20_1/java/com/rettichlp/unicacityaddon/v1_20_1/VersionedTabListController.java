@@ -3,6 +3,7 @@ package com.rettichlp.unicacityaddon.v1_20_1;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.tab.TabPrefix;
 import com.rettichlp.unicacityaddon.controller.TabListController;
+import net.labymod.api.Laby;
 import net.labymod.api.client.network.ClientPacketListener;
 import net.labymod.api.client.network.NetworkPlayerInfo;
 import net.labymod.api.models.Implements;
@@ -30,7 +31,7 @@ public class VersionedTabListController extends TabListController {
 
     @Override
     public void orderTabList(UnicacityAddon unicacityAddon) {
-        ClientPacketListener clientPacketListener = unicacityAddon.labyAPI().minecraft().getClientPacketListener();
+        ClientPacketListener clientPacketListener = Laby.labyAPI().minecraft().getClientPacketListener();
         Collection<NetworkPlayerInfo> networkPlayerInfos = clientPacketListener != null ? clientPacketListener.getNetworkPlayerInfos() : Collections.emptyList();
         assert Minecraft.getInstance().level != null;
         Scoreboard scoreboard = Minecraft.getInstance().level.getScoreboard();

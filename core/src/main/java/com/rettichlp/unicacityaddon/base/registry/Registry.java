@@ -401,7 +401,7 @@ public class Registry {
     }
 
     public void registerTags() {
-        TagRegistry registry = this.unicacityAddon.labyAPI().tagRegistry();
+        TagRegistry registry = Laby.labyAPI().tagRegistry();
 
         AtomicInteger registeredNameTagCount = new AtomicInteger();
         Set<Class<?>> nameTagClassSet = this.nameTagList; // this.unicacityAddon.utilService().getAllClassesFromPackage("com.rettichlp.unicacityaddon.nametags");
@@ -428,7 +428,7 @@ public class Registry {
 
     @SuppressWarnings("unchecked")
     public void registerHudWidgets() {
-        HudWidgetRegistry registry = this.unicacityAddon.labyAPI().hudWidgetRegistry();
+        HudWidgetRegistry registry = Laby.labyAPI().hudWidgetRegistry();
 
         AtomicInteger registeredHudWidgetCount = new AtomicInteger();
         Set<Class<?>> hudWidgetClassSet = this.hudWidgetList; // this.unicacityAddon.utilService().getAllClassesFromPackage("com.rettichlp.unicacityaddon.hudwidgets");
@@ -459,7 +459,7 @@ public class Registry {
                         Object listener = listenerClass.getConstructor(UnicacityAddon.class).newInstance(this.unicacityAddon);
 
                         Objects.requireNonNull(listener, "Listener");
-                        this.unicacityAddon.labyAPI().eventBus().registerListener(listener);
+                        Laby.labyAPI().eventBus().registerListener(listener);
 
                         registeredListenerCount.getAndIncrement();
                     } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException |
@@ -488,7 +488,7 @@ public class Registry {
 
                             Objects.requireNonNull(command, "Command");
                             this.commands.add(command);
-                            this.unicacityAddon.labyAPI().commandService().register(command);
+                            Laby.labyAPI().commandService().register(command);
 
                             registeredCommandCount.getAndIncrement();
                         } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException |

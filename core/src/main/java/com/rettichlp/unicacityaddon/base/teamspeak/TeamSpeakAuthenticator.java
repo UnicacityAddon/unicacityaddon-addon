@@ -21,7 +21,6 @@ import net.labymod.api.models.OperatingSystem;
 import net.labymod.api.util.io.IOUtil;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
