@@ -60,10 +60,10 @@ import com.rettichlp.unicacityaddon.commands.faction.badfaction.ASetBlacklistCom
 import com.rettichlp.unicacityaddon.commands.faction.badfaction.BlackMarketCommand;
 import com.rettichlp.unicacityaddon.commands.faction.badfaction.BlacklistInfoCommand;
 import com.rettichlp.unicacityaddon.commands.faction.badfaction.DBankDropAllCommand;
-import com.rettichlp.unicacityaddon.commands.faction.badfaction.EigenbedarfCommand;
 import com.rettichlp.unicacityaddon.commands.faction.badfaction.GaggedCommand;
-import com.rettichlp.unicacityaddon.commands.faction.badfaction.GiftEigenbedarfCommand;
 import com.rettichlp.unicacityaddon.commands.faction.badfaction.ModifyBlacklistCommand;
+import com.rettichlp.unicacityaddon.commands.faction.badfaction.OwnUseCommand;
+import com.rettichlp.unicacityaddon.commands.faction.badfaction.OwnUseGiftCommand;
 import com.rettichlp.unicacityaddon.commands.faction.badfaction.SellDrugCommand;
 import com.rettichlp.unicacityaddon.commands.faction.chat.DForceCommand;
 import com.rettichlp.unicacityaddon.commands.faction.chat.FForceCommand;
@@ -312,14 +312,12 @@ public class Registry {
             DrugActivityCommand.class,
             DutyCommand.class,
             DyavolCommand.class,
-            EigenbedarfCommand.class,
             EquipListCommand.class,
             ExplosiveBeltCommand.class,
             FForceCommand.class,
             FactionBankDepositCommand.class,
             GaggedCommand.class,
             GetGunPatternCommand.class,
-            GiftEigenbedarfCommand.class,
             HouseBankCommand.class,
             HouseBankDropGetAllCommand.class,
             HouseStorageCommand.class,
@@ -340,6 +338,8 @@ public class Registry {
             NearestATMCommand.class,
             NearestJobCommand.class,
             NearestNaviPointCommand.class,
+            OwnUseCommand.class,
+            OwnUseGiftCommand.class,
             PayEquipCommand.class,
             PlayerGroupCommand.class,
             PunishCommand.class,

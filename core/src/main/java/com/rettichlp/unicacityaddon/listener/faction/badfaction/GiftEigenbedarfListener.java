@@ -4,7 +4,7 @@ import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
-import com.rettichlp.unicacityaddon.commands.faction.badfaction.GiftEigenbedarfCommand;
+import com.rettichlp.unicacityaddon.commands.faction.badfaction.OwnUseGiftCommand;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
@@ -29,8 +29,8 @@ public class GiftEigenbedarfListener {
         String msg = e.chatMessage().getPlainText();
 
         Matcher drugDealEndedMatcher = PatternHandler.DRUG_DEAL_ENDED.matcher(msg);
-        if (drugDealEndedMatcher.find() && !GiftEigenbedarfCommand.scheduledTasks.isEmpty()) {
-            p.sendServerMessage(GiftEigenbedarfCommand.scheduledTasks.remove(0));
+        if (drugDealEndedMatcher.find() && !OwnUseGiftCommand.scheduledTasks.isEmpty()) {
+            p.sendServerMessage(OwnUseGiftCommand.scheduledTasks.remove(0));
         }
     }
 }
