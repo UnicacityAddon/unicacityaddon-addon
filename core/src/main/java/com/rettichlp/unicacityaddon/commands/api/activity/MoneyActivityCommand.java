@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * @author Dimiikou
  */
-@UCCommand(prefix = "moneyactivity", aliases = {"mact"}, usage = "[type] [value] (screenshot)")
+@UCCommand(prefix = "moneyactivity", aliases = {"mact"}, usage = "[Typ] [Menge] (Screenshot)")
 public class MoneyActivityCommand extends UnicacityCommand {
 
     private final List<String> typeOptions = Arrays.asList("blacklist", "ausraub", "menschenhandel", "transport", "autoverkauf");

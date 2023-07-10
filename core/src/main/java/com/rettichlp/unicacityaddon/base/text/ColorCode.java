@@ -35,11 +35,4 @@ public enum ColorCode {
     private final String code;
     private final TextColor textColor;
     private final Color color;
-
-    public static ColorCode getColorCodeByTextColor(TextColor color) {
-        return Arrays.stream(values())
-                .filter(colorCode -> colorCode.textColor.equals(color))
-                .findFirst()
-                .orElse(WHITE);
-    }
 }

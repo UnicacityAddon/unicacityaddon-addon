@@ -50,6 +50,7 @@ public class UtilService {
         this.text = new TextUtils();
     }
 
+    @SuppressWarnings("SameReturnValue")
     public String version() {
         return "2.1.0-dev";
     }

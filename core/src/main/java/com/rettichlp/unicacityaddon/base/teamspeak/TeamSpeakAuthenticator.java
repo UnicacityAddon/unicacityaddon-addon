@@ -65,7 +65,7 @@ public class TeamSpeakAuthenticator {
             }
 
             try {
-                String contents = new String(Files.readAllBytes(clientQueryPath), StandardCharsets.UTF_8);
+                String contents = Files.readString(clientQueryPath);
                 String[] split = contents.split("\n");
                 for (String line : split) {
                     line = line.trim();

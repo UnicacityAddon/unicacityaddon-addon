@@ -67,11 +67,6 @@ public class DefaultAddonPlayer implements AddonPlayer {
     }
 
     @Override
-    public Inventory getInventory() {
-        return getPlayer() != null ? getPlayer().inventory() : null;
-    }
-
-    @Override
     public void sendMessage(String message) {
         try {
             this.unicacityAddon.displayMessage(message);

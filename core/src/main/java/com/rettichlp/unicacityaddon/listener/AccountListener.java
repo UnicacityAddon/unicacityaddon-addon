@@ -154,15 +154,6 @@ public class AccountListener {
                         .of(gamePlay.getKills() + " Kills").color(ColorCode.RED).advance()
                         .createComponent());
 
-//                Not allowed on Unicacity:
-//                p.sendMessage(Message.getBuilder()
-//                        .space().space()
-//                        .of("-").color(ColorCode.DARK_GRAY).advance().space()
-//                        .of("K/D").color(ColorCode.GOLD).advance()
-//                        .of(":").color(ColorCode.DARK_GRAY).advance().space()
-//                        .of(MathUtils.DECIMAL_FORMAT.format(gamePlay.getKd())).color(ColorCode.RED).advance()
-//                        .createComponent());
-
                 p.sendMessage(Message.getBuilder()
                         .space().space()
                         .of("-").color(ColorCode.DARK_GRAY).advance().space()

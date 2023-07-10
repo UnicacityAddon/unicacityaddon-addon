@@ -75,7 +75,7 @@ public class EquipShopListener {
                     @Override
                     public void run() {
                         if (EquipShopListener.this.amountLeft > 0) {
-                            EquipShopListener.this.unicacityAddon.guiController().inventoryClick(EquipShopListener.this.unicacityAddon, slotNumber);
+                            EquipShopListener.this.unicacityAddon.guiController().inventoryClick(slotNumber);
                             EquipShopListener.this.amountLeft--;
                         } else {
                             this.cancel();

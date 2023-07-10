@@ -32,9 +32,6 @@ public interface AddonPlayer {
     @Nullable
     FloatVector3 getLocation();
 
-    @Nullable
-    Inventory getInventory();
-
     void sendMessage(String message);
 
     void sendMessage(Component component);

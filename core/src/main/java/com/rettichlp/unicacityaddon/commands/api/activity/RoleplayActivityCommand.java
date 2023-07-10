@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * @author Dimiikou
  */
-@UCCommand(prefix = "roleplayactivity", aliases = {"ract"}, usage = "[type] [screenshot]")
+@UCCommand(prefix = "roleplayactivity", aliases = {"ract"}, usage = "[Typ] [Screenshot]")
 public class RoleplayActivityCommand extends UnicacityCommand {
 
     private final List<String> typeOptions = Arrays.asList("blacklist", "ausraub", "menschenhandel", "transport", "autoverkauf", "drogenhandel", "verhandlung", "sonstiges");

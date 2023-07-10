@@ -2,10 +2,8 @@ package com.rettichlp.unicacityaddon.listener;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
-import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.FormattingCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
-import net.labymod.api.client.component.Component;
 import net.labymod.api.client.network.NetworkPlayerInfo;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.render.PlayerNameTagRenderEvent;
@@ -15,10 +13,6 @@ import net.labymod.api.event.client.render.PlayerNameTagRenderEvent;
  */
 @UCEvent
 public class NameTagRenderListener {
-
-    private final Component AFK_COMPONENT = Message.getBuilder().space()
-            .of("AFK").color(ColorCode.GRAY).italic().advance()
-            .createComponent();
 
     private final UnicacityAddon unicacityAddon;
 
@@ -50,17 +44,6 @@ public class NameTagRenderListener {
                     e.setNameTag(Message.getBuilder().add(prefix + playerName).createComponent());
                 }
             }
-        }/* else if (context.equals(PlayerNameTagRenderEvent.Context.TAB_LIST)) {
-            boolean isNoPush = this.unicacityAddon.nameTagService().isNoPush(playerName);
-            Component nameTagComponent = e.nameTag();
-            String nameTagComponentString = this.unicacityAddon.utilService().text().plain(nameTagComponent);
-
-            if (isNoPush && !nameTagComponentString.contains(" AFK")) {
-                componentComponentMap.put(nameTagComponent, nameTagComponent.append(AFK_COMPONENT));
-                e.setNameTag(nameTagComponent.append(AFK_COMPONENT));
-            } else if (!isNoPush && nameTagComponentString.contains(" AFK")) {
-                e.setNameTag(componentComponentMap.getOrDefault(nameTagComponent, Component.text("failure")));
-            }
-        }*/
+        }
     }
 }

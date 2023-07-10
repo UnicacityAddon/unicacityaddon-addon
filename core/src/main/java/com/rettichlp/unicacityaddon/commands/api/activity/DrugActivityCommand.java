@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * @author Dimiikou
  */
-@UCCommand(prefix = "drugactivity", aliases = {"dact"}, usage = "[Droge] [Reinheit] [Menge] (screenshot)")
+@UCCommand(prefix = "drugactivity", aliases = {"dact"}, usage = "[Droge] [Reinheit] [Menge] (Screenshot)")
 public class DrugActivityCommand extends UnicacityCommand {
 
     private final UnicacityAddon unicacityAddon;

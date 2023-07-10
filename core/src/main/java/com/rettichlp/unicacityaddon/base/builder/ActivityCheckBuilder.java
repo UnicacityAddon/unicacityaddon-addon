@@ -4,14 +4,13 @@ import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.api.response.Success;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
+import lombok.NoArgsConstructor;
 
 /**
  * @author RettichLP
  */
+@NoArgsConstructor
 public class ActivityCheckBuilder {
-
-    public ActivityCheckBuilder() {
-    }
 
     public static Builder getBuilder(UnicacityAddon unicacityAddon) {
         return new Builder(unicacityAddon);
@@ -82,6 +81,6 @@ public class ActivityCheckBuilder {
 
     public enum Activity {
 
-        NULL, MONEY, DRUG, ROLEPLAY, EQUIP_ADD, EQUIP_EDIT
+        MONEY, DRUG, ROLEPLAY, EQUIP_ADD, EQUIP_EDIT
     }
 }

@@ -143,22 +143,5 @@ public class NameTagService {
         }
 
         return duty;
-
-//        ClientPacketListener clientPacketListener = this.unicacityAddon.labyAPI().minecraft().getClientPacketListener();
-//        if (clientPacketListener != null && this.unicacityAddon.utilService().isUnicacity()) {
-//            for (NetworkPlayerInfo networkPlayerInfo : clientPacketListener.getNetworkPlayerInfos()) {
-//                try {
-//                    String legacy = this.unicacityAddon.utilService().text().legacy(networkPlayerInfo.displayName());
-//                    if (legacy.contains(playerName) && legacy.startsWith("§8[§9UC§8]§c")) {
-//                        return true;
-//                    }
-//                } catch (IllegalStateException e) {
-//                    this.unicacityAddon.utilService().debug("Can't retrieve admin duty for " + networkPlayerInfo.profile().getUsername());
-//                    this.unicacityAddon.logger().warn(e.getMessage());
-//                }
-//            }
-//        }
-//
-//        return false;
     }
 }
