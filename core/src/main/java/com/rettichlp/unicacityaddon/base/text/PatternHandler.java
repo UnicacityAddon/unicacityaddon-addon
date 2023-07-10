@@ -296,7 +296,7 @@ public class PatternHandler {
      * @see com.rettichlp.unicacityaddon.listener.EquipShopListener
      */
     public static final Pattern TRACKER_PATTERN = Pattern.compile("^Du hast einen Peilsender an (?:\\[UC])*(\\w+) befestigt\\.$");
-    public static final Pattern EQUIP_PATTERN = Pattern.compile("^(?:|\\[Equip] )Du hast (?:dir|dich mit) (?:|ein|eine|einen|einem) (.+) equip(?:|p)t[!.]$");
+    public static final Pattern EQUIP_PATTERN = Pattern.compile("^(?:|\\[Equip] )Du hast (?:dir|dich mit) (?:|ein|eine|einen|einem) (?<equipName>.+) equip(?:|p)t[!.]$");
     public static final Pattern EQUIP_INTERRUPTED_PATTERN = Pattern.compile("^\\[Equip] Du bist nicht im Dienst\\.$");
 
     /**
