@@ -66,7 +66,10 @@ public class HouseInteractionListener {
                 progress[progressIndex]++;
                 setMessage(progress[progressIndex]);
             }
-            case 10 -> progress[progressIndex] = -1;
+            case 10 -> {
+                progress[progressIndex] = -1;
+                this.unicacityAddon.logger().info("Resetting house interaction progress [{}]", progressIndex);
+            }
         }
     }
 
