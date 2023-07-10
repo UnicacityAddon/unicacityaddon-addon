@@ -3,6 +3,7 @@ package com.rettichlp.unicacityaddon.base.io.file;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.builder.ActivityCheckBuilder;
+import com.rettichlp.unicacityaddon.base.enums.Activity;
 import com.rettichlp.unicacityaddon.base.enums.Weapon;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
@@ -340,7 +341,7 @@ public class Data {
 
         if (unicacityAddon.player().getFaction().equals(Faction.LEMILIEU)) {
             ActivityCheckBuilder.getBuilder(unicacityAddon)
-                    .activity(ActivityCheckBuilder.Activity.EQUIP_ADD)
+                    .activity(Activity.EQUIP_ADD)
                     .type(equip.getEquipName())
                     .value(String.valueOf(equip.getPrice(unicacityAddon.configuration())))
                     .send();

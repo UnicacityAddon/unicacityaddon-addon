@@ -5,6 +5,7 @@ import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.builder.ActivityCheckBuilder;
 import com.rettichlp.unicacityaddon.base.builder.ScreenshotBuilder;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
+import com.rettichlp.unicacityaddon.base.enums.Activity;
 import com.rettichlp.unicacityaddon.base.registry.UnicacityCommand;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.services.utils.MathUtils;
@@ -51,7 +52,7 @@ public class MoneyActivityCommand extends UnicacityCommand {
                 String screenshot = arguments.length == 3 ? arguments[2] : ScreenshotBuilder.getBuilder(unicacityAddon).file(file).upload();
 
                 String info = ActivityCheckBuilder.getBuilder(this.unicacityAddon)
-                        .activity(ActivityCheckBuilder.Activity.MONEY)
+                        .activity(Activity.MONEY)
                         .type(type)
                         .value(String.valueOf(value))
                         .date(System.currentTimeMillis())

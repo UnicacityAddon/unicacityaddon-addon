@@ -5,6 +5,7 @@ import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.builder.ActivityCheckBuilder;
 import com.rettichlp.unicacityaddon.base.builder.ScreenshotBuilder;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
+import com.rettichlp.unicacityaddon.base.enums.Activity;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
 import com.rettichlp.unicacityaddon.base.registry.UnicacityCommand;
@@ -56,7 +57,7 @@ public class DrugActivityCommand extends UnicacityCommand {
                 String screenshot = arguments.length == 4 ? arguments[3] : ScreenshotBuilder.getBuilder(unicacityAddon).file(file).upload();
 
                 String info = ActivityCheckBuilder.getBuilder(this.unicacityAddon)
-                        .activity(ActivityCheckBuilder.Activity.DRUG)
+                        .activity(Activity.DRUG)
                         .value(String.valueOf(drugAmount))
                         .drugType(drugType)
                         .drugPurity(drugPurity)

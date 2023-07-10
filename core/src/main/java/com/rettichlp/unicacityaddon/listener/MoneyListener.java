@@ -4,6 +4,7 @@ import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.builder.ActivityCheckBuilder;
 import com.rettichlp.unicacityaddon.base.config.atm.ATMConfiguration;
+import com.rettichlp.unicacityaddon.base.enums.Activity;
 import com.rettichlp.unicacityaddon.base.enums.api.StatisticType;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
@@ -139,7 +140,7 @@ public class MoneyListener {
 
             if (PayEquipCommand.payEquipMap.getValue() == money && this.unicacityAddon.utilService().isUnicacity()) {
                 ActivityCheckBuilder.getBuilder(this.unicacityAddon)
-                        .activity(ActivityCheckBuilder.Activity.EQUIP_EDIT)
+                        .activity(Activity.EQUIP_EDIT)
                         .type(PayEquipCommand.payEquipMap.getKey())
                         .value("true")
                         .send();

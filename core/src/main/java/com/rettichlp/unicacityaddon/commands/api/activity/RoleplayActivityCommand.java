@@ -4,6 +4,7 @@ import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.builder.ActivityCheckBuilder;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
+import com.rettichlp.unicacityaddon.base.enums.Activity;
 import com.rettichlp.unicacityaddon.base.registry.UnicacityCommand;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 
@@ -39,7 +40,7 @@ public class RoleplayActivityCommand extends UnicacityCommand {
             String screenshot = arguments[1];
 
             String info = ActivityCheckBuilder.getBuilder(this.unicacityAddon)
-                    .activity(ActivityCheckBuilder.Activity.ROLEPLAY)
+                    .activity(Activity.ROLEPLAY)
                     .type(type)
                     .date(System.currentTimeMillis())
                     .screenshot(screenshot)
