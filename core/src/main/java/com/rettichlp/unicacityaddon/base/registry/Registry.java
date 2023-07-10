@@ -49,10 +49,10 @@ import com.rettichlp.unicacityaddon.commands.api.activity.DrugActivityCommand;
 import com.rettichlp.unicacityaddon.commands.api.activity.MoneyActivityCommand;
 import com.rettichlp.unicacityaddon.commands.api.activity.PayEquipCommand;
 import com.rettichlp.unicacityaddon.commands.api.activity.RoleplayActivityCommand;
-import com.rettichlp.unicacityaddon.commands.faction.AFbankEinzahlenCommand;
 import com.rettichlp.unicacityaddon.commands.faction.CheckActiveMembersCommand;
 import com.rettichlp.unicacityaddon.commands.faction.DropDrugAllCommand;
 import com.rettichlp.unicacityaddon.commands.faction.EquipListCommand;
+import com.rettichlp.unicacityaddon.commands.faction.FactionBankDepositCommand;
 import com.rettichlp.unicacityaddon.commands.faction.ReinforcementCommand;
 import com.rettichlp.unicacityaddon.commands.faction.ServiceCountCommand;
 import com.rettichlp.unicacityaddon.commands.faction.ShareLocationCommand;
@@ -68,12 +68,12 @@ import com.rettichlp.unicacityaddon.commands.faction.badfaction.SellDrugCommand;
 import com.rettichlp.unicacityaddon.commands.faction.chat.DForceCommand;
 import com.rettichlp.unicacityaddon.commands.faction.chat.FForceCommand;
 import com.rettichlp.unicacityaddon.commands.faction.chat.SFForceCommand;
-import com.rettichlp.unicacityaddon.commands.faction.rettungsdienst.ARezeptAnnehmenCommand;
-import com.rettichlp.unicacityaddon.commands.faction.rettungsdienst.ARezeptCommand;
 import com.rettichlp.unicacityaddon.commands.faction.rettungsdienst.CheckFireCommand;
+import com.rettichlp.unicacityaddon.commands.faction.rettungsdienst.RecipeAcceptCommand;
+import com.rettichlp.unicacityaddon.commands.faction.rettungsdienst.RecipeCommand;
 import com.rettichlp.unicacityaddon.commands.faction.state.ASUCommand;
 import com.rettichlp.unicacityaddon.commands.faction.state.ClearCommand;
-import com.rettichlp.unicacityaddon.commands.faction.state.KorruptionsrechnerCommand;
+import com.rettichlp.unicacityaddon.commands.faction.state.CorruptionCalculatorCommand;
 import com.rettichlp.unicacityaddon.commands.faction.state.ModifyWantedsCommand;
 import com.rettichlp.unicacityaddon.commands.faction.terroristen.ExplosiveBeltCommand;
 import com.rettichlp.unicacityaddon.commands.house.HouseBankCommand;
@@ -83,11 +83,11 @@ import com.rettichlp.unicacityaddon.commands.job.ADropMoneyCommand;
 import com.rettichlp.unicacityaddon.commands.mobile.ACallCommand;
 import com.rettichlp.unicacityaddon.commands.mobile.ASMSCommand;
 import com.rettichlp.unicacityaddon.commands.mobile.BlockCommand;
+import com.rettichlp.unicacityaddon.commands.mobile.MobileMuteCommand;
 import com.rettichlp.unicacityaddon.commands.mobile.ReplyCommand;
-import com.rettichlp.unicacityaddon.commands.mobile.StummCommand;
 import com.rettichlp.unicacityaddon.commands.money.ATMFillCommand;
-import com.rettichlp.unicacityaddon.commands.money.EinzahlenCommand;
-import com.rettichlp.unicacityaddon.commands.money.ReichensteuerCommand;
+import com.rettichlp.unicacityaddon.commands.money.DepositCommand;
+import com.rettichlp.unicacityaddon.commands.money.RichTaxesCommand;
 import com.rettichlp.unicacityaddon.commands.supporter.PunishCommand;
 import com.rettichlp.unicacityaddon.commands.teamspeak.ChannelActivityCommand;
 import com.rettichlp.unicacityaddon.commands.teamspeak.MoveCommand;
@@ -281,13 +281,10 @@ public class Registry {
     private final HashSet<Class<?>> commandList = Sets.newHashSet(
             ACallCommand.class,
             ADropMoneyCommand.class,
-            AFbankEinzahlenCommand.class,
-            ARezeptAnnehmenCommand.class,
-            ARezeptCommand.class,
             ASMSCommand.class,
             ASUCommand.class,
-            ATMFillCommand.class,
             ASetBlacklistCommand.class,
+            ATMFillCommand.class,
             ActivityCommand.class,
             AutoNCCommand.class,
             BlackMarketCommand.class,
@@ -305,31 +302,33 @@ public class Registry {
             ClearCommand.class,
             ClockCommand.class,
             CoordlistCommand.class,
+            CorruptionCalculatorCommand.class,
             CountdownCommand.class,
             DBankDropAllCommand.class,
             DForceCommand.class,
+            DepositCommand.class,
             DiscordCommand.class,
+            DropDrugAllCommand.class,
             DrugActivityCommand.class,
             DutyCommand.class,
             DyavolCommand.class,
-            DropDrugAllCommand.class,
             EigenbedarfCommand.class,
-            EinzahlenCommand.class,
             EquipListCommand.class,
             ExplosiveBeltCommand.class,
             FForceCommand.class,
+            FactionBankDepositCommand.class,
             GaggedCommand.class,
             GetGunPatternCommand.class,
             GiftEigenbedarfCommand.class,
-            HousebanCommand.class,
-            HousebanReasonCommand.class,
             HouseBankCommand.class,
             HouseBankDropGetAllCommand.class,
             HouseStorageCommand.class,
-            KorruptionsrechnerCommand.class,
+            HousebanCommand.class,
+            HousebanReasonCommand.class,
             MaskInfoCommand.class,
             MemberInfoAllCommand.class,
             MemberInfoCommand.class,
+            MobileMuteCommand.class,
             ModifyBlacklistCommand.class,
             ModifyWantedsCommand.class,
             MoneyActivityCommand.class,
@@ -344,27 +343,28 @@ public class Registry {
             PayEquipCommand.class,
             PlayerGroupCommand.class,
             PunishCommand.class,
+            RecipeAcceptCommand.class,
+            RecipeCommand.class,
             ReinforcementCommand.class,
-            ReichensteuerCommand.class,
             ReplyCommand.class,
             ReviveStatsCommand.class,
+            RichTaxesCommand.class,
             RoleplayActivityCommand.class,
             RoleplayNameCommand.class,
+            SFForceCommand.class,
             ScreenCommand.class,
             SellDrugCommand.class,
             ServiceCountCommand.class,
-            SFForceCommand.class,
             ShareLocationCommand.class,
             ShutdownGraveyardCommand.class,
             ShutdownJailCommand.class,
-            StummCommand.class,
             SyncCommand.class,
+            TSFindCommand.class,
+            TSJoinCommand.class,
             TimerCommand.class,
             TodoListCommand.class,
             TokenCommand.class,
             TopListCommand.class,
-            TSFindCommand.class,
-            TSJoinCommand.class,
             WantedReasonCommand.class,
             YasinCommand.class
     );

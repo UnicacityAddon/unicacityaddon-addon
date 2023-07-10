@@ -11,7 +11,7 @@ import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.commands.api.activity.PayEquipCommand;
 import com.rettichlp.unicacityaddon.commands.money.ATMFillCommand;
-import com.rettichlp.unicacityaddon.commands.money.ReichensteuerCommand;
+import com.rettichlp.unicacityaddon.commands.money.RichTaxesCommand;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatMessageSendEvent;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
@@ -193,8 +193,8 @@ public class MoneyListener {
         }
 
         Matcher atmInfoMatcher = PatternHandler.ATM_INFO_PATTERN.matcher(msg);
-        if (atmInfoMatcher.find() && (ReichensteuerCommand.isActive || ATMFillCommand.isActive)) {
-            ReichensteuerCommand.cashInATM = ATMFillCommand.cashInATM = Integer.parseInt(atmInfoMatcher.group(2));
+        if (atmInfoMatcher.find() && (RichTaxesCommand.isActive || ATMFillCommand.isActive)) {
+            RichTaxesCommand.cashInATM = ATMFillCommand.cashInATM = Integer.parseInt(atmInfoMatcher.group(2));
             e.setCancelled(true);
         }
 

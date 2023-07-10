@@ -14,11 +14,11 @@ import java.util.List;
  * @author Gelegenheitscode
  */
 @UCCommand(prefix = "korruptionsrechner", usage = "[Spieler]")
-public class KorruptionsrechnerCommand extends UnicacityCommand {
+public class CorruptionCalculatorCommand extends UnicacityCommand {
 
     private final UnicacityAddon unicacityAddon;
 
-    public KorruptionsrechnerCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+    public CorruptionCalculatorCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
         super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }

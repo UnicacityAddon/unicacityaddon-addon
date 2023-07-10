@@ -22,7 +22,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * @author Dimiikou
  */
 @UCCommand(prefix = "afbank", usage = "[einzahlen|auszahlen] [Betrag]")
-public class AFbankEinzahlenCommand extends UnicacityCommand {
+public class FactionBankDepositCommand extends UnicacityCommand {
 
     public static final AtomicBoolean STARTED = new AtomicBoolean();
     public static final Timer timer = new Timer();
@@ -30,7 +30,7 @@ public class AFbankEinzahlenCommand extends UnicacityCommand {
 
     private final UnicacityAddon unicacityAddon;
 
-    public AFbankEinzahlenCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+    public FactionBankDepositCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
         super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
@@ -77,7 +77,7 @@ public class AFbankEinzahlenCommand extends UnicacityCommand {
                     // send clock command
                     timer.schedule(new TimerTask() {
                         public void run() {
-                            sendClockMessage(AFbankEinzahlenCommand.this.unicacityAddon);
+                            sendClockMessage(FactionBankDepositCommand.this.unicacityAddon);
                         }
                     }, 200L);
                 }

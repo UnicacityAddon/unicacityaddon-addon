@@ -6,7 +6,7 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
-import com.rettichlp.unicacityaddon.commands.faction.AFbankEinzahlenCommand;
+import com.rettichlp.unicacityaddon.commands.faction.FactionBankDepositCommand;
 import net.labymod.api.client.chat.ChatMessage;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
@@ -65,7 +65,7 @@ public class ContractListener {
             String hitman = contractKillMatcher.group(1);
 
             if (hitman.equals(p.getName())) {
-                AFbankEinzahlenCommand.sendClockMessage(this.unicacityAddon);
+                FactionBankDepositCommand.sendClockMessage(this.unicacityAddon);
             }
 
             if (this.unicacityAddon.configuration().message().contract().get()) {

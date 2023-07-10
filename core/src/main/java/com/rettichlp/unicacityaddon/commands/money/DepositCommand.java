@@ -12,11 +12,11 @@ import java.util.List;
  * @author Dimiikou
  */
 @UCCommand(prefix = "einzahlen")
-public class EinzahlenCommand extends UnicacityCommand {
+public class DepositCommand extends UnicacityCommand {
 
     private final UnicacityAddon unicacityAddon;
 
-    public EinzahlenCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+    public DepositCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
         super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }

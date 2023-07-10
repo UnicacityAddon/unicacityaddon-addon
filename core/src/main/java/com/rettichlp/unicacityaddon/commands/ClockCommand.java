@@ -4,7 +4,7 @@ import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.registry.UnicacityCommand;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
-import com.rettichlp.unicacityaddon.commands.faction.AFbankEinzahlenCommand;
+import com.rettichlp.unicacityaddon.commands.faction.FactionBankDepositCommand;
 
 import java.util.List;
 
@@ -23,7 +23,7 @@ public class ClockCommand extends UnicacityCommand {
 
     @Override
     public boolean execute(String[] arguments) {
-        AFbankEinzahlenCommand.sendClockMessage(this.unicacityAddon);
+        FactionBankDepositCommand.sendClockMessage(this.unicacityAddon);
         return true;
     }
 
