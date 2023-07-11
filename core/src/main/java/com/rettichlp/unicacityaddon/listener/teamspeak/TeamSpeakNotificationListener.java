@@ -12,6 +12,9 @@ import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.event.HoverEvent;
 import net.labymod.api.event.Subscribe;
 
+import java.util.Optional;
+import java.util.stream.IntStream;
+
 /**
  * @author RettichLP
  */
@@ -44,20 +47,42 @@ public class TeamSpeakNotificationListener {
 
             // support waiting room
             if (this.unicacityAddon.configuration().teamspeak().support().get() && cid == 41) {
-                p.sendMessage(Message.getBuilder()
+                Message.Builder messageBuilder = Message.getBuilder()
                         .prefix()
-                        .of(name).color(ColorCode.AQUA).advance().space()
-                        .of("hat das").color(ColorCode.GRAY).advance().space()
+                        .of(isAddonUser ? "Du" : name).color(ColorCode.AQUA).advance().space()
+                        .of(isAddonUser ? "hast das" : "hat das").color(ColorCode.GRAY).advance().space()
                         .of("Wartezimmer").color(ColorCode.AQUA).advance().space()
-                        .of("betreten.").color(ColorCode.GRAY).advance().space()
-                        .of("[↓]").color(ColorCode.BLUE)
-                                .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Move " + name + " zu dir").color(ColorCode.RED).advance().createComponent())
-                                .clickEvent(ClickEvent.Action.RUN_COMMAND, "/movehere " + name)
-                                .advance()
-                        .createComponent());
+                        .of("betreten.").color(ColorCode.GRAY).advance().space();
 
-                this.unicacityAddon.soundController().playTeamSpeakSupportSound();
-                this.unicacityAddon.logger().info("Client joined support channel: " + name);
+                if (isAddonUser) {
+                    messageBuilder
+                            .of("[←]").color(ColorCode.BLUE)
+                                    .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Betritt deinen vorherigen Channel").color(ColorCode.RED).advance().createComponent())
+                                    .clickEvent(ClickEvent.Action.RUN_COMMAND, "/tsjoin id=" + e.getOldChannel().getId())
+                                    .advance()
+                            .createComponent();
+                } else {
+                    int emptySupportChannelId = getEmptySupportChannelId();
+                    if (emptySupportChannelId != 0) {
+                        messageBuilder
+                                .of("[↑]").color(ColorCode.BLUE)
+                                        .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Betritt einen freien Support Channel").color(ColorCode.RED).advance().createComponent())
+                                        .clickEvent(ClickEvent.Action.RUN_COMMAND, "/tsjoin id=" + emptySupportChannelId)
+                                        .advance().space();
+                    }
+
+                    messageBuilder
+                            .of("[↓]").color(ColorCode.BLUE)
+                                    .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Move " + name + " zu dir").color(ColorCode.RED).advance().createComponent())
+                                    .clickEvent(ClickEvent.Action.RUN_COMMAND, "/movehere " + name)
+                                    .advance();
+
+                    this.unicacityAddon.soundController().playTeamSpeakSupportSound();
+                    this.unicacityAddon.logger().info("Client joined support channel: " + name);
+                }
+
+                p.sendMessage(messageBuilder.createComponent());
+
             // public channel
             } else if (this.unicacityAddon.configuration().teamspeak().publicity().get() && cid == p.getFaction().getPublicChannelId()) {
                 Message.Builder messageBuilder = Message.getBuilder()
@@ -72,8 +97,7 @@ public class TeamSpeakNotificationListener {
                             .of("[←]").color(ColorCode.BLUE)
                                     .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Betritt deinen vorherigen Channel").color(ColorCode.RED).advance().createComponent())
                                     .clickEvent(ClickEvent.Action.RUN_COMMAND, "/tsjoin id=" + e.getOldChannel().getId())
-                                    .advance()
-                            .createComponent();
+                                    .advance();
                 } else {
                     messageBuilder
                             .of("[↑]").color(ColorCode.BLUE)
@@ -83,8 +107,7 @@ public class TeamSpeakNotificationListener {
                             .of("[↓]").color(ColorCode.BLUE)
                                     .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Move " + name + " zu dir").color(ColorCode.RED).advance().createComponent())
                                     .clickEvent(ClickEvent.Action.RUN_COMMAND, "/movehere " + name)
-                                    .advance()
-                            .createComponent();
+                                    .advance();
 
                     this.unicacityAddon.soundController().playTeamSpeakPublicitySound();
                     this.unicacityAddon.logger().info("Client joined public channel: " + name);
@@ -93,5 +116,14 @@ public class TeamSpeakNotificationListener {
                 p.sendMessage(messageBuilder.createComponent());
             }
         }
+    }
+
+    private int getEmptySupportChannelId() {
+        return IntStream.of(24, 25, 26)
+                .filter(channelId -> Optional.ofNullable(this.unicacityAddon.teamSpeakAPI().getServer().getChannel(channelId))
+                        .map(Channel::isEmpty)
+                        .orElse(false))
+                .findFirst()
+                .orElse(0);
     }
 }

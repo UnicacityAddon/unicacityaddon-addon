@@ -80,4 +80,8 @@ public class Channel {
                 .of(")").color(ColorCode.GRAY).advance()
                 .create() : "";
     }
+
+    public boolean isEmpty() {
+        return this.users.isEmpty();
+    }
 }
