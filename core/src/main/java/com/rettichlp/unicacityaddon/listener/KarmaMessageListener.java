@@ -41,8 +41,9 @@ public class KarmaMessageListener {
         Matcher karmaChangedMatcher = PatternHandler.KARMA_CHANGED_PATTERN.matcher(msg);
         if (karmaChangedMatcher.find()) {
             // handle revive
-            if (System.currentTimeMillis() - ReviveListener.medicReviveStartTime < TimeUnit.SECONDS.toMillis(10))
-                unicacityAddon.api().sendStatisticAddRequest(StatisticType.REVIVE);
+            if (System.currentTimeMillis() - ReviveListener.medicReviveStartTime < TimeUnit.SECONDS.toMillis(10)) {
+                this.unicacityAddon.api().sendStatisticAddRequest(StatisticType.REVIVE);
+            }
 
             // show karma mesage
             karmaCheck = true;

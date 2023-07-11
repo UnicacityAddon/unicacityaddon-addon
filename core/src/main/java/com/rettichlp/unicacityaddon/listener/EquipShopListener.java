@@ -44,7 +44,7 @@ public class EquipShopListener {
 
         Matcher equipMatcher = PatternHandler.EQUIP_PATTERN.matcher(msg);
         if (equipMatcher.find()) {
-            String equipString = equipMatcher.group(1);
+            String equipString = equipMatcher.group("equipName");
 
             Optional<Equip> equipOptional = Arrays.stream(Equip.values())
                     .filter(eq -> eq.getMessageName().equalsIgnoreCase(equipString))

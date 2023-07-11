@@ -21,8 +21,8 @@ import com.rettichlp.unicacityaddon.api.response.Success;
 import com.rettichlp.unicacityaddon.api.statistic.Statistic;
 import com.rettichlp.unicacityaddon.api.statisticTop.StatisticTop;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
-import com.rettichlp.unicacityaddon.base.builder.ActivityCheckBuilder;
 import com.rettichlp.unicacityaddon.base.builder.RequestBuilder;
+import com.rettichlp.unicacityaddon.base.enums.Activity;
 import com.rettichlp.unicacityaddon.base.enums.api.AddonGroup;
 import com.rettichlp.unicacityaddon.base.enums.api.ApplicationPath;
 import com.rettichlp.unicacityaddon.base.enums.api.StatisticType;
@@ -266,19 +266,19 @@ public class API {
                 .getAsJsonObjectAndParse(Success.class);
     }
 
-    public Success sendActivityCheckActivity(ActivityCheckBuilder.Activity activity, String type, String value, DrugType drugType, DrugPurity drugPurity, Long date, String screenshot) {
+    public Success sendActivityCheckActivity(Activity activity, String type, String value, DrugType drugType, DrugPurity drugPurity, Long date, String screenshot) {
         return RequestBuilder.getBuilder(this.unicacityAddon)
                 .nonProd(this.unicacityAddon.configuration().local().get())
                 .applicationPath(ApplicationPath.ACTIVITY_CHECK)
                 .subPath(this.addonPlayer.getFaction() + "/add")
                 .parameter(Map.of(
                         "activity", String.valueOf(activity),
-                        "type", Optional.ofNullable(type).orElse(""),
-                        "value", Optional.ofNullable(value).orElse(""),
+                        "type", Optional.ofNullable(type).orElse("").replace(" ", "-"),
+                        "value", Optional.ofNullable(value).orElse("").replace(" ", "-"),
                         "drugType", Optional.ofNullable(drugType).map(DrugType::name).orElse(""),
                         "drugPurity", String.valueOf(Optional.ofNullable(drugPurity).map(DrugPurity::getPurity).orElse(-1)),
                         "date", String.valueOf(Optional.ofNullable(date).orElse(0L)),
-                        "screenshot", Optional.ofNullable(screenshot).orElse("")))
+                        "screenshot", Optional.ofNullable(screenshot).orElse("").replace(" ", "-")))
                 .getAsJsonObjectAndParse(Success.class);
     }
 

@@ -2,6 +2,7 @@ package com.rettichlp.unicacityaddon.base.builder;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.api.response.Success;
+import com.rettichlp.unicacityaddon.base.enums.Activity;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
 import lombok.NoArgsConstructor;
@@ -70,17 +71,12 @@ public class ActivityCheckBuilder {
         public Success send() {
             return this.unicacityAddon.api().sendActivityCheckActivity(
                     this.activity,
-                    this.type.replace(" ", "-"),
-                    this.value.replace(" ", "-"),
+                    this.type,
+                    this.value,
                     this.drugType,
                     this.drugPurity,
                     this.date,
-                    this.screenshot.replace(" ", "-"));
+                    this.screenshot);
         }
-    }
-
-    public enum Activity {
-
-        MONEY, DRUG, ROLEPLAY, EQUIP_ADD, EQUIP_EDIT
     }
 }
