@@ -59,8 +59,7 @@ public class TeamSpeakNotificationListener {
                             .of("[←]").color(ColorCode.BLUE)
                                     .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Betritt deinen vorherigen Channel").color(ColorCode.RED).advance().createComponent())
                                     .clickEvent(ClickEvent.Action.RUN_COMMAND, "/tsjoin id=" + e.getOldChannel().getId())
-                                    .advance()
-                            .createComponent();
+                                    .advance();
                 } else {
                     int emptySupportChannelId = getEmptySupportChannelId();
                     if (emptySupportChannelId != 0) {
