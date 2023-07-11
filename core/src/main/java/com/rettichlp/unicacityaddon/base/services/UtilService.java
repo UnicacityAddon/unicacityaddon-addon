@@ -33,8 +33,7 @@ import java.util.stream.Collectors;
 @Getter
 public class UtilService {
 
-    private final Icon icon = Icon.texture(ResourceLocation.create("unicacityaddon", "textures/uc.png")).resolution(64, 64);
-    private final Icon noPushIcon = Icon.texture(ResourceLocation.create("unicacityaddon", "textures/noPush.png")).resolution(64, 32);
+    private final Icon icon = Icon.texture(ResourceLocation.create("unicacityaddon", "textures/icon.png")).resolution(64, 64);
 
     private final CommandUtils command;
     private final ImageUploadUtils imageUpload;
