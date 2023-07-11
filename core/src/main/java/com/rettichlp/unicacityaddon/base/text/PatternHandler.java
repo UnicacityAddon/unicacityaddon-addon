@@ -178,8 +178,7 @@ public class PatternHandler {
     public static final Pattern DBANK_GIVE_PATTERN = Pattern.compile("^(?:\\[UC])*(\\w+) hat (?<amount>\\d+)g (?<drugType>.+) \\((?<drugPurity>Höchste|Gute|Mittlere|Schlechte) Reinheit\\) \\((\\d+)g\\) eingelagert\\.$");
     public static final Pattern DBANK_GET_PATTERN = Pattern.compile("^(?:\\[UC])*(\\w+) hat (?<amount>\\d+)g (?<drugType>.+) \\((?<drugPurity>Höchste|Gute|Mittlere|Schlechte) Reinheit\\) \\((\\d+)g\\) aus der Drogenbank genommen\\.$");
     public static final Pattern DRUG_DEAL_ACCEPTED = Pattern.compile("^\\[Deal] (?:\\[UC])*(\\w+) hat den Deal angenommen\\.$");
-    public static final Pattern DRUG_DEAL_ENDED = Pattern.compile("^\\[Deal] (?:\\[UC])*(\\w+) hat den Deal angenommen\\.$" +
-            "|^\\[Deal] (?:\\[UC])*(\\w+) hat das Angebot abgelehnt\\.$");
+    public static final Pattern DRUG_DEAL_DECLINED = Pattern.compile("^\\[Deal] (?:\\[UC])*(\\w+) hat das Angebot abgelehnt\\.$");
     public static final Pattern DRUG_GIVE_PATTERN = Pattern.compile("^\\[Deal] Du hast (?:\\[UC])*(\\w+) (?<amount>\\d+)g (?<drugType>.+) \\(Reinheit (?<drugPurity>\\d)\\) für (\\d+)\\$ angeboten\\.$");
     public static final Pattern DRUG_GET_PATTERN = Pattern.compile("^\\[Deal] (?:\\[UC])*(\\w+) bietet dir (?<amount>\\d+)g (?<drugType>.+) \\(Reinheit (?<drugPurity>\\d)\\) für (\\d+)\\$ an\\.$");
     public static final Pattern DRUG_USE_PATTERN = Pattern.compile("^(?:\\[UC])*(\\w+) hat (?<drugType>.+) genommen\\.$");

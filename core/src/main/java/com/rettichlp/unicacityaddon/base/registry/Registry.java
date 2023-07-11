@@ -59,7 +59,6 @@ import com.rettichlp.unicacityaddon.commands.faction.ShareLocationCommand;
 import com.rettichlp.unicacityaddon.commands.faction.badfaction.ASetBlacklistCommand;
 import com.rettichlp.unicacityaddon.commands.faction.badfaction.BlackMarketCommand;
 import com.rettichlp.unicacityaddon.commands.faction.badfaction.BlacklistInfoCommand;
-import com.rettichlp.unicacityaddon.commands.faction.badfaction.DBankDropAllCommand;
 import com.rettichlp.unicacityaddon.commands.faction.badfaction.GaggedCommand;
 import com.rettichlp.unicacityaddon.commands.faction.badfaction.ModifyBlacklistCommand;
 import com.rettichlp.unicacityaddon.commands.faction.badfaction.OwnUseCommand;
@@ -138,7 +137,6 @@ import com.rettichlp.unicacityaddon.listener.faction.ReinforcementListener;
 import com.rettichlp.unicacityaddon.listener.faction.ShareLocationListener;
 import com.rettichlp.unicacityaddon.listener.faction.badfaction.BannerListener;
 import com.rettichlp.unicacityaddon.listener.faction.badfaction.GaggedListener;
-import com.rettichlp.unicacityaddon.listener.faction.badfaction.GiftEigenbedarfListener;
 import com.rettichlp.unicacityaddon.listener.faction.badfaction.PlantListener;
 import com.rettichlp.unicacityaddon.listener.faction.badfaction.blacklist.BlacklistListener;
 import com.rettichlp.unicacityaddon.listener.faction.badfaction.blacklist.BlacklistModifyListener;
@@ -246,7 +244,6 @@ public class Registry {
             FirstAidListener.class,
             GaggedListener.class,
             GangwarListener.class,
-            GiftEigenbedarfListener.class,
             HouseDataListener.class,
             HouseInteractionListener.class,
             HouseRenterListener.class,
@@ -304,7 +301,6 @@ public class Registry {
             CoordlistCommand.class,
             CorruptionCalculatorCommand.class,
             CountdownCommand.class,
-            DBankDropAllCommand.class,
             DForceCommand.class,
             DepositCommand.class,
             DiscordCommand.class,

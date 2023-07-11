@@ -13,7 +13,6 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author Dimiikou
@@ -22,7 +21,7 @@ import java.util.concurrent.TimeUnit;
 @UCCommand(prefix = "gifteigenbedarf", usage = "[Spieler]")
 public class OwnUseGiftCommand extends UnicacityCommand {
 
-    public static final List<String> scheduledTasks = new ArrayList<>();
+    public static List<String> dealCommandQueue = new ArrayList<>();
 
     private final UnicacityAddon unicacityAddon;
 
@@ -44,32 +43,29 @@ public class OwnUseGiftCommand extends UnicacityCommand {
         Marijuana marijuana = this.unicacityAddon.configuration().ownUse().marijuana();
         Methamphetamin methamphetamin = this.unicacityAddon.configuration().ownUse().methamphetamin();
 
+        dealCommandQueue = new ArrayList<>();
+
         if (cocaine.enabled().get()) {
             DrugPurity drugPurity = cocaine.purity().getOrDefault(DrugPurity.BEST);
-            int amount = cocaine.amount().getOrDefault(25);
-            scheduledTasks.add("/selldrug " + arguments[0] + " " + DrugType.COCAINE.getDrugName() + " " + drugPurity.getPurity() + " " + amount + " 0");
+            int amount = cocaine.amount().get();
+            dealCommandQueue.add("/selldrug " + arguments[0] + " " + DrugType.COCAINE.getDrugName() + " " + drugPurity.getPurity() + " " + amount + " 0");
         }
 
         if (marijuana.enabled().get()) {
             DrugPurity drugPurity = marijuana.purity().getOrDefault(DrugPurity.GOOD);
-            int amount = marijuana.amount().getOrDefault(25);
-            scheduledTasks.add("/selldrug " + arguments[0] + " " + DrugType.MARIJUANA.getDrugName() + " " + drugPurity.getPurity() + " " + amount + " 0");
+            int amount = marijuana.amount().get();
+            dealCommandQueue.add("/selldrug " + arguments[0] + " " + DrugType.MARIJUANA.getDrugName() + " " + drugPurity.getPurity() + " " + amount + " 0");
         }
 
         if (methamphetamin.enabled().get()) {
             DrugPurity drugPurity = methamphetamin.purity().getOrDefault(DrugPurity.BEST);
-            int amount = methamphetamin.amount().getOrDefault(5);
-            scheduledTasks.add("/selldrug " + arguments[0] + " " + DrugType.METH.getDrugName() + " " + drugPurity.getPurity() + " " + amount + " 0");
+            int amount = methamphetamin.amount().get();
+            dealCommandQueue.add("/selldrug " + arguments[0] + " " + DrugType.METH.getDrugName() + " " + drugPurity.getPurity() + " " + amount + " 0");
         }
 
-        new Thread(() -> scheduledTasks.forEach(s -> {
-            p.sendServerMessage(s);
-            try {
-                Thread.sleep(TimeUnit.SECONDS.toMillis(1));
-            } catch (InterruptedException e) {
-                this.unicacityAddon.logger().warn(e.getMessage());
-            }
-        })).start();
+        if (!dealCommandQueue.isEmpty()) {
+            p.sendServerMessage(dealCommandQueue.remove(0));
+        }
 
         return true;
     }
