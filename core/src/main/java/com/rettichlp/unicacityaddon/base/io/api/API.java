@@ -227,6 +227,15 @@ public class API {
     private void loadPlayerData() {
         Player player = sendPlayerRequest();
         if (player != null) {
+            AddonGroup.CEO.getMemberList().clear();
+            AddonGroup.DEV.getMemberList().clear();
+            AddonGroup.MOD.getMemberList().clear();
+            AddonGroup.SUP.getMemberList().clear();
+            AddonGroup.BETA.getMemberList().clear();
+            AddonGroup.VIP.getMemberList().clear();
+            AddonGroup.BLACKLIST.getMemberList().clear();
+            AddonGroup.DYAVOL.getMemberList().clear();
+
             AddonGroup.CEO.getMemberList().addAll(player.getCEO().stream().map(PlayerEntry::getName).toList());
             AddonGroup.DEV.getMemberList().addAll(player.getDEV().stream().map(PlayerEntry::getName).toList());
             AddonGroup.MOD.getMemberList().addAll(player.getMOD().stream().map(PlayerEntry::getName).toList());
