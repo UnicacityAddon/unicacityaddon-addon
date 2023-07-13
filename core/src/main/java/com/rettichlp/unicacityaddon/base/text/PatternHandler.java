@@ -1,6 +1,5 @@
 package com.rettichlp.unicacityaddon.base.text;
 
-
 import java.util.regex.Pattern;
 
 /**
@@ -170,8 +169,8 @@ public class PatternHandler {
     /**
      * Pattern for bad faction interaction
      *
-     * @see com.rettichlp.unicacityaddon.listener.faction.badfaction.BannerListener
      * @see com.rettichlp.unicacityaddon.listener.DrugListener
+     * @see com.rettichlp.unicacityaddon.listener.faction.badfaction.BannerListener
      * @see com.rettichlp.unicacityaddon.listener.faction.badfaction.PlantListener
      */
     public static final Pattern PLANT_HARVEST_PATTERN = Pattern.compile("^\\[Plantage] Eine .+-Plantage wurde von (?:\\[UC])*(\\w+) geerntet\\. \\[\\d+g]$");
