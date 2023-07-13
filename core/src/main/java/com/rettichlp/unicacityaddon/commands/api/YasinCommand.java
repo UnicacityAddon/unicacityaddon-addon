@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * @author RettichLP
  */
-@UCCommand(prefix = "yasin")
+@UCCommand(prefix = "yasin", onlyOnUnicacity = false)
 public class YasinCommand extends UnicacityCommand {
 
     private final UnicacityAddon unicacityAddon;
