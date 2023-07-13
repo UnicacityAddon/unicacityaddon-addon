@@ -39,14 +39,14 @@ public class MoneyActivityCommand extends UnicacityCommand {
             return true;
         }
 
-        if (!typeOptions.contains(arguments[0])) {
+        if (!typeOptions.contains(arguments[0].toLowerCase())) {
             p.sendErrorMessage("Dieser Aktivitätstyp existiert nicht.");
             return true;
         }
 
         new Thread(() -> {
             try {
-                String type = arguments[0];
+                String type = arguments[0].toLowerCase();
                 int value = Integer.parseInt(arguments[1]);
                 File file = this.unicacityAddon.fileService().getNewImageFile();
                 String screenshot = arguments.length == 3 ? arguments[2] : ScreenshotBuilder.getBuilder(unicacityAddon).file(file).upload();
