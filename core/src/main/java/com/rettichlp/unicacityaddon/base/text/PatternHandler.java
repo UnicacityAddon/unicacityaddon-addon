@@ -1,6 +1,5 @@
 package com.rettichlp.unicacityaddon.base.text;
 
-
 import java.util.regex.Pattern;
 
 /**
@@ -164,13 +163,14 @@ public class PatternHandler {
     public static final Pattern MOBILE_REMOVE_PATTERN = Pattern.compile("^((?:\\[UC])*\\w+) hat dir deine Kommunikationsgeräte abgenommen\\.$");
     public static final Pattern MOBILE_GET_PATTERN = Pattern.compile("^Du hast dein Handy genommen\\.$" +
             "|^((?:\\[UC])*\\w+) hat dir deine Kommunikationsgeräte wiedergegeben\\.$");
-    public static final Pattern MOBILE_TOGGLE_PATTERN = Pattern.compile("^Du hast dein Telefon (ein|aus)geschaltet\\.$");
+    public static final Pattern MOBILE_TOGGLE_PATTERN = Pattern.compile("^Du hast dein Telefon (ein|aus)geschaltet\\.$" +
+            "|^Der Akku von deinem Handy ist leer\\.$");
 
     /**
      * Pattern for bad faction interaction
      *
+     * @see com.rettichlp.unicacityaddon.listener.DrugListener
      * @see com.rettichlp.unicacityaddon.listener.faction.badfaction.BannerListener
-     * @see com.rettichlp.unicacityaddon.listener.faction.badfaction.GiftEigenbedarfListener
      * @see com.rettichlp.unicacityaddon.listener.faction.badfaction.PlantListener
      */
     public static final Pattern PLANT_HARVEST_PATTERN = Pattern.compile("^\\[Plantage] Eine .+-Plantage wurde von (?:\\[UC])*(\\w+) geerntet\\. \\[\\d+g]$");
