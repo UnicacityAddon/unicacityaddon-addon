@@ -66,7 +66,6 @@ public class MobileListener {
             return;
         }
 
-
         Matcher mobileTogglePattern = PatternHandler.MOBILE_TOGGLE_PATTERN.matcher(msg);
         if (mobileTogglePattern.find()) {
             hasCommunications = true;
