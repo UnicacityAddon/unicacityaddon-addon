@@ -57,8 +57,6 @@ public interface UnicacityAddonConfiguration {
 
     ConfigProperty<Boolean> carRoute();
 
-    ConfigProperty<Integer> aBuyAmount();
-
     // other
 
     TeamSpeakConfiguration teamspeak();

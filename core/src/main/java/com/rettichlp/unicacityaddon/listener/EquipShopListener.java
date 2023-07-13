@@ -22,6 +22,9 @@ import java.util.regex.Matcher;
 @UCEvent
 public class EquipShopListener {
 
+    public static int amount = 10;
+    public static int period = 200;
+
     private int amountLeft = 0;
     private int slotNumber = -1;
 
@@ -67,7 +70,7 @@ public class EquipShopListener {
     @Subscribe
     public void onHotkey(HotkeyEvent e) {
         if (e.getKey().equals(e.hotkeyConfiguration().aBuy().get())) {
-            this.amountLeft = this.unicacityAddon.configuration().aBuyAmount().getOrDefault(5);
+            this.amountLeft = amount;
             slotNumber = ScreenRenderListener.lastHoveredSlotNumber;
 
             if (slotNumber >= 0) {
@@ -82,7 +85,7 @@ public class EquipShopListener {
                             EquipShopListener.this.slotNumber = -1;
                         }
                     }
-                }, 0, 200);
+                }, 0, period);
             }
         }
     }

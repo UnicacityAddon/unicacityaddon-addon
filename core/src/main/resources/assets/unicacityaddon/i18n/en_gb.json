@@ -455,10 +455,6 @@
         "name": "Automatically display route to car",
         "description": "After executing the '/car find' command, the route is displayed directly"
       },
-      "aBuyAmount": {
-        "name": "Amount for ABuy and AEquip",
-        "description": "Number of items/equip to auto-purchase or equip"
-      },
       "teamspeak": {
         "name": "TeamSpeak",
         "resolve": {

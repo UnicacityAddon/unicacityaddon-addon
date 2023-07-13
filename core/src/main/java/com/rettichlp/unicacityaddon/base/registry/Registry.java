@@ -7,6 +7,7 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCBadge;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCNameTag;
+import com.rettichlp.unicacityaddon.commands.ABuyCommand;
 import com.rettichlp.unicacityaddon.commands.ActivityCommand;
 import com.rettichlp.unicacityaddon.commands.BusCommand;
 import com.rettichlp.unicacityaddon.commands.CalculateCommand;
@@ -276,6 +277,7 @@ public class Registry {
     );
 
     private final HashSet<Class<?>> commandList = Sets.newHashSet(
+            ABuyCommand.class,
             ACallCommand.class,
             ADropMoneyCommand.class,
             ASMSCommand.class,
