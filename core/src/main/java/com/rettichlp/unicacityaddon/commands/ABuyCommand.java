@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * @author RettichLP
  */
-@UCCommand(prefix = "abuy", usage = "[Menge] (Delay)")
+@UCCommand(prefix = "abuy", usage = "[Menge] (Delay, mind. 150ms)")
 public class ABuyCommand extends UnicacityCommand {
 
     private final UnicacityAddon unicacityAddon;
@@ -38,7 +38,7 @@ public class ABuyCommand extends UnicacityCommand {
         }
 
         EquipShopListener.amount = Integer.parseInt(arguments[0]);
-        EquipShopListener.period = arguments.length == 2 ? Integer.parseInt(arguments[1]) : 150;
+        EquipShopListener.period = arguments.length == 2 ? Math.max(Integer.parseInt(arguments[1]), 150) : 150;
 
         p.sendInfoMessage("Menge für /abuy auf " + EquipShopListener.amount + " und Delay auf " + EquipShopListener.period + "ms eingestellt.");
 

@@ -23,7 +23,7 @@ import java.util.regex.Matcher;
 public class EquipShopListener {
 
     public static int amount = 10;
-    public static int period = 200;
+    public static int period = 150;
 
     private int amountLeft = 0;
     private int slotNumber = -1;
