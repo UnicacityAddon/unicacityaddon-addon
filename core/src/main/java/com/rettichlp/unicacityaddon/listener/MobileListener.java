@@ -72,7 +72,7 @@ public class MobileListener {
 
             if (activeCommunicationsCheck) {
                 e.setCancelled(true);
-                if (msg.contains("eingeschaltet")) {
+                if (msg.contains("eingeschaltet") || msg.contains("Akku")) {
                     activeCommunicationsCheck = false;
                 } else {
                     new Timer().schedule(new TimerTask() {

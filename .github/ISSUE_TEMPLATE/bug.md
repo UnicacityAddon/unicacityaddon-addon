@@ -13,7 +13,7 @@ before the bug occurred? What did you expect? Do you have screenshots?
 
 LabyMod version: `3` `4`
 
-Minecraft version: `1.12.2` `1.16.5`
+Minecraft version: `1.12.2`
 
 Addon version: `2.1.0-dev`
 
