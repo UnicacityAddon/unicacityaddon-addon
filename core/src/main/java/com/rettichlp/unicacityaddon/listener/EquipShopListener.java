@@ -85,7 +85,7 @@ public class EquipShopListener {
                             EquipShopListener.this.slotNumber = -1;
                         }
                     }
-                }, 0, 200);
+                }, 0, period);
             }
         }
     }
