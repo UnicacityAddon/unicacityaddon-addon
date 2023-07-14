@@ -38,15 +38,5 @@ public class TickListener {
                 lastTickDamage = Maps.immutableEntry(System.currentTimeMillis(), currentHeal);
             }
         }
-
-        if (e.isPhase(UnicacityAddonTickEvent.Phase.SECOND)) {
-            if (this.unicacityAddon.fileService().data().getTimer() > 0) {
-                this.unicacityAddon.fileService().data().setTimer(this.unicacityAddon.fileService().data().getTimer() - 1);
-            }
-        }
-
-        if (e.isUnicacity() && e.isPhase(UnicacityAddonTickEvent.Phase.SECOND) && this.unicacityAddon.configuration().nametag().corpse().get()) {
-            this.unicacityAddon.deadBodyController().updateDisplayName(this.unicacityAddon);
-        }
     }
 }

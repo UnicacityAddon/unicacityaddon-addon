@@ -2,6 +2,7 @@ package com.rettichlp.unicacityaddon.listener;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.enums.Weapon;
+import com.rettichlp.unicacityaddon.base.events.UnicacityAddonTickEvent;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.commands.GetGunPatternCommand;
 import com.rettichlp.unicacityaddon.commands.faction.DropDrugAllCommand;
@@ -49,5 +50,12 @@ public class ScreenRenderListener {
     public void onItemStackTooltip(ItemStackTooltipEvent e) {
         ItemStack itemStack = e.itemStack();
         lastHoveredSlotNumber = this.unicacityAddon.guiController().getSlotNumberByDisplayName(this.unicacityAddon.utilService().text().plain(itemStack.getDisplayName()));
+    }
+
+    @Subscribe
+    public void onUnicacityAddonTick(UnicacityAddonTickEvent e) {
+        if (e.isUnicacity() && e.isPhase(UnicacityAddonTickEvent.Phase.SECOND) && this.unicacityAddon.configuration().nametag().corpse().get()) {
+            this.unicacityAddon.deadBodyController().updateDisplayName(this.unicacityAddon);
+        }
     }
 }
