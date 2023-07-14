@@ -5,7 +5,6 @@ import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.entity.player.ClientPlayer;
-import net.labymod.api.client.entity.player.Inventory;
 import net.labymod.api.client.scoreboard.Scoreboard;
 import net.labymod.api.client.world.ClientWorld;
 import net.labymod.api.util.math.vector.FloatVector3;
@@ -32,9 +31,6 @@ public interface AddonPlayer {
     @Nullable
     FloatVector3 getLocation();
 
-    @Nullable
-    Inventory getInventory();
-
     void sendMessage(String message);
 
     void sendMessage(Component component);
@@ -59,7 +55,9 @@ public interface AddonPlayer {
 
     int getRank();
 
-    boolean inDuty();
+    boolean isDuty();
+
+    void setTempDuty(boolean tempDuty);
 
     void sellMedication(String target, DrugType medication);
 

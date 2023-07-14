@@ -3,8 +3,8 @@ package com.rettichlp.unicacityaddon.listener.faction.rettungsdienst;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
-import com.rettichlp.unicacityaddon.commands.faction.rettungsdienst.ARezeptAnnehmenCommand;
-import com.rettichlp.unicacityaddon.commands.faction.rettungsdienst.ARezeptCommand;
+import com.rettichlp.unicacityaddon.commands.faction.rettungsdienst.RecipeAcceptCommand;
+import com.rettichlp.unicacityaddon.commands.faction.rettungsdienst.RecipeCommand;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
@@ -32,7 +32,7 @@ public class MedicationListener {
         long timeSinceLastExecution;
         long delay = 0;
 
-        if (PatternHandler.RECIPE_ACCEPT_PATTERN.matcher(msg).find() && ARezeptAnnehmenCommand.amount > 0) {
+        if (PatternHandler.RECIPE_ACCEPT_PATTERN.matcher(msg).find() && RecipeAcceptCommand.amount > 0) {
             timeSinceLastExecution = System.currentTimeMillis() - lastExecution;
             if (timeSinceLastExecution < 1000) delay = 1000 - timeSinceLastExecution;
             TIMER.schedule(new TimerTask() {
@@ -44,7 +44,7 @@ public class MedicationListener {
             return;
         }
 
-        if (PatternHandler.RECIPE_GIVE_PATTERN.matcher(msg).find() && ARezeptCommand.amount > 0) {
+        if (PatternHandler.RECIPE_GIVE_PATTERN.matcher(msg).find() && RecipeCommand.amount > 0) {
             timeSinceLastExecution = System.currentTimeMillis() - lastExecution;
             if (timeSinceLastExecution < 1000) delay = 1000 - timeSinceLastExecution;
             TIMER.schedule(new TimerTask() {
@@ -57,14 +57,14 @@ public class MedicationListener {
     }
 
     public static void acceptRecipe(UnicacityAddon unicacityAddon) {
-        --ARezeptAnnehmenCommand.amount;
+        --RecipeAcceptCommand.amount;
         lastExecution = System.currentTimeMillis();
         unicacityAddon.player().acceptOffer();
     }
 
     public static void giveRecipe(UnicacityAddon unicacityAddon) {
-        --ARezeptCommand.amount;
+        --RecipeCommand.amount;
         lastExecution = System.currentTimeMillis();
-        unicacityAddon.player().sellMedication(ARezeptCommand.target, ARezeptCommand.medication);
+        unicacityAddon.player().sellMedication(RecipeCommand.target, RecipeCommand.medication);
     }
 }

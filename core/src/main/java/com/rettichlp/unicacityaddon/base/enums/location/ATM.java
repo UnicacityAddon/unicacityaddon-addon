@@ -84,7 +84,7 @@ public enum ATM {
     private final int z;
 
     public String getNaviCommand() {
-        return "/navi " + getX() + "/" + getY() + "/" + getZ();
+        return "/navi " + x + "/" + y + "/" + z;
     }
 
     public FloatVector3 getLocation() {

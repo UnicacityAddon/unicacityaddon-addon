@@ -1,6 +1,7 @@
 package com.rettichlp.unicacityaddon.base.events;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
+import net.labymod.api.Laby;
 import net.labymod.api.event.Event;
 
 /**
@@ -18,7 +19,7 @@ public class UnicacityAddonTickEvent implements Event {
     }
 
     public boolean isIngame() {
-        return this.unicacityAddon.labyAPI().minecraft().isIngame();
+        return Laby.labyAPI().minecraft().isIngame();
     }
 
     public boolean isUnicacity() {

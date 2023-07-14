@@ -13,11 +13,11 @@ import java.util.List;
  * @author RettichLP
  */
 @UCCommand(prefix = "stumm", aliases = {"nichtstören", "donotdisturb"})
-public class StummCommand extends UnicacityCommand {
+public class MobileMuteCommand extends UnicacityCommand {
 
     private final UnicacityAddon unicacityAddon;
 
-    public StummCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+    public MobileMuteCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
         super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }

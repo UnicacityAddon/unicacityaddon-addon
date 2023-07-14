@@ -7,7 +7,6 @@ import com.rettichlp.unicacityaddon.base.registry.UnicacityCommand;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
-import com.rettichlp.unicacityaddon.listener.faction.state.WantedListener;
 
 import java.util.List;
 
@@ -15,11 +14,11 @@ import java.util.List;
  * @author Gelegenheitscode
  */
 @UCCommand(prefix = "korruptionsrechner", usage = "[Spieler]")
-public class KorruptionsrechnerCommand extends UnicacityCommand {
+public class CorruptionCalculatorCommand extends UnicacityCommand {
 
     private final UnicacityAddon unicacityAddon;
 
-    public KorruptionsrechnerCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+    public CorruptionCalculatorCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
         super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }

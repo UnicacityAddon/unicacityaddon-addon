@@ -6,7 +6,6 @@ import net.labymod.api.client.component.format.NamedTextColor;
 import net.labymod.api.client.component.format.TextColor;
 
 import java.awt.Color;
-import java.util.Arrays;
 
 /**
  * @author RettichLP
@@ -35,11 +34,4 @@ public enum ColorCode {
     private final String code;
     private final TextColor textColor;
     private final Color color;
-
-    public static ColorCode getColorCodeByTextColor(TextColor color) {
-        return Arrays.stream(values())
-                .filter(colorCode -> colorCode.textColor.equals(color))
-                .findFirst()
-                .orElse(WHITE);
-    }
 }

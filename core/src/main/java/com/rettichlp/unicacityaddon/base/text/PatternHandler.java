@@ -1,6 +1,5 @@
 package com.rettichlp.unicacityaddon.base.text;
 
-
 import java.util.regex.Pattern;
 
 /**
@@ -131,6 +130,9 @@ public class PatternHandler {
     public static final Pattern TABAK_DROP_PATTERN = Pattern.compile("^\\[Tabakplantage] Bringe es nun zur Shishabar und gib es mit /droptabak ab\\.$");
     public static final Pattern TABAK_FINISH_PATTERN = Pattern.compile("^\\[Tabakplantage] Du hast (\\d+)g Tabak abgegeben\\.$");
     public static final Pattern MINERS_JOB_END_PATTERN = Pattern.compile("^\\[Steinbruch] Bring alles nun zum Lagerraum\\.$");
+    public static final Pattern LUMBERJACK_START_PATTERN = Pattern.compile("^\\[Holzfäller] Fälle (.+) Bäume und bringe sie zu den Sägen zur Weiterverarbeitung!$");
+    public static final Pattern LUMBERJACK_NEW_TREE_PATTERN = Pattern.compile("^\\[Holzfäller] Du hast den Baumstamm zur Weiterverarbeitung in die Säge gelegt\\.$");
+    public static final Pattern LUMBERJACK_END_PATTERN = Pattern.compile("^\\[Holzfäller] Du hast sehr gute Arbeit geleistet! Du hast dir deinen Lohn vedient\\.$");
 
     /**
      * Pattern for medic interaction
@@ -161,13 +163,14 @@ public class PatternHandler {
     public static final Pattern MOBILE_REMOVE_PATTERN = Pattern.compile("^((?:\\[UC])*\\w+) hat dir deine Kommunikationsgeräte abgenommen\\.$");
     public static final Pattern MOBILE_GET_PATTERN = Pattern.compile("^Du hast dein Handy genommen\\.$" +
             "|^((?:\\[UC])*\\w+) hat dir deine Kommunikationsgeräte wiedergegeben\\.$");
-    public static final Pattern MOBILE_TOGGLE_PATTERN = Pattern.compile("^Du hast dein Telefon (ein|aus)geschaltet\\.$");
+    public static final Pattern MOBILE_TOGGLE_PATTERN = Pattern.compile("^Du hast dein Telefon (ein|aus)geschaltet\\.$" +
+            "|^Der Akku von deinem Handy ist leer\\.$");
 
     /**
      * Pattern for bad faction interaction
      *
+     * @see com.rettichlp.unicacityaddon.listener.DrugListener
      * @see com.rettichlp.unicacityaddon.listener.faction.badfaction.BannerListener
-     * @see com.rettichlp.unicacityaddon.listener.faction.badfaction.GiftEigenbedarfListener
      * @see com.rettichlp.unicacityaddon.listener.faction.badfaction.PlantListener
      */
     public static final Pattern PLANT_HARVEST_PATTERN = Pattern.compile("^\\[Plantage] Eine .+-Plantage wurde von (?:\\[UC])*(\\w+) geerntet\\. \\[\\d+g]$");
@@ -175,8 +178,7 @@ public class PatternHandler {
     public static final Pattern DBANK_GIVE_PATTERN = Pattern.compile("^(?:\\[UC])*(\\w+) hat (?<amount>\\d+)g (?<drugType>.+) \\((?<drugPurity>Höchste|Gute|Mittlere|Schlechte) Reinheit\\) \\((\\d+)g\\) eingelagert\\.$");
     public static final Pattern DBANK_GET_PATTERN = Pattern.compile("^(?:\\[UC])*(\\w+) hat (?<amount>\\d+)g (?<drugType>.+) \\((?<drugPurity>Höchste|Gute|Mittlere|Schlechte) Reinheit\\) \\((\\d+)g\\) aus der Drogenbank genommen\\.$");
     public static final Pattern DRUG_DEAL_ACCEPTED = Pattern.compile("^\\[Deal] (?:\\[UC])*(\\w+) hat den Deal angenommen\\.$");
-    public static final Pattern DRUG_DEAL_ENDED = Pattern.compile("^\\[Deal] (?:\\[UC])*(\\w+) hat den Deal angenommen\\.$" +
-            "|^\\[Deal] (?:\\[UC])*(\\w+) hat das Angebot abgelehnt\\.$");
+    public static final Pattern DRUG_DEAL_DECLINED = Pattern.compile("^\\[Deal] (?:\\[UC])*(\\w+) hat das Angebot abgelehnt\\.$");
     public static final Pattern DRUG_GIVE_PATTERN = Pattern.compile("^\\[Deal] Du hast (?:\\[UC])*(\\w+) (?<amount>\\d+)g (?<drugType>.+) \\(Reinheit (?<drugPurity>\\d)\\) für (\\d+)\\$ angeboten\\.$");
     public static final Pattern DRUG_GET_PATTERN = Pattern.compile("^\\[Deal] (?:\\[UC])*(\\w+) bietet dir (?<amount>\\d+)g (?<drugType>.+) \\(Reinheit (?<drugPurity>\\d)\\) für (\\d+)\\$ an\\.$");
     public static final Pattern DRUG_USE_PATTERN = Pattern.compile("^(?:\\[UC])*(\\w+) hat (?<drugType>.+) genommen\\.$");
@@ -185,6 +187,7 @@ public class PatternHandler {
     public static final Pattern TRUNK_GIVE_COMMAND_PATTERN = Pattern.compile("^/trunk drop (?<drugType>.+) (?<drugPurity>\\d) (?<amount>\\d+)$");
     public static final Pattern TRUNK_INTERACTION_ACCEPTED_PATTERN = Pattern.compile("^\\[Car] Du hast (?<amount>\\d+)g (?<drugType>.+) (aus dem|in den) Kofferraum (genommen|verstaut)\\.$");
     public static final Pattern BANNER_SPRAYED_PATTERN = Pattern.compile("^\\[Graffiti] Du hast das Graffiti mit deiner Fraktionsflagge übersprayt\\.$");
+    public static final Pattern GANGWAR_CAPTURE_START_PATTERN = Pattern.compile("\\[Gangwar] Du hast begonnen den Punkt (.+) zu erobern\\.$");
 
     /**
      * Pattern for money interaction
@@ -211,6 +214,7 @@ public class PatternHandler {
     public static final Pattern CASH_REMOVE_PATTERN = Pattern.compile("^ {2}-(\\d+)\\$$");
     public static final Pattern CASH_STATS_PATTERN = Pattern.compile("^ {2}- Geld: (\\d+)\\$$");
     public static final Pattern LOTTO_WIN = Pattern.compile("^\\[Lotto] Du hast im Lotto gewonnen! \\((\\d+)\\$\\)$");
+    public static final Pattern WEAPON_TRAINING_START = Pattern.compile("^\\[Waffentraining] Du hast ein Waffentraining für die Waffe (\\w+) gestartet\\.$");
 
     /**
      * Pattern karma interaction
@@ -263,6 +267,7 @@ public class PatternHandler {
     public static final Pattern REPORT_ACCEPTED_PATTERN = Pattern.compile("^\\[Report] Du hast den Report von \\w+ \\[Level \\d+] angenommen! Thema: [a-zA-Z]+$");
     public static final Pattern REPORT_END_PATTERN = Pattern.compile("^\\[Report] Du hast den Report mit \\w+ beendet! \\(#\\d+\\)$");
     public static final Pattern AD_CONTROL_PATTERN = Pattern.compile("^\\[Werbung] (\\w+) hat eine Werbung geschalten: .+$");
+    public static final Pattern NEWBIE_CHAT = Pattern.compile("^\\[NeulingsChat] (\\w+): (?<message>.+)$");
 
     /**
      * Pattern for house interaction
@@ -290,7 +295,7 @@ public class PatternHandler {
      * @see com.rettichlp.unicacityaddon.listener.EquipShopListener
      */
     public static final Pattern TRACKER_PATTERN = Pattern.compile("^Du hast einen Peilsender an (?:\\[UC])*(\\w+) befestigt\\.$");
-    public static final Pattern EQUIP_PATTERN = Pattern.compile("^(?:|\\[Equip] )Du hast (?:dir|dich mit) (?:|ein|eine|einen|einem) (.+) equip(?:|p)t[!.]$");
+    public static final Pattern EQUIP_PATTERN = Pattern.compile("^(?:|\\[Equip] )Du hast (?:dir|dich mit) (?:|ein|eine|einen|einem) (?<equipName>.+) equip(?:|p)t[!.]$");
     public static final Pattern EQUIP_INTERRUPTED_PATTERN = Pattern.compile("^\\[Equip] Du bist nicht im Dienst\\.$");
 
     /**
@@ -319,9 +324,9 @@ public class PatternHandler {
      */
     public static final Pattern DRUG_VAULT_DROP_PATTERN = Pattern.compile("^HQ: (.+) (?:\\[UC])*(\\w+) hat (\\d+)g (Pulver|Kräuter|Kristalle|Wundertüte) \\((Höchste Reinheit|Gute Reinheit|Mittlere Reinheit|Schlechte Reinheit)\\) in der Asservatenkammer verstaut\\.$");
     public static final Pattern DRUG_VAULT_GET_PATTERN = Pattern.compile("^HQ: (.+) (?:\\[UC])*(\\w+) hat (\\d+)g (Pulver|Kräuter|Kristalle|Wundertüte) \\((Höchste Reinheit|Gute Reinheit|Mittlere Reinheit|Schlechte Reinheit)\\) aus der Asservatenkammer genommen\\.$");
-    public static final Pattern DRUG_VAULT_INFOTITLE_PATTERN = Pattern.compile("^ ===== Asservatenkammer \\((Pulver|Kräuter|Kristalle|Wundertüte)\\) =====$");
+    public static final Pattern DRUG_VAULT_INFOTITLE_PATTERN = Pattern.compile("^ ===== Asservatenkammer \\((Pulver|Kräuter|Kristalle|Wundertüten)\\) =====$");
     public static final Pattern DRUG_VAULT_INFO_PATTERN = Pattern.compile("^ {2}» (Mittlere|Höchste|Gute|Schlechte) Reinheit: (\\d+)g {2}» (Mittlere|Höchste|Gute|Schlechte) Reinheit: (\\d+)g {2}» (Mittlere|Höchste|Gute|Schlechte) Reinheit: (\\d+)g {2}» (Mittlere|Höchste|Gute|Schlechte) Reinheit: (\\d+)g$");
-    public static final Pattern DRUG_VAULT_INFOLSD_PATTERN = Pattern.compile("^ {2}» Wundertüte: (\\d+) Stück$");
+    public static final Pattern DRUG_VAULT_INFOLSD_PATTERN = Pattern.compile("^ {2}» Wundertüten: (\\d+) Stück$");
     public static final Pattern DRUG_VAULT_BURN_PATTERN = Pattern.compile("^HQ: (.+) (?:\\[UC])*(\\w+) hat (\\d+)g (Pulver|Kräuter|Kristalle|Wundertüte) \\((Höchste Reinheit|Gute Reinheit|Mittlere Reinheit|Schlechte Reinheit)\\) vernichtet\\.$");
     public static final Pattern PLANT_BURN_PATTERN = Pattern.compile("^HQ: (.+) (?:\\[UC])*(\\w+) hat erfolgreich eine (Pulver|Kräuter) Plantage verbrannt, over\\.$");
 }

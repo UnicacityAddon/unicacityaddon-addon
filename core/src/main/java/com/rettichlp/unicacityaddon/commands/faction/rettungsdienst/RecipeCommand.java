@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
  * @author RettichLP
  */
 @UCCommand(prefix = "arezept", usage = "[Spieler] [Rezept] [Anzahl]")
-public class ARezeptCommand extends UnicacityCommand {
+public class RecipeCommand extends UnicacityCommand {
 
     public static String target;
     public static DrugType medication;
@@ -24,7 +24,7 @@ public class ARezeptCommand extends UnicacityCommand {
 
     private final UnicacityAddon unicacityAddon;
 
-    public ARezeptCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+    public RecipeCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
         super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }

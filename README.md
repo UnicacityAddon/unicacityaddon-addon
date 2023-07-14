@@ -61,11 +61,11 @@ Supported Minecraft versions:
 
 - `1.12.2`
 - `1.16.5`
-- ~~`1.17.1`~~ (Unicacity does not currently support this version)
-- ~~`1.18.2`~~ (Unicacity does not currently support this version)
-- ~~`1.19.2`~~ (Unicacity does not currently support this version)
-- ~~`1.19.3`~~ (Unicacity does not currently support this version)
-- ~~`1.19.4`~~ (Unicacity does not currently support this version)
+- `1.17.1`
+- `1.18.2`
+- `1.19.2`
+- `1.19.3`
+- `1.19.4`
 
 ## Installation
 

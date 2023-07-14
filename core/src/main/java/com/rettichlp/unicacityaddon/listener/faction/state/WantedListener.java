@@ -12,6 +12,7 @@ import lombok.Setter;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
+import java.util.function.Predicate;
 import java.util.regex.Matcher;
 
 /**
@@ -88,15 +89,18 @@ public class WantedListener {
             String playerName = wantedDeleteMatcher.group(1);
             String targetName = wantedDeleteMatcher.group(2);
 
-            this.unicacityAddon.nameTagService().getWantedList().removeIf(wanted -> wanted.getName().equals(targetName));
-            this.unicacityAddon.utilService().debug("[WANTED] " + targetName + " (remove)");
+            int wpAmount = getWpAmountAndDelete(targetName);
 
             if (hqMessages) {
                 e.setMessage(Message.getBuilder().of("Gelöscht").color(ColorCode.RED).advance().space()
                         .of("-").color(ColorCode.GRAY).advance().space()
                         .of(targetName).color(ColorCode.BLUE).advance().space()
+                        .of("(").color(ColorCode.GRAY).advance()
+                        .of(String.valueOf(wpAmount)).color(ColorCode.RED).advance()
+                        .of(")").color(ColorCode.GRAY).advance().space()
                         .of("-").color(ColorCode.GRAY).advance().space()
-                        .of(playerName).color(ColorCode.BLUE).advance().createComponent());
+                        .of(playerName).color(ColorCode.BLUE).advance().space()
+                        .createComponent());
             }
 
             return;
@@ -107,8 +111,7 @@ public class WantedListener {
             String targetName = wantedKillMatcher.group(1);
             String playerName = wantedKillMatcher.group(2);
 
-            this.unicacityAddon.nameTagService().getWantedList().removeIf(wanted -> wanted.getName().equals(targetName));
-            this.unicacityAddon.utilService().debug("[WANTED] " + targetName + " (remove)");
+            int wpAmount = getWpAmountAndDelete(targetName);
 
             if (playerName.equals(this.unicacityAddon.player().getName())) {
                 this.unicacityAddon.api().sendStatisticAddRequest(StatisticType.KILL);
@@ -118,8 +121,12 @@ public class WantedListener {
                 e.setMessage(Message.getBuilder().of("Getötet").color(ColorCode.RED).advance().space()
                         .of("-").color(ColorCode.GRAY).advance().space()
                         .of(targetName).color(ColorCode.BLUE).advance().space()
+                        .of("(").color(ColorCode.GRAY).advance()
+                        .of(String.valueOf(wpAmount)).color(ColorCode.RED).advance()
+                        .of(")").color(ColorCode.GRAY).advance().space()
                         .of("-").color(ColorCode.GRAY).advance().space()
-                        .of(playerName).color(ColorCode.BLUE).advance().createComponent());
+                        .of(playerName).color(ColorCode.BLUE).advance()
+                        .createComponent());
             }
 
             return;
@@ -130,15 +137,18 @@ public class WantedListener {
             String targetName = wantedJailMatcher.group(1);
             String playerName = wantedJailMatcher.group(2);
 
-            this.unicacityAddon.nameTagService().getWantedList().removeIf(wanted -> wanted.getName().equals(targetName));
-            this.unicacityAddon.utilService().debug("[WANTED] " + targetName + " (remove)");
+            int wpAmount = getWpAmountAndDelete(targetName);
 
             if (hqMessages) {
                 e.setMessage(Message.getBuilder().of("Eingesperrt").color(ColorCode.RED).advance().space()
                         .of("-").color(ColorCode.GRAY).advance().space()
                         .of(targetName).color(ColorCode.BLUE).advance().space()
+                        .of("(").color(ColorCode.GRAY).advance()
+                        .of(String.valueOf(wpAmount)).color(ColorCode.RED).advance()
+                        .of(")").color(ColorCode.GRAY).advance().space()
                         .of("-").color(ColorCode.GRAY).advance().space()
-                        .of(playerName).color(ColorCode.BLUE).advance().createComponent());
+                        .of(playerName).color(ColorCode.BLUE).advance()
+                        .createComponent());
             }
 
             return;
@@ -255,6 +265,14 @@ public class WantedListener {
             this.unicacityAddon.nameTagService().getWantedList().clear();
             wantedsShown = System.currentTimeMillis();
         }
+    }
+
+    private int getWpAmountAndDelete(String targetName) {
+        Predicate<Wanted> predicate = wanted -> wanted.getName().equals(targetName);
+        int wpAmount = this.unicacityAddon.nameTagService().getWantedList().stream().filter(predicate).findAny().map(Wanted::getAmount).orElse(0);
+        this.unicacityAddon.nameTagService().getWantedList().removeIf(predicate);
+        this.unicacityAddon.utilService().debug("[WANTED] " + targetName + " (remove)");
+        return wpAmount;
     }
 
     @Getter

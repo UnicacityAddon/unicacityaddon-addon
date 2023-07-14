@@ -2,9 +2,12 @@ package com.rettichlp.unicacityaddon.base.registry;
 
 import com.google.common.collect.Sets;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.badge.NoPushBadge;
+import com.rettichlp.unicacityaddon.base.registry.annotation.UCBadge;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCNameTag;
+import com.rettichlp.unicacityaddon.commands.ABuyCommand;
 import com.rettichlp.unicacityaddon.commands.ActivityCommand;
 import com.rettichlp.unicacityaddon.commands.BusCommand;
 import com.rettichlp.unicacityaddon.commands.CalculateCommand;
@@ -23,12 +26,15 @@ import com.rettichlp.unicacityaddon.commands.MemberInfoCommand;
 import com.rettichlp.unicacityaddon.commands.NaviCommand;
 import com.rettichlp.unicacityaddon.commands.NearestATMCommand;
 import com.rettichlp.unicacityaddon.commands.NearestJobCommand;
+import com.rettichlp.unicacityaddon.commands.NearestNaviPointCommand;
+import com.rettichlp.unicacityaddon.commands.RoleplayNameCommand;
 import com.rettichlp.unicacityaddon.commands.ScreenCommand;
 import com.rettichlp.unicacityaddon.commands.ShutdownGraveyardCommand;
 import com.rettichlp.unicacityaddon.commands.ShutdownJailCommand;
 import com.rettichlp.unicacityaddon.commands.SyncCommand;
 import com.rettichlp.unicacityaddon.commands.TimerCommand;
 import com.rettichlp.unicacityaddon.commands.TodoListCommand;
+import com.rettichlp.unicacityaddon.commands.api.AutoNCCommand;
 import com.rettichlp.unicacityaddon.commands.api.BlacklistReasonCommand;
 import com.rettichlp.unicacityaddon.commands.api.BroadcastCommand;
 import com.rettichlp.unicacityaddon.commands.api.HousebanCommand;
@@ -40,32 +46,34 @@ import com.rettichlp.unicacityaddon.commands.api.TokenCommand;
 import com.rettichlp.unicacityaddon.commands.api.TopListCommand;
 import com.rettichlp.unicacityaddon.commands.api.WantedReasonCommand;
 import com.rettichlp.unicacityaddon.commands.api.YasinCommand;
-import com.rettichlp.unicacityaddon.commands.faction.AFbankEinzahlenCommand;
+import com.rettichlp.unicacityaddon.commands.api.activity.DrugActivityCommand;
+import com.rettichlp.unicacityaddon.commands.api.activity.MoneyActivityCommand;
+import com.rettichlp.unicacityaddon.commands.api.activity.PayEquipCommand;
+import com.rettichlp.unicacityaddon.commands.api.activity.RoleplayActivityCommand;
 import com.rettichlp.unicacityaddon.commands.faction.CheckActiveMembersCommand;
 import com.rettichlp.unicacityaddon.commands.faction.DropDrugAllCommand;
 import com.rettichlp.unicacityaddon.commands.faction.EquipListCommand;
+import com.rettichlp.unicacityaddon.commands.faction.FactionBankDepositCommand;
 import com.rettichlp.unicacityaddon.commands.faction.ReinforcementCommand;
 import com.rettichlp.unicacityaddon.commands.faction.ServiceCountCommand;
 import com.rettichlp.unicacityaddon.commands.faction.ShareLocationCommand;
-import com.rettichlp.unicacityaddon.commands.faction.badfaction.ACaptureCommand;
 import com.rettichlp.unicacityaddon.commands.faction.badfaction.ASetBlacklistCommand;
 import com.rettichlp.unicacityaddon.commands.faction.badfaction.BlackMarketCommand;
 import com.rettichlp.unicacityaddon.commands.faction.badfaction.BlacklistInfoCommand;
-import com.rettichlp.unicacityaddon.commands.faction.badfaction.DBankDropAllCommand;
-import com.rettichlp.unicacityaddon.commands.faction.badfaction.EigenbedarfCommand;
 import com.rettichlp.unicacityaddon.commands.faction.badfaction.GaggedCommand;
-import com.rettichlp.unicacityaddon.commands.faction.badfaction.GiftEigenbedarfCommand;
 import com.rettichlp.unicacityaddon.commands.faction.badfaction.ModifyBlacklistCommand;
+import com.rettichlp.unicacityaddon.commands.faction.badfaction.OwnUseCommand;
+import com.rettichlp.unicacityaddon.commands.faction.badfaction.OwnUseGiftCommand;
 import com.rettichlp.unicacityaddon.commands.faction.badfaction.SellDrugCommand;
 import com.rettichlp.unicacityaddon.commands.faction.chat.DForceCommand;
 import com.rettichlp.unicacityaddon.commands.faction.chat.FForceCommand;
 import com.rettichlp.unicacityaddon.commands.faction.chat.SFForceCommand;
-import com.rettichlp.unicacityaddon.commands.faction.rettungsdienst.ARezeptAnnehmenCommand;
-import com.rettichlp.unicacityaddon.commands.faction.rettungsdienst.ARezeptCommand;
 import com.rettichlp.unicacityaddon.commands.faction.rettungsdienst.CheckFireCommand;
+import com.rettichlp.unicacityaddon.commands.faction.rettungsdienst.RecipeAcceptCommand;
+import com.rettichlp.unicacityaddon.commands.faction.rettungsdienst.RecipeCommand;
 import com.rettichlp.unicacityaddon.commands.faction.state.ASUCommand;
 import com.rettichlp.unicacityaddon.commands.faction.state.ClearCommand;
-import com.rettichlp.unicacityaddon.commands.faction.state.KorruptionsrechnerCommand;
+import com.rettichlp.unicacityaddon.commands.faction.state.CorruptionCalculatorCommand;
 import com.rettichlp.unicacityaddon.commands.faction.state.ModifyWantedsCommand;
 import com.rettichlp.unicacityaddon.commands.faction.terroristen.ExplosiveBeltCommand;
 import com.rettichlp.unicacityaddon.commands.house.HouseBankCommand;
@@ -75,11 +83,11 @@ import com.rettichlp.unicacityaddon.commands.job.ADropMoneyCommand;
 import com.rettichlp.unicacityaddon.commands.mobile.ACallCommand;
 import com.rettichlp.unicacityaddon.commands.mobile.ASMSCommand;
 import com.rettichlp.unicacityaddon.commands.mobile.BlockCommand;
+import com.rettichlp.unicacityaddon.commands.mobile.MobileMuteCommand;
 import com.rettichlp.unicacityaddon.commands.mobile.ReplyCommand;
-import com.rettichlp.unicacityaddon.commands.mobile.StummCommand;
 import com.rettichlp.unicacityaddon.commands.money.ATMFillCommand;
-import com.rettichlp.unicacityaddon.commands.money.EinzahlenCommand;
-import com.rettichlp.unicacityaddon.commands.money.ReichensteuerCommand;
+import com.rettichlp.unicacityaddon.commands.money.DepositCommand;
+import com.rettichlp.unicacityaddon.commands.money.RichTaxesCommand;
 import com.rettichlp.unicacityaddon.commands.supporter.PunishCommand;
 import com.rettichlp.unicacityaddon.commands.teamspeak.ChannelActivityCommand;
 import com.rettichlp.unicacityaddon.commands.teamspeak.MoveCommand;
@@ -106,6 +114,7 @@ import com.rettichlp.unicacityaddon.listener.EquipShopListener;
 import com.rettichlp.unicacityaddon.listener.EventRegistrationListener;
 import com.rettichlp.unicacityaddon.listener.GangwarListener;
 import com.rettichlp.unicacityaddon.listener.KarmaMessageListener;
+import com.rettichlp.unicacityaddon.listener.LabyConnectListener;
 import com.rettichlp.unicacityaddon.listener.MobileListener;
 import com.rettichlp.unicacityaddon.listener.MoneyListener;
 import com.rettichlp.unicacityaddon.listener.NameTagRenderListener;
@@ -129,7 +138,6 @@ import com.rettichlp.unicacityaddon.listener.faction.ReinforcementListener;
 import com.rettichlp.unicacityaddon.listener.faction.ShareLocationListener;
 import com.rettichlp.unicacityaddon.listener.faction.badfaction.BannerListener;
 import com.rettichlp.unicacityaddon.listener.faction.badfaction.GaggedListener;
-import com.rettichlp.unicacityaddon.listener.faction.badfaction.GiftEigenbedarfListener;
 import com.rettichlp.unicacityaddon.listener.faction.badfaction.PlantListener;
 import com.rettichlp.unicacityaddon.listener.faction.badfaction.blacklist.BlacklistListener;
 import com.rettichlp.unicacityaddon.listener.faction.badfaction.blacklist.BlacklistModifyListener;
@@ -146,6 +154,7 @@ import com.rettichlp.unicacityaddon.listener.job.FishermanListener;
 import com.rettichlp.unicacityaddon.listener.job.JobListener;
 import com.rettichlp.unicacityaddon.listener.team.ADutyListener;
 import com.rettichlp.unicacityaddon.listener.team.AdListener;
+import com.rettichlp.unicacityaddon.listener.team.NewbieChatListener;
 import com.rettichlp.unicacityaddon.listener.team.ReportListener;
 import com.rettichlp.unicacityaddon.listener.teamspeak.TeamSpeakKeyListener;
 import com.rettichlp.unicacityaddon.listener.teamspeak.TeamSpeakNotificationListener;
@@ -155,9 +164,13 @@ import com.rettichlp.unicacityaddon.nametags.FactionInfoTag;
 import com.rettichlp.unicacityaddon.nametags.HouseBanTag;
 import com.rettichlp.unicacityaddon.nametags.NoPushTag;
 import com.rettichlp.unicacityaddon.nametags.OutlawTag;
+import com.rettichlp.unicacityaddon.nametags.RoleplayNameTag;
 import lombok.Getter;
 import lombok.experimental.Accessors;
+import net.labymod.api.Laby;
 import net.labymod.api.client.chat.command.Command;
+import net.labymod.api.client.entity.player.badge.BadgeRegistry;
+import net.labymod.api.client.entity.player.badge.renderer.BadgeRenderer;
 import net.labymod.api.client.entity.player.tag.TagRegistry;
 import net.labymod.api.client.entity.player.tag.tags.NameTag;
 import net.labymod.api.client.gui.hud.HudWidgetRegistry;
@@ -180,13 +193,18 @@ public class Registry {
     @Getter
     private final Set<Command> commands = new HashSet<>();
 
+    private final HashSet<Class<?>> badgeList = Sets.newHashSet(
+            NoPushBadge.class
+    );
+
     private final HashSet<Class<?>> nameTagList = Sets.newHashSet(
             AddonTag.class,
             DutyTag.class,
             FactionInfoTag.class,
             HouseBanTag.class,
             NoPushTag.class,
-            OutlawTag.class
+            OutlawTag.class,
+            RoleplayNameTag.class
     );
 
     private final HashSet<Class<?>> hudWidgetList = Sets.newHashSet(
@@ -227,18 +245,19 @@ public class Registry {
             FirstAidListener.class,
             GaggedListener.class,
             GangwarListener.class,
-            GiftEigenbedarfListener.class,
             HouseDataListener.class,
             HouseInteractionListener.class,
             HouseRenterListener.class,
             JobListener.class,
             KarmaMessageListener.class,
+            LabyConnectListener.class,
             MedicationListener.class,
             MemberInfoListener.class,
             MobileListener.class,
             MoneyListener.class,
             NavigationListener.class,
             NameTagRenderListener.class,
+            NewbieChatListener.class,
             PlantListener.class,
             PrayListener.class,
             ReinforcementListener.class,
@@ -258,17 +277,15 @@ public class Registry {
     );
 
     private final HashSet<Class<?>> commandList = Sets.newHashSet(
+            ABuyCommand.class,
             ACallCommand.class,
-            ACaptureCommand.class,
             ADropMoneyCommand.class,
-            AFbankEinzahlenCommand.class,
-            ARezeptAnnehmenCommand.class,
-            ARezeptCommand.class,
             ASMSCommand.class,
             ASUCommand.class,
-            ATMFillCommand.class,
             ASetBlacklistCommand.class,
+            ATMFillCommand.class,
             ActivityCommand.class,
+            AutoNCCommand.class,
             BlackMarketCommand.class,
             BlacklistInfoCommand.class,
             BlacklistReasonCommand.class,
@@ -284,32 +301,33 @@ public class Registry {
             ClearCommand.class,
             ClockCommand.class,
             CoordlistCommand.class,
+            CorruptionCalculatorCommand.class,
             CountdownCommand.class,
-            DBankDropAllCommand.class,
             DForceCommand.class,
+            DepositCommand.class,
             DiscordCommand.class,
+            DropDrugAllCommand.class,
+            DrugActivityCommand.class,
             DutyCommand.class,
             DyavolCommand.class,
-            DropDrugAllCommand.class,
-            EigenbedarfCommand.class,
-            EinzahlenCommand.class,
             EquipListCommand.class,
             ExplosiveBeltCommand.class,
             FForceCommand.class,
+            FactionBankDepositCommand.class,
             GaggedCommand.class,
             GetGunPatternCommand.class,
-            GiftEigenbedarfCommand.class,
-            HousebanCommand.class,
-            HousebanReasonCommand.class,
             HouseBankCommand.class,
             HouseBankDropGetAllCommand.class,
             HouseStorageCommand.class,
-            KorruptionsrechnerCommand.class,
+            HousebanCommand.class,
+            HousebanReasonCommand.class,
             MaskInfoCommand.class,
             MemberInfoAllCommand.class,
             MemberInfoCommand.class,
+            MobileMuteCommand.class,
             ModifyBlacklistCommand.class,
             ModifyWantedsCommand.class,
+            MoneyActivityCommand.class,
             MoveCommand.class,
             MoveHereCommand.class,
             MoveToCommand.class,
@@ -317,27 +335,34 @@ public class Registry {
             NaviPointCommand.class,
             NearestATMCommand.class,
             NearestJobCommand.class,
+            NearestNaviPointCommand.class,
+            OwnUseCommand.class,
+            OwnUseGiftCommand.class,
+            PayEquipCommand.class,
             PlayerGroupCommand.class,
             PunishCommand.class,
+            RecipeAcceptCommand.class,
+            RecipeCommand.class,
             ReinforcementCommand.class,
-            ReichensteuerCommand.class,
             ReplyCommand.class,
             ReviveStatsCommand.class,
+            RichTaxesCommand.class,
+            RoleplayActivityCommand.class,
+            RoleplayNameCommand.class,
+            SFForceCommand.class,
             ScreenCommand.class,
             SellDrugCommand.class,
             ServiceCountCommand.class,
-            SFForceCommand.class,
             ShareLocationCommand.class,
             ShutdownGraveyardCommand.class,
             ShutdownJailCommand.class,
-            StummCommand.class,
             SyncCommand.class,
+            TSFindCommand.class,
+            TSJoinCommand.class,
             TimerCommand.class,
             TodoListCommand.class,
             TokenCommand.class,
             TopListCommand.class,
-            TSFindCommand.class,
-            TSJoinCommand.class,
             WantedReasonCommand.class,
             YasinCommand.class
     );
@@ -348,8 +373,33 @@ public class Registry {
         this.unicacityAddon = unicacityAddon;
     }
 
+    public void registerBadges() {
+        BadgeRegistry registry = Laby.references().badgeRegistry();
+
+        AtomicInteger registeredBadgeCount = new AtomicInteger();
+        Set<Class<?>> badgeClassSet = this.badgeList; // this.unicacityAddon.utilService().getAllClassesFromPackage("com.rettichlp.unicacityaddon.nametags");
+        badgeClassSet.stream()
+                .filter(badgeClass -> badgeClass.isAnnotationPresent(UCBadge.class))
+                .forEach(badgeClass -> {
+                    UCBadge ucBadge = badgeClass.getAnnotation(UCBadge.class);
+                    try {
+                        BadgeRenderer badgeRenderer = (BadgeRenderer) badgeClass.getConstructor(UnicacityAddon.class).newInstance(this.unicacityAddon);
+
+                        Objects.requireNonNull(badgeRenderer, "Badge");
+                        registry.register(ucBadge.name(), ucBadge.positionType(), badgeRenderer);
+
+                        registeredBadgeCount.getAndIncrement();
+                    } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException |
+                             InstantiationException e) {
+                        this.unicacityAddon.logger().warn("Can't register Badge: {}", badgeClass.getSimpleName());
+                        e.printStackTrace();
+                    }
+                });
+        this.unicacityAddon.logger().info("Registered {}/{} Badges", registeredBadgeCount, badgeClassSet.size());
+    }
+
     public void registerTags() {
-        TagRegistry registry = this.unicacityAddon.labyAPI().tagRegistry();
+        TagRegistry registry = Laby.labyAPI().tagRegistry();
 
         AtomicInteger registeredNameTagCount = new AtomicInteger();
         Set<Class<?>> nameTagClassSet = this.nameTagList; // this.unicacityAddon.utilService().getAllClassesFromPackage("com.rettichlp.unicacityaddon.nametags");
@@ -376,7 +426,7 @@ public class Registry {
 
     @SuppressWarnings("unchecked")
     public void registerHudWidgets() {
-        HudWidgetRegistry registry = this.unicacityAddon.labyAPI().hudWidgetRegistry();
+        HudWidgetRegistry registry = Laby.labyAPI().hudWidgetRegistry();
 
         AtomicInteger registeredHudWidgetCount = new AtomicInteger();
         Set<Class<?>> hudWidgetClassSet = this.hudWidgetList; // this.unicacityAddon.utilService().getAllClassesFromPackage("com.rettichlp.unicacityaddon.hudwidgets");
@@ -407,7 +457,7 @@ public class Registry {
                         Object listener = listenerClass.getConstructor(UnicacityAddon.class).newInstance(this.unicacityAddon);
 
                         Objects.requireNonNull(listener, "Listener");
-                        this.unicacityAddon.labyAPI().eventBus().registerListener(listener);
+                        Laby.labyAPI().eventBus().registerListener(listener);
 
                         registeredListenerCount.getAndIncrement();
                     } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException |
@@ -436,7 +486,7 @@ public class Registry {
 
                             Objects.requireNonNull(command, "Command");
                             this.commands.add(command);
-                            this.unicacityAddon.labyAPI().commandService().register(command);
+                            Laby.labyAPI().commandService().register(command);
 
                             registeredCommandCount.getAndIncrement();
                         } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException |

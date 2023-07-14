@@ -9,9 +9,13 @@ import net.labymod.api.event.Event;
 @Getter
 public class BombPlantedEvent implements Event {
 
-    private final long placeTime;
+    private final long delaySincePlace;
 
     public BombPlantedEvent() {
-        this.placeTime = System.currentTimeMillis();
+        this.delaySincePlace = 0;
+    }
+
+    public BombPlantedEvent(long placeTime) {
+        this.delaySincePlace = System.currentTimeMillis() - placeTime;
     }
 }

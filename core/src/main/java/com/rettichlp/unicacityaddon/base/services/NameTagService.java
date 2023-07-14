@@ -8,15 +8,15 @@ import com.rettichlp.unicacityaddon.base.config.nametag.specific.Specific;
 import com.rettichlp.unicacityaddon.base.config.nametag.streetwar.Streetwar;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.FormattingCode;
-import com.rettichlp.unicacityaddon.listener.faction.ContractListener;
 import com.rettichlp.unicacityaddon.listener.faction.state.WantedListener;
 import lombok.Getter;
 import lombok.Setter;
+import net.labymod.api.Laby;
 import net.labymod.api.client.network.ClientPacketListener;
+import net.labymod.api.client.scoreboard.ScoreboardTeam;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,18 +28,16 @@ import java.util.Map;
 public class NameTagService {
 
     private Map<String, Boolean> blacklistPlayerMap;
+    private Collection<String> contractList;
     private Collection<WantedListener.Wanted> wantedList;
-    private Collection<String> noPushPlayerList;
-    private Collection<String> maskedPlayerList;
 
     private final UnicacityAddon unicacityAddon;
 
     public NameTagService(UnicacityAddon unicacityAddon) {
         this.unicacityAddon = unicacityAddon;
         this.blacklistPlayerMap = new HashMap<>();
+        this.contractList = new ArrayList<>();
         this.wantedList = new ArrayList<>();
-        this.noPushPlayerList = Collections.emptyList();
-        this.maskedPlayerList = Collections.emptyList();
     }
 
     public String getPrefix(String playerName, boolean isCorpse) {
@@ -87,11 +85,29 @@ public class NameTagService {
             if (this.blacklistPlayerMap.get(playerName) != null)
                 prefix.append(specific.color().getOrDefault(ColorCode.DARK_RED).getCode());
 
-            if (ContractListener.CONTRACT_LIST.contains(playerName))
+            if (this.contractList.contains(playerName))
                 prefix.append(specific.color().getOrDefault(ColorCode.DARK_RED).getCode());
         }
 
         return prefix.toString();
+    }
+
+    public boolean isMasked(String playerName) {
+        return this.unicacityAddon.player().getScoreboard().getTeams().stream()
+                .filter(scoreboardTeam -> scoreboardTeam.getTeamName().equals("masked"))
+                .findFirst()
+                .map(ScoreboardTeam::getEntries)
+                .map(strings -> strings.contains(playerName))
+                .orElse(false);
+    }
+
+    public boolean isNoPush(String playerName) {
+        return this.unicacityAddon.player().getScoreboard().getTeams().stream()
+                .filter(scoreboardTeam -> scoreboardTeam.getTeamName().equals("nopush"))
+                .findAny()
+                .map(ScoreboardTeam::getEntries)
+                .map(strings -> strings.contains(playerName))
+                .orElse(false);
     }
 
     public ColorCode getWpColor(int wantedPointAmount) {
@@ -118,7 +134,7 @@ public class NameTagService {
         boolean duty = false;
 
         try {
-            ClientPacketListener clientPacketListener = this.unicacityAddon.labyAPI().minecraft().getClientPacketListener();
+            ClientPacketListener clientPacketListener = Laby.labyAPI().minecraft().getClientPacketListener();
             duty = clientPacketListener != null && this.unicacityAddon.utilService().isUnicacity() && clientPacketListener.getNetworkPlayerInfos().stream()
                     .map(networkPlayerInfo -> this.unicacityAddon.utilService().text().legacy(networkPlayerInfo.displayName()))
                     .anyMatch(s -> s.contains(playerName) && s.startsWith("§8[§9UC§8]§c"));
@@ -128,22 +144,5 @@ public class NameTagService {
         }
 
         return duty;
-
-//        ClientPacketListener clientPacketListener = this.unicacityAddon.labyAPI().minecraft().getClientPacketListener();
-//        if (clientPacketListener != null && this.unicacityAddon.utilService().isUnicacity()) {
-//            for (NetworkPlayerInfo networkPlayerInfo : clientPacketListener.getNetworkPlayerInfos()) {
-//                try {
-//                    String legacy = this.unicacityAddon.utilService().text().legacy(networkPlayerInfo.displayName());
-//                    if (legacy.contains(playerName) && legacy.startsWith("§8[§9UC§8]§c")) {
-//                        return true;
-//                    }
-//                } catch (IllegalStateException e) {
-//                    this.unicacityAddon.utilService().debug("Can't retrieve admin duty for " + networkPlayerInfo.profile().getUsername());
-//                    this.unicacityAddon.logger().warn(e.getMessage());
-//                }
-//            }
-//        }
-//
-//        return false;
     }
 }

@@ -57,7 +57,7 @@ public class VersionedGuiController extends GuiController {
     }
 
     @Override
-    public void inventoryClick(UnicacityAddon unicacityAddon, int slotNumber) {
+    public void inventoryClick(int slotNumber) {
         Screen screen = Minecraft.getInstance().screen;
 
         int containerId = 0;
@@ -89,15 +89,15 @@ public class VersionedGuiController extends GuiController {
             if (DropDrugAllCommand.cocaineCheck) {
                 DropDrugAllCommand.cocaineCheck = false;
                 // select cocaine to check drug purity
-                this.inventoryClick(unicacityAddon, 0);
+                this.inventoryClick(0);
             } else if (DropDrugAllCommand.marihuanaCheck) {
                 DropDrugAllCommand.marihuanaCheck = false;
                 // select marihuana to check drug purity
-                this.inventoryClick(unicacityAddon, 1);
+                this.inventoryClick(1);
             } else if (DropDrugAllCommand.methCheck) {
                 DropDrugAllCommand.methCheck = false;
                 // select meth to check drug purity
-                this.inventoryClick(unicacityAddon, 2);
+                this.inventoryClick(2);
             } else {
                 chestMenu.getItems().stream()
                         .filter(itemStack -> !itemStack.isEmpty() && !itemStack.getDisplayName().getString().contains("Pulver") && !itemStack.getDisplayName().getString().contains("Kräuter") && !itemStack.getDisplayName().getString().contains("Kristalle"))
@@ -165,7 +165,7 @@ public class VersionedGuiController extends GuiController {
                     });
 
             // go back to inventory container
-            this.inventoryClick(unicacityAddon, 4);
+            this.inventoryClick(4);
         }
     }
 

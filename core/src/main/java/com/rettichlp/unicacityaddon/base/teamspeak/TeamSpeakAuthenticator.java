@@ -21,7 +21,6 @@ import net.labymod.api.models.OperatingSystem;
 import net.labymod.api.util.io.IOUtil;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -65,7 +64,7 @@ public class TeamSpeakAuthenticator {
             }
 
             try {
-                String contents = new String(Files.readAllBytes(clientQueryPath), StandardCharsets.UTF_8);
+                String contents = Files.readString(clientQueryPath);
                 String[] split = contents.split("\n");
                 for (String line : split) {
                     line = line.trim();

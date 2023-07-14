@@ -38,7 +38,7 @@ public class NaviCommand extends UnicacityCommand {
             return true;
         }
 
-        NaviPoint naviPoint = find(this.unicacityAddon.api().getNaviPointList(), n -> n.getTabName().equalsIgnoreCase(arguments[0]));
+        NaviPoint naviPoint = find(this.unicacityAddon.api().getNaviPointList(), n -> n.getName().equalsIgnoreCase(arguments[0]));
         if (naviPoint == null) {
             return false;
         }

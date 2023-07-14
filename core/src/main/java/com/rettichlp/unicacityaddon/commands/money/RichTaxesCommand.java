@@ -14,14 +14,14 @@ import java.util.TimerTask;
  * @author Dimiikou
  */
 @UCCommand(prefix = "reichensteuer")
-public class ReichensteuerCommand extends UnicacityCommand {
+public class RichTaxesCommand extends UnicacityCommand {
 
     public static boolean isActive = false;
     public static int cashInATM = 0;
 
     private final UnicacityAddon unicacityAddon;
 
-    public ReichensteuerCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+    public RichTaxesCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
         super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }

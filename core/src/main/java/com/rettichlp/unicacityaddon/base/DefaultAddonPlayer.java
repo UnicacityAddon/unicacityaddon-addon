@@ -8,9 +8,9 @@ import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.listener.NavigationListener;
+import net.labymod.api.Laby;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.entity.player.ClientPlayer;
-import net.labymod.api.client.entity.player.Inventory;
 import net.labymod.api.client.network.ClientPacketListener;
 import net.labymod.api.client.network.NetworkPlayerInfo;
 import net.labymod.api.client.scoreboard.DisplaySlot;
@@ -33,6 +33,7 @@ public class DefaultAddonPlayer implements AddonPlayer {
 
     private static String latestVersion = null;
     private boolean gagged = false;
+    private boolean tempDuty = false;
 
     private final UnicacityAddon unicacityAddon;
 
@@ -42,12 +43,12 @@ public class DefaultAddonPlayer implements AddonPlayer {
 
     @Override
     public ClientPlayer getPlayer() {
-        return this.unicacityAddon.labyAPI().minecraft().getClientPlayer();
+        return Laby.labyAPI().minecraft().getClientPlayer();
     }
 
     @Override
     public String getName() {
-        return this.unicacityAddon.labyAPI().getName();
+        return Laby.labyAPI().getName();
     }
 
     @Override
@@ -66,18 +67,25 @@ public class DefaultAddonPlayer implements AddonPlayer {
     }
 
     @Override
-    public Inventory getInventory() {
-        return getPlayer() != null ? getPlayer().inventory() : null;
-    }
-
-    @Override
     public void sendMessage(String message) {
-        this.unicacityAddon.displayMessage(message);
+        try {
+            this.unicacityAddon.displayMessage(message);
+        } catch (IndexOutOfBoundsException e) {
+            this.unicacityAddon.utilService().debug("Message sending failed: " + message);
+            this.unicacityAddon.logger().warn(e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void sendMessage(Component component) {
-        this.unicacityAddon.displayMessage(component);
+        try {
+            this.unicacityAddon.displayMessage(component);
+        } catch (IndexOutOfBoundsException e) {
+            this.unicacityAddon.utilService().debug("Message sending failed: " + component.toString());
+            this.unicacityAddon.logger().warn(e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -123,12 +131,12 @@ public class DefaultAddonPlayer implements AddonPlayer {
 
     @Override
     public ClientWorld getWorld() {
-        return this.unicacityAddon.labyAPI().minecraft().clientWorld();
+        return Laby.labyAPI().minecraft().clientWorld();
     }
 
     @Override
     public Scoreboard getScoreboard() {
-        return this.unicacityAddon.labyAPI().minecraft().getScoreboard();
+        return Laby.labyAPI().minecraft().getScoreboard();
     }
 
     @Override
@@ -142,8 +150,13 @@ public class DefaultAddonPlayer implements AddonPlayer {
     }
 
     @Override
-    public boolean inDuty() {
-        return this.unicacityAddon.factionService().checkPlayerDuty(getName());
+    public boolean isDuty() {
+        return this.tempDuty || this.unicacityAddon.factionService().checkPlayerDuty(getName());
+    }
+
+    @Override
+    public void setTempDuty(boolean tempDuty) {
+        this.tempDuty = tempDuty;
     }
 
     @Override
@@ -175,7 +188,7 @@ public class DefaultAddonPlayer implements AddonPlayer {
 
     @Override
     public void copyToClipboard(String string) {
-        this.unicacityAddon.labyAPI().minecraft().setClipboard(string);
+        Laby.labyAPI().minecraft().setClipboard(string);
     }
 
     @Override
@@ -240,7 +253,7 @@ public class DefaultAddonPlayer implements AddonPlayer {
     }
 
     public boolean hasPlayerLatestAddonVersion(String name) {
-        ClientPacketListener clientPacketListener = this.unicacityAddon.labyAPI().minecraft().getClientPacketListener();
+        ClientPacketListener clientPacketListener = Laby.labyAPI().minecraft().getClientPacketListener();
 
         Optional<ManagementUser> managementUserOptional = this.unicacityAddon.api().getManagementUserList().stream()
                 .filter(managementUser -> clientPacketListener != null)

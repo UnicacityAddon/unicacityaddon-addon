@@ -2,17 +2,16 @@ package com.rettichlp.unicacityaddon.listener.faction;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
-import com.rettichlp.unicacityaddon.base.enums.api.StatisticType;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
-import com.rettichlp.unicacityaddon.commands.faction.AFbankEinzahlenCommand;
+import com.rettichlp.unicacityaddon.commands.faction.FactionBankDepositCommand;
+import net.labymod.api.client.chat.ChatMessage;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Matcher;
 
 /**
@@ -24,8 +23,7 @@ import java.util.regex.Matcher;
 @UCEvent
 public class ContractListener {
 
-    public static final List<String> CONTRACT_LIST = new ArrayList<>();
-    private static long hitlistShown;
+    private long hitlistShown;
 
     private final UnicacityAddon unicacityAddon;
 
@@ -36,14 +34,15 @@ public class ContractListener {
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {
         AddonPlayer p = this.unicacityAddon.player();
-        String msg = e.chatMessage().getPlainText();
+        ChatMessage chatMessage = e.chatMessage();
+        String msg = chatMessage.getPlainText();
         long currentTime = System.currentTimeMillis();
 
         Matcher contractSetMatcher = PatternHandler.CONTRACT_SET_PATTERN.matcher(msg);
         if (contractSetMatcher.find()) {
             this.unicacityAddon.soundController().playContractSetSound();
             String target = contractSetMatcher.group(1);
-            CONTRACT_LIST.add(target);
+            this.unicacityAddon.nameTagService().getContractList().add(target);
 
             if (this.unicacityAddon.configuration().message().contract().get()) {
                 e.setMessage(Message.getBuilder()
@@ -62,12 +61,11 @@ public class ContractListener {
         if (contractKillMatcher.find()) {
             this.unicacityAddon.soundController().playContractFulfilledSound();
             String target = contractKillMatcher.group(2);
-            CONTRACT_LIST.remove(target);
+            this.unicacityAddon.nameTagService().getContractList().remove(target);
             String hitman = contractKillMatcher.group(1);
 
             if (hitman.equals(p.getName())) {
-                this.unicacityAddon.api().sendStatisticAddRequest(StatisticType.KILL);
-                AFbankEinzahlenCommand.sendClockMessage(this.unicacityAddon);
+                FactionBankDepositCommand.sendClockMessage(this.unicacityAddon);
             }
 
             if (this.unicacityAddon.configuration().message().contract().get()) {
@@ -87,7 +85,7 @@ public class ContractListener {
         Matcher contractDeleteMatcher = PatternHandler.CONTRACT_DELETE_PATTERN.matcher(msg);
         if (contractDeleteMatcher.find()) {
             String target = contractDeleteMatcher.group(2);
-            CONTRACT_LIST.remove(target);
+            this.unicacityAddon.nameTagService().getContractList().remove(target);
 
             if (this.unicacityAddon.configuration().message().contract().get()) {
                 e.setMessage(Message.getBuilder().of("CT-DELETE").color(ColorCode.RED).bold().advance().space()
@@ -102,15 +100,23 @@ public class ContractListener {
 
         Matcher contractListHeaderMatcher = PatternHandler.CONTRACT_LIST_HEADER_PATTERN.matcher(msg);
         if (contractListHeaderMatcher.find()) {
-            CONTRACT_LIST.clear();
-            hitlistShown = currentTime;
+            this.unicacityAddon.nameTagService().setContractList(new ArrayList<>());
+            this.hitlistShown = currentTime;
             return;
         }
 
         Matcher contractListMatcher = PatternHandler.CONTRACT_LIST_PATTERN.matcher(msg);
-        if (contractListMatcher.find() && currentTime - hitlistShown < 5000) {
-            String name = contractListMatcher.group("name");
-            CONTRACT_LIST.add(name);
+        if (contractListMatcher.find()) {
+            // update contract list
+            if (currentTime - this.hitlistShown < 5000) {
+                String name = contractListMatcher.group("name");
+                this.unicacityAddon.nameTagService().getContractList().add(name);
+            }
+
+            // show list entry dependent on configuration
+            if (this.unicacityAddon.configuration().message().filteredContractlist().get() && this.unicacityAddon.utilService().text().legacy(chatMessage.originalComponent()).contains(ColorCode.RED.getCode())) {
+                e.setCancelled(true);
+            }
         }
     }
 }

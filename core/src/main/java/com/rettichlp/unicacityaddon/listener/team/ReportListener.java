@@ -13,6 +13,7 @@ import net.labymod.api.client.chat.ChatMessage;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.gui.screen.key.Key;
 import net.labymod.api.event.Subscribe;
+import net.labymod.api.event.client.chat.ChatMessageSendEvent;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
 import java.util.Arrays;
@@ -70,10 +71,11 @@ public class ReportListener {
 
         if (PatternHandler.REPORT_END_PATTERN.matcher(msg).find()) {
             isReport = false;
+            p.setTempDuty(false);
             return;
         }
 
-        if (chatMessage.getOriginalFormattedText().startsWith(ColorCode.DARK_PURPLE.getCode()) && isReport) {
+        if (this.unicacityAddon.utilService().text().legacy(chatMessage.originalComponent()).startsWith(ColorCode.DARK_PURPLE.getCode()) && isReport) {
             Message.Builder messageBuilder = Message.getBuilder()
                     .add(messageConfiguration.prefix().getOrDefault("").replaceAll("&", "§"));
 
@@ -96,6 +98,16 @@ public class ReportListener {
 
         if (PatternHandler.REPORT_PATTERN.matcher(msg).find()) {
             this.unicacityAddon.soundController().playReportSound();
+        }
+    }
+
+    @Subscribe
+    public void onChatMessageSend(ChatMessageSendEvent e) {
+        AddonPlayer p = this.unicacityAddon.player();
+        String msg = e.getMessage();
+
+        if (msg.startsWith("/ar") || msg.startsWith("/acceptreport")) {
+            p.setTempDuty(this.unicacityAddon.factionService().checkPlayerDuty(p.getName()));
         }
     }
 

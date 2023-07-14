@@ -4,10 +4,16 @@ import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.events.UnicacityAddonTickEvent;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
+import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import net.labymod.api.client.scoreboard.DisplaySlot;
 import net.labymod.api.client.scoreboard.Scoreboard;
 import net.labymod.api.client.scoreboard.ScoreboardScore;
 import net.labymod.api.event.Subscribe;
+import net.labymod.api.event.client.chat.ChatReceiveEvent;
+
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author RettichLP
@@ -19,6 +25,20 @@ public class GangwarListener {
 
     public GangwarListener(UnicacityAddon unicacityAddon) {
         this.unicacityAddon = unicacityAddon;
+    }
+
+    @Subscribe
+    public void onChatReceive(ChatReceiveEvent e) {
+        String msg = e.chatMessage().getPlainText();
+
+        if (PatternHandler.GANGWAR_CAPTURE_START_PATTERN.matcher(msg).find()) {
+            new Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    GangwarListener.this.unicacityAddon.player().sendServerMessage("/capture");
+                }
+            }, TimeUnit.SECONDS.toMillis(17));
+        }
     }
 
     @Subscribe

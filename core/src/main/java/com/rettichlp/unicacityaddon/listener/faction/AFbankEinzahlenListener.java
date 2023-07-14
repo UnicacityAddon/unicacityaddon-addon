@@ -5,7 +5,7 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
-import com.rettichlp.unicacityaddon.commands.faction.AFbankEinzahlenCommand;
+import com.rettichlp.unicacityaddon.commands.faction.FactionBankDepositCommand;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
@@ -26,22 +26,22 @@ public class AFbankEinzahlenListener {
 
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {
-        if (!AFbankEinzahlenCommand.STARTED.get())
+        if (!FactionBankDepositCommand.STARTED.get())
             return;
 
         String msg = e.chatMessage().getPlainText();
         Matcher cashFromFBankMatcher = PatternHandler.CASH_FROM_FBANK_PATTERN.matcher(msg);
         Matcher cashToFBankMatcher = PatternHandler.CASH_TO_FBANK_PATTERN.matcher(msg);
         if ((cashFromFBankMatcher.find() && msg.contains("$ (+")) || (cashToFBankMatcher.find() && msg.contains("$ (-"))) {
-            AFbankEinzahlenCommand.STARTED.set(false);
+            FactionBankDepositCommand.STARTED.set(false);
             // send clock command
-            AFbankEinzahlenCommand.timer.schedule(new TimerTask() {
+            FactionBankDepositCommand.timer.schedule(new TimerTask() {
                 public void run() {
-                    AFbankEinzahlenCommand.sendClockMessage(AFbankEinzahlenListener.this.unicacityAddon);
+                    FactionBankDepositCommand.sendClockMessage(AFbankEinzahlenListener.this.unicacityAddon);
                     AFbankEinzahlenListener.this.unicacityAddon.player().sendMessage(Message.getBuilder()
                             .prefix()
                             .of("Nicht eingezahlt wurden: ").color(ColorCode.GRAY).advance()
-                            .of(AFbankEinzahlenCommand.amount + "$").color(ColorCode.BLUE).advance()
+                            .of(FactionBankDepositCommand.amount + "$").color(ColorCode.BLUE).advance()
                             .of(".").color(ColorCode.GRAY).advance()
                             .createComponent());
                 }
@@ -49,7 +49,7 @@ public class AFbankEinzahlenListener {
         }
 
         if (msg.equals("[F-Bank] Du hast zu wenig Geld.") || msg.equals("Du befindest dich nicht in der Nähe eines Bankautomaten.")) {
-            AFbankEinzahlenCommand.STARTED.set(false);
+            FactionBankDepositCommand.STARTED.set(false);
         }
     }
 }

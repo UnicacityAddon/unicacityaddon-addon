@@ -1,8 +1,13 @@
 package com.rettichlp.unicacityaddon.commands.faction;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
+import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
+import com.rettichlp.unicacityaddon.base.io.api.APIResponseException;
 import com.rettichlp.unicacityaddon.base.registry.UnicacityCommand;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
@@ -12,6 +17,7 @@ import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 
 /**
  * @author Dimiikou
@@ -32,11 +38,16 @@ public class EquipListCommand extends UnicacityCommand {
     @Override
     public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
+
         if (arguments.length == 1 && arguments[0].equalsIgnoreCase("reset")) {
             this.unicacityAddon.fileService().data().setEquipMap(new HashMap<>());
             p.sendInfoMessage("Equipliste gelöscht.");
-        } else
+        } else if (p.getFaction().equals(Faction.LEMILIEU)) {
+            equipListLeMilieu(p);
+        } else {
             equipList(p);
+        }
+
         return true;
     }
 
@@ -58,7 +69,7 @@ public class EquipListCommand extends UnicacityCommand {
             String equipName = equip != null ? equip.getEquipName() : "unbekanntes Equip";
             int equipPrice = equip != null ? equip.getPrice(this.unicacityAddon.configuration()) : 0;
             p.sendMessage(Message.getBuilder()
-                    .of("» " + integer + "x " + equipName + ": ").color(ColorCode.GRAY).advance()
+                    .of("» " + integer + "x " + equipName + ":").color(ColorCode.GRAY).advance().space()
                     .of(numberFormat.format(equipPrice) + "$").color(ColorCode.AQUA).advance()
                     .createComponent());
         });
@@ -68,10 +79,50 @@ public class EquipListCommand extends UnicacityCommand {
                 .reduce(0, Integer::sum);
 
         p.sendMessage(Message.getBuilder()
-                .of("» ").color(ColorCode.GRAY).advance()
+                .of("»").color(ColorCode.GRAY).advance().space()
                 .of(numberFormat.format(totalAmount) + "$").color(ColorCode.AQUA).bold().advance()
                 .createComponent());
 
         p.sendEmptyMessage();
+    }
+
+    private void equipListLeMilieu(AddonPlayer p) {
+        NumberFormat numberFormat = NumberFormat.getNumberInstance(new Locale("da", "DK"));
+        p.sendEmptyMessage();
+        p.sendMessage(Message.getBuilder()
+                .of("Equip:").color(ColorCode.DARK_AQUA).bold().advance()
+                .createComponent());
+
+        new Thread(() -> {
+            try {
+                String uuid = Optional.ofNullable(p.getUniqueId())
+                        .map(u -> u.toString().replace("-", ""))
+                        .orElse("");
+
+                String response = this.unicacityAddon.webService().sendRequest("https://lemilieu.de/api/equip/get?member=" + uuid);
+
+                JsonArray jsonArray = new JsonParser().parse(response).getAsJsonArray();
+                jsonArray.forEach(jsonElement -> {
+                    JsonObject jsonObject = jsonElement.getAsJsonObject();
+                    String payed = jsonObject.get("payed").getAsString();
+
+                    if (payed.equals("false")) {
+                        String id = jsonObject.get("id").getAsString();
+                        String price = jsonObject.get("price").getAsString();
+                        String item = jsonObject.get("item").getAsString();
+
+                        p.sendMessage(Message.getBuilder()
+                                .of("» ID " + id + ": " + item + " -").color(ColorCode.GRAY).advance().space()
+                                .of(numberFormat.format(Integer.parseInt(price)) + "$").color(ColorCode.AQUA).advance()
+                                .createComponent());
+                    }
+                });
+
+                p.sendEmptyMessage();
+
+            } catch (APIResponseException e) {
+                this.unicacityAddon.logger().warn(e.getMessage());
+            }
+        }).start();
     }
 }

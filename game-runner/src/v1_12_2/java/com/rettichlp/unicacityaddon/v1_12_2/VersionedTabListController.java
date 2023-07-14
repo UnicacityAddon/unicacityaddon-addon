@@ -3,6 +3,7 @@ package com.rettichlp.unicacityaddon.v1_12_2;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.tab.TabPrefix;
 import com.rettichlp.unicacityaddon.controller.TabListController;
+import net.labymod.api.Laby;
 import net.labymod.api.client.network.ClientPacketListener;
 import net.labymod.api.client.network.NetworkPlayerInfo;
 import net.labymod.api.models.Implements;
@@ -30,7 +31,7 @@ public class VersionedTabListController extends TabListController {
 
     @Override
     public void orderTabList(UnicacityAddon unicacityAddon) {
-        ClientPacketListener clientPacketListener = unicacityAddon.labyAPI().minecraft().getClientPacketListener();
+        ClientPacketListener clientPacketListener = Laby.labyAPI().minecraft().getClientPacketListener();
         Collection<NetworkPlayerInfo> networkPlayerInfos = clientPacketListener != null ? clientPacketListener.getNetworkPlayerInfos() : Collections.emptyList();
         assert Minecraft.getMinecraft().world != null;
         Scoreboard scoreboard = Minecraft.getMinecraft().world.getScoreboard();
@@ -38,22 +39,16 @@ public class VersionedTabListController extends TabListController {
         // get teams or create if not present
         Map<TabPrefix, ScorePlayerTeam> tabPrefixScorePlayerTeamMap = getScorePlayerTeamMap(scoreboard);
 
-        // add default player team (m_player)
+        // add player to team
         networkPlayerInfos.stream()
                 .filter(networkPlayerInfo -> networkPlayerInfo.profile() != null)
-                .filter(networkPlayerInfo -> networkPlayerInfo.getTeam() == null || (!networkPlayerInfo.getTeam().getTeamName().equals("nopush") && !networkPlayerInfo.getTeam().getTeamName().equals("masked")))
-                .map(networkPlayerInfo -> networkPlayerInfo.profile().getUsername())
-                .forEach(s -> scoreboard.addPlayerToTeam(s, tabPrefixScorePlayerTeamMap.get(TabPrefix.NONE).getName()));
-
-        // add formatted player teams
-        networkPlayerInfos.stream()
-                .filter(networkPlayerInfo -> networkPlayerInfo.displayName() != null)
-                .filter(networkPlayerInfo -> networkPlayerInfo.getTeam() == null || (!networkPlayerInfo.getTeam().getTeamName().equals("nopush") && !networkPlayerInfo.getTeam().getTeamName().equals("masked")))
                 .forEach(networkPlayerInfo -> {
-                    String displayName = unicacityAddon.utilService().text().legacy(networkPlayerInfo.displayName());
-                    TabPrefix tabPrefix = TabPrefix.getTypeByDisplayName(displayName);
-                    ScorePlayerTeam playerTeam = tabPrefixScorePlayerTeamMap.get(tabPrefix);
-                    scoreboard.addPlayerToTeam(networkPlayerInfo.profile().getUsername(), playerTeam.getName());
+                    String playerName = networkPlayerInfo.profile().getUsername();
+                    if (!unicacityAddon.nameTagService().isMasked(playerName) && !unicacityAddon.nameTagService().isNoPush(playerName)) {
+                        TabPrefix tabPrefix = TabPrefix.getTypeByDisplayName(unicacityAddon.utilService().text().legacy(networkPlayerInfo.displayName()));
+                        ScorePlayerTeam playerTeam = tabPrefixScorePlayerTeamMap.get(tabPrefix);
+                        scoreboard.addPlayerToTeam(playerName, playerTeam.getName());
+                    }
                 });
     }
 

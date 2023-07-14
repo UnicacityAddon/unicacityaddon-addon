@@ -22,6 +22,9 @@ import java.util.regex.Matcher;
 @UCEvent
 public class EquipShopListener {
 
+    public static int amount = 10;
+    public static int period = 150;
+
     private int amountLeft = 0;
     private int slotNumber = -1;
 
@@ -44,7 +47,7 @@ public class EquipShopListener {
 
         Matcher equipMatcher = PatternHandler.EQUIP_PATTERN.matcher(msg);
         if (equipMatcher.find()) {
-            String equipString = equipMatcher.group(1);
+            String equipString = equipMatcher.group("equipName");
 
             Optional<Equip> equipOptional = Arrays.stream(Equip.values())
                     .filter(eq -> eq.getMessageName().equalsIgnoreCase(equipString))
@@ -67,7 +70,7 @@ public class EquipShopListener {
     @Subscribe
     public void onHotkey(HotkeyEvent e) {
         if (e.getKey().equals(e.hotkeyConfiguration().aBuy().get())) {
-            this.amountLeft = this.unicacityAddon.configuration().aBuyAmount().getOrDefault(5);
+            this.amountLeft = amount;
             slotNumber = ScreenRenderListener.lastHoveredSlotNumber;
 
             if (slotNumber >= 0) {
@@ -75,14 +78,14 @@ public class EquipShopListener {
                     @Override
                     public void run() {
                         if (EquipShopListener.this.amountLeft > 0) {
-                            EquipShopListener.this.unicacityAddon.guiController().inventoryClick(EquipShopListener.this.unicacityAddon, slotNumber);
+                            EquipShopListener.this.unicacityAddon.guiController().inventoryClick(slotNumber);
                             EquipShopListener.this.amountLeft--;
                         } else {
                             this.cancel();
                             EquipShopListener.this.slotNumber = -1;
                         }
                     }
-                }, 0, 200);
+                }, 0, period);
             }
         }
     }

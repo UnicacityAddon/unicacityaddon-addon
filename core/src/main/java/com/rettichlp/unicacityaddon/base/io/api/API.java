@@ -1,13 +1,16 @@
 package com.rettichlp.unicacityaddon.base.io.api;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.api.AutoNC;
 import com.rettichlp.unicacityaddon.api.BlackMarketLocation;
 import com.rettichlp.unicacityaddon.api.BlacklistReason;
 import com.rettichlp.unicacityaddon.api.Broadcast;
 import com.rettichlp.unicacityaddon.api.NaviPoint;
 import com.rettichlp.unicacityaddon.api.Revive;
+import com.rettichlp.unicacityaddon.api.RoleplayName;
 import com.rettichlp.unicacityaddon.api.WantedReason;
 import com.rettichlp.unicacityaddon.api.Yasin;
+import com.rettichlp.unicacityaddon.api.event.Event;
 import com.rettichlp.unicacityaddon.api.houseBan.HouseBan;
 import com.rettichlp.unicacityaddon.api.houseBan.HouseBanReason;
 import com.rettichlp.unicacityaddon.api.management.Management;
@@ -19,17 +22,23 @@ import com.rettichlp.unicacityaddon.api.statistic.Statistic;
 import com.rettichlp.unicacityaddon.api.statisticTop.StatisticTop;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.builder.RequestBuilder;
+import com.rettichlp.unicacityaddon.base.enums.Activity;
 import com.rettichlp.unicacityaddon.base.enums.api.AddonGroup;
 import com.rettichlp.unicacityaddon.base.enums.api.ApplicationPath;
 import com.rettichlp.unicacityaddon.base.enums.api.StatisticType;
+import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
+import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import lombok.Getter;
 import lombok.Setter;
+import net.labymod.api.Laby;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.session.Session;
+import net.labymod.api.labyconnect.TokenStorage.Purpose;
+import net.labymod.api.labyconnect.TokenStorage.Token;
 import net.labymod.api.notification.Notification;
 
 import java.math.BigInteger;
@@ -40,14 +49,18 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.UUID;
 import java.util.function.Predicate;
 
 /**
  * <h3>Session token</h3>
- * An important function of the addon is to collect statistics and make data available to all players. In order to offer
- * a high level of user-friendliness, an update should not have to be created due to small changes. That's why I use an
- * API through which I make some data available. I use a private server for this. This provides data for:
+ * An important addon function is to collect statistics and make data available to all players. To ensure
+ * user-friendliness, an update should not always have to be created for changes to content-related data. I utilize an
+ * API to provide data, leveraging a private server. Data is available for the following purposes:
  * <ul>
+ *     <li>activity check <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/activitycheck/LEMILIEU/add">API</a> (unauthorized)</li>
+ *     <li>auto nc <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/autonc">API</a> (unauthorized)</li>
  *     <li>addon groups <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/player">API</a></li>
  *     <li>banners <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/banner">API</a></li>
  *     <li>blacklist reasons <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/blacklistreason/LEMILIEU">API</a> (unauthorized)</li>
@@ -59,48 +72,54 @@ import java.util.function.Predicate;
  *     <li>users <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/mgmt/users">API</a></li>
  *     <li>navi points <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/navipoint">API</a></li>
  *     <li>revives <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/revive">API</a> (unauthorized)</li>
+ *     <li>roleplay <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/roleplay">API</a></li>
  *     <li>statistics <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/statistic/RettichLP">API</a></li>
  *     <li>wanted reasons <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/wantedreason">API</a></li>
  *     <li>yasin <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/yasin">API</a></li>
  * </ul>
- * This data can change constantly and can therefore not be entered statically in the code.
+ * This data can change constantly. Therefore, it cannot be statically entered into the code.
  * <p>
- * Why i need the session token for this? For example, the number of revives should only be seen by medics, as well as
- * the name of the person who entered a house ban (advanced house ban view). For editing any data, a certain faction and
- * rank in this faction is required.
+ * Why do I need the LabyConnect session token for this? For example, the number of revives or the player name who
+ * entered a house ban (advanced house ban view) should only be visible to medics. For editing any data, a faction and
+ * rank in this faction is necessary.
  * <p>
  * I can read the faction and rank from the Unicacity website
- * (<a href="https://unicacity.de/fraktionen">https://unicacity.de/fraktionen</a>). But in order to be able to assign
- * the faction information to a player, I need his UUID. I could pass these as parameters in the api call, but you could
- * mess that up by calling the endpoint with a different UUID that isn't your own. I needed a way to pass the UUID so
- * that it cannot (so easily) be falsified. For this I use the session token, because I can use it to read the UUID via
- * the Mojang API and nobody else knows the session token.
+ * (<a href="https://unicacity.de/fraktionen">https://unicacity.de/fraktionen</a>). But to assign the faction
+ * information to a player, I need his UUID. I could pass these as parameters in the API call, but you could mess that
+ * up by calling the endpoint with a different UUID from your own. The LabyMod session token contains the UUID. On the
+ * server, I verify the session token with a public key. If the verification passes, I store the player UUID with my
+ * generated API token.
  * <p>
- * A more detailed overview of how the authorization works can be found
- * <a href="https://wiki.unicacityaddon.rettichlp.de/api/function/autorisierung/">here</a> and an overview of all data I
- * store can be found <a href="https://wiki.unicacityaddon.rettichlp.de/api/function/daten-und-speicherung/">here</a>.
- * The session token is never saved ore logged. Only my specially generated token is saved in a database. If necessary I
- * can give access to the server code and give an insight into all stored data.
+ * An additional overview of the authorization can be found
+ * <a href="https://wiki.unicacityaddon.rettichlp.de/api/function/autorisierung/">here</a>. An overview of all stored
+ * data can be found <a href="https://wiki.unicacityaddon.rettichlp.de/api/function/daten-und-speicherung/">here</a>.
+ * The LabyConnect session token is never saved or logged. Only my specially generated token is stored in a database. If
+ * necessary, I can provide access to the server code and an insight into all stored data.
  *
  * @author RettichLP
  */
 @Getter
 public class API {
 
+    private final String AUTHORIZE_SUB_PATH = "authorize";
     private final String ADD_SUB_PATH = "add";
     private final String REMOVE_SUB_PATH = "remove";
     private final String QUEUE_SUB_PATH = "queue";
     private final String SEND_SUB_PATH = "send";
     private final String TOP_SUB_PATH = "top";
-    private final String CREATE_SUB_PATH = "create";
     private final String DONE_SUB_PATH = "done";
     private final String USERS_SUB_PATH = "users";
     private final String BOMB_SUB_PATH = "bomb";
     private final String GANGWAR_SUB_PATH = "gangwar";
+    private final String UPDATE_SUB_PATH = "update";
+    private final String BLOCK_SUB_PATH = "block";
+    private final String UNBLOCK_SUB_PATH = "unblock";
 
     private final Map<String, Faction> playerFactionMap = new HashMap<>();
     private final Map<String, Integer> playerRankMap = new HashMap<>();
 
+    @Setter
+    private List<AutoNC> autoNCList = new ArrayList<>();
     @Setter
     private List<BlacklistReason> blacklistReasonList = new ArrayList<>();
     @Setter
@@ -113,6 +132,8 @@ public class API {
     private List<ManagementUser> managementUserList = new ArrayList<>();
     @Setter
     private List<NaviPoint> naviPointList = new ArrayList<>();
+    @Setter
+    private List<RoleplayName> roleplayNameList = new ArrayList<>();
     @Setter
     private List<WantedReason> wantedReasonList = new ArrayList<>();
 
@@ -128,7 +149,7 @@ public class API {
     public void sync(AddonPlayer addonPlayer) {
         this.addonPlayer = addonPlayer;
 
-        this.unicacityAddon.labyAPI().notificationController().push(syncNotification(Type.STARTED));
+        Laby.labyAPI().notificationController().push(syncNotification(Type.STARTED));
 
         new Thread(() -> {
             try {
@@ -137,21 +158,24 @@ public class API {
                 this.loadFactionData();
                 this.loadPlayerData();
 
+                this.autoNCList = this.sendAutoNCRequest();
                 this.blacklistReasonList = this.sendBlacklistReasonRequest();
                 this.blackMarketLocationList = this.sendBlackMarketLocationRequest();
                 this.houseBanList = this.sendHouseBanRequest(this.addonPlayer.getFaction().equals(Faction.RETTUNGSDIENST));
                 this.houseBanReasonList = this.sendHouseBanReasonRequest();
                 this.managementUserList = this.sendManagementUserRequest();
                 this.naviPointList = this.sendNaviPointRequest();
+                this.roleplayNameList = this.sendRoleplayNameRequest();
                 this.wantedReasonList = this.sendWantedReasonRequest();
 
-                this.unicacityAddon.labyAPI().notificationController().pop(syncNotification(Type.STARTED));
-                this.unicacityAddon.labyAPI().notificationController().push(syncNotification(Type.SUCCESS));
-            } catch (APIResponseException e) {
-                this.unicacityAddon.logger().warn("API Token was not generated successfully. Data synchronization cannot be performed!");
+                Laby.labyAPI().notificationController().pop(syncNotification(Type.STARTED));
+                Laby.labyAPI().notificationController().push(syncNotification(Type.SUCCESS));
+            } catch (TokenException | APIResponseException e) {
+                this.unicacityAddon.logger().warn(e.getMessage());
+                this.unicacityAddon.logger().warn("Data synchronization cannot be performed!");
 
-                this.unicacityAddon.labyAPI().notificationController().pop(syncNotification(Type.STARTED));
-                this.unicacityAddon.labyAPI().notificationController().push(syncNotification(Type.FAILURE));
+                Laby.labyAPI().notificationController().pop(syncNotification(Type.STARTED));
+                Laby.labyAPI().notificationController().push(syncNotification(Type.FAILURE));
             }
         }).start();
     }
@@ -203,6 +227,15 @@ public class API {
     private void loadPlayerData() {
         Player player = sendPlayerRequest();
         if (player != null) {
+            AddonGroup.CEO.getMemberList().clear();
+            AddonGroup.DEV.getMemberList().clear();
+            AddonGroup.MOD.getMemberList().clear();
+            AddonGroup.SUP.getMemberList().clear();
+            AddonGroup.BETA.getMemberList().clear();
+            AddonGroup.VIP.getMemberList().clear();
+            AddonGroup.BLACKLIST.getMemberList().clear();
+            AddonGroup.DYAVOL.getMemberList().clear();
+
             AddonGroup.CEO.getMemberList().addAll(player.getCEO().stream().map(PlayerEntry::getName).toList());
             AddonGroup.DEV.getMemberList().addAll(player.getDEV().stream().map(PlayerEntry::getName).toList());
             AddonGroup.MOD.getMemberList().addAll(player.getMOD().stream().map(PlayerEntry::getName).toList());
@@ -212,6 +245,50 @@ public class API {
             AddonGroup.BLACKLIST.getMemberList().addAll(player.getBLACKLIST().stream().map(PlayerEntry::getName).toList());
             AddonGroup.DYAVOL.getMemberList().addAll(player.getDYAVOL().stream().map(PlayerEntry::getName).toList());
         }
+    }
+
+    public List<AutoNC> sendAutoNCRequest() {
+        return RequestBuilder.getBuilder(this.unicacityAddon)
+                .nonProd(this.unicacityAddon.configuration().local().get())
+                .applicationPath(ApplicationPath.AUTO_NC)
+                .getAsJsonArrayAndParse(AutoNC.class);
+    }
+
+    public Success sendAutoNCAddRequest(String words, String answer) {
+        return RequestBuilder.getBuilder(this.unicacityAddon)
+                .nonProd(this.unicacityAddon.configuration().local().get())
+                .applicationPath(ApplicationPath.AUTO_NC)
+                .subPath(ADD_SUB_PATH)
+                .parameter(Map.of(
+                        "words", words,
+                        "answer", answer))
+                .getAsJsonObjectAndParse(Success.class);
+    }
+
+    public Success sendAutoNCRemoveRequest(Long id) {
+        return RequestBuilder.getBuilder(this.unicacityAddon)
+                .nonProd(this.unicacityAddon.configuration().local().get())
+                .applicationPath(ApplicationPath.AUTO_NC)
+                .subPath(REMOVE_SUB_PATH)
+                .parameter(Map.of(
+                        "id", String.valueOf(id)))
+                .getAsJsonObjectAndParse(Success.class);
+    }
+
+    public Success sendActivityCheckActivity(Activity activity, String type, String value, DrugType drugType, DrugPurity drugPurity, Long date, String screenshot) {
+        return RequestBuilder.getBuilder(this.unicacityAddon)
+                .nonProd(this.unicacityAddon.configuration().local().get())
+                .applicationPath(ApplicationPath.ACTIVITY_CHECK)
+                .subPath(this.addonPlayer.getFaction() + "/add")
+                .parameter(Map.of(
+                        "activity", String.valueOf(activity),
+                        "type", Optional.ofNullable(type).orElse("").replace(" ", "-"),
+                        "value", Optional.ofNullable(value).orElse("").replace(" ", "-"),
+                        "drugType", Optional.ofNullable(drugType).map(DrugType::name).orElse(""),
+                        "drugPurity", String.valueOf(Optional.ofNullable(drugPurity).map(DrugPurity::getPurity).orElse(-1)),
+                        "date", String.valueOf(Optional.ofNullable(date).orElse(0L)),
+                        "screenshot", Optional.ofNullable(screenshot).orElse("").replace(" ", "-")))
+                .getAsJsonObjectAndParse(Success.class);
     }
 
     public void sendBannerAddRequest(Faction faction, int x, int y, int z, String navipoint) {
@@ -283,6 +360,13 @@ public class API {
                         "message", message,
                         "sendTime", sendTime))
                 .getAsJsonObjectAndParse(Success.class);
+    }
+
+    public Event sendEventRequest() {
+        return RequestBuilder.getBuilder(this.unicacityAddon)
+                .nonProd(this.unicacityAddon.configuration().local().get())
+                .applicationPath(ApplicationPath.EVENT)
+                .getAsJsonObjectAndParse(Event.class);
     }
 
     public void sendEventBombRequest(long startTime) {
@@ -466,6 +550,43 @@ public class API {
                 .getAsJsonObjectAndParse(Revive.class);
     }
 
+    public List<RoleplayName> sendRoleplayNameRequest() {
+        return RequestBuilder.getBuilder(this.unicacityAddon)
+                .nonProd(this.unicacityAddon.configuration().local().get())
+                .applicationPath(ApplicationPath.ROLEPLAY)
+                .getAsJsonArrayAndParse(RoleplayName.class);
+    }
+
+    public Success sendRoleplayNameSetRequest(String roleplayName) {
+        return RequestBuilder.getBuilder(this.unicacityAddon)
+                .nonProd(this.unicacityAddon.configuration().local().get())
+                .applicationPath(ApplicationPath.ROLEPLAY)
+                .subPath(UPDATE_SUB_PATH)
+                .parameter(Map.of(
+                        "name", roleplayName))
+                .getAsJsonObjectAndParse(Success.class);
+    }
+
+    public Success sendRoleplayNameBlockRequest(String minecraftUuid) {
+        return RequestBuilder.getBuilder(this.unicacityAddon)
+                .nonProd(this.unicacityAddon.configuration().local().get())
+                .applicationPath(ApplicationPath.ROLEPLAY)
+                .subPath(BLOCK_SUB_PATH)
+                .parameter(Map.of(
+                        "minecraftUuid", minecraftUuid))
+                .getAsJsonObjectAndParse(Success.class);
+    }
+
+    public Success sendRoleplayNameUnblockRequest(String minecraftUuid) {
+        return RequestBuilder.getBuilder(this.unicacityAddon)
+                .nonProd(this.unicacityAddon.configuration().local().get())
+                .applicationPath(ApplicationPath.ROLEPLAY)
+                .subPath(UNBLOCK_SUB_PATH)
+                .parameter(Map.of(
+                        "minecraftUuid", minecraftUuid))
+                .getAsJsonObjectAndParse(Success.class);
+    }
+
     public Statistic sendStatisticRequest() {
         return RequestBuilder.getBuilder(this.unicacityAddon)
                 .nonProd(this.unicacityAddon.configuration().local().get())
@@ -493,13 +614,13 @@ public class API {
                 .getAsJsonObjectAndParse(StatisticTop.class);
     }
 
-    public void sendTokenCreateRequest() throws APIResponseException {
+    public void sendTokenCreateRequest(Token token) throws APIResponseException {
         RequestBuilder.getBuilder(this.unicacityAddon)
                 .nonProd(this.unicacityAddon.configuration().local().get())
                 .applicationPath(ApplicationPath.TOKEN)
-                .subPath(CREATE_SUB_PATH)
+                .subPath(AUTHORIZE_SUB_PATH)
                 .parameter(Map.of(
-                        "authToken", this.unicacityAddon.labyAPI().minecraft().sessionAccessor().session().getAccessToken(),
+                        "token", token.getToken(),
                         "version", this.unicacityAddon.utilService().version()))
                 .send();
     }
@@ -571,13 +692,16 @@ public class API {
                 .getAsJsonObjectAndParse(Success.class);
     }
 
-    public void createToken() throws APIResponseException {
-        Session session = this.unicacityAddon.labyAPI().minecraft().sessionAccessor().session();
-        String uuid = session.getUniqueId().toString().replace("-", "");
-        String salt = "423WhKRMTfRv4mn6u8hLcPj7bYesKh4Ex4yRErYuW4KsgYjpo35nSU11QYj3OINAJwcd0TPDD6AkqhSq";
-        String authToken = session.getAccessToken();
-        this.token = hash(uuid + salt + authToken);
-        this.sendTokenCreateRequest();
+    public void createToken() throws TokenException, APIResponseException {
+        Optional<Session> sessionOptional = Optional.ofNullable(Laby.labyAPI().minecraft().sessionAccessor().getSession());
+        Optional<UUID> uniqueIdOptional = sessionOptional.map(Session::getUniqueId);
+        Optional<Token> tokenOptional = uniqueIdOptional.map(uuid -> Laby.references().tokenStorage().getToken(Purpose.JWT, uuid));
+
+        this.token = tokenOptional
+                .map(t -> hash(uniqueIdOptional.get().toString().replace("-", "") + t.getToken()))
+                .orElseThrow(() -> new TokenException(this.unicacityAddon, "Failed to retrieve LabyConnect session token"));
+
+        this.sendTokenCreateRequest(tokenOptional.get());
     }
 
     public String hash(String input) {

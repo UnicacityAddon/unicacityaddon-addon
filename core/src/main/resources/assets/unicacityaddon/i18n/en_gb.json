@@ -170,6 +170,10 @@
         "team": {
           "name": "Addon Team Tag",
           "description": "Displays the team rank above the name"
+        },
+        "roleplay": {
+          "name": "Roleplay name",
+          "description": "Displays the roleplay name of other players"
         }
       },
       "reinforcement": {
@@ -385,6 +389,10 @@
           "name": "Contract Messages",
           "description": "Formatting the contract messages in a clearer design"
         },
+        "filteredContractlist": {
+          "name": "Filtered Contractlist",
+          "description": "Only shows the online targets on the contractlist"
+        },
         "greeting": {
           "name": "Greeting",
           "description": "Message sent when accepting a report"
@@ -447,10 +455,6 @@
         "name": "Automatically display route to car",
         "description": "After executing the '/car find' command, the route is displayed directly"
       },
-      "aBuyAmount": {
-        "name": "Amount for ABuy and AEquip",
-        "description": "Number of items/equip to auto-purchase or equip"
-      },
       "teamspeak": {
         "name": "TeamSpeak",
         "resolve": {
@@ -467,8 +471,15 @@
         }
       },
       "tablist": {
-        "name": "Sorted Tab List",
-        "description": "Sorts the tab list by duty factions, UC's, builders and active reports"
+        "name": "Tab list",
+        "sorted": {
+          "name": "Sorted Tab List",
+          "description": "Sorts the tab list by duty factions, UC's, builders and active reports"
+        },
+        "afk": {
+          "name": "AFK Tag",
+          "description": "Shows an icon behind AFK players"
+        }
       },
       "despawnTime": {
         "name": "Despawn Time",

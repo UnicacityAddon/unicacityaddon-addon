@@ -32,36 +32,36 @@ public class EventRegistrationListener {
         if (e.phase().equals(Phase.POST)) {
             this.currentTick++;
 
-            this.unicacityAddon.labyAPI().eventBus().fire(new UnicacityAddonTickEvent(this.unicacityAddon, UnicacityAddonTickEvent.Phase.TICK));
+            Laby.labyAPI().eventBus().fire(new UnicacityAddonTickEvent(this.unicacityAddon, UnicacityAddonTickEvent.Phase.TICK));
 
             // 0,25 SECONDS
             if (this.currentTick % 5 == 0) {
-                this.unicacityAddon.labyAPI().eventBus().fire(new UnicacityAddonTickEvent(this.unicacityAddon, UnicacityAddonTickEvent.Phase.TICK_5));
+                Laby.labyAPI().eventBus().fire(new UnicacityAddonTickEvent(this.unicacityAddon, UnicacityAddonTickEvent.Phase.TICK_5));
             }
 
             // 1 SECOND
             if (this.currentTick % 20 == 0) {
-                this.unicacityAddon.labyAPI().eventBus().fire(new UnicacityAddonTickEvent(this.unicacityAddon, UnicacityAddonTickEvent.Phase.SECOND));
+                Laby.labyAPI().eventBus().fire(new UnicacityAddonTickEvent(this.unicacityAddon, UnicacityAddonTickEvent.Phase.SECOND));
             }
 
             // 3 SECONDS
             if (this.currentTick % 60 == 0) {
-                this.unicacityAddon.labyAPI().eventBus().fire(new UnicacityAddonTickEvent(this.unicacityAddon, UnicacityAddonTickEvent.Phase.SECOND_3));
+                Laby.labyAPI().eventBus().fire(new UnicacityAddonTickEvent(this.unicacityAddon, UnicacityAddonTickEvent.Phase.SECOND_3));
             }
 
             // 5 SECONDS
             if (this.currentTick % 100 == 0) {
-                this.unicacityAddon.labyAPI().eventBus().fire(new UnicacityAddonTickEvent(this.unicacityAddon, UnicacityAddonTickEvent.Phase.SECOND_5));
+                Laby.labyAPI().eventBus().fire(new UnicacityAddonTickEvent(this.unicacityAddon, UnicacityAddonTickEvent.Phase.SECOND_5));
             }
 
             // 30 SECONDS
             if (this.currentTick % 600 == 0) {
-                this.unicacityAddon.labyAPI().eventBus().fire(new UnicacityAddonTickEvent(this.unicacityAddon, UnicacityAddonTickEvent.Phase.SECOND_30));
+                Laby.labyAPI().eventBus().fire(new UnicacityAddonTickEvent(this.unicacityAddon, UnicacityAddonTickEvent.Phase.SECOND_30));
             }
 
             // 1 MINUTE
             if (this.currentTick % 1200 == 0) {
-                this.unicacityAddon.labyAPI().eventBus().fire(new UnicacityAddonTickEvent(this.unicacityAddon, UnicacityAddonTickEvent.Phase.MINUTE));
+                Laby.labyAPI().eventBus().fire(new UnicacityAddonTickEvent(this.unicacityAddon, UnicacityAddonTickEvent.Phase.MINUTE));
             }
         }
     }
@@ -73,7 +73,7 @@ public class EventRegistrationListener {
 
         UnicacityAddonConfiguration configuration = this.unicacityAddon.configuration();
         if (state.equals(KeyEvent.State.PRESS)) {
-            if (key.equals(Key.TAB) && !Laby.references().chatAccessor().isChatOpen() && configuration.tablist().get()) {
+            if (key.equals(Key.TAB) && !Laby.references().chatAccessor().isChatOpen() && configuration.tablist().enabled().get() && configuration.tablist().sorted().get() && this.unicacityAddon.utilService().isUnicacity()) {
                 this.unicacityAddon.utilService().debug("Sorting tab list");
                 this.unicacityAddon.tabListController().orderTabList(this.unicacityAddon);
                 return;
@@ -81,7 +81,7 @@ public class EventRegistrationListener {
 
             HotkeyConfiguration hotkeyConfiguration = configuration.hotkey();
             if (!Laby.references().chatAccessor().isChatOpen() && this.unicacityAddon.utilService().isUnicacity() && hotkeyConfiguration.enabled().get()) {
-                this.unicacityAddon.labyAPI().eventBus().fire(new HotkeyEvent(this.unicacityAddon, key));
+                Laby.labyAPI().eventBus().fire(new HotkeyEvent(this.unicacityAddon, key));
             }
         }
     }

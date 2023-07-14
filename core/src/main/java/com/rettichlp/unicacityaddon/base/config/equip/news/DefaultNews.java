@@ -22,6 +22,6 @@ public class DefaultNews extends Config implements News {
 
     @Override
     public ConfigProperty<String> coffee() {
-        return this.notepad;
+        return this.coffee;
     }
 }

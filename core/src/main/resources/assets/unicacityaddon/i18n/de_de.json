@@ -170,6 +170,10 @@
         "team": {
           "name": "Addon Team Tag",
           "description": "Zeigt den Team Rang über dem Namen an"
+        },
+        "roleplay": {
+          "name": "Roleplay Name",
+          "description": "Zeigt den Roleplay Namen anderer Spieler an"
         }
       },
       "reinforcement": {
@@ -385,6 +389,10 @@
           "name": "Contract Nachrichten",
           "description": "Formatierung der Contract Nachrichten in ein übersichtlicheres Design"
         },
+        "filteredContractlist": {
+          "name": "Gefilterte Contractliste",
+          "description": "Zeigt nur die Onlineziele auf der Contractliste an"
+        },
         "greeting": {
           "name": "Begrüßung",
           "description": "Nachricht die bei der Annahme eines Reports gesendet wird"
@@ -447,10 +455,6 @@
         "name": "Automatisch die Route zum Auto anzeigen",
         "description": "Nach Ausführung des '/car find' Commands wird direkt die Route angezeigt"
       },
-      "aBuyAmount": {
-        "name": "Menge für ABuy und AEquip",
-        "description": "Anzahl der Gegenstände/des Equips, das automatisch gekauft oder ausgerüstet werden soll"
-      },
       "teamspeak": {
         "name": "TeamSpeak",
         "resolve": {
@@ -467,8 +471,15 @@
         }
       },
       "tablist": {
-        "name": "Sortierte Tabliste",
-        "description": "Sortiert die Tabliste nach Duty-Fraktionen, UC's, Buildern und aktiven Reports"
+        "name": "Tabliste",
+        "sorted": {
+          "name": "Sortierte Tabliste",
+          "description": "Sortiert die Tabliste nach Duty-Fraktionen, UC's, Buildern und aktiven Reports"
+        },
+        "afk": {
+          "name": "AFK Tag in Tabliste",
+          "description": "Zeugt hinter AFK Spielern ein Icon an"
+        }
       },
       "despawnTime": {
         "name": "Despawn Zeitpunkt",

@@ -1,6 +1,5 @@
 package com.rettichlp.unicacityaddon.listener;
 
-
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.config.ownUse.OwnUseConfiguration;
@@ -11,6 +10,7 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
+import com.rettichlp.unicacityaddon.commands.faction.badfaction.OwnUseGiftCommand;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.event.HoverEvent;
 import net.labymod.api.event.Subscribe;
@@ -19,6 +19,8 @@ import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
 import java.text.NumberFormat;
 import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 
@@ -46,7 +48,7 @@ public class DrugListener {
         AddonPlayer p = this.unicacityAddon.player();
         String playerName = p.getName();
 
-        boolean hqMessageSetting = this.unicacityAddon.configuration().message().hq().get();
+        boolean dBankMessageSetting = this.unicacityAddon.configuration().message().dBank().get();
 
         Matcher drugGetMatcher = PatternHandler.DRUG_GET_PATTERN.matcher(msg);
         if (drugGetMatcher.find()) {
@@ -92,7 +94,7 @@ public class DrugListener {
                 this.unicacityAddon.fileService().data().addDrugToInventory(drugType, drugPurity, amount);
             }
 
-            if (hqMessageSetting) {
+            if (dBankMessageSetting) {
                 NumberFormat numberFormat = NumberFormat.getNumberInstance(new Locale("da", "DK"));
                 e.setMessage(Message.getBuilder().of("D").color(ColorCode.GOLD).bold().advance()
                         .of("-").color(ColorCode.GRAY).advance()
@@ -121,7 +123,7 @@ public class DrugListener {
                 this.unicacityAddon.fileService().data().removeDrugFromInventory(drugType, drugPurity, amount);
             }
 
-            if (hqMessageSetting) {
+            if (dBankMessageSetting) {
                 NumberFormat numberFormat = NumberFormat.getNumberInstance(new Locale("da", "DK"));
                 e.setMessage(Message.getBuilder().of("D").color(ColorCode.GOLD).bold().advance()
                         .of("-").color(ColorCode.GRAY).advance()
@@ -167,8 +169,44 @@ public class DrugListener {
         }
 
         Matcher drugDealAcceptedMatcher = PatternHandler.DRUG_DEAL_ACCEPTED.matcher(msg);
+        if (drugDealAcceptedMatcher.find() && System.currentTimeMillis() - time < TimeUnit.MINUTES.toMillis(3)) {
+            if (type.equals("ADD")) {
+                this.unicacityAddon.fileService().data().addDrugToInventory(lastDrugType, lastDrugPurity, amount);
+            } else if (type.equals("REMOVE")) {
+                this.unicacityAddon.fileService().data().removeDrugFromInventory(lastDrugType, lastDrugPurity, amount);
+            }
+
+            // gift own use
+            if (!OwnUseGiftCommand.dealCommandQueue.isEmpty()) {
+                new Timer().schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        p.sendServerMessage(OwnUseGiftCommand.dealCommandQueue.remove(0));
+                    }
+                }, TimeUnit.SECONDS.toMillis(1));
+            }
+
+            return;
+        }
+
+        Matcher drugDealDeclinedMatcher = PatternHandler.DRUG_DEAL_DECLINED.matcher(msg);
+        if (drugDealDeclinedMatcher.find() && System.currentTimeMillis() - time < TimeUnit.MINUTES.toMillis(3)) {
+
+            // gift own use
+            if (!OwnUseGiftCommand.dealCommandQueue.isEmpty()) {
+                new Timer().schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        p.sendServerMessage(OwnUseGiftCommand.dealCommandQueue.remove(0));
+                    }
+                }, TimeUnit.SECONDS.toMillis(1));
+            }
+
+            return;
+        }
+
         Matcher trunkInteractionAcceptedMatcher = PatternHandler.TRUNK_INTERACTION_ACCEPTED_PATTERN.matcher(msg);
-        if ((drugDealAcceptedMatcher.find() || trunkInteractionAcceptedMatcher.find()) && System.currentTimeMillis() - time < TimeUnit.MINUTES.toMillis(3)) {
+        if (trunkInteractionAcceptedMatcher.find()) {
             if (type.equals("ADD")) {
                 this.unicacityAddon.fileService().data().addDrugToInventory(lastDrugType, lastDrugPurity, amount);
             } else if (type.equals("REMOVE")) {
@@ -177,7 +215,7 @@ public class DrugListener {
             return;
         }
 
-        if (hqMessageSetting) {
+        if (dBankMessageSetting) {
             Matcher drugVaultDropMatcher = PatternHandler.DRUG_VAULT_DROP_PATTERN.matcher(msg);
             if (drugVaultDropMatcher.find()) {
                 e.setMessage(Message.getBuilder().of("Asservatenkammer").color(ColorCode.DARK_AQUA).bold().advance().space()
@@ -264,9 +302,9 @@ public class DrugListener {
             if (drugVaultInfoLSDMatcher.find()) {
                 e.setMessage(Message.getBuilder()
                         .of("»").color(ColorCode.DARK_GRAY).advance().space()
-                        .of("LSD").color(ColorCode.GOLD).advance()
+                        .of("Wundertüte").color(ColorCode.GOLD).advance()
                         .of(":").color(ColorCode.DARK_GRAY).advance().space()
-                        .of(drugVaultInfoLSDMatcher.group(1)).color(ColorCode.YELLOW).advance().space()
+                        .of(drugVaultInfoLSDMatcher.group(2)).color(ColorCode.YELLOW).advance().space()
                         .of("Stück").color(ColorCode.YELLOW).advance().createComponent());
                 return;
             }

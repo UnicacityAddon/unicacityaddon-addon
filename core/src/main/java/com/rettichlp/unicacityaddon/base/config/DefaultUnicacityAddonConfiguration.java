@@ -20,10 +20,11 @@ import com.rettichlp.unicacityaddon.base.config.reinforcement.DefaultReinforceme
 import com.rettichlp.unicacityaddon.base.config.reinforcement.ReinforcementConfiguration;
 import com.rettichlp.unicacityaddon.base.config.sloc.DefaultSlocConfiguration;
 import com.rettichlp.unicacityaddon.base.config.sloc.SlocConfiguration;
+import com.rettichlp.unicacityaddon.base.config.tablist.DefaultTabListConfiguration;
+import com.rettichlp.unicacityaddon.base.config.tablist.TabListConfiguration;
 import com.rettichlp.unicacityaddon.base.config.teamspeak.DefaultTeamSpeakConfiguration;
 import com.rettichlp.unicacityaddon.base.config.teamspeak.TeamSpeakConfiguration;
 import net.labymod.api.addon.AddonConfig;
-import net.labymod.api.client.gui.screen.widget.widgets.input.SliderWidget.SliderSetting;
 import net.labymod.api.client.gui.screen.widget.widgets.input.SwitchWidget.SwitchSetting;
 import net.labymod.api.configuration.loader.annotation.ConfigName;
 import net.labymod.api.configuration.loader.property.ConfigProperty;
@@ -69,14 +70,11 @@ public class DefaultUnicacityAddonConfiguration extends AddonConfig implements U
     @SwitchSetting
     private final ConfigProperty<Boolean> carRoute = new ConfigProperty<>(true);
 
-    @SliderSetting(min = 1, max = 20)
-    private final ConfigProperty<Integer> aBuyAmount = new ConfigProperty<>(10);
-
     @SettingSection("other")
     private final DefaultTeamSpeakConfiguration teamspeak = new DefaultTeamSpeakConfiguration();
 
     @SwitchSetting
-    private final ConfigProperty<Boolean> tablist = new ConfigProperty<>(true);
+    private final DefaultTabListConfiguration tablist = new DefaultTabListConfiguration();
 
     @SwitchSetting
     private final ConfigProperty<Boolean> despawnTime = new ConfigProperty<>(true);
@@ -159,17 +157,12 @@ public class DefaultUnicacityAddonConfiguration extends AddonConfig implements U
     }
 
     @Override
-    public ConfigProperty<Integer> aBuyAmount() {
-        return this.aBuyAmount;
-    }
-
-    @Override
     public TeamSpeakConfiguration teamspeak() {
         return this.teamspeak;
     }
 
     @Override
-    public ConfigProperty<Boolean> tablist() {
+    public TabListConfiguration tablist() {
         return this.tablist;
     }
 

@@ -5,6 +5,7 @@ import com.rettichlp.unicacityaddon.api.statistic.GamePlay;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.config.join.CommandConfiguration;
 import com.rettichlp.unicacityaddon.base.config.join.PasswordConfiguration;
+import com.rettichlp.unicacityaddon.base.events.BombPlantedEvent;
 import com.rettichlp.unicacityaddon.base.events.OfflineDataChangedEvent;
 import com.rettichlp.unicacityaddon.base.events.UnicacityAddonTickEvent;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
@@ -12,6 +13,7 @@ import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.commands.MaskInfoCommand;
+import net.labymod.api.Laby;
 import net.labymod.api.client.chat.ChatMessage;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.event.HoverEvent;
@@ -45,6 +47,7 @@ public class AccountListener {
         AddonPlayer p = this.unicacityAddon.player();
         ChatMessage chatMessage = e.chatMessage();
         String msg = chatMessage.getPlainText();
+        String formattedMsg = this.unicacityAddon.utilService().text().legacy(chatMessage.originalComponent());
 
         if (!this.unicacityAddon.utilService().isUnicacity())
             return;
@@ -97,7 +100,7 @@ public class AccountListener {
         if (accountFriendJoinMatcher.find()) {
             String name = accountFriendJoinMatcher.group("name");
             e.setMessage(Message.getBuilder()
-                    .add(chatMessage.getOriginalFormattedText())
+                    .add(formattedMsg)
                     .space()
                     .of("[☎]").color(ColorCode.DARK_GREEN)
                             .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of(name + " anrufen").color(ColorCode.DARK_GREEN).advance().createComponent())
@@ -121,7 +124,7 @@ public class AccountListener {
         if (accountFriendLeaveMatcher.find()) {
             String name = accountFriendLeaveMatcher.group("name");
             e.setMessage(Message.getBuilder()
-                    .add(chatMessage.getOriginalFormattedText())
+                    .add(formattedMsg)
                     .space()
                     .of("[✕]").color(ColorCode.RED)
                             .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of(name + " aus der Freundesliste entfernen").color(ColorCode.RED).advance().createComponent())
@@ -151,15 +154,6 @@ public class AccountListener {
                         .of(":").color(ColorCode.DARK_GRAY).advance().space()
                         .of(gamePlay.getKills() + " Kills").color(ColorCode.RED).advance()
                         .createComponent());
-
-//                Not allowed on Unicacity:
-//                p.sendMessage(Message.getBuilder()
-//                        .space().space()
-//                        .of("-").color(ColorCode.DARK_GRAY).advance().space()
-//                        .of("K/D").color(ColorCode.GOLD).advance()
-//                        .of(":").color(ColorCode.DARK_GRAY).advance().space()
-//                        .of(MathUtils.DECIMAL_FORMAT.format(gamePlay.getKd())).color(ColorCode.RED).advance()
-//                        .createComponent());
 
                 p.sendMessage(Message.getBuilder()
                         .space().space()
@@ -267,6 +261,13 @@ public class AccountListener {
                         }
                     }, 2500);
                 }
+
+                // LOAD BOMB TIME
+                new Thread(() -> {
+                    AccountListener.this.unicacityAddon.utilService().debug("Loading bomb place time");
+                    long placeTime = AccountListener.this.unicacityAddon.api().sendEventRequest().getBomb();
+                    Laby.labyAPI().eventBus().fire(new BombPlantedEvent(placeTime));
+                }).start();
             }
         }, 1000);
     }

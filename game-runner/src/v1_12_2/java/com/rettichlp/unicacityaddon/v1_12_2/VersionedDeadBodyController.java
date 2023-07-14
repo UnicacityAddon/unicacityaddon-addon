@@ -47,9 +47,9 @@ public class VersionedDeadBodyController extends DeadBodyController {
             // get player name and revivable status
             String playerName;
             boolean nonRevivable;
-            if (customNameTag.startsWith(ColorCode.GRAY.getCode() + "✟")) { // only in not formatted corpses
+            if (customNameTag.startsWith(ColorCode.GRAY.getCode() + "✟") || customNameTag.startsWith(ColorCode.DARK_GRAY.getCode() + "✟")) { // only in not formatted corpses
                 playerName = customNameTag.substring(3);
-                nonRevivable = customNameTag.contains(ColorCode.DARK_GRAY.getCode());
+                nonRevivable = customNameTag.startsWith(ColorCode.DARK_GRAY.getCode());
                 this.corpseMap.put(entityItem.getUniqueID(), new AbstractMap.SimpleEntry<>(playerName, nonRevivable));
             } else {
                 Map.Entry<String, Boolean> corpse = this.corpseMap.getOrDefault(entityItem.getUniqueID(), new AbstractMap.SimpleEntry<>("Unbekannt", false));

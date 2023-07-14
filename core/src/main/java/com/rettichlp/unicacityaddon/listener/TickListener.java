@@ -14,6 +14,12 @@ import java.util.Map;
 @UCEvent
 public class TickListener {
 
+    /**
+     * Quote: <pre>
+     *     AkushimaTenshi: "Ich hab' nichts gegen deine Rasse..."
+     *     RettichLP: *verwirrt* "ähm..."
+     *     AkushimaTenshi: "Mann!"</pre>
+     */
     public static Map.Entry<Long, Float> lastTickDamage = Maps.immutableEntry(0L, 0F);
 
     private final UnicacityAddon unicacityAddon;

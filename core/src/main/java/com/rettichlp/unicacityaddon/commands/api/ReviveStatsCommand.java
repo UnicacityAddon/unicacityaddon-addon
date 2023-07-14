@@ -11,6 +11,7 @@ import com.rettichlp.unicacityaddon.base.services.utils.MathUtils;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.FormattingCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
+import net.labymod.api.Laby;
 import net.labymod.api.client.component.event.HoverEvent;
 
 import java.util.List;
@@ -34,7 +35,7 @@ public class ReviveStatsCommand extends UnicacityCommand {
     public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
 
-        this.unicacityAddon.labyAPI().minecraft().chatExecutor().displayActionBar(ColorCode.AQUA.getCode() + FormattingCode.BOLD.getCode() + "Revivestats werden geladen...");
+        Laby.labyAPI().minecraft().chatExecutor().displayActionBar(ColorCode.AQUA.getCode() + FormattingCode.BOLD.getCode() + "Revivestats werden geladen...");
 
         new Thread(() -> {
             if (arguments.length == 0) {

@@ -38,7 +38,6 @@ public class DyavolCommand extends UnicacityCommand {
             p.sendMessage(Message.getBuilder()
                     .of("»").color(ColorCode.GRAY).advance().space()
                     .of(s).color(online ? ColorCode.GREEN : ColorCode.RED).advance()
-                    .of(s).color(online ? ColorCode.GREEN : ColorCode.RED).advance()
                     .createComponent());
         });
 

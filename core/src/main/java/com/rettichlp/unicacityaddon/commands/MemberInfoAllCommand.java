@@ -45,7 +45,7 @@ public class MemberInfoAllCommand extends UnicacityCommand {
                     .of("===").color(ColorCode.DARK_GRAY).advance().space()
                     .of("Fraktionsmitglieder").color(ColorCode.DARK_AQUA).advance().space()
                     .of("[").color(ColorCode.DARK_GRAY).advance()
-                    .of(factionString).color(ColorCode.DARK_AQUA).advance()
+                    .of(faction.getDisplayName()).color(ColorCode.DARK_AQUA).advance()
                     .of("]").color(ColorCode.DARK_GRAY).advance().space()
                     .of("(").color(ColorCode.DARK_GRAY).advance()
                     .of(String.valueOf(factionMemberList.size())).color(ColorCode.AQUA).advance()

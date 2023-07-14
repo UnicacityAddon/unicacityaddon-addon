@@ -65,7 +65,7 @@ public class ImageUploadUtils {
     private String upload(File file) {
         HttpURLConnection conn = null;
         try {
-            conn = getHttpConnection(UPLOAD_API_URL);
+            conn = getHttpConnection();
             writeToConnection(conn, "image=" + toBase64(file));
 
             return getResponse(conn);
@@ -90,11 +90,10 @@ public class ImageUploadUtils {
     /**
      * Creates and sets up an HttpURLConnection for use with the Imgur API.
      *
-     * @param url The URL to connect to. (check Imgur API for correct URL).
      * @return The newly created HttpURLConnection.
      */
-    private HttpURLConnection getHttpConnection(String url) throws IOException {
-        HttpURLConnection conn = (HttpURLConnection) new URL(url).openConnection();
+    private HttpURLConnection getHttpConnection() throws IOException {
+        HttpURLConnection conn = (HttpURLConnection) new URL(UPLOAD_API_URL).openConnection();
         conn.setDoInput(true);
         conn.setDoOutput(true);
         conn.setRequestMethod("POST");

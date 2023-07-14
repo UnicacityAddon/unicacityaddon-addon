@@ -13,13 +13,13 @@ import java.util.List;
  * @author RettichLP
  */
 @UCCommand(prefix = "arezeptannehmen", aliases = {"arannehmen"}, usage = "[Anzahl]")
-public class ARezeptAnnehmenCommand extends UnicacityCommand {
+public class RecipeAcceptCommand extends UnicacityCommand {
 
     public static int amount = 0;
 
     private final UnicacityAddon unicacityAddon;
 
-    public ARezeptAnnehmenCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+    public RecipeAcceptCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
         super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }

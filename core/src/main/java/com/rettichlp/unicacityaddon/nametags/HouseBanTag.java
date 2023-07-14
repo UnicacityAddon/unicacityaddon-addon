@@ -18,7 +18,7 @@ import java.util.Optional;
 /**
  * @author RettichLP
  */
-@UCNameTag(name = "unicacityaddon_housebantag", positionType = PositionType.BELOW_NAME)
+@UCNameTag(name = "unicacityaddon_housebantag", positionType = PositionType.BELOW_NAME, priority = 10)
 public class HouseBanTag extends NameTag {
 
     private final FloatVector3 HOSPITAL = new FloatVector3(265, 69, 215);
