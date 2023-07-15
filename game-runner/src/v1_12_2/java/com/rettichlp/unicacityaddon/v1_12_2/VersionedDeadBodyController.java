@@ -8,7 +8,9 @@ import com.rettichlp.unicacityaddon.controller.DeadBodyController;
 import net.labymod.api.models.Implements;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemSkull;
+import net.minecraft.item.ItemStack;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -51,6 +53,10 @@ public class VersionedDeadBodyController extends DeadBodyController {
                 playerName = customNameTag.substring(3);
                 nonRevivable = customNameTag.startsWith(ColorCode.DARK_GRAY.getCode());
                 this.corpseMap.put(entityItem.getUniqueID(), new AbstractMap.SimpleEntry<>(playerName, nonRevivable));
+
+                if (nonRevivable) {
+                    entityItem.setItem(new ItemStack(Items.SKULL, 1, 1));
+                }
             } else {
                 Map.Entry<String, Boolean> corpse = this.corpseMap.getOrDefault(entityItem.getUniqueID(), new AbstractMap.SimpleEntry<>("Unbekannt", false));
                 playerName = corpse.getKey();
