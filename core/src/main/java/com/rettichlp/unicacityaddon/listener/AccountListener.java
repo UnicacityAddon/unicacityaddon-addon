@@ -6,6 +6,7 @@ import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.config.join.CommandConfiguration;
 import com.rettichlp.unicacityaddon.base.config.join.PasswordConfiguration;
 import com.rettichlp.unicacityaddon.base.events.BombPlantedEvent;
+import com.rettichlp.unicacityaddon.base.events.HearthChangeEvent;
 import com.rettichlp.unicacityaddon.base.events.OfflineDataChangedEvent;
 import com.rettichlp.unicacityaddon.base.events.UnicacityAddonTickEvent;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
@@ -35,6 +36,7 @@ public class AccountListener {
     public static boolean isAfk = false;
     private boolean isMessageLocked = false;
     private long lastAfkTry = 0;
+    private long lastDamageTime = 0;
 
     private final UnicacityAddon unicacityAddon;
 
@@ -85,14 +87,13 @@ public class AccountListener {
 
         if (PatternHandler.ACCOUNT_AFK_FAILURE_PATTERN.matcher(msg).find() && System.currentTimeMillis() - lastAfkTry > TimeUnit.SECONDS.toMillis(30)) {
             p.sendInfoMessage("Das Addon versucht dich anschließend in den AFK Modus zu setzen.");
-            long lastDamageTime = TickListener.lastTickDamage.getKey();
             new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {
                     p.sendServerMessage("/afk");
                     lastAfkTry = System.currentTimeMillis();
                 }
-            }, new Date(lastDamageTime + TimeUnit.SECONDS.toMillis(15)));
+            }, new Date(this.lastDamageTime + TimeUnit.SECONDS.toMillis(15)));
             return;
         }
 
@@ -212,6 +213,13 @@ public class AccountListener {
     public void onUnicacityAddonTick(UnicacityAddonTickEvent e) {
         if (e.isUnicacity() && e.isPhase(UnicacityAddonTickEvent.Phase.MINUTE) && !isAfk) {
             this.unicacityAddon.fileService().data().addPayDayTime(1);
+        }
+    }
+
+    @Subscribe
+    public void onHearthChange(HearthChangeEvent e) {
+        if (e.getType().equals(EventRegistrationListener.Type.HURT)) {
+            this.lastDamageTime = e.getTime();
         }
     }
 

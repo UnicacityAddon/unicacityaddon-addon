@@ -123,7 +123,6 @@ import com.rettichlp.unicacityaddon.listener.ScreenRenderListener;
 import com.rettichlp.unicacityaddon.listener.ScreenshotListener;
 import com.rettichlp.unicacityaddon.listener.ServerLoginListener;
 import com.rettichlp.unicacityaddon.listener.TabCompletionListener;
-import com.rettichlp.unicacityaddon.listener.TickListener;
 import com.rettichlp.unicacityaddon.listener.TimerListener;
 import com.rettichlp.unicacityaddon.listener.WeaponListener;
 import com.rettichlp.unicacityaddon.listener.chatlog.ChatLogReceiveChatListener;
@@ -270,7 +269,6 @@ public class Registry {
             TabCompletionListener.class,
             TeamSpeakKeyListener.class,
             TeamSpeakNotificationListener.class,
-            TickListener.class,
             TimerListener.class,
             WantedListener.class,
             WeaponListener.class
