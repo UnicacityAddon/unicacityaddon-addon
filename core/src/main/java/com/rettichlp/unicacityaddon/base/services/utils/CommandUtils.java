@@ -62,6 +62,11 @@ public class CommandUtils {
         this.active = this.cocaineCheck = this.marihuanaCheck = this.methCheck = true;
         this.unicacityAddon.player().sendServerMessage("/inv");
 
-        runnable.run();
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                runnable.run();
+            }
+        }, TimeUnit.SECONDS.toMillis(3));
     }
 }

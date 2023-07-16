@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * @author RettichLP
  */
-@UCCommand(prefix = "sellalldrug", aliases = {"sad"})
+@UCCommand(prefix = "selldrugall", aliases = {"selldrugs", "sda"}, usage = "[Spieler]")
 public class SellDrugAllCommand extends UnicacityCommand {
 
     private final UnicacityAddon unicacityAddon;
