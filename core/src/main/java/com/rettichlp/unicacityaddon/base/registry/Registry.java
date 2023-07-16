@@ -55,6 +55,7 @@ import com.rettichlp.unicacityaddon.commands.faction.DropDrugAllCommand;
 import com.rettichlp.unicacityaddon.commands.faction.EquipListCommand;
 import com.rettichlp.unicacityaddon.commands.faction.FactionBankDepositCommand;
 import com.rettichlp.unicacityaddon.commands.faction.ReinforcementCommand;
+import com.rettichlp.unicacityaddon.commands.faction.SellDrugAllCommand;
 import com.rettichlp.unicacityaddon.commands.faction.ServiceCountCommand;
 import com.rettichlp.unicacityaddon.commands.faction.ShareLocationCommand;
 import com.rettichlp.unicacityaddon.commands.faction.badfaction.ASetBlacklistCommand;
@@ -349,6 +350,7 @@ public class Registry {
             RoleplayNameCommand.class,
             SFForceCommand.class,
             ScreenCommand.class,
+            SellDrugAllCommand.class,
             SellDrugCommand.class,
             ServiceCountCommand.class,
             ShareLocationCommand.class,

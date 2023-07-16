@@ -3,7 +3,6 @@ package com.rettichlp.unicacityaddon.v1_12_2;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
-import com.rettichlp.unicacityaddon.commands.faction.DropDrugAllCommand;
 import com.rettichlp.unicacityaddon.controller.GuiController;
 import net.labymod.api.models.Implements;
 import net.labymod.api.nbt.NBTTagType;
@@ -73,21 +72,21 @@ public class VersionedGuiController extends GuiController {
         GuiScreen guiScreen = Minecraft.getMinecraft().currentScreen;
         if (guiScreen instanceof GuiChest guiChest) {
             int windowId = guiChest.inventorySlots.windowId;
-            if (DropDrugAllCommand.lastWindowId == windowId)
+            if (unicacityAddon.utilService().command().getLastWindowId() == windowId)
                 return;
 
-            DropDrugAllCommand.lastWindowId = windowId;
+            unicacityAddon.utilService().command().setLastWindowId(windowId);
 
-            if (DropDrugAllCommand.cocaineCheck) {
-                DropDrugAllCommand.cocaineCheck = false;
+            if (unicacityAddon.utilService().command().isCocaineCheck()) {
+                unicacityAddon.utilService().command().setCocaineCheck(false);
                 // select cocaine to check drug purity
                 this.inventoryClick(0);
-            } else if (DropDrugAllCommand.marihuanaCheck) {
-                DropDrugAllCommand.marihuanaCheck = false;
+            } else if (unicacityAddon.utilService().command().isMarihuanaCheck()) {
+                unicacityAddon.utilService().command().setMarihuanaCheck(false);
                 // select marihuana to check drug purity
                 this.inventoryClick(1);
-            } else if (DropDrugAllCommand.methCheck) {
-                DropDrugAllCommand.methCheck = false;
+            } else if (unicacityAddon.utilService().command().isMethCheck()) {
+                unicacityAddon.utilService().command().setMethCheck(false);
                 // select meth to check drug purity
                 this.inventoryClick(2);
             } else {
@@ -114,16 +113,15 @@ public class VersionedGuiController extends GuiController {
                             }
                         });
 
-                DropDrugAllCommand.active = false;
-                DropDrugAllCommand.dropCommandExecution(unicacityAddon);
+                unicacityAddon.utilService().command().setActive(false);
                 Minecraft.getMinecraft().player.closeScreen();
             }
-        } else if (guiScreen instanceof GuiHopper guiHopper && DropDrugAllCommand.active) {
+        } else if (guiScreen instanceof GuiHopper guiHopper && unicacityAddon.utilService().command().isActive()) {
             int windowId = guiHopper.inventorySlots.windowId;
-            if (windowId == DropDrugAllCommand.lastWindowId)
+            if (unicacityAddon.utilService().command().getLastWindowId() == windowId)
                 return;
 
-            DropDrugAllCommand.lastWindowId = windowId;
+            unicacityAddon.utilService().command().setLastWindowId(windowId);
 
             guiHopper.inventorySlots.getInventory().stream()
                     .filter(itemStack -> !itemStack.isEmpty())
