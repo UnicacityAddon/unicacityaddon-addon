@@ -10,7 +10,6 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
-import com.rettichlp.unicacityaddon.commands.faction.badfaction.OwnUseGiftCommand;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.event.HoverEvent;
 import net.labymod.api.event.Subscribe;
@@ -18,6 +17,8 @@ import net.labymod.api.event.client.chat.ChatMessageSendEvent;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
 import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -30,6 +31,7 @@ import java.util.regex.Matcher;
 @UCEvent
 public class DrugListener {
 
+    public static List<String> dealCommandQueue = new ArrayList<>();
     private static int amount;
     private static DrugType lastDrugType;
     private static DrugPurity lastDrugPurity;
@@ -176,12 +178,12 @@ public class DrugListener {
                 this.unicacityAddon.fileService().data().removeDrugFromInventory(lastDrugType, lastDrugPurity, amount);
             }
 
-            // gift own use
-            if (!OwnUseGiftCommand.dealCommandQueue.isEmpty()) {
+            // gift own use or sell drug all
+            if (!dealCommandQueue.isEmpty()) {
                 new Timer().schedule(new TimerTask() {
                     @Override
                     public void run() {
-                        p.sendServerMessage(OwnUseGiftCommand.dealCommandQueue.remove(0));
+                        p.sendServerMessage(dealCommandQueue.remove(0));
                     }
                 }, TimeUnit.SECONDS.toMillis(1));
             }
@@ -192,12 +194,12 @@ public class DrugListener {
         Matcher drugDealDeclinedMatcher = PatternHandler.DRUG_DEAL_DECLINED.matcher(msg);
         if (drugDealDeclinedMatcher.find() && System.currentTimeMillis() - time < TimeUnit.MINUTES.toMillis(3)) {
 
-            // gift own use
-            if (!OwnUseGiftCommand.dealCommandQueue.isEmpty()) {
+            // gift own use or sell drug all
+            if (!dealCommandQueue.isEmpty()) {
                 new Timer().schedule(new TimerTask() {
                     @Override
                     public void run() {
-                        p.sendServerMessage(OwnUseGiftCommand.dealCommandQueue.remove(0));
+                        p.sendServerMessage(dealCommandQueue.remove(0));
                     }
                 }, TimeUnit.SECONDS.toMillis(1));
             }

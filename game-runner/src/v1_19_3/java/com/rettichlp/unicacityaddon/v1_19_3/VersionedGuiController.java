@@ -3,7 +3,6 @@ package com.rettichlp.unicacityaddon.v1_19_3;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
-import com.rettichlp.unicacityaddon.commands.faction.DropDrugAllCommand;
 import com.rettichlp.unicacityaddon.controller.GuiController;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMaps;
 import net.labymod.api.models.Implements;
@@ -82,21 +81,21 @@ public class VersionedGuiController extends GuiController {
             ChestMenu chestMenu = ((ContainerScreen) screen).getMenu();
 
             int windowId = chestMenu.containerId;
-            if (DropDrugAllCommand.lastWindowId == windowId)
+            if (unicacityAddon.utilService().command().getLastWindowId() == windowId)
                 return;
 
-            DropDrugAllCommand.lastWindowId = windowId;
+            unicacityAddon.utilService().command().setLastWindowId(windowId);
 
-            if (DropDrugAllCommand.cocaineCheck) {
-                DropDrugAllCommand.cocaineCheck = false;
+            if (unicacityAddon.utilService().command().isCocaineCheck()) {
+                unicacityAddon.utilService().command().setCocaineCheck(false);
                 // select cocaine to check drug purity
                 this.inventoryClick(0);
-            } else if (DropDrugAllCommand.marihuanaCheck) {
-                DropDrugAllCommand.marihuanaCheck = false;
+            } else if (unicacityAddon.utilService().command().isMarihuanaCheck()) {
+                unicacityAddon.utilService().command().setMarihuanaCheck(false);
                 // select marihuana to check drug purity
                 this.inventoryClick(1);
-            } else if (DropDrugAllCommand.methCheck) {
-                DropDrugAllCommand.methCheck = false;
+            } else if (unicacityAddon.utilService().command().isMethCheck()) {
+                unicacityAddon.utilService().command().setMethCheck(false);
                 // select meth to check drug purity
                 this.inventoryClick(2);
             } else {
@@ -122,19 +121,18 @@ public class VersionedGuiController extends GuiController {
                             }
                         });
 
-                DropDrugAllCommand.active = false;
-                DropDrugAllCommand.dropCommandExecution(unicacityAddon);
+                unicacityAddon.utilService().command().setActive(false);
                 assert Minecraft.getInstance().player != null;
                 Minecraft.getInstance().player.closeContainer();
             }
-        } else if (screen instanceof HopperScreen && DropDrugAllCommand.active) {
+        } else if (screen instanceof HopperScreen && unicacityAddon.utilService().command().isActive()) {
             HopperMenu hopperMenu = ((HopperScreen) screen).getMenu();
 
             int windowId = hopperMenu.containerId;
-            if (windowId == DropDrugAllCommand.lastWindowId)
+            if (unicacityAddon.utilService().command().getLastWindowId() == windowId)
                 return;
 
-            DropDrugAllCommand.lastWindowId = windowId;
+            unicacityAddon.utilService().command().setLastWindowId(windowId);
 
             hopperMenu.getItems().stream()
                     .filter(itemStack -> !itemStack.isEmpty())
