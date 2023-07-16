@@ -5,7 +5,6 @@ import com.rettichlp.unicacityaddon.base.enums.Weapon;
 import com.rettichlp.unicacityaddon.base.events.UnicacityAddonTickEvent;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.commands.GetGunPatternCommand;
-import com.rettichlp.unicacityaddon.commands.faction.DropDrugAllCommand;
 import net.labymod.api.client.world.item.ItemStack;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.render.ScreenRenderEvent;
@@ -41,7 +40,7 @@ public class ScreenRenderListener {
             GetGunPatternCommand.armament = null;
         }
 
-        if (DropDrugAllCommand.active) {
+        if (unicacityAddon.utilService().command().isActive()) {
             this.unicacityAddon.guiController().updateDrugInventoryMap(this.unicacityAddon);
         }
     }

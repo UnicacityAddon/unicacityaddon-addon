@@ -3,6 +3,8 @@ package com.rettichlp.unicacityaddon.base.services.utils;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
+import lombok.Getter;
+import lombok.Setter;
 import net.labymod.api.client.component.Component;
 
 import java.util.HashMap;
@@ -14,13 +16,15 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author RettichLP
  */
+@Getter
+@Setter
 public class CommandUtils {
 
-    public static boolean cocaineCheck = true;
-    public static boolean marihuanaCheck = true;
-    public static boolean methCheck = true;
-    public static boolean active = false;
-    public static int lastWindowId = 0;
+    private boolean cocaineCheck = true;
+    private boolean marihuanaCheck = true;
+    private boolean methCheck = true;
+    private boolean active = false;
+    private int lastWindowId = 0;
 
     private final UnicacityAddon unicacityAddon;
 
@@ -55,7 +59,7 @@ public class CommandUtils {
     public void loadDrugInventory(Runnable runnable) {
         this.unicacityAddon.fileService().data().setDrugInventoryMap(new HashMap<>());
 
-        active = cocaineCheck = marihuanaCheck = methCheck = true;
+        this.active = this.cocaineCheck = this.marihuanaCheck = this.methCheck = true;
         this.unicacityAddon.player().sendServerMessage("/inv");
 
         runnable.run();
