@@ -1,7 +1,6 @@
 package com.rettichlp.unicacityaddon.commands.faction;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
@@ -9,7 +8,6 @@ import com.rettichlp.unicacityaddon.base.registry.UnicacityCommand;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -27,13 +25,6 @@ public class DropDrugAllCommand extends UnicacityCommand {
 
     @Override
     public boolean execute(String[] arguments) {
-        AddonPlayer p = this.unicacityAddon.player();
-
-        if (arguments.length > 0 && arguments[0].equalsIgnoreCase("reset")) {
-            this.unicacityAddon.fileService().data().setDrugInventoryMap(new HashMap<>());
-            return true;
-        }
-
         this.unicacityAddon.utilService().command().loadDrugInventory(() -> {
             List<String> commandQueue = new ArrayList<>();
 
@@ -41,7 +32,7 @@ public class DropDrugAllCommand extends UnicacityCommand {
                     .filter(drugTypeMapEntry -> drugTypeMapEntry.getKey().equals(DrugType.COCAINE) || drugTypeMapEntry.getKey().equals(DrugType.MARIJUANA) || drugTypeMapEntry.getKey().equals(DrugType.METH) || drugTypeMapEntry.getKey().equals(DrugType.LSD))
                     .forEach(drugTypeMapEntry -> drugTypeMapEntry.getValue().forEach((drugPurity, integer) -> {
                         if (integer > 0) {
-                            String type = p.getFaction().equals(Faction.FBI) ? "asservatenkammer" : "dbank";
+                            String type = this.unicacityAddon.player().getFaction().equals(Faction.FBI) ? "asservatenkammer" : "dbank";
                             commandQueue.add("/" + type + " drop " + drugTypeMapEntry.getKey().getDrugName() + " " + integer + " " + drugPurity.getPurity());
                         }
                     }));
