@@ -67,6 +67,6 @@ public class CommandUtils {
             public void run() {
                 runnable.run();
             }
-        }, TimeUnit.SECONDS.toMillis(3));
+        }, TimeUnit.SECONDS.toMillis(2));
     }
 }
