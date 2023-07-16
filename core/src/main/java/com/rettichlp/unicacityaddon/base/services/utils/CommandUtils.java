@@ -5,6 +5,7 @@ import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import net.labymod.api.client.component.Component;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -14,6 +15,12 @@ import java.util.concurrent.TimeUnit;
  * @author RettichLP
  */
 public class CommandUtils {
+
+    public static boolean cocaineCheck = true;
+    public static boolean marihuanaCheck = true;
+    public static boolean methCheck = true;
+    public static boolean active = false;
+    public static int lastWindowId = 0;
 
     private final UnicacityAddon unicacityAddon;
 
@@ -43,5 +50,14 @@ public class CommandUtils {
                 .of(" | ").color(ColorCode.GRAY).advance()
                 .of(String.valueOf(z)).color(ColorCode.AQUA).advance()
                 .createComponent();
+    }
+
+    public void loadDrugInventory(Runnable runnable) {
+        this.unicacityAddon.fileService().data().setDrugInventoryMap(new HashMap<>());
+
+        active = cocaineCheck = marihuanaCheck = methCheck = true;
+        this.unicacityAddon.player().sendServerMessage("/inv");
+
+        runnable.run();
     }
 }
