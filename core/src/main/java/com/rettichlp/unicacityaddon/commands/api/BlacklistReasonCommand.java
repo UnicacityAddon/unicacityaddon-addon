@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 /**
  * @author RettichLP
  */
-@UCCommand(prefix = "blacklistreason", usage = "(add|remove) (Grund) (Preis) (Kills)")
+@UCCommand(prefix = "blacklistreason", aliases = {"blreason"}, usage = "(add|remove) (Grund) (Preis) (Kills)")
 public class BlacklistReasonCommand extends UnicacityCommand {
 
     private final UnicacityAddon unicacityAddon;
