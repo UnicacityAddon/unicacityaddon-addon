@@ -56,7 +56,7 @@ public class HousebanReasonCommand extends UnicacityCommand {
 
                 p.sendEmptyMessage();
 
-            } else if (arguments.length == 3 && arguments[0].equalsIgnoreCase("add") && MathUtils.isInteger(arguments[2])) {
+            } else if (arguments.length == 3 && arguments[0].equalsIgnoreCase("add") && !arguments[1].equalsIgnoreCase("all") && MathUtils.isInteger(arguments[2])) {
                 String info = this.unicacityAddon.api().sendHouseBanReasonAddRequest(arguments[1], arguments[2]).getInfo();
                 p.sendAPIMessage(info, true);
             } else if (arguments.length == 2 && arguments[0].equalsIgnoreCase("remove")) {
