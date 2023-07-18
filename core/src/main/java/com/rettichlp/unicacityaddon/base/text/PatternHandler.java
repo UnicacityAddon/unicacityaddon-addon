@@ -318,6 +318,7 @@ public class PatternHandler {
      * Pattern for church interaction
      */
     public static final Pattern PRAYING_START_PATTERN = Pattern.compile("^\\[Kirche] Du hast begonnen für (?:\\[UC])*(?<name>\\w+) zu beten\\.$");
+    public static final Pattern PRAYED_FOR_YOU_PATTERN = Pattern.compile("^\\[Kirche] Für dich wurde gebetet\\.$");
 
     /**
      * Pattern for state messages
