@@ -345,6 +345,7 @@ public class API {
 
     public List<Broadcast> sendBroadcastQueueRequest() {
         return RequestBuilder.getBuilder(this.unicacityAddon)
+                .preCondition(this.token != null)
                 .nonProd(this.unicacityAddon.configuration().local().get())
                 .applicationPath(ApplicationPath.BROADCAST)
                 .subPath(QUEUE_SUB_PATH)
