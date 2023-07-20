@@ -3,6 +3,7 @@ package com.rettichlp.unicacityaddon.listener;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.api.NaviPoint;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
+import com.rettichlp.unicacityaddon.base.enums.location.GasStation;
 import com.rettichlp.unicacityaddon.base.events.UnicacityAddonTickEvent;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
@@ -135,7 +136,33 @@ public class CarListener {
                 case 100 -> sentTankWarnings.clear();
                 case 15, 10, 5 -> {
                     if (!sentTankWarnings.contains(tank)) {
-                        p.sendInfoMessage("Dein Tank hat noch " + tank + " Liter.");
+                        Map.Entry<Double, GasStation> nearestGasStation = this.unicacityAddon.navigationService().getNearestGasStation(p.getLocation());
+                        p.sendMessage(Message.getBuilder()
+                                .info().space()
+                                .of("Dein Tank hat noch " + tank + " Liter.").color(ColorCode.WHITE).advance().space()
+                                .of("➡").color(ColorCode.GRAY).advance().space()
+                                .of("Navi").color(ColorCode.AQUA)
+                                        .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Nächste Tankstelle").color(ColorCode.RED).advance().createComponent())
+                                        .clickEvent(ClickEvent.Action.RUN_COMMAND, nearestGasStation.getValue().getNaviCommand())
+                                        .advance().space()
+                                .of("(").color(ColorCode.GRAY)
+                                        .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Nächste Tankstelle").color(ColorCode.RED).advance().createComponent())
+                                        .clickEvent(ClickEvent.Action.RUN_COMMAND, nearestGasStation.getValue().getNaviCommand())
+                                        .advance()
+                                .of(String.valueOf(Math.round(nearestGasStation.getKey()))).color(ColorCode.RED)
+                                        .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Nächste Tankstelle").color(ColorCode.RED).advance().createComponent())
+                                        .clickEvent(ClickEvent.Action.RUN_COMMAND, nearestGasStation.getValue().getNaviCommand())
+                                        .advance().space()
+                                .of("m").color(ColorCode.AQUA)
+                                        .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Nächste Tankstelle").color(ColorCode.RED).advance().createComponent())
+                                        .clickEvent(ClickEvent.Action.RUN_COMMAND, nearestGasStation.getValue().getNaviCommand())
+                                        .advance()
+                                .of(")").color(ColorCode.GRAY)
+                                        .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Nächste Tankstelle").color(ColorCode.RED).advance().createComponent())
+                                        .clickEvent(ClickEvent.Action.RUN_COMMAND, nearestGasStation.getValue().getNaviCommand())
+                                        .advance()
+                                .createComponent());
+
                         this.unicacityAddon.soundController().playTankWarningSound();
                         sentTankWarnings.add(tank);
                     }
