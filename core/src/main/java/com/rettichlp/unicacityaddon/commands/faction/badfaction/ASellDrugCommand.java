@@ -65,7 +65,7 @@ public class ASellDrugCommand extends UnicacityCommand {
             case LSD, IRON, MASK, GUNPOWDER, ANTIBIOTIKA, HUSTENSAFT, SCHMERZMITTEL -> 0;
         };
 
-        p.sendServerMessage("/selldrug " + arguments[0] + " " + arguments[1] + " " + arguments[2] + " " + arguments[3] + " " + price);
+        p.sendServerMessage("/selldrug " + arguments[0] + " " + arguments[1] + " " + arguments[2] + " " + arguments[3] + " " + (price * Integer.parseInt(arguments[3])));
         return true;
     }
 
