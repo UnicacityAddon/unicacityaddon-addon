@@ -2,7 +2,7 @@ package com.rettichlp.unicacityaddon.listener;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
-import com.rettichlp.unicacityaddon.base.config.ownUse.OwnUseConfiguration;
+import com.rettichlp.unicacityaddon.base.config.drug.DrugConfiguration;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
@@ -158,11 +158,11 @@ public class DrugListener {
             DrugPurity drugPurity = DrugPurity.BEST;
 
             if (drugType != null) {
-                OwnUseConfiguration ownUseConfiguration = this.unicacityAddon.configuration().ownUse();
+                DrugConfiguration drugConfiguration = this.unicacityAddon.configuration().drug();
                 switch (drugType) {
-                    case COCAINE -> drugPurity = ownUseConfiguration.cocaine().purity().get();
-                    case MARIJUANA -> drugPurity = ownUseConfiguration.marijuana().purity().get();
-                    case METH -> drugPurity = ownUseConfiguration.methamphetamin().purity().get();
+                    case COCAINE -> drugPurity = drugConfiguration.cocaine().purity().get();
+                    case MARIJUANA -> drugPurity = drugConfiguration.marijuana().purity().get();
+                    case METH -> drugPurity = drugConfiguration.methamphetamin().purity().get();
                 }
             }
 

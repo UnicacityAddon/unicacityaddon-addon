@@ -1,4 +1,4 @@
-package com.rettichlp.unicacityaddon.base.config.ownUse.marijuana;
+package com.rettichlp.unicacityaddon.base.config.drug.methamphetamin;
 
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
 import net.labymod.api.configuration.loader.property.ConfigProperty;
@@ -6,11 +6,19 @@ import net.labymod.api.configuration.loader.property.ConfigProperty;
 /**
  * @author RettichLP
  */
-public interface Marijuana {
+public interface Methamphetamin {
 
     ConfigProperty<Boolean> enabled();
 
     ConfigProperty<Integer> amount();
 
     ConfigProperty<DrugPurity> purity();
+
+    ConfigProperty<Integer> best();
+
+    ConfigProperty<Integer> good();
+
+    ConfigProperty<Integer> medium();
+
+    ConfigProperty<Integer> bad();
 }

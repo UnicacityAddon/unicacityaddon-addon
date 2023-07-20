@@ -14,8 +14,8 @@ import com.rettichlp.unicacityaddon.base.config.message.DefaultMessageConfigurat
 import com.rettichlp.unicacityaddon.base.config.message.MessageConfiguration;
 import com.rettichlp.unicacityaddon.base.config.nametag.DefaultNameTagConfiguration;
 import com.rettichlp.unicacityaddon.base.config.nametag.NameTagConfiguration;
-import com.rettichlp.unicacityaddon.base.config.ownUse.DefaultOwnUseConfiguration;
-import com.rettichlp.unicacityaddon.base.config.ownUse.OwnUseConfiguration;
+import com.rettichlp.unicacityaddon.base.config.drug.DefaultDrugConfiguration;
+import com.rettichlp.unicacityaddon.base.config.drug.DrugConfiguration;
 import com.rettichlp.unicacityaddon.base.config.reinforcement.DefaultReinforcementConfiguration;
 import com.rettichlp.unicacityaddon.base.config.reinforcement.ReinforcementConfiguration;
 import com.rettichlp.unicacityaddon.base.config.sloc.DefaultSlocConfiguration;
@@ -48,7 +48,7 @@ public class DefaultUnicacityAddonConfiguration extends AddonConfig implements U
 
     private final DefaultEquipConfiguration equip = new DefaultEquipConfiguration();
 
-    private final DefaultOwnUseConfiguration ownUse = new DefaultOwnUseConfiguration();
+    private final DefaultDrugConfiguration drug = new DefaultDrugConfiguration();
 
     @SettingSection("message")
     private final DefaultMessageConfiguration message = new DefaultMessageConfiguration();
@@ -117,8 +117,8 @@ public class DefaultUnicacityAddonConfiguration extends AddonConfig implements U
     }
 
     @Override
-    public OwnUseConfiguration ownUse() {
-        return this.ownUse;
+    public DrugConfiguration drug() {
+        return this.drug;
     }
 
     @Override
