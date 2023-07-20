@@ -22,6 +22,9 @@
       "job": {
         "name": "Job Belohnungen"
       },
+      "mask": {
+        "name": "Maske"
+      },
       "money": {
         "name": "Geld"
       },
