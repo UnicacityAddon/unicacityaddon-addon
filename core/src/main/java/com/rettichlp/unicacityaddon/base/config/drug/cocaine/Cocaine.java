@@ -13,4 +13,12 @@ public interface Cocaine {
     ConfigProperty<Integer> amount();
 
     ConfigProperty<DrugPurity> purity();
+
+    ConfigProperty<Integer> best();
+
+    ConfigProperty<Integer> good();
+
+    ConfigProperty<Integer> medium();
+
+    ConfigProperty<Integer> bad();
 }
