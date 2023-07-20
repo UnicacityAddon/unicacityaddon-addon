@@ -1,4 +1,4 @@
-package com.rettichlp.unicacityaddon.base.config.ownUse.cocaine;
+package com.rettichlp.unicacityaddon.base.config.drug.marijuana;
 
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
 import net.labymod.api.client.gui.screen.widget.widgets.input.SliderWidget.SliderSetting;
@@ -11,7 +11,7 @@ import net.labymod.api.configuration.loader.property.ConfigProperty;
 /**
  * @author RettichLP
  */
-public class DefaultCocaine extends Config implements Cocaine {
+public class DefaultMarijuana extends Config implements Marijuana {
 
     @SwitchSetting
     @ParentSwitch
@@ -21,7 +21,7 @@ public class DefaultCocaine extends Config implements Cocaine {
     private final ConfigProperty<Integer> amount = new ConfigProperty<>(25);
 
     @DropdownSetting
-    private final ConfigProperty<DrugPurity> purity = ConfigProperty.createEnum(DrugPurity.BEST);
+    private final ConfigProperty<DrugPurity> purity = ConfigProperty.createEnum(DrugPurity.GOOD);
 
     @Override
     public ConfigProperty<Boolean> enabled() {

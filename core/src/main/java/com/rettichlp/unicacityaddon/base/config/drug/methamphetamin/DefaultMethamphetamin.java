@@ -1,4 +1,4 @@
-package com.rettichlp.unicacityaddon.base.config.ownUse.methamphetamin;
+package com.rettichlp.unicacityaddon.base.config.drug.methamphetamin;
 
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
 import net.labymod.api.client.gui.screen.widget.widgets.input.SliderWidget.SliderSetting;

@@ -1,4 +1,4 @@
-package com.rettichlp.unicacityaddon.base.config.ownUse.cocaine;
+package com.rettichlp.unicacityaddon.base.config.drug.methamphetamin;
 
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
 import net.labymod.api.configuration.loader.property.ConfigProperty;
@@ -6,7 +6,7 @@ import net.labymod.api.configuration.loader.property.ConfigProperty;
 /**
  * @author RettichLP
  */
-public interface Cocaine {
+public interface Methamphetamin {
 
     ConfigProperty<Boolean> enabled();
 

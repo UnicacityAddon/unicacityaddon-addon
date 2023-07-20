@@ -3,9 +3,9 @@ package com.rettichlp.unicacityaddon.commands.faction.badfaction;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
-import com.rettichlp.unicacityaddon.base.config.ownUse.cocaine.Cocaine;
-import com.rettichlp.unicacityaddon.base.config.ownUse.marijuana.Marijuana;
-import com.rettichlp.unicacityaddon.base.config.ownUse.methamphetamin.Methamphetamin;
+import com.rettichlp.unicacityaddon.base.config.drug.cocaine.Cocaine;
+import com.rettichlp.unicacityaddon.base.config.drug.marijuana.Marijuana;
+import com.rettichlp.unicacityaddon.base.config.drug.methamphetamin.Methamphetamin;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
 import com.rettichlp.unicacityaddon.base.registry.UnicacityCommand;
@@ -38,9 +38,9 @@ public class OwnUseGiftCommand extends UnicacityCommand {
             return true;
         }
 
-        Cocaine cocaine = this.unicacityAddon.configuration().ownUse().cocaine();
-        Marijuana marijuana = this.unicacityAddon.configuration().ownUse().marijuana();
-        Methamphetamin methamphetamin = this.unicacityAddon.configuration().ownUse().methamphetamin();
+        Cocaine cocaine = this.unicacityAddon.configuration().drug().cocaine();
+        Marijuana marijuana = this.unicacityAddon.configuration().drug().marijuana();
+        Methamphetamin methamphetamin = this.unicacityAddon.configuration().drug().methamphetamin();
 
         DrugListener.dealCommandQueue = new ArrayList<>();
 
