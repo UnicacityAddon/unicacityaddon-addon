@@ -30,7 +30,7 @@ public class ASellDrugCommand extends UnicacityCommand {
     public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
 
-        if (arguments.length < 4 || MathUtils.isInteger(arguments[2])) {
+        if (arguments.length < 4 || !MathUtils.isInteger(arguments[2])) {
             sendUsage();
             return true;
         }
