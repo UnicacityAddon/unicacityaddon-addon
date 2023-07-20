@@ -330,9 +330,17 @@
           }
         }
       },
-      "ownUse": {
-        "name": "Personal use",
+      "drug": {
+        "name": "Drugs",
         "cocaine": {
+          "header": {
+            "ownUse": {
+              "name": "Personal use"
+            },
+            "price": {
+              "name": "Price"
+            }
+          },
           "name": "Powder",
           "amount": {
             "name": "Quantity",
@@ -341,9 +349,33 @@
           "purity": {
             "name": "Purity",
             "description": "Purity to be used for personal use"
+          },
+          "best": {
+            "name": "Best",
+            "description": "Best purity"
+          },
+          "good": {
+            "name": "Good",
+            "description": "Good purity"
+          },
+          "medium": {
+            "name": "Medium",
+            "description": "Medium purity"
+          },
+          "bad": {
+            "name": "Bad",
+            "description": "Bad purity"
           }
         },
         "marijuana": {
+          "header": {
+            "ownUse": {
+              "name": "Personal use"
+            },
+            "price": {
+              "name": "Price"
+            }
+          },
           "name": "Herbs",
           "amount": {
             "name": "Quantity",
@@ -352,9 +384,33 @@
           "purity": {
             "name": "Purity",
             "description": "Purity to be used for personal use"
+          },
+          "best": {
+            "name": "Best",
+            "description": "Best purity"
+          },
+          "good": {
+            "name": "Good",
+            "description": "Good purity"
+          },
+          "medium": {
+            "name": "Medium",
+            "description": "Medium purity"
+          },
+          "bad": {
+            "name": "Bad",
+            "description": "Bad purity"
           }
         },
         "methamphetamin": {
+          "header": {
+            "ownUse": {
+              "name": "Personal use"
+            },
+            "price": {
+              "name": "Price"
+            }
+          },
           "name": "Crystals",
           "amount": {
             "name": "Quantity",
@@ -363,6 +419,22 @@
           "purity": {
             "name": "Purity",
             "description": "Purity to be used for personal use"
+          },
+          "best": {
+            "name": "Best",
+            "description": "Best purity"
+          },
+          "good": {
+            "name": "Good",
+            "description": "Good purity"
+          },
+          "medium": {
+            "name": "Medium",
+            "description": "Medium purity"
+          },
+          "bad": {
+            "name": "Bad",
+            "description": "Bad purity"
           }
         }
       },

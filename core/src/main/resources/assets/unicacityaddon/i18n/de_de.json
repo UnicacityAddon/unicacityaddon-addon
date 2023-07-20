@@ -330,9 +330,17 @@
           }
         }
       },
-      "ownUse": {
-        "name": "Eigenbedarf",
+      "drug": {
+        "name": "Drogen",
         "cocaine": {
+          "header": {
+            "ownUse": {
+              "name": "Eigenbedarf"
+            },
+            "price": {
+              "name": "Preis"
+            }
+          },
           "name": "Pulver",
           "amount": {
             "name": "Menge",
@@ -341,9 +349,33 @@
           "purity": {
             "name": "Reinheit",
             "description": "Reinheit, die als Eigenbedarf genutzt werden soll"
+          },
+          "best": {
+            "name": "Beste",
+            "description": "Beste Reinheit"
+          },
+          "good": {
+            "name": "Gute",
+            "description": "Gute Reinheit"
+          },
+          "medium": {
+            "name": "Mittlere",
+            "description": "Mittlere Reinheit"
+          },
+          "bad": {
+            "name": "Schlechte",
+            "description": "Schlechte Reinheit"
           }
         },
         "marijuana": {
+          "header": {
+            "ownUse": {
+              "name": "Eigenbedarf"
+            },
+            "price": {
+              "name": "Preis"
+            }
+          },
           "name": "Kräuter",
           "amount": {
             "name": "Menge",
@@ -352,9 +384,33 @@
           "purity": {
             "name": "Reinheit",
             "description": "Reinheit, die als Eigenbedarf genutzt werden soll"
+          },
+          "best": {
+            "name": "Beste",
+            "description": "Beste Reinheit"
+          },
+          "good": {
+            "name": "Gute",
+            "description": "Gute Reinheit"
+          },
+          "medium": {
+            "name": "Mittlere",
+            "description": "Mittlere Reinheit"
+          },
+          "bad": {
+            "name": "Schlechte",
+            "description": "Schlechte Reinheit"
           }
         },
         "methamphetamin": {
+          "header": {
+            "ownUse": {
+              "name": "Eigenbedarf"
+            },
+            "price": {
+              "name": "Preis"
+            }
+          },
           "name": "Kristalle",
           "amount": {
             "name": "Menge",
@@ -363,6 +419,22 @@
           "purity": {
             "name": "Reinheit",
             "description": "Reinheit, die als Eigenbedarf genutzt werden soll"
+          },
+          "best": {
+            "name": "Beste",
+            "description": "Beste Reinheit"
+          },
+          "good": {
+            "name": "Gute",
+            "description": "Gute Reinheit"
+          },
+          "medium": {
+            "name": "Mittlere",
+            "description": "Mittlere Reinheit"
+          },
+          "bad": {
+            "name": "Schlechte",
+            "description": "Schlechte Reinheit"
           }
         }
       },
