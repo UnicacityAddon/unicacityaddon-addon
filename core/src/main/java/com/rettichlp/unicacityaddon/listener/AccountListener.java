@@ -7,6 +7,8 @@ import com.rettichlp.unicacityaddon.base.config.join.CommandConfiguration;
 import com.rettichlp.unicacityaddon.base.config.join.PasswordConfiguration;
 import com.rettichlp.unicacityaddon.base.events.BombPlantedEvent;
 import com.rettichlp.unicacityaddon.base.events.HearthChangeEvent;
+import com.rettichlp.unicacityaddon.base.events.MaskPutOnEvent;
+import com.rettichlp.unicacityaddon.base.events.MaskRemovedEvent;
 import com.rettichlp.unicacityaddon.base.events.OfflineDataChangedEvent;
 import com.rettichlp.unicacityaddon.base.events.UnicacityAddonTickEvent;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
@@ -168,11 +170,13 @@ public class AccountListener {
         }
 
         if (PatternHandler.ACCOUNT_MASK_ON_PATTERN.matcher(msg).find()) {
+            Laby.labyAPI().eventBus().fire(new MaskPutOnEvent());
             MaskInfoCommand.startTime = System.currentTimeMillis();
             return;
         }
 
         if (PatternHandler.ACCOUNT_MASK_OFF_PATTERN.matcher(msg).find()) {
+            Laby.labyAPI().eventBus().fire(new MaskRemovedEvent());
             MaskInfoCommand.startTime = 0;
             return;
         }
