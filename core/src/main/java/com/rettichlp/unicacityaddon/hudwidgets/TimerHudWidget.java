@@ -44,9 +44,9 @@ public class TimerHudWidget extends TextHudWidget<TextHudWidgetConfig> {
     public void onUnicacityAddonTick(UnicacityAddonTickEvent e) {
         if (e.isPhase(UnicacityAddonTickEvent.Phase.SECOND)) {
             if (this.unicacityAddon.fileService().data().getTimer() >= 0) {
-                this.unicacityAddon.fileService().data().setTimer(this.unicacityAddon.fileService().data().getTimer() - 1);
                 String text = this.unicacityAddon.utilService().text().parseTimer(this.unicacityAddon.fileService().data().getTimer());
                 this.textLine.updateAndFlush(text);
+                this.unicacityAddon.fileService().data().setTimer(this.unicacityAddon.fileService().data().getTimer() - 1);
             }
         }
     }

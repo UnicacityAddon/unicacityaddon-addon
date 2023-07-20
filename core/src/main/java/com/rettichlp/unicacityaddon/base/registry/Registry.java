@@ -103,6 +103,7 @@ import com.rettichlp.unicacityaddon.hudwidgets.EmergencyServiceHudWidget;
 import com.rettichlp.unicacityaddon.hudwidgets.HearthHudWidget;
 import com.rettichlp.unicacityaddon.hudwidgets.InventoryHudWidget;
 import com.rettichlp.unicacityaddon.hudwidgets.JobHudWidget;
+import com.rettichlp.unicacityaddon.hudwidgets.MaskHudWidget;
 import com.rettichlp.unicacityaddon.hudwidgets.MoneyHudWidget;
 import com.rettichlp.unicacityaddon.hudwidgets.PayDayHudWidget;
 import com.rettichlp.unicacityaddon.hudwidgets.PlantHudWidget;
@@ -215,6 +216,7 @@ public class Registry {
             HearthHudWidget.class,
             InventoryHudWidget.class,
             JobHudWidget.class,
+            MaskHudWidget.class,
             MoneyHudWidget.class,
             PayDayHudWidget.class,
             PlantHudWidget.class,

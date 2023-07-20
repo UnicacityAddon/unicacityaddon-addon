@@ -22,6 +22,9 @@
       "job": {
         "name": "Job Rewards"
       },
+      "mask": {
+        "name": "Mask"
+      },
       "money": {
         "name": "Money"
       },
