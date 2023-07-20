@@ -58,6 +58,7 @@ import com.rettichlp.unicacityaddon.commands.faction.ReinforcementCommand;
 import com.rettichlp.unicacityaddon.commands.faction.SellDrugAllCommand;
 import com.rettichlp.unicacityaddon.commands.faction.ServiceCountCommand;
 import com.rettichlp.unicacityaddon.commands.faction.ShareLocationCommand;
+import com.rettichlp.unicacityaddon.commands.faction.badfaction.ASellDrugCommand;
 import com.rettichlp.unicacityaddon.commands.faction.badfaction.ASetBlacklistCommand;
 import com.rettichlp.unicacityaddon.commands.faction.badfaction.BlackMarketCommand;
 import com.rettichlp.unicacityaddon.commands.faction.badfaction.BlacklistInfoCommand;
@@ -281,6 +282,7 @@ public class Registry {
             ABuyCommand.class,
             ACallCommand.class,
             ADropMoneyCommand.class,
+            ASellDrugCommand.class,
             ASMSCommand.class,
             ASUCommand.class,
             ASetBlacklistCommand.class,
