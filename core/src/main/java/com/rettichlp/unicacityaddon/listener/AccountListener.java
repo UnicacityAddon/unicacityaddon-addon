@@ -170,13 +170,13 @@ public class AccountListener {
         }
 
         if (PatternHandler.ACCOUNT_MASK_ON_PATTERN.matcher(msg).find()) {
-            Laby.fireEvent(new MaskPutOnEvent());
+            Laby.labyAPI().eventBus().fire(new MaskPutOnEvent());
             MaskInfoCommand.startTime = System.currentTimeMillis();
             return;
         }
 
         if (PatternHandler.ACCOUNT_MASK_OFF_PATTERN.matcher(msg).find()) {
-            Laby.fireEvent(new MaskRemovedEvent());
+            Laby.labyAPI().eventBus().fire(new MaskRemovedEvent());
             MaskInfoCommand.startTime = 0;
             return;
         }
