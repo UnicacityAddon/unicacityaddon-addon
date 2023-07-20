@@ -54,7 +54,8 @@ public class BombHudWidget extends TextHudWidget<TextHudWidgetConfig> {
     @Subscribe
     public void onUnicacityAddonTick(UnicacityAddonTickEvent e) {
         if (e.isPhase(UnicacityAddonTickEvent.Phase.SECOND) && this.time != null) {
-            textLine.updateAndFlush((this.time >= 780 ? ColorCode.RED.getCode() : "") + this.unicacityAddon.utilService().text().parseTimer(this.time));
+            String text = (this.time >= 780 ? ColorCode.RED.getCode() : "") + this.unicacityAddon.utilService().text().parseTimer(this.time);
+            textLine.updateAndFlush(text);
             this.time = this.time >= 1200 ? null : this.time + 1;
         }
     }

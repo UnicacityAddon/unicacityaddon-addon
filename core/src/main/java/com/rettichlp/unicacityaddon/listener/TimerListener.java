@@ -2,7 +2,6 @@ package com.rettichlp.unicacityaddon.listener;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.enums.api.StatisticType;
-import com.rettichlp.unicacityaddon.base.events.UnicacityAddonTickEvent;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.commands.ShutdownJailCommand;
@@ -65,19 +64,10 @@ public class TimerListener {
         Matcher jailFinishMatcher = PatternHandler.TIMER_JAIL_FINISH_PATTERN.matcher(msg);
         if (jailFinishMatcher.find()) {
             isJail = false;
-            this.unicacityAddon.fileService().data().setTimer(0);
+            this.unicacityAddon.fileService().data().setTimer(-1);
 
             if (ShutdownJailCommand.shutdownJail)
                 this.unicacityAddon.utilService().shutdownPC();
-        }
-    }
-
-    @Subscribe
-    public void onUnicacityAddonTick(UnicacityAddonTickEvent e) {
-        if (e.isPhase(UnicacityAddonTickEvent.Phase.SECOND)) {
-            if (this.unicacityAddon.fileService().data().getTimer() > 0) {
-                this.unicacityAddon.fileService().data().setTimer(this.unicacityAddon.fileService().data().getTimer() - 1);
-            }
         }
     }
 }

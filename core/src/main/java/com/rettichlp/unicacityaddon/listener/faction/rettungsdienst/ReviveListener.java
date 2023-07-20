@@ -38,7 +38,7 @@ public class ReviveListener {
 
         Matcher reviveFailureMatcher = PatternHandler.REVIVE_FAILURE_PATTERN.matcher(msg);
         if (reviveFailureMatcher.find()) {
-            this.unicacityAddon.fileService().data().setTimer(0);
+            this.unicacityAddon.fileService().data().setTimer(-1);
             this.unicacityAddon.fileService().data().setCashBalance(0);
 
             if (ShutdownGraveyardCommand.shutdownGraveyard)
@@ -66,7 +66,7 @@ public class ReviveListener {
             this.lastReviveMessageDisplayTime = System.currentTimeMillis();
 
             this.unicacityAddon.fileService().data().removeBankBalance(50); // successfully revived by medic = 50$
-            this.unicacityAddon.fileService().data().setTimer(0);
+            this.unicacityAddon.fileService().data().setTimer(-1);
 
             // message to remember how long you are not allowed to shoot after revive
             timer.schedule(new TimerTask() {
