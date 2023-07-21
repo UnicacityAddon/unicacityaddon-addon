@@ -504,8 +504,12 @@
         }
       },
       "texturePack": {
-        "name": "TexturePack Nachricht deaktivieren",
+        "name": "Texturen Paket Nachricht deaktivieren",
         "description": "Deaktiviert die TexturePack Nachricht"
+      },
+      "hitSound": {
+        "name": "Hit Sounds aktivieren",
+        "description": "Aktiviert die Hit Sounds (Unicacity deaktiviert diese durch einen Bug nach einem Rejoin)"
       },
       "atm": {
         "name": "ATM Einstellungen",
