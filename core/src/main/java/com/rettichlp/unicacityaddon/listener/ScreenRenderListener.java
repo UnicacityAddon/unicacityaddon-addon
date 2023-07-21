@@ -33,6 +33,7 @@ public class ScreenRenderListener {
     public void onScreenRender(ScreenRenderEvent e) {
         this.unicacityAddon.transportController().carInteract();
         this.unicacityAddon.transportController().processBusRouting(this.unicacityAddon);
+        this.unicacityAddon.guiController().updateSetting(true);
 
         if (GetGunPatternCommand.armament != null && System.currentTimeMillis() - GetGunPatternCommand.startTime < TimeUnit.SECONDS.toMillis(5)) {
             Weapon weapon = GetGunPatternCommand.armament.getWeapon();
@@ -45,10 +46,6 @@ public class ScreenRenderListener {
 
         if (this.unicacityAddon.utilService().command().isActiveDrugInventoryLoading()) {
             this.unicacityAddon.guiController().updateDrugInventoryMap(this.unicacityAddon);
-        }
-
-        if (!settingPath.isEmpty()) {
-            this.unicacityAddon.guiController().inventoryClick(settingPath.remove(0));
         }
     }
 

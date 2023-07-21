@@ -18,4 +18,6 @@ public abstract class GuiController {
     public abstract void updateDrugInventoryMap(UnicacityAddon unicacityAddon);
 
     public abstract void setSelectedHotbarSlot(int slotNumber);
+
+    public abstract void updateSetting(boolean expectedValue);
 }
