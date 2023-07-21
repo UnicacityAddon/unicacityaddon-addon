@@ -10,6 +10,8 @@ import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.render.ScreenRenderEvent;
 import net.labymod.api.event.client.world.ItemStackTooltipEvent;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -19,6 +21,7 @@ import java.util.concurrent.TimeUnit;
 public class ScreenRenderListener {
 
     public static int lastHoveredSlotNumber = -1;
+    public static List<Integer> settingPath = new ArrayList<>();
 
     private final UnicacityAddon unicacityAddon;
 
@@ -42,6 +45,10 @@ public class ScreenRenderListener {
 
         if (this.unicacityAddon.utilService().command().isActiveDrugInventoryLoading()) {
             this.unicacityAddon.guiController().updateDrugInventoryMap(this.unicacityAddon);
+        }
+
+        if (!settingPath.isEmpty()) {
+            this.unicacityAddon.guiController().inventoryClick(settingPath.remove(0));
         }
     }
 
