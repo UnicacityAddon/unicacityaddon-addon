@@ -113,10 +113,10 @@ public class VersionedGuiController extends GuiController {
                             }
                         });
 
-                unicacityAddon.utilService().command().setActive(false);
+                unicacityAddon.utilService().command().setActiveDrugInventoryLoading(false);
                 Minecraft.getMinecraft().player.closeScreen();
             }
-        } else if (guiScreen instanceof GuiHopper guiHopper && unicacityAddon.utilService().command().isActive()) {
+        } else if (guiScreen instanceof GuiHopper guiHopper && unicacityAddon.utilService().command().isActiveDrugInventoryLoading()) {
             int windowId = guiHopper.inventorySlots.windowId;
             if (unicacityAddon.utilService().command().getLastWindowId() == windowId)
                 return;

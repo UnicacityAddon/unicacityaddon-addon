@@ -122,11 +122,11 @@ public class VersionedGuiController extends GuiController {
                             }
                         });
 
-                unicacityAddon.utilService().command().setActive(false);
+                unicacityAddon.utilService().command().setActiveDrugInventoryLoading(false);
                 assert Minecraft.getInstance().player != null;
                 Minecraft.getInstance().player.closeContainer();
             }
-        } else if (screen instanceof HopperScreen && unicacityAddon.utilService().command().isActive()) {
+        } else if (screen instanceof HopperScreen && unicacityAddon.utilService().command().isActiveDrugInventoryLoading()) {
             HopperMenu hopperMenu = ((HopperScreen) screen).getMenu();
 
             int windowId = hopperMenu.containerId;

@@ -23,7 +23,7 @@ public class CommandUtils {
     private boolean cocaineCheck = true;
     private boolean marihuanaCheck = true;
     private boolean methCheck = true;
-    private boolean active = false;
+    private boolean activeDrugInventoryLoading = false;
     private int lastWindowId = 0;
 
     private final UnicacityAddon unicacityAddon;
@@ -59,7 +59,7 @@ public class CommandUtils {
     public void loadDrugInventory(Runnable runnable) {
         this.unicacityAddon.fileService().data().setDrugInventoryMap(new HashMap<>());
 
-        this.active = this.cocaineCheck = this.marihuanaCheck = this.methCheck = true;
+        this.activeDrugInventoryLoading = this.cocaineCheck = this.marihuanaCheck = this.methCheck = true;
         this.unicacityAddon.player().sendServerMessage("/inv");
 
         new Timer().schedule(new TimerTask() {

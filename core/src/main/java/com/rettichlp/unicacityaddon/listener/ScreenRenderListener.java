@@ -40,7 +40,7 @@ public class ScreenRenderListener {
             GetGunPatternCommand.armament = null;
         }
 
-        if (unicacityAddon.utilService().command().isActive()) {
+        if (this.unicacityAddon.utilService().command().isActiveDrugInventoryLoading()) {
             this.unicacityAddon.guiController().updateDrugInventoryMap(this.unicacityAddon);
         }
     }
