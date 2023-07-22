@@ -172,7 +172,7 @@ public class VersionedGuiController extends GuiController {
                 this.windowId = container.windowId;
 
                 if (ScreenRenderListener.settingPath.size() > 1) {
-                    Minecraft.getMinecraft().playerController.windowClick(container.windowId, ScreenRenderListener.settingPath.remove(0), 0, ClickType.PICKUP, Minecraft.getMinecraft().player);
+                    this.inventoryClick(ScreenRenderListener.settingPath.remove(0));
                 } else {
                     int slotNumber = ScreenRenderListener.settingPath.remove(0);
                     ItemStack itemStack = guiChest.inventorySlots.getInventory().get(slotNumber);
