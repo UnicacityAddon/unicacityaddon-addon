@@ -61,6 +61,9 @@ public class DefaultUnicacityAddonConfiguration extends AddonConfig implements U
     @SwitchSetting
     private final ConfigProperty<Boolean> texturePack = new ConfigProperty<>(true);
 
+    @SwitchSetting
+    private final ConfigProperty<Boolean> hitSound = new ConfigProperty<>(false);
+
     @SettingSection("automation")
     private final DefaultATMConfiguration atm = new DefaultATMConfiguration();
 
@@ -139,6 +142,11 @@ public class DefaultUnicacityAddonConfiguration extends AddonConfig implements U
     @Override
     public ConfigProperty<Boolean> texturePack() {
         return this.texturePack;
+    }
+
+    @Override
+    public ConfigProperty<Boolean> hitSound() {
+        return this.hitSound;
     }
 
     @Override

@@ -10,6 +10,8 @@ import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.render.ScreenRenderEvent;
 import net.labymod.api.event.client.world.ItemStackTooltipEvent;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -19,6 +21,7 @@ import java.util.concurrent.TimeUnit;
 public class ScreenRenderListener {
 
     public static int lastHoveredSlotNumber = -1;
+    public static List<Integer> settingPath = new ArrayList<>();
 
     private final UnicacityAddon unicacityAddon;
 
@@ -30,6 +33,7 @@ public class ScreenRenderListener {
     public void onScreenRender(ScreenRenderEvent e) {
         this.unicacityAddon.transportController().carInteract();
         this.unicacityAddon.transportController().processBusRouting(this.unicacityAddon);
+        this.unicacityAddon.guiController().updateSetting(true);
 
         if (GetGunPatternCommand.armament != null && System.currentTimeMillis() - GetGunPatternCommand.startTime < TimeUnit.SECONDS.toMillis(5)) {
             Weapon weapon = GetGunPatternCommand.armament.getWeapon();
@@ -40,7 +44,7 @@ public class ScreenRenderListener {
             GetGunPatternCommand.armament = null;
         }
 
-        if (unicacityAddon.utilService().command().isActive()) {
+        if (this.unicacityAddon.utilService().command().isActiveDrugInventoryLoading()) {
             this.unicacityAddon.guiController().updateDrugInventoryMap(this.unicacityAddon);
         }
     }

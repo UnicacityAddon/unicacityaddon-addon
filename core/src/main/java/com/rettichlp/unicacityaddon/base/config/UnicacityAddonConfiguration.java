@@ -49,6 +49,8 @@ public interface UnicacityAddonConfiguration {
 
     ConfigProperty<Boolean> texturePack();
 
+    ConfigProperty<Boolean> hitSound();
+
     // automation
 
     ATMConfiguration atm();

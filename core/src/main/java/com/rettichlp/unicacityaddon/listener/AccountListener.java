@@ -23,6 +23,8 @@ import net.labymod.api.client.component.event.HoverEvent;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -237,50 +239,56 @@ public class AccountListener {
     private void handleJoin() {
         AddonPlayer p = this.unicacityAddon.player();
 
-        new Timer().schedule(new TimerTask() {
-            @Override
-            public void run() {
+        new Thread(() -> {
+            try {
+                Thread.sleep(1000);
+
                 // MOBILEEVENTHANDLER
                 p.sendServerMessage("/togglephone");
 
+                Thread.sleep(100);
+
                 // AUTOMATE_COMMAND_SETTINGS
                 CommandConfiguration commandConfiguration = unicacityAddon.configuration().command();
-                if (commandConfiguration.enabled().get()) {
-                    // AUTOMATE_COMMAND_FIRST_SETTINGS
-                    new Timer().schedule(new TimerTask() {
-                        @Override
-                        public void run() {
-                            if (!commandConfiguration.first().getOrDefault("").isEmpty())
-                                p.sendServerMessage(commandConfiguration.first().get());
-                        }
-                    }, 1500);
+                String command;
 
-                    // AUTOMATE_COMMAND_SECOND_SETTINGS
-                    new Timer().schedule(new TimerTask() {
-                        @Override
-                        public void run() {
-                            if (!commandConfiguration.second().getOrDefault("").isEmpty())
-                                p.sendServerMessage(commandConfiguration.second().get());
-                        }
-                    }, 2000);
+                // AUTOMATE_COMMAND_FIRST_SETTINGS
+                command = commandConfiguration.first().get();
+                if (commandConfiguration.enabled().get() && !command.isEmpty()) {
+                    p.sendServerMessage(command);
+                    this.unicacityAddon.logger().info("Sent first automated command: {}", command);
+                    Thread.sleep(100);
+                }
+                // AUTOMATE_COMMAND_SECOND_SETTINGS
+                command = commandConfiguration.second().get();
+                if (commandConfiguration.enabled().get() && !command.isEmpty()) {
+                    p.sendServerMessage(commandConfiguration.second().get());
+                    this.unicacityAddon.logger().info("Sent second automated command: {}", command);
+                    Thread.sleep(100);
+                }
+                // AUTOMATE_COMMAND_THIRD_SETTINGS
+                command = commandConfiguration.third().get();
+                if (commandConfiguration.enabled().get() && !command.isEmpty()) {
+                    p.sendServerMessage(command);
+                    this.unicacityAddon.logger().info("Sent third automated command: {}", command);
+                    Thread.sleep(100);
+                }
 
-                    // AUTOMATE_COMMAND_THIRD_SETTINGS
-                    new Timer().schedule(new TimerTask() {
-                        @Override
-                        public void run() {
-                            if (!commandConfiguration.third().getOrDefault("").isEmpty())
-                                p.sendServerMessage(commandConfiguration.third().get());
-                        }
-                    }, 2500);
+                // FORCE ENABLE HIT SOUNDS
+                if (this.unicacityAddon.configuration().hitSound().get()) {
+                    ScreenRenderListener.settingPath = new ArrayList<>(Arrays.asList(1, 2));
+                    p.sendServerMessage("/settings");
+                    this.unicacityAddon.logger().info("Force activate hit sounds");
+                    Thread.sleep(1000);
                 }
 
                 // LOAD BOMB TIME
-                new Thread(() -> {
-                    AccountListener.this.unicacityAddon.utilService().debug("Loading bomb place time");
-                    long placeTime = AccountListener.this.unicacityAddon.api().sendEventRequest().getBomb();
-                    Laby.labyAPI().eventBus().fire(new BombPlantedEvent(placeTime));
-                }).start();
+                AccountListener.this.unicacityAddon.utilService().debug("Loading bomb place time");
+                long placeTime = AccountListener.this.unicacityAddon.api().sendEventRequest().getBomb();
+                Laby.labyAPI().eventBus().fire(new BombPlantedEvent(placeTime));
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
             }
-        }, 1000);
+        }).start();
     }
 }

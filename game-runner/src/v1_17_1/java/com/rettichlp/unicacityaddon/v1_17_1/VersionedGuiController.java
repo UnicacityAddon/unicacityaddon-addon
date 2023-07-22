@@ -4,6 +4,7 @@ import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
 import com.rettichlp.unicacityaddon.controller.GuiController;
+import com.rettichlp.unicacityaddon.listener.ScreenRenderListener;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMaps;
 import net.labymod.api.models.Implements;
 import net.labymod.api.nbt.NBTTagType;
@@ -35,6 +36,8 @@ import java.util.regex.Pattern;
 @Implements(GuiController.class)
 public class VersionedGuiController extends GuiController {
 
+    private int containerId = 0;
+
     @Override
     public int getSlotNumberByDisplayName(String displayName) {
         int slotNumber = -1;
@@ -60,17 +63,17 @@ public class VersionedGuiController extends GuiController {
     public void inventoryClick(int slotNumber) {
         Screen screen = Minecraft.getInstance().screen;
 
-        int containerId = 0;
+        this.containerId = 0;
         if (screen instanceof ContainerScreen && ((ContainerScreen) screen).getMenu() instanceof ChestMenu) {
-            containerId = ((ContainerScreen) screen).getMenu().containerId;
+            this.containerId = ((ContainerScreen) screen).getMenu().containerId;
         } else if (screen instanceof HopperScreen && ((HopperScreen) screen).getMenu() instanceof HopperMenu) {
-            containerId = ((HopperScreen) screen).getMenu().containerId;
+            this.containerId = ((HopperScreen) screen).getMenu().containerId;
         }
 
         LocalPlayer localPlayer = Minecraft.getInstance().player;
         assert localPlayer != null;
 
-        ServerboundContainerClickPacket serverboundContainerClickPacket = new ServerboundContainerClickPacket(containerId, 0, slotNumber, 1, ClickType.PICKUP, localPlayer.containerMenu.getCarried(), Int2ObjectMaps.emptyMap());
+        ServerboundContainerClickPacket serverboundContainerClickPacket = new ServerboundContainerClickPacket(this.containerId, 0, slotNumber, 1, ClickType.PICKUP, localPlayer.containerMenu.getCarried(), Int2ObjectMaps.emptyMap());
         localPlayer.connection.send(serverboundContainerClickPacket);
     }
 
@@ -80,11 +83,11 @@ public class VersionedGuiController extends GuiController {
         if (screen instanceof ContainerScreen && ((ContainerScreen) screen).getMenu() instanceof ChestMenu) {
             ChestMenu chestMenu = ((ContainerScreen) screen).getMenu();
 
-            int windowId = chestMenu.containerId;
-            if (unicacityAddon.utilService().command().getLastWindowId() == windowId)
+            this.containerId = chestMenu.containerId;
+            if (unicacityAddon.utilService().command().getLastWindowId() == this.containerId)
                 return;
 
-            unicacityAddon.utilService().command().setLastWindowId(windowId);
+            unicacityAddon.utilService().command().setLastWindowId(this.containerId);
 
             if (unicacityAddon.utilService().command().isCocaineCheck()) {
                 unicacityAddon.utilService().command().setCocaineCheck(false);
@@ -121,18 +124,18 @@ public class VersionedGuiController extends GuiController {
                             }
                         });
 
-                unicacityAddon.utilService().command().setActive(false);
+                unicacityAddon.utilService().command().setActiveDrugInventoryLoading(false);
                 assert Minecraft.getInstance().player != null;
                 Minecraft.getInstance().player.closeContainer();
             }
-        } else if (screen instanceof HopperScreen && unicacityAddon.utilService().command().isActive()) {
+        } else if (screen instanceof HopperScreen && unicacityAddon.utilService().command().isActiveDrugInventoryLoading()) {
             HopperMenu hopperMenu = ((HopperScreen) screen).getMenu();
 
-            int windowId = hopperMenu.containerId;
-            if (unicacityAddon.utilService().command().getLastWindowId() == windowId)
+            this.containerId = hopperMenu.containerId;
+            if (unicacityAddon.utilService().command().getLastWindowId() == this.containerId)
                 return;
 
-            unicacityAddon.utilService().command().setLastWindowId(windowId);
+            unicacityAddon.utilService().command().setLastWindowId(this.containerId);
 
             hopperMenu.getItems().stream()
                     .filter(itemStack -> !itemStack.isEmpty())
@@ -168,5 +171,32 @@ public class VersionedGuiController extends GuiController {
     public void setSelectedHotbarSlot(int slotNumber) {
         assert Minecraft.getInstance().player != null;
         Minecraft.getInstance().player.getInventory().selected = slotNumber;
+    }
+
+    @Override
+    public void updateSetting(boolean expectedValue) {
+        Screen screen = Minecraft.getInstance().screen;
+        if (screen instanceof ContainerScreen && ((ContainerScreen) screen).getMenu() instanceof ChestMenu && !ScreenRenderListener.settingPath.isEmpty()) {
+            ChestMenu chestMenu = ((ContainerScreen) screen).getMenu();
+
+            if (chestMenu.containerId != this.containerId) {
+                this.containerId = chestMenu.containerId;
+
+                if (ScreenRenderListener.settingPath.size() > 1) {
+                    this.inventoryClick(ScreenRenderListener.settingPath.remove(0));
+                } else {
+                    int slotNumber = ScreenRenderListener.settingPath.remove(0);
+                    ItemStack itemStack = chestMenu.getItems().get(slotNumber);
+                    assert itemStack.getTag() != null;
+                    CompoundTag compoundTag = itemStack.getTag().getCompound("display");
+                    ListTag lore = compoundTag.getList("Lore", NBTTagType.STRING.getId());
+                    if (lore.getString(1).equals("§cAktiviere den Hitsound") && expectedValue) {
+                        this.inventoryClick(slotNumber);
+                    }
+                    assert Minecraft.getInstance().player != null;
+                    Minecraft.getInstance().player.closeContainer();
+                }
+            }
+        }
     }
 }

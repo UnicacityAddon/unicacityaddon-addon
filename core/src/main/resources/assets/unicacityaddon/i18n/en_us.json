@@ -507,6 +507,10 @@
         "name": "Disable TexturePack message",
         "description": "Disables the TexturePack message"
       },
+      "hitSound": {
+        "name": "Enable hit sounds",
+        "description": "Enables the hit sounds (Unicacity disables them due to a bug after a rejoin"
+      },
       "atm": {
         "name": "ATM Settings",
         "info": {
