@@ -304,9 +304,9 @@ public class DrugListener {
             if (drugVaultInfoLSDMatcher.find()) {
                 e.setMessage(Message.getBuilder()
                         .of("»").color(ColorCode.DARK_GRAY).advance().space()
-                        .of("Wundertüte").color(ColorCode.GOLD).advance()
+                        .of("Wundertüten").color(ColorCode.GOLD).advance()
                         .of(":").color(ColorCode.DARK_GRAY).advance().space()
-                        .of(drugVaultInfoLSDMatcher.group(2)).color(ColorCode.YELLOW).advance().space()
+                        .of(drugVaultInfoLSDMatcher.group(1)).color(ColorCode.YELLOW).advance().space()
                         .of("Stück").color(ColorCode.YELLOW).advance().createComponent());
                 return;
             }
