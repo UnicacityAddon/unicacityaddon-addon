@@ -43,8 +43,6 @@ public class ProtectionMoneyCommand extends UnicacityCommand {
                     .screenshot(screenshot)
                     .send().getInfo();
 
-            //TODO: Weiterleiten an /activity/add?passwort={pw}&member={uuid}&specialisedType={playerName}&value={price}&screenshot={screenshot}
-
             p.sendAPIMessage(info, true);
         }).start();
         return true;

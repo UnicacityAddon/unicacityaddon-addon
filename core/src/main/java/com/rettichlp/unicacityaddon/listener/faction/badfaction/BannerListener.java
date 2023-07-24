@@ -54,8 +54,6 @@ public class BannerListener {
                         .type("banner")
                         .send().getInfo();
 
-                //TODO: Weiterleiten an /activity/add?passwort={pw}&member={uuid}&banner=true
-
                 p.sendAPIMessage(info, true);
             }).start();
         }
