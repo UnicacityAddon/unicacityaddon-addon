@@ -7,6 +7,9 @@
       "bomb": {
         "name": "Bomben Timer"
       },
+      "balance": {
+        "name": "Kontostand"
+      },
       "car": {
         "name": "Auto Info"
       },

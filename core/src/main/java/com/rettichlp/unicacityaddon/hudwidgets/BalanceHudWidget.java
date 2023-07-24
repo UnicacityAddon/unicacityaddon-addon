@@ -11,29 +11,30 @@ import java.text.NumberFormat;
 import java.util.Locale;
 
 /**
+ * @author Gelegenheitscode
  * @author RettichLP
  */
-public class MoneyHudWidget extends TextHudWidget<TextHudWidgetConfig> {
+public class BalanceHudWidget extends TextHudWidget<TextHudWidgetConfig> {
 
     private final NumberFormat numberFormat = NumberFormat.getNumberInstance(new Locale("da", "DK"));
-    private TextLine cash;
+    private TextLine bank;
 
     private final UnicacityAddon unicacityAddon;
 
-    public MoneyHudWidget(UnicacityAddon unicacityAddon) {
-        super("money");
+    public BalanceHudWidget(UnicacityAddon unicacityAddon) {
+        super("balance");
         this.unicacityAddon = unicacityAddon;
     }
 
     @Override
     public void load(TextHudWidgetConfig config) {
         super.load(config);
-        this.cash = super.createLine("Bargeld", this.numberFormat.format(this.unicacityAddon.fileService().data().getCashBalance()) + "$");
+        this.bank = super.createLine("Bank", this.numberFormat.format(this.unicacityAddon.fileService().data().getBankBalance()) + "$");
         this.setIcon(this.unicacityAddon.utilService().icon());
     }
 
     @Subscribe
     public void onOfflineDataChanged(OfflineDataChangedEvent e) {
-        this.cash.updateAndFlush(this.numberFormat.format(e.getData().getCashBalance()) + "$");
+        this.bank.updateAndFlush(this.numberFormat.format(e.getData().getBankBalance()) + "$");
     }
 }
