@@ -31,12 +31,12 @@ public class MoneyHudWidget extends TextHudWidget<MoneyHudWidget.MoneyHudWidgetC
     @Override
     public void load(MoneyHudWidgetConfig config) {
         super.load(config);
-
         this.bank = super.createLine("Bank", this.numberFormat.format(this.unicacityAddon.fileService().data().getBankBalance()) + "$");
         this.cash = super.createLine("Bargeld", this.numberFormat.format(this.unicacityAddon.fileService().data().getCashBalance()) + "$");
         this.setIcon(this.unicacityAddon.utilService().icon());
 
-        this.bank.setState(config.showBankMoney().get() ? TextLine.State.VISIBLE : TextLine.State.HIDDEN);
+        this.bank.setState(config.showBank().get() ? TextLine.State.VISIBLE : TextLine.State.HIDDEN);
+        this.cash.setState(config.showCash().get() ? TextLine.State.VISIBLE : TextLine.State.HIDDEN);
     }
 
     @Subscribe
@@ -48,10 +48,17 @@ public class MoneyHudWidget extends TextHudWidget<MoneyHudWidget.MoneyHudWidgetC
     public static class MoneyHudWidgetConfig extends TextHudWidgetConfig {
 
         @SwitchSetting
-        private final ConfigProperty<Boolean> showBankBalance = new ConfigProperty<>(true);
+        private final ConfigProperty<Boolean> showBank = new ConfigProperty<>(true);
 
-        public ConfigProperty<Boolean> showBankMoney() {
-            return this.showBankBalance;
+        @SwitchSetting
+        private final ConfigProperty<Boolean> showCash = new ConfigProperty<>(true);
+
+        public ConfigProperty<Boolean> showBank() {
+            return this.showBank;
+        }
+
+        public ConfigProperty<Boolean> showCash() {
+            return this.showCash;
         }
     }
 }

@@ -27,8 +27,11 @@
       },
       "money": {
         "name": "Money",
-        "showBankBalance": {
+        "showBank": {
           "name": "Show bank balance"
+        },
+        "showCash": {
+          "name": "Show cash balance"
         }
       },
       "payday": {
