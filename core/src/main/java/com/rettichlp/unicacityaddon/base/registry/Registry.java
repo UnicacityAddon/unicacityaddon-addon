@@ -49,6 +49,7 @@ import com.rettichlp.unicacityaddon.commands.api.YasinCommand;
 import com.rettichlp.unicacityaddon.commands.api.activity.DrugActivityCommand;
 import com.rettichlp.unicacityaddon.commands.api.activity.MoneyActivityCommand;
 import com.rettichlp.unicacityaddon.commands.api.activity.PayEquipCommand;
+import com.rettichlp.unicacityaddon.commands.api.activity.ProtectionMoneyCommand;
 import com.rettichlp.unicacityaddon.commands.api.activity.RoleplayActivityCommand;
 import com.rettichlp.unicacityaddon.commands.faction.CheckActiveMembersCommand;
 import com.rettichlp.unicacityaddon.commands.faction.DropDrugAllCommand;
@@ -343,6 +344,7 @@ public class Registry {
             OwnUseGiftCommand.class,
             PayEquipCommand.class,
             PlayerGroupCommand.class,
+            ProtectionMoneyCommand.class,
             PunishCommand.class,
             RecipeAcceptCommand.class,
             RecipeCommand.class,
