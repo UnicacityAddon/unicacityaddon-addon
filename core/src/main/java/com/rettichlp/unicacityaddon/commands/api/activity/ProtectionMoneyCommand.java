@@ -7,6 +7,7 @@ import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
 import com.rettichlp.unicacityaddon.base.enums.Activity;
 import com.rettichlp.unicacityaddon.base.registry.UnicacityCommand;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
+import com.rettichlp.unicacityaddon.base.services.utils.MathUtils;
 
 import java.util.List;
 
@@ -15,6 +16,7 @@ import java.util.List;
  */
 @UCCommand(prefix = "schutzgeld", aliases = {"sgeld"}, usage = "[Spieler] [Preis] [Screenshot]")
 public class ProtectionMoneyCommand extends UnicacityCommand {
+
     private final UnicacityAddon unicacityAddon;
 
     public ProtectionMoneyCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
@@ -26,7 +28,7 @@ public class ProtectionMoneyCommand extends UnicacityCommand {
     public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
 
-        if (arguments.length < 3) {
+        if (arguments.length < 3 || !MathUtils.isInteger(arguments[1])) {
             sendUsage();
             return true;
         }
@@ -50,7 +52,6 @@ public class ProtectionMoneyCommand extends UnicacityCommand {
 
     @Override
     public List<String> complete(String[] arguments) {
-        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments)
-                .build();
+        return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments).build();
     }
 }
