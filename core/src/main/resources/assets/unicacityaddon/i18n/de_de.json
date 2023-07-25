@@ -26,7 +26,13 @@
         "name": "Maske"
       },
       "money": {
-        "name": "Geld"
+        "name": "Geld",
+        "showBank": {
+          "name": "Kontostand anzeigen"
+        },
+        "showCash": {
+          "name": "Bargeld anzeigen"
+        }
       },
       "payday": {
         "name": "Zeit bis zum PayDay"

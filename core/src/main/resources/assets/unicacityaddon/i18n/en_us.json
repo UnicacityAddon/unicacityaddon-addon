@@ -26,7 +26,13 @@
         "name": "Mask"
       },
       "money": {
-        "name": "Money"
+        "name": "Money",
+        "showBank": {
+          "name": "Show bank balance"
+        },
+        "showCash": {
+          "name": "Show cash balance"
+        }
       },
       "payday": {
         "name": "Time to PayDay"
