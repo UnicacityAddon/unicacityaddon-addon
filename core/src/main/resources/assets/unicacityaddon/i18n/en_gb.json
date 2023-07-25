@@ -7,9 +7,6 @@
       "bomb": {
         "name": "Bomb Timer"
       },
-      "balance": {
-        "name": "Balance"
-      },
       "car": {
         "name": "Car Info"
       },
@@ -29,7 +26,10 @@
         "name": "Mask"
       },
       "money": {
-        "name": "Money"
+        "name": "Money",
+        "showBankBalance": {
+          "name": "Show bank balance"
+        }
       },
       "payday": {
         "name": "Time to PayDay"

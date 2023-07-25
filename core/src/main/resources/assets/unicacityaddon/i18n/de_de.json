@@ -7,9 +7,6 @@
       "bomb": {
         "name": "Bomben Timer"
       },
-      "balance": {
-        "name": "Kontostand"
-      },
       "car": {
         "name": "Auto Info"
       },
@@ -29,7 +26,10 @@
         "name": "Maske"
       },
       "money": {
-        "name": "Geld"
+        "name": "Geld",
+        "showBankBalance": {
+          "name": "Kontostand anzeigen"
+        }
       },
       "payday": {
         "name": "Zeit bis zum PayDay"
