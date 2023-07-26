@@ -88,15 +88,15 @@ public class PunishCommand extends UnicacityCommand {
                 p.sendServerMessage("/warn " + arguments[0] + " " + reason);
             }
 
-        String debugString = "Punished " + arguments[0] + " with " +
-                "Checkpoints: " + checkpoints + ", " +
-                (banDuration < 0 ? "Permanenter-Ban: true, Temporärer-Ban: false" : "Permanenter-Ban: false, Temporärer-Ban: " + banDuration) + ", " +
-                "Treuebonus-Reset: " + loyalityPointReset + ", " +
-                "Waffensperre: " + weaponLock + ", " +
-                "Fraktionssperre: " + factionLock + ", " +
-                "Ad-Sperre: " + adLock + ", " +
-                "Kick: " + adLock + ", " +
-                "Warns: " + warnAmmount;
+        String debugString = "Punished " + arguments[0] + " for " + reason + ": " +
+                "Checkpoints=" + checkpoints + ", " +
+                (banDuration < 0 ? "Permanenter-Ban=true, Temporärer-Ban=false" : "Permanenter-Ban=false, Temporärer-Ban=" + banDuration) + ", " +
+                "Treuebonus-Reset=" + loyalityPointReset + ", " +
+                "Waffensperre=" + weaponLock + ", " +
+                "Fraktionssperre=" + factionLock + ", " +
+                "Ad-Sperre=" + adLock + ", " +
+                "Kick=" + kick + ", " +
+                "Warns=" + warnAmmount;
 
         this.unicacityAddon.utilService().debug(debugString);
         this.unicacityAddon.logger().info(debugString);
