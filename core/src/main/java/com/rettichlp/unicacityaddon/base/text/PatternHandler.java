@@ -27,8 +27,8 @@ public class PatternHandler {
      */
     public static final Pattern BOMB_PLANTED_PATTERN = Pattern.compile("^News: ACHTUNG! Es wurde eine Bombe in der Nähe von (?<location>.+) gefunden!$");
     public static final Pattern BOMB_REMOVED_PATTERN = Pattern.compile("^News: Die Bombe konnte (nicht|erfolgreich) entschärft werden!$");
-    public static final Pattern BANK_ROB_STARTED_PATTERN = Pattern.compile("");
-    public static final Pattern BANK_ROB_ENDED_PATTERN = Pattern.compile("");
+    public static final Pattern BANK_ROB_STARTED_PATTERN = Pattern.compile("^HQ: Die Staatsbank wird ausgeraubt!$");
+    public static final Pattern BANK_ROB_ENDED_PATTERN = Pattern.compile("^HQ: Der Staatsbankraub wurde erfolgreich verhindert!$|^HQ: Der Staatsbankraub konnte nicht verhindert werden!$");
 
     /**
      * Pattern for car interaction
