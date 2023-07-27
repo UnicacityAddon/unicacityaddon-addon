@@ -107,7 +107,7 @@ public class MajorEventListener {
 //            this.unicacityAddon.soundController().playBankRobStartedSound();
 
             if (p.getFaction().equals(Faction.POLIZEI)) {
-//                this.unicacityAddon.api().sendEventBankRobRequest(System.currentTimeMillis());
+                this.unicacityAddon.api().sendEventBankRobRequest(System.currentTimeMillis());
             }
 
             return;

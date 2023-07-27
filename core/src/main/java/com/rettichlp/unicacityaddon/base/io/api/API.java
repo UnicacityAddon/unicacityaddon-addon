@@ -109,6 +109,7 @@ public class API {
     private final String TOP_SUB_PATH = "top";
     private final String DONE_SUB_PATH = "done";
     private final String USERS_SUB_PATH = "users";
+    private final String BANK_ROB_SUB_PATH = "bankrob";
     private final String BOMB_SUB_PATH = "bomb";
     private final String GANGWAR_SUB_PATH = "gangwar";
     private final String UPDATE_SUB_PATH = "update";
@@ -368,6 +369,16 @@ public class API {
                 .nonProd(this.unicacityAddon.configuration().local().get())
                 .applicationPath(ApplicationPath.EVENT)
                 .getAsJsonObjectAndParse(Event.class);
+    }
+
+    public void sendEventBankRobRequest(long startTime) {
+        RequestBuilder.getBuilder(this.unicacityAddon)
+                .nonProd(this.unicacityAddon.configuration().local().get())
+                .applicationPath(ApplicationPath.EVENT)
+                .subPath(BANK_ROB_SUB_PATH)
+                .parameter(Map.of(
+                        "startTime", String.valueOf(startTime)))
+                .sendAsync();
     }
 
     public void sendEventBombRequest(long startTime) {
