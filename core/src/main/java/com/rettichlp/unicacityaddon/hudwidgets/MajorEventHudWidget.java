@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit;
 public class MajorEventHudWidget extends TextHudWidget<TextHudWidgetConfig> {
 
     private TextLine textLine;
-    private Integer bankTime;
+    private Integer bankRobTime;
     private Integer bombTime;
 
     private final UnicacityAddon unicacityAddon;
@@ -39,19 +39,19 @@ public class MajorEventHudWidget extends TextHudWidget<TextHudWidgetConfig> {
 
     @Override
     public boolean isVisibleInGame() {
-        return this.bankTime != null || this.bombTime != null;
+        return this.bankRobTime != null || this.bombTime != null;
     }
 
     @Subscribe
     public void onBankRobStarted(BankRobStartedEvent e) {
         long delay = e.getDelaySincePlace();
         this.unicacityAddon.utilService().debug("Start bank with delay = " + delay);
-        this.bankTime = Math.toIntExact(TimeUnit.MILLISECONDS.toSeconds(delay));
+        this.bankRobTime = Math.toIntExact(TimeUnit.MILLISECONDS.toSeconds(delay));
     }
 
     @Subscribe
     public void onBankRobEnded(BankRobEndedEvent e) {
-        this.bankTime = null;
+        this.bankRobTime = null;
     }
 
     @Subscribe
@@ -71,12 +71,12 @@ public class MajorEventHudWidget extends TextHudWidget<TextHudWidgetConfig> {
         if (e.isPhase(UnicacityAddonTickEvent.Phase.SECOND)) {
             StringBuilder completeStringBuilder = new StringBuilder();
 
-            if (this.bankTime != null) {
-                String bankTimeString = (this.bankTime >= 1500 ? ColorCode.RED.getCode() : "") + this.unicacityAddon.utilService().text().parseTimer(this.bankTime);
+            if (this.bankRobTime != null) {
+                String bankTimeString = (this.bankRobTime >= 1500 ? ColorCode.RED.getCode() : "") + this.unicacityAddon.utilService().text().parseTimer(this.bankRobTime);
                 completeStringBuilder.append(bankTimeString);
             }
 
-            if (this.bankTime != null && this.bombTime != null) {
+            if (this.bankRobTime != null && this.bombTime != null) {
                 completeStringBuilder.append(" | ");
             }
 
@@ -86,7 +86,7 @@ public class MajorEventHudWidget extends TextHudWidget<TextHudWidgetConfig> {
             }
 
             textLine.updateAndFlush(completeStringBuilder.toString());
-            this.bankTime = this.bankTime >= 1800 ? null : this.bankTime + 1;
+            this.bankRobTime = this.bankRobTime >= 1800 ? null : this.bankRobTime + 1;
             this.bombTime = this.bombTime >= 1200 ? null : this.bombTime + 1;
         }
     }
