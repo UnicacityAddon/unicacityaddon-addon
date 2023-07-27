@@ -21,12 +21,14 @@ public class PatternHandler {
     public static final Pattern STRIP_PREFIX_PATTERN = Pattern.compile("\\[[a-zA-Z0-9]+]");
 
     /**
-     * Pattern for bomb timer
+     * Pattern for major event timer
      *
-     * @see com.rettichlp.unicacityaddon.listener.faction.terroristen.BombListener
+     * @see com.rettichlp.unicacityaddon.listener.faction.MajorEventListener
      */
     public static final Pattern BOMB_PLANTED_PATTERN = Pattern.compile("^News: ACHTUNG! Es wurde eine Bombe in der Nähe von (?<location>.+) gefunden!$");
     public static final Pattern BOMB_REMOVED_PATTERN = Pattern.compile("^News: Die Bombe konnte (nicht|erfolgreich) entschärft werden!$");
+    public static final Pattern BANK_ROB_STARTED_PATTERN = Pattern.compile("");
+    public static final Pattern BANK_ROB_ENDED_PATTERN = Pattern.compile("");
 
     /**
      * Pattern for car interaction

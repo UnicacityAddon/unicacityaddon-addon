@@ -136,6 +136,7 @@ import com.rettichlp.unicacityaddon.listener.faction.ContractListener;
 import com.rettichlp.unicacityaddon.listener.faction.EmergencyServiceListener;
 import com.rettichlp.unicacityaddon.listener.faction.FDSFChatListener;
 import com.rettichlp.unicacityaddon.listener.faction.FDoorListener;
+import com.rettichlp.unicacityaddon.listener.faction.MajorEventListener;
 import com.rettichlp.unicacityaddon.listener.faction.MemberInfoListener;
 import com.rettichlp.unicacityaddon.listener.faction.ReinforcementListener;
 import com.rettichlp.unicacityaddon.listener.faction.ShareLocationListener;
@@ -149,7 +150,6 @@ import com.rettichlp.unicacityaddon.listener.faction.rettungsdienst.FirstAidList
 import com.rettichlp.unicacityaddon.listener.faction.rettungsdienst.MedicationListener;
 import com.rettichlp.unicacityaddon.listener.faction.rettungsdienst.ReviveListener;
 import com.rettichlp.unicacityaddon.listener.faction.state.WantedListener;
-import com.rettichlp.unicacityaddon.listener.faction.terroristen.BombListener;
 import com.rettichlp.unicacityaddon.listener.house.HouseDataListener;
 import com.rettichlp.unicacityaddon.listener.house.HouseInteractionListener;
 import com.rettichlp.unicacityaddon.listener.house.HouseRenterListener;
@@ -233,7 +233,6 @@ public class Registry {
             BannerListener.class,
             BlacklistListener.class,
             BlacklistModifyListener.class,
-            BombListener.class,
             BroadcastListener.class,
             CarListener.class,
             ChatLogReceiveChatListener.class,
@@ -255,6 +254,7 @@ public class Registry {
             JobListener.class,
             KarmaMessageListener.class,
             LabyConnectListener.class,
+            MajorEventListener.class,
             MedicationListener.class,
             MemberInfoListener.class,
             MobileListener.class,
