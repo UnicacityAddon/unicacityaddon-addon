@@ -74,6 +74,7 @@ public class MajorEventHudWidget extends TextHudWidget<TextHudWidgetConfig> {
             if (this.bankRobTime != null) {
                 String bankTimeString = (this.bankRobTime >= 1500 ? ColorCode.RED.getCode() : "") + this.unicacityAddon.utilService().text().parseTimer(this.bankRobTime);
                 completeStringBuilder.append(bankTimeString);
+                this.bankRobTime = this.bankRobTime >= 1800 ? null : this.bankRobTime + 1;
             }
 
             if (this.bankRobTime != null && this.bombTime != null) {
@@ -83,11 +84,12 @@ public class MajorEventHudWidget extends TextHudWidget<TextHudWidgetConfig> {
             if (this.bombTime != null) {
                 String bombTimeString = (this.bombTime >= 780 ? ColorCode.RED.getCode() : "") + this.unicacityAddon.utilService().text().parseTimer(this.bombTime);
                 completeStringBuilder.append(bombTimeString);
+                this.bombTime = this.bombTime >= 1200 ? null : this.bombTime + 1;
             }
 
-            textLine.updateAndFlush(completeStringBuilder.toString());
-            this.bankRobTime = this.bankRobTime >= 1800 ? null : this.bankRobTime + 1;
-            this.bombTime = this.bombTime >= 1200 ? null : this.bombTime + 1;
+            if (!completeStringBuilder.isEmpty()) {
+                textLine.updateAndFlush(completeStringBuilder.toString());
+            }
         }
     }
 }
