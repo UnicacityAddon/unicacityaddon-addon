@@ -15,15 +15,15 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author RettichLP
  */
-public class BombHudWidget extends TextHudWidget<TextHudWidgetConfig> {
+public class MajorEventHudWidget extends TextHudWidget<TextHudWidgetConfig> {
 
     private TextLine textLine;
     private Integer time;
 
     private final UnicacityAddon unicacityAddon;
 
-    public BombHudWidget(UnicacityAddon unicacityAddon) {
-        super("bomb");
+    public MajorEventHudWidget(UnicacityAddon unicacityAddon) {
+        super("majorEvent");
         this.unicacityAddon = unicacityAddon;
     }
 

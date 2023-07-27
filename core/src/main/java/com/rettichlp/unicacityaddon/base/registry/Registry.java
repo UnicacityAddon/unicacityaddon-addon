@@ -99,12 +99,12 @@ import com.rettichlp.unicacityaddon.commands.teamspeak.MoveToCommand;
 import com.rettichlp.unicacityaddon.commands.teamspeak.TSFindCommand;
 import com.rettichlp.unicacityaddon.commands.teamspeak.TSJoinCommand;
 import com.rettichlp.unicacityaddon.hudwidgets.AmmunitionHudWidget;
-import com.rettichlp.unicacityaddon.hudwidgets.BombHudWidget;
 import com.rettichlp.unicacityaddon.hudwidgets.CarHudWidget;
 import com.rettichlp.unicacityaddon.hudwidgets.EmergencyServiceHudWidget;
 import com.rettichlp.unicacityaddon.hudwidgets.HearthHudWidget;
 import com.rettichlp.unicacityaddon.hudwidgets.InventoryHudWidget;
 import com.rettichlp.unicacityaddon.hudwidgets.JobHudWidget;
+import com.rettichlp.unicacityaddon.hudwidgets.MajorEventHudWidget;
 import com.rettichlp.unicacityaddon.hudwidgets.MaskHudWidget;
 import com.rettichlp.unicacityaddon.hudwidgets.MoneyHudWidget;
 import com.rettichlp.unicacityaddon.hudwidgets.PayDayHudWidget;
@@ -212,12 +212,12 @@ public class Registry {
 
     private final HashSet<Class<?>> hudWidgetList = Sets.newHashSet(
             AmmunitionHudWidget.class,
-            BombHudWidget.class,
             CarHudWidget.class,
             EmergencyServiceHudWidget.class,
             HearthHudWidget.class,
             InventoryHudWidget.class,
             JobHudWidget.class,
+            MajorEventHudWidget.class,
             MaskHudWidget.class,
             MoneyHudWidget.class,
             PayDayHudWidget.class,
