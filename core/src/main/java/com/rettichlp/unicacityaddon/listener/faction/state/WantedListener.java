@@ -131,8 +131,8 @@ public class WantedListener {
                 this.unicacityAddon.api().sendStatisticAddRequest(StatisticType.KILL);
                 this.unicacityAddon.player().sendMessage(Message.getBuilder()
                         .of("[⬆]").color(ColorCode.BLUE)
-                                .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Aktivität eintrage").color(ColorCode.DARK_BLUE).advance().createComponent())
-                                .clickEvent(ClickEvent.Action.RUN_COMMAND, "/activitytest kill")
+                                .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Aktivität eintragen").color(ColorCode.DARK_BLUE).advance().createComponent())
+                                .clickEvent(ClickEvent.Action.RUN_COMMAND, "/activitytest kills")
                                 .advance()
                         .createComponent());
             }
@@ -162,7 +162,7 @@ public class WantedListener {
             if(playerName.equals(this.unicacityAddon.player().getName())) {
                 this.unicacityAddon.player().sendMessage(Message.getBuilder()
                         .of("[⬆]").color(ColorCode.BLUE)
-                                .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Aktivität eintrage").color(ColorCode.DARK_BLUE).advance().createComponent())
+                                .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Aktivität eintragen").color(ColorCode.DARK_BLUE).advance().createComponent())
                                 .clickEvent(ClickEvent.Action.RUN_COMMAND, "/activitytest verhaftung")
                                 .advance()
                         .createComponent());
