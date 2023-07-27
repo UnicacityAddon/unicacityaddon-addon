@@ -5,6 +5,7 @@ import com.rettichlp.unicacityaddon.api.statistic.GamePlay;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.config.join.CommandConfiguration;
 import com.rettichlp.unicacityaddon.base.config.join.PasswordConfiguration;
+import com.rettichlp.unicacityaddon.base.events.BankRobStartedEvent;
 import com.rettichlp.unicacityaddon.base.events.BombPlantedEvent;
 import com.rettichlp.unicacityaddon.base.events.HearthChangeEvent;
 import com.rettichlp.unicacityaddon.base.events.MaskPutOnEvent;
@@ -282,10 +283,12 @@ public class AccountListener {
                     Thread.sleep(1000);
                 }
 
-                // LOAD BOMB TIME
-                AccountListener.this.unicacityAddon.utilService().debug("Loading bomb place time");
-                long placeTime = AccountListener.this.unicacityAddon.api().sendEventRequest().getBomb();
-                Laby.labyAPI().eventBus().fire(new BombPlantedEvent(placeTime));
+                // LOAD MAJOR EVENT TIME
+                AccountListener.this.unicacityAddon.utilService().debug("Loading major event time");
+                long bankRobTime = AccountListener.this.unicacityAddon.api().sendEventRequest().getBankRob();
+                Laby.labyAPI().eventBus().fire(new BankRobStartedEvent(bankRobTime));
+                long bombTime = AccountListener.this.unicacityAddon.api().sendEventRequest().getBomb();
+                Laby.labyAPI().eventBus().fire(new BombPlantedEvent(bombTime));
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }

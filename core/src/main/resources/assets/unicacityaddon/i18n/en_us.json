@@ -4,8 +4,8 @@
       "ammunition": {
         "name": "Ammunition"
       },
-      "bomb": {
-        "name": "Bomb Timer"
+      "majorEvent": {
+        "name": "Major Event Timer"
       },
       "car": {
         "name": "Car Info"
