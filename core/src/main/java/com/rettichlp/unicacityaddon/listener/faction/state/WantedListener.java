@@ -147,7 +147,6 @@ public class WantedListener {
             int wpAmount = getWpAmountAndDelete(targetName);
             boolean isAddonPlayer = playerName.equals(this.unicacityAddon.player().getName());
 
-
             if (hqMessages) {
                 e.setMessage(Message.getBuilder().of("Eingesperrt").color(ColorCode.RED).advance().space()
                         .of("-").color(ColorCode.GRAY).advance().space()
