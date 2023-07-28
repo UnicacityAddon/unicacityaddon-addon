@@ -79,6 +79,7 @@ import com.rettichlp.unicacityaddon.commands.faction.state.ClearCommand;
 import com.rettichlp.unicacityaddon.commands.faction.state.CorruptionCalculatorCommand;
 import com.rettichlp.unicacityaddon.commands.faction.state.ModifyWantedsCommand;
 import com.rettichlp.unicacityaddon.commands.faction.terroristen.ExplosiveBeltCommand;
+import com.rettichlp.unicacityaddon.commands.house.ADropAmmoCommand;
 import com.rettichlp.unicacityaddon.commands.house.HouseBankCommand;
 import com.rettichlp.unicacityaddon.commands.house.HouseBankDropGetAllCommand;
 import com.rettichlp.unicacityaddon.commands.house.HouseStorageCommand;
@@ -151,6 +152,7 @@ import com.rettichlp.unicacityaddon.listener.faction.rettungsdienst.MedicationLi
 import com.rettichlp.unicacityaddon.listener.faction.rettungsdienst.ReviveListener;
 import com.rettichlp.unicacityaddon.listener.faction.state.WantedListener;
 import com.rettichlp.unicacityaddon.listener.house.HouseDataListener;
+import com.rettichlp.unicacityaddon.listener.house.HouseDropAmmoRespondListener;
 import com.rettichlp.unicacityaddon.listener.house.HouseInteractionListener;
 import com.rettichlp.unicacityaddon.listener.house.HouseRenterListener;
 import com.rettichlp.unicacityaddon.listener.job.FishermanListener;
@@ -249,6 +251,7 @@ public class Registry {
             GaggedListener.class,
             GangwarListener.class,
             HouseDataListener.class,
+            HouseDropAmmoRespondListener.class,
             HouseInteractionListener.class,
             HouseRenterListener.class,
             JobListener.class,
@@ -282,6 +285,7 @@ public class Registry {
     private final HashSet<Class<?>> commandList = Sets.newHashSet(
             ABuyCommand.class,
             ACallCommand.class,
+            ADropAmmoCommand.class,
             ADropMoneyCommand.class,
             ASellDrugCommand.class,
             ASMSCommand.class,
