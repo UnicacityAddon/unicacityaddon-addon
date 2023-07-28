@@ -115,6 +115,10 @@ public class WantedListener {
 
             int wpAmount = getWpAmountAndDelete(targetName);
 
+            if (playerName.equals(this.unicacityAddon.player().getName())) {
+                this.unicacityAddon.api().sendStatisticAddRequest(StatisticType.KILL);
+            }
+
             if (hqMessages) {
                 e.setMessage(Message.getBuilder().of("Getötet").color(ColorCode.RED).advance().space()
                         .of("-").color(ColorCode.GRAY).advance().space()
@@ -124,16 +128,6 @@ public class WantedListener {
                         .of(")").color(ColorCode.GRAY).advance().space()
                         .of("-").color(ColorCode.GRAY).advance().space()
                         .of(playerName).color(ColorCode.BLUE).advance()
-                        .createComponent());
-            }
-
-            if (playerName.equals(this.unicacityAddon.player().getName())) {
-                this.unicacityAddon.api().sendStatisticAddRequest(StatisticType.KILL);
-                this.unicacityAddon.player().sendMessage(Message.getBuilder()
-                        .of("[⬆]").color(ColorCode.BLUE)
-                                .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Aktivität eintragen").color(ColorCode.DARK_BLUE).advance().createComponent())
-                                .clickEvent(ClickEvent.Action.RUN_COMMAND, "/activitytest kills")
-                                .advance()
                         .createComponent());
             }
 
@@ -156,15 +150,6 @@ public class WantedListener {
                         .of(")").color(ColorCode.GRAY).advance().space()
                         .of("-").color(ColorCode.GRAY).advance().space()
                         .of(playerName).color(ColorCode.BLUE).advance()
-                        .createComponent());
-            }
-
-            if(playerName.equals(this.unicacityAddon.player().getName())) {
-                this.unicacityAddon.player().sendMessage(Message.getBuilder()
-                        .of("[⬆]").color(ColorCode.BLUE)
-                                .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Aktivität eintragen").color(ColorCode.DARK_BLUE).advance().createComponent())
-                                .clickEvent(ClickEvent.Action.RUN_COMMAND, "/activitytest verhaftung")
-                                .advance()
                         .createComponent());
             }
 
