@@ -114,6 +114,11 @@ public class WantedListener {
             String playerName = wantedKillMatcher.group(2);
 
             int wpAmount = getWpAmountAndDelete(targetName);
+            boolean isAddonPlayer = playerName.equals(this.unicacityAddon.player().getName());
+
+            if (isAddonPlayer) {
+                this.unicacityAddon.api().sendStatisticAddRequest(StatisticType.KILL);
+            }
 
             if (hqMessages) {
                 e.setMessage(Message.getBuilder().of("Getötet").color(ColorCode.RED).advance().space()
@@ -124,13 +129,7 @@ public class WantedListener {
                         .of(")").color(ColorCode.GRAY).advance().space()
                         .of("-").color(ColorCode.GRAY).advance().space()
                         .of(playerName).color(ColorCode.BLUE).advance()
-                        .createComponent());
-            }
-
-            if (playerName.equals(this.unicacityAddon.player().getName())) {
-                this.unicacityAddon.api().sendStatisticAddRequest(StatisticType.KILL);
-                this.unicacityAddon.player().sendMessage(Message.getBuilder()
-                        .of("[⬆]").color(ColorCode.BLUE)
+                        .of(isAddonPlayer ? " [⬆]" : "").color(ColorCode.BLUE)
                                 .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Aktivität eintragen").color(ColorCode.DARK_BLUE).advance().createComponent())
                                 .clickEvent(ClickEvent.Action.RUN_COMMAND, "/activitytest kills")
                                 .advance()
@@ -146,6 +145,8 @@ public class WantedListener {
             String playerName = wantedJailMatcher.group(2);
 
             int wpAmount = getWpAmountAndDelete(targetName);
+            boolean isAddonPlayer = playerName.equals(this.unicacityAddon.player().getName());
+
 
             if (hqMessages) {
                 e.setMessage(Message.getBuilder().of("Eingesperrt").color(ColorCode.RED).advance().space()
@@ -156,12 +157,7 @@ public class WantedListener {
                         .of(")").color(ColorCode.GRAY).advance().space()
                         .of("-").color(ColorCode.GRAY).advance().space()
                         .of(playerName).color(ColorCode.BLUE).advance()
-                        .createComponent());
-            }
-
-            if(playerName.equals(this.unicacityAddon.player().getName())) {
-                this.unicacityAddon.player().sendMessage(Message.getBuilder()
-                        .of("[⬆]").color(ColorCode.BLUE)
+                        .of(isAddonPlayer ? " [⬆]" : "").color(ColorCode.BLUE)
                                 .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Aktivität eintragen").color(ColorCode.DARK_BLUE).advance().createComponent())
                                 .clickEvent(ClickEvent.Action.RUN_COMMAND, "/activitytest verhaftung")
                                 .advance()
