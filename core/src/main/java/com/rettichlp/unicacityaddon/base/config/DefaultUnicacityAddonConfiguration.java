@@ -27,10 +27,13 @@ import com.rettichlp.unicacityaddon.base.config.teamspeak.TeamSpeakConfiguration
 import net.labymod.api.addon.AddonConfig;
 import net.labymod.api.client.gui.screen.widget.widgets.input.SwitchWidget.SwitchSetting;
 import net.labymod.api.configuration.loader.annotation.ConfigName;
+import net.labymod.api.configuration.loader.annotation.SpriteSlot;
+import net.labymod.api.configuration.loader.annotation.SpriteTexture;
 import net.labymod.api.configuration.loader.property.ConfigProperty;
 import net.labymod.api.configuration.settings.annotation.SettingSection;
 
 @ConfigName("settings")
+@SpriteTexture("settings.png")
 public class DefaultUnicacityAddonConfiguration extends AddonConfig implements UnicacityAddonConfiguration {
 
     @SwitchSetting
@@ -39,9 +42,11 @@ public class DefaultUnicacityAddonConfiguration extends AddonConfig implements U
     private final DefaultHotkeyConfiguration hotkey = new DefaultHotkeyConfiguration();
 
     @SettingSection("nametag")
+    @SpriteSlot()
     private final DefaultNameTagConfiguration nametag = new DefaultNameTagConfiguration();
 
     @SettingSection("faction")
+    @SpriteSlot(size = 32)
     private final DefaultReinforcementConfiguration reinforcement = new DefaultReinforcementConfiguration();
 
     private final DefaultSlocConfiguration sloc = new DefaultSlocConfiguration();
