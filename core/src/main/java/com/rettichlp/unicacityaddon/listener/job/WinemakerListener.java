@@ -5,7 +5,7 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import net.labymod.api.client.world.item.ItemStack;
 import net.labymod.api.event.Subscribe;
-import net.labymod.api.event.client.render.ScreenRenderEvent;
+import net.labymod.api.event.client.gui.screen.ScreenOpenEvent;
 import net.labymod.api.event.client.world.ItemStackTooltipEvent;
 
 import java.awt.AWTException;
@@ -38,7 +38,7 @@ public class WinemakerListener {
     }
 
     @Subscribe
-    public void onScreenRender(ScreenRenderEvent e) {
+    public void onScreenOpen(ScreenOpenEvent e) {
         String containerLegacyName = this.unicacityAddon.guiController().getContainerLegacyName();
         boolean isWinemakerContainer = containerLegacyName != null && containerLegacyName.equals(ColorCode.GOLD.getCode() + "Winzer");
 
