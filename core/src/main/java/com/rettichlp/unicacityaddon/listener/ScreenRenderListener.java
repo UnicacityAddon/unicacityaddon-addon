@@ -40,8 +40,7 @@ public class ScreenRenderListener {
             int weaponSlotNumber = this.unicacityAddon.guiController().getSlotNumberByDisplayName(weapon.getName());
 
             this.unicacityAddon.guiController().inventoryClick(weaponSlotNumber);
-            // weapon name is everywhere with '-' except in /getammo command handling (it's an Unicacity feature, nobody knows why)
-            this.unicacityAddon.player().sendServerMessage("/getammo " + weapon.getName().replace("-", "") + " " + GetGunPatternCommand.armament.getAmount());
+            this.unicacityAddon.player().sendServerMessage("/getammo " + weapon.getName() + " " + GetGunPatternCommand.armament.getAmount());
             GetGunPatternCommand.armament = null;
         }
 
