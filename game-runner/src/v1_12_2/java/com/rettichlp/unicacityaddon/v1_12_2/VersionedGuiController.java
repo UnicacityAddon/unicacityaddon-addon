@@ -62,10 +62,10 @@ public class VersionedGuiController extends GuiController {
         GuiScreen guiScreen = Minecraft.getMinecraft().currentScreen;
 
         this.windowId = 0;
-        if (guiScreen instanceof GuiContainer && ((GuiContainer) guiScreen).inventorySlots instanceof ContainerChest) {
-            this.windowId = ((GuiContainer) guiScreen).inventorySlots.windowId;
-        } else if (guiScreen instanceof GuiHopper && ((GuiHopper) guiScreen).inventorySlots instanceof ContainerHopper) {
-            this.windowId = ((GuiHopper) guiScreen).inventorySlots.windowId;
+        if (guiScreen instanceof GuiContainer guiContainer && guiContainer.inventorySlots instanceof ContainerChest containerChest) {
+            this.windowId = containerChest.windowId;
+        } else if (guiScreen instanceof GuiHopper guiHopper && guiHopper.inventorySlots instanceof ContainerHopper containerHopper) {
+            this.windowId = containerHopper.windowId;
         }
 
         Minecraft.getMinecraft().playerController.windowClick(this.windowId, slotNumber, 0, ClickType.PICKUP, Minecraft.getMinecraft().player);

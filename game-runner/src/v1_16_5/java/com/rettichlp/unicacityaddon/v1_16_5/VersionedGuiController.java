@@ -42,8 +42,8 @@ public class VersionedGuiController extends GuiController {
         int slotNumber = -1;
 
         Screen screen = Minecraft.getInstance().screen;
-        if (screen instanceof ContainerScreen && ((ContainerScreen) screen).getMenu() instanceof ChestMenu) {
-            ChestMenu chestMenu = ((ContainerScreen) screen).getMenu();
+        if (screen instanceof ContainerScreen containerScreen) {
+            ChestMenu chestMenu = containerScreen.getMenu();
 
             NonNullList<ItemStack> itemStacks = chestMenu.getItems();
             Optional<ItemStack> hoveredItemStackOptional = itemStacks.stream()
@@ -63,10 +63,10 @@ public class VersionedGuiController extends GuiController {
         Screen screen = Minecraft.getInstance().screen;
 
         this.containerId = 0;
-        if (screen instanceof ContainerScreen && ((ContainerScreen) screen).getMenu() instanceof ChestMenu) {
-            this.containerId = ((ContainerScreen) screen).getMenu().containerId;
-        } else if (screen instanceof HopperScreen && ((HopperScreen) screen).getMenu() instanceof HopperMenu) {
-            this.containerId = ((HopperScreen) screen).getMenu().containerId;
+        if (screen instanceof ContainerScreen containerScreen) {
+            this.containerId = containerScreen.getMenu().containerId;
+        } else if (screen instanceof HopperScreen hopperScreen) {
+            this.containerId = hopperScreen.getMenu().containerId;
         }
 
         LocalPlayer localPlayer = Minecraft.getInstance().player;
@@ -79,8 +79,8 @@ public class VersionedGuiController extends GuiController {
     @Override
     public void updateDrugInventoryMap(UnicacityAddon unicacityAddon) {
         Screen screen = Minecraft.getInstance().screen;
-        if (screen instanceof ContainerScreen && ((ContainerScreen) screen).getMenu() instanceof ChestMenu) {
-            ChestMenu chestMenu = ((ContainerScreen) screen).getMenu();
+        if (screen instanceof ContainerScreen containerScreen) {
+            ChestMenu chestMenu = containerScreen.getMenu();
 
             this.containerId = chestMenu.containerId;
             if (unicacityAddon.utilService().command().getLastWindowId() == this.containerId)
@@ -129,8 +129,8 @@ public class VersionedGuiController extends GuiController {
                 assert Minecraft.getInstance().player != null;
                 Minecraft.getInstance().player.closeContainer();
             }
-        } else if (screen instanceof HopperScreen && unicacityAddon.utilService().command().isActiveDrugInventoryLoading()) {
-            HopperMenu hopperMenu = ((HopperScreen) screen).getMenu();
+        } else if (screen instanceof HopperScreen hopperScreen && unicacityAddon.utilService().command().isActiveDrugInventoryLoading()) {
+            HopperMenu hopperMenu = hopperScreen.getMenu();
 
             this.containerId = hopperMenu.containerId;
             if (unicacityAddon.utilService().command().getLastWindowId() == this.containerId)
@@ -179,8 +179,8 @@ public class VersionedGuiController extends GuiController {
     @Override
     public void updateSetting(boolean expectedValue) {
         Screen screen = Minecraft.getInstance().screen;
-        if (screen instanceof ContainerScreen && ((ContainerScreen) screen).getMenu() instanceof ChestMenu && !ScreenRenderListener.settingPath.isEmpty()) {
-            ChestMenu chestMenu = ((ContainerScreen) screen).getMenu();
+        if (screen instanceof ContainerScreen containerScreen && !ScreenRenderListener.settingPath.isEmpty()) {
+            ChestMenu chestMenu = containerScreen.getMenu();
 
             if (chestMenu.containerId != this.containerId) {
                 this.containerId = chestMenu.containerId;
