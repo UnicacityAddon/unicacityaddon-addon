@@ -37,54 +37,70 @@ import net.labymod.api.configuration.settings.annotation.SettingSection;
 public class DefaultUnicacityAddonConfiguration extends AddonConfig implements UnicacityAddonConfiguration {
 
     @SwitchSetting
+    @SpriteSlot()
     private final ConfigProperty<Boolean> enabled = new ConfigProperty<>(true);
 
+    @SpriteSlot(x = 1)
     private final DefaultHotkeyConfiguration hotkey = new DefaultHotkeyConfiguration();
 
     @SettingSection("nametag")
-    @SpriteSlot()
+    @SpriteSlot(x = 2)
     private final DefaultNameTagConfiguration nametag = new DefaultNameTagConfiguration();
 
     @SettingSection("faction")
-    @SpriteSlot(size = 32)
+    @SpriteSlot(x = 3)
     private final DefaultReinforcementConfiguration reinforcement = new DefaultReinforcementConfiguration();
 
+    @SpriteSlot(x = 4)
     private final DefaultSlocConfiguration sloc = new DefaultSlocConfiguration();
 
+    @SpriteSlot(x = 5)
     private final DefaultEquipConfiguration equip = new DefaultEquipConfiguration();
 
+    @SpriteSlot(x = 6)
     private final DefaultDrugConfiguration drug = new DefaultDrugConfiguration();
 
     @SettingSection("message")
+    @SpriteSlot(x = 7)
     private final DefaultMessageConfiguration message = new DefaultMessageConfiguration();
 
     @SettingSection("join")
+    @SpriteSlot(y = 1)
     private final DefaultPasswordConfiguration password = new DefaultPasswordConfiguration();
 
+    @SpriteSlot(x = 1, y = 1)
     private final DefaultCommandConfiguration command = new DefaultCommandConfiguration();
 
     @SwitchSetting
+    @SpriteSlot(x = 2, y = 1)
     private final ConfigProperty<Boolean> texturePack = new ConfigProperty<>(true);
 
     @SwitchSetting
+    @SpriteSlot(x = 3, y = 1)
     private final ConfigProperty<Boolean> hitSound = new ConfigProperty<>(false);
 
     @SettingSection("automation")
+    @SpriteSlot(x = 4, y = 1)
     private final DefaultATMConfiguration atm = new DefaultATMConfiguration();
 
     @SwitchSetting
+    @SpriteSlot(x = 5, y = 1)
     private final ConfigProperty<Boolean> bombScreenshot = new ConfigProperty<>(true);
 
     @SwitchSetting
+    @SpriteSlot(x = 6, y = 1)
     private final ConfigProperty<Boolean> carRoute = new ConfigProperty<>(true);
 
     @SettingSection("other")
+    @SpriteSlot(x = 7, y = 1)
     private final DefaultTeamSpeakConfiguration teamspeak = new DefaultTeamSpeakConfiguration();
 
     @SwitchSetting
+    @SpriteSlot(y = 2)
     private final DefaultTabListConfiguration tablist = new DefaultTabListConfiguration();
 
     @SwitchSetting
+    @SpriteSlot(x = 1, y = 2)
     private final ConfigProperty<Boolean> despawnTime = new ConfigProperty<>(true);
 
     @SettingSection("debug")
