@@ -16,6 +16,8 @@ public abstract class GuiController {
     @Nullable
     public abstract String getContainerLegacyName();
 
+    public abstract int getContainerId();
+
     public abstract void inventoryClick(int slotNumber);
 
     public abstract void updateDrugInventoryMap(UnicacityAddon unicacityAddon);

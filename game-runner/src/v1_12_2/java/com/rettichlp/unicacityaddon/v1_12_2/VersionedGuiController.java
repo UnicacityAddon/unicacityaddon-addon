@@ -66,7 +66,7 @@ public class VersionedGuiController extends GuiController {
     }
 
     @Override
-    public void inventoryClick(int slotNumber) {
+    public int getContainerId() {
         GuiScreen guiScreen = Minecraft.getMinecraft().currentScreen;
 
         this.windowId = 0;
@@ -76,7 +76,12 @@ public class VersionedGuiController extends GuiController {
             this.windowId = containerHopper.windowId;
         }
 
-        Minecraft.getMinecraft().playerController.windowClick(this.windowId, slotNumber, 0, ClickType.PICKUP, Minecraft.getMinecraft().player);
+        return this.windowId;
+    }
+
+    @Override
+    public void inventoryClick(int slotNumber) {
+        Minecraft.getMinecraft().playerController.windowClick(getContainerId(), slotNumber, 0, ClickType.PICKUP, Minecraft.getMinecraft().player);
     }
 
     @Override
