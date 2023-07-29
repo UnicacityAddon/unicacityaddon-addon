@@ -20,6 +20,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.NonNullList;
+import org.jetbrains.annotations.Nullable;
 
 import javax.inject.Singleton;
 import java.util.HashMap;
@@ -58,7 +59,7 @@ public class VersionedGuiController extends GuiController {
     }
 
     @Override
-    public String getContainerLegacyName() {
+    public @Nullable String getContainerLegacyName() {
         GuiScreen guiScreen = Minecraft.getMinecraft().currentScreen;
         return guiScreen instanceof GuiContainer guiContainer && guiContainer.inventorySlots instanceof ContainerChest containerChest
                 ? containerChest.getLowerChestInventory().getName()

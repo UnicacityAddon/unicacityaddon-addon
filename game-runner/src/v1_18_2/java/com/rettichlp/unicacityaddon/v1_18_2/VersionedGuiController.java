@@ -21,6 +21,7 @@ import net.minecraft.world.inventory.ChestMenu;
 import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.HopperMenu;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.Nullable;
 
 import javax.inject.Singleton;
 import java.util.HashMap;
@@ -57,6 +58,16 @@ public class VersionedGuiController extends GuiController {
         }
 
         return slotNumber;
+    }
+
+    @Override
+    public @Nullable String getContainerLegacyName() {
+        return null;
+    }
+
+    @Override
+    public int getContainerId() {
+        return 0;
     }
 
     @Override
