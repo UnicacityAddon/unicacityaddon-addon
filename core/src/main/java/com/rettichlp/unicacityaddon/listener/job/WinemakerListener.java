@@ -4,13 +4,16 @@ import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
-import net.labymod.api.Laby;
-import net.labymod.api.client.gui.mouse.Mouse;
 import net.labymod.api.client.world.item.ItemStack;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 import net.labymod.api.event.client.render.ScreenRenderEvent;
 import net.labymod.api.event.client.world.ItemStackTooltipEvent;
+
+import java.awt.AWTException;
+import java.awt.MouseInfo;
+import java.awt.Point;
+import java.awt.Robot;
 
 /**
  * @author RettichLP
@@ -19,8 +22,7 @@ import net.labymod.api.event.client.world.ItemStackTooltipEvent;
 public class WinemakerListener {
 
     private int containerId;
-    private Double lastMousePosX;
-    private Double lastMousePosY;
+    private Point lastMousePos;
 
     private final UnicacityAddon unicacityAddon;
 
@@ -33,8 +35,7 @@ public class WinemakerListener {
         String msg = e.chatMessage().getPlainText();
 
         if (PatternHandler.WINEMAKER_CONTINUE_PATTERN.matcher(msg).find()) {
-            this.lastMousePosX = null;
-            this.lastMousePosY = null;
+            this.lastMousePos = null;
         }
     }
 
@@ -46,9 +47,7 @@ public class WinemakerListener {
         this.containerId = this.unicacityAddon.guiController().getContainerId();
 
         if (plainDisplayName.equals("Traube")) {
-            Mouse mouse = Laby.labyAPI().minecraft().mouse();
-            this.lastMousePosX = mouse.getXDouble();
-            this.lastMousePosY = mouse.getYDouble();
+            this.lastMousePos = MouseInfo.getPointerInfo().getLocation();
         }
     }
 
@@ -58,8 +57,14 @@ public class WinemakerListener {
         boolean isWinemakerContainer = containerLegacyName != null && containerLegacyName.equals(ColorCode.GOLD.getCode() + "Winzer");
 
         int currentContainerId = this.unicacityAddon.guiController().getContainerId();
-        if (isWinemakerContainer && this.containerId != currentContainerId && this.lastMousePosX != null && this.lastMousePosY != null) {
-            Laby.labyAPI().minecraft().setCursorPosition(this.lastMousePosX, -this.lastMousePosY);
+        if (isWinemakerContainer && this.containerId != currentContainerId && this.lastMousePos != null) {
+            try {
+                Robot robot = new Robot();
+                robot.mouseMove(this.lastMousePos.x, this.lastMousePos.y);
+                this.lastMousePos = null;
+            } catch (AWTException ex) {
+                this.unicacityAddon.logger().warn(ex.getMessage());
+            }
         }
     }
 }
