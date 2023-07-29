@@ -37,7 +37,6 @@ import net.labymod.api.configuration.settings.annotation.SettingSection;
 public class DefaultUnicacityAddonConfiguration extends AddonConfig implements UnicacityAddonConfiguration {
 
     @SwitchSetting
-    @SpriteSlot()
     private final ConfigProperty<Boolean> enabled = new ConfigProperty<>(true);
 
     @SpriteSlot(x = 1)
