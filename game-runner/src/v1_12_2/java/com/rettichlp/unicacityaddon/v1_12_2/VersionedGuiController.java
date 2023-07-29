@@ -58,6 +58,14 @@ public class VersionedGuiController extends GuiController {
     }
 
     @Override
+    public String getContainerLegacyName() {
+        GuiScreen guiScreen = Minecraft.getMinecraft().currentScreen;
+        return guiScreen instanceof GuiContainer guiContainer && guiContainer.inventorySlots instanceof ContainerChest containerChest
+                ? containerChest.getLowerChestInventory().getName()
+                : null;
+    }
+
+    @Override
     public void inventoryClick(int slotNumber) {
         GuiScreen guiScreen = Minecraft.getMinecraft().currentScreen;
 
