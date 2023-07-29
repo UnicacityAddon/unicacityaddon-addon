@@ -247,7 +247,7 @@ public class AccountListener {
                 // MOBILEEVENTHANDLER
                 p.sendServerMessage("/togglephone");
 
-                Thread.sleep(100);
+                Thread.sleep(1100);
 
                 // AUTOMATE_COMMAND_SETTINGS
                 CommandConfiguration commandConfiguration = unicacityAddon.configuration().command();

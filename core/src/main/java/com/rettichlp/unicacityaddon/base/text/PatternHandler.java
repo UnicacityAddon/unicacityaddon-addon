@@ -110,6 +110,7 @@ public class PatternHandler {
      *
      * @see com.rettichlp.unicacityaddon.listener.job.FishermanListener
      * @see com.rettichlp.unicacityaddon.listener.job.JobListener
+     * @see com.rettichlp.unicacityaddon.listener.job.WinemakerListener
      */
     public static final Pattern FISHER_START = Pattern.compile("^\\[Fischer] Mit /findschwarm kannst du dir den nächsten Fischschwarm anzeigen lassen\\.$");
     public static final Pattern FISHER_SPOT_FOUND = Pattern.compile("^\\[Fischer] Du hast einen Fischschwarm gefunden!$");
@@ -135,6 +136,8 @@ public class PatternHandler {
     public static final Pattern LUMBERJACK_START_PATTERN = Pattern.compile("^\\[Holzfäller] Fälle (.+) Bäume und bringe sie zu den Sägen zur Weiterverarbeitung!$");
     public static final Pattern LUMBERJACK_NEW_TREE_PATTERN = Pattern.compile("^\\[Holzfäller] Du hast den Baumstamm zur Weiterverarbeitung in die Säge gelegt\\.$");
     public static final Pattern LUMBERJACK_END_PATTERN = Pattern.compile("^\\[Holzfäller] Du hast sehr gute Arbeit geleistet! Du hast dir deinen Lohn vedient\\.$");
+    public static final Pattern WINEMAKER_CONTINUE_PATTERN = Pattern.compile("^\\[Winzer] Du musst noch (\\d+ Rebstöcke|einen Rebstock) ernten\\.$" +
+            "|^\\[Winzer] Bringe nun die Trauben in den Weinkeller\\.$");
 
     /**
      * Pattern for medic interaction
