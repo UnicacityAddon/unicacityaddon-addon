@@ -57,25 +57,25 @@ public class EmergencyServiceListener {
                 Component hoverMessage = Message.getBuilder().of("Annehmen").color(ColorCode.RED).advance().createComponent();
                 e.setMessage(Message.getBuilder()
                         .of("Neuer Notruf").color(ColorCode.RED).bold()
-                        .hoverEvent(HoverEvent.Action.SHOW_TEXT, hoverMessage) // Grund
-                        .clickEvent(ClickEvent.Action.RUN_COMMAND, "/acceptservice " + serviceArrivedMatcher.group(1).replace("[UC]", ""))
-                        .advance().space()
+                                .hoverEvent(HoverEvent.Action.SHOW_TEXT, hoverMessage) // Grund
+                                .clickEvent(ClickEvent.Action.RUN_COMMAND, "/acceptservice " + serviceArrivedMatcher.group(1).replace("[UC]", ""))
+                                .advance().space()
                         .of("-").color(ColorCode.GRAY)
-                        .hoverEvent(HoverEvent.Action.SHOW_TEXT, hoverMessage) // Grund
-                        .clickEvent(ClickEvent.Action.RUN_COMMAND, "/acceptservice " + serviceArrivedMatcher.group(1).replace("[UC]", ""))
-                        .advance().space()
+                                .hoverEvent(HoverEvent.Action.SHOW_TEXT, hoverMessage) // Grund
+                                .clickEvent(ClickEvent.Action.RUN_COMMAND, "/acceptservice " + serviceArrivedMatcher.group(1).replace("[UC]", ""))
+                                .advance().space()
                         .of(serviceArrivedMatcher.group(1)).color(ColorCode.DARK_RED)
-                        .hoverEvent(HoverEvent.Action.SHOW_TEXT, hoverMessage) // Grund
-                        .clickEvent(ClickEvent.Action.RUN_COMMAND, "/acceptservice " + serviceArrivedMatcher.group(1).replace("[UC]", ""))
-                        .advance().space() // Notruf Sender
+                                .hoverEvent(HoverEvent.Action.SHOW_TEXT, hoverMessage) // Grund
+                                .clickEvent(ClickEvent.Action.RUN_COMMAND, "/acceptservice " + serviceArrivedMatcher.group(1).replace("[UC]", ""))
+                                .advance().space() // Notruf Sender
                         .of("-").color(ColorCode.GRAY)
-                        .hoverEvent(HoverEvent.Action.SHOW_TEXT, hoverMessage) // Grund
-                        .clickEvent(ClickEvent.Action.RUN_COMMAND, "/acceptservice " + serviceArrivedMatcher.group(1).replace("[UC]", ""))
-                        .advance().space()
+                                .hoverEvent(HoverEvent.Action.SHOW_TEXT, hoverMessage) // Grund
+                                .clickEvent(ClickEvent.Action.RUN_COMMAND, "/acceptservice " + serviceArrivedMatcher.group(1).replace("[UC]", ""))
+                                .advance().space()
                         .of("\"" + serviceArrivedMatcher.group(3) + "\"").color(ColorCode.DARK_RED)
-                        .hoverEvent(HoverEvent.Action.SHOW_TEXT, hoverMessage) // Grund
-                        .clickEvent(ClickEvent.Action.RUN_COMMAND, "/acceptservice " + serviceArrivedMatcher.group(1).replace("[UC]", ""))
-                        .advance()
+                                .hoverEvent(HoverEvent.Action.SHOW_TEXT, hoverMessage) // Grund
+                                .clickEvent(ClickEvent.Action.RUN_COMMAND, "/acceptservice " + serviceArrivedMatcher.group(1).replace("[UC]", ""))
+                                .advance()
                         .createComponent());
             }
             return;

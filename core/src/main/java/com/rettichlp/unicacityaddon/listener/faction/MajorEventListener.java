@@ -58,8 +58,7 @@ public class MajorEventListener {
             if (((p.getFaction().equals(Faction.POLIZEI) || p.getFaction().equals(Faction.FBI)) && p.getRank() > 3) || p.isSuperUser()) {
                 this.location = bombPlantedMatcher.group("location");
                 e.setMessage(Message.getBuilder()
-                        .add(formattedMsg)
-                        .space()
+                        .add(formattedMsg).space()
                         .of("[").color(ColorCode.DARK_GRAY).advance()
                         .of("Sperrgebiet ausrufen").color(ColorCode.RED)
                                 .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Sperrgebiet ausrufen").color(ColorCode.RED).advance().createComponent())
@@ -84,12 +83,10 @@ public class MajorEventListener {
             String state = bombRemovedMatcher.group(1);
 
             e.setMessage(Message.getBuilder()
-                    .add(formattedMsg)
-                    .space()
+                    .add(formattedMsg).space()
                     .of(timeString.isEmpty() ? "" : "(").color(ColorCode.DARK_GRAY).advance()
                     .of(timeString).color(state.equals("nicht") ? ColorCode.RED : ColorCode.GREEN).advance()
-                    .of(timeString.isEmpty() ? "" : ")").color(ColorCode.DARK_GRAY).advance()
-                    .space()
+                    .of(timeString.isEmpty() ? "" : ")").color(ColorCode.DARK_GRAY).advance().space()
                     .of(this.location != null ? "[" : "").color(ColorCode.DARK_GRAY).advance()
                     .of(this.location != null ? "Sperrgebiet aufheben" : "").color(ColorCode.RED)
                             .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Sperrgebiet aufheben").color(ColorCode.RED).advance().createComponent())

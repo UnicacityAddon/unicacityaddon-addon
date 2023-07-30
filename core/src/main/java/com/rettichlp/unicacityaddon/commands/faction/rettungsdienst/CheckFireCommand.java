@@ -49,9 +49,9 @@ public class CheckFireCommand extends UnicacityCommand {
                         .of("»").color(ColorCode.GRAY).advance().space()
                         .of("X: " + (int) block.getX() + " | Y: " + (int) block.getY() + " | Z: " + (int) block.getZ()).color(ColorCode.RED).advance().space()
                         .of("[➤]").color(ColorCode.GREEN)
-                        .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Route anzeigen").color(ColorCode.RED).advance().createComponent())
-                        .clickEvent(ClickEvent.Action.RUN_COMMAND, "/navi " + (int) block.getX() + "/" + (int) block.getY() + "/" + (int) block.getZ())
-                        .advance()
+                                .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Route anzeigen").color(ColorCode.RED).advance().createComponent())
+                                .clickEvent(ClickEvent.Action.RUN_COMMAND, "/navi " + (int) block.getX() + "/" + (int) block.getY() + "/" + (int) block.getZ())
+                                .advance()
                         .createComponent()));
             } else {
                 p.sendMessage(Message.getBuilder()

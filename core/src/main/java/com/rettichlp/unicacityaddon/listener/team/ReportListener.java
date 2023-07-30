@@ -85,12 +85,10 @@ public class ReportListener {
                             .of(s).color(ColorCode.BLUE)
                                     .underline()
                                     .clickEvent(ClickEvent.Action.OPEN_URL, s.startsWith("http") ? s : "http://" + s)
-                                    .advance()
-                            .space();
+                                    .advance().space();
                 else
                     messageBuilder
-                            .of(s).color(ColorCode.DARK_PURPLE).advance()
-                            .space();
+                            .of(s).color(ColorCode.DARK_PURPLE).advance().space();
             });
 
             e.setMessage(messageBuilder.createComponent());

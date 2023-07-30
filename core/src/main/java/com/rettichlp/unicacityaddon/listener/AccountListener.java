@@ -106,18 +106,15 @@ public class AccountListener {
         if (accountFriendJoinMatcher.find()) {
             String name = accountFriendJoinMatcher.group("name");
             e.setMessage(Message.getBuilder()
-                    .add(formattedMsg)
-                    .space()
+                    .add(formattedMsg).space()
                     .of("[☎]").color(ColorCode.DARK_GREEN)
                             .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of(name + " anrufen").color(ColorCode.DARK_GREEN).advance().createComponent())
                             .clickEvent(ClickEvent.Action.RUN_COMMAND, "/acall " + name)
-                            .advance()
-                    .space()
+                            .advance().space()
                     .of("[✉]").color(ColorCode.GOLD)
                             .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("SMS an " + name + " senden").color(ColorCode.GOLD).advance().createComponent())
                             .clickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/asms " + name + " ")
-                            .advance()
-                    .space()
+                            .advance().space()
                     .of("[✕]").color(ColorCode.RED)
                             .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of(name + " aus der Freundesliste entfernen").color(ColorCode.RED).advance().createComponent())
                             .clickEvent(ClickEvent.Action.RUN_COMMAND, "/fl delete " + name)
@@ -130,8 +127,7 @@ public class AccountListener {
         if (accountFriendLeaveMatcher.find()) {
             String name = accountFriendLeaveMatcher.group("name");
             e.setMessage(Message.getBuilder()
-                    .add(formattedMsg)
-                    .space()
+                    .add(formattedMsg).space()
                     .of("[✕]").color(ColorCode.RED)
                             .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of(name + " aus der Freundesliste entfernen").color(ColorCode.RED).advance().createComponent())
                             .clickEvent(ClickEvent.Action.RUN_COMMAND, "/fl delete " + name)

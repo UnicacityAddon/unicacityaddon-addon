@@ -43,13 +43,13 @@ public class BlacklistReasonCommand extends UnicacityCommand {
                 blacklistReasonList.forEach(blacklistReasonEntry -> p.sendMessage(Message.getBuilder()
                         .of("»").color(ColorCode.GRAY).advance().space()
                         .of(blacklistReasonEntry.getReason()).color(ColorCode.AQUA)
-                        .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder()
-                                .of("Preis:").color(ColorCode.RED).advance().space()
-                                .of(String.valueOf(blacklistReasonEntry.getPrice())).color(ColorCode.DARK_RED).advance().space()
-                                .of("Kills:").color(ColorCode.RED).advance().space()
-                                .of(String.valueOf(blacklistReasonEntry.getKills())).color(ColorCode.DARK_RED).advance()
-                                .createComponent())
-                        .advance()
+                                .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder()
+                                        .of("Preis:").color(ColorCode.RED).advance().space()
+                                        .of(String.valueOf(blacklistReasonEntry.getPrice())).color(ColorCode.DARK_RED).advance().space()
+                                        .of("Kills:").color(ColorCode.RED).advance().space()
+                                        .of(String.valueOf(blacklistReasonEntry.getKills())).color(ColorCode.DARK_RED).advance()
+                                        .createComponent())
+                                .advance()
                         .createComponent()));
 
                 p.sendEmptyMessage();
