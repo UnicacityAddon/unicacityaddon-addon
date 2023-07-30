@@ -20,6 +20,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.NonNullList;
+import org.jetbrains.annotations.Nullable;
 
 import javax.inject.Singleton;
 import java.util.HashMap;
@@ -58,17 +59,30 @@ public class VersionedGuiController extends GuiController {
     }
 
     @Override
-    public void inventoryClick(int slotNumber) {
+    public @Nullable String getContainerLegacyName() {
+        GuiScreen guiScreen = Minecraft.getMinecraft().currentScreen;
+        return guiScreen instanceof GuiContainer guiContainer && guiContainer.inventorySlots instanceof ContainerChest containerChest
+                ? containerChest.getLowerChestInventory().getName()
+                : null;
+    }
+
+    @Override
+    public int getContainerId() {
         GuiScreen guiScreen = Minecraft.getMinecraft().currentScreen;
 
         this.windowId = 0;
-        if (guiScreen instanceof GuiContainer && ((GuiContainer) guiScreen).inventorySlots instanceof ContainerChest) {
-            this.windowId = ((GuiContainer) guiScreen).inventorySlots.windowId;
-        } else if (guiScreen instanceof GuiHopper && ((GuiHopper) guiScreen).inventorySlots instanceof ContainerHopper) {
-            this.windowId = ((GuiHopper) guiScreen).inventorySlots.windowId;
+        if (guiScreen instanceof GuiContainer guiContainer && guiContainer.inventorySlots instanceof ContainerChest containerChest) {
+            this.windowId = containerChest.windowId;
+        } else if (guiScreen instanceof GuiHopper guiHopper && guiHopper.inventorySlots instanceof ContainerHopper containerHopper) {
+            this.windowId = containerHopper.windowId;
         }
 
-        Minecraft.getMinecraft().playerController.windowClick(this.windowId, slotNumber, 0, ClickType.PICKUP, Minecraft.getMinecraft().player);
+        return this.windowId;
+    }
+
+    @Override
+    public void inventoryClick(int slotNumber) {
+        Minecraft.getMinecraft().playerController.windowClick(getContainerId(), slotNumber, 0, ClickType.PICKUP, Minecraft.getMinecraft().player);
     }
 
     @Override

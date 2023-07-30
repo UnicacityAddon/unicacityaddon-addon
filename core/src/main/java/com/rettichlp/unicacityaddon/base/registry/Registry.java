@@ -157,6 +157,7 @@ import com.rettichlp.unicacityaddon.listener.house.HouseRenterListener;
 import com.rettichlp.unicacityaddon.listener.house.HouseWeaponListener;
 import com.rettichlp.unicacityaddon.listener.job.FishermanListener;
 import com.rettichlp.unicacityaddon.listener.job.JobListener;
+import com.rettichlp.unicacityaddon.listener.job.WinemakerListener;
 import com.rettichlp.unicacityaddon.listener.team.ADutyListener;
 import com.rettichlp.unicacityaddon.listener.team.AdListener;
 import com.rettichlp.unicacityaddon.listener.team.NewbieChatListener;
@@ -279,7 +280,8 @@ public class Registry {
             TeamSpeakNotificationListener.class,
             TimerListener.class,
             WantedListener.class,
-            WeaponListener.class
+            WeaponListener.class,
+            WinemakerListener.class
     );
 
     private final HashSet<Class<?>> commandList = Sets.newHashSet(
