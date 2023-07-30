@@ -81,6 +81,7 @@ import com.rettichlp.unicacityaddon.commands.faction.state.ModifyWantedsCommand;
 import com.rettichlp.unicacityaddon.commands.faction.terroristen.ExplosiveBeltCommand;
 import com.rettichlp.unicacityaddon.commands.house.HouseBankCommand;
 import com.rettichlp.unicacityaddon.commands.house.HouseBankDropGetAllCommand;
+import com.rettichlp.unicacityaddon.commands.house.HouseDropAmmunitionCommand;
 import com.rettichlp.unicacityaddon.commands.house.HouseStorageCommand;
 import com.rettichlp.unicacityaddon.commands.job.ADropMoneyCommand;
 import com.rettichlp.unicacityaddon.commands.mobile.ACallCommand;
@@ -153,6 +154,7 @@ import com.rettichlp.unicacityaddon.listener.faction.state.WantedListener;
 import com.rettichlp.unicacityaddon.listener.house.HouseDataListener;
 import com.rettichlp.unicacityaddon.listener.house.HouseInteractionListener;
 import com.rettichlp.unicacityaddon.listener.house.HouseRenterListener;
+import com.rettichlp.unicacityaddon.listener.house.HouseWeaponListener;
 import com.rettichlp.unicacityaddon.listener.job.FishermanListener;
 import com.rettichlp.unicacityaddon.listener.job.JobListener;
 import com.rettichlp.unicacityaddon.listener.job.WinemakerListener;
@@ -252,6 +254,7 @@ public class Registry {
             HouseDataListener.class,
             HouseInteractionListener.class,
             HouseRenterListener.class,
+            HouseWeaponListener.class,
             JobListener.class,
             KarmaMessageListener.class,
             LabyConnectListener.class,
@@ -324,6 +327,7 @@ public class Registry {
             GetGunPatternCommand.class,
             HouseBankCommand.class,
             HouseBankDropGetAllCommand.class,
+            HouseDropAmmunitionCommand.class,
             HouseStorageCommand.class,
             HousebanCommand.class,
             HousebanReasonCommand.class,

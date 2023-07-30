@@ -280,6 +280,7 @@ public class PatternHandler {
      * @see com.rettichlp.unicacityaddon.listener.house.HouseDataListener
      * @see com.rettichlp.unicacityaddon.listener.house.HouseInteractionListener
      * @see com.rettichlp.unicacityaddon.listener.house.HouseRenterListener
+     * @see com.rettichlp.unicacityaddon.listener.house.HouseWeaponListener
      */
     public static final Pattern HOUSE_BANK_HEADER_PATTERN = Pattern.compile("^=== Hauskasse Haus (\\d+) ===$");
     public static final Pattern HOUSE_BANK_VALUE_PATTERN = Pattern.compile("^ {2}» (\\d+)\\$$");
@@ -293,6 +294,7 @@ public class PatternHandler {
     public static final Pattern HOUSE_AKKU_PATTERN = Pattern.compile("^Du hast begonnen deinen Akku aufzuladen\\.\\.\\.$");
     public static final Pattern HOUSE_HEAL_PATTERN = Pattern.compile("^Du hast begonnen dich zu heilen\\.\\.\\.$");
     public static final Pattern HOUSE_AMMUNITION_PATTERN = Pattern.compile("^\\[Waffenschrank] Du hast deine (?<weapon>.+) mit (?<amount>\\d+) Kugeln beladen\\.$");
+    public static final Pattern HOUSE_AMMUNITION_DROP_PATTERN = Pattern.compile("^\\[Waffenschrank] Du hast (?<amount>\\d+) (?<weapon>.+) Kugeln zurück in deinen Waffenschrank gelegt\\.$");
 
     /**
      * Pattern for equip interaction
