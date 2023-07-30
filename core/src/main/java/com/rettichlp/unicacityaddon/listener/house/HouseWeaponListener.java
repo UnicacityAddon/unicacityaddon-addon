@@ -9,6 +9,9 @@ import com.rettichlp.unicacityaddon.commands.house.HouseDropAmmunitionCommand;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 
 /**
@@ -37,8 +40,13 @@ public class HouseWeaponListener {
             int newDropAmount = HouseDropAmmunitionCommand.dropAmount - droppedAmount;
 
             if (newDropAmount > 0) {
-                p.sendServerMessage("/dropammo " + weapon.getName() + " " + Math.min(newDropAmount, 350));
-                HouseDropAmmunitionCommand.dropAmount = newDropAmount;
+                new Timer().schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        p.sendServerMessage("/dropammo " + weapon.getName() + " " + Math.min(newDropAmount, 350));
+                        HouseDropAmmunitionCommand.dropAmount = newDropAmount;
+                    }
+                }, TimeUnit.SECONDS.toMillis(1));
             }
         }
     }
