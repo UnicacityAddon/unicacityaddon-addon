@@ -32,7 +32,7 @@ public class HouseDropAmmunitionCommand extends UnicacityCommand {
     public boolean execute(@NotNull String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
 
-        if(arguments.length != 2 || !MathUtils.isInteger(arguments[1])) {
+        if (arguments.length != 2 || !MathUtils.isInteger(arguments[1])) {
             sendUsage();
             return true;
         }

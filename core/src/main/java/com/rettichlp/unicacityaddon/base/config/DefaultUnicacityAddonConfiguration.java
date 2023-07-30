@@ -2,6 +2,8 @@ package com.rettichlp.unicacityaddon.base.config;
 
 import com.rettichlp.unicacityaddon.base.config.atm.ATMConfiguration;
 import com.rettichlp.unicacityaddon.base.config.atm.DefaultATMConfiguration;
+import com.rettichlp.unicacityaddon.base.config.drug.DefaultDrugConfiguration;
+import com.rettichlp.unicacityaddon.base.config.drug.DrugConfiguration;
 import com.rettichlp.unicacityaddon.base.config.equip.DefaultEquipConfiguration;
 import com.rettichlp.unicacityaddon.base.config.equip.EquipConfiguration;
 import com.rettichlp.unicacityaddon.base.config.hotkey.DefaultHotkeyConfiguration;
@@ -14,8 +16,6 @@ import com.rettichlp.unicacityaddon.base.config.message.DefaultMessageConfigurat
 import com.rettichlp.unicacityaddon.base.config.message.MessageConfiguration;
 import com.rettichlp.unicacityaddon.base.config.nametag.DefaultNameTagConfiguration;
 import com.rettichlp.unicacityaddon.base.config.nametag.NameTagConfiguration;
-import com.rettichlp.unicacityaddon.base.config.drug.DefaultDrugConfiguration;
-import com.rettichlp.unicacityaddon.base.config.drug.DrugConfiguration;
 import com.rettichlp.unicacityaddon.base.config.reinforcement.DefaultReinforcementConfiguration;
 import com.rettichlp.unicacityaddon.base.config.reinforcement.ReinforcementConfiguration;
 import com.rettichlp.unicacityaddon.base.config.sloc.DefaultSlocConfiguration;
