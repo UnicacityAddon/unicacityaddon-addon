@@ -53,7 +53,7 @@ theme:
   features:
     - announce.dismiss
     - header.autohide
-    - navigation.tabs
+#    - navigation.tabs
     - navigation.sections
     - navigation.indexes
     - navigation.top
@@ -80,7 +80,6 @@ markdown_extensions:
 # Page tree
 nav:
   - UnicacityAddon: https://unicacityaddon.rettichlp.de
-  - Inhalt: index.md
   - API:
       - Funktion:
           - Grundlagen: api/function/grundlagen.md
@@ -119,6 +118,8 @@ nav:
           - Command Annotation: commands/implementation/command-annotation.md
           - Tab-Completion Builder: commands/implementation/tab-completion-builder.md
   - Widgets:
-      - widgets/index.md
+      - Übersicht:
+          - widgets/index.md
   - Config:
-      - config/index.md
+      - Übersicht:
+          - config/index.md
