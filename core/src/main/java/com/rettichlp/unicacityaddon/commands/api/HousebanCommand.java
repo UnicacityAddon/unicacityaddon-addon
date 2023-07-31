@@ -75,8 +75,8 @@ public class HousebanCommand extends UnicacityCommand {
                             .of(houseBanReason.getReason().replace("-", " ")).color(ColorCode.RED).advance().space()
                             .of(houseBanReason.getCreatorName() != null ? "(" : "").color(ColorCode.GRAY).advance()
                             .of(houseBanReason.getCreatorName() != null ? houseBanReason.getCreatorName() : "").color(ColorCode.GRAY).advance()
-                            .of(houseBanReason.getCreatorName() != null ? ")" : "").color(ColorCode.GRAY).advance().space()
-                            .newline());
+                            .of(houseBanReason.getCreatorName() != null ? ")" : "").color(ColorCode.GRAY).advance()
+                            .space().newline());
 
                     p.sendMessage(Message.getBuilder()
                             .of("»").color(ColorCode.GRAY).advance().space()

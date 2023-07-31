@@ -3,6 +3,7 @@ package com.rettichlp.unicacityaddon.listener;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.api.NaviPoint;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
+import com.rettichlp.unicacityaddon.base.enums.location.GasStation;
 import com.rettichlp.unicacityaddon.base.events.UnicacityAddonTickEvent;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
@@ -135,7 +136,18 @@ public class CarListener {
                 case 100 -> sentTankWarnings.clear();
                 case 15, 10, 5 -> {
                     if (!sentTankWarnings.contains(tank)) {
-                        p.sendInfoMessage("Dein Tank hat noch " + tank + " Liter.");
+                        Map.Entry<Double, GasStation> nearestGasStation = this.unicacityAddon.navigationService().getNearestGasStation(p.getLocation());
+                        p.sendMessage(Message.getBuilder()
+                                .info().space()
+                                .of("Dein Tank hat noch " + tank + " Liter.").color(ColorCode.WHITE).advance().space()
+                                .of("[").color(ColorCode.DARK_GRAY).advance()
+                                .of("Nächste Tankstelle").color(ColorCode.DARK_AQUA)
+                                        .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Nächste Tankstelle").color(ColorCode.RED).advance().createComponent())
+                                        .clickEvent(ClickEvent.Action.RUN_COMMAND, nearestGasStation.getValue().getNaviCommand())
+                                        .advance()
+                                .of("]").color(ColorCode.DARK_GRAY).advance()
+                                .createComponent());
+
                         this.unicacityAddon.soundController().playTankWarningSound();
                         sentTankWarnings.add(tank);
                     }

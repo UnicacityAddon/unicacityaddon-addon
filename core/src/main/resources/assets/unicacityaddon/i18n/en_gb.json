@@ -4,8 +4,8 @@
       "ammunition": {
         "name": "Ammunition"
       },
-      "bomb": {
-        "name": "Bomb Timer"
+      "majorEvent": {
+        "name": "Major Event Timer"
       },
       "car": {
         "name": "Car Info"
@@ -22,8 +22,17 @@
       "job": {
         "name": "Job Rewards"
       },
+      "mask": {
+        "name": "Mask"
+      },
       "money": {
-        "name": "Money"
+        "name": "Money",
+        "showBank": {
+          "name": "Show bank balance"
+        },
+        "showCash": {
+          "name": "Show cash balance"
+        }
       },
       "payday": {
         "name": "Time to PayDay"
@@ -327,9 +336,17 @@
           }
         }
       },
-      "ownUse": {
-        "name": "Personal use",
+      "drug": {
+        "name": "Drugs",
         "cocaine": {
+          "header": {
+            "ownUse": {
+              "name": "Personal use"
+            },
+            "price": {
+              "name": "Price"
+            }
+          },
           "name": "Powder",
           "amount": {
             "name": "Quantity",
@@ -338,9 +355,33 @@
           "purity": {
             "name": "Purity",
             "description": "Purity to be used for personal use"
+          },
+          "best": {
+            "name": "Best",
+            "description": "Best purity"
+          },
+          "good": {
+            "name": "Good",
+            "description": "Good purity"
+          },
+          "medium": {
+            "name": "Medium",
+            "description": "Medium purity"
+          },
+          "bad": {
+            "name": "Bad",
+            "description": "Bad purity"
           }
         },
         "marijuana": {
+          "header": {
+            "ownUse": {
+              "name": "Personal use"
+            },
+            "price": {
+              "name": "Price"
+            }
+          },
           "name": "Herbs",
           "amount": {
             "name": "Quantity",
@@ -349,9 +390,33 @@
           "purity": {
             "name": "Purity",
             "description": "Purity to be used for personal use"
+          },
+          "best": {
+            "name": "Best",
+            "description": "Best purity"
+          },
+          "good": {
+            "name": "Good",
+            "description": "Good purity"
+          },
+          "medium": {
+            "name": "Medium",
+            "description": "Medium purity"
+          },
+          "bad": {
+            "name": "Bad",
+            "description": "Bad purity"
           }
         },
         "methamphetamin": {
+          "header": {
+            "ownUse": {
+              "name": "Personal use"
+            },
+            "price": {
+              "name": "Price"
+            }
+          },
           "name": "Crystals",
           "amount": {
             "name": "Quantity",
@@ -360,6 +425,22 @@
           "purity": {
             "name": "Purity",
             "description": "Purity to be used for personal use"
+          },
+          "best": {
+            "name": "Best",
+            "description": "Best purity"
+          },
+          "good": {
+            "name": "Good",
+            "description": "Good purity"
+          },
+          "medium": {
+            "name": "Medium",
+            "description": "Medium purity"
+          },
+          "bad": {
+            "name": "Bad",
+            "description": "Bad purity"
           }
         }
       },
@@ -431,6 +512,10 @@
       "texturePack": {
         "name": "Disable TexturePack message",
         "description": "Disables the TexturePack message"
+      },
+      "hitSound": {
+        "name": "Enable hit sounds",
+        "description": "Enables the hit sounds (Unicacity disables them due to a bug after a rejoin"
       },
       "atm": {
         "name": "ATM Settings",

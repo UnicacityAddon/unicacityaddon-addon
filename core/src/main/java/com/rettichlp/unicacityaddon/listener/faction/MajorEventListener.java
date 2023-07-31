@@ -1,9 +1,11 @@
-package com.rettichlp.unicacityaddon.listener.faction.terroristen;
+package com.rettichlp.unicacityaddon.listener.faction;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.api.NaviPoint;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
+import com.rettichlp.unicacityaddon.base.events.BankRobEndedEvent;
+import com.rettichlp.unicacityaddon.base.events.BankRobStartedEvent;
 import com.rettichlp.unicacityaddon.base.events.BombPlantedEvent;
 import com.rettichlp.unicacityaddon.base.events.BombRemovedEvent;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
@@ -26,14 +28,14 @@ import static com.rettichlp.unicacityaddon.base.io.api.API.find;
  * @author RettichLP
  */
 @UCEvent
-public class BombListener {
+public class MajorEventListener {
 
     private Long bombPlantedTime;
     private String location;
 
     private final UnicacityAddon unicacityAddon;
 
-    public BombListener(UnicacityAddon unicacityAddon) {
+    public MajorEventListener(UnicacityAddon unicacityAddon) {
         this.unicacityAddon = unicacityAddon;
     }
 
@@ -56,8 +58,7 @@ public class BombListener {
             if (((p.getFaction().equals(Faction.POLIZEI) || p.getFaction().equals(Faction.FBI)) && p.getRank() > 3) || p.isSuperUser()) {
                 this.location = bombPlantedMatcher.group("location");
                 e.setMessage(Message.getBuilder()
-                        .add(formattedMsg)
-                        .space()
+                        .add(formattedMsg).space()
                         .of("[").color(ColorCode.DARK_GRAY).advance()
                         .of("Sperrgebiet ausrufen").color(ColorCode.RED)
                                 .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Sperrgebiet ausrufen").color(ColorCode.RED).advance().createComponent())
@@ -82,12 +83,10 @@ public class BombListener {
             String state = bombRemovedMatcher.group(1);
 
             e.setMessage(Message.getBuilder()
-                    .add(formattedMsg)
-                    .space()
+                    .add(formattedMsg).space()
                     .of(timeString.isEmpty() ? "" : "(").color(ColorCode.DARK_GRAY).advance()
                     .of(timeString).color(state.equals("nicht") ? ColorCode.RED : ColorCode.GREEN).advance()
-                    .of(timeString.isEmpty() ? "" : ")").color(ColorCode.DARK_GRAY).advance()
-                    .space()
+                    .of(timeString.isEmpty() ? "" : ")").color(ColorCode.DARK_GRAY).advance().space()
                     .of(this.location != null ? "[" : "").color(ColorCode.DARK_GRAY).advance()
                     .of(this.location != null ? "Sperrgebiet aufheben" : "").color(ColorCode.RED)
                             .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Sperrgebiet aufheben").color(ColorCode.RED).advance().createComponent())
@@ -97,6 +96,23 @@ public class BombListener {
                     .createComponent());
 
             Laby.labyAPI().eventBus().fire(new BombRemovedEvent());
+        }
+
+        Matcher bankRobStartedMatcher = PatternHandler.BANK_ROB_STARTED_PATTERN.matcher(msg);
+        if (bankRobStartedMatcher.find()) {
+            Laby.labyAPI().eventBus().fire(new BankRobStartedEvent());
+//            this.unicacityAddon.soundController().playBankRobStartedSound();
+
+            if (p.getFaction().equals(Faction.POLIZEI)) {
+                this.unicacityAddon.api().sendEventBankRobRequest(System.currentTimeMillis());
+            }
+
+            return;
+        }
+
+        Matcher bankRobEndedMatcher = PatternHandler.BANK_ROB_ENDED_PATTERN.matcher(msg);
+        if (bankRobEndedMatcher.find()) {
+            Laby.labyAPI().eventBus().fire(new BankRobEndedEvent());
         }
     }
 

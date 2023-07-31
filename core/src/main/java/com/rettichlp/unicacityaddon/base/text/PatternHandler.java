@@ -21,12 +21,14 @@ public class PatternHandler {
     public static final Pattern STRIP_PREFIX_PATTERN = Pattern.compile("\\[[a-zA-Z0-9]+]");
 
     /**
-     * Pattern for bomb timer
+     * Pattern for major event timer
      *
-     * @see com.rettichlp.unicacityaddon.listener.faction.terroristen.BombListener
+     * @see com.rettichlp.unicacityaddon.listener.faction.MajorEventListener
      */
     public static final Pattern BOMB_PLANTED_PATTERN = Pattern.compile("^News: ACHTUNG! Es wurde eine Bombe in der Nähe von (?<location>.+) gefunden!$");
     public static final Pattern BOMB_REMOVED_PATTERN = Pattern.compile("^News: Die Bombe konnte (nicht|erfolgreich) entschärft werden!$");
+    public static final Pattern BANK_ROB_STARTED_PATTERN = Pattern.compile("^HQ: Die Staatsbank wird ausgeraubt!$");
+    public static final Pattern BANK_ROB_ENDED_PATTERN = Pattern.compile("^HQ: Der Staatsbankraub wurde erfolgreich verhindert!$|^HQ: Der Staatsbankraub konnte nicht verhindert werden!$");
 
     /**
      * Pattern for car interaction
@@ -108,6 +110,7 @@ public class PatternHandler {
      *
      * @see com.rettichlp.unicacityaddon.listener.job.FishermanListener
      * @see com.rettichlp.unicacityaddon.listener.job.JobListener
+     * @see com.rettichlp.unicacityaddon.listener.job.WinemakerListener
      */
     public static final Pattern FISHER_START = Pattern.compile("^\\[Fischer] Mit /findschwarm kannst du dir den nächsten Fischschwarm anzeigen lassen\\.$");
     public static final Pattern FISHER_SPOT_FOUND = Pattern.compile("^\\[Fischer] Du hast einen Fischschwarm gefunden!$");
@@ -133,6 +136,8 @@ public class PatternHandler {
     public static final Pattern LUMBERJACK_START_PATTERN = Pattern.compile("^\\[Holzfäller] Fälle (.+) Bäume und bringe sie zu den Sägen zur Weiterverarbeitung!$");
     public static final Pattern LUMBERJACK_NEW_TREE_PATTERN = Pattern.compile("^\\[Holzfäller] Du hast den Baumstamm zur Weiterverarbeitung in die Säge gelegt\\.$");
     public static final Pattern LUMBERJACK_END_PATTERN = Pattern.compile("^\\[Holzfäller] Du hast sehr gute Arbeit geleistet! Du hast dir deinen Lohn vedient\\.$");
+    public static final Pattern WINEMAKER_CONTINUE_PATTERN = Pattern.compile("^\\[Winzer] Du musst noch (\\d+ Rebstöcke|einen Rebstock) ernten\\.$" +
+            "|^\\[Winzer] Bringe nun die Trauben in den Weinkeller\\.$");
 
     /**
      * Pattern for medic interaction
@@ -275,6 +280,7 @@ public class PatternHandler {
      * @see com.rettichlp.unicacityaddon.listener.house.HouseDataListener
      * @see com.rettichlp.unicacityaddon.listener.house.HouseInteractionListener
      * @see com.rettichlp.unicacityaddon.listener.house.HouseRenterListener
+     * @see com.rettichlp.unicacityaddon.listener.house.HouseWeaponListener
      */
     public static final Pattern HOUSE_BANK_HEADER_PATTERN = Pattern.compile("^=== Hauskasse Haus (\\d+) ===$");
     public static final Pattern HOUSE_BANK_VALUE_PATTERN = Pattern.compile("^ {2}» (\\d+)\\$$");
@@ -288,6 +294,7 @@ public class PatternHandler {
     public static final Pattern HOUSE_AKKU_PATTERN = Pattern.compile("^Du hast begonnen deinen Akku aufzuladen\\.\\.\\.$");
     public static final Pattern HOUSE_HEAL_PATTERN = Pattern.compile("^Du hast begonnen dich zu heilen\\.\\.\\.$");
     public static final Pattern HOUSE_AMMUNITION_PATTERN = Pattern.compile("^\\[Waffenschrank] Du hast deine (?<weapon>.+) mit (?<amount>\\d+) Kugeln beladen\\.$");
+    public static final Pattern HOUSE_AMMUNITION_DROP_PATTERN = Pattern.compile("^\\[Waffenschrank] Du hast (?<amount>\\d+) (?<weapon>.+) Kugeln zurück in deinen Waffenschrank gelegt\\.$");
 
     /**
      * Pattern for equip interaction

@@ -1,4 +1,4 @@
-package com.rettichlp.unicacityaddon.base.config.ownUse.cocaine;
+package com.rettichlp.unicacityaddon.base.config.drug.cocaine;
 
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
 import net.labymod.api.configuration.loader.property.ConfigProperty;
@@ -13,4 +13,12 @@ public interface Cocaine {
     ConfigProperty<Integer> amount();
 
     ConfigProperty<DrugPurity> purity();
+
+    ConfigProperty<Integer> best();
+
+    ConfigProperty<Integer> good();
+
+    ConfigProperty<Integer> medium();
+
+    ConfigProperty<Integer> bad();
 }

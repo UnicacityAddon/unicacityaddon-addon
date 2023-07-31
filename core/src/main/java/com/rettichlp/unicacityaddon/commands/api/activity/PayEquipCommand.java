@@ -14,7 +14,6 @@ import com.rettichlp.unicacityaddon.base.services.utils.MathUtils;
 import java.util.AbstractMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 /**
  * @author Dimiikou
@@ -42,11 +41,7 @@ public class PayEquipCommand extends UnicacityCommand {
 
         new Thread(() -> {
             try {
-                String uuid = Optional.ofNullable(p.getUniqueId())
-                        .map(u -> u.toString().replace("-", ""))
-                        .orElse("");
-
-                String response = this.unicacityAddon.webService().sendRequest("https://lemilieu.de/api/equip/get?member=" + uuid);
+                String response = this.unicacityAddon.webService().sendRequest("https://lemilieu.de/api/equip/get?member=" + p.getShortUniqueId());
 
                 JsonArray jsonArray = new JsonParser().parse(response).getAsJsonArray();
                 jsonArray.forEach(jsonElement -> {
