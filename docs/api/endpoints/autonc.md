@@ -1,5 +1,10 @@
 # Addon Group
 
+!!! danger "Deactivated"
+
+    Dieser Endpunkt ist zur Zeit nicht in Verwendung. Durch eine Unicacity Richtlinie ist die Verwendung dieses Features
+    aktuell deaktiviert.
+
 OpenAPI: (noch nicht verfügbar)
 
 ## [/autonc](http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/autonc)
