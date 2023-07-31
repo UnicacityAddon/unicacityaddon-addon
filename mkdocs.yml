@@ -79,7 +79,7 @@ markdown_extensions:
 
 # Page tree
 nav:
-  - UnicacityAddon: https://unicacityaddon.rettichlp.de
+  - Zur Webseite: https://unicacityaddon.rettichlp.de
   - API:
       - Funktion:
           - Grundlagen: api/function/grundlagen.md
