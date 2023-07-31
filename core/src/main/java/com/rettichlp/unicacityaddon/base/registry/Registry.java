@@ -263,7 +263,7 @@ public class Registry {
             MoneyListener.class,
             NavigationListener.class,
             NameTagRenderListener.class,
-            NewbieChatListener.class,
+//            NewbieChatListener.class, deactivated because Unicacity guidelines
             PlantListener.class,
             PrayListener.class,
             ReinforcementListener.class,
