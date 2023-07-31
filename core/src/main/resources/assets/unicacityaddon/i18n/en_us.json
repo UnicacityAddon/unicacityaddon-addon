@@ -91,14 +91,6 @@
           "name": "Exit report",
           "description": "Send the farewell from 'Report -> Farewell' and close the report"
         },
-        "aDuty": {
-          "name": "ADuty",
-          "description": "Run the '/aduty' command"
-        },
-        "aDutySilent": {
-          "name": "ADuty (no message)",
-          "description": "Run the '/aduty -s' command"
-        },
         "publicChannel": {
           "name": "Join Public Channel",
           "description": "Moves the player to their own public channel on Teamspeak"

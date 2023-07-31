@@ -91,14 +91,6 @@
           "name": "Report beenden",
           "description": "Sendet die Verabschiedung aus 'Report -> Verabschiedung' und schließt den Report"
         },
-        "aDuty": {
-          "name": "ADuty",
-          "description": "Führt den '/aduty' Befehl aus"
-        },
-        "aDutySilent": {
-          "name": "ADuty (ohne Nachricht)",
-          "description": "Führt den '/aduty -s' Befehl aus"
-        },
         "publicChannel": {
           "name": "Öffentlichen Channel betreten",
           "description": "Bewegt den Spieler in den eigenen öffentlichen Channel auf dem Teamspeak"
