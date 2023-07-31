@@ -14,16 +14,24 @@ Zeigt die Daten für aktuelle Events.
 |---------------|--------------|
 | `tokenString` | Addon-Token  |
 
+## [/event/bankrob](http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/event/bankrob?startTime=1684868332000)
+
+Fügt ein Bankraub Event hinzu.
+
+**Einschränkung**: 🔐
+
+**GET** `/unicacityaddon/v1/{tokenString}/event/bankrob?startTime={startTime}`
+
+| Parameter     | Beschreibung               |
+|---------------|----------------------------|
+| `tokenString` | Addon-Token                |
+| `startTime`   | Zeitpunkt des Event-Starts |
+
 ## [/event/bomb](http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/event/bomb?startTime=1684868332000)
 
 Fügt ein Bomben Event hinzu.
 
-!!! info
-
-    Das Bomben Event ist nicht im Addon implementiert. Der Endpunkt existiert bereits falls die Logik auf der
-    Client-Seite implementiert wird.
-
-**Einschränkung**: 🔓
+**Einschränkung**: 🔐
 
 **GET** `/unicacityaddon/v1/{tokenString}/event/bomb?startTime={startTime}`
 
