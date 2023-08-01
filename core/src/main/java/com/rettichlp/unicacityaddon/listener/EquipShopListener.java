@@ -1,6 +1,7 @@
 package com.rettichlp.unicacityaddon.listener;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.enums.faction.Equip;
 import com.rettichlp.unicacityaddon.base.events.HotkeyEvent;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
@@ -22,7 +23,8 @@ import java.util.regex.Matcher;
 @UCEvent
 public class EquipShopListener {
 
-    public static int amount = 10;
+    public static int aBuyAmount = 10;
+    public static int aEquipAmount = 10;
     public static int period = 150;
 
     private int amountLeft = 0;
@@ -69,11 +71,13 @@ public class EquipShopListener {
 
     @Subscribe
     public void onHotkey(HotkeyEvent e) {
-        if (e.getKey().equals(e.hotkeyConfiguration().aBuy().get())) {
-            this.amountLeft = amount;
-            slotNumber = ScreenRenderListener.lastHoveredSlotNumber;
+        AddonPlayer p = this.unicacityAddon.player();
 
-            if (slotNumber >= 0) {
+        if (e.getKey().equals(e.hotkeyConfiguration().aBuy().get())) {
+            this.amountLeft = aBuyAmount;
+            this.slotNumber = ScreenRenderListener.lastHoveredSlotNumber;
+
+            if (this.slotNumber >= 0) {
                 new Timer().scheduleAtFixedRate(new TimerTask() {
                     @Override
                     public void run() {
@@ -86,6 +90,28 @@ public class EquipShopListener {
                         }
                     }
                 }, 0, period);
+            }
+        } else if (e.getKey().equals(e.hotkeyConfiguration().aEquip().get())) {
+            this.amountLeft = aEquipAmount;
+            this.slotNumber = ScreenRenderListener.lastHoveredSlotNumber;
+
+            if (this.slotNumber >= 0) {
+                new Timer().scheduleAtFixedRate(new TimerTask() {
+                    @Override
+                    public void run() {
+                        if (EquipShopListener.this.amountLeft > 0) {
+                            EquipShopListener.this.unicacityAddon.guiController().inventoryClick(EquipShopListener.this.slotNumber);
+                            EquipShopListener.this.amountLeft--;
+
+                            if (EquipShopListener.this.amountLeft > 0) {
+                                p.sendServerMessage("/equip");
+                            }
+                        } else {
+                            this.cancel();
+                            EquipShopListener.this.slotNumber = -1;
+                        }
+                    }
+                }, 0, 1000);
             }
         }
     }
