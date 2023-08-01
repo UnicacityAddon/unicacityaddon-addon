@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * @author RettichLP
  */
-@UCCommand(prefix = "abuy", aliases = {"aequip"}, usage = "[Menge] (Delay, mind. 150ms)")
+@UCCommand(prefix = "abuy", aliases = {"aequip"}, usage = "(/aequip) [Menge] (Delay, mind. 150ms)")
 public class ABuyCommand extends UnicacityCommand {
 
     private final UnicacityAddon unicacityAddon;
@@ -37,16 +37,10 @@ public class ABuyCommand extends UnicacityCommand {
             return true;
         }
 
-        int amount = Integer.parseInt(arguments[0]);
-        if (this.getPrefix().contains("buy")) {
-            EquipShopListener.aBuyAmount = amount;
-        } else {
-            EquipShopListener.aEquipAmount = amount;
-        }
-
+        EquipShopListener.aBuyAmount = EquipShopListener.aEquipAmount = Integer.parseInt(arguments[0]);
         EquipShopListener.period = arguments.length == 2 ? Math.max(Integer.parseInt(arguments[1]), 150) : 150;
 
-        p.sendInfoMessage("Menge für /" + this.getPrefix() + " auf " + amount + " und Delay auf " + EquipShopListener.period + "ms eingestellt.");
+        p.sendInfoMessage("Menge für /abuy und /aequip auf " + EquipShopListener.aBuyAmount + " und Delay auf " + EquipShopListener.period + "ms eingestellt.");
 
         return true;
     }
