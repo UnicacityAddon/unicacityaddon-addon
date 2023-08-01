@@ -22,5 +22,7 @@ public interface HotkeyConfiguration {
 
     ConfigProperty<Key> aBuy();
 
+    ConfigProperty<Key> aEquip();
+
     ConfigProperty<Key> screenshot();
 }

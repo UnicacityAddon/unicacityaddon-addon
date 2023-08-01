@@ -35,6 +35,9 @@ public class DefaultHotkeyConfiguration extends Config implements HotkeyConfigur
     private final ConfigProperty<Key> aBuy = new ConfigProperty<>(Key.NONE);
 
     @KeyBindSetting
+    private final ConfigProperty<Key> aEquip = new ConfigProperty<>(Key.NONE);
+
+    @KeyBindSetting
     private final ConfigProperty<Key> screenshot = new ConfigProperty<>(Key.NONE);
 
     @Override
@@ -70,6 +73,11 @@ public class DefaultHotkeyConfiguration extends Config implements HotkeyConfigur
     @Override
     public ConfigProperty<Key> aBuy() {
         return this.aBuy;
+    }
+
+    @Override
+    public ConfigProperty<Key> aEquip() {
+        return this.aEquip;
     }
 
     @Override
