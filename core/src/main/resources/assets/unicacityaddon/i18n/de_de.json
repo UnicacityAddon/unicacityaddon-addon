@@ -96,8 +96,12 @@
           "description": "Bewegt den Spieler in den eigenen öffentlichen Channel auf dem Teamspeak"
         },
         "aBuy": {
-          "name": "ABuy und AEquip ausführen",
-          "description": "Kauft automatisch die eingestellte Menge, wenn über ein kaufbares/ausrüstbares Item mit der Maus gegangen wird und dieser Hotkey statt der linken Maustaste gedrückt wird"
+          "name": "ABuy ausführen",
+          "description": "Kauft automatisch die eingestellte Menge, wenn über ein kaufbares Item mit der Maus gegangen wird und dieser Hotkey statt der linken Maustaste gedrückt wird"
+        },
+        "aEquip": {
+          "name": "AEquip ausführen",
+          "description": "Kauft automatisch die eingestellte Menge, wenn über ein ausrüstbares Item mit der Maus gegangen wird und dieser Hotkey statt der linken Maustaste gedrückt wird"
         },
         "screenshot": {
           "name": "Screenshot mit Upload zu Imgur",

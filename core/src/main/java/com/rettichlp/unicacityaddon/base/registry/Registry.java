@@ -159,7 +159,6 @@ import com.rettichlp.unicacityaddon.listener.job.FishermanListener;
 import com.rettichlp.unicacityaddon.listener.job.JobListener;
 import com.rettichlp.unicacityaddon.listener.job.WinemakerListener;
 import com.rettichlp.unicacityaddon.listener.team.AdListener;
-import com.rettichlp.unicacityaddon.listener.team.NewbieChatListener;
 import com.rettichlp.unicacityaddon.listener.team.ReportListener;
 import com.rettichlp.unicacityaddon.listener.teamspeak.TeamSpeakKeyListener;
 import com.rettichlp.unicacityaddon.listener.teamspeak.TeamSpeakNotificationListener;

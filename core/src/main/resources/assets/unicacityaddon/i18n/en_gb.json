@@ -96,8 +96,12 @@
           "description": "Moves the player to their own public channel on Teamspeak"
         },
         "aBuy": {
-          "name": "Run ABuy and AEquip",
-          "description": "Automatically buys the set amount when hovering over a buyable/equipable item and pressing this hotkey instead of the left mouse button"
+          "name": "Run ABuy",
+          "description": "Automatically buys the set amount when hovering over a buyable item and pressing this hotkey instead of the left mouse button"
+        },
+        "aEquip": {
+          "name": "Run AEquip",
+          "description": "Automatically buys the set amount when hovering over an equipable item and pressing this hotkey instead of the left mouse button"
         },
         "screenshot": {
           "name": "Screenshot with upload to Imgur",
