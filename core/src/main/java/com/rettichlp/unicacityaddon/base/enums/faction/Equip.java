@@ -43,7 +43,7 @@ public enum Equip {
     TRACKER("Peilsender", "Peilsender", (configuration) -> configuration.equip().state().tracker().getOrDefault("0")),
     EXPLOSIVEBELT("Sprenggürtel", "Sprenggürtel", (configuration) -> configuration.equip().terrorist().explosiveBelt().getOrDefault("0")),
     RPG7(Weapon.ALPHA_7.getName(), Weapon.ALPHA_7.getName(), (configuration) -> configuration.equip().terrorist().rpg7().getOrDefault("0")),
-    NOTEPAD("Notizblock", "Notizblock", (configuration) -> configuration.equip().news().notepad().getOrDefault("0")), // UnicaCity Bug (Nachricht gibt es noch nicht)
+    NOTEPAD("Notizblock", "Notizblock", (configuration) -> configuration.equip().news().notepad().getOrDefault("0")), // Unicacity bug (message not yet existing)
     GLASSCUTTER("Glasschneider", "Glasschneider", (configuration) -> configuration.equip().hitman().glassCutter().getOrDefault("0")),
     LOCKPICK("Dietrich", "Dietrich", (configuration) -> configuration.equip().hitman().lockPick().getOrDefault("0")),
     SOUP("Suppe", "Suppe", (configuration) -> configuration.equip().church().soup().getOrDefault("2")),
