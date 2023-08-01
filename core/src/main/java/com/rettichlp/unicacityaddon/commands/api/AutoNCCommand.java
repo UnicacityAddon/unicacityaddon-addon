@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * @author RettichLP
  */
-@UCCommand(prefix = "autonc", onlyOnUnicacity = false, usage = "[add|remove] (Wort1,Wort2,Wort3,...|Id) (Antwort)")
+@UCCommand(prefix = "autonc", onlyOnUnicacity = false, usage = "[add|remove] (Wort1,Wort2,Wort3,...|Id) (Antwort)", deactivated = true)
 public class AutoNCCommand extends UnicacityCommand {
 
     private final UnicacityAddon unicacityAddon;

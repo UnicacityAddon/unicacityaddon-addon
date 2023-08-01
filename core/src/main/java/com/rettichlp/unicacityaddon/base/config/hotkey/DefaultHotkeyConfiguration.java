@@ -29,12 +29,6 @@ public class DefaultHotkeyConfiguration extends Config implements HotkeyConfigur
     private final ConfigProperty<Key> cancelReport = new ConfigProperty<>(Key.NONE);
 
     @KeyBindSetting
-    private final ConfigProperty<Key> aDuty = new ConfigProperty<>(Key.NONE);
-
-    @KeyBindSetting
-    private final ConfigProperty<Key> aDutySilent = new ConfigProperty<>(Key.NONE);
-
-    @KeyBindSetting
     private final ConfigProperty<Key> publicChannel = new ConfigProperty<>(Key.NONE);
 
     @KeyBindSetting
@@ -66,16 +60,6 @@ public class DefaultHotkeyConfiguration extends Config implements HotkeyConfigur
     @Override
     public ConfigProperty<Key> cancelReport() {
         return this.cancelReport;
-    }
-
-    @Override
-    public ConfigProperty<Key> aDuty() {
-        return this.aDuty;
-    }
-
-    @Override
-    public ConfigProperty<Key> aDutySilent() {
-        return this.aDutySilent;
     }
 
     @Override

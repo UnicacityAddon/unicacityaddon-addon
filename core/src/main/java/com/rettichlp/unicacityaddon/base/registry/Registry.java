@@ -158,7 +158,6 @@ import com.rettichlp.unicacityaddon.listener.house.HouseWeaponListener;
 import com.rettichlp.unicacityaddon.listener.job.FishermanListener;
 import com.rettichlp.unicacityaddon.listener.job.JobListener;
 import com.rettichlp.unicacityaddon.listener.job.WinemakerListener;
-import com.rettichlp.unicacityaddon.listener.team.ADutyListener;
 import com.rettichlp.unicacityaddon.listener.team.AdListener;
 import com.rettichlp.unicacityaddon.listener.team.NewbieChatListener;
 import com.rettichlp.unicacityaddon.listener.team.ReportListener;
@@ -231,7 +230,6 @@ public class Registry {
     private final HashSet<Class<?>> listenerList = Sets.newHashSet(
             AccountListener.class,
             AdListener.class,
-            ADutyListener.class,
             AFbankEinzahlenListener.class,
             BannerListener.class,
             BlacklistListener.class,
@@ -265,7 +263,7 @@ public class Registry {
             MoneyListener.class,
             NavigationListener.class,
             NameTagRenderListener.class,
-            NewbieChatListener.class,
+//            NewbieChatListener.class, deactivated because Unicacity guidelines
             PlantListener.class,
             PrayListener.class,
             ReinforcementListener.class,

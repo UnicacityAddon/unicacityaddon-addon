@@ -250,6 +250,7 @@ public class API {
 
     public List<AutoNC> sendAutoNCRequest() {
         return RequestBuilder.getBuilder(this.unicacityAddon)
+                .preCondition(false) // deactivated because Unicacity guidelines
                 .nonProd(this.unicacityAddon.configuration().local().get())
                 .applicationPath(ApplicationPath.AUTO_NC)
                 .getAsJsonArrayAndParse(AutoNC.class);
