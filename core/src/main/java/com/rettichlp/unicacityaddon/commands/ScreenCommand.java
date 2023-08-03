@@ -13,6 +13,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.rettichlp.unicacityaddon.base.io.api.API.find;
+
 /**
  * @author Dimiikou
  */
@@ -33,18 +35,16 @@ public class ScreenCommand extends UnicacityCommand {
             return true;
         }
 
-        ScreenshotType screenshotType = Arrays.stream(ScreenshotType.values())
-                .filter(st -> st.getDirectoryName().equals(arguments[0]))
-                .findFirst()
-                .orElse(null);
-
+        ScreenshotType screenshotType = find(Arrays.asList(ScreenshotType.values()), st -> st.getDirectoryName().equals(arguments[0]));
         if (screenshotType == null) {
             sendUsage();
             return true;
         }
 
         try {
-            File file = this.unicacityAddon.fileService().getNewActivityImageFile(arguments[0]);
+            File file = screenshotType.equals(ScreenshotType.ROLEPLAY) && arguments.length > 1
+                    ? this.unicacityAddon.fileService().getNewRoleplayActivityImageFile(arguments[1])
+                    : this.unicacityAddon.fileService().getNewActivityImageFile(arguments[0]);
             ScreenshotBuilder.getBuilder(this.unicacityAddon).file(file).save();
         } catch (IOException e) {
             throw new RuntimeException(e);

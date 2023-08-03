@@ -47,29 +47,33 @@ public class ActivityCommand extends UnicacityCommand {
                 .createComponent());
 
         AtomicInteger overallCount = new AtomicInteger();
-        screenshotTypeList.stream().map(ScreenshotType::getDirectoryName).sorted().forEach(s -> {
-            File addonActivityScreenDir = this.unicacityAddon.fileService().getAddonActivityScreenDir(s);
-            File[] files = new File[0];
-            if (addonActivityScreenDir != null) {
-                files = addonActivityScreenDir.listFiles((dir, name) -> name.endsWith("-" + s + ".jpg"));
-            }
+        screenshotTypeList.stream()
+                .map(ScreenshotType::getDirectoryName)
+                .sorted()
+                .forEach(s -> {
+                    File addonActivityScreenDir = this.unicacityAddon.fileService().getAddonActivityScreenDir(s);
+                    File[] files = new File[0];
+                    if (addonActivityScreenDir != null) {
+                        files = addonActivityScreenDir.listFiles((dir, name) -> name.endsWith("-" + s + ".jpg"));
+                    }
 
-            int entryCount = files != null ? files.length : 0;
+                    // exclude roleplay directory from (overall)count
+                    int entryCount = files != null && !s.equalsIgnoreCase("roleplay") ? files.length : 0;
 
-            overallCount.addAndGet(entryCount);
-            if (entryCount > 0) {
-                p.sendMessage(Message.getBuilder()
-                        .of("»").color(ColorCode.GRAY).advance().space()
-                        .of(Character.toUpperCase(s.charAt(0)) + s.substring(1)).color(ColorCode.GRAY).advance()
-                        .of(":").color(ColorCode.GRAY).advance().space()
-                        .of(String.valueOf(entryCount)).color(ColorCode.AQUA).advance().space()
-                        .of("[↗]").color(ColorCode.BLUE)
-                                .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Ordner öffnen").color(ColorCode.RED).advance().createComponent())
-                                .clickEvent(ClickEvent.Action.OPEN_FILE, this.unicacityAddon.fileService().getAddonActivityScreenDir(s).getAbsolutePath())
-                                .advance()
-                        .createComponent());
-            }
-        });
+                    overallCount.addAndGet(entryCount);
+                    if (entryCount > 0) {
+                        p.sendMessage(Message.getBuilder()
+                                .of("»").color(ColorCode.GRAY).advance().space()
+                                .of(Character.toUpperCase(s.charAt(0)) + s.substring(1)).color(ColorCode.GRAY).advance()
+                                .of(":").color(ColorCode.GRAY).advance().space()
+                                .of(String.valueOf(entryCount)).color(ColorCode.AQUA).advance().space()
+                                .of("[↗]").color(ColorCode.BLUE)
+                                        .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Ordner öffnen").color(ColorCode.RED).advance().createComponent())
+                                        .clickEvent(ClickEvent.Action.OPEN_FILE, this.unicacityAddon.fileService().getAddonActivityScreenDir(s).getAbsolutePath())
+                                        .advance()
+                                .createComponent());
+                    }
+                });
 
         p.sendMessage(Message.getBuilder()
                 .of("»").color(ColorCode.GRAY).advance().space()
