@@ -48,7 +48,6 @@ public class ActivityCommand extends UnicacityCommand {
 
         AtomicInteger overallCount = new AtomicInteger();
         screenshotTypeList.stream()
-                .filter(screenshotType -> screenshotType != ScreenshotType.ROLEPLAY)
                 .map(ScreenshotType::getDirectoryName)
                 .sorted()
                 .forEach(s -> {
@@ -58,7 +57,8 @@ public class ActivityCommand extends UnicacityCommand {
                         files = addonActivityScreenDir.listFiles((dir, name) -> name.endsWith("-" + s + ".jpg"));
                     }
 
-                    int entryCount = files != null ? files.length : 0;
+                    // exclude roleplay directory from (overall)count
+                    int entryCount = files != null && !s.equalsIgnoreCase("roleplay") ? files.length : 0;
 
                     overallCount.addAndGet(entryCount);
                     if (entryCount > 0) {
