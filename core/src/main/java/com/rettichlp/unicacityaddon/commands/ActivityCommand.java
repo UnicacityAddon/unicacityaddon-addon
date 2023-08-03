@@ -54,11 +54,11 @@ public class ActivityCommand extends UnicacityCommand {
                     File addonActivityScreenDir = this.unicacityAddon.fileService().getAddonActivityScreenDir(s);
                     File[] files = new File[0];
                     if (addonActivityScreenDir != null) {
-                        files = addonActivityScreenDir.listFiles((dir, name) -> name.endsWith("-" + s + ".jpg"));
+                        files = addonActivityScreenDir.listFiles((dir, name) -> dir.isDirectory() || name.endsWith("-" + s + ".jpg"));
                     }
 
                     // exclude roleplay directory from (overall)count
-                    int entryCount = files != null && !s.equalsIgnoreCase("roleplay") ? files.length : 0;
+                    int entryCount = files != null ? files.length : 0;
 
                     overallCount.addAndGet(entryCount);
                     if (entryCount > 0) {
