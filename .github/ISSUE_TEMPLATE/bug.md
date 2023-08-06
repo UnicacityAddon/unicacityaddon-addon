@@ -15,7 +15,7 @@ LabyMod version: `3` `4`
 
 Minecraft version: `1.12.2`
 
-Addon version: `2.1.0`
+Addon version: `2.2.0`
 
 <hr>
 
