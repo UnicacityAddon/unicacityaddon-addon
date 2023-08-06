@@ -379,6 +379,7 @@ public class API {
 
     public void sendEventBankRobRequest(long startTime) {
         RequestBuilder.getBuilder(this.unicacityAddon)
+                .preCondition(this.unicacityAddon.utilService().isUnicacity())
                 .nonProd(this.unicacityAddon.configuration().local().get())
                 .applicationPath(ApplicationPath.EVENT)
                 .subPath(BANK_ROB_SUB_PATH)
@@ -389,6 +390,7 @@ public class API {
 
     public void sendEventBombRequest(long startTime) {
         RequestBuilder.getBuilder(this.unicacityAddon)
+                .preCondition(this.unicacityAddon.utilService().isUnicacity())
                 .nonProd(this.unicacityAddon.configuration().local().get())
                 .applicationPath(ApplicationPath.EVENT)
                 .subPath(BOMB_SUB_PATH)
@@ -399,6 +401,7 @@ public class API {
 
     public void sendEventGangwarRequest(int attacker, int defender) {
         RequestBuilder.getBuilder(this.unicacityAddon)
+                .preCondition(this.unicacityAddon.utilService().isUnicacity())
                 .nonProd(this.unicacityAddon.configuration().local().get())
                 .applicationPath(ApplicationPath.EVENT)
                 .subPath(GANGWAR_SUB_PATH)

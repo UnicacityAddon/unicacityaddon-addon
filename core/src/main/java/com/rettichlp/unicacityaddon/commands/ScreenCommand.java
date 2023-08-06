@@ -17,8 +17,9 @@ import static com.rettichlp.unicacityaddon.base.io.api.API.find;
 
 /**
  * @author Dimiikou
+ * @author RettichLP
  */
-@UCCommand(prefix = "screen", aliases = {"activitytest"}, usage = "[Typ]")
+@UCCommand(prefix = "screen", aliases = {"activitytest"}, usage = "[Typ] (Roleplay-Unterordner)")
 public class ScreenCommand extends UnicacityCommand {
 
     private final UnicacityAddon unicacityAddon;
