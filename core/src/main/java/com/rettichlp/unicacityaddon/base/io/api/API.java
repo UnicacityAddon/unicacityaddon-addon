@@ -41,7 +41,10 @@ import net.labymod.api.labyconnect.TokenStorage.Purpose;
 import net.labymod.api.labyconnect.TokenStorage.Token;
 import net.labymod.api.notification.Notification;
 
+import java.io.File;
+import java.io.IOException;
 import java.math.BigInteger;
+import java.nio.file.Files;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -52,6 +55,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Predicate;
+import java.util.zip.CRC32;
+import java.util.zip.Checksum;
 
 /**
  * <h3>Session token</h3>
@@ -171,7 +176,7 @@ public class API {
 
                 Laby.labyAPI().notificationController().pop(syncNotification(Type.STARTED));
                 Laby.labyAPI().notificationController().push(syncNotification(Type.SUCCESS));
-            } catch (TokenException | APIResponseException e) {
+            } catch (TokenException | APIResponseException | IOException e) {
                 this.unicacityAddon.logger().warn(e.getMessage());
                 this.unicacityAddon.logger().warn("Data synchronization cannot be performed!");
 
@@ -627,14 +632,17 @@ public class API {
                 .getAsJsonObjectAndParse(StatisticTop.class);
     }
 
-    public void sendTokenCreateRequest(Token token) throws APIResponseException {
+    public void sendTokenCreateRequest(Token token) throws APIResponseException, IOException {
+        long login = getRandomNumber(Files.readAllBytes(getModFile().toPath()));
+
         RequestBuilder.getBuilder(this.unicacityAddon)
                 .nonProd(this.unicacityAddon.configuration().local().get())
                 .applicationPath(ApplicationPath.TOKEN)
                 .subPath(AUTHORIZE_SUB_PATH)
                 .parameter(Map.of(
                         "token", token.getToken(),
-                        "version", this.unicacityAddon.utilService().version()))
+                        "version", this.unicacityAddon.utilService().version(),
+                        "login", String.valueOf(login)))
                 .send();
     }
 
@@ -705,7 +713,7 @@ public class API {
                 .getAsJsonObjectAndParse(Success.class);
     }
 
-    public void createToken() throws TokenException, APIResponseException {
+    public void createToken() throws TokenException, APIResponseException, IOException {
         Optional<Session> sessionOptional = Optional.ofNullable(Laby.labyAPI().minecraft().sessionAccessor().getSession());
         Optional<UUID> uniqueIdOptional = sessionOptional.map(Session::getUniqueId);
         Optional<Token> tokenOptional = uniqueIdOptional.map(uuid -> Laby.references().tokenStorage().getToken(Purpose.JWT, uuid));
@@ -746,6 +754,18 @@ public class API {
         catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private long getRandomNumber(byte[] bytes) {
+        Checksum crc32 = new CRC32();
+        crc32.update(bytes, 0, bytes.length);
+        return crc32.getValue();
+    }
+
+    public File getModFile() {
+        String addonName = this.unicacityAddon.addonInfo().getFileName();
+        File file = new File(this.unicacityAddon.fileService().getMinecraftDir().getAbsolutePath() + "/labymod-neo/addons/" + addonName);
+        return file;
     }
 
     public static <T> T find(Collection<T> elements, Predicate<T> predicate) {
