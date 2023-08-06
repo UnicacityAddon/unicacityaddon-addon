@@ -49,14 +49,17 @@ import com.rettichlp.unicacityaddon.commands.api.YasinCommand;
 import com.rettichlp.unicacityaddon.commands.api.activity.DrugActivityCommand;
 import com.rettichlp.unicacityaddon.commands.api.activity.MoneyActivityCommand;
 import com.rettichlp.unicacityaddon.commands.api.activity.PayEquipCommand;
+import com.rettichlp.unicacityaddon.commands.api.activity.ProtectionMoneyCommand;
 import com.rettichlp.unicacityaddon.commands.api.activity.RoleplayActivityCommand;
 import com.rettichlp.unicacityaddon.commands.faction.CheckActiveMembersCommand;
 import com.rettichlp.unicacityaddon.commands.faction.DropDrugAllCommand;
 import com.rettichlp.unicacityaddon.commands.faction.EquipListCommand;
 import com.rettichlp.unicacityaddon.commands.faction.FactionBankDepositCommand;
 import com.rettichlp.unicacityaddon.commands.faction.ReinforcementCommand;
+import com.rettichlp.unicacityaddon.commands.faction.SellDrugAllCommand;
 import com.rettichlp.unicacityaddon.commands.faction.ServiceCountCommand;
 import com.rettichlp.unicacityaddon.commands.faction.ShareLocationCommand;
+import com.rettichlp.unicacityaddon.commands.faction.badfaction.ASellDrugCommand;
 import com.rettichlp.unicacityaddon.commands.faction.badfaction.ASetBlacklistCommand;
 import com.rettichlp.unicacityaddon.commands.faction.badfaction.BlackMarketCommand;
 import com.rettichlp.unicacityaddon.commands.faction.badfaction.BlacklistInfoCommand;
@@ -78,6 +81,7 @@ import com.rettichlp.unicacityaddon.commands.faction.state.ModifyWantedsCommand;
 import com.rettichlp.unicacityaddon.commands.faction.terroristen.ExplosiveBeltCommand;
 import com.rettichlp.unicacityaddon.commands.house.HouseBankCommand;
 import com.rettichlp.unicacityaddon.commands.house.HouseBankDropGetAllCommand;
+import com.rettichlp.unicacityaddon.commands.house.HouseDropAmmunitionCommand;
 import com.rettichlp.unicacityaddon.commands.house.HouseStorageCommand;
 import com.rettichlp.unicacityaddon.commands.job.ADropMoneyCommand;
 import com.rettichlp.unicacityaddon.commands.mobile.ACallCommand;
@@ -96,12 +100,13 @@ import com.rettichlp.unicacityaddon.commands.teamspeak.MoveToCommand;
 import com.rettichlp.unicacityaddon.commands.teamspeak.TSFindCommand;
 import com.rettichlp.unicacityaddon.commands.teamspeak.TSJoinCommand;
 import com.rettichlp.unicacityaddon.hudwidgets.AmmunitionHudWidget;
-import com.rettichlp.unicacityaddon.hudwidgets.BombHudWidget;
 import com.rettichlp.unicacityaddon.hudwidgets.CarHudWidget;
 import com.rettichlp.unicacityaddon.hudwidgets.EmergencyServiceHudWidget;
 import com.rettichlp.unicacityaddon.hudwidgets.HearthHudWidget;
 import com.rettichlp.unicacityaddon.hudwidgets.InventoryHudWidget;
 import com.rettichlp.unicacityaddon.hudwidgets.JobHudWidget;
+import com.rettichlp.unicacityaddon.hudwidgets.MajorEventHudWidget;
+import com.rettichlp.unicacityaddon.hudwidgets.MaskHudWidget;
 import com.rettichlp.unicacityaddon.hudwidgets.MoneyHudWidget;
 import com.rettichlp.unicacityaddon.hudwidgets.PayDayHudWidget;
 import com.rettichlp.unicacityaddon.hudwidgets.PlantHudWidget;
@@ -123,7 +128,6 @@ import com.rettichlp.unicacityaddon.listener.ScreenRenderListener;
 import com.rettichlp.unicacityaddon.listener.ScreenshotListener;
 import com.rettichlp.unicacityaddon.listener.ServerLoginListener;
 import com.rettichlp.unicacityaddon.listener.TabCompletionListener;
-import com.rettichlp.unicacityaddon.listener.TickListener;
 import com.rettichlp.unicacityaddon.listener.TimerListener;
 import com.rettichlp.unicacityaddon.listener.WeaponListener;
 import com.rettichlp.unicacityaddon.listener.chatlog.ChatLogReceiveChatListener;
@@ -133,6 +137,7 @@ import com.rettichlp.unicacityaddon.listener.faction.ContractListener;
 import com.rettichlp.unicacityaddon.listener.faction.EmergencyServiceListener;
 import com.rettichlp.unicacityaddon.listener.faction.FDSFChatListener;
 import com.rettichlp.unicacityaddon.listener.faction.FDoorListener;
+import com.rettichlp.unicacityaddon.listener.faction.MajorEventListener;
 import com.rettichlp.unicacityaddon.listener.faction.MemberInfoListener;
 import com.rettichlp.unicacityaddon.listener.faction.ReinforcementListener;
 import com.rettichlp.unicacityaddon.listener.faction.ShareLocationListener;
@@ -146,15 +151,14 @@ import com.rettichlp.unicacityaddon.listener.faction.rettungsdienst.FirstAidList
 import com.rettichlp.unicacityaddon.listener.faction.rettungsdienst.MedicationListener;
 import com.rettichlp.unicacityaddon.listener.faction.rettungsdienst.ReviveListener;
 import com.rettichlp.unicacityaddon.listener.faction.state.WantedListener;
-import com.rettichlp.unicacityaddon.listener.faction.terroristen.BombListener;
 import com.rettichlp.unicacityaddon.listener.house.HouseDataListener;
 import com.rettichlp.unicacityaddon.listener.house.HouseInteractionListener;
 import com.rettichlp.unicacityaddon.listener.house.HouseRenterListener;
+import com.rettichlp.unicacityaddon.listener.house.HouseWeaponListener;
 import com.rettichlp.unicacityaddon.listener.job.FishermanListener;
 import com.rettichlp.unicacityaddon.listener.job.JobListener;
-import com.rettichlp.unicacityaddon.listener.team.ADutyListener;
+import com.rettichlp.unicacityaddon.listener.job.WinemakerListener;
 import com.rettichlp.unicacityaddon.listener.team.AdListener;
-import com.rettichlp.unicacityaddon.listener.team.NewbieChatListener;
 import com.rettichlp.unicacityaddon.listener.team.ReportListener;
 import com.rettichlp.unicacityaddon.listener.teamspeak.TeamSpeakKeyListener;
 import com.rettichlp.unicacityaddon.listener.teamspeak.TeamSpeakNotificationListener;
@@ -209,12 +213,13 @@ public class Registry {
 
     private final HashSet<Class<?>> hudWidgetList = Sets.newHashSet(
             AmmunitionHudWidget.class,
-            BombHudWidget.class,
             CarHudWidget.class,
             EmergencyServiceHudWidget.class,
             HearthHudWidget.class,
             InventoryHudWidget.class,
             JobHudWidget.class,
+            MajorEventHudWidget.class,
+            MaskHudWidget.class,
             MoneyHudWidget.class,
             PayDayHudWidget.class,
             PlantHudWidget.class,
@@ -224,12 +229,10 @@ public class Registry {
     private final HashSet<Class<?>> listenerList = Sets.newHashSet(
             AccountListener.class,
             AdListener.class,
-            ADutyListener.class,
             AFbankEinzahlenListener.class,
             BannerListener.class,
             BlacklistListener.class,
             BlacklistModifyListener.class,
-            BombListener.class,
             BroadcastListener.class,
             CarListener.class,
             ChatLogReceiveChatListener.class,
@@ -248,16 +251,18 @@ public class Registry {
             HouseDataListener.class,
             HouseInteractionListener.class,
             HouseRenterListener.class,
+            HouseWeaponListener.class,
             JobListener.class,
             KarmaMessageListener.class,
             LabyConnectListener.class,
+            MajorEventListener.class,
             MedicationListener.class,
             MemberInfoListener.class,
             MobileListener.class,
             MoneyListener.class,
             NavigationListener.class,
             NameTagRenderListener.class,
-            NewbieChatListener.class,
+//            NewbieChatListener.class, deactivated because Unicacity guidelines
             PlantListener.class,
             PrayListener.class,
             ReinforcementListener.class,
@@ -270,16 +275,17 @@ public class Registry {
             TabCompletionListener.class,
             TeamSpeakKeyListener.class,
             TeamSpeakNotificationListener.class,
-            TickListener.class,
             TimerListener.class,
             WantedListener.class,
-            WeaponListener.class
+            WeaponListener.class,
+            WinemakerListener.class
     );
 
     private final HashSet<Class<?>> commandList = Sets.newHashSet(
             ABuyCommand.class,
             ACallCommand.class,
             ADropMoneyCommand.class,
+            ASellDrugCommand.class,
             ASMSCommand.class,
             ASUCommand.class,
             ASetBlacklistCommand.class,
@@ -318,6 +324,7 @@ public class Registry {
             GetGunPatternCommand.class,
             HouseBankCommand.class,
             HouseBankDropGetAllCommand.class,
+            HouseDropAmmunitionCommand.class,
             HouseStorageCommand.class,
             HousebanCommand.class,
             HousebanReasonCommand.class,
@@ -340,6 +347,7 @@ public class Registry {
             OwnUseGiftCommand.class,
             PayEquipCommand.class,
             PlayerGroupCommand.class,
+            ProtectionMoneyCommand.class,
             PunishCommand.class,
             RecipeAcceptCommand.class,
             RecipeCommand.class,
@@ -351,6 +359,7 @@ public class Registry {
             RoleplayNameCommand.class,
             SFForceCommand.class,
             ScreenCommand.class,
+            SellDrugAllCommand.class,
             SellDrugCommand.class,
             ServiceCountCommand.class,
             ShareLocationCommand.class,

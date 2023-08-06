@@ -4,8 +4,8 @@
       "ammunition": {
         "name": "Ammunition"
       },
-      "bomb": {
-        "name": "Bomb Timer"
+      "majorEvent": {
+        "name": "Major Event Timer"
       },
       "car": {
         "name": "Car Info"
@@ -22,8 +22,17 @@
       "job": {
         "name": "Job Rewards"
       },
+      "mask": {
+        "name": "Mask"
+      },
       "money": {
-        "name": "Money"
+        "name": "Money",
+        "showBank": {
+          "name": "Show bank balance"
+        },
+        "showCash": {
+          "name": "Show cash balance"
+        }
       },
       "payday": {
         "name": "Time to PayDay"
@@ -82,21 +91,17 @@
           "name": "Exit report",
           "description": "Send the farewell from 'Report -> Farewell' and close the report"
         },
-        "aDuty": {
-          "name": "ADuty",
-          "description": "Run the '/aduty' command"
-        },
-        "aDutySilent": {
-          "name": "ADuty (no message)",
-          "description": "Run the '/aduty -s' command"
-        },
         "publicChannel": {
           "name": "Join Public Channel",
           "description": "Moves the player to their own public channel on Teamspeak"
         },
         "aBuy": {
-          "name": "Run ABuy and AEquip",
-          "description": "Automatically buys the set amount when hovering over a buyable/equipable item and pressing this hotkey instead of the left mouse button"
+          "name": "Run ABuy",
+          "description": "Automatically buys the set amount when hovering over a buyable item and pressing this hotkey instead of the left mouse button"
+        },
+        "aEquip": {
+          "name": "Run AEquip",
+          "description": "Automatically buys the set amount when hovering over an equipable item and pressing this hotkey instead of the left mouse button"
         },
         "screenshot": {
           "name": "Screenshot with upload to Imgur",
@@ -327,9 +332,17 @@
           }
         }
       },
-      "ownUse": {
-        "name": "Personal use",
+      "drug": {
+        "name": "Drugs",
         "cocaine": {
+          "header": {
+            "ownUse": {
+              "name": "Personal use"
+            },
+            "price": {
+              "name": "Price"
+            }
+          },
           "name": "Powder",
           "amount": {
             "name": "Quantity",
@@ -338,9 +351,33 @@
           "purity": {
             "name": "Purity",
             "description": "Purity to be used for personal use"
+          },
+          "best": {
+            "name": "Best",
+            "description": "Best purity"
+          },
+          "good": {
+            "name": "Good",
+            "description": "Good purity"
+          },
+          "medium": {
+            "name": "Medium",
+            "description": "Medium purity"
+          },
+          "bad": {
+            "name": "Bad",
+            "description": "Bad purity"
           }
         },
         "marijuana": {
+          "header": {
+            "ownUse": {
+              "name": "Personal use"
+            },
+            "price": {
+              "name": "Price"
+            }
+          },
           "name": "Herbs",
           "amount": {
             "name": "Quantity",
@@ -349,9 +386,33 @@
           "purity": {
             "name": "Purity",
             "description": "Purity to be used for personal use"
+          },
+          "best": {
+            "name": "Best",
+            "description": "Best purity"
+          },
+          "good": {
+            "name": "Good",
+            "description": "Good purity"
+          },
+          "medium": {
+            "name": "Medium",
+            "description": "Medium purity"
+          },
+          "bad": {
+            "name": "Bad",
+            "description": "Bad purity"
           }
         },
         "methamphetamin": {
+          "header": {
+            "ownUse": {
+              "name": "Personal use"
+            },
+            "price": {
+              "name": "Price"
+            }
+          },
           "name": "Crystals",
           "amount": {
             "name": "Quantity",
@@ -360,6 +421,22 @@
           "purity": {
             "name": "Purity",
             "description": "Purity to be used for personal use"
+          },
+          "best": {
+            "name": "Best",
+            "description": "Best purity"
+          },
+          "good": {
+            "name": "Good",
+            "description": "Good purity"
+          },
+          "medium": {
+            "name": "Medium",
+            "description": "Medium purity"
+          },
+          "bad": {
+            "name": "Bad",
+            "description": "Bad purity"
           }
         }
       },
@@ -431,6 +508,10 @@
       "texturePack": {
         "name": "Disable TexturePack message",
         "description": "Disables the TexturePack message"
+      },
+      "hitSound": {
+        "name": "Enable hit sounds",
+        "description": "Enables the hit sounds (Unicacity disables them due to a bug after a rejoin"
       },
       "atm": {
         "name": "ATM Settings",

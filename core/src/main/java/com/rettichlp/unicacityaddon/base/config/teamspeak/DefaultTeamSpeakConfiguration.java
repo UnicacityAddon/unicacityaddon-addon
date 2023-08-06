@@ -4,6 +4,7 @@ import net.labymod.api.client.gui.screen.widget.widgets.input.SwitchWidget.Switc
 import net.labymod.api.client.gui.screen.widget.widgets.input.TextFieldWidget.TextFieldSetting;
 import net.labymod.api.configuration.loader.Config;
 import net.labymod.api.configuration.loader.property.ConfigProperty;
+import net.labymod.api.configuration.settings.annotation.SettingRequires;
 
 /**
  * @author RettichLP
@@ -13,6 +14,7 @@ public class DefaultTeamSpeakConfiguration extends Config implements TeamSpeakCo
     @SwitchSetting
     private final ConfigProperty<Boolean> resolve = new ConfigProperty<>(true);
 
+    @SettingRequires(value = "resolve", invert = true)
     @TextFieldSetting
     private final ConfigProperty<String> key = new ConfigProperty<>("");
 

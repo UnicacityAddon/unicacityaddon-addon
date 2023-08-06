@@ -1,10 +1,9 @@
 package com.rettichlp.unicacityaddon.hudwidgets;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.events.BombPlantedEvent;
-import com.rettichlp.unicacityaddon.base.events.BombRemovedEvent;
+import com.rettichlp.unicacityaddon.base.events.MaskPutOnEvent;
+import com.rettichlp.unicacityaddon.base.events.MaskRemovedEvent;
 import com.rettichlp.unicacityaddon.base.events.UnicacityAddonTickEvent;
-import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidget;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidgetConfig;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextLine;
@@ -15,22 +14,22 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author RettichLP
  */
-public class BombHudWidget extends TextHudWidget<TextHudWidgetConfig> {
+public class MaskHudWidget extends TextHudWidget<TextHudWidgetConfig> {
 
     private TextLine textLine;
     private Integer time;
 
     private final UnicacityAddon unicacityAddon;
 
-    public BombHudWidget(UnicacityAddon unicacityAddon) {
-        super("bomb");
+    public MaskHudWidget(UnicacityAddon unicacityAddon) {
+        super("mask");
         this.unicacityAddon = unicacityAddon;
     }
 
     @Override
     public void load(TextHudWidgetConfig config) {
         super.load(config);
-        this.textLine = super.createLine("Bombe", this.unicacityAddon.utilService().text().parseTimer(0));
+        this.textLine = super.createLine("Maske", this.unicacityAddon.utilService().text().parseTimer(0));
         this.setIcon(this.unicacityAddon.utilService().icon());
     }
 
@@ -40,22 +39,21 @@ public class BombHudWidget extends TextHudWidget<TextHudWidgetConfig> {
     }
 
     @Subscribe
-    public void onBombPlanted(BombPlantedEvent e) {
-        long delay = e.getDelaySincePlace();
-        this.unicacityAddon.utilService().debug("Start bomb with delay = " + delay);
-        this.time = Math.toIntExact(TimeUnit.MILLISECONDS.toSeconds(delay));
+    public void onMaskPutOn(MaskPutOnEvent e) {
+        this.time = Math.toIntExact(TimeUnit.MINUTES.toSeconds(20));
     }
 
     @Subscribe
-    public void onBombRemoved(BombRemovedEvent e) {
+    public void onMaskRemoved(MaskRemovedEvent e) {
         this.time = null;
     }
 
     @Subscribe
     public void onUnicacityAddonTick(UnicacityAddonTickEvent e) {
         if (e.isPhase(UnicacityAddonTickEvent.Phase.SECOND) && this.time != null) {
-            textLine.updateAndFlush((this.time >= 780 ? ColorCode.RED.getCode() : "") + this.unicacityAddon.utilService().text().parseTimer(this.time));
-            this.time = this.time >= 1200 ? null : this.time + 1;
+            String text = this.unicacityAddon.utilService().text().parseTimer(this.time);
+            this.textLine.updateAndFlush(text);
+            this.time = this.time >= 0 ? this.time - 1 : null;
         }
     }
 }

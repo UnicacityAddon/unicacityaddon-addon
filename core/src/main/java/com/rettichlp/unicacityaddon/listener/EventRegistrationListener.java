@@ -3,6 +3,7 @@ package com.rettichlp.unicacityaddon.listener;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.config.UnicacityAddonConfiguration;
 import com.rettichlp.unicacityaddon.base.config.hotkey.HotkeyConfiguration;
+import com.rettichlp.unicacityaddon.base.events.HearthChangeEvent;
 import com.rettichlp.unicacityaddon.base.events.HotkeyEvent;
 import com.rettichlp.unicacityaddon.base.events.UnicacityAddonTickEvent;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
@@ -20,6 +21,7 @@ import net.labymod.api.event.client.lifecycle.GameTickEvent;
 public class EventRegistrationListener {
 
     private long currentTick = 0;
+    private float lastHealth = 0;
 
     private final UnicacityAddon unicacityAddon;
 
@@ -72,17 +74,43 @@ public class EventRegistrationListener {
         Key key = e.key();
 
         UnicacityAddonConfiguration configuration = this.unicacityAddon.configuration();
-        if (state.equals(KeyEvent.State.PRESS)) {
-            if (key.equals(Key.TAB) && !Laby.references().chatAccessor().isChatOpen() && configuration.tablist().enabled().get() && configuration.tablist().sorted().get() && this.unicacityAddon.utilService().isUnicacity()) {
+        if (state.equals(KeyEvent.State.PRESS) && this.unicacityAddon.utilService().isUnicacity()) {
+            if (key.equals(Key.TAB) && !Laby.references().chatAccessor().isChatOpen() && configuration.tablist().enabled().get() && configuration.tablist().sorted().get()) {
                 this.unicacityAddon.utilService().debug("Sorting tab list");
                 this.unicacityAddon.tabListController().orderTabList(this.unicacityAddon);
                 return;
             }
 
             HotkeyConfiguration hotkeyConfiguration = configuration.hotkey();
-            if (!Laby.references().chatAccessor().isChatOpen() && this.unicacityAddon.utilService().isUnicacity() && hotkeyConfiguration.enabled().get()) {
+            if (!Laby.references().chatAccessor().isChatOpen() && hotkeyConfiguration.enabled().get()) {
                 Laby.labyAPI().eventBus().fire(new HotkeyEvent(this.unicacityAddon, key));
             }
         }
+    }
+
+    /**
+     * Quote: <pre>
+     *     AkushimaTenshi: "Ich hab' nichts gegen deine Rasse..."
+     *     RettichLP: *verwirrt* "ähm..."
+     *     AkushimaTenshi: "Mann!"</pre>
+     */
+    @Subscribe
+    public void onUnicacityAddonTick(UnicacityAddonTickEvent e) {
+        if (e.isIngame() && e.isPhase(UnicacityAddonTickEvent.Phase.TICK)) {
+            Float currentHeal = this.unicacityAddon.player().getHealth();
+
+            if (currentHeal != null && this.lastHealth > currentHeal) {
+                Laby.labyAPI().eventBus().fire(new HearthChangeEvent(currentHeal, Type.HURT));
+                this.lastHealth = currentHeal;
+            } else if (currentHeal != null && this.lastHealth < currentHeal) {
+                Laby.labyAPI().eventBus().fire(new HearthChangeEvent(currentHeal, Type.HEAL));
+                this.lastHealth = currentHeal;
+            }
+        }
+    }
+
+    public enum Type {
+
+        HEAL, HURT
     }
 }

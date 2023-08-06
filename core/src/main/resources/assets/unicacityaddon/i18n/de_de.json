@@ -4,8 +4,8 @@
       "ammunition": {
         "name": "Munition"
       },
-      "bomb": {
-        "name": "Bomben Timer"
+      "majorEvent": {
+        "name": "Großeinsatz Timer"
       },
       "car": {
         "name": "Auto Info"
@@ -14,7 +14,7 @@
         "name": "Offene Services"
       },
       "hearth": {
-        "name": "Herzen Anzeige"
+        "name": "Herzen"
       },
       "inventory": {
         "name": "Inventar"
@@ -22,8 +22,17 @@
       "job": {
         "name": "Job Belohnungen"
       },
+      "mask": {
+        "name": "Maske"
+      },
       "money": {
-        "name": "Geld"
+        "name": "Geld",
+        "showBank": {
+          "name": "Kontostand anzeigen"
+        },
+        "showCash": {
+          "name": "Bargeld anzeigen"
+        }
       },
       "payday": {
         "name": "Zeit bis zum PayDay"
@@ -82,21 +91,17 @@
           "name": "Report beenden",
           "description": "Sendet die Verabschiedung aus 'Report -> Verabschiedung' und schließt den Report"
         },
-        "aDuty": {
-          "name": "ADuty",
-          "description": "Führt den '/aduty' Befehl aus"
-        },
-        "aDutySilent": {
-          "name": "ADuty (ohne Nachricht)",
-          "description": "Führt den '/aduty -s' Befehl aus"
-        },
         "publicChannel": {
           "name": "Öffentlichen Channel betreten",
           "description": "Bewegt den Spieler in den eigenen öffentlichen Channel auf dem Teamspeak"
         },
         "aBuy": {
-          "name": "ABuy und AEquip ausführen",
-          "description": "Kauft automatisch die eingestellte Menge, wenn über ein kaufbares/ausrüstbares Item mit der Maus gegangen wird und dieser Hotkey statt der linken Maustaste gedrückt wird"
+          "name": "ABuy ausführen",
+          "description": "Kauft automatisch die eingestellte Menge, wenn über ein kaufbares Item mit der Maus gegangen wird und dieser Hotkey statt der linken Maustaste gedrückt wird"
+        },
+        "aEquip": {
+          "name": "AEquip ausführen",
+          "description": "Kauft automatisch die eingestellte Menge, wenn über ein ausrüstbares Item mit der Maus gegangen wird und dieser Hotkey statt der linken Maustaste gedrückt wird"
         },
         "screenshot": {
           "name": "Screenshot mit Upload zu Imgur",
@@ -327,9 +332,17 @@
           }
         }
       },
-      "ownUse": {
-        "name": "Eigenbedarf",
+      "drug": {
+        "name": "Drogen",
         "cocaine": {
+          "header": {
+            "ownUse": {
+              "name": "Eigenbedarf"
+            },
+            "price": {
+              "name": "Preis"
+            }
+          },
           "name": "Pulver",
           "amount": {
             "name": "Menge",
@@ -338,9 +351,33 @@
           "purity": {
             "name": "Reinheit",
             "description": "Reinheit, die als Eigenbedarf genutzt werden soll"
+          },
+          "best": {
+            "name": "Beste",
+            "description": "Beste Reinheit"
+          },
+          "good": {
+            "name": "Gute",
+            "description": "Gute Reinheit"
+          },
+          "medium": {
+            "name": "Mittlere",
+            "description": "Mittlere Reinheit"
+          },
+          "bad": {
+            "name": "Schlechte",
+            "description": "Schlechte Reinheit"
           }
         },
         "marijuana": {
+          "header": {
+            "ownUse": {
+              "name": "Eigenbedarf"
+            },
+            "price": {
+              "name": "Preis"
+            }
+          },
           "name": "Kräuter",
           "amount": {
             "name": "Menge",
@@ -349,9 +386,33 @@
           "purity": {
             "name": "Reinheit",
             "description": "Reinheit, die als Eigenbedarf genutzt werden soll"
+          },
+          "best": {
+            "name": "Beste",
+            "description": "Beste Reinheit"
+          },
+          "good": {
+            "name": "Gute",
+            "description": "Gute Reinheit"
+          },
+          "medium": {
+            "name": "Mittlere",
+            "description": "Mittlere Reinheit"
+          },
+          "bad": {
+            "name": "Schlechte",
+            "description": "Schlechte Reinheit"
           }
         },
         "methamphetamin": {
+          "header": {
+            "ownUse": {
+              "name": "Eigenbedarf"
+            },
+            "price": {
+              "name": "Preis"
+            }
+          },
           "name": "Kristalle",
           "amount": {
             "name": "Menge",
@@ -360,6 +421,22 @@
           "purity": {
             "name": "Reinheit",
             "description": "Reinheit, die als Eigenbedarf genutzt werden soll"
+          },
+          "best": {
+            "name": "Beste",
+            "description": "Beste Reinheit"
+          },
+          "good": {
+            "name": "Gute",
+            "description": "Gute Reinheit"
+          },
+          "medium": {
+            "name": "Mittlere",
+            "description": "Mittlere Reinheit"
+          },
+          "bad": {
+            "name": "Schlechte",
+            "description": "Schlechte Reinheit"
           }
         }
       },
@@ -429,8 +506,12 @@
         }
       },
       "texturePack": {
-        "name": "TexturePack Nachricht deaktivieren",
+        "name": "Texturen Paket Nachricht deaktivieren",
         "description": "Deaktiviert die TexturePack Nachricht"
+      },
+      "hitSound": {
+        "name": "Hit Sounds aktivieren",
+        "description": "Aktiviert die Hit Sounds (Unicacity deaktiviert diese durch einen Bug nach einem Rejoin)"
       },
       "atm": {
         "name": "ATM Einstellungen",

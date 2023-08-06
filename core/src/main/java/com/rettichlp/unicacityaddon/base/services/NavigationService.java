@@ -4,6 +4,7 @@ import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.api.NaviPoint;
 import com.rettichlp.unicacityaddon.base.enums.location.ATM;
 import com.rettichlp.unicacityaddon.base.enums.location.Bus;
+import com.rettichlp.unicacityaddon.base.enums.location.GasStation;
 import com.rettichlp.unicacityaddon.base.enums.location.Job;
 import net.labymod.api.util.math.vector.FloatVector3;
 import org.spongepowered.include.com.google.common.collect.Maps;
@@ -35,6 +36,10 @@ public class NavigationService {
 
     public Map.Entry<Double, Bus> getNearestBus(FloatVector3 location) {
         return getNearest(location, Bus.values(), Bus::getLocation);
+    }
+
+    public Map.Entry<Double, GasStation> getNearestGasStation(FloatVector3 location) {
+        return getNearest(location, GasStation.values(), GasStation::getLocation);
     }
 
     public Map.Entry<Double, NaviPoint> getNearestNaviPoint() {

@@ -5,7 +5,11 @@ import com.rettichlp.unicacityaddon.api.statistic.GamePlay;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.config.join.CommandConfiguration;
 import com.rettichlp.unicacityaddon.base.config.join.PasswordConfiguration;
+import com.rettichlp.unicacityaddon.base.events.BankRobStartedEvent;
 import com.rettichlp.unicacityaddon.base.events.BombPlantedEvent;
+import com.rettichlp.unicacityaddon.base.events.HearthChangeEvent;
+import com.rettichlp.unicacityaddon.base.events.MaskPutOnEvent;
+import com.rettichlp.unicacityaddon.base.events.MaskRemovedEvent;
 import com.rettichlp.unicacityaddon.base.events.OfflineDataChangedEvent;
 import com.rettichlp.unicacityaddon.base.events.UnicacityAddonTickEvent;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
@@ -20,6 +24,8 @@ import net.labymod.api.client.component.event.HoverEvent;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -35,6 +41,7 @@ public class AccountListener {
     public static boolean isAfk = false;
     private boolean isMessageLocked = false;
     private long lastAfkTry = 0;
+    private long lastDamageTime = 0;
 
     private final UnicacityAddon unicacityAddon;
 
@@ -85,14 +92,13 @@ public class AccountListener {
 
         if (PatternHandler.ACCOUNT_AFK_FAILURE_PATTERN.matcher(msg).find() && System.currentTimeMillis() - lastAfkTry > TimeUnit.SECONDS.toMillis(30)) {
             p.sendInfoMessage("Das Addon versucht dich anschließend in den AFK Modus zu setzen.");
-            long lastDamageTime = TickListener.lastTickDamage.getKey();
             new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {
                     p.sendServerMessage("/afk");
                     lastAfkTry = System.currentTimeMillis();
                 }
-            }, new Date(lastDamageTime + TimeUnit.SECONDS.toMillis(15)));
+            }, new Date(this.lastDamageTime + TimeUnit.SECONDS.toMillis(15)));
             return;
         }
 
@@ -100,18 +106,15 @@ public class AccountListener {
         if (accountFriendJoinMatcher.find()) {
             String name = accountFriendJoinMatcher.group("name");
             e.setMessage(Message.getBuilder()
-                    .add(formattedMsg)
-                    .space()
+                    .add(formattedMsg).space()
                     .of("[☎]").color(ColorCode.DARK_GREEN)
                             .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of(name + " anrufen").color(ColorCode.DARK_GREEN).advance().createComponent())
                             .clickEvent(ClickEvent.Action.RUN_COMMAND, "/acall " + name)
-                            .advance()
-                    .space()
+                            .advance().space()
                     .of("[✉]").color(ColorCode.GOLD)
                             .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("SMS an " + name + " senden").color(ColorCode.GOLD).advance().createComponent())
                             .clickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/asms " + name + " ")
-                            .advance()
-                    .space()
+                            .advance().space()
                     .of("[✕]").color(ColorCode.RED)
                             .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of(name + " aus der Freundesliste entfernen").color(ColorCode.RED).advance().createComponent())
                             .clickEvent(ClickEvent.Action.RUN_COMMAND, "/fl delete " + name)
@@ -124,8 +127,7 @@ public class AccountListener {
         if (accountFriendLeaveMatcher.find()) {
             String name = accountFriendLeaveMatcher.group("name");
             e.setMessage(Message.getBuilder()
-                    .add(formattedMsg)
-                    .space()
+                    .add(formattedMsg).space()
                     .of("[✕]").color(ColorCode.RED)
                             .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of(name + " aus der Freundesliste entfernen").color(ColorCode.RED).advance().createComponent())
                             .clickEvent(ClickEvent.Action.RUN_COMMAND, "/fl delete " + name)
@@ -167,11 +169,13 @@ public class AccountListener {
         }
 
         if (PatternHandler.ACCOUNT_MASK_ON_PATTERN.matcher(msg).find()) {
+            Laby.labyAPI().eventBus().fire(new MaskPutOnEvent());
             MaskInfoCommand.startTime = System.currentTimeMillis();
             return;
         }
 
         if (PatternHandler.ACCOUNT_MASK_OFF_PATTERN.matcher(msg).find()) {
+            Laby.labyAPI().eventBus().fire(new MaskRemovedEvent());
             MaskInfoCommand.startTime = 0;
             return;
         }
@@ -215,6 +219,13 @@ public class AccountListener {
         }
     }
 
+    @Subscribe
+    public void onHearthChange(HearthChangeEvent e) {
+        if (e.getType().equals(EventRegistrationListener.Type.HURT)) {
+            this.lastDamageTime = e.getTime();
+        }
+    }
+
     private void handleUnlockAccount() {
         PasswordConfiguration passwordConfigurationSetting = this.unicacityAddon.configuration().password();
         String password = passwordConfigurationSetting.password().getOrDefault("");
@@ -225,50 +236,58 @@ public class AccountListener {
     private void handleJoin() {
         AddonPlayer p = this.unicacityAddon.player();
 
-        new Timer().schedule(new TimerTask() {
-            @Override
-            public void run() {
+        new Thread(() -> {
+            try {
+                Thread.sleep(1000);
+
                 // MOBILEEVENTHANDLER
                 p.sendServerMessage("/togglephone");
 
+                Thread.sleep(1100);
+
                 // AUTOMATE_COMMAND_SETTINGS
                 CommandConfiguration commandConfiguration = unicacityAddon.configuration().command();
-                if (commandConfiguration.enabled().get()) {
-                    // AUTOMATE_COMMAND_FIRST_SETTINGS
-                    new Timer().schedule(new TimerTask() {
-                        @Override
-                        public void run() {
-                            if (!commandConfiguration.first().getOrDefault("").isEmpty())
-                                p.sendServerMessage(commandConfiguration.first().get());
-                        }
-                    }, 1500);
+                String command;
 
-                    // AUTOMATE_COMMAND_SECOND_SETTINGS
-                    new Timer().schedule(new TimerTask() {
-                        @Override
-                        public void run() {
-                            if (!commandConfiguration.second().getOrDefault("").isEmpty())
-                                p.sendServerMessage(commandConfiguration.second().get());
-                        }
-                    }, 2000);
-
-                    // AUTOMATE_COMMAND_THIRD_SETTINGS
-                    new Timer().schedule(new TimerTask() {
-                        @Override
-                        public void run() {
-                            if (!commandConfiguration.third().getOrDefault("").isEmpty())
-                                p.sendServerMessage(commandConfiguration.third().get());
-                        }
-                    }, 2500);
+                // AUTOMATE_COMMAND_FIRST_SETTINGS
+                command = commandConfiguration.first().get();
+                if (commandConfiguration.enabled().get() && !command.isEmpty()) {
+                    p.sendServerMessage(command);
+                    this.unicacityAddon.logger().info("Sent first automated command: {}", command);
+                    Thread.sleep(100);
+                }
+                // AUTOMATE_COMMAND_SECOND_SETTINGS
+                command = commandConfiguration.second().get();
+                if (commandConfiguration.enabled().get() && !command.isEmpty()) {
+                    p.sendServerMessage(commandConfiguration.second().get());
+                    this.unicacityAddon.logger().info("Sent second automated command: {}", command);
+                    Thread.sleep(100);
+                }
+                // AUTOMATE_COMMAND_THIRD_SETTINGS
+                command = commandConfiguration.third().get();
+                if (commandConfiguration.enabled().get() && !command.isEmpty()) {
+                    p.sendServerMessage(command);
+                    this.unicacityAddon.logger().info("Sent third automated command: {}", command);
+                    Thread.sleep(100);
                 }
 
-                // LOAD BOMB TIME
-                new Thread(() -> {
-                    AccountListener.this.unicacityAddon.utilService().debug("Loading bomb place time");
-                    long placeTime = AccountListener.this.unicacityAddon.api().sendEventRequest().getBomb();
-                    Laby.labyAPI().eventBus().fire(new BombPlantedEvent(placeTime));
-                }).start();
+                // FORCE ENABLE HIT SOUNDS
+                if (this.unicacityAddon.configuration().hitSound().get()) {
+                    ScreenRenderListener.settingPath = new ArrayList<>(Arrays.asList(1, 2));
+                    p.sendServerMessage("/settings");
+                    this.unicacityAddon.logger().info("Force activate hit sounds");
+                    Thread.sleep(1000);
+                }
+
+                // LOAD MAJOR EVENT TIME
+                AccountListener.this.unicacityAddon.utilService().debug("Loading major event time");
+                long bankRobTime = AccountListener.this.unicacityAddon.api().sendEventRequest().getBankRob();
+                Laby.labyAPI().eventBus().fire(new BankRobStartedEvent(bankRobTime));
+                long bombTime = AccountListener.this.unicacityAddon.api().sendEventRequest().getBomb();
+                Laby.labyAPI().eventBus().fire(new BombPlantedEvent(bombTime));
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
             }
-        }, 1000);
+        }).start();
     }
 }

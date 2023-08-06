@@ -2,7 +2,7 @@ package com.rettichlp.unicacityaddon.listener;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
-import com.rettichlp.unicacityaddon.base.config.ownUse.OwnUseConfiguration;
+import com.rettichlp.unicacityaddon.base.config.drug.DrugConfiguration;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
@@ -10,7 +10,6 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
-import com.rettichlp.unicacityaddon.commands.faction.badfaction.OwnUseGiftCommand;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.event.HoverEvent;
 import net.labymod.api.event.Subscribe;
@@ -18,6 +17,8 @@ import net.labymod.api.event.client.chat.ChatMessageSendEvent;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
 import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -30,6 +31,7 @@ import java.util.regex.Matcher;
 @UCEvent
 public class DrugListener {
 
+    public static List<String> dealCommandQueue = new ArrayList<>();
     private static int amount;
     private static DrugType lastDrugType;
     private static DrugPurity lastDrugPurity;
@@ -61,13 +63,11 @@ public class DrugListener {
                         .of("[DA5]").color(ColorCode.AQUA).bold()
                                 .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Gebe dem Spieler die Wantedmodifikation").color(ColorCode.GOLD).advance().createComponent())
                                 .clickEvent(ClickEvent.Action.RUN_COMMAND, "/mw " + name + " da5")
-                                .advance()
-                        .space()
+                                .advance().space()
                         .of("[DA10]").color(ColorCode.AQUA).bold()
                                 .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Gebe dem Spieler die Wantedmodifikation").color(ColorCode.GOLD).advance().createComponent())
                                 .clickEvent(ClickEvent.Action.RUN_COMMAND, "/mw " + name + " da10")
-                                .advance()
-                        .space()
+                                .advance().space()
                         .of("[DA15]").color(ColorCode.AQUA).bold()
                                 .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Gebe dem Spieler die Wantedmodifikation").color(ColorCode.GOLD).advance().createComponent())
                                 .clickEvent(ClickEvent.Action.RUN_COMMAND, "/mw " + name + " da15")
@@ -156,11 +156,11 @@ public class DrugListener {
             DrugPurity drugPurity = DrugPurity.BEST;
 
             if (drugType != null) {
-                OwnUseConfiguration ownUseConfiguration = this.unicacityAddon.configuration().ownUse();
+                DrugConfiguration drugConfiguration = this.unicacityAddon.configuration().drug();
                 switch (drugType) {
-                    case COCAINE -> drugPurity = ownUseConfiguration.cocaine().purity().get();
-                    case MARIJUANA -> drugPurity = ownUseConfiguration.marijuana().purity().get();
-                    case METH -> drugPurity = ownUseConfiguration.methamphetamin().purity().get();
+                    case COCAINE -> drugPurity = drugConfiguration.cocaine().purity().get();
+                    case MARIJUANA -> drugPurity = drugConfiguration.marijuana().purity().get();
+                    case METH -> drugPurity = drugConfiguration.methamphetamin().purity().get();
                 }
             }
 
@@ -176,12 +176,12 @@ public class DrugListener {
                 this.unicacityAddon.fileService().data().removeDrugFromInventory(lastDrugType, lastDrugPurity, amount);
             }
 
-            // gift own use
-            if (!OwnUseGiftCommand.dealCommandQueue.isEmpty()) {
+            // gift own use or sell drug all
+            if (!dealCommandQueue.isEmpty()) {
                 new Timer().schedule(new TimerTask() {
                     @Override
                     public void run() {
-                        p.sendServerMessage(OwnUseGiftCommand.dealCommandQueue.remove(0));
+                        p.sendServerMessage(dealCommandQueue.remove(0));
                     }
                 }, TimeUnit.SECONDS.toMillis(1));
             }
@@ -192,12 +192,12 @@ public class DrugListener {
         Matcher drugDealDeclinedMatcher = PatternHandler.DRUG_DEAL_DECLINED.matcher(msg);
         if (drugDealDeclinedMatcher.find() && System.currentTimeMillis() - time < TimeUnit.MINUTES.toMillis(3)) {
 
-            // gift own use
-            if (!OwnUseGiftCommand.dealCommandQueue.isEmpty()) {
+            // gift own use or sell drug all
+            if (!dealCommandQueue.isEmpty()) {
                 new Timer().schedule(new TimerTask() {
                     @Override
                     public void run() {
-                        p.sendServerMessage(OwnUseGiftCommand.dealCommandQueue.remove(0));
+                        p.sendServerMessage(dealCommandQueue.remove(0));
                     }
                 }, TimeUnit.SECONDS.toMillis(1));
             }
@@ -302,9 +302,9 @@ public class DrugListener {
             if (drugVaultInfoLSDMatcher.find()) {
                 e.setMessage(Message.getBuilder()
                         .of("»").color(ColorCode.DARK_GRAY).advance().space()
-                        .of("Wundertüte").color(ColorCode.GOLD).advance()
+                        .of("Wundertüten").color(ColorCode.GOLD).advance()
                         .of(":").color(ColorCode.DARK_GRAY).advance().space()
-                        .of(drugVaultInfoLSDMatcher.group(2)).color(ColorCode.YELLOW).advance().space()
+                        .of(drugVaultInfoLSDMatcher.group(1)).color(ColorCode.YELLOW).advance().space()
                         .of("Stück").color(ColorCode.YELLOW).advance().createComponent());
                 return;
             }

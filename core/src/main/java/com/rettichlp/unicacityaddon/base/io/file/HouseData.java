@@ -79,20 +79,18 @@ public class HouseData {
             if (drugType.isLegal() && drugPurityIntegerMap.get(DrugPurity.BEST) > 0) {
                 hoverMessageBuilder
                         .of(drugType.getDrugName() + ":").color(ColorCode.BLUE).advance().space()
-                        .of(drugPurityIntegerMap.get(DrugPurity.BEST) + "g").color(ColorCode.AQUA).advance()
-                        .newline();
+                        .of(drugPurityIntegerMap.get(DrugPurity.BEST) + "g").color(ColorCode.AQUA).advance().newline();
             } else if (drugPurityIntegerMap.values().stream().reduce(0, Integer::sum) > 0) {
                 hoverMessageBuilder
-                        .of(drugType.getDrugName() + ":").color(ColorCode.BLUE).advance().space()
-                        .newline();
+                        .of(drugType.getDrugName() + ":").color(ColorCode.BLUE).advance()
+                        .space().newline();
                 drugPurityIntegerMap.forEach((drugPurity, integer) -> {
                     if (integer > 0) {
                         hoverMessageBuilder
                                 .space()
                                 .of("➡").color(ColorCode.GRAY).advance().space()
                                 .of(drugPurity.getPurityString() + ":").color(ColorCode.DARK_AQUA).advance().space()
-                                .of(integer + "g").color(ColorCode.AQUA).advance()
-                                .newline();
+                                .of(integer + "g").color(ColorCode.AQUA).advance().newline();
                     }
                 });
             }

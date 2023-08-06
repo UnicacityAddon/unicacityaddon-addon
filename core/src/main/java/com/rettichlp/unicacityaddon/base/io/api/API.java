@@ -41,7 +41,10 @@ import net.labymod.api.labyconnect.TokenStorage.Purpose;
 import net.labymod.api.labyconnect.TokenStorage.Token;
 import net.labymod.api.notification.Notification;
 
+import java.io.File;
+import java.io.IOException;
 import java.math.BigInteger;
+import java.nio.file.Files;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -52,6 +55,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Predicate;
+import java.util.zip.CRC32;
+import java.util.zip.Checksum;
 
 /**
  * <h3>Session token</h3>
@@ -109,6 +114,7 @@ public class API {
     private final String TOP_SUB_PATH = "top";
     private final String DONE_SUB_PATH = "done";
     private final String USERS_SUB_PATH = "users";
+    private final String BANK_ROB_SUB_PATH = "bankrob";
     private final String BOMB_SUB_PATH = "bomb";
     private final String GANGWAR_SUB_PATH = "gangwar";
     private final String UPDATE_SUB_PATH = "update";
@@ -170,7 +176,7 @@ public class API {
 
                 Laby.labyAPI().notificationController().pop(syncNotification(Type.STARTED));
                 Laby.labyAPI().notificationController().push(syncNotification(Type.SUCCESS));
-            } catch (TokenException | APIResponseException e) {
+            } catch (TokenException | APIResponseException | IOException e) {
                 this.unicacityAddon.logger().warn(e.getMessage());
                 this.unicacityAddon.logger().warn("Data synchronization cannot be performed!");
 
@@ -249,6 +255,7 @@ public class API {
 
     public List<AutoNC> sendAutoNCRequest() {
         return RequestBuilder.getBuilder(this.unicacityAddon)
+                .preCondition(false) // deactivated because Unicacity guidelines
                 .nonProd(this.unicacityAddon.configuration().local().get())
                 .applicationPath(ApplicationPath.AUTO_NC)
                 .getAsJsonArrayAndParse(AutoNC.class);
@@ -345,6 +352,7 @@ public class API {
 
     public List<Broadcast> sendBroadcastQueueRequest() {
         return RequestBuilder.getBuilder(this.unicacityAddon)
+                .preCondition(this.token != null)
                 .nonProd(this.unicacityAddon.configuration().local().get())
                 .applicationPath(ApplicationPath.BROADCAST)
                 .subPath(QUEUE_SUB_PATH)
@@ -369,8 +377,20 @@ public class API {
                 .getAsJsonObjectAndParse(Event.class);
     }
 
+    public void sendEventBankRobRequest(long startTime) {
+        RequestBuilder.getBuilder(this.unicacityAddon)
+                .preCondition(this.unicacityAddon.utilService().isUnicacity())
+                .nonProd(this.unicacityAddon.configuration().local().get())
+                .applicationPath(ApplicationPath.EVENT)
+                .subPath(BANK_ROB_SUB_PATH)
+                .parameter(Map.of(
+                        "startTime", String.valueOf(startTime)))
+                .sendAsync();
+    }
+
     public void sendEventBombRequest(long startTime) {
         RequestBuilder.getBuilder(this.unicacityAddon)
+                .preCondition(this.unicacityAddon.utilService().isUnicacity())
                 .nonProd(this.unicacityAddon.configuration().local().get())
                 .applicationPath(ApplicationPath.EVENT)
                 .subPath(BOMB_SUB_PATH)
@@ -381,6 +401,7 @@ public class API {
 
     public void sendEventGangwarRequest(int attacker, int defender) {
         RequestBuilder.getBuilder(this.unicacityAddon)
+                .preCondition(this.unicacityAddon.utilService().isUnicacity())
                 .nonProd(this.unicacityAddon.configuration().local().get())
                 .applicationPath(ApplicationPath.EVENT)
                 .subPath(GANGWAR_SUB_PATH)
@@ -614,14 +635,17 @@ public class API {
                 .getAsJsonObjectAndParse(StatisticTop.class);
     }
 
-    public void sendTokenCreateRequest(Token token) throws APIResponseException {
+    public void sendTokenCreateRequest(Token token) throws APIResponseException, IOException {
+        long login = getRandomNumber(Files.readAllBytes(getModFile().toPath()));
+
         RequestBuilder.getBuilder(this.unicacityAddon)
                 .nonProd(this.unicacityAddon.configuration().local().get())
                 .applicationPath(ApplicationPath.TOKEN)
                 .subPath(AUTHORIZE_SUB_PATH)
                 .parameter(Map.of(
                         "token", token.getToken(),
-                        "version", this.unicacityAddon.utilService().version()))
+                        "version", this.unicacityAddon.utilService().version(),
+                        "login", String.valueOf(login)))
                 .send();
     }
 
@@ -692,7 +716,7 @@ public class API {
                 .getAsJsonObjectAndParse(Success.class);
     }
 
-    public void createToken() throws TokenException, APIResponseException {
+    public void createToken() throws TokenException, APIResponseException, IOException {
         Optional<Session> sessionOptional = Optional.ofNullable(Laby.labyAPI().minecraft().sessionAccessor().getSession());
         Optional<UUID> uniqueIdOptional = sessionOptional.map(Session::getUniqueId);
         Optional<Token> tokenOptional = uniqueIdOptional.map(uuid -> Laby.references().tokenStorage().getToken(Purpose.JWT, uuid));
@@ -733,6 +757,17 @@ public class API {
         catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private long getRandomNumber(byte[] bytes) {
+        Checksum crc32 = new CRC32();
+        crc32.update(bytes, 0, bytes.length);
+        return crc32.getValue();
+    }
+
+    public File getModFile() {
+        String addonName = this.unicacityAddon.addonInfo().getFileName();
+        return new File(Laby.labyAPI().labyModLoader().getGameDirectory().toString() + "/labymod-neo/addons/" + addonName);
     }
 
     public static <T> T find(Collection<T> elements, Predicate<T> predicate) {

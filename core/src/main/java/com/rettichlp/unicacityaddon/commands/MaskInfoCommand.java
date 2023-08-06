@@ -31,9 +31,9 @@ public class MaskInfoCommand extends UnicacityCommand {
         if (startTime > 0) {
             long timeLeft = System.currentTimeMillis() - startTime;
             String maskDuration = this.unicacityAddon.utilService().text().parseTimer(1200 - TimeUnit.MILLISECONDS.toSeconds(timeLeft));
-            String[] splittedMaskDurytion = maskDuration.split(":");
-            int minutes = Integer.parseInt(splittedMaskDurytion[0]);
-            int seconds = Integer.parseInt(splittedMaskDurytion[1]);
+            String[] splitMaskDuration = maskDuration.split(":");
+            int minutes = Integer.parseInt(splitMaskDuration[0]);
+            int seconds = Integer.parseInt(splitMaskDuration[1]);
             p.sendInfoMessage("Du bist noch " + minutes + " Minute" + (minutes != 1 ? "n" : "") + " und " + seconds + " Sekunde" + (seconds != 1 ? "n" : "") + " maskiert.");
         } else {
             p.sendErrorMessage("Du bist nicht maskiert.");

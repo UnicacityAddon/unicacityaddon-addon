@@ -17,7 +17,6 @@ import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Optional;
 
 /**
  * @author Dimiikou
@@ -95,11 +94,7 @@ public class EquipListCommand extends UnicacityCommand {
 
         new Thread(() -> {
             try {
-                String uuid = Optional.ofNullable(p.getUniqueId())
-                        .map(u -> u.toString().replace("-", ""))
-                        .orElse("");
-
-                String response = this.unicacityAddon.webService().sendRequest("https://lemilieu.de/api/equip/get?member=" + uuid);
+                String response = this.unicacityAddon.webService().sendRequest("https://lemilieu.de/api/equip/get?member=" + p.getShortUniqueId());
 
                 JsonArray jsonArray = new JsonParser().parse(response).getAsJsonArray();
                 jsonArray.forEach(jsonElement -> {

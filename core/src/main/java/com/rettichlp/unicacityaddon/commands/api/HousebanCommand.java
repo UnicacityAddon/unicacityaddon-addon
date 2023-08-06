@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 /**
  * @author RettichLP
  */
-@UCCommand(prefix = "houseban", usage = "(add|remove) (Spieler) (Grund)")
+@UCCommand(prefix = "houseban", usage = "(add|remove) (Spieler) (Grund|all)")
 public class HousebanCommand extends UnicacityCommand {
 
     private final UnicacityAddon unicacityAddon;
@@ -75,8 +75,8 @@ public class HousebanCommand extends UnicacityCommand {
                             .of(houseBanReason.getReason().replace("-", " ")).color(ColorCode.RED).advance().space()
                             .of(houseBanReason.getCreatorName() != null ? "(" : "").color(ColorCode.GRAY).advance()
                             .of(houseBanReason.getCreatorName() != null ? houseBanReason.getCreatorName() : "").color(ColorCode.GRAY).advance()
-                            .of(houseBanReason.getCreatorName() != null ? ")" : "").color(ColorCode.GRAY).advance().space()
-                            .newline());
+                            .of(houseBanReason.getCreatorName() != null ? ")" : "").color(ColorCode.GRAY).advance()
+                            .space().newline());
 
                     p.sendMessage(Message.getBuilder()
                             .of("»").color(ColorCode.GRAY).advance().space()
@@ -108,6 +108,7 @@ public class HousebanCommand extends UnicacityCommand {
         return TabCompletionBuilder.getBuilder(this.unicacityAddon, arguments)
                 .addAtIndex(1, "add", "remove")
                 .addAtIndex(3, this.unicacityAddon.api().getHouseBanReasonList().stream().map(HouseBanReason::getReason).sorted().collect(Collectors.toList()))
+                .addAtIndex(3, "all")
                 .build();
     }
 }

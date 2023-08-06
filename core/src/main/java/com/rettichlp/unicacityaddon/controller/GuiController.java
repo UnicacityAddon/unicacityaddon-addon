@@ -13,9 +13,16 @@ public abstract class GuiController {
 
     public abstract int getSlotNumberByDisplayName(String displayName);
 
+    @Nullable
+    public abstract String getContainerLegacyName();
+
+    public abstract int getContainerId();
+
     public abstract void inventoryClick(int slotNumber);
 
     public abstract void updateDrugInventoryMap(UnicacityAddon unicacityAddon);
 
     public abstract void setSelectedHotbarSlot(int slotNumber);
+
+    public abstract void updateSetting(boolean expectedValue);
 }

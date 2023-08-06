@@ -45,8 +45,7 @@ public class TeamSpeakNotificationListener {
 
             this.unicacityAddon.utilService().debug(name + " -> " + channel.getName() + " (" + channel.getChannelCategory() + ")");
 
-            // support waiting room
-            if (this.unicacityAddon.configuration().teamspeak().support().get() && cid == 41) {
+            if (this.unicacityAddon.configuration().teamspeak().support().get() && cid == 41) { // support waiting room
                 Message.Builder messageBuilder = Message.getBuilder()
                         .prefix()
                         .of(isAddonUser ? "Du" : name).color(ColorCode.AQUA).advance().space()
@@ -82,8 +81,7 @@ public class TeamSpeakNotificationListener {
 
                 p.sendMessage(messageBuilder.createComponent());
 
-            // public channel
-            } else if (this.unicacityAddon.configuration().teamspeak().publicity().get() && cid == p.getFaction().getPublicChannelId()) {
+            } else if (this.unicacityAddon.configuration().teamspeak().publicity().get() && cid == p.getFaction().getPublicChannelId()) { // public channel
                 Message.Builder messageBuilder = Message.getBuilder()
                         .prefix()
                         .of(isAddonUser ? "Du" : name).color(ColorCode.AQUA).advance().space()

@@ -53,7 +53,12 @@ public class DefaultAddonPlayer implements AddonPlayer {
 
     @Override
     public UUID getUniqueId() {
-        return getPlayer() != null ? getPlayer().getUniqueId() : null;
+        return Laby.labyAPI().getUniqueId();
+    }
+
+    @Override
+    public String getShortUniqueId() {
+        return getUniqueId().toString().replace("-", "");
     }
 
     @Override
@@ -193,12 +198,8 @@ public class DefaultAddonPlayer implements AddonPlayer {
 
     @Override
     public boolean isSuperUser() {
-        boolean isSuperUser = false;
-        if (getUniqueId() != null) {
-            String uuid = getUniqueId().toString().replace("-", "");
-            isSuperUser = uuid.equals("25855f4d38744a7fa6ade9e4f3042e19") || uuid.equals("6e49e42eefca4d9389f9f395b887809e");
-        }
-        return isSuperUser;
+        String uuid = this.getShortUniqueId();
+        return uuid.equals("25855f4d38744a7fa6ade9e4f3042e19") || uuid.equals("6e49e42eefca4d9389f9f395b887809e");
     }
 
     @Override

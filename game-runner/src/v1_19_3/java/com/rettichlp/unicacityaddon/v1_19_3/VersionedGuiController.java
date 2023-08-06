@@ -3,8 +3,8 @@ package com.rettichlp.unicacityaddon.v1_19_3;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
-import com.rettichlp.unicacityaddon.commands.faction.DropDrugAllCommand;
 import com.rettichlp.unicacityaddon.controller.GuiController;
+import com.rettichlp.unicacityaddon.listener.ScreenRenderListener;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMaps;
 import net.labymod.api.models.Implements;
 import net.labymod.api.nbt.NBTTagType;
@@ -21,6 +21,7 @@ import net.minecraft.world.inventory.ChestMenu;
 import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.HopperMenu;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.Nullable;
 
 import javax.inject.Singleton;
 import java.util.HashMap;
@@ -36,13 +37,15 @@ import java.util.regex.Pattern;
 @Implements(GuiController.class)
 public class VersionedGuiController extends GuiController {
 
+    private int containerId = 0;
+
     @Override
     public int getSlotNumberByDisplayName(String displayName) {
         int slotNumber = -1;
 
         Screen screen = Minecraft.getInstance().screen;
-        if (screen instanceof ContainerScreen && ((ContainerScreen) screen).getMenu() instanceof ChestMenu) {
-            ChestMenu chestMenu = ((ContainerScreen) screen).getMenu();
+        if (screen instanceof ContainerScreen containerScreen) {
+            ChestMenu chestMenu = containerScreen.getMenu();
 
             NonNullList<ItemStack> itemStacks = chestMenu.getItems();
             Optional<ItemStack> hoveredItemStackOptional = itemStacks.stream()
@@ -58,45 +61,55 @@ public class VersionedGuiController extends GuiController {
     }
 
     @Override
+    public @Nullable String getContainerLegacyName() {
+        return null;
+    }
+
+    @Override
+    public int getContainerId() {
+        return 0;
+    }
+
+    @Override
     public void inventoryClick(int slotNumber) {
         Screen screen = Minecraft.getInstance().screen;
 
-        int containerId = 0;
-        if (screen instanceof ContainerScreen && ((ContainerScreen) screen).getMenu() instanceof ChestMenu) {
-            containerId = ((ContainerScreen) screen).getMenu().containerId;
-        } else if (screen instanceof HopperScreen && ((HopperScreen) screen).getMenu() instanceof HopperMenu) {
-            containerId = ((HopperScreen) screen).getMenu().containerId;
+        this.containerId = 0;
+        if (screen instanceof ContainerScreen containerScreen) {
+            this.containerId = containerScreen.getMenu().containerId;
+        } else if (screen instanceof HopperScreen hopperScreen) {
+            this.containerId = hopperScreen.getMenu().containerId;
         }
 
         LocalPlayer localPlayer = Minecraft.getInstance().player;
         assert localPlayer != null;
 
-        ServerboundContainerClickPacket serverboundContainerClickPacket = new ServerboundContainerClickPacket(containerId, 0, slotNumber, 1, ClickType.PICKUP, localPlayer.containerMenu.getCarried(), Int2ObjectMaps.emptyMap());
+        ServerboundContainerClickPacket serverboundContainerClickPacket = new ServerboundContainerClickPacket(this.containerId, 0, slotNumber, 1, ClickType.PICKUP, localPlayer.containerMenu.getCarried(), Int2ObjectMaps.emptyMap());
         localPlayer.connection.send(serverboundContainerClickPacket);
     }
 
     @Override
     public void updateDrugInventoryMap(UnicacityAddon unicacityAddon) {
         Screen screen = Minecraft.getInstance().screen;
-        if (screen instanceof ContainerScreen && ((ContainerScreen) screen).getMenu() instanceof ChestMenu) {
-            ChestMenu chestMenu = ((ContainerScreen) screen).getMenu();
+        if (screen instanceof ContainerScreen containerScreen) {
+            ChestMenu chestMenu = containerScreen.getMenu();
 
-            int windowId = chestMenu.containerId;
-            if (DropDrugAllCommand.lastWindowId == windowId)
+            this.containerId = chestMenu.containerId;
+            if (unicacityAddon.utilService().command().getLastWindowId() == this.containerId)
                 return;
 
-            DropDrugAllCommand.lastWindowId = windowId;
+            unicacityAddon.utilService().command().setLastWindowId(this.containerId);
 
-            if (DropDrugAllCommand.cocaineCheck) {
-                DropDrugAllCommand.cocaineCheck = false;
+            if (unicacityAddon.utilService().command().isCocaineCheck()) {
+                unicacityAddon.utilService().command().setCocaineCheck(false);
                 // select cocaine to check drug purity
                 this.inventoryClick(0);
-            } else if (DropDrugAllCommand.marihuanaCheck) {
-                DropDrugAllCommand.marihuanaCheck = false;
+            } else if (unicacityAddon.utilService().command().isMarihuanaCheck()) {
+                unicacityAddon.utilService().command().setMarihuanaCheck(false);
                 // select marihuana to check drug purity
                 this.inventoryClick(1);
-            } else if (DropDrugAllCommand.methCheck) {
-                DropDrugAllCommand.methCheck = false;
+            } else if (unicacityAddon.utilService().command().isMethCheck()) {
+                unicacityAddon.utilService().command().setMethCheck(false);
                 // select meth to check drug purity
                 this.inventoryClick(2);
             } else {
@@ -122,19 +135,18 @@ public class VersionedGuiController extends GuiController {
                             }
                         });
 
-                DropDrugAllCommand.active = false;
-                DropDrugAllCommand.dropCommandExecution(unicacityAddon);
+                unicacityAddon.utilService().command().setActiveDrugInventoryLoading(false);
                 assert Minecraft.getInstance().player != null;
                 Minecraft.getInstance().player.closeContainer();
             }
-        } else if (screen instanceof HopperScreen && DropDrugAllCommand.active) {
-            HopperMenu hopperMenu = ((HopperScreen) screen).getMenu();
+        } else if (screen instanceof HopperScreen hopperScreen && unicacityAddon.utilService().command().isActiveDrugInventoryLoading()) {
+            HopperMenu hopperMenu = hopperScreen.getMenu();
 
-            int windowId = hopperMenu.containerId;
-            if (windowId == DropDrugAllCommand.lastWindowId)
+            this.containerId = hopperMenu.containerId;
+            if (unicacityAddon.utilService().command().getLastWindowId() == this.containerId)
                 return;
 
-            DropDrugAllCommand.lastWindowId = windowId;
+            unicacityAddon.utilService().command().setLastWindowId(this.containerId);
 
             hopperMenu.getItems().stream()
                     .filter(itemStack -> !itemStack.isEmpty())
@@ -170,5 +182,32 @@ public class VersionedGuiController extends GuiController {
     public void setSelectedHotbarSlot(int slotNumber) {
         assert Minecraft.getInstance().player != null;
         Minecraft.getInstance().player.getInventory().selected = slotNumber;
+    }
+
+    @Override
+    public void updateSetting(boolean expectedValue) {
+        Screen screen = Minecraft.getInstance().screen;
+        if (screen instanceof ContainerScreen containerScreen && !ScreenRenderListener.settingPath.isEmpty()) {
+            ChestMenu chestMenu = containerScreen.getMenu();
+
+            if (chestMenu.containerId != this.containerId) {
+                this.containerId = chestMenu.containerId;
+
+                if (ScreenRenderListener.settingPath.size() > 1) {
+                    this.inventoryClick(ScreenRenderListener.settingPath.remove(0));
+                } else {
+                    int slotNumber = ScreenRenderListener.settingPath.remove(0);
+                    ItemStack itemStack = chestMenu.getItems().get(slotNumber);
+                    assert itemStack.getTag() != null;
+                    CompoundTag compoundTag = itemStack.getTag().getCompound("display");
+                    ListTag lore = compoundTag.getList("Lore", NBTTagType.STRING.getId());
+                    if (lore.getString(1).equals("§cAktiviere den Hitsound") && expectedValue) {
+                        this.inventoryClick(slotNumber);
+                    }
+                    assert Minecraft.getInstance().player != null;
+                    Minecraft.getInstance().player.closeContainer();
+                }
+            }
+        }
     }
 }

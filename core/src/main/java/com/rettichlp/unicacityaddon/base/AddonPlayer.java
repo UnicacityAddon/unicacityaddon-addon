@@ -22,8 +22,9 @@ public interface AddonPlayer {
 
     String getName();
 
-    @Nullable
     UUID getUniqueId();
+
+    String getShortUniqueId();
 
     @Nullable
     Float getHealth();

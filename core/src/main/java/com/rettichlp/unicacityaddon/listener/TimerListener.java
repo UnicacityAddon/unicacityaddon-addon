@@ -17,7 +17,7 @@ import java.util.regex.Matcher;
 @UCEvent
 public class TimerListener {
 
-    public static boolean isJail = false;
+    private boolean isJail = false;
 
     private final UnicacityAddon unicacityAddon;
 
@@ -64,7 +64,7 @@ public class TimerListener {
         Matcher jailFinishMatcher = PatternHandler.TIMER_JAIL_FINISH_PATTERN.matcher(msg);
         if (jailFinishMatcher.find()) {
             isJail = false;
-            this.unicacityAddon.fileService().data().setTimer(0);
+            this.unicacityAddon.fileService().data().setTimer(-1);
 
             if (ShutdownJailCommand.shutdownJail)
                 this.unicacityAddon.utilService().shutdownPC();

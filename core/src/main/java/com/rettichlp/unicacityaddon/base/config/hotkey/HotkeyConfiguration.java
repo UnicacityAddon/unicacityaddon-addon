@@ -18,13 +18,11 @@ public interface HotkeyConfiguration {
 
     ConfigProperty<Key> cancelReport();
 
-    ConfigProperty<Key> aDuty();
-
-    ConfigProperty<Key> aDutySilent();
-
     ConfigProperty<Key> publicChannel();
 
     ConfigProperty<Key> aBuy();
+
+    ConfigProperty<Key> aEquip();
 
     ConfigProperty<Key> screenshot();
 }

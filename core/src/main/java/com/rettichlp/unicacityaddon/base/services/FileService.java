@@ -67,6 +67,13 @@ public class FileService {
         return addonScreenshotDir.exists() || addonScreenshotDir.mkdir() ? addonScreenshotDir : null;
     }
 
+    public File getAddonRoleplayActivityScreenDir(String type) {
+        if (getAddonActivityScreenDir("roleplay") == null)
+            return null;
+        File addonRoleplayScreenshotDir = new File(getAddonActivityScreenDir("roleplay").getAbsolutePath() + "/" + type);
+        return addonRoleplayScreenshotDir.exists() || addonRoleplayScreenshotDir.mkdir() ? addonRoleplayScreenshotDir : null;
+    }
+
     public File getDataFile() throws IOException {
         if (getUnicacityAddonDir() == null)
             return null;
@@ -107,6 +114,24 @@ public class FileService {
         }
 
         File newImageFile = new File(Objects.requireNonNull(getAddonActivityScreenDir(type)).getAbsolutePath() + "/" + sb + "-" + type + ".jpg");
+        return newImageFile.createNewFile() ? newImageFile : null;
+    }
+
+    public File getNewRoleplayActivityImageFile(String type) throws IOException {
+        if (getAddonRoleplayActivityScreenDir(type) == null)
+            return null;
+
+        String date = DATE_FORMAT.format(new Date());
+        StringBuilder sb = new StringBuilder(date);
+        int i = 1;
+        while (new File(Objects.requireNonNull(getAddonRoleplayActivityScreenDir(type)).getAbsolutePath() + "/" + sb + "-" + type + ".jpg").exists()) {
+            if (i == 1)
+                sb.append("_").append(i++);
+            else
+                sb.replace(sb.length() - 1, sb.length(), String.valueOf(i));
+        }
+
+        File newImageFile = new File(Objects.requireNonNull(getAddonRoleplayActivityScreenDir(type)).getAbsolutePath() + "/" + sb + "-" + type + ".jpg");
         return newImageFile.createNewFile() ? newImageFile : null;
     }
 
