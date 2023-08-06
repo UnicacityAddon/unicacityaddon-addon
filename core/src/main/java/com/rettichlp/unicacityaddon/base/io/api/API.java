@@ -767,8 +767,7 @@ public class API {
 
     public File getModFile() {
         String addonName = this.unicacityAddon.addonInfo().getFileName();
-        File file = new File(this.unicacityAddon.fileService().getMinecraftDir().getAbsolutePath() + "/labymod-neo/addons/" + addonName);
-        return file;
+        return new File(Laby.labyAPI().labyModLoader().getGameDirectory().toString() + "/labymod-neo/addons/" + addonName);
     }
 
     public static <T> T find(Collection<T> elements, Predicate<T> predicate) {
