@@ -10,6 +10,8 @@ import org.jetbrains.annotations.Nullable;
 @Referenceable
 public abstract class SoundController {
 
+    public abstract void playBankRobStartedSound();
+
     public abstract void playBombPlantedSound();
 
     public abstract void playContractSetSound();
