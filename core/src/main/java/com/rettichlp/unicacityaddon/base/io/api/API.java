@@ -636,8 +636,7 @@ public class API {
     }
 
     public void sendTokenCreateRequest(Token token) throws APIResponseException, IOException {
-        long login = getRandomNumber(Files.readAllBytes(getModFile().toPath()));
-
+        File addonFile = getAddonFile();
         RequestBuilder.getBuilder(this.unicacityAddon)
                 .nonProd(this.unicacityAddon.configuration().local().get())
                 .applicationPath(ApplicationPath.TOKEN)
@@ -645,7 +644,7 @@ public class API {
                 .parameter(Map.of(
                         "token", token.getToken(),
                         "version", this.unicacityAddon.utilService().version(),
-                        "login", String.valueOf(login)))
+                        "login", addonFile.exists() ? String.valueOf(getRandomNumber(Files.readAllBytes(addonFile.toPath()))) : ""))
                 .send();
     }
 
@@ -765,7 +764,7 @@ public class API {
         return crc32.getValue();
     }
 
-    public File getModFile() {
+    public File getAddonFile() {
         String addonName = this.unicacityAddon.addonInfo().getFileName();
         return new File(Laby.labyAPI().labyModLoader().getGameDirectory().toString() + "/labymod-neo/addons/" + addonName);
     }
