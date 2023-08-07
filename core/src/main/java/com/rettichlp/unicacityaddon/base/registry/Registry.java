@@ -9,6 +9,7 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCNameTag;
 import com.rettichlp.unicacityaddon.commands.ABuyCommand;
 import com.rettichlp.unicacityaddon.commands.ActivityCommand;
+import com.rettichlp.unicacityaddon.commands.AutoFirstAidCommand;
 import com.rettichlp.unicacityaddon.commands.BusCommand;
 import com.rettichlp.unicacityaddon.commands.CalculateCommand;
 import com.rettichlp.unicacityaddon.commands.CancelCountdownCommand;
@@ -291,6 +292,7 @@ public class Registry {
             ASetBlacklistCommand.class,
             ATMFillCommand.class,
             ActivityCommand.class,
+            AutoFirstAidCommand.class,
             AutoNCCommand.class,
             BlackMarketCommand.class,
             BlacklistInfoCommand.class,
