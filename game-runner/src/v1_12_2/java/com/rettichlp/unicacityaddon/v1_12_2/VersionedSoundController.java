@@ -1,8 +1,6 @@
 package com.rettichlp.unicacityaddon.v1_12_2;
 
 import com.rettichlp.unicacityaddon.controller.SoundController;
-import net.labymod.api.Laby;
-import net.labymod.api.client.resources.ResourceLocation;
 import net.labymod.api.models.Implements;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
