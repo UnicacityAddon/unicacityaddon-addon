@@ -101,7 +101,7 @@ public class MajorEventListener {
         Matcher bankRobStartedMatcher = PatternHandler.BANK_ROB_STARTED_PATTERN.matcher(msg);
         if (bankRobStartedMatcher.find()) {
             Laby.labyAPI().eventBus().fire(new BankRobStartedEvent());
-//            this.unicacityAddon.soundController().playBankRobStartedSound();
+            this.unicacityAddon.soundController().playBankRobStartedSound();
 
             if (p.getFaction().equals(Faction.POLIZEI)) {
                 this.unicacityAddon.api().sendEventBankRobRequest(System.currentTimeMillis());

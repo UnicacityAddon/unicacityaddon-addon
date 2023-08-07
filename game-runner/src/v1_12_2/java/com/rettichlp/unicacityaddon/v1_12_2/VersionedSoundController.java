@@ -23,6 +23,29 @@ public class VersionedSoundController extends SoundController {
     }
 
     @Override
+    public void playBankRobStartedSound() {
+        new Thread(() -> {
+            Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(this.create("block.note.chime"), 0.6F));
+
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+
+            Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(this.create("block.note.chime"), 0.9F));
+
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+
+            Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(this.create("block.note.chime"), 0.6F));
+        }).start();
+    }
+
+    @Override
     public void playBombPlantedSound() {
         new Thread(() -> {
             Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(this.create("block.note.chime"), 1.0F));
