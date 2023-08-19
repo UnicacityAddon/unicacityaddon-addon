@@ -14,9 +14,9 @@ import com.rettichlp.unicacityaddon.base.services.WebService;
 import com.rettichlp.unicacityaddon.base.teamspeak.TeamSpeakAPI;
 import com.rettichlp.unicacityaddon.controller.DeadBodyController;
 import com.rettichlp.unicacityaddon.controller.GuiController;
+import com.rettichlp.unicacityaddon.controller.PlayerListController;
 import com.rettichlp.unicacityaddon.controller.ScreenshotController;
 import com.rettichlp.unicacityaddon.controller.SoundController;
-import com.rettichlp.unicacityaddon.controller.TabListController;
 import com.rettichlp.unicacityaddon.controller.TransportController;
 import com.rettichlp.unicacityaddon.controller.WorldInteractionController;
 import com.rettichlp.unicacityaddon.core.generated.DefaultReferenceStorage;
@@ -149,16 +149,16 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
         return controller().getDeadBodyController();
     }
 
+    public PlayerListController playerListController() {
+        return controller().getPlayerListController();
+    }
+
     public ScreenshotController screenshotController() {
         return controller().getScreenshotController();
     }
 
     public SoundController soundController() {
         return controller().getSoundController();
-    }
-
-    public TabListController tabListController() {
-        return controller().getTabListController();
     }
 
     public TransportController transportController() {

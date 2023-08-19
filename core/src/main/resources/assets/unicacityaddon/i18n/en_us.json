@@ -551,11 +551,11 @@
           "name": "Join support channel message"
         }
       },
-      "tablist": {
-        "name": "Tab List",
+      "playerlist": {
+        "name": "Player List",
         "sorted": {
-          "name": "Sorted Tab List",
-          "description": "Sorts the tab list by duty factions, UC's, builders and active reports"
+          "name": "Sorted Player List",
+          "description": "Sorts the player list by duty factions, UC's, builders and active reports"
         },
         "afk": {
           "name": "AFK Tag",

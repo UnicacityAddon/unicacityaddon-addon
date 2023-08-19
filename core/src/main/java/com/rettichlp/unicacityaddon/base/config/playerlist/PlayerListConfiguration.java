@@ -1,11 +1,11 @@
-package com.rettichlp.unicacityaddon.base.config.tablist;
+package com.rettichlp.unicacityaddon.base.config.playerlist;
 
 import net.labymod.api.configuration.loader.property.ConfigProperty;
 
 /**
  * @author RettichLP
  */
-public interface TabListConfiguration {
+public interface PlayerListConfiguration {
 
     ConfigProperty<Boolean> enabled();
 

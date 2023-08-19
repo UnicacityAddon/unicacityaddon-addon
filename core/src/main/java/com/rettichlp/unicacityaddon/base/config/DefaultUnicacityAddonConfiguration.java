@@ -16,12 +16,12 @@ import com.rettichlp.unicacityaddon.base.config.message.DefaultMessageConfigurat
 import com.rettichlp.unicacityaddon.base.config.message.MessageConfiguration;
 import com.rettichlp.unicacityaddon.base.config.nametag.DefaultNameTagConfiguration;
 import com.rettichlp.unicacityaddon.base.config.nametag.NameTagConfiguration;
+import com.rettichlp.unicacityaddon.base.config.playerlist.DefaultPlayerListConfiguration;
+import com.rettichlp.unicacityaddon.base.config.playerlist.PlayerListConfiguration;
 import com.rettichlp.unicacityaddon.base.config.reinforcement.DefaultReinforcementConfiguration;
 import com.rettichlp.unicacityaddon.base.config.reinforcement.ReinforcementConfiguration;
 import com.rettichlp.unicacityaddon.base.config.sloc.DefaultSlocConfiguration;
 import com.rettichlp.unicacityaddon.base.config.sloc.SlocConfiguration;
-import com.rettichlp.unicacityaddon.base.config.tablist.DefaultTabListConfiguration;
-import com.rettichlp.unicacityaddon.base.config.tablist.TabListConfiguration;
 import com.rettichlp.unicacityaddon.base.config.teamspeak.DefaultTeamSpeakConfiguration;
 import com.rettichlp.unicacityaddon.base.config.teamspeak.TeamSpeakConfiguration;
 import net.labymod.api.addon.AddonConfig;
@@ -96,7 +96,7 @@ public class DefaultUnicacityAddonConfiguration extends AddonConfig implements U
 
     @SwitchSetting
     @SpriteSlot(y = 2)
-    private final DefaultTabListConfiguration tablist = new DefaultTabListConfiguration();
+    private final DefaultPlayerListConfiguration playerlist = new DefaultPlayerListConfiguration();
 
     @SwitchSetting
     @SpriteSlot(x = 1, y = 2)
@@ -190,8 +190,8 @@ public class DefaultUnicacityAddonConfiguration extends AddonConfig implements U
     }
 
     @Override
-    public TabListConfiguration tablist() {
-        return this.tablist;
+    public PlayerListConfiguration playerlist() {
+        return this.playerlist;
     }
 
     @Override
