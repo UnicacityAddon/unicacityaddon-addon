@@ -30,6 +30,11 @@ public class VersionedTabListController extends TabListController {
     }
 
     @Override
+    public boolean isKeyPlayerListDown() {
+        return Minecraft.getInstance().options.keyPlayerList.isDown();
+    }
+
+    @Override
     public void orderTabList(UnicacityAddon unicacityAddon) {
         ClientPacketListener clientPacketListener = Laby.labyAPI().minecraft().getClientPacketListener();
         Collection<NetworkPlayerInfo> networkPlayerInfos = clientPacketListener != null ? clientPacketListener.getNetworkPlayerInfos() : Collections.emptyList();

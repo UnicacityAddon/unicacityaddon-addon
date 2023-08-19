@@ -11,5 +11,7 @@ import org.jetbrains.annotations.Nullable;
 @Referenceable
 public abstract class TabListController {
 
+    public abstract boolean isKeyPlayerListDown();
+
     public abstract void orderTabList(UnicacityAddon unicacityAddon);
 }
