@@ -32,7 +32,8 @@ import java.util.stream.Collectors;
 public class DefaultAddonPlayer implements AddonPlayer {
 
     private static String latestVersion = null;
-    private boolean gagged = false;
+    private boolean shouting = false;
+    private boolean whispering = false;
     private boolean tempDuty = false;
 
     private final UnicacityAddon unicacityAddon;
@@ -221,13 +222,23 @@ public class DefaultAddonPlayer implements AddonPlayer {
     }
 
     @Override
-    public boolean isGagged() {
-        return gagged;
+    public boolean isShouting() {
+        return shouting;
     }
 
     @Override
-    public void setGagged(boolean gagged) {
-        this.gagged = gagged;
+    public void setShouting(boolean shouting) {
+        this.shouting = shouting;
+    }
+
+    @Override
+    public boolean isWhispering() {
+        return whispering;
+    }
+
+    @Override
+    public void setWhispering(boolean whispering) {
+        this.whispering = whispering;
     }
 
     @Override
