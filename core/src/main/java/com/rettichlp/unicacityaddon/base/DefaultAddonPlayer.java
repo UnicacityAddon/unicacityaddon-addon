@@ -74,24 +74,12 @@ public class DefaultAddonPlayer implements AddonPlayer {
 
     @Override
     public void sendMessage(String message) {
-        try {
-            this.unicacityAddon.displayMessage(message);
-        } catch (IndexOutOfBoundsException e) {
-            this.unicacityAddon.utilService().debug("Message sending failed: " + message);
-            this.unicacityAddon.logger().warn(e.getMessage());
-            e.printStackTrace();
-        }
+        this.unicacityAddon.displayMessage(message);
     }
 
     @Override
     public void sendMessage(Component component) {
-        try {
-            this.unicacityAddon.displayMessage(component);
-        } catch (IndexOutOfBoundsException e) {
-            this.unicacityAddon.utilService().debug("Message sending failed: " + component.toString());
-            this.unicacityAddon.logger().warn(e.getMessage());
-            e.printStackTrace();
-        }
+        this.unicacityAddon.displayMessage(component);
     }
 
     @Override

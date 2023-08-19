@@ -79,13 +79,13 @@ public interface AddonPlayer {
     @Nullable
     Weapon getWeaponInMainHand();
 
-    boolean isWhispering();
-
-    void setWhispering(boolean whispering);
-
     boolean isShouting();
 
     void setShouting(boolean shouting);
+
+    boolean isWhispering();
+
+    void setWhispering(boolean whispering);
 
     boolean isPrioritizedMember();
 }
