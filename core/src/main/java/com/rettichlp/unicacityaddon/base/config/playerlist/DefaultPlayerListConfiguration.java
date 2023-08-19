@@ -1,4 +1,4 @@
-package com.rettichlp.unicacityaddon.base.config.tablist;
+package com.rettichlp.unicacityaddon.base.config.playerlist;
 
 import net.labymod.api.client.gui.screen.widget.widgets.input.SwitchWidget.SwitchSetting;
 import net.labymod.api.configuration.loader.Config;
@@ -8,7 +8,7 @@ import net.labymod.api.configuration.loader.property.ConfigProperty;
 /**
  * @author RettichLP
  */
-public class DefaultTabListConfiguration extends Config implements TabListConfiguration {
+public class DefaultPlayerListConfiguration extends Config implements PlayerListConfiguration {
 
     @SwitchSetting
     @ParentSwitch

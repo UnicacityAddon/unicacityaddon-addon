@@ -75,10 +75,10 @@ public class EventRegistrationListener {
 
         UnicacityAddonConfiguration configuration = this.unicacityAddon.configuration();
         if (state.equals(KeyEvent.State.PRESS) && this.unicacityAddon.utilService().isUnicacity()) {
-            boolean isKeyPlayerListDown = this.unicacityAddon.tabListController().isKeyPlayerListDown();
-            if (isKeyPlayerListDown && !Laby.references().chatAccessor().isChatOpen() && configuration.tablist().enabled().get() && configuration.tablist().sorted().get()) {
+            boolean isKeyPlayerListDown = this.unicacityAddon.playerListController().isKeyPlayerListDown();
+            if (isKeyPlayerListDown && !Laby.references().chatAccessor().isChatOpen() && configuration.playerlist().enabled().get() && configuration.playerlist().sorted().get()) {
                 this.unicacityAddon.utilService().debug("Sorting tab list");
-                this.unicacityAddon.tabListController().orderTabList(this.unicacityAddon);
+                this.unicacityAddon.playerListController().orderPlayerList(this.unicacityAddon);
                 return;
             }
 

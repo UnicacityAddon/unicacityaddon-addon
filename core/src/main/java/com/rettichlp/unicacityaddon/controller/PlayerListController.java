@@ -13,5 +13,5 @@ public abstract class PlayerListController {
 
     public abstract boolean isKeyPlayerListDown();
 
-    public abstract void orderTabList(UnicacityAddon unicacityAddon);
+    public abstract void orderPlayerList(UnicacityAddon unicacityAddon);
 }

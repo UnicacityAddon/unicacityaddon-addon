@@ -149,8 +149,8 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
         return controller().getDeadBodyController();
     }
 
-    public PlayerListController tabListController() {
-        return controller().getTabListController();
+    public PlayerListController playerListController() {
+        return controller().getPlayerListController();
     }
 
     public ScreenshotController screenshotController() {

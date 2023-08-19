@@ -35,7 +35,7 @@ public class VersionedPlayerListController extends PlayerListController {
     }
 
     @Override
-    public void orderTabList(UnicacityAddon unicacityAddon) {
+    public void orderPlayerList(UnicacityAddon unicacityAddon) {
         ClientPacketListener clientPacketListener = Laby.labyAPI().minecraft().getClientPacketListener();
         Collection<NetworkPlayerInfo> networkPlayerInfos = clientPacketListener != null ? clientPacketListener.getNetworkPlayerInfos() : Collections.emptyList();
         assert Minecraft.getMinecraft().world != null;

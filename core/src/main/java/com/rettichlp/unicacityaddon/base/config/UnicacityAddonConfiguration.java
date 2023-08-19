@@ -8,9 +8,9 @@ import com.rettichlp.unicacityaddon.base.config.join.CommandConfiguration;
 import com.rettichlp.unicacityaddon.base.config.join.PasswordConfiguration;
 import com.rettichlp.unicacityaddon.base.config.message.MessageConfiguration;
 import com.rettichlp.unicacityaddon.base.config.nametag.NameTagConfiguration;
+import com.rettichlp.unicacityaddon.base.config.playerlist.PlayerListConfiguration;
 import com.rettichlp.unicacityaddon.base.config.reinforcement.ReinforcementConfiguration;
 import com.rettichlp.unicacityaddon.base.config.sloc.SlocConfiguration;
-import com.rettichlp.unicacityaddon.base.config.tablist.TabListConfiguration;
 import com.rettichlp.unicacityaddon.base.config.teamspeak.TeamSpeakConfiguration;
 import net.labymod.api.configuration.loader.property.ConfigProperty;
 
@@ -63,7 +63,7 @@ public interface UnicacityAddonConfiguration {
 
     TeamSpeakConfiguration teamspeak();
 
-    TabListConfiguration tablist();
+    PlayerListConfiguration playerlist();
 
     ConfigProperty<Boolean> despawnTime();
 
