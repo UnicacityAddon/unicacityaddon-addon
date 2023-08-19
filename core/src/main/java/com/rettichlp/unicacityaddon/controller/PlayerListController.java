@@ -9,7 +9,7 @@ import org.jetbrains.annotations.Nullable;
  */
 @Nullable
 @Referenceable
-public abstract class TabListController {
+public abstract class PlayerListController {
 
     public abstract boolean isKeyPlayerListDown();
 

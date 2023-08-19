@@ -2,7 +2,7 @@ package com.rettichlp.unicacityaddon.v1_17_1;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.tab.TabPrefix;
-import com.rettichlp.unicacityaddon.controller.TabListController;
+import com.rettichlp.unicacityaddon.controller.PlayerListController;
 import net.labymod.api.Laby;
 import net.labymod.api.client.network.ClientPacketListener;
 import net.labymod.api.client.network.NetworkPlayerInfo;
@@ -22,11 +22,11 @@ import java.util.Map;
  * @author RettichLP
  */
 @Singleton
-@Implements(TabListController.class)
-public class VersionedTabListController extends TabListController {
+@Implements(PlayerListController.class)
+public class VersionedPlayerListController extends PlayerListController {
 
     @Inject
-    public VersionedTabListController() {
+    public VersionedPlayerListController() {
     }
 
     @Override
