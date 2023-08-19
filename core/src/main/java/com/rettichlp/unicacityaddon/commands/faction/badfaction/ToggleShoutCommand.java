@@ -9,14 +9,14 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import java.util.List;
 
 /**
- * @author Dimiikou
+ * @author RettichLP
  */
-@UCCommand(prefix = "geknebelt")
-public class GaggedCommand extends UnicacityCommand {
+@UCCommand(prefix = "toggleshout", aliases = {"toggles", "toggleschreien", "sonorus"}) // Sonorus = Harry Potter Anspielung
+public class ToggleShoutCommand extends UnicacityCommand {
 
     private final UnicacityAddon unicacityAddon;
 
-    public GaggedCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+    public ToggleShoutCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
         super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
@@ -24,12 +24,12 @@ public class GaggedCommand extends UnicacityCommand {
     @Override
     public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
-        p.setGagged(!p.isGagged());
+        p.setShouting(!p.isShouting());
 
-        if (p.isGagged()) {
-            p.sendInfoMessage("Ab sofort kannst du nur noch flüstern.");
+        if (p.isShouting()) {
+            p.sendInfoMessage("Ab sofort schreist du jede Nachricht.");
         } else {
-            p.sendInfoMessage("Ab sofort kannst du wieder normal reden.");
+            p.sendInfoMessage("Ab sofort redest du wieder normal.");
         }
         return true;
     }

@@ -63,11 +63,12 @@ import com.rettichlp.unicacityaddon.commands.faction.badfaction.ASellDrugCommand
 import com.rettichlp.unicacityaddon.commands.faction.badfaction.ASetBlacklistCommand;
 import com.rettichlp.unicacityaddon.commands.faction.badfaction.BlackMarketCommand;
 import com.rettichlp.unicacityaddon.commands.faction.badfaction.BlacklistInfoCommand;
-import com.rettichlp.unicacityaddon.commands.faction.badfaction.GaggedCommand;
 import com.rettichlp.unicacityaddon.commands.faction.badfaction.ModifyBlacklistCommand;
 import com.rettichlp.unicacityaddon.commands.faction.badfaction.OwnUseCommand;
 import com.rettichlp.unicacityaddon.commands.faction.badfaction.OwnUseGiftCommand;
 import com.rettichlp.unicacityaddon.commands.faction.badfaction.SellDrugCommand;
+import com.rettichlp.unicacityaddon.commands.faction.badfaction.ToggleShoutCommand;
+import com.rettichlp.unicacityaddon.commands.faction.badfaction.ToggleWhisperCommand;
 import com.rettichlp.unicacityaddon.commands.faction.chat.DForceCommand;
 import com.rettichlp.unicacityaddon.commands.faction.chat.FForceCommand;
 import com.rettichlp.unicacityaddon.commands.faction.chat.SFForceCommand;
@@ -142,8 +143,8 @@ import com.rettichlp.unicacityaddon.listener.faction.MemberInfoListener;
 import com.rettichlp.unicacityaddon.listener.faction.ReinforcementListener;
 import com.rettichlp.unicacityaddon.listener.faction.ShareLocationListener;
 import com.rettichlp.unicacityaddon.listener.faction.badfaction.BannerListener;
-import com.rettichlp.unicacityaddon.listener.faction.badfaction.GaggedListener;
 import com.rettichlp.unicacityaddon.listener.faction.badfaction.PlantListener;
+import com.rettichlp.unicacityaddon.listener.faction.badfaction.PronunciationListener;
 import com.rettichlp.unicacityaddon.listener.faction.badfaction.blacklist.BlacklistListener;
 import com.rettichlp.unicacityaddon.listener.faction.badfaction.blacklist.BlacklistModifyListener;
 import com.rettichlp.unicacityaddon.listener.faction.kirche.PrayListener;
@@ -246,7 +247,6 @@ public class Registry {
             FDoorListener.class,
             FishermanListener.class,
             FirstAidListener.class,
-            GaggedListener.class,
             GangwarListener.class,
             HouseDataListener.class,
             HouseInteractionListener.class,
@@ -265,6 +265,7 @@ public class Registry {
 //            NewbieChatListener.class, deactivated because Unicacity guidelines
             PlantListener.class,
             PrayListener.class,
+            PronunciationListener.class,
             ReinforcementListener.class,
             ReportListener.class,
             ReviveListener.class,
@@ -320,7 +321,6 @@ public class Registry {
             ExplosiveBeltCommand.class,
             FForceCommand.class,
             FactionBankDepositCommand.class,
-            GaggedCommand.class,
             GetGunPatternCommand.class,
             HouseBankCommand.class,
             HouseBankDropGetAllCommand.class,
@@ -370,6 +370,8 @@ public class Registry {
             TSJoinCommand.class,
             TimerCommand.class,
             TodoListCommand.class,
+            ToggleShoutCommand.class,
+            ToggleWhisperCommand.class,
             TokenCommand.class,
             TopListCommand.class,
             WantedReasonCommand.class,
