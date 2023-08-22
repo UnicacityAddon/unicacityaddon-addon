@@ -16,7 +16,7 @@ import java.util.Optional;
  * @author RettichLP
  */
 @UCBadge(name = "NoPushBadge")
-public class NoPushBadge implements BadgeRenderer {
+public class NoPushBadge extends BadgeRenderer {
 
     private final UnicacityAddon unicacityAddon;
 
