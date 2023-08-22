@@ -94,7 +94,6 @@ public class DefaultUnicacityAddonConfiguration extends AddonConfig implements U
     @SpriteSlot(x = 7, y = 1)
     private final DefaultTeamSpeakConfiguration teamspeak = new DefaultTeamSpeakConfiguration();
 
-    @SwitchSetting
     @SpriteSlot(y = 2)
     private final DefaultPlayerListConfiguration playerlist = new DefaultPlayerListConfiguration();
 
