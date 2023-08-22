@@ -11,6 +11,7 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import net.labymod.api.client.component.event.HoverEvent;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -54,20 +55,7 @@ public class HousebanCommand extends UnicacityCommand {
                                     .replace("s", ColorCode.DARK_AQUA.getCode() + "s"))
                             .create();
 
-                    ColorCode colorCode = ColorCode.AQUA;
-                    int days = (int) TimeUnit.MILLISECONDS.toDays(durationInMillis);
-                    if (days == 0)
-                        colorCode = ColorCode.DARK_GREEN;
-                    else if (days > 0 && days <= 5)
-                        colorCode = ColorCode.GREEN;
-                    else if (days > 5 && days <= 14)
-                        colorCode = ColorCode.YELLOW;
-                    else if (days > 14 && days <= 25)
-                        colorCode = ColorCode.GOLD;
-                    else if (days > 25 && days <= 50)
-                        colorCode = ColorCode.RED;
-                    else if (days > 50)
-                        colorCode = ColorCode.DARK_RED;
+                    ColorCode colorCode = getColorCode(durationInMillis);
 
                     Message.Builder builder = Message.getBuilder();
                     houseBanEntry.getHouseBanReasonList().forEach(houseBanReason -> builder
@@ -110,5 +98,24 @@ public class HousebanCommand extends UnicacityCommand {
                 .addAtIndex(3, this.unicacityAddon.api().getHouseBanReasonList().stream().map(HouseBanReason::getReason).sorted().collect(Collectors.toList()))
                 .addAtIndex(3, "all")
                 .build();
+    }
+
+    @NotNull
+    private static ColorCode getColorCode(long durationInMillis) {
+        ColorCode colorCode = ColorCode.AQUA;
+        int days = (int) TimeUnit.MILLISECONDS.toDays(durationInMillis);
+        if (days == 0)
+            colorCode = ColorCode.DARK_GREEN;
+        else if (days > 0 && days <= 5)
+            colorCode = ColorCode.GREEN;
+        else if (days > 5 && days <= 14)
+            colorCode = ColorCode.YELLOW;
+        else if (days > 14 && days <= 25)
+            colorCode = ColorCode.GOLD;
+        else if (days > 25 && days <= 50)
+            colorCode = ColorCode.RED;
+        else if (days > 50)
+            colorCode = ColorCode.DARK_RED;
+        return colorCode;
     }
 }

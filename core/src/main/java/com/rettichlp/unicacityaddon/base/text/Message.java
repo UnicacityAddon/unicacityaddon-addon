@@ -1,5 +1,6 @@
 package com.rettichlp.unicacityaddon.base.text;
 
+import lombok.Getter;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.Style;
 import net.labymod.api.client.component.format.TextDecoration;
@@ -14,14 +15,11 @@ import java.util.List;
  */
 public class Message {
 
+    @Getter
     private final List<MessagePart> messageParts;
 
     private Message(Builder builder) {
         this.messageParts = builder.messageParts;
-    }
-
-    public List<MessagePart> getMessageParts() {
-        return messageParts;
     }
 
     public static Builder getBuilder() {

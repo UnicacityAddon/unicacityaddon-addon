@@ -403,7 +403,7 @@ public class Registry {
                     } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException |
                              InstantiationException e) {
                         this.unicacityAddon.logger().warn("Can't register Badge: {}", badgeClass.getSimpleName());
-                        e.printStackTrace();
+                        this.unicacityAddon.logger().error(e.getMessage());
                     }
                 });
         this.unicacityAddon.logger().info("Registered {}/{} Badges", registeredBadgeCount, badgeClassSet.size());
@@ -429,7 +429,7 @@ public class Registry {
                     } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException |
                              InstantiationException e) {
                         this.unicacityAddon.logger().warn("Can't register NameTag: {}", nameTagClass.getSimpleName());
-                        e.printStackTrace();
+                        this.unicacityAddon.logger().error(e.getMessage());
                     }
                 });
         this.unicacityAddon.logger().info("Registered {}/{} NameTags", registeredNameTagCount, nameTagClassSet.size());
@@ -452,7 +452,7 @@ public class Registry {
             } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException |
                      InstantiationException e) {
                 this.unicacityAddon.logger().warn("Can't register HudWidget: {}", hudWidgetClass.getSimpleName());
-                e.printStackTrace();
+                this.unicacityAddon.logger().error(e.getMessage());
             }
         });
         this.unicacityAddon.logger().info("Registered {}/{} HudWidgets", registeredHudWidgetCount, hudWidgetClassSet.size());
@@ -474,7 +474,7 @@ public class Registry {
                     } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException |
                              InstantiationException e) {
                         this.unicacityAddon.logger().warn("Can't register Listener: {}", listenerClass.getSimpleName());
-                        e.printStackTrace();
+                        this.unicacityAddon.logger().error(e.getMessage());
                     }
                 });
         this.unicacityAddon.logger().info("Registered {}/{} Listeners", registeredListenerCount, listenerClassSet.size());
@@ -503,7 +503,7 @@ public class Registry {
                         } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException |
                                  InstantiationException e) {
                             this.unicacityAddon.logger().warn("Can't register Command: {}", commandClass.getSimpleName());
-                            e.printStackTrace();
+                            this.unicacityAddon.logger().error(e.getMessage());
                         }
                     }
                 });

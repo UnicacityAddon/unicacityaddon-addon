@@ -68,7 +68,7 @@ public class VersionedDeadBodyController extends DeadBodyController {
             // get player name and revivable status
             String playerName;
             boolean nonRevivable;
-            if (siblings.size() > 0) { // sibling size only by not formatted corpses greater than 0
+            if (!siblings.isEmpty()) { // sibling size only by not formatted corpses greater than 0
                 Component originalCorpseName = siblings.get(0);
                 playerName = originalCorpseName.getContents().toString().substring(1);
                 nonRevivable = Objects.equals(originalCorpseName.getStyle().getColor(), TextColor.fromLegacyFormat(ChatFormatting.DARK_GRAY));

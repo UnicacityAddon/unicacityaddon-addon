@@ -62,14 +62,14 @@ public class CarListener {
 
             // modify message
             Map.Entry<Double, NaviPoint> nearestNaviPoint = this.unicacityAddon.navigationService().getNearestNaviPoint(x, y, z);
-            NaviPoint navipoint = nearestNaviPoint.getValue();
+            NaviPoint naviPoint = nearestNaviPoint.getValue();
 
             e.setMessage(Message.getBuilder()
                     .of("[").color(ColorCode.DARK_GRAY).advance()
                     .of("Car").color(ColorCode.GOLD).advance()
                     .of("]").color(ColorCode.DARK_GRAY).advance().space()
                     .of("Das Fahrzeug befindet sich in der Nähe von").color(ColorCode.GRAY).advance().space()
-                    .of(navipoint != null ? navipoint.getDisplayName() : "unbekannter Ort").color(ColorCode.AQUA)
+                    .of(naviPoint != null ? naviPoint.getDisplayName() : "unbekannter Ort").color(ColorCode.AQUA)
                             .hoverEvent(HoverEvent.Action.SHOW_TEXT, this.unicacityAddon.utilService().command().locationHoverMessage(x, y, z))
                             .advance()
                     .of(".").color(ColorCode.GRAY).advance()

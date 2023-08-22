@@ -97,7 +97,7 @@ public class UtilService {
                     .map(ClassPath.ClassInfo::load)
                     .collect(Collectors.toSet());
         } catch (IOException exception) {
-            exception.printStackTrace();
+            this.unicacityAddon.logger().error(exception.getMessage());
         }
         return new HashSet<>();
     }

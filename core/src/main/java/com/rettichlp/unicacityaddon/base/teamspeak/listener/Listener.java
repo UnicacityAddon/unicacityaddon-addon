@@ -18,6 +18,7 @@ package com.rettichlp.unicacityaddon.base.teamspeak.listener;
 
 import com.rettichlp.unicacityaddon.base.teamspeak.TeamSpeakAPI;
 import com.rettichlp.unicacityaddon.base.teamspeak.util.ArgumentParser;
+import lombok.Getter;
 
 /**
  * This code was modified. The original code is available at: <a href="https://github.com/labymod-addons/teamspeak">https://github.com/labymod-addons/teamspeak</a>.
@@ -29,6 +30,7 @@ import com.rettichlp.unicacityaddon.base.teamspeak.util.ArgumentParser;
  */
 public abstract class Listener {
 
+    @Getter
     private final String identifier;
     private boolean register = true;
 
@@ -44,10 +46,6 @@ public abstract class Listener {
 
     protected <T> T get(String argument, String identifier, Class<T> clazz) {
         return ArgumentParser.parse(argument, identifier, clazz);
-    }
-
-    public String getIdentifier() {
-        return this.identifier;
     }
 
     public boolean needsToBeRegistered() {

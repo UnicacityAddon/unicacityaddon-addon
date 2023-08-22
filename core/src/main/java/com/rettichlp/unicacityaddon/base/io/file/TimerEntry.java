@@ -14,14 +14,13 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author RettichLP
  */
+@Getter
 public class TimerEntry {
 
     public static Map<Long, TimerEntry> ACTIVE_TIMERS;
-    @Getter
     private final String name;
     private final long duration;
     private final TimeUnit timeUnit;
-    @Getter
     private final long id;
     private final Timer timer = new Timer();
 
