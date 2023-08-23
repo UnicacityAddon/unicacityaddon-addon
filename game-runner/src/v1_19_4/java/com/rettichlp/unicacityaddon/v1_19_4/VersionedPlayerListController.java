@@ -1,8 +1,8 @@
-package com.rettichlp.unicacityaddon.v1_16_5;
+package com.rettichlp.unicacityaddon.v1_19_4;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.tab.TabPrefix;
-import com.rettichlp.unicacityaddon.controller.TabListController;
+import com.rettichlp.unicacityaddon.controller.PlayerListController;
 import net.labymod.api.Laby;
 import net.labymod.api.client.network.ClientPacketListener;
 import net.labymod.api.client.network.NetworkPlayerInfo;
@@ -22,15 +22,20 @@ import java.util.Map;
  * @author RettichLP
  */
 @Singleton
-@Implements(TabListController.class)
-public class VersionedTabListController extends TabListController {
+@Implements(PlayerListController.class)
+public class VersionedPlayerListController extends PlayerListController {
 
     @Inject
-    public VersionedTabListController() {
+    public VersionedPlayerListController() {
     }
 
     @Override
-    public void orderTabList(UnicacityAddon unicacityAddon) {
+    public boolean isKeyPlayerListDown() {
+        return Minecraft.getInstance().options.keyPlayerList.isDown();
+    }
+
+    @Override
+    public void orderPlayerList(UnicacityAddon unicacityAddon) {
         ClientPacketListener clientPacketListener = Laby.labyAPI().minecraft().getClientPacketListener();
         Collection<NetworkPlayerInfo> networkPlayerInfos = clientPacketListener != null ? clientPacketListener.getNetworkPlayerInfos() : Collections.emptyList();
         assert Minecraft.getInstance().level != null;

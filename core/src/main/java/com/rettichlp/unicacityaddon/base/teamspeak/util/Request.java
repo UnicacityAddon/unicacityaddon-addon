@@ -16,6 +16,8 @@
 
 package com.rettichlp.unicacityaddon.base.teamspeak.util;
 
+import lombok.Getter;
+
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
@@ -29,6 +31,7 @@ import java.util.function.Predicate;
  */
 public class Request {
 
+    @Getter
     private final String query;
 
     private final Predicate<String> responsePredicate;
@@ -76,10 +79,6 @@ public class Request {
         }
 
         return false;
-    }
-
-    public String getQuery() {
-        return this.query;
     }
 
     public boolean isFinished() {

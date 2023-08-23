@@ -52,7 +52,7 @@ public class UtilService {
 
     @SuppressWarnings("SameReturnValue")
     public String version() {
-        return "2.2.0";
+        return "2.3.0";
     }
 
     public boolean isUnicacity() {
@@ -97,7 +97,7 @@ public class UtilService {
                     .map(ClassPath.ClassInfo::load)
                     .collect(Collectors.toSet());
         } catch (IOException exception) {
-            exception.printStackTrace();
+            this.unicacityAddon.logger().error(exception.getMessage());
         }
         return new HashSet<>();
     }

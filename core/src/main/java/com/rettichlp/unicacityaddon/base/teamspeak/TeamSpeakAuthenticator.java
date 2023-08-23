@@ -37,10 +37,12 @@ import java.util.List;
  */
 public class TeamSpeakAuthenticator {
 
+    private final UnicacityAddon unicacityAddon;
     private final TeamSpeakAPI teamSpeakAPI;
     private final List<Path> possibleDirectories;
 
     public TeamSpeakAuthenticator(UnicacityAddon unicacityAddon, TeamSpeakAPI teamSpeakAPI) {
+        this.unicacityAddon = unicacityAddon;
         this.teamSpeakAPI = teamSpeakAPI;
         this.possibleDirectories = new ArrayList<>();
 
@@ -52,7 +54,7 @@ public class TeamSpeakAuthenticator {
         } else if (platform == OperatingSystem.LINUX) {
             this.loadLinuxDirectories();
         } else {
-            unicacityAddon.logger().warn("Cannot automatically resolve the Auth Key on " + platform + "!");
+            this.unicacityAddon.logger().warn("Cannot automatically resolve the Auth Key on " + platform + "!");
         }
     }
 
@@ -76,7 +78,7 @@ public class TeamSpeakAuthenticator {
                     this.teamSpeakAPI.authenticate(apiKey);
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                this.unicacityAddon.logger().error(e.getMessage());
             }
         }
     }

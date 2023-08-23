@@ -9,7 +9,9 @@ import org.jetbrains.annotations.Nullable;
  */
 @Nullable
 @Referenceable
-public abstract class TabListController {
+public abstract class PlayerListController {
 
-    public abstract void orderTabList(UnicacityAddon unicacityAddon);
+    public abstract boolean isKeyPlayerListDown();
+
+    public abstract void orderPlayerList(UnicacityAddon unicacityAddon);
 }

@@ -46,8 +46,8 @@ public class PunishCommand extends UnicacityCommand {
         StringBuilder reasonStringBuilder = new StringBuilder();
         int checkpoints = 0;
         int banDuration = 0;
-        int warnAmmount = 0;
-        boolean loyalityPointReset = false;
+        int warnAmount = 0;
+        boolean loyaltyPointReset = false;
         boolean kick = false;
         int weaponLock = 0;
         int factionLock = 0;
@@ -57,8 +57,8 @@ public class PunishCommand extends UnicacityCommand {
             reasonStringBuilder.append(punishment.getReason()).append(" + ");
             checkpoints = checkpoints + punishment.getCheckpoints();
             banDuration = banDuration < 0 || punishment.getBanDuration() < 0 ? -1 : banDuration + punishment.getBanDuration();
-            warnAmmount = warnAmmount + punishment.getWarnAmmount();
-            loyalityPointReset = loyalityPointReset || punishment.isLoyalityPointReset();
+            warnAmount = warnAmount + punishment.getWarnAmmount();
+            loyaltyPointReset = loyaltyPointReset || punishment.isLoyalityPointReset();
             kick = kick || punishment.isKick();
             weaponLock = weaponLock + punishment.getWeaponLock();
             factionLock = factionLock + punishment.getFactionLock();
@@ -73,8 +73,8 @@ public class PunishCommand extends UnicacityCommand {
             p.sendServerMessage("/tban " + arguments[0] + " 0 0 " + banDuration + " " + reason);
         if (banDuration == -1)
             p.sendServerMessage("/ban " + arguments[0] + " " + reason);
-        if (loyalityPointReset)
-            p.sendServerMessage("/resettreuebonus " + arguments[0]);
+//        if (loyaltyPointReset)
+//            p.sendServerMessage("/resettreuebonus " + arguments[0]);
         if (weaponLock > 0)
             p.sendServerMessage("/waffensperre " + arguments[0] + " 0 0 " + weaponLock * 24 * 60 + " " + reason);
         if (factionLock > 0)
@@ -83,20 +83,20 @@ public class PunishCommand extends UnicacityCommand {
             p.sendServerMessage("/adsperre " + arguments[0] + " " + adLock + " " + reason);
         if (kick)
             p.sendServerMessage("/kick " + arguments[0] + " " + reason);
-        if (warnAmmount > 0)
-            for (int i = 0; i < warnAmmount; i++) {
+        if (warnAmount > 0)
+            for (int i = 0; i < warnAmount; i++) {
                 p.sendServerMessage("/warn " + arguments[0] + " " + reason);
             }
 
         String debugString = "Punished " + arguments[0] + " for " + reason + ": " +
                 "Checkpoints=" + checkpoints + ", " +
                 (banDuration < 0 ? "Permanenter-Ban=true, Temporärer-Ban=false" : "Permanenter-Ban=false, Temporärer-Ban=" + banDuration) + ", " +
-                "Treuebonus-Reset=" + loyalityPointReset + ", " +
+                "Treuebonus-Reset=" + loyaltyPointReset + " (not executed), " +
                 "Waffensperre=" + weaponLock + ", " +
                 "Fraktionssperre=" + factionLock + ", " +
                 "Ad-Sperre=" + adLock + ", " +
                 "Kick=" + kick + ", " +
-                "Warns=" + warnAmmount;
+                "Warns=" + warnAmount;
 
         this.unicacityAddon.utilService().debug(debugString);
         this.unicacityAddon.logger().info(debugString);

@@ -2,8 +2,9 @@ package com.rettichlp.unicacityaddon.v1_12_2;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.tab.TabPrefix;
-import com.rettichlp.unicacityaddon.controller.TabListController;
+import com.rettichlp.unicacityaddon.controller.PlayerListController;
 import net.labymod.api.Laby;
+import net.labymod.api.client.gui.screen.key.Key;
 import net.labymod.api.client.network.ClientPacketListener;
 import net.labymod.api.client.network.NetworkPlayerInfo;
 import net.labymod.api.models.Implements;
@@ -17,20 +18,28 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * @author RettichLP
  */
 @Singleton
-@Implements(TabListController.class)
-public class VersionedTabListController extends TabListController {
+@Implements(PlayerListController.class)
+public class VersionedPlayerListController extends PlayerListController {
 
     @Inject
-    public VersionedTabListController() {
+    public VersionedPlayerListController() {
     }
 
     @Override
-    public void orderTabList(UnicacityAddon unicacityAddon) {
+    public boolean isKeyPlayerListDown() {
+        int playerListKeyCode = Minecraft.getMinecraft().gameSettings.keyBindPlayerList.getKeyCode();
+        return Optional.ofNullable(Laby.references().keyMapper().getKeyByKeyCode(playerListKeyCode))
+                .map(Key::isPressed).orElse(false);
+    }
+
+    @Override
+    public void orderPlayerList(UnicacityAddon unicacityAddon) {
         ClientPacketListener clientPacketListener = Laby.labyAPI().minecraft().getClientPacketListener();
         Collection<NetworkPlayerInfo> networkPlayerInfos = clientPacketListener != null ? clientPacketListener.getNetworkPlayerInfos() : Collections.emptyList();
         assert Minecraft.getMinecraft().world != null;

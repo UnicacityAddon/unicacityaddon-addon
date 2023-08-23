@@ -62,6 +62,7 @@ public class TeamSpeakAPI {
     private Socket socket;
     private PrintWriter outputStream;
 
+    @Getter
     private boolean connected;
 
     @Getter
@@ -117,7 +118,7 @@ public class TeamSpeakAPI {
             this.reconnectController.start();
             return;
         } catch (IOException e) {
-            e.printStackTrace();
+            this.unicacityAddon.logger().error(e.getMessage());
         }
 
         new Thread(() -> {
@@ -130,7 +131,7 @@ public class TeamSpeakAPI {
                         try {
                             this.socket.close();
                         } catch (IOException e) {
-                            e.printStackTrace();
+                            this.unicacityAddon.logger().error(e.getMessage());
                         }
                         this.unicacityAddon.logger().warn("3Connection to TeamSpeak client lost.");
                         this.reconnectController.start();
@@ -141,7 +142,7 @@ public class TeamSpeakAPI {
                 try {
                     Thread.sleep(5000L);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    this.unicacityAddon.logger().error(e.getMessage());
                 }
             }
 
@@ -151,7 +152,7 @@ public class TeamSpeakAPI {
                 try {
                     this.socket.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    this.unicacityAddon.logger().error(e.getMessage());
                 }
                 this.unicacityAddon.logger().warn("1Connection to TeamSpeak client lost.");
                 this.reconnectController.start();
@@ -185,7 +186,7 @@ public class TeamSpeakAPI {
 
                 Thread.sleep(100L);
             } catch (Exception e) {
-                e.printStackTrace();
+                this.unicacityAddon.logger().error(e.getMessage());
             }
         }
 
@@ -195,7 +196,7 @@ public class TeamSpeakAPI {
             try {
                 this.socket.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                this.unicacityAddon.logger().error(e.getMessage());
             }
 
             this.unicacityAddon.logger().warn("2Connection to TeamSpeak client lost.");
@@ -247,10 +248,6 @@ public class TeamSpeakAPI {
                 listener.execute(this, s);
             }
         }
-    }
-
-    public boolean isConnected() {
-        return this.connected;
     }
 
     public void clientNotifyRegister(int id) {

@@ -21,9 +21,32 @@ public class VersionedSoundController extends SoundController {
     }
 
     @Override
+    public void playBankRobStartedSound() {
+        new Thread(() -> {
+            Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(this.create("block.note.chime"), 0.6F));
+
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+
+            Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(this.create("block.note.chime"), 0.9F));
+
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+
+            Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(this.create("block.note.chime"), 0.6F));
+        }).start();
+    }
+
+    @Override
     public void playBombPlantedSound() {
         new Thread(() -> {
-            Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(this.create("block.note.bit"), 1.0F));
+            Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(this.create("block.note.chime"), 1.0F));
 
             try {
                 Thread.sleep(100);
@@ -31,7 +54,7 @@ public class VersionedSoundController extends SoundController {
                 throw new RuntimeException(e);
             }
 
-            Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(this.create("block.note.bit"), 0.8F));
+            Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(this.create("block.note.chime"), 0.8F));
 
             try {
                 Thread.sleep(100);
@@ -39,7 +62,7 @@ public class VersionedSoundController extends SoundController {
                 throw new RuntimeException(e);
             }
 
-            Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(this.create("block.note.bit"), 1.4F));
+            Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(this.create("block.note.chime"), 1.4F));
         }).start();
     }
 

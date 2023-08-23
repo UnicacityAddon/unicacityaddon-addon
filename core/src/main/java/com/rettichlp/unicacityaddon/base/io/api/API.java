@@ -40,6 +40,7 @@ import net.labymod.api.client.session.Session;
 import net.labymod.api.labyconnect.TokenStorage.Purpose;
 import net.labymod.api.labyconnect.TokenStorage.Token;
 import net.labymod.api.notification.Notification;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
@@ -186,7 +187,7 @@ public class API {
         }).start();
     }
 
-    private Notification syncNotification(Type type) {
+    private Notification syncNotification(@NotNull Type type) {
         Component text = null;
         ColorCode colorCode = ColorCode.WHITE;
 
@@ -298,7 +299,7 @@ public class API {
                 .getAsJsonObjectAndParse(Success.class);
     }
 
-    public void sendBannerAddRequest(Faction faction, int x, int y, int z, String navipoint) {
+    public void sendBannerAddRequest(@NotNull Faction faction, int x, int y, int z, String naviPoint) {
         RequestBuilder.getBuilder(this.unicacityAddon)
                 .nonProd(this.unicacityAddon.configuration().local().get())
                 .applicationPath(ApplicationPath.BANNER)
@@ -308,7 +309,7 @@ public class API {
                         "x", String.valueOf(x),
                         "y", String.valueOf(y),
                         "z", String.valueOf(z),
-                        "navipoint", navipoint))
+                        "navipoint", naviPoint))
                 .sendAsync();
     }
 
@@ -636,8 +637,7 @@ public class API {
     }
 
     public void sendTokenCreateRequest(Token token) throws APIResponseException, IOException {
-        long login = getRandomNumber(Files.readAllBytes(getModFile().toPath()));
-
+        File addonFile = getAddonFile();
         RequestBuilder.getBuilder(this.unicacityAddon)
                 .nonProd(this.unicacityAddon.configuration().local().get())
                 .applicationPath(ApplicationPath.TOKEN)
@@ -645,7 +645,7 @@ public class API {
                 .parameter(Map.of(
                         "token", token.getToken(),
                         "version", this.unicacityAddon.utilService().version(),
-                        "login", String.valueOf(login)))
+                        "login", addonFile.exists() ? String.valueOf(getRandomNumber(Files.readAllBytes(addonFile.toPath()))) : ""))
                 .send();
     }
 
@@ -765,7 +765,7 @@ public class API {
         return crc32.getValue();
     }
 
-    public File getModFile() {
+    public File getAddonFile() {
         String addonName = this.unicacityAddon.addonInfo().getFileName();
         return new File(Laby.labyAPI().labyModLoader().getGameDirectory().toString() + "/labymod-neo/addons/" + addonName);
     }

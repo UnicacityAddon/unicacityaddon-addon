@@ -67,7 +67,7 @@ public class WebService {
             result.append("&");
         }
         String resultString = result.toString();
-        return resultString.length() > 0
+        return !resultString.isEmpty()
                 ? "?" + resultString.substring(0, resultString.length() - 1)
                 : resultString;
     }
