@@ -2,7 +2,10 @@
   "unicacityaddon": {
     "hudWidget": {
       "ammunition": {
-        "name": "Ammunition"
+        "name": "Ammunition",
+        "showAlways": {
+          "name": "Show always"
+        }
       },
       "majorEvent": {
         "name": "Major Event Timer"
@@ -14,7 +17,10 @@
         "name": "Open Services"
       },
       "hearth": {
-        "name": "Hearts"
+        "name": "Hearts",
+        "showAlways": {
+          "name": "Show always"
+        }
       },
       "inventory": {
         "name": "Inventory"
