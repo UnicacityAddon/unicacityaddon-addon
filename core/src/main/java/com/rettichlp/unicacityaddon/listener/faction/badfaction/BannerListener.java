@@ -5,7 +5,6 @@ import com.rettichlp.unicacityaddon.api.NaviPoint;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.builder.ActivityCheckBuilder;
 import com.rettichlp.unicacityaddon.base.enums.Activity;
-import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import net.labymod.api.event.Subscribe;
@@ -48,16 +47,11 @@ public class BannerListener {
         if (bannerStartMatcher.find() && lastClickedBannerLocation != null) {
             NaviPoint naviPoint = this.unicacityAddon.navigationService().getNearestNaviPoint(lastClickedBannerLocation).getValue();
             this.unicacityAddon.api().sendBannerAddRequest(p.getFaction(), (int) lastClickedBannerLocation.getX(), (int) lastClickedBannerLocation.getY(), (int) lastClickedBannerLocation.getZ(), naviPoint.getName());
-            if (p.getFaction() == Faction.LEMILIEU) { // remove as soon as activity-access is available for all badfactions
-                new Thread(() -> {
-                    String info = ActivityCheckBuilder.getBuilder(this.unicacityAddon)
-                            .activity(Activity.BANNER)
-                            .type("banner")
-                            .send().getInfo();
 
-                    p.sendAPIMessage(info, true);
-                }).start();
-            }
+            new Thread(() -> ActivityCheckBuilder.getBuilder(this.unicacityAddon)
+                    .activity(Activity.BANNER)
+                    .type("banner")
+                    .send()).start();
         }
     }
 }
