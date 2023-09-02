@@ -25,7 +25,7 @@ public enum Punishment {
     CHEATING_ABOVE_LEVEL_5("Cheaten-(über-Level-5)", "Cheaten", 0, 10080, 1, false, false, 0, 0, 0),
     SERIOUS_CHEATING_UNDER_LEVEL_5("Schwerwiegendes-Cheaten-(unter-Level-5)", "Schwerwiegendes Cheaten", 0, -1, 0, false, false, 0, 0, 0),
     SERIOUS_CHEATING_ABOVE_LEVEL_5("Schwerwiegendes-Cheaten-(über-Level-5)", "Schwerwiegendes Cheaten", 0, 20160, 1, false, false, 0, 21, 0),
-    EXCESSIVE_USE_OF_CONTRACT("Exzessives-Setzen", "Exzessives Setzen", 0, 2880, 0, false, false, 0, 0, 0),
+    EXCESSIVE_USE_OF_CONTRACT("Exzessives-Setzen-von-Kopfgeld", "Exzessives Setzen von Kopfgeld", 0, 2880, 0, false, false, 0, 0, 0),
     THIRD_PARTY_ADVERTISING_UNDER_LEVEL5("Fremdwerbung-(unter-Level-5)", "Fremdwerbung", 0, 43200, 1, false, false, 0, 0, 0),
     THIRD_PARTY_ADVERTISING_OVER_LEVEL5("Fremdwerbung-(über-Level-5)", "Fremdwerbung", 0, 10080, 1, false, false, 0, 0, 0),
     MONEY_STORE_SECONDARY_ACCOUNT("Geldspeicher-(Zweitaccount)", "Geldspeicher", 0, -1, 0, false, false, 0, 0, 0),
