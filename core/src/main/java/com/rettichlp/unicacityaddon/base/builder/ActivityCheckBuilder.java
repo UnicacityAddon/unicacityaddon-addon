@@ -68,8 +68,8 @@ public class ActivityCheckBuilder {
             return this;
         }
 
-        public Success send() {
-            return this.unicacityAddon.api().sendActivityCheckActivity(
+        public void send() {
+            this.unicacityAddon.api().sendActivityCheckActivity(
                     this.activity,
                     this.type,
                     this.value,

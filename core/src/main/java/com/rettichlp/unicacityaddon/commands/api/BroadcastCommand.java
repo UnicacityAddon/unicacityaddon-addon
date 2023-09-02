@@ -68,8 +68,7 @@ public class BroadcastCommand extends UnicacityCommand {
                 LocalDateTime localDateTime = LocalDateTime.parse(date + " " + time, DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss"));
                 long sendTime = localDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
 
-                String info = this.unicacityAddon.api().sendBroadcastSendRequest(message, String.valueOf(sendTime)).getInfo();
-                p.sendAPIMessage(info, true);
+                this.unicacityAddon.api().sendBroadcastSendRequest(message, String.valueOf(sendTime));
             } else {
                 sendUsage();
             }
