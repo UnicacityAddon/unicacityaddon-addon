@@ -138,6 +138,6 @@ public class UtilService {
     public String messageWithHiddenToken(String message) {
         return Optional.ofNullable(this.unicacityAddon.api().getToken())
                 .map(s -> message.replace(s, "TOKEN"))
-                .orElse("Aus Sicherheitsgründen kann diese Nachricht nicht angezeigt werden.");
+                .orElse("Message cannot be displayed because it contains a token.");
     }
 }

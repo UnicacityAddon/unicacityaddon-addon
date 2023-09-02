@@ -40,7 +40,7 @@ public class WebService {
 
         try {
             int responseCode = httpURLConnection.getResponseCode();
-            this.unicacityAddon.utilService().debug("[API] [" + responseCode + "] " + this.unicacityAddon.utilService().messageWithHiddenToken(urlString));
+            // this.unicacityAddon.utilService().debug("[API] [" + responseCode + "] " + this.unicacityAddon.utilService().messageWithHiddenToken(urlString));
 
             if (responseCode >= 200 && responseCode < 300) {
                 // return body
