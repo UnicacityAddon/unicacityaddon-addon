@@ -4,7 +4,6 @@ import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.api.AutoNC;
 import com.rettichlp.unicacityaddon.api.BlackMarketLocation;
 import com.rettichlp.unicacityaddon.api.BlacklistReason;
-import com.rettichlp.unicacityaddon.api.Broadcast;
 import com.rettichlp.unicacityaddon.api.NaviPoint;
 import com.rettichlp.unicacityaddon.api.Revive;
 import com.rettichlp.unicacityaddon.api.RoleplayName;
@@ -29,6 +28,7 @@ import com.rettichlp.unicacityaddon.base.enums.api.StatisticType;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
+import com.rettichlp.unicacityaddon.base.services.FileService;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
@@ -71,7 +71,6 @@ import java.util.zip.Checksum;
  *     <li>banners <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/banner">API</a></li>
  *     <li>blacklist reasons <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/blacklistreason/LEMILIEU">API</a> (unauthorized)</li>
  *     <li>blackmarket locations <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/blackmarket">API</a></li>
- *     <li>broadcasts <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/broadcast/queue">API</a></li>
  *     <li>events <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/event">API</a></li>
  *     <li>house bans <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/houseban?advanced=false">API</a> (unauthorized for <code>advanced=true</code>)</li>
  *     <li>house ban reasons <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/housebanreason">API</a></li>
@@ -348,26 +347,6 @@ public class API {
                 .subPath(this.addonPlayer.getFaction() + "/remove")
                 .parameter(Map.of(
                         "reason", reason))
-                .getAsJsonObjectAndParse(Success.class);
-    }
-
-    public List<Broadcast> sendBroadcastQueueRequest() {
-        return RequestBuilder.getBuilder(this.unicacityAddon)
-                .preCondition(this.token != null)
-                .nonProd(this.unicacityAddon.configuration().local().get())
-                .applicationPath(ApplicationPath.BROADCAST)
-                .subPath(QUEUE_SUB_PATH)
-                .getAsJsonArrayAndParse(Broadcast.class);
-    }
-
-    public Success sendBroadcastSendRequest(String message, String sendTime) {
-        return RequestBuilder.getBuilder(this.unicacityAddon)
-                .nonProd(this.unicacityAddon.configuration().local().get())
-                .applicationPath(ApplicationPath.BROADCAST)
-                .subPath(SEND_SUB_PATH)
-                .parameter(Map.of(
-                        "message", message,
-                        "sendTime", sendTime))
                 .getAsJsonObjectAndParse(Success.class);
     }
 
