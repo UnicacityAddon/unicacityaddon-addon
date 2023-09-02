@@ -77,8 +77,7 @@ public class RequestBuilder {
         public JsonElement send() throws APIResponseException {
             this.preConditionList.removeIf(preCondition -> preCondition);
             if (this.preConditionList.isEmpty()) {
-                String urlString = this.unicacityAddon.webService().createUrl(this.nonProd, this.applicationPath, this.subPath, this.parameter);
-                String response = this.unicacityAddon.webService().sendRequest(urlString);
+                String response = this.unicacityAddon.webService().sendApiRequest(this.nonProd, this.applicationPath, this.subPath, this.parameter);
                 return new JsonParser().parse(response);
             }
             return JsonNull.INSTANCE;
@@ -95,19 +94,17 @@ public class RequestBuilder {
             }).start();
         }
 
-        @SuppressWarnings("unchecked")
         public <T> T getAsJsonObjectAndParse(Class<T> responseSchemaClass) {
             try {
                 JsonElement jsonElement = send();
                 return parse(jsonElement.getAsJsonObject(), responseSchemaClass);
             } catch (APIResponseException e) {
+                this.unicacityAddon.logger().error(e.getMessage());
                 e.sendNotification();
-                this.unicacityAddon.logger().warn(e.getMessage());
-                return (T) e.failureResponse();
             } catch (IllegalStateException e) {
                 this.unicacityAddon.logger().info("Precondition(s) failed! Parsing of JSON response skipped for: {}", responseSchemaClass.getSimpleName());
-                return null;
             }
+            return null;
         }
 
         public <T> List<T> getAsJsonArrayAndParse(Class<T> responseSchemaClass) {
@@ -115,8 +112,8 @@ public class RequestBuilder {
                 JsonElement jsonElement = send();
                 return parse(jsonElement.getAsJsonArray(), responseSchemaClass);
             } catch (APIResponseException e) {
+                this.unicacityAddon.logger().error(e.getMessage());
                 e.sendNotification();
-                this.unicacityAddon.logger().warn(e.getMessage());
             } catch (IllegalStateException e) {
                 this.unicacityAddon.logger().info("Precondition(s) failed! Parsing of JSON response skipped for: {}", responseSchemaClass.getSimpleName());
             }
@@ -129,7 +126,7 @@ public class RequestBuilder {
             return gson.fromJson(jsonObject, typeToken.getType());
         }
 
-        public <T> List<T> parse(JsonArray jsonArray, Class<T> responseSchemaClass) throws JsonSyntaxException {
+        private <T> List<T> parse(JsonArray jsonArray, Class<T> responseSchemaClass) throws JsonSyntaxException {
             TypeToken<List<T>> typeToken = new TypeToken<List<T>>() {}.where(new TypeParameter<>() {}, responseSchemaClass);
             Gson gson = new Gson();
             return gson.fromJson(jsonArray, typeToken.getType());
