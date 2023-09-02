@@ -74,15 +74,17 @@ public class ActivityCheckBuilder {
             return this;
         }
 
-        public Success send() {
-            return allowedFactions.contains(this.unicacityAddon.player().getFaction()) ? this.unicacityAddon.api().sendActivityCheckActivity(
-                    this.activity,
-                    this.type,
-                    this.value,
-                    this.drugType,
-                    this.drugPurity,
-                    this.date,
-                    this.screenshot) : null;
+        public void send() {
+            if (allowedFactions.contains(this.unicacityAddon.player().getFaction())) {
+                this.unicacityAddon.api().sendActivityCheckActivity(
+                        this.activity,
+                        this.type,
+                        this.value,
+                        this.drugType,
+                        this.drugPurity,
+                        this.date,
+                        this.screenshot);
+            }
         }
     }
 }

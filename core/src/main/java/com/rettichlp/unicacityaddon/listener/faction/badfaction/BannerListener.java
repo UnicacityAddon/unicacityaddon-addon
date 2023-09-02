@@ -48,10 +48,10 @@ public class BannerListener {
             NaviPoint naviPoint = this.unicacityAddon.navigationService().getNearestNaviPoint(lastClickedBannerLocation).getValue();
             this.unicacityAddon.api().sendBannerAddRequest(p.getFaction(), (int) lastClickedBannerLocation.getX(), (int) lastClickedBannerLocation.getY(), (int) lastClickedBannerLocation.getZ(), naviPoint.getName());
 
-            new Thread(() -> ActivityCheckBuilder.getBuilder(this.unicacityAddon)
+            ActivityCheckBuilder.getBuilder(this.unicacityAddon)
                     .activity(Activity.BANNER)
                     .type("banner")
-                    .send()).start();
+                    .send();
         }
     }
 }

@@ -46,11 +46,9 @@ public class PlayerGroupCommand extends UnicacityCommand {
                 p.sendEmptyMessage();
 
             } else if (arguments.length == 3 && arguments[0].equalsIgnoreCase("add")) {
-                String info = this.unicacityAddon.api().sendPlayerAddRequest(arguments[2], arguments[1]).getInfo();
-                p.sendAPIMessage(info, true);
+                this.unicacityAddon.api().sendPlayerAddRequest(arguments[2], arguments[1]);
             } else if (arguments.length == 3 && arguments[0].equalsIgnoreCase("remove")) {
-                String info = this.unicacityAddon.api().sendPlayerRemoveRequest(arguments[2], arguments[1]).getInfo();
-                p.sendAPIMessage(info, true);
+                this.unicacityAddon.api().sendPlayerRemoveRequest(arguments[2], arguments[1]);
             } else {
                 sendUsage();
             }

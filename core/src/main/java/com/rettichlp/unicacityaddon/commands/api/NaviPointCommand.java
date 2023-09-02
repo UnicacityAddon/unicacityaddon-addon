@@ -30,11 +30,9 @@ public class NaviPointCommand extends UnicacityCommand {
 
         new Thread(() -> {
             if (arguments.length == 6 && arguments[0].equalsIgnoreCase("add")) {
-                String info = this.unicacityAddon.api().sendNaviPointAddRequest(arguments[1], arguments[2], arguments[3], arguments[4], arguments[5]).getInfo();
-                p.sendAPIMessage(info, true);
+                this.unicacityAddon.api().sendNaviPointAddRequest(arguments[1], arguments[2], arguments[3], arguments[4], arguments[5]);
             } else if (arguments.length == 2 && arguments[0].equalsIgnoreCase("remove")) {
-                String info = this.unicacityAddon.api().sendNaviPointRemoveRequest(arguments[1]).getInfo();
-                p.sendAPIMessage(info, true);
+                this.unicacityAddon.api().sendNaviPointRemoveRequest(arguments[1]);
             } else {
                 sendUsage();
             }

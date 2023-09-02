@@ -34,36 +34,30 @@ public class RoleplayNameCommand extends UnicacityCommand {
         }
 
         new Thread(() -> {
-            String info = null;
-
             if (arguments[0].equalsIgnoreCase("reset")) {
-                info = this.unicacityAddon.api().sendRoleplayNameSetRequest("").getInfo();
+                this.unicacityAddon.api().sendRoleplayNameSetRequest("");
             } else if (arguments.length > 1 && arguments[0].equalsIgnoreCase("block")) {
                 String minecraftUuid = Optional.ofNullable(Laby.labyAPI().minecraft().getClientPacketListener())
                         .map(clientPacketListener -> clientPacketListener.getNetworkPlayerInfo(arguments[1]))
                         .map(networkPlayerInfo -> networkPlayerInfo.profile().getUniqueId())
                         .map(uuid -> uuid.toString().replace("-", ""))
                         .orElse("");
-                info = this.unicacityAddon.api().sendRoleplayNameBlockRequest(minecraftUuid).getInfo();
+                this.unicacityAddon.api().sendRoleplayNameBlockRequest(minecraftUuid);
             } else if (arguments.length > 1 && arguments[0].equalsIgnoreCase("unblock")) {
                 String minecraftUuid = Optional.ofNullable(Laby.labyAPI().minecraft().getClientPacketListener())
                         .map(clientPacketListener -> clientPacketListener.getNetworkPlayerInfo(arguments[1]))
                         .map(networkPlayerInfo -> networkPlayerInfo.profile().getUniqueId())
                         .map(uuid -> uuid.toString().replace("-", ""))
                         .orElse("");
-                info = this.unicacityAddon.api().sendRoleplayNameUnblockRequest(minecraftUuid).getInfo();
+                this.unicacityAddon.api().sendRoleplayNameUnblockRequest(minecraftUuid);
             } else {
                 String roleplayName = this.unicacityAddon.utilService().text().makeStringByArgs(arguments, " ");
                 Pattern pattern = Pattern.compile("^[A-Za-z-äöüÄÖÜßâêîôûáéíóúàèìòù'\\s]{3,30}$");
                 if (pattern.matcher(roleplayName).find()) {
-                    info = this.unicacityAddon.api().sendRoleplayNameSetRequest(roleplayName).getInfo();
+                    this.unicacityAddon.api().sendRoleplayNameSetRequest(roleplayName);
                 } else {
                     p.sendErrorMessage("Der Name muss zwischen (einschließlich) 3 und 30 Zeichen lang sein und darf nur aus Buchstaben, Bindestrichen und Apostrophen bestehen!");
                 }
-            }
-
-            if (info != null) {
-                p.sendAPIMessage(info, true);
             }
         }).start();
 
