@@ -15,6 +15,12 @@ public class UnicacityAddonException extends Exception {
 
     private final UnicacityAddon unicacityAddon;
 
+    public UnicacityAddonException(String message) {
+        super(message);
+        this.unicacityAddon = null;
+        this.notificationMessage = "";
+    }
+
     public UnicacityAddonException(UnicacityAddon unicacityAddon, String message, String notificationMessage) {
         super(unicacityAddon.utilService().messageWithHiddenToken(message));
         this.unicacityAddon = unicacityAddon;
@@ -22,11 +28,13 @@ public class UnicacityAddonException extends Exception {
     }
 
     public void sendNotification() {
-        Laby.labyAPI().notificationController().push(Notification.builder()
-                .title(Message.getBuilder().of("Fehler!").color(ColorCode.RED).bold().advance().createComponent())
-                .text(Message.getBuilder().of(this.notificationMessage).advance().createComponent())
-                .icon(this.unicacityAddon.utilService().icon())
-                .type(Notification.Type.ADVANCEMENT)
-                .build());
+        if (this.unicacityAddon != null && !this.notificationMessage.isBlank()) {
+            Laby.labyAPI().notificationController().push(Notification.builder()
+                    .title(Message.getBuilder().of("Fehler!").color(ColorCode.RED).bold().advance().createComponent())
+                    .text(Message.getBuilder().of(this.notificationMessage).advance().createComponent())
+                    .icon(this.unicacityAddon.utilService().icon())
+                    .type(Notification.Type.ADVANCEMENT)
+                    .build());
+        }
     }
 }
