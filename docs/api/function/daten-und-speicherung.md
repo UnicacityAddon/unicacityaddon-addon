@@ -36,22 +36,6 @@ Speichert die Blacklist-Gründe.
 - `issuerMinecraftUuid` Minecraft UUID des Spielers, der den Blacklist-Grund hinzugefügt hat
 - `faction` Fraktion, der der Blacklist-Grund gehört
 
-## Broadcast
-
-Speichert Broadcasts bis die `sendTime` vorbei ist.
-
-- `senderMinecraftUuid` Minecraft UUID des Spielers, der den Broadcast gesendet hat
-- `senderMinecraftName` Minecraft Name des Spielers, der den Broadcast gesendet hat
-- `createTime` Zeitpunkt der Erstellung
-- `sendTime` Zeitpunkt an dem der Broadcast gesendet werden soll
-
-!!! note
-
-    Der Name wird gespeichert, da die eigentliche Broadcast Nachricht den Namen des Senders enthält. Es soll jedoch
-    nicht jeder Client die Mojang API aufrufen, um den Namen anhand der Minecraft UUID abzurufen. Darum wird der Name
-    gespeichert und über den API Endpunkt, zum abrufen von aktiven Broadcasts, mitgesendet. Der Name wird serverseitig
-    gecached, da er noch für andere Funktionen benötigt wird.
-
 ## HouseBan
 
 Speichert Spieler mit einem Hausverbot im Krankenhaus/in der Feuerwache.
