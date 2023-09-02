@@ -34,9 +34,7 @@ public class WebService {
 
     public String sendApiRequest(boolean nonProd, ApplicationPath applicationPath, String subPath, Map<String, String> parameter) throws APIResponseException {
         String urlString = createUrl(nonProd, applicationPath, subPath, parameter);
-        HttpURLConnection httpURLConnection = getHttpURLConnection(urlString);
-
-        String body = getHttpURLConnectionBody(httpURLConnection);
+        String body = sendRequest(urlString);
 
         try {
             int responseCode = httpURLConnection.getResponseCode();

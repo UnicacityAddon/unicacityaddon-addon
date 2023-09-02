@@ -95,7 +95,10 @@ public class RequestBuilder {
                     if (jsonElement.isJsonObject()) {
                         Success success = parse(jsonElement.getAsJsonObject(), Success.class);
                         Laby.labyAPI().notificationController().push(Notification.builder()
-                                .title(Message.getBuilder().of("API").color(ColorCode.AQUA).bold().advance().createComponent())
+                                .title(Message.getBuilder()
+                                        .of("UnicacityAddon").color(ColorCode.DARK_AQUA).bold().advance().space()
+                                        .of("API").color(ColorCode.AQUA).bold().advance()
+                                        .createComponent())
                                 .text(Message.getBuilder().of(success.getInfo()).advance().createComponent())
                                 .icon(this.unicacityAddon.utilService().icon())
                                 .type(Notification.Type.ADVANCEMENT)
