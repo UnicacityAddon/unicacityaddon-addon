@@ -1,4 +1,4 @@
-# Broadcast
+# Event
 
 OpenAPI: (noch nicht verfügbar)
 

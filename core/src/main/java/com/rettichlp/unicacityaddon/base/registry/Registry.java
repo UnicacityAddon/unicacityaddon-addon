@@ -36,7 +36,6 @@ import com.rettichlp.unicacityaddon.commands.TimerCommand;
 import com.rettichlp.unicacityaddon.commands.TodoListCommand;
 import com.rettichlp.unicacityaddon.commands.api.AutoNCCommand;
 import com.rettichlp.unicacityaddon.commands.api.BlacklistReasonCommand;
-import com.rettichlp.unicacityaddon.commands.api.BroadcastCommand;
 import com.rettichlp.unicacityaddon.commands.api.HousebanCommand;
 import com.rettichlp.unicacityaddon.commands.api.HousebanReasonCommand;
 import com.rettichlp.unicacityaddon.commands.api.NaviPointCommand;
@@ -113,7 +112,6 @@ import com.rettichlp.unicacityaddon.hudwidgets.PayDayHudWidget;
 import com.rettichlp.unicacityaddon.hudwidgets.PlantHudWidget;
 import com.rettichlp.unicacityaddon.hudwidgets.TimerHudWidget;
 import com.rettichlp.unicacityaddon.listener.AccountListener;
-import com.rettichlp.unicacityaddon.listener.BroadcastListener;
 import com.rettichlp.unicacityaddon.listener.CarListener;
 import com.rettichlp.unicacityaddon.listener.DrugListener;
 import com.rettichlp.unicacityaddon.listener.EquipShopListener;
@@ -234,7 +232,6 @@ public class Registry {
             BannerListener.class,
             BlacklistListener.class,
             BlacklistModifyListener.class,
-            BroadcastListener.class,
             CarListener.class,
             ChatLogReceiveChatListener.class,
             ChatLogSendChatListener.class,
@@ -297,7 +294,6 @@ public class Registry {
             BlacklistInfoCommand.class,
             BlacklistReasonCommand.class,
             BlockCommand.class,
-            BroadcastCommand.class,
             BusCommand.class,
             CalculateCommand.class,
             CancelCountdownCommand.class,
