@@ -5,9 +5,11 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
+import com.rettichlp.unicacityaddon.commands.AutoFirstAidCommand;
 import net.labymod.api.client.component.event.HoverEvent;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
+import net.labymod.api.event.client.render.ScreenRenderEvent;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -56,6 +58,17 @@ public class FirstAidListener {
                     FirstAidListener.this.unicacityAddon.player().sendInfoMessage("Du kannst wieder Erste Hilfe leisten.");
                 }
             }, TimeUnit.SECONDS.toMillis(90));
+        }
+    }
+
+    @Subscribe
+    public void onScreenRender(ScreenRenderEvent e) {
+        boolean isFirstAidContainer = this.unicacityAddon.guiController().containsItemContainingString("Erste-Hilfe von ");
+
+        if (isFirstAidContainer && AutoFirstAidCommand.autoAcceptFirstAid) {
+            this.unicacityAddon.utilService().debug("Found first aid container");
+            this.unicacityAddon.guiController().inventoryClick(1);
+            this.unicacityAddon.logger().info("Accepted first aid automatically");
         }
     }
 }
