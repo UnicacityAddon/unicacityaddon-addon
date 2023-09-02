@@ -63,8 +63,7 @@ public class FirstAidListener {
 
     @Subscribe
     public void onScreenRender(ScreenRenderEvent e) {
-        String containerLegacyName = this.unicacityAddon.guiController().getContainerLegacyName();
-        boolean isFirstAidContainer = containerLegacyName != null && containerLegacyName.equals(ColorCode.GRAY.getCode() + "Erste-Hilfe annehmen?");
+        boolean isFirstAidContainer = this.unicacityAddon.guiController().containsItemContainingString("Erste-Hilfe von ");
 
         if (isFirstAidContainer && AutoFirstAidCommand.autoAcceptFirstAid) {
             this.unicacityAddon.utilService().debug("Found first aid container");
