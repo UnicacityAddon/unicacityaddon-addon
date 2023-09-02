@@ -35,11 +35,9 @@ public class AutoNCCommand extends UnicacityCommand {
                 String answer = this.unicacityAddon.utilService().text().makeStringByArgs(arguments, " ")
                         .replace(arguments[0] + " " + arguments[1] + " ", "");
 
-                String info = this.unicacityAddon.api().sendAutoNCAddRequest(arguments[1], answer).getInfo();
-                p.sendAPIMessage(info, true);
+                this.unicacityAddon.api().sendAutoNCAddRequest(arguments[1], answer);
             } else if (arguments.length == 2 && arguments[0].equalsIgnoreCase("remove")) {
-                String info = this.unicacityAddon.api().sendAutoNCRemoveRequest(Long.valueOf(arguments[1])).getInfo();
-                p.sendAPIMessage(info, true);
+                this.unicacityAddon.api().sendAutoNCRemoveRequest(Long.valueOf(arguments[1]));
             } else {
                 new Thread(() -> {
                     List<AutoNC> autoNCList = this.unicacityAddon.api().sendAutoNCRequest();

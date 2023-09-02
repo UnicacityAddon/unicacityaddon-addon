@@ -32,7 +32,8 @@ import java.util.stream.Collectors;
 public class DefaultAddonPlayer implements AddonPlayer {
 
     private static String latestVersion = null;
-    private boolean gagged = false;
+    private boolean shouting = false;
+    private boolean whispering = false;
     private boolean tempDuty = false;
 
     private final UnicacityAddon unicacityAddon;
@@ -73,24 +74,12 @@ public class DefaultAddonPlayer implements AddonPlayer {
 
     @Override
     public void sendMessage(String message) {
-        try {
-            this.unicacityAddon.displayMessage(message);
-        } catch (IndexOutOfBoundsException e) {
-            this.unicacityAddon.utilService().debug("Message sending failed: " + message);
-            this.unicacityAddon.logger().warn(e.getMessage());
-            e.printStackTrace();
-        }
+        this.unicacityAddon.displayMessage(message);
     }
 
     @Override
     public void sendMessage(Component component) {
-        try {
-            this.unicacityAddon.displayMessage(component);
-        } catch (IndexOutOfBoundsException e) {
-            this.unicacityAddon.utilService().debug("Message sending failed: " + component.toString());
-            this.unicacityAddon.logger().warn(e.getMessage());
-            e.printStackTrace();
-        }
+        this.unicacityAddon.displayMessage(component);
     }
 
     @Override
@@ -221,13 +210,23 @@ public class DefaultAddonPlayer implements AddonPlayer {
     }
 
     @Override
-    public boolean isGagged() {
-        return gagged;
+    public boolean isShouting() {
+        return shouting;
     }
 
     @Override
-    public void setGagged(boolean gagged) {
-        this.gagged = gagged;
+    public void setShouting(boolean shouting) {
+        this.shouting = shouting;
+    }
+
+    @Override
+    public boolean isWhispering() {
+        return whispering;
+    }
+
+    @Override
+    public void setWhispering(boolean whispering) {
+        this.whispering = whispering;
     }
 
     @Override

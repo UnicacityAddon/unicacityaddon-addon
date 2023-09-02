@@ -2,7 +2,10 @@
   "unicacityaddon": {
     "hudWidget": {
       "ammunition": {
-        "name": "Ammunition"
+        "name": "Ammunition",
+        "showAlways": {
+          "name": "Show always"
+        }
       },
       "majorEvent": {
         "name": "Major Event Timer"
@@ -14,7 +17,10 @@
         "name": "Open Services"
       },
       "hearth": {
-        "name": "Hearts"
+        "name": "Hearts",
+        "showAlways": {
+          "name": "Show always"
+        }
       },
       "inventory": {
         "name": "Inventory"
@@ -551,11 +557,11 @@
           "name": "Join support channel message"
         }
       },
-      "tablist": {
-        "name": "Tab List",
+      "playerlist": {
+        "name": "Player List",
         "sorted": {
-          "name": "Sorted Tab List",
-          "description": "Sorts the tab list by duty factions, UC's, builders and active reports"
+          "name": "Sorted Player List",
+          "description": "Sorts the player list by duty factions, UC's, builders and active reports"
         },
         "afk": {
           "name": "AFK Tag",

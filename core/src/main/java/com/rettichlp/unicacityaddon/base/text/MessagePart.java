@@ -1,5 +1,6 @@
 package com.rettichlp.unicacityaddon.base.text;
 
+import lombok.Getter;
 import net.labymod.api.client.component.ComponentService;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.event.HoverEvent;
@@ -11,6 +12,7 @@ import java.util.List;
  * @author RettichLP
  * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/base/text/MessagePart.java">UCUtils by paulzhng</a>
  */
+@Getter
 public class MessagePart {
 
     private final List<FormattingCode> formattingCodes;
@@ -25,26 +27,6 @@ public class MessagePart {
         this.colorCode = builder.colorCode;
         this.clickEvent = builder.clickEvent;
         this.hoverEvent = builder.hoverEvent;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public ColorCode getColorCode() {
-        return colorCode;
-    }
-
-    public List<FormattingCode> getFormattingCodes() {
-        return formattingCodes;
-    }
-
-    public ClickEvent getClickEvent() {
-        return clickEvent;
-    }
-
-    public HoverEvent<?> getHoverEvent() {
-        return hoverEvent;
     }
 
     public static Builder getBuilder() {

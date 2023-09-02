@@ -13,6 +13,7 @@ import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.event.HoverEvent;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -101,18 +102,7 @@ public class ChatLogCommand extends UnicacityCommand {
     private String upload(String content) {
         try {
             byte[] postData = content.getBytes(StandardCharsets.UTF_8);
-            int postDataLength = postData.length;
-            String request = "https://paste.labymod.net/documents";
-            URL url = new URL(request);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setDoOutput(true);
-            conn.setInstanceFollowRedirects(false);
-            conn.setRequestMethod("POST");
-            conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
-            conn.setRequestProperty("Content-Type", "text/plain");
-            conn.setRequestProperty("charset", "utf-8");
-            conn.setRequestProperty("Content-Length", Integer.toString(postDataLength));
-            conn.setUseCaches(false);
+            HttpURLConnection conn = getHttpURLConnection(postData);
             DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
             wr.write(postData);
             Reader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), StandardCharsets.UTF_8));
@@ -130,5 +120,22 @@ public class ChatLogCommand extends UnicacityCommand {
             this.unicacityAddon.logger().warn(e.getMessage());
             return null;
         }
+    }
+
+    @NotNull
+    private static HttpURLConnection getHttpURLConnection(byte[] postData) throws IOException {
+        int postDataLength = postData.length;
+        String request = "https://paste.labymod.net/documents";
+        URL url = new URL(request);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setDoOutput(true);
+        conn.setInstanceFollowRedirects(false);
+        conn.setRequestMethod("POST");
+        conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
+        conn.setRequestProperty("Content-Type", "text/plain");
+        conn.setRequestProperty("charset", "utf-8");
+        conn.setRequestProperty("Content-Length", Integer.toString(postDataLength));
+        conn.setUseCaches(false);
+        return conn;
     }
 }

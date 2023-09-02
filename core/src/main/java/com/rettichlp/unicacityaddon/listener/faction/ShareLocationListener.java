@@ -49,19 +49,19 @@ public class ShareLocationListener {
 
         Map.Entry<Double, NaviPoint> doubleNaviPointEntry = this.unicacityAddon.navigationService().getNearestNaviPoint(posX, posY, posZ);
 
-        String navipointString;
+        String naviPointString;
         if (doubleNaviPointEntry.getValue() == null) {
-            navipointString = "unbekannter Ort";
+            naviPointString = "unbekannter Ort";
             p.sendErrorMessage("Navipunkte wurden nicht geladen. Versuche /sync um diese neu zu laden!");
         } else {
-            navipointString = doubleNaviPointEntry.getValue().getDisplayName();
+            naviPointString = doubleNaviPointEntry.getValue().getDisplayName();
         }
 
         FloatVector3 location = this.unicacityAddon.player().getLocation();
         p.sendMessage(this.unicacityAddon.configuration().sloc().sloc().getOrDefault(DefaultSlocConfiguration.SLOC)
                 .replace("&", "§")
                 .replace("%sender%", senderName)
-                .replace("%navipoint%", navipointString)
+                .replace("%navipoint%", naviPointString)
                 .replace("%distance%", String.valueOf(location != null ? (int) location.distance(new FloatVector3(posX, posY, posZ)) : 0)));
 
         p.sendMessage(Message.getBuilder()

@@ -33,20 +33,16 @@ public class ProtectionMoneyCommand extends UnicacityCommand {
             return true;
         }
 
-        new Thread(() -> {
-            String playerName = arguments[0];
-            int price = Integer.parseInt(arguments[1]);
-            String screenshot = arguments[2];
+        String playerName = arguments[0];
+        int price = Integer.parseInt(arguments[1]);
+        String screenshot = arguments[2];
 
-            String info = ActivityCheckBuilder.getBuilder(this.unicacityAddon)
-                    .activity(Activity.PROTECTION_MONEY)
-                    .type(playerName)
-                    .value(String.valueOf(price))
-                    .screenshot(screenshot)
-                    .send().getInfo();
-
-            p.sendAPIMessage(info, true);
-        }).start();
+        ActivityCheckBuilder.getBuilder(this.unicacityAddon)
+                .activity(Activity.PROTECTION_MONEY)
+                .type(playerName)
+                .value(String.valueOf(price))
+                .screenshot(screenshot)
+                .send();
         return true;
     }
 

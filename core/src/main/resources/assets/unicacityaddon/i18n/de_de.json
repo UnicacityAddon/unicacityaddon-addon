@@ -2,7 +2,10 @@
   "unicacityaddon": {
     "hudWidget": {
       "ammunition": {
-        "name": "Munition"
+        "name": "Munition",
+        "showAlways": {
+          "name": "Immer anzeigen"
+        }
       },
       "majorEvent": {
         "name": "Großeinsatz Timer"
@@ -14,7 +17,10 @@
         "name": "Offene Services"
       },
       "hearth": {
-        "name": "Herzen"
+        "name": "Herzen",
+        "showAlways": {
+          "name": "Immer anzeigen"
+        }
       },
       "inventory": {
         "name": "Inventar"
@@ -551,14 +557,14 @@
           "name": "Support-Channel-betreten Nachricht"
         }
       },
-      "tablist": {
-        "name": "Tabliste",
+      "playerlist": {
+        "name": "Spieler-Liste",
         "sorted": {
-          "name": "Sortierte Tabliste",
-          "description": "Sortiert die Tabliste nach Duty-Fraktionen, UC's, Buildern und aktiven Reports"
+          "name": "Sortierte Spieler-Liste",
+          "description": "Sortiert die Spieler-Liste nach Duty-Fraktionen, UC's, Buildern und aktiven Reports"
         },
         "afk": {
-          "name": "AFK Tag in Tabliste",
+          "name": "AFK Tag in Spieler-Liste",
           "description": "Zeugt hinter AFK Spielern ein Icon an"
         }
       },

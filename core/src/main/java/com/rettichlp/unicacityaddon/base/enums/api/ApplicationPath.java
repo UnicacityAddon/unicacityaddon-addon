@@ -15,7 +15,6 @@ public enum ApplicationPath {
     BANNER("/banner"),
     BLACKLISTREASON("/blacklistreason"),
     BLACKMARKETLOCATION("/blackmarket"),
-    BROADCAST("/broadcast"),
     EVENT("/event"),
     HOUSEBAN("/houseban"),
     HOUSEBANREASON("/housebanreason"),

@@ -37,7 +37,6 @@ import com.rettichlp.unicacityaddon.commands.TimerCommand;
 import com.rettichlp.unicacityaddon.commands.TodoListCommand;
 import com.rettichlp.unicacityaddon.commands.api.AutoNCCommand;
 import com.rettichlp.unicacityaddon.commands.api.BlacklistReasonCommand;
-import com.rettichlp.unicacityaddon.commands.api.BroadcastCommand;
 import com.rettichlp.unicacityaddon.commands.api.HousebanCommand;
 import com.rettichlp.unicacityaddon.commands.api.HousebanReasonCommand;
 import com.rettichlp.unicacityaddon.commands.api.NaviPointCommand;
@@ -64,11 +63,12 @@ import com.rettichlp.unicacityaddon.commands.faction.badfaction.ASellDrugCommand
 import com.rettichlp.unicacityaddon.commands.faction.badfaction.ASetBlacklistCommand;
 import com.rettichlp.unicacityaddon.commands.faction.badfaction.BlackMarketCommand;
 import com.rettichlp.unicacityaddon.commands.faction.badfaction.BlacklistInfoCommand;
-import com.rettichlp.unicacityaddon.commands.faction.badfaction.GaggedCommand;
 import com.rettichlp.unicacityaddon.commands.faction.badfaction.ModifyBlacklistCommand;
 import com.rettichlp.unicacityaddon.commands.faction.badfaction.OwnUseCommand;
 import com.rettichlp.unicacityaddon.commands.faction.badfaction.OwnUseGiftCommand;
 import com.rettichlp.unicacityaddon.commands.faction.badfaction.SellDrugCommand;
+import com.rettichlp.unicacityaddon.commands.faction.badfaction.ToggleShoutCommand;
+import com.rettichlp.unicacityaddon.commands.faction.badfaction.ToggleWhisperCommand;
 import com.rettichlp.unicacityaddon.commands.faction.chat.DForceCommand;
 import com.rettichlp.unicacityaddon.commands.faction.chat.FForceCommand;
 import com.rettichlp.unicacityaddon.commands.faction.chat.SFForceCommand;
@@ -113,7 +113,6 @@ import com.rettichlp.unicacityaddon.hudwidgets.PayDayHudWidget;
 import com.rettichlp.unicacityaddon.hudwidgets.PlantHudWidget;
 import com.rettichlp.unicacityaddon.hudwidgets.TimerHudWidget;
 import com.rettichlp.unicacityaddon.listener.AccountListener;
-import com.rettichlp.unicacityaddon.listener.BroadcastListener;
 import com.rettichlp.unicacityaddon.listener.CarListener;
 import com.rettichlp.unicacityaddon.listener.DrugListener;
 import com.rettichlp.unicacityaddon.listener.EquipShopListener;
@@ -143,8 +142,8 @@ import com.rettichlp.unicacityaddon.listener.faction.MemberInfoListener;
 import com.rettichlp.unicacityaddon.listener.faction.ReinforcementListener;
 import com.rettichlp.unicacityaddon.listener.faction.ShareLocationListener;
 import com.rettichlp.unicacityaddon.listener.faction.badfaction.BannerListener;
-import com.rettichlp.unicacityaddon.listener.faction.badfaction.GaggedListener;
 import com.rettichlp.unicacityaddon.listener.faction.badfaction.PlantListener;
+import com.rettichlp.unicacityaddon.listener.faction.badfaction.PronunciationListener;
 import com.rettichlp.unicacityaddon.listener.faction.badfaction.blacklist.BlacklistListener;
 import com.rettichlp.unicacityaddon.listener.faction.badfaction.blacklist.BlacklistModifyListener;
 import com.rettichlp.unicacityaddon.listener.faction.kirche.PrayListener;
@@ -234,7 +233,6 @@ public class Registry {
             BannerListener.class,
             BlacklistListener.class,
             BlacklistModifyListener.class,
-            BroadcastListener.class,
             CarListener.class,
             ChatLogReceiveChatListener.class,
             ChatLogSendChatListener.class,
@@ -247,7 +245,6 @@ public class Registry {
             FDoorListener.class,
             FishermanListener.class,
             FirstAidListener.class,
-            GaggedListener.class,
             GangwarListener.class,
             HouseDataListener.class,
             HouseInteractionListener.class,
@@ -266,6 +263,7 @@ public class Registry {
 //            NewbieChatListener.class, deactivated because Unicacity guidelines
             PlantListener.class,
             PrayListener.class,
+            PronunciationListener.class,
             ReinforcementListener.class,
             ReportListener.class,
             ReviveListener.class,
@@ -298,7 +296,6 @@ public class Registry {
             BlacklistInfoCommand.class,
             BlacklistReasonCommand.class,
             BlockCommand.class,
-            BroadcastCommand.class,
             BusCommand.class,
             CalculateCommand.class,
             CancelCountdownCommand.class,
@@ -322,7 +319,6 @@ public class Registry {
             ExplosiveBeltCommand.class,
             FForceCommand.class,
             FactionBankDepositCommand.class,
-            GaggedCommand.class,
             GetGunPatternCommand.class,
             HouseBankCommand.class,
             HouseBankDropGetAllCommand.class,
@@ -372,6 +368,8 @@ public class Registry {
             TSJoinCommand.class,
             TimerCommand.class,
             TodoListCommand.class,
+            ToggleShoutCommand.class,
+            ToggleWhisperCommand.class,
             TokenCommand.class,
             TopListCommand.class,
             WantedReasonCommand.class,
@@ -403,7 +401,7 @@ public class Registry {
                     } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException |
                              InstantiationException e) {
                         this.unicacityAddon.logger().warn("Can't register Badge: {}", badgeClass.getSimpleName());
-                        e.printStackTrace();
+                        this.unicacityAddon.logger().error(e.getMessage());
                     }
                 });
         this.unicacityAddon.logger().info("Registered {}/{} Badges", registeredBadgeCount, badgeClassSet.size());
@@ -429,7 +427,7 @@ public class Registry {
                     } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException |
                              InstantiationException e) {
                         this.unicacityAddon.logger().warn("Can't register NameTag: {}", nameTagClass.getSimpleName());
-                        e.printStackTrace();
+                        this.unicacityAddon.logger().error(e.getMessage());
                     }
                 });
         this.unicacityAddon.logger().info("Registered {}/{} NameTags", registeredNameTagCount, nameTagClassSet.size());
@@ -452,7 +450,7 @@ public class Registry {
             } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException |
                      InstantiationException e) {
                 this.unicacityAddon.logger().warn("Can't register HudWidget: {}", hudWidgetClass.getSimpleName());
-                e.printStackTrace();
+                this.unicacityAddon.logger().error(e.getMessage());
             }
         });
         this.unicacityAddon.logger().info("Registered {}/{} HudWidgets", registeredHudWidgetCount, hudWidgetClassSet.size());
@@ -474,7 +472,7 @@ public class Registry {
                     } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException |
                              InstantiationException e) {
                         this.unicacityAddon.logger().warn("Can't register Listener: {}", listenerClass.getSimpleName());
-                        e.printStackTrace();
+                        this.unicacityAddon.logger().error(e.getMessage());
                     }
                 });
         this.unicacityAddon.logger().info("Registered {}/{} Listeners", registeredListenerCount, listenerClassSet.size());
@@ -503,7 +501,7 @@ public class Registry {
                         } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException |
                                  InstantiationException e) {
                             this.unicacityAddon.logger().warn("Can't register Command: {}", commandClass.getSimpleName());
-                            e.printStackTrace();
+                            this.unicacityAddon.logger().error(e.getMessage());
                         }
                     }
                 });

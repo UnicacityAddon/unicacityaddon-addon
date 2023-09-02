@@ -64,14 +64,14 @@ public class ReinforcementListener {
             }
 
             Map.Entry<Double, NaviPoint> nearestNaviPoint = this.unicacityAddon.navigationService().getNearestNaviPoint(posX, posY, posZ);
-            NaviPoint navipoint = nearestNaviPoint.getValue();
+            NaviPoint naviPoint = nearestNaviPoint.getValue();
 
-            String navipointString;
-            if (navipoint == null) {
-                navipointString = "unbekannter Ort";
+            String naviPointString;
+            if (naviPoint == null) {
+                naviPointString = "unbekannter Ort";
                 p.sendErrorMessage("Navipunkte wurden nicht geladen. Versuche /sync um diese neu zu laden!");
             } else {
-                navipointString = navipoint.getDisplayName();
+                naviPointString = naviPoint.getDisplayName();
             }
 
             p.sendMessage(this.unicacityAddon.configuration().reinforcement().reinforcement().getOrDefault(DefaultReinforcementConfiguration.REINFORCEMENT)
@@ -81,7 +81,7 @@ public class ReinforcementListener {
                     .replace("%x%", String.valueOf(posX))
                     .replace("%y%", String.valueOf(posY))
                     .replace("%z%", String.valueOf(posZ))
-                    .replace("%navipoint%", navipointString)
+                    .replace("%navipoint%", naviPointString)
                     .replace("%distance%", String.valueOf(distance)));
 
             p.sendMessage(Message.getBuilder()
