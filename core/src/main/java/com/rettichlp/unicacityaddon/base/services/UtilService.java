@@ -23,6 +23,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -126,5 +127,17 @@ public class UtilService {
         } catch (IOException e) {
             this.unicacityAddon.logger().warn(e.getMessage());
         }
+    }
+
+    /**
+     * Replaces the addon api token with "TOKEN"
+     *
+     * @param message Message which needs to be checked
+     * @return Message without addon api token
+     */
+    public String messageWithHiddenToken(String message) {
+        return Optional.ofNullable(this.unicacityAddon.api().getToken())
+                .map(s -> message.replace(s, "TOKEN"))
+                .orElse("Aus Sicherheitsgründen kann diese Nachricht nicht angezeigt werden.");
     }
 }
