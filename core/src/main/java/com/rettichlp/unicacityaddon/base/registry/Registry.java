@@ -77,6 +77,7 @@ import com.rettichlp.unicacityaddon.commands.faction.rettungsdienst.CheckFireCom
 import com.rettichlp.unicacityaddon.commands.faction.rettungsdienst.RecipeAcceptCommand;
 import com.rettichlp.unicacityaddon.commands.faction.rettungsdienst.RecipeCommand;
 import com.rettichlp.unicacityaddon.commands.faction.state.ASUCommand;
+import com.rettichlp.unicacityaddon.commands.faction.state.AcceptServiceCommand;
 import com.rettichlp.unicacityaddon.commands.faction.state.ClearCommand;
 import com.rettichlp.unicacityaddon.commands.faction.state.CorruptionCalculatorCommand;
 import com.rettichlp.unicacityaddon.commands.faction.state.ModifyWantedsCommand;
@@ -284,6 +285,7 @@ public class Registry {
     private final HashSet<Class<?>> commandList = Sets.newHashSet(
             ABuyCommand.class,
             ACallCommand.class,
+            AcceptServiceCommand.class,
             ADropMoneyCommand.class,
             ASellDrugCommand.class,
             ASMSCommand.class,
