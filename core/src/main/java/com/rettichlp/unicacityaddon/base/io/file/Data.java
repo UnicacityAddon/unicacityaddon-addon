@@ -401,6 +401,11 @@ public class Data {
                 .of("Hauskassen:").color(ColorCode.DARK_AQUA).bold().advance()
                 .createComponent());
         getHouseDataMap().values().forEach(houseData -> p.sendMessage(houseData.getBankComponent()));
+        p.sendMessage(Message.getBuilder()
+                .of("»").color(ColorCode.GRAY).advance().space()
+                .of("Gesamt:").color(ColorCode.DARK_AQUA).advance().space()
+                .of(getHouseDataMap().values().stream().mapToInt(HouseData::getHouseBank).sum() + "$").color(ColorCode.AQUA).advance()
+                .createComponent());
         p.sendEmptyMessage();
     }
 
