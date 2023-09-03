@@ -66,12 +66,13 @@ import com.rettichlp.unicacityaddon.commands.faction.badfaction.BlacklistInfoCom
 import com.rettichlp.unicacityaddon.commands.faction.badfaction.ModifyBlacklistCommand;
 import com.rettichlp.unicacityaddon.commands.faction.badfaction.OwnUseCommand;
 import com.rettichlp.unicacityaddon.commands.faction.badfaction.OwnUseGiftCommand;
+import com.rettichlp.unicacityaddon.commands.faction.badfaction.ResetPlantTimerCommand;
 import com.rettichlp.unicacityaddon.commands.faction.badfaction.SellDrugCommand;
-import com.rettichlp.unicacityaddon.commands.faction.badfaction.ToggleShoutCommand;
-import com.rettichlp.unicacityaddon.commands.faction.badfaction.ToggleWhisperCommand;
 import com.rettichlp.unicacityaddon.commands.faction.chat.DForceCommand;
 import com.rettichlp.unicacityaddon.commands.faction.chat.FForceCommand;
 import com.rettichlp.unicacityaddon.commands.faction.chat.SFForceCommand;
+import com.rettichlp.unicacityaddon.commands.faction.chat.ToggleShoutCommand;
+import com.rettichlp.unicacityaddon.commands.faction.chat.ToggleWhisperCommand;
 import com.rettichlp.unicacityaddon.commands.faction.rettungsdienst.CheckFireCommand;
 import com.rettichlp.unicacityaddon.commands.faction.rettungsdienst.RecipeAcceptCommand;
 import com.rettichlp.unicacityaddon.commands.faction.rettungsdienst.RecipeCommand;
@@ -351,6 +352,7 @@ public class Registry {
             RecipeCommand.class,
             ReinforcementCommand.class,
             ReplyCommand.class,
+            ResetPlantTimerCommand.class,
             ReviveStatsCommand.class,
             RichTaxesCommand.class,
             RoleplayActivityCommand.class,
