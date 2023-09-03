@@ -67,11 +67,11 @@ import com.rettichlp.unicacityaddon.commands.faction.badfaction.ModifyBlacklistC
 import com.rettichlp.unicacityaddon.commands.faction.badfaction.OwnUseCommand;
 import com.rettichlp.unicacityaddon.commands.faction.badfaction.OwnUseGiftCommand;
 import com.rettichlp.unicacityaddon.commands.faction.badfaction.SellDrugCommand;
-import com.rettichlp.unicacityaddon.commands.faction.badfaction.ToggleShoutCommand;
-import com.rettichlp.unicacityaddon.commands.faction.badfaction.ToggleWhisperCommand;
 import com.rettichlp.unicacityaddon.commands.faction.chat.DForceCommand;
 import com.rettichlp.unicacityaddon.commands.faction.chat.FForceCommand;
 import com.rettichlp.unicacityaddon.commands.faction.chat.SFForceCommand;
+import com.rettichlp.unicacityaddon.commands.faction.chat.ToggleShoutCommand;
+import com.rettichlp.unicacityaddon.commands.faction.chat.ToggleWhisperCommand;
 import com.rettichlp.unicacityaddon.commands.faction.rettungsdienst.CheckFireCommand;
 import com.rettichlp.unicacityaddon.commands.faction.rettungsdienst.RecipeAcceptCommand;
 import com.rettichlp.unicacityaddon.commands.faction.rettungsdienst.RecipeCommand;

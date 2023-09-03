@@ -1,4 +1,4 @@
-package com.rettichlp.unicacityaddon.commands.faction.badfaction;
+package com.rettichlp.unicacityaddon.commands.faction.chat;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
@@ -9,14 +9,14 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import java.util.List;
 
 /**
- * @author Dimiikou
+ * @author RettichLP
  */
-@UCCommand(prefix = "togglewhisper", aliases = {"togglew", "toggleflüstern", "geknebelt"})
-public class ToggleWhisperCommand extends UnicacityCommand {
+@UCCommand(prefix = "toggleshout", aliases = {"toggles", "toggleschreien", "sonorus"}) // Sonorus = Harry Potter Anspielung
+public class ToggleShoutCommand extends UnicacityCommand {
 
     private final UnicacityAddon unicacityAddon;
 
-    public ToggleWhisperCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+    public ToggleShoutCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
         super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
@@ -24,10 +24,10 @@ public class ToggleWhisperCommand extends UnicacityCommand {
     @Override
     public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
-        p.setWhispering(!p.isWhispering());
+        p.setShouting(!p.isShouting());
 
-        if (p.isWhispering()) {
-            p.sendInfoMessage("Ab sofort flüsterst du jede Nachricht.");
+        if (p.isShouting()) {
+            p.sendInfoMessage("Ab sofort schreist du jede Nachricht.");
         } else {
             p.sendInfoMessage("Ab sofort redest du wieder normal.");
         }
