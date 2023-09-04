@@ -8,7 +8,10 @@ import com.rettichlp.unicacityaddon.commands.GetGunPatternCommand;
 import net.labymod.api.client.world.item.ItemStack;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.render.ScreenRenderEvent;
+import net.labymod.api.event.client.render.world.RenderWorldEvent;
 import net.labymod.api.event.client.world.ItemStackTooltipEvent;
+import net.labymod.api.util.Color;
+import net.labymod.api.util.math.vector.FloatVector3;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +49,17 @@ public class ScreenRenderListener {
 
         if (this.unicacityAddon.utilService().command().isActiveDrugInventoryLoading()) {
             this.unicacityAddon.guiController().updateDrugInventoryMap(this.unicacityAddon);
+        }
+    }
+
+    /**
+     * Quote: Slime Daddy - Lilu
+     */
+    @Subscribe
+    public void onRenderWorld(RenderWorldEvent e) {
+        if (this.unicacityAddon.utilService().isUnicacity()) {
+            this.unicacityAddon.renderController().drawFacade(new FloatVector3(236, 69, -551), new FloatVector3(236, 69, -495), Color.GREEN, 256);
+            this.unicacityAddon.renderController().drawFacade(new FloatVector3(236, 69, -495), new FloatVector3(291, 69, -495), Color.GREEN, 256);
         }
     }
 
