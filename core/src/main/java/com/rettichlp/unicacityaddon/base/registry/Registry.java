@@ -3,6 +3,7 @@ package com.rettichlp.unicacityaddon.base.registry;
 import com.google.common.collect.Sets;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.badge.NoPushBadge;
+import com.rettichlp.unicacityaddon.badge.VipBadge;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCBadge;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
@@ -200,7 +201,8 @@ public class Registry {
     private final Set<Command> commands = new HashSet<>();
 
     private final HashSet<Class<?>> badgeList = Sets.newHashSet(
-            NoPushBadge.class
+            NoPushBadge.class,
+            VipBadge.class
     );
 
     private final HashSet<Class<?>> nameTagList = Sets.newHashSet(
