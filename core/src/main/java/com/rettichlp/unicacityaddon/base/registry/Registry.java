@@ -36,12 +36,12 @@ import com.rettichlp.unicacityaddon.commands.ShutdownJailCommand;
 import com.rettichlp.unicacityaddon.commands.SyncCommand;
 import com.rettichlp.unicacityaddon.commands.TimerCommand;
 import com.rettichlp.unicacityaddon.commands.TodoListCommand;
+import com.rettichlp.unicacityaddon.commands.api.AddonGroupCommand;
 import com.rettichlp.unicacityaddon.commands.api.AutoNCCommand;
 import com.rettichlp.unicacityaddon.commands.api.BlacklistReasonCommand;
 import com.rettichlp.unicacityaddon.commands.api.HousebanCommand;
 import com.rettichlp.unicacityaddon.commands.api.HousebanReasonCommand;
 import com.rettichlp.unicacityaddon.commands.api.NaviPointCommand;
-import com.rettichlp.unicacityaddon.commands.api.PlayerGroupCommand;
 import com.rettichlp.unicacityaddon.commands.api.ReviveStatsCommand;
 import com.rettichlp.unicacityaddon.commands.api.TokenCommand;
 import com.rettichlp.unicacityaddon.commands.api.TopListCommand;
@@ -295,6 +295,7 @@ public class Registry {
             ASetBlacklistCommand.class,
             ATMFillCommand.class,
             ActivityCommand.class,
+            AddonGroupCommand.class,
             AutoFirstAidCommand.class,
             AutoNCCommand.class,
             BlackMarketCommand.class,
@@ -349,7 +350,6 @@ public class Registry {
             OwnUseCommand.class,
             OwnUseGiftCommand.class,
             PayEquipCommand.class,
-            PlayerGroupCommand.class,
             ProtectionMoneyCommand.class,
             PunishCommand.class,
             RecipeAcceptCommand.class,
