@@ -37,10 +37,10 @@ public class VersionedRenderController extends RenderController {
 
             // draw
             glPushMatrix();
-            gl(c.withAlpha(0.3f), () -> {
-                drawColorBox(new AxisAlignedBB(x, y, z, x, height, z + length), 0F, 0F, 0F, 0F);
+            gl(c.withAlpha(0.12f), () -> {
+                drawColorBox(new AxisAlignedBB(x, -height, z, x, height, z + length), 0F, 0F, 0F, 0F);
                 glColor4d(0, 0, 0, 0.5);
-                drawSelectionBoundingBox(new AxisAlignedBB(x, y, z, x, height, z + length));
+                drawSelectionBoundingBox(new AxisAlignedBB(x, -height, z, x, height, z + length));
                 glLineWidth(2.0F);
             });
             glPopMatrix();
@@ -57,15 +57,15 @@ public class VersionedRenderController extends RenderController {
 
             // draw
             glPushMatrix();
-            gl(c.withAlpha(0.3f), () -> {
-                drawColorBox(new AxisAlignedBB(x, -255, z, x + length, height, z), 0F, 0F, 0F, 0F);
+            gl(c.withAlpha(0.12f), () -> {
+                drawColorBox(new AxisAlignedBB(x, -height, z, x + length, height, z), 0F, 0F, 0F, 0F);
                 glColor4d(0, 0, 0, 0.5);
-                drawSelectionBoundingBox(new AxisAlignedBB(x, -255, z, x + length, height, z));
+                drawSelectionBoundingBox(new AxisAlignedBB(x, -height, z, x + length, height, z));
                 glLineWidth(2.0F);
             });
             glPopMatrix();
         } else {
-            throw new IllegalArgumentException("Positions are not in a row.");
+            throw new IllegalArgumentException("Positions are not in a row: " + first + " and " + second);
         }
     }
 
@@ -74,15 +74,15 @@ public class VersionedRenderController extends RenderController {
         glEnable(GL_BLEND);
         glLineWidth(2.0F);
         glDisable(GL_TEXTURE_2D);
-        glDisable(GL_DEPTH_TEST);
-        glDepthMask(false);
+//        glDisable(GL_DEPTH_TEST);
+//        glDepthMask(false);
         glColor4f(c.getRed() / 255f, c.getGreen() / 255f, c.getBlue() / 255f, c.getAlpha() / 255f);
 
         runnable.run();
 
         glEnable(GL_TEXTURE_2D);
-        glEnable(GL_DEPTH_TEST);
-        glDepthMask(true);
+//        glEnable(GL_DEPTH_TEST);
+//        glDepthMask(true);
         glDisable(GL_BLEND);
     }
 

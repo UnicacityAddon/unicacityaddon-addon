@@ -2,18 +2,21 @@ package com.rettichlp.unicacityaddon.listener;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.enums.Weapon;
+import com.rettichlp.unicacityaddon.base.enums.faction.Gangzone;
+import com.rettichlp.unicacityaddon.base.events.HotkeyEvent;
 import com.rettichlp.unicacityaddon.base.events.UnicacityAddonTickEvent;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.commands.GetGunPatternCommand;
+import net.labymod.api.client.gui.screen.key.Key;
 import net.labymod.api.client.world.item.ItemStack;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.render.ScreenRenderEvent;
 import net.labymod.api.event.client.render.world.RenderWorldEvent;
 import net.labymod.api.event.client.world.ItemStackTooltipEvent;
 import net.labymod.api.util.Color;
-import net.labymod.api.util.math.vector.FloatVector3;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -25,6 +28,7 @@ public class ScreenRenderListener {
 
     public static int lastHoveredSlotNumber = -1;
     public static List<Integer> settingPath = new ArrayList<>();
+    private boolean showGangzones = false;
 
     private final UnicacityAddon unicacityAddon;
 
@@ -53,13 +57,15 @@ public class ScreenRenderListener {
     }
 
     /**
-     * Quote: Slime Daddy - Lilu
+     * Quote: "Ohhhh ein Slime Daddy!" - Liiluu, 04.09.2023
      */
     @Subscribe
     public void onRenderWorld(RenderWorldEvent e) {
-        if (this.unicacityAddon.utilService().isUnicacity()) {
-            this.unicacityAddon.renderController().drawFacade(new FloatVector3(236, 69, -551), new FloatVector3(236, 69, -495), Color.GREEN, 256);
-            this.unicacityAddon.renderController().drawFacade(new FloatVector3(236, 69, -495), new FloatVector3(291, 69, -495), Color.GREEN, 256);
+        if (this.unicacityAddon.utilService().isUnicacity() && this.showGangzones) {
+            Color c = Color.ORANGE;
+            Arrays.stream(Gangzone.values())
+                    .forEach(gangzone -> gangzone.getFacades()
+                            .forEach(posPair -> this.unicacityAddon.renderController().drawFacade(posPair.getFirst(), posPair.getSecond(), c, 50)));
         }
     }
 
@@ -73,6 +79,15 @@ public class ScreenRenderListener {
     public void onUnicacityAddonTick(UnicacityAddonTickEvent e) {
         if (e.isUnicacity() && e.isPhase(UnicacityAddonTickEvent.Phase.SECOND) && this.unicacityAddon.configuration().nametag().corpse().get()) {
             this.unicacityAddon.deadBodyController().updateDisplayName(this.unicacityAddon);
+        }
+    }
+
+    @Subscribe
+    public void onHotkey(HotkeyEvent e) {
+        Key key = e.getKey();
+
+        if (key.equals(this.unicacityAddon.configuration().hotkey().showGangzones().get()) && e.isRealIngame()) {
+            this.showGangzones = !this.showGangzones;
         }
     }
 }

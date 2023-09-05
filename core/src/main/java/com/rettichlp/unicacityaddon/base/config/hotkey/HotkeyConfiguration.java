@@ -25,4 +25,6 @@ public interface HotkeyConfiguration {
     ConfigProperty<Key> aEquip();
 
     ConfigProperty<Key> screenshot();
+
+    ConfigProperty<Key> showGangzones();
 }
