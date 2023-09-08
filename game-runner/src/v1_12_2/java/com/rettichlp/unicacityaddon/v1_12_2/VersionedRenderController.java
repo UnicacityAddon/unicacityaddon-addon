@@ -20,7 +20,7 @@ import static org.lwjgl.opengl.GL11.*;
 public class VersionedRenderController extends RenderController {
 
     @Override
-    public void drawFacade(FloatVector3 first, FloatVector3 second, Color c, double height) {
+    public void drawFacade(FloatVector3 first, FloatVector3 second, Color c) {
         // length of facade
         double length;
 
@@ -29,7 +29,7 @@ public class VersionedRenderController extends RenderController {
             FloatVector3 lower = first.getZ() <= second.getZ() ? first : second;
 
             double x = lower.getX() - Minecraft.getMinecraft().getRenderManager().viewerPosX;
-            double y = lower.getY() - Minecraft.getMinecraft().getRenderManager().viewerPosY;
+            double y = 0 - Minecraft.getMinecraft().getRenderManager().viewerPosY;
             double z = lower.getZ() - Minecraft.getMinecraft().getRenderManager().viewerPosZ;
 
             // length
@@ -38,9 +38,9 @@ public class VersionedRenderController extends RenderController {
             // draw
             glPushMatrix();
             gl(c.withAlpha(0.12f), () -> {
-                drawColorBox(new AxisAlignedBB(x, -height, z, x, height, z + length), 0F, 0F, 0F, 0F);
+                drawColorBox(new AxisAlignedBB(x, y, z, x, y + 100, z + length), 0F, 0F, 0F, 0F);
                 glColor4d(0, 0, 0, 0.5);
-                drawSelectionBoundingBox(new AxisAlignedBB(x, -height, z, x, height, z + length));
+                drawSelectionBoundingBox(new AxisAlignedBB(x, y, z, x, y + 100, z + length));
                 glLineWidth(2.0F);
             });
             glPopMatrix();
@@ -49,7 +49,7 @@ public class VersionedRenderController extends RenderController {
             FloatVector3 lower = first.getX() <= second.getX() ? first : second;
 
             double x = lower.getX() - Minecraft.getMinecraft().getRenderManager().viewerPosX;
-            double y = lower.getY() - Minecraft.getMinecraft().getRenderManager().viewerPosY;
+            double y = 0 - Minecraft.getMinecraft().getRenderManager().viewerPosY;
             double z = lower.getZ() - Minecraft.getMinecraft().getRenderManager().viewerPosZ;
 
             // length
@@ -58,9 +58,9 @@ public class VersionedRenderController extends RenderController {
             // draw
             glPushMatrix();
             gl(c.withAlpha(0.12f), () -> {
-                drawColorBox(new AxisAlignedBB(x, -height, z, x + length, height, z), 0F, 0F, 0F, 0F);
+                drawColorBox(new AxisAlignedBB(x, y, z, x + length, y + 100, z), 0F, 0F, 0F, 0F);
                 glColor4d(0, 0, 0, 0.5);
-                drawSelectionBoundingBox(new AxisAlignedBB(x, -height, z, x + length, height, z));
+                drawSelectionBoundingBox(new AxisAlignedBB(x, y, z, x + length, y + 100, z));
                 glLineWidth(2.0F);
             });
             glPopMatrix();
@@ -70,19 +70,19 @@ public class VersionedRenderController extends RenderController {
     }
 
     private void gl(Color c, Runnable runnable) {
-        glBlendFunc(770, 771);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glEnable(GL_BLEND);
         glLineWidth(2.0F);
         glDisable(GL_TEXTURE_2D);
 //        glDisable(GL_DEPTH_TEST);
-//        glDepthMask(false);
+        glDepthMask(false);
         glColor4f(c.getRed() / 255f, c.getGreen() / 255f, c.getBlue() / 255f, c.getAlpha() / 255f);
 
         runnable.run();
 
         glEnable(GL_TEXTURE_2D);
 //        glEnable(GL_DEPTH_TEST);
-//        glDepthMask(true);
+        glDepthMask(true);
         glDisable(GL_BLEND);
     }
 

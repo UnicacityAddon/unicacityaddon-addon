@@ -12,5 +12,5 @@ import org.jetbrains.annotations.Nullable;
 @Referenceable
 public abstract class RenderController {
 
-    public abstract void drawFacade(FloatVector3 first, FloatVector3 second, Color c, double height);
+    public abstract void drawFacade(FloatVector3 first, FloatVector3 second, Color c);
 }

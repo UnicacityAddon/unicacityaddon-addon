@@ -13,7 +13,6 @@ import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.render.ScreenRenderEvent;
 import net.labymod.api.event.client.render.world.RenderWorldEvent;
 import net.labymod.api.event.client.world.ItemStackTooltipEvent;
-import net.labymod.api.util.Color;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -62,10 +61,9 @@ public class ScreenRenderListener {
     @Subscribe
     public void onRenderWorld(RenderWorldEvent e) {
         if (this.unicacityAddon.utilService().isUnicacity() && this.showGangzones) {
-            Color c = Color.ORANGE;
             Arrays.stream(Gangzone.values())
                     .forEach(gangzone -> gangzone.getFacades()
-                            .forEach(posPair -> this.unicacityAddon.renderController().drawFacade(posPair.getFirst(), posPair.getSecond(), c, 50)));
+                            .forEach(posPair -> this.unicacityAddon.renderController().drawFacade(posPair.getFirst(), posPair.getSecond(), gangzone.getColor())));
         }
     }
 
