@@ -55,16 +55,27 @@ public class MajorEventListener {
             Laby.labyAPI().eventBus().fire(new BombPlantedEvent());
             this.unicacityAddon.soundController().playBombPlantedSound();
 
-            if (((p.getFaction().equals(Faction.POLIZEI) || p.getFaction().equals(Faction.FBI)) && p.getRank() > 3) || p.isSuperUser()) {
+            boolean isPoliceOrFbi = p.getFaction().equals(Faction.POLIZEI) || p.getFaction().equals(Faction.FBI) || p.isSuperUser();
+            boolean isRank4 = p.getRank() > 3 || p.isSuperUser();
+
+            if (isPoliceOrFbi) {
                 this.location = bombPlantedMatcher.group("location");
                 e.setMessage(Message.getBuilder()
                         .add(formattedMsg).space()
-                        .of("[").color(ColorCode.DARK_GRAY).advance()
-                        .of("Sperrgebiet ausrufen").color(ColorCode.RED)
+                        .of("[↑]").color(ColorCode.BLUE)
+                                .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Betritt den Polizei-Öffentlich-Channel").color(ColorCode.RED).advance().createComponent())
+                                .clickEvent(ClickEvent.Action.RUN_COMMAND, "/tsjoin id=" + Faction.POLIZEI.getPublicChannelId())
+                                .advance().space()
+                        .of("[↑]").color(ColorCode.BLUE)
+                                .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Betritt den FBI-Öffentlich-Channel").color(ColorCode.RED).advance().createComponent())
+                                .clickEvent(ClickEvent.Action.RUN_COMMAND, "/tsjoin id=" + Faction.FBI.getPublicChannelId())
+                                .advance().space()
+                        .of(isRank4 ? "[" : "").color(ColorCode.DARK_GRAY).advance()
+                        .of(isRank4 ? "Sperrgebiet ausrufen" : "").color(ColorCode.RED)
                                 .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Sperrgebiet ausrufen").color(ColorCode.RED).advance().createComponent())
                                 .clickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/sperrgebiet " + getLocationWithArticle(this.location))
                                 .advance()
-                        .of("]").color(ColorCode.DARK_GRAY).advance()
+                        .of(isRank4 ? "]" : "").color(ColorCode.DARK_GRAY).advance()
                         .createComponent());
             }
 
