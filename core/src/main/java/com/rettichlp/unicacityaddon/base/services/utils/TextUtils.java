@@ -185,4 +185,27 @@ public class TextUtils {
 
         return found;
     }
+
+    /**
+     * Transform a {@link String} in which every word starts with an uppercase letter and all other letters are lowercase.
+     *
+     * @param string String to be transformed
+     * @return a string in which all letters are lowercase without letters at word beginnings
+     */
+    public String createTitle(String string) {
+        StringBuilder titleBuilder = new StringBuilder();
+        boolean nextTitleCase = true;
+
+        for (char c : string.replace("-", " ").replace("_", " ").toCharArray()) {
+            if (Character.isSpaceChar(c)) {
+                nextTitleCase = true;
+            } else if (nextTitleCase) {
+                c = Character.toTitleCase(c);
+                nextTitleCase = false;
+            }
+            titleBuilder.append(c);
+        }
+
+        return titleBuilder.toString();
+    }
 }

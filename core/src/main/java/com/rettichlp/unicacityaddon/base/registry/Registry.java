@@ -133,8 +133,8 @@ import com.rettichlp.unicacityaddon.listener.ServerLoginListener;
 import com.rettichlp.unicacityaddon.listener.TabCompletionListener;
 import com.rettichlp.unicacityaddon.listener.TimerListener;
 import com.rettichlp.unicacityaddon.listener.WeaponListener;
-import com.rettichlp.unicacityaddon.listener.chatlog.ChatLogReceiveChatListener;
-import com.rettichlp.unicacityaddon.listener.chatlog.ChatLogSendChatListener;
+import com.rettichlp.unicacityaddon.listener.chat.ChatLinkListener;
+import com.rettichlp.unicacityaddon.listener.chat.ChatLogListener;
 import com.rettichlp.unicacityaddon.listener.faction.AFbankEinzahlenListener;
 import com.rettichlp.unicacityaddon.listener.faction.ContractListener;
 import com.rettichlp.unicacityaddon.listener.faction.EmergencyServiceListener;
@@ -238,8 +238,8 @@ public class Registry {
             BlacklistListener.class,
             BlacklistModifyListener.class,
             CarListener.class,
-            ChatLogReceiveChatListener.class,
-            ChatLogSendChatListener.class,
+            ChatLinkListener.class,
+            ChatLogListener.class,
             ContractListener.class,
             DrugListener.class,
             EmergencyServiceListener.class,
