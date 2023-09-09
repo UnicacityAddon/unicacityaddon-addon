@@ -59,16 +59,13 @@ public class MajorEventListener {
             boolean isRank4 = p.getRank() > 3 || p.isSuperUser();
 
             if (isPoliceOrFbi) {
+                Faction allianceFaction = p.getFaction().equals(Faction.POLIZEI) ? Faction.FBI : Faction.POLIZEI;
                 this.location = bombPlantedMatcher.group("location");
                 e.setMessage(Message.getBuilder()
                         .add(formattedMsg).space()
                         .of("[↑]").color(ColorCode.BLUE)
-                                .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Betritt den Polizei-Öffentlich-Channel").color(ColorCode.RED).advance().createComponent())
-                                .clickEvent(ClickEvent.Action.RUN_COMMAND, "/tsjoin id=" + Faction.POLIZEI.getPublicChannelId())
-                                .advance().space()
-                        .of("[↑]").color(ColorCode.BLUE)
-                                .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Betritt den FBI-Öffentlich-Channel").color(ColorCode.RED).advance().createComponent())
-                                .clickEvent(ClickEvent.Action.RUN_COMMAND, "/tsjoin id=" + Faction.FBI.getPublicChannelId())
+                                .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Betritt den " + allianceFaction.getDisplayName() + "-Öffentlich-Channel").color(ColorCode.RED).advance().createComponent())
+                                .clickEvent(ClickEvent.Action.RUN_COMMAND, "/tsjoin id=" + allianceFaction.getPublicChannelId())
                                 .advance().space()
                         .of(isRank4 ? "[" : "").color(ColorCode.DARK_GRAY).advance()
                         .of(isRank4 ? "Sperrgebiet ausrufen" : "").color(ColorCode.RED)
