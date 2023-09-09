@@ -202,4 +202,18 @@ public class VersionedGuiController extends GuiController {
             }
         }
     }
+
+    @Override
+    public boolean containsItemContainingString(String name) {
+        NonNullList<ItemStack> itemStackNonNullList = null;
+
+        GuiScreen guiScreen = Minecraft.getMinecraft().currentScreen;
+        if (guiScreen instanceof GuiChest guiChest) {
+            itemStackNonNullList = guiChest.inventorySlots.getInventory();
+        } else if (guiScreen instanceof GuiHopper guiHopper) {
+            itemStackNonNullList = guiHopper.inventorySlots.getInventory();
+        }
+
+        return itemStackNonNullList != null && itemStackNonNullList.stream().anyMatch(itemStack -> itemStack.getDisplayName().contains(name));
+    }
 }

@@ -8,7 +8,9 @@ import net.labymod.api.client.entity.LivingEntity;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidget;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidgetConfig;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextLine;
+import net.labymod.api.client.gui.screen.widget.widgets.input.SwitchWidget.SwitchSetting;
 import net.labymod.api.client.world.item.ItemStack;
+import net.labymod.api.configuration.loader.property.ConfigProperty;
 import net.labymod.api.event.Subscribe;
 
 import java.util.Optional;
@@ -16,19 +18,19 @@ import java.util.Optional;
 /**
  * @author RettichLP
  */
-public class AmmunitionHudWidget extends TextHudWidget<TextHudWidgetConfig> {
+public class AmmunitionHudWidget extends TextHudWidget<AmmunitionHudWidget.AmmunitionHudWidgetConfig> {
 
     private TextLine textLine;
 
     private final UnicacityAddon unicacityAddon;
 
     public AmmunitionHudWidget(UnicacityAddon unicacityAddon) {
-        super("ammunition");
+        super("ammunition", AmmunitionHudWidgetConfig.class);
         this.unicacityAddon = unicacityAddon;
     }
 
     @Override
-    public void load(TextHudWidgetConfig config) {
+    public void load(AmmunitionHudWidgetConfig config) {
         super.load(config);
         this.textLine = super.createLine("Munition", ColorCode.RED.getCode() + "0" + ColorCode.DARK_GRAY.getCode() + "/" + ColorCode.GOLD.getCode() + "0");
         this.setIcon(this.unicacityAddon.utilService().icon());
@@ -46,11 +48,21 @@ public class AmmunitionHudWidget extends TextHudWidget<TextHudWidgetConfig> {
                         || s.equalsIgnoreCase("Einsatzschild")
                         || s.equalsIgnoreCase("Messer"));
 
-        return p.getWeaponInMainHand() != null || itemAllowed;
+        return p.getWeaponInMainHand() != null || itemAllowed || this.config.showAlways().get();
     }
 
     @Subscribe
     public void onWeaponShot(WeaponUpdateEvent e) {
         this.textLine.updateAndFlush(e.getWeaponAmmunitionText());
+    }
+
+    public static class AmmunitionHudWidgetConfig extends TextHudWidgetConfig {
+
+        @SwitchSetting
+        private final ConfigProperty<Boolean> showAlways = new ConfigProperty<>(false);
+
+        public ConfigProperty<Boolean> showAlways() {
+            return this.showAlways;
+        }
     }
 }

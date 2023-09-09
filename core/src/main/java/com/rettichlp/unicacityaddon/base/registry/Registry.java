@@ -3,12 +3,14 @@ package com.rettichlp.unicacityaddon.base.registry;
 import com.google.common.collect.Sets;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.badge.NoPushBadge;
+import com.rettichlp.unicacityaddon.badge.VipBadge;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCBadge;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCNameTag;
 import com.rettichlp.unicacityaddon.commands.ABuyCommand;
 import com.rettichlp.unicacityaddon.commands.ActivityCommand;
+import com.rettichlp.unicacityaddon.commands.AutoFirstAidCommand;
 import com.rettichlp.unicacityaddon.commands.BusCommand;
 import com.rettichlp.unicacityaddon.commands.CalculateCommand;
 import com.rettichlp.unicacityaddon.commands.CancelCountdownCommand;
@@ -34,13 +36,12 @@ import com.rettichlp.unicacityaddon.commands.ShutdownJailCommand;
 import com.rettichlp.unicacityaddon.commands.SyncCommand;
 import com.rettichlp.unicacityaddon.commands.TimerCommand;
 import com.rettichlp.unicacityaddon.commands.TodoListCommand;
+import com.rettichlp.unicacityaddon.commands.api.AddonGroupCommand;
 import com.rettichlp.unicacityaddon.commands.api.AutoNCCommand;
 import com.rettichlp.unicacityaddon.commands.api.BlacklistReasonCommand;
-import com.rettichlp.unicacityaddon.commands.api.BroadcastCommand;
 import com.rettichlp.unicacityaddon.commands.api.HousebanCommand;
 import com.rettichlp.unicacityaddon.commands.api.HousebanReasonCommand;
 import com.rettichlp.unicacityaddon.commands.api.NaviPointCommand;
-import com.rettichlp.unicacityaddon.commands.api.PlayerGroupCommand;
 import com.rettichlp.unicacityaddon.commands.api.ReviveStatsCommand;
 import com.rettichlp.unicacityaddon.commands.api.TokenCommand;
 import com.rettichlp.unicacityaddon.commands.api.TopListCommand;
@@ -66,16 +67,18 @@ import com.rettichlp.unicacityaddon.commands.faction.badfaction.BlacklistInfoCom
 import com.rettichlp.unicacityaddon.commands.faction.badfaction.ModifyBlacklistCommand;
 import com.rettichlp.unicacityaddon.commands.faction.badfaction.OwnUseCommand;
 import com.rettichlp.unicacityaddon.commands.faction.badfaction.OwnUseGiftCommand;
+import com.rettichlp.unicacityaddon.commands.faction.badfaction.ResetPlantTimerCommand;
 import com.rettichlp.unicacityaddon.commands.faction.badfaction.SellDrugCommand;
-import com.rettichlp.unicacityaddon.commands.faction.badfaction.ToggleShoutCommand;
-import com.rettichlp.unicacityaddon.commands.faction.badfaction.ToggleWhisperCommand;
 import com.rettichlp.unicacityaddon.commands.faction.chat.DForceCommand;
 import com.rettichlp.unicacityaddon.commands.faction.chat.FForceCommand;
 import com.rettichlp.unicacityaddon.commands.faction.chat.SFForceCommand;
+import com.rettichlp.unicacityaddon.commands.faction.chat.ToggleShoutCommand;
+import com.rettichlp.unicacityaddon.commands.faction.chat.ToggleWhisperCommand;
 import com.rettichlp.unicacityaddon.commands.faction.rettungsdienst.CheckFireCommand;
 import com.rettichlp.unicacityaddon.commands.faction.rettungsdienst.RecipeAcceptCommand;
 import com.rettichlp.unicacityaddon.commands.faction.rettungsdienst.RecipeCommand;
 import com.rettichlp.unicacityaddon.commands.faction.state.ASUCommand;
+import com.rettichlp.unicacityaddon.commands.faction.state.AcceptServiceCommand;
 import com.rettichlp.unicacityaddon.commands.faction.state.ClearCommand;
 import com.rettichlp.unicacityaddon.commands.faction.state.CorruptionCalculatorCommand;
 import com.rettichlp.unicacityaddon.commands.faction.state.ModifyWantedsCommand;
@@ -113,7 +116,6 @@ import com.rettichlp.unicacityaddon.hudwidgets.PayDayHudWidget;
 import com.rettichlp.unicacityaddon.hudwidgets.PlantHudWidget;
 import com.rettichlp.unicacityaddon.hudwidgets.TimerHudWidget;
 import com.rettichlp.unicacityaddon.listener.AccountListener;
-import com.rettichlp.unicacityaddon.listener.BroadcastListener;
 import com.rettichlp.unicacityaddon.listener.CarListener;
 import com.rettichlp.unicacityaddon.listener.DrugListener;
 import com.rettichlp.unicacityaddon.listener.EquipShopListener;
@@ -199,7 +201,8 @@ public class Registry {
     private final Set<Command> commands = new HashSet<>();
 
     private final HashSet<Class<?>> badgeList = Sets.newHashSet(
-            NoPushBadge.class
+            NoPushBadge.class,
+            VipBadge.class
     );
 
     private final HashSet<Class<?>> nameTagList = Sets.newHashSet(
@@ -234,7 +237,6 @@ public class Registry {
             BannerListener.class,
             BlacklistListener.class,
             BlacklistModifyListener.class,
-            BroadcastListener.class,
             CarListener.class,
             ChatLinkListener.class,
             ChatLogListener.class,
@@ -285,6 +287,7 @@ public class Registry {
     private final HashSet<Class<?>> commandList = Sets.newHashSet(
             ABuyCommand.class,
             ACallCommand.class,
+            AcceptServiceCommand.class,
             ADropMoneyCommand.class,
             ASellDrugCommand.class,
             ASMSCommand.class,
@@ -292,12 +295,13 @@ public class Registry {
             ASetBlacklistCommand.class,
             ATMFillCommand.class,
             ActivityCommand.class,
+            AddonGroupCommand.class,
+            AutoFirstAidCommand.class,
             AutoNCCommand.class,
             BlackMarketCommand.class,
             BlacklistInfoCommand.class,
             BlacklistReasonCommand.class,
             BlockCommand.class,
-            BroadcastCommand.class,
             BusCommand.class,
             CalculateCommand.class,
             CancelCountdownCommand.class,
@@ -346,13 +350,13 @@ public class Registry {
             OwnUseCommand.class,
             OwnUseGiftCommand.class,
             PayEquipCommand.class,
-            PlayerGroupCommand.class,
             ProtectionMoneyCommand.class,
             PunishCommand.class,
             RecipeAcceptCommand.class,
             RecipeCommand.class,
             ReinforcementCommand.class,
             ReplyCommand.class,
+            ResetPlantTimerCommand.class,
             ReviveStatsCommand.class,
             RichTaxesCommand.class,
             RoleplayActivityCommand.class,

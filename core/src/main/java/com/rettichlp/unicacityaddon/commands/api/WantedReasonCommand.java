@@ -29,11 +29,9 @@ public class WantedReasonCommand extends UnicacityCommand {
 
         new Thread(() -> {
             if (arguments.length == 3 && arguments[0].equalsIgnoreCase("add")) {
-                String info = this.unicacityAddon.api().sendWantedReasonAddRequest(arguments[1], arguments[2]).getInfo();
-                p.sendAPIMessage(info, true);
+                this.unicacityAddon.api().sendWantedReasonAddRequest(arguments[1], arguments[2]);
             } else if (arguments.length == 2 && arguments[0].equalsIgnoreCase("remove")) {
-                String info = this.unicacityAddon.api().sendWantedReasonRemoveRequest(arguments[1]).getInfo();
-                p.sendAPIMessage(info, true);
+                this.unicacityAddon.api().sendWantedReasonRemoveRequest(arguments[1]);
             } else {
                 sendUsage();
             }

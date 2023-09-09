@@ -25,4 +25,6 @@ public abstract class GuiController {
     public abstract void setSelectedHotbarSlot(int slotNumber);
 
     public abstract void updateSetting(boolean expectedValue);
+
+    public abstract boolean containsItemContainingString(String name);
 }

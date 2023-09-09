@@ -55,11 +55,9 @@ public class BlacklistReasonCommand extends UnicacityCommand {
                 p.sendEmptyMessage();
 
             } else if (arguments.length == 4 && arguments[0].equalsIgnoreCase("add")) {
-                String info = this.unicacityAddon.api().sendBlacklistReasonAddRequest(arguments[1], arguments[2], arguments[3]).getInfo();
-                p.sendAPIMessage(info, true);
+                this.unicacityAddon.api().sendBlacklistReasonAddRequest(arguments[1], arguments[2], arguments[3]);
             } else if (arguments.length == 2 && arguments[0].equalsIgnoreCase("remove")) {
-                String info = this.unicacityAddon.api().sendBlacklistReasonRemoveRequest(arguments[1]).getInfo();
-                p.sendAPIMessage(info, true);
+                this.unicacityAddon.api().sendBlacklistReasonRemoveRequest(arguments[1]);
             } else {
                 sendUsage();
             }

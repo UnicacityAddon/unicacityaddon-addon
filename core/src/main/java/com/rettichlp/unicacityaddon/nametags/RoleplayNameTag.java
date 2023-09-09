@@ -45,7 +45,7 @@ public class RoleplayNameTag extends NameTag {
 
         return optionalRoleplayName
                 .map(RoleplayName::getRoleplayName)
-                .filter(s -> !s.equalsIgnoreCase("_blocked"))
+                .filter(s -> !s.startsWith("_"))
                 .map(s -> RenderableComponent.of(Message.getBuilder()
                         .of(s).advance()
                         .createComponent()))

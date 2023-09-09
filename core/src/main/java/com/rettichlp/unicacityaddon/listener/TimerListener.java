@@ -1,10 +1,15 @@
 package com.rettichlp.unicacityaddon.listener;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
+import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.enums.api.StatisticType;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
+import com.rettichlp.unicacityaddon.base.text.ColorCode;
+import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import com.rettichlp.unicacityaddon.commands.ShutdownJailCommand;
+import net.labymod.api.client.component.event.ClickEvent;
+import net.labymod.api.client.component.event.HoverEvent;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
@@ -27,6 +32,7 @@ public class TimerListener {
 
     @Subscribe
     public void onChatReceive(ChatReceiveEvent e) {
+        AddonPlayer p = this.unicacityAddon.player();
         String msg = e.chatMessage().getPlainText();
 
         Matcher fbiHackStartedMatcher = PatternHandler.TIMER_FBI_HACK_START_PATTERN.matcher(msg);
@@ -43,6 +49,16 @@ public class TimerListener {
                 int seconds = (int) TimeUnit.MINUTES.toSeconds(Integer.parseInt(timerGraveyardStartMatcher.group(1)));
                 this.unicacityAddon.fileService().data().setTimer(seconds);
             }
+
+            p.sendMessage(Message.getBuilder()
+                    .info().space()
+                    .of("Das UnicacityAddon nimmt Erste Hilfe automatisch an. Klicke").color(ColorCode.WHITE).advance().space()
+                    .of("hier").color(ColorCode.RED).underline()
+                            .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of("Erste Hilfe nicht automatisch annehmen").color(ColorCode.RED).advance().createComponent())
+                            .clickEvent(ClickEvent.Action.RUN_COMMAND, "/autofirstaid off")
+                            .advance().space()
+                    .of("um die Funktion zu deaktivieren.").color(ColorCode.WHITE).advance().space()
+                    .createComponent());
 
             return;
         }

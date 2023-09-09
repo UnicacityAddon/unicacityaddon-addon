@@ -44,26 +44,22 @@ public class MoneyActivityCommand extends UnicacityCommand {
             return true;
         }
 
-        new Thread(() -> {
-            try {
-                String type = arguments[0].toLowerCase();
-                int value = Integer.parseInt(arguments[1]);
-                File file = this.unicacityAddon.fileService().getNewImageFile();
-                String screenshot = arguments.length == 3 ? arguments[2] : ScreenshotBuilder.getBuilder(unicacityAddon).file(file).upload();
+        try {
+            String type = arguments[0].toLowerCase();
+            int value = Integer.parseInt(arguments[1]);
+            File file = this.unicacityAddon.fileService().getNewImageFile();
+            String screenshot = arguments.length == 3 ? arguments[2] : ScreenshotBuilder.getBuilder(unicacityAddon).file(file).upload();
 
-                String info = ActivityCheckBuilder.getBuilder(this.unicacityAddon)
-                        .activity(Activity.MONEY)
-                        .type(type)
-                        .value(String.valueOf(value))
-                        .date(System.currentTimeMillis())
-                        .screenshot(screenshot)
-                        .send().getInfo();
-
-                p.sendAPIMessage(info, true);
-            } catch (IOException e) {
-                this.unicacityAddon.logger().warn(e.getMessage());
-            }
-        }).start();
+            ActivityCheckBuilder.getBuilder(this.unicacityAddon)
+                    .activity(Activity.MONEY)
+                    .type(type)
+                    .value(String.valueOf(value))
+                    .date(System.currentTimeMillis())
+                    .screenshot(screenshot)
+                    .send();
+        } catch (IOException e) {
+            this.unicacityAddon.logger().warn(e.getMessage());
+        }
         return true;
     }
 
