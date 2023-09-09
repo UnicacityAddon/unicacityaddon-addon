@@ -19,9 +19,9 @@ public class PatternHandler {
     public static final Pattern RANK_PATTERN = Pattern.compile("<strong>Rang (\\d)( \\(Leader\\))*</strong>");
     public static final Pattern STRIP_COLOR_PATTERN = Pattern.compile("(?i)[§&][A-FK-OR0-9]");
     public static final Pattern STRIP_PREFIX_PATTERN = Pattern.compile("\\[[a-zA-Z0-9]+]");
-    public static final Pattern URL_FORUM_PATTERN = Pattern.compile("https://forum\\.unicacity\\.de/index\\.php\\?thread/(?<threadId>\\d+)-*(?<title>[a-z0-9-]*)/*(?:&postID=(?<postId>\\d+))*(?:#post(?<post>\\d+))*");
+    public static final Pattern URL_FORUM_PATTERN = Pattern.compile("https://forum\\.unicacity\\.de/index\\.php\\?(forum|thread)/(?<threadId>\\d+)-*(?<title>[a-z0-9-äöü]*)/*(?:&postID=(?<postId>\\d+))*(?:#post(?<post>\\d+))*");
     public static final Pattern URL_TWITCH_PATTERN = Pattern.compile("https://www\\.twitch\\.tv/(?<channel>[A-Za-z0-9_-]*)");
-    public static final Pattern URL_IMGUR_PATTERN = Pattern.compile("https://imgur\\.com/a/([A-Za-z0-9]+)|https://i.imgur.com/([A-Za-z0-9]+)\\.png");
+    public static final Pattern URL_IMGUR_PATTERN = Pattern.compile("https://(i\\.)*imgur\\.com/(a/)*(.[A-Za-z0-9]+)(\\.png|\\.jpg)*");
 
     /**
      * Pattern for major event timer
