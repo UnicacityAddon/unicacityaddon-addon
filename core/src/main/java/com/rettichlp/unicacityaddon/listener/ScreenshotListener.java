@@ -34,7 +34,7 @@ public class ScreenshotListener {
                     File file = this.unicacityAddon.fileService().getNewImageFile();
                     ScreenshotBuilder.getBuilder(unicacityAddon).file(file).upload();
                 } catch (IOException ex) {
-                    this.unicacityAddon.logger().warn(ex.getMessage());
+                    this.unicacityAddon.logger().error(ex.getMessage());
                 }
             }).start();
         }
@@ -51,7 +51,7 @@ public class ScreenshotListener {
                     File file = this.unicacityAddon.fileService().getNewActivityImageFile("reinforcement");
                     ScreenshotBuilder.getBuilder(this.unicacityAddon).file(file).save();
                 } catch (IOException ex) {
-                    this.unicacityAddon.logger().warn(ex.getMessage());
+                    this.unicacityAddon.logger().error(ex.getMessage());
                 }
             });
 
@@ -69,7 +69,7 @@ public class ScreenshotListener {
                     File file = this.unicacityAddon.fileService().getNewActivityImageFile("großeinsatz");
                     ScreenshotBuilder.getBuilder(this.unicacityAddon).file(file).save();
                 } catch (IOException ex) {
-                    this.unicacityAddon.logger().warn(ex.getMessage());
+                    this.unicacityAddon.logger().error(ex.getMessage());
                 }
             });
 
@@ -83,6 +83,7 @@ public class ScreenshotListener {
                 runnable.run();
             } catch (InterruptedException e) {
                 this.unicacityAddon.logger().warn("Delayed execution of activity screenshot failed");
+                this.unicacityAddon.logger().error(e.getMessage());
             }
         }).start();
     }

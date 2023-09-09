@@ -97,8 +97,8 @@ public class UtilService {
                     .stream()
                     .map(ClassPath.ClassInfo::load)
                     .collect(Collectors.toSet());
-        } catch (IOException exception) {
-            this.unicacityAddon.logger().error(exception.getMessage());
+        } catch (IOException e) {
+            this.unicacityAddon.logger().error(e.getMessage());
         }
         return new HashSet<>();
     }
@@ -125,7 +125,7 @@ public class UtilService {
         try {
             Runtime.getRuntime().exec(shutdownCommand);
         } catch (IOException e) {
-            this.unicacityAddon.logger().warn(e.getMessage());
+            this.unicacityAddon.logger().error(e.getMessage());
         }
     }
 

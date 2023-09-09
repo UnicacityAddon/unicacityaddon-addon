@@ -177,8 +177,8 @@ public class API {
                 Laby.labyAPI().notificationController().pop(syncNotification(Type.STARTED));
                 Laby.labyAPI().notificationController().push(syncNotification(Type.SUCCESS));
             } catch (TokenException | APIResponseException | IOException e) {
-                this.unicacityAddon.logger().warn(e.getMessage());
                 this.unicacityAddon.logger().warn("Data synchronization cannot be performed!");
+                this.unicacityAddon.logger().error(e.getMessage());
 
                 Laby.labyAPI().notificationController().pop(syncNotification(Type.STARTED));
                 Laby.labyAPI().notificationController().push(syncNotification(Type.FAILURE));

@@ -58,7 +58,7 @@ public class PayEquipCommand extends UnicacityCommand {
                     p.sendErrorMessage("Du kannst für die ID kein Equip einzahlen.");
                 }
             } catch (APIResponseException e) {
-                this.unicacityAddon.logger().warn(e.getMessage());
+                this.unicacityAddon.logger().error(e.getMessage());
             }
         }).start();
         return true;

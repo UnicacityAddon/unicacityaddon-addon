@@ -106,7 +106,7 @@ public class RequestBuilder {
                     }
                 } catch (APIResponseException e) {
                     e.sendNotification();
-                    this.unicacityAddon.logger().warn(e.getMessage());
+                    this.unicacityAddon.logger().error(e.getMessage());
                 }
             }).start();
         }

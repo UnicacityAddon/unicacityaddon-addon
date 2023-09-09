@@ -166,7 +166,7 @@ public class FileService {
                 this.data = new Gson().fromJson(jsonData, Data.class);
             }
         } catch (JsonSyntaxException e) {
-            this.unicacityAddon.logger().info("Data cannot be created because Json is invalid: " + jsonData);
+            this.unicacityAddon.logger().warn("Data cannot be created because Json is invalid: " + jsonData);
             this.unicacityAddon.logger().error(e.getMessage());
             this.unicacityAddon.logger().info("Creating default Data...");
         }
