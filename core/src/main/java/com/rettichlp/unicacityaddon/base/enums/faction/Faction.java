@@ -43,10 +43,10 @@ public enum Faction {
     }
 
     public String getNameTagSuffix() {
-        return Message.getBuilder()
+        return this.icon != null ? Message.getBuilder()
                 .of("◤").color(ColorCode.DARK_GRAY).advance()
                 .of(this.icon).color(this.color).advance()
-                .of("◢").color(ColorCode.DARK_GRAY).advance().create();
+                .of("◢").color(ColorCode.DARK_GRAY).advance().create() : "";
     }
 
     public static Faction getFactionByDisplayName(String s) {
