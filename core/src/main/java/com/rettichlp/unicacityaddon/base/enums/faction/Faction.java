@@ -43,7 +43,7 @@ public enum Faction {
     }
 
     public String getNameTagSuffix() {
-        return this.icon != null ? Message.getBuilder()
+        return !this.equals(NULL) ? Message.getBuilder()
                 .of("◤").color(ColorCode.DARK_GRAY).advance()
                 .of(this.icon).color(this.color).advance()
                 .of("◢").color(ColorCode.DARK_GRAY).advance().create() : "";
