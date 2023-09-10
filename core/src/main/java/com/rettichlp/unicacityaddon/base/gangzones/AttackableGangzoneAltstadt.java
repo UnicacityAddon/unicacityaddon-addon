@@ -1,21 +1,18 @@
 package com.rettichlp.unicacityaddon.base.gangzones;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
+import com.rettichlp.unicacityaddon.base.registry.annotation.UCGangzone;
 import net.labymod.api.util.Pair;
 import net.labymod.api.util.math.vector.FloatVector3;
 
+import java.util.Collections;
 import java.util.List;
 
+@UCGangzone
 public class AttackableGangzoneAltstadt extends AbstractAttackableGangzone {
 
-    public AttackableGangzoneAltstadt(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon);
-    }
-
-    @Override
-    public Faction owner() {
-        return null;
+    public AttackableGangzoneAltstadt(UnicacityAddon unicacityAddon, UCGangzone ucGangzone) {
+        super(unicacityAddon, ucGangzone);
     }
 
     @Override
@@ -50,6 +47,6 @@ public class AttackableGangzoneAltstadt extends AbstractAttackableGangzone {
 
     @Override
     public List<Pair<FloatVector3, FloatVector3>> gangwarFacades() {
-        return null;
+        return Collections.emptyList();
     }
 }

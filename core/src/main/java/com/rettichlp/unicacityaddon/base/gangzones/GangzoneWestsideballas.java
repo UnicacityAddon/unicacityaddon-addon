@@ -2,20 +2,17 @@ package com.rettichlp.unicacityaddon.base.gangzones;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
+import com.rettichlp.unicacityaddon.base.registry.annotation.UCGangzone;
 import net.labymod.api.util.Pair;
 import net.labymod.api.util.math.vector.FloatVector3;
 
 import java.util.List;
 
+@UCGangzone(owner = Faction.WESTSIDEBALLAS)
 public class GangzoneWestsideballas extends AbstractGangzone {
 
-    public GangzoneWestsideballas(UnicacityAddon unicacityAddon) {
-        super(unicacityAddon);
-    }
-
-    @Override
-    public Faction owner() {
-        return Faction.WESTSIDEBALLAS;
+    public GangzoneWestsideballas(UnicacityAddon unicacityAddon, UCGangzone ucGangzone) {
+        super(unicacityAddon, ucGangzone);
     }
 
     @Override

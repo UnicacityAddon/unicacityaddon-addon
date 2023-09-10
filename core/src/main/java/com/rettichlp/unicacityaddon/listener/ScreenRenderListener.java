@@ -4,7 +4,7 @@ import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.enums.Weapon;
 import com.rettichlp.unicacityaddon.base.events.HotkeyEvent;
 import com.rettichlp.unicacityaddon.base.events.UnicacityAddonTickEvent;
-import com.rettichlp.unicacityaddon.base.gangzones.AttackableGangzoneHafen;
+import com.rettichlp.unicacityaddon.base.gangzones.AbstractAttackableGangzone;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.commands.GetGunPatternCommand;
 import net.labymod.api.client.gui.screen.key.Key;
@@ -60,8 +60,13 @@ public class ScreenRenderListener {
     @Subscribe
     public void onRenderWorld(RenderWorldEvent e) {
         if (this.unicacityAddon.utilService().isUnicacity() && this.showGangzones) {
-            new AttackableGangzoneHafen(this.unicacityAddon).renderGangwarArea();
-            new AttackableGangzoneHafen(this.unicacityAddon).renderGangzoneArea();
+            this.unicacityAddon.registry().gangzones().forEach(gangzone -> {
+                gangzone.renderGangzoneArea();
+
+                if (gangzone instanceof AbstractAttackableGangzone attackableGangzone) {
+                    attackableGangzone.renderGangwarArea();
+                }
+            });
         }
     }
 
