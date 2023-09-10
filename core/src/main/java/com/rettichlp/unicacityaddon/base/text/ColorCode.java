@@ -34,4 +34,8 @@ public enum ColorCode {
     private final String code;
     private final TextColor textColor;
     private final Color color;
+
+    public net.labymod.api.util.Color getLabymodColor() {
+        return net.labymod.api.util.Color.of(this.color.getRGB());
+    }
 }
