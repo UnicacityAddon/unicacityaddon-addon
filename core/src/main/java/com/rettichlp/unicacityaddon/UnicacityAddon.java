@@ -131,6 +131,7 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
         this.registry.registerHudWidgets();
         this.registry.registerListeners();
         this.registry.registerCommands();
+        this.registry.registerGangzones();
 
         new Thread(this.teamSpeakAPI::initialize).start();
 
