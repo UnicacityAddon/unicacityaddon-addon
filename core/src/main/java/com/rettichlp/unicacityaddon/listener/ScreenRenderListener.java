@@ -2,9 +2,9 @@ package com.rettichlp.unicacityaddon.listener;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.enums.Weapon;
-import com.rettichlp.unicacityaddon.base.enums.faction.Gangzone;
 import com.rettichlp.unicacityaddon.base.events.HotkeyEvent;
 import com.rettichlp.unicacityaddon.base.events.UnicacityAddonTickEvent;
+import com.rettichlp.unicacityaddon.base.gangzones.AttackableGangzoneHafen;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.commands.GetGunPatternCommand;
 import net.labymod.api.client.gui.screen.key.Key;
@@ -15,7 +15,6 @@ import net.labymod.api.event.client.render.world.RenderWorldEvent;
 import net.labymod.api.event.client.world.ItemStackTooltipEvent;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -61,9 +60,8 @@ public class ScreenRenderListener {
     @Subscribe
     public void onRenderWorld(RenderWorldEvent e) {
         if (this.unicacityAddon.utilService().isUnicacity() && this.showGangzones) {
-            Arrays.stream(Gangzone.values())
-                    .forEach(gangzone -> gangzone.getFacades()
-                            .forEach(posPair -> this.unicacityAddon.renderController().drawFacade(posPair.getFirst(), posPair.getSecond(), gangzone.getColor())));
+            new AttackableGangzoneHafen(this.unicacityAddon).renderGangwarArea();
+            new AttackableGangzoneHafen(this.unicacityAddon).renderGangzoneArea();
         }
     }
 
