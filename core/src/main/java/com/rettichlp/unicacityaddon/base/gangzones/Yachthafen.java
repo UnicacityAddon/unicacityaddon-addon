@@ -5,7 +5,6 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCGangzone;
 import net.labymod.api.util.Pair;
 import net.labymod.api.util.math.vector.FloatVector3;
 
-import java.util.Collections;
 import java.util.List;
 
 @UCGangzone
@@ -27,6 +26,11 @@ public class Yachthafen extends AbstractAttackableGangzone {
 
     @Override
     public List<Pair<FloatVector3, FloatVector3>> gangwarFacades() {
-        return Collections.emptyList();
+        return List.of(
+                Pair.of(new FloatVector3(186, 69, -601), new FloatVector3(186, 69, -445)),
+                Pair.of(new FloatVector3(186, 69, -445), new FloatVector3(342, 69, -445)),
+                Pair.of(new FloatVector3(342, 69, -445), new FloatVector3(342, 69, -601)),
+                Pair.of(new FloatVector3(342, 69, -601), new FloatVector3(186, 69, -601))
+        );
     }
 }
