@@ -9,9 +9,9 @@ import net.labymod.api.util.math.vector.FloatVector3;
 import java.util.List;
 
 @UCGangzone(owner = Faction.WESTSIDEBALLAS)
-public class GangzoneWestsideballas extends AbstractGangzone {
+public class Westsideballas extends AbstractGangzone {
 
-    public GangzoneWestsideballas(UnicacityAddon unicacityAddon, UCGangzone ucGangzone) {
+    public Westsideballas(UnicacityAddon unicacityAddon, UCGangzone ucGangzone) {
         super(unicacityAddon, ucGangzone);
     }
 

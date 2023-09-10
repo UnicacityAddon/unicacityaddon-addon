@@ -9,19 +9,19 @@ import java.util.Collections;
 import java.util.List;
 
 @UCGangzone
-public class AttackableGangzoneHafen extends AbstractAttackableGangzone {
+public class Yachthafen extends AbstractAttackableGangzone {
 
-    public AttackableGangzoneHafen(UnicacityAddon unicacityAddon, UCGangzone ucGangzone) {
+    public Yachthafen(UnicacityAddon unicacityAddon, UCGangzone ucGangzone) {
         super(unicacityAddon, ucGangzone);
     }
 
     @Override
     public List<Pair<FloatVector3, FloatVector3>> gangzoneFacades() {
         return List.of(
-                Pair.of(new FloatVector3(-423, 69, 2), new FloatVector3(-423, 69, 177)),
-                Pair.of(new FloatVector3(-423, 69, 177), new FloatVector3(-322, 69, 177)),
-                Pair.of(new FloatVector3(-322, 69, 177), new FloatVector3(-322, 69, 2)),
-                Pair.of(new FloatVector3(-322, 69, 2), new FloatVector3(-423, 69, 2))
+                Pair.of(new FloatVector3(236, 69, -551), new FloatVector3(236, 69, -495)),
+                Pair.of(new FloatVector3(236, 69, -495), new FloatVector3(292, 69, -495)),
+                Pair.of(new FloatVector3(292, 69, -495), new FloatVector3(292, 69, -551)),
+                Pair.of(new FloatVector3(292, 69, -551), new FloatVector3(236, 69, -551))
         );
     }
 

@@ -4,18 +4,18 @@ import com.google.common.collect.Sets;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.badge.NoPushBadge;
 import com.rettichlp.unicacityaddon.base.gangzones.AbstractGangzone;
-import com.rettichlp.unicacityaddon.base.gangzones.AttackableGangzoneAltstadt;
-import com.rettichlp.unicacityaddon.base.gangzones.AttackableGangzoneFarm;
-import com.rettichlp.unicacityaddon.base.gangzones.AttackableGangzoneHafen;
-import com.rettichlp.unicacityaddon.base.gangzones.AttackableGangzonePlattenbau;
-import com.rettichlp.unicacityaddon.base.gangzones.AttackableGangzoneRotlicht;
-import com.rettichlp.unicacityaddon.base.gangzones.AttackableGangzoneYachthafen;
-import com.rettichlp.unicacityaddon.base.gangzones.GangzoneCalderon;
-import com.rettichlp.unicacityaddon.base.gangzones.GangzoneKerzakov;
-import com.rettichlp.unicacityaddon.base.gangzones.GangzoneLaCosaNostra;
-import com.rettichlp.unicacityaddon.base.gangzones.GangzoneLeMilieu;
-import com.rettichlp.unicacityaddon.base.gangzones.GangzoneObrien;
-import com.rettichlp.unicacityaddon.base.gangzones.GangzoneWestsideballas;
+import com.rettichlp.unicacityaddon.base.gangzones.Altstadt;
+import com.rettichlp.unicacityaddon.base.gangzones.Farm;
+import com.rettichlp.unicacityaddon.base.gangzones.Hafen;
+import com.rettichlp.unicacityaddon.base.gangzones.Plattenbau;
+import com.rettichlp.unicacityaddon.base.gangzones.Rotlicht;
+import com.rettichlp.unicacityaddon.base.gangzones.Yachthafen;
+import com.rettichlp.unicacityaddon.base.gangzones.Calderon;
+import com.rettichlp.unicacityaddon.base.gangzones.Kerzakov;
+import com.rettichlp.unicacityaddon.base.gangzones.LaCosaNostra;
+import com.rettichlp.unicacityaddon.base.gangzones.LeMilieu;
+import com.rettichlp.unicacityaddon.base.gangzones.Obrien;
+import com.rettichlp.unicacityaddon.base.gangzones.Westsideballas;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCBadge;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
@@ -399,18 +399,18 @@ public class Registry {
     );
 
     private final HashSet<Class<?>> gangzoneList = Sets.newHashSet(
-            AttackableGangzoneAltstadt.class,
-            AttackableGangzoneFarm.class,
-            AttackableGangzoneHafen.class,
-            AttackableGangzonePlattenbau.class,
-            AttackableGangzoneRotlicht.class,
-            AttackableGangzoneYachthafen.class,
-            GangzoneCalderon.class,
-            GangzoneKerzakov.class,
-            GangzoneLaCosaNostra.class,
-            GangzoneLeMilieu.class,
-            GangzoneObrien.class,
-            GangzoneWestsideballas.class
+            Altstadt.class,
+            Farm.class,
+            Hafen.class,
+            Plattenbau.class,
+            Rotlicht.class,
+            Yachthafen.class,
+            Calderon.class,
+            Kerzakov.class,
+            LaCosaNostra.class,
+            LeMilieu.class,
+            Obrien.class,
+            Westsideballas.class
     );
 
     private final UnicacityAddon unicacityAddon;

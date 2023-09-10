@@ -9,9 +9,9 @@ import java.util.Collections;
 import java.util.List;
 
 @UCGangzone
-public class AttackableGangzonePlattenbau extends AbstractAttackableGangzone {
+public class Plattenbau extends AbstractAttackableGangzone {
 
-    public AttackableGangzonePlattenbau(UnicacityAddon unicacityAddon, UCGangzone ucGangzone) {
+    public Plattenbau(UnicacityAddon unicacityAddon, UCGangzone ucGangzone) {
         super(unicacityAddon, ucGangzone);
     }
 
