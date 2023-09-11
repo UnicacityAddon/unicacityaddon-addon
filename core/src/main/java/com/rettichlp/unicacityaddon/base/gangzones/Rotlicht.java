@@ -5,7 +5,6 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCGangzone;
 import net.labymod.api.util.Pair;
 import net.labymod.api.util.math.vector.FloatVector3;
 
-import java.util.Collections;
 import java.util.List;
 
 @UCGangzone
@@ -35,6 +34,19 @@ public class Rotlicht extends AbstractAttackableGangzone {
 
     @Override
     public List<Pair<FloatVector3, FloatVector3>> gangwarFacades() {
-        return Collections.emptyList();
+        return List.of(
+                Pair.of(new FloatVector3(641, 69, -79), new FloatVector3(641, 69, 110)),
+                Pair.of(new FloatVector3(641, 69, 110), new FloatVector3(813, 69, 110)),
+                Pair.of(new FloatVector3(813, 69, 110), new FloatVector3(813, 69, 108)),
+                Pair.of(new FloatVector3(813, 69, 108), new FloatVector3(814, 69, 108)),
+                Pair.of(new FloatVector3(814, 69, 108), new FloatVector3(814, 69, 106)),
+                Pair.of(new FloatVector3(814, 69, 106), new FloatVector3(815, 69, 106)),
+                Pair.of(new FloatVector3(815, 69, 106), new FloatVector3(815, 69, 105)),
+                Pair.of(new FloatVector3(815, 69, 105), new FloatVector3(817, 69, 105)),
+                Pair.of(new FloatVector3(817, 69, 105), new FloatVector3(817, 69, 104)),
+                Pair.of(new FloatVector3(817, 69, 104), new FloatVector3(857, 69, 104)),
+                Pair.of(new FloatVector3(857, 69, 104), new FloatVector3(857, 69, -79)),
+                Pair.of(new FloatVector3(857, 69, -79), new FloatVector3(641, 69, -79))
+        );
     }
 }
