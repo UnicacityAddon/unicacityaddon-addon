@@ -21,8 +21,12 @@ public abstract class AbstractGangzone {
 
     public abstract List<Pair<FloatVector3, FloatVector3>> gangzoneFacades();
 
-    public void renderGangzoneArea() {
+    public void renderGangzoneFacades() {
         Color color = this.ucGangzone.owner().getColor().getLabymodColor();
         this.gangzoneFacades().forEach(posPair -> this.unicacityAddon.renderController().drawFacade(posPair.getFirst(), posPair.getSecond(), color));
+    }
+
+    public void renderGangzoneOutline(Color color) {
+        this.gangzoneFacades().forEach(posPair -> this.unicacityAddon.renderController().drawOutline(posPair.getFirst(), posPair.getSecond(), color));
     }
 }

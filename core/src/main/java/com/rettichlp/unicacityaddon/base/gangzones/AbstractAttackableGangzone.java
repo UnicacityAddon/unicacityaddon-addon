@@ -20,8 +20,13 @@ public abstract class AbstractAttackableGangzone extends AbstractGangzone {
 
     public abstract List<Pair<FloatVector3, FloatVector3>> gangwarFacades();
 
-    public void renderGangwarArea() {
-        Color color = ColorCode.GOLD.getLabymodColor();
+    public void renderGangwarFacades() {
+        Color color = Color.ORANGE;
         this.gangwarFacades().forEach(posPair -> this.unicacityAddon.renderController().drawFacade(posPair.getFirst(), posPair.getSecond(), color));
+    }
+
+    public void renderGangwarOutline() {
+        Color color = Color.BLACK;
+        this.gangwarFacades().forEach(posPair -> this.unicacityAddon.renderController().drawOutline(posPair.getFirst(), posPair.getSecond(), color));
     }
 }
