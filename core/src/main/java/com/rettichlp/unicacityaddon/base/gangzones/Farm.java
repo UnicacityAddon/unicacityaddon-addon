@@ -8,6 +8,9 @@ import net.labymod.api.util.math.vector.FloatVector3;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * @author RettichLP
+ */
 @UCGangzone
 public class Farm extends AbstractAttackableGangzone {
 

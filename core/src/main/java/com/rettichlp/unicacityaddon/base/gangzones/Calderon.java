@@ -8,6 +8,9 @@ import net.labymod.api.util.math.vector.FloatVector3;
 
 import java.util.List;
 
+/**
+ * @author RettichLP
+ */
 @UCGangzone(owner = Faction.CALDERON)
 public class Calderon extends AbstractGangzone {
 
