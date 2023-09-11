@@ -13,4 +13,6 @@ import org.jetbrains.annotations.Nullable;
 public abstract class RenderController {
 
     public abstract void drawFacade(FloatVector3 first, FloatVector3 second, Color c);
+
+    public abstract void drawOutline(FloatVector3 first, FloatVector3 second, Color c);
 }

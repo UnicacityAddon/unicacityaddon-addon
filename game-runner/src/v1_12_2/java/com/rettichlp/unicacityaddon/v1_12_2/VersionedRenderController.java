@@ -40,8 +40,6 @@ public class VersionedRenderController extends RenderController {
             gl(c.withAlpha(0.12f), () -> {
                 drawColorBox(new AxisAlignedBB(x, y, z, x, y + 100, z + length), 0F, 0F, 0F, 0F);
                 glColor4d(0, 0, 0, 0.5);
-                drawSelectionBoundingBox(new AxisAlignedBB(x, y, z, x, y + 100, z + length));
-                glLineWidth(2.0F);
             });
             glPopMatrix();
         } else if (first.getZ() == second.getZ()) { // modify x
@@ -60,6 +58,50 @@ public class VersionedRenderController extends RenderController {
             gl(c.withAlpha(0.12f), () -> {
                 drawColorBox(new AxisAlignedBB(x, y, z, x + length, y + 100, z), 0F, 0F, 0F, 0F);
                 glColor4d(0, 0, 0, 0.5);
+            });
+            glPopMatrix();
+        } else {
+            throw new IllegalArgumentException("Positions are not in a row: " + first + " and " + second);
+        }
+    }
+
+    @Override
+    public void drawOutline(FloatVector3 first, FloatVector3 second, Color c) {
+        // length of facade
+        double length;
+
+        if (first.getX() == second.getX()) { // modify z
+            // lower location
+            FloatVector3 lower = first.getZ() <= second.getZ() ? first : second;
+
+            double x = lower.getX() - Minecraft.getMinecraft().getRenderManager().viewerPosX;
+            double y = 0 - Minecraft.getMinecraft().getRenderManager().viewerPosY;
+            double z = lower.getZ() - Minecraft.getMinecraft().getRenderManager().viewerPosZ;
+
+            // length
+            length = Math.abs(first.getZ() - second.getZ());
+
+            // draw
+            glPushMatrix();
+            gl(c.withAlpha(0.12f), () -> {
+                drawSelectionBoundingBox(new AxisAlignedBB(x, y, z, x, y + 100, z + length));
+                glLineWidth(2.0F);
+            });
+            glPopMatrix();
+        } else if (first.getZ() == second.getZ()) { // modify x
+            // lower location
+            FloatVector3 lower = first.getX() <= second.getX() ? first : second;
+
+            double x = lower.getX() - Minecraft.getMinecraft().getRenderManager().viewerPosX;
+            double y = 0 - Minecraft.getMinecraft().getRenderManager().viewerPosY;
+            double z = lower.getZ() - Minecraft.getMinecraft().getRenderManager().viewerPosZ;
+
+            // length
+            length = Math.abs(first.getX() - second.getX());
+
+            // draw
+            glPushMatrix();
+            gl(c.withAlpha(0.12f), () -> {
                 drawSelectionBoundingBox(new AxisAlignedBB(x, y, z, x + length, y + 100, z));
                 glLineWidth(2.0F);
             });
