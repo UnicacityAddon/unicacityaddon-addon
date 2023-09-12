@@ -16,7 +16,6 @@ import com.rettichlp.unicacityaddon.api.management.Management;
 import com.rettichlp.unicacityaddon.api.management.ManagementUser;
 import com.rettichlp.unicacityaddon.api.player.Player;
 import com.rettichlp.unicacityaddon.api.player.PlayerEntry;
-import com.rettichlp.unicacityaddon.api.response.Success;
 import com.rettichlp.unicacityaddon.api.statistic.Statistic;
 import com.rettichlp.unicacityaddon.api.statisticTop.StatisticTop;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
@@ -28,7 +27,6 @@ import com.rettichlp.unicacityaddon.base.enums.api.StatisticType;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
-import com.rettichlp.unicacityaddon.base.services.FileService;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
@@ -187,26 +185,26 @@ public class API {
     }
 
     private Notification syncNotification(@NotNull Type type) {
-        Component text = null;
-        ColorCode colorCode = ColorCode.WHITE;
-
-        switch (type) {
-            case STARTED -> {
-                colorCode = ColorCode.AQUA;
-                text = Message.getBuilder().of("Aktualisierung gestartet.").advance().createComponent();
-            }
-            case SUCCESS -> {
-                colorCode = ColorCode.GREEN;
-                text = Message.getBuilder().of("Aktualisierung abgeschlossen.").advance().createComponent();
-            }
-            case FAILURE -> {
-                colorCode = ColorCode.RED;
-                text = Message.getBuilder().of("Aktualisierung fehlgeschlagen.").advance().createComponent();
-            }
-        }
+        Component text = switch (type) {
+            case STARTED -> Message.getBuilder()
+                    .of("●").color(ColorCode.BLUE).advance().space()
+                    .of("Aktualisierung gestartet.").advance()
+                    .createComponent();
+            case SUCCESS -> Message.getBuilder()
+                    .of("●").color(ColorCode.GREEN).advance().space()
+                    .of("Aktualisierung abgeschlossen.").advance()
+                    .createComponent();
+            case FAILURE -> Message.getBuilder()
+                    .of("●").color(ColorCode.RED).advance().space()
+                    .of("Aktualisierung fehlgeschlagen.").advance()
+                    .createComponent();
+        };
 
         return Notification.builder()
-                .title(Message.getBuilder().of("Synchronisierung").color(colorCode).bold().advance().createComponent())
+                .title(Message.getBuilder()
+                        .of("UnicacityAddon").color(ColorCode.DARK_AQUA).bold().advance().space()
+                        .of("API").color(ColorCode.AQUA).advance()
+                        .createComponent())
                 .text(text)
                 .icon(this.unicacityAddon.utilService().icon())
                 .type(Notification.Type.ADVANCEMENT)
