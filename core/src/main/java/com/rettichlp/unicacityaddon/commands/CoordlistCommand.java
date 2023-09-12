@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 /**
  * @author RettichLP
  */
-@UCCommand(prefix = "coordlist", usage = "[add|remove] [Ort]")
+@UCCommand(prefix = "coordlist", usage = "[add|remove] [Name]")
 public class CoordlistCommand extends UnicacityCommand {
 
     private final UnicacityAddon unicacityAddon;
