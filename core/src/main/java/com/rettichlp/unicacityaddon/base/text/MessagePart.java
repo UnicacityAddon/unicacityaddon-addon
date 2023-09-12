@@ -4,6 +4,7 @@ import lombok.Getter;
 import net.labymod.api.client.component.ComponentService;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.event.HoverEvent;
+import net.labymod.api.client.gui.icon.Icon;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +21,7 @@ public class MessagePart {
     private final ColorCode colorCode;
     private final ClickEvent clickEvent;
     private final HoverEvent<?> hoverEvent;
+    private final Icon icon;
 
     private MessagePart(Builder builder) {
         this.formattingCodes = builder.formattingCodes;
@@ -27,6 +29,7 @@ public class MessagePart {
         this.colorCode = builder.colorCode;
         this.clickEvent = builder.clickEvent;
         this.hoverEvent = builder.hoverEvent;
+        this.icon = builder.icon;
     }
 
     public static Builder getBuilder() {
@@ -40,6 +43,7 @@ public class MessagePart {
         private ColorCode colorCode;
         private ClickEvent clickEvent;
         private HoverEvent<?> hoverEvent;
+        private Icon icon;
         private Message.Builder messageBuilder;
 
         public Builder messageBuilder(Message.Builder messageBuilder) {
@@ -89,6 +93,11 @@ public class MessagePart {
 
         public <V> Builder hoverEvent(HoverEvent.Action<V> action, V value) {
             this.hoverEvent = ComponentService.hoverEvent(action, value);
+            return this;
+        }
+
+        public Builder icon(Icon icon) {
+            this.icon = icon;
             return this;
         }
 

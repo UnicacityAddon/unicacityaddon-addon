@@ -33,7 +33,7 @@ import net.labymod.api.configuration.loader.property.ConfigProperty;
 import net.labymod.api.configuration.settings.annotation.SettingSection;
 
 @ConfigName("settings")
-@SpriteTexture("settings.png")
+@SpriteTexture("sprite/settings.png")
 public class DefaultUnicacityAddonConfiguration extends AddonConfig implements UnicacityAddonConfiguration {
 
     @SwitchSetting

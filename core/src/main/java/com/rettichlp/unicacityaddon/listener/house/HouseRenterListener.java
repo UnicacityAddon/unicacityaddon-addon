@@ -99,7 +99,7 @@ public class HouseRenterListener {
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
                     date = simpleDateFormat.parse(renterMatcher.group(3) + "/" + renterMatcher.group(4) + "/" + renterMatcher.group(5));
                 } catch (ParseException ex) {
-                    this.unicacityAddon.logger().warn(ex.getMessage());
+                    this.unicacityAddon.logger().error(ex.getMessage());
                 }
 
                 if (date == null)

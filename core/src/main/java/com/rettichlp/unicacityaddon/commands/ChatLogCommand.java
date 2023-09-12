@@ -110,14 +110,14 @@ public class ChatLogCommand extends UnicacityCommand {
             jsonReader.setLenient(true);
             JsonElement jsonElement = new JsonParser().parse(jsonReader);
             if (!jsonElement.getAsJsonObject().has("key")) {
-                this.unicacityAddon.logger().error("Error while uploading chatlog");
+                this.unicacityAddon.logger().error("Error while uploading chatlog: Key 'key' not found");
                 return null;
             } else {
                 String key = jsonElement.getAsJsonObject().get("key").getAsString();
                 return "https://paste.labymod.net/" + key;
             }
         } catch (IOException e) {
-            this.unicacityAddon.logger().warn(e.getMessage());
+            this.unicacityAddon.logger().error(e.getMessage());
             return null;
         }
     }

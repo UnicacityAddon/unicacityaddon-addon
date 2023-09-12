@@ -8,8 +8,8 @@ import net.labymod.api.client.entity.player.ClientPlayer;
 import net.labymod.api.client.scoreboard.Scoreboard;
 import net.labymod.api.client.world.ClientWorld;
 import net.labymod.api.util.math.vector.FloatVector3;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.UUID;
 
 /**
@@ -35,8 +35,6 @@ public interface AddonPlayer {
     void sendMessage(String message);
 
     void sendMessage(Component component);
-
-    void sendAPIMessage(String message, boolean success);
 
     void sendEmptyMessage();
 

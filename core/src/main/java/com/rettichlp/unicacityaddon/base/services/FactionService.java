@@ -39,7 +39,7 @@ public class FactionService {
             // playerName Joshxa_ matches with plain displayName [UC]Joshxa_ (UC prefix)
         } catch (IllegalStateException e) {
             this.unicacityAddon.utilService().debug("Can't retrieve player duty for " + playerName);
-            this.unicacityAddon.logger().warn(e.getMessage());
+            this.unicacityAddon.logger().error(e.getMessage());
         }
 
         return duty;

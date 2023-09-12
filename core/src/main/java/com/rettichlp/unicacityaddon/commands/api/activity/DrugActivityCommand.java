@@ -64,7 +64,7 @@ public class DrugActivityCommand extends UnicacityCommand {
                     .screenshot(screenshot)
                     .send();
         } catch (IOException e) {
-            this.unicacityAddon.logger().warn(e.getMessage());
+            this.unicacityAddon.logger().error(e.getMessage());
         }
         return true;
     }

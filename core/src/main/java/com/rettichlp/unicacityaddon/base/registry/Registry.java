@@ -3,6 +3,7 @@ package com.rettichlp.unicacityaddon.base.registry;
 import com.google.common.collect.Sets;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.badge.NoPushBadge;
+import com.rettichlp.unicacityaddon.badge.VipBadge;
 import com.rettichlp.unicacityaddon.base.gangzones.AbstractGangzone;
 import com.rettichlp.unicacityaddon.base.gangzones.Altstadt;
 import com.rettichlp.unicacityaddon.base.gangzones.Farm;
@@ -49,12 +50,12 @@ import com.rettichlp.unicacityaddon.commands.ShutdownJailCommand;
 import com.rettichlp.unicacityaddon.commands.SyncCommand;
 import com.rettichlp.unicacityaddon.commands.TimerCommand;
 import com.rettichlp.unicacityaddon.commands.TodoListCommand;
+import com.rettichlp.unicacityaddon.commands.api.AddonGroupCommand;
 import com.rettichlp.unicacityaddon.commands.api.AutoNCCommand;
 import com.rettichlp.unicacityaddon.commands.api.BlacklistReasonCommand;
 import com.rettichlp.unicacityaddon.commands.api.HousebanCommand;
 import com.rettichlp.unicacityaddon.commands.api.HousebanReasonCommand;
 import com.rettichlp.unicacityaddon.commands.api.NaviPointCommand;
-import com.rettichlp.unicacityaddon.commands.api.PlayerGroupCommand;
 import com.rettichlp.unicacityaddon.commands.api.ReviveStatsCommand;
 import com.rettichlp.unicacityaddon.commands.api.TokenCommand;
 import com.rettichlp.unicacityaddon.commands.api.TopListCommand;
@@ -146,8 +147,8 @@ import com.rettichlp.unicacityaddon.listener.ServerLoginListener;
 import com.rettichlp.unicacityaddon.listener.TabCompletionListener;
 import com.rettichlp.unicacityaddon.listener.TimerListener;
 import com.rettichlp.unicacityaddon.listener.WeaponListener;
-import com.rettichlp.unicacityaddon.listener.chatlog.ChatLogReceiveChatListener;
-import com.rettichlp.unicacityaddon.listener.chatlog.ChatLogSendChatListener;
+import com.rettichlp.unicacityaddon.listener.chat.ChatLinkListener;
+import com.rettichlp.unicacityaddon.listener.chat.ChatLogListener;
 import com.rettichlp.unicacityaddon.listener.faction.AFbankEinzahlenListener;
 import com.rettichlp.unicacityaddon.listener.faction.ContractListener;
 import com.rettichlp.unicacityaddon.listener.faction.EmergencyServiceListener;
@@ -218,7 +219,8 @@ public class Registry {
     private final Set<AbstractGangzone> gangzones = new HashSet<>();
 
     private final HashSet<Class<?>> badgeList = Sets.newHashSet(
-            NoPushBadge.class
+            NoPushBadge.class,
+            VipBadge.class
     );
 
     private final HashSet<Class<?>> nameTagList = Sets.newHashSet(
@@ -254,8 +256,8 @@ public class Registry {
             BlacklistListener.class,
             BlacklistModifyListener.class,
             CarListener.class,
-            ChatLogReceiveChatListener.class,
-            ChatLogSendChatListener.class,
+            ChatLinkListener.class,
+            ChatLogListener.class,
             ContractListener.class,
             DrugListener.class,
             EmergencyServiceListener.class,
@@ -311,6 +313,7 @@ public class Registry {
             ASetBlacklistCommand.class,
             ATMFillCommand.class,
             ActivityCommand.class,
+            AddonGroupCommand.class,
             AutoFirstAidCommand.class,
             AutoNCCommand.class,
             BlackMarketCommand.class,
@@ -365,7 +368,6 @@ public class Registry {
             OwnUseCommand.class,
             OwnUseGiftCommand.class,
             PayEquipCommand.class,
-            PlayerGroupCommand.class,
             ProtectionMoneyCommand.class,
             PunishCommand.class,
             RecipeAcceptCommand.class,

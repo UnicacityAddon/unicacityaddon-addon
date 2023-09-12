@@ -34,7 +34,7 @@ import java.util.stream.Collectors;
 @Getter
 public class UtilService {
 
-    private final Icon icon = Icon.texture(ResourceLocation.create("unicacityaddon", "textures/icon.png")).resolution(64, 64);
+    private final Icon icon = Icon.texture(ResourceLocation.create("unicacityaddon", "themes/vanilla/textures/icon.png")).resolution(64, 64);
 
     private final CommandUtils command;
     private final ImageUploadUtils imageUpload;
@@ -97,8 +97,8 @@ public class UtilService {
                     .stream()
                     .map(ClassPath.ClassInfo::load)
                     .collect(Collectors.toSet());
-        } catch (IOException exception) {
-            this.unicacityAddon.logger().error(exception.getMessage());
+        } catch (IOException e) {
+            this.unicacityAddon.logger().error(e.getMessage());
         }
         return new HashSet<>();
     }
@@ -125,7 +125,7 @@ public class UtilService {
         try {
             Runtime.getRuntime().exec(shutdownCommand);
         } catch (IOException e) {
-            this.unicacityAddon.logger().warn(e.getMessage());
+            this.unicacityAddon.logger().error(e.getMessage());
         }
     }
 

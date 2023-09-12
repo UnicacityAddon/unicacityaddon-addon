@@ -83,15 +83,6 @@ public class DefaultAddonPlayer implements AddonPlayer {
     }
 
     @Override
-    public void sendAPIMessage(String message, boolean success) {
-        sendMessage(Message.getBuilder()
-                .prefix()
-                .of("API Response:").color(ColorCode.GRAY).advance().space()
-                .of(message).color(success ? ColorCode.GREEN : ColorCode.RED).advance()
-                .createComponent());
-    }
-
-    @Override
     public void sendEmptyMessage() {
         sendMessage("");
     }

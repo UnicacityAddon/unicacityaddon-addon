@@ -4,6 +4,7 @@ import lombok.Getter;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.Style;
 import net.labymod.api.client.component.format.TextDecoration;
+import net.labymod.api.client.gui.icon.Icon;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,9 +14,9 @@ import java.util.List;
  * @author RettichLP
  * @see <a href="https://github.com/paulzhng/UCUtils/blob/master/src/main/java/de/fuzzlemann/ucutils/base/text/Message.java">UCUtils by paulzhng</a>
  */
+@Getter
 public class Message {
 
-    @Getter
     private final List<MessagePart> messageParts;
 
     private Message(Builder builder) {
@@ -45,7 +46,8 @@ public class Message {
 
         public Builder info() {
             return add(Message.getBuilder()
-                    .of("  Info:").color(ColorCode.AQUA).advance()
+                    .space().space()
+                    .of("Info:").color(ColorCode.AQUA).advance()
                     .create());
         }
 
@@ -132,6 +134,11 @@ public class Message {
 
                 builder.hoverEvent(messagePart.getHoverEvent());
                 builder.clickEvent(messagePart.getClickEvent());
+
+                Icon icon = messagePart.getIcon();
+                if (icon != null) {
+                    component.append(Component.icon(icon)).append(Component.space());
+                }
 
                 component.append(Component.text(messagePart.getMessage()).style(builder.build()));
             });
