@@ -5,7 +5,6 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCGangzone;
 import net.labymod.api.util.Pair;
 import net.labymod.api.util.math.vector.FloatVector3;
 
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -50,6 +49,27 @@ public class Altstadt extends AbstractAttackableGangzone {
 
     @Override
     public List<Pair<FloatVector3, FloatVector3>> gangwarFacades() {
-        return Collections.emptyList();
+        return List.of(
+                Pair.of(new FloatVector3(145, 69, 539), new FloatVector3(145, 69, 587)),
+                Pair.of(new FloatVector3(145, 69, 587), new FloatVector3(132, 69, 587)),
+                Pair.of(new FloatVector3(132, 69, 587), new FloatVector3(132, 69, 597)),
+                Pair.of(new FloatVector3(132, 69, 597), new FloatVector3(124, 69, 597)),
+                Pair.of(new FloatVector3(124, 69, 597), new FloatVector3(124, 69, 727)),
+                Pair.of(new FloatVector3(124, 69, 727), new FloatVector3(126, 69, 727)),
+                Pair.of(new FloatVector3(126, 69, 727), new FloatVector3(126, 69, 818)),
+                Pair.of(new FloatVector3(126, 69, 818), new FloatVector3(132, 69, 818)),
+                Pair.of(new FloatVector3(132, 69, 818), new FloatVector3(132, 69, 844)),
+                Pair.of(new FloatVector3(132, 69, 844), new FloatVector3(142, 69, 844)),
+                Pair.of(new FloatVector3(142, 69, 844), new FloatVector3(142, 69, 898)),
+                Pair.of(new FloatVector3(142, 69, 898), new FloatVector3(354, 69, 898)),
+                Pair.of(new FloatVector3(354, 69, 898), new FloatVector3(354, 69, 874)),
+                Pair.of(new FloatVector3(354, 69, 874), new FloatVector3(366, 69, 874)),
+                Pair.of(new FloatVector3(366, 69, 874), new FloatVector3(366, 69, 753)),
+                Pair.of(new FloatVector3(366, 69, 753), new FloatVector3(364, 69, 753)),
+                Pair.of(new FloatVector3(364, 69, 753), new FloatVector3(364, 69, 736)),
+                Pair.of(new FloatVector3(364, 69, 736), new FloatVector3(363, 69, 736)),
+                Pair.of(new FloatVector3(363, 69, 736), new FloatVector3(363, 69, 539)),
+                Pair.of(new FloatVector3(363, 69, 539), new FloatVector3(145, 69, 539))
+        );
     }
 }

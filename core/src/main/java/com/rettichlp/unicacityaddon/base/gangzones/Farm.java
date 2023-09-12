@@ -5,7 +5,6 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCGangzone;
 import net.labymod.api.util.Pair;
 import net.labymod.api.util.math.vector.FloatVector3;
 
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -38,6 +37,19 @@ public class Farm extends AbstractAttackableGangzone {
 
     @Override
     public List<Pair<FloatVector3, FloatVector3>> gangwarFacades() {
-        return Collections.emptyList();
+        return List.of(
+                Pair.of(new FloatVector3(405, 69, 433), new FloatVector3(405, 69, 612)),
+                Pair.of(new FloatVector3(405, 69, 612), new FloatVector3(472, 69, 612)),
+                Pair.of(new FloatVector3(472, 69, 612), new FloatVector3(472, 69, 618)),
+                Pair.of(new FloatVector3(472, 69, 618), new FloatVector3(600, 69, 618)),
+                Pair.of(new FloatVector3(600, 69, 618), new FloatVector3(600, 69, 612)),
+                Pair.of(new FloatVector3(600, 69, 612), new FloatVector3(601, 69, 612)),
+                Pair.of(new FloatVector3(601, 69, 612), new FloatVector3(601, 69, 500)),
+                Pair.of(new FloatVector3(601, 69, 500), new FloatVector3(600, 69, 500)),
+                Pair.of(new FloatVector3(600, 69, 500), new FloatVector3(600, 69, 494)),
+                Pair.of(new FloatVector3(600, 69, 494), new FloatVector3(575, 69, 494)),
+                Pair.of(new FloatVector3(575, 69, 494), new FloatVector3(575, 69, 433)),
+                Pair.of(new FloatVector3(575, 69, 433), new FloatVector3(405, 69, 433))
+        );
     }
 }
