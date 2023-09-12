@@ -193,7 +193,7 @@ public class DefaultAddonPlayer implements AddonPlayer {
 
     @Override
     public boolean hasGangwar() {
-        return getScoreboard().getScores(getScoreboard().getObjective(DisplaySlot.SIDEBAR)).stream()
+        return this.unicacityAddon.configuration().gangwar().get() || getScoreboard().getScores(getScoreboard().getObjective(DisplaySlot.SIDEBAR)).stream()
                 .map(ScoreboardScore::getName)
                 .anyMatch(s -> s.contains("Angreifer") || s.contains("Verteidiger"));
     }
