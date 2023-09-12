@@ -25,7 +25,7 @@ public class VipBadge extends BadgeRenderer {
 
     @Override
     public void render(Stack stack, float x, float y, NetworkPlayerInfo player) {
-        Icon icon = Icon.sprite16(ResourceLocation.create("unicacityaddon", "themes/vanilla/textures/badges.png"), 1, 0);
+        Icon icon = Icon.sprite16(ResourceLocation.create("unicacityaddon", "themes/vanilla/textures/sprite/badges.png"), 1, 0);
         icon.render(stack, x + 3, y + 1, 6);
     }
 
