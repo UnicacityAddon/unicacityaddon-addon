@@ -15,6 +15,7 @@ import com.rettichlp.unicacityaddon.base.teamspeak.TeamSpeakAPI;
 import com.rettichlp.unicacityaddon.controller.DeadBodyController;
 import com.rettichlp.unicacityaddon.controller.GuiController;
 import com.rettichlp.unicacityaddon.controller.PlayerListController;
+import com.rettichlp.unicacityaddon.controller.RenderController;
 import com.rettichlp.unicacityaddon.controller.ScreenshotController;
 import com.rettichlp.unicacityaddon.controller.SoundController;
 import com.rettichlp.unicacityaddon.controller.TransportController;
@@ -130,6 +131,7 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
         this.registry.registerHudWidgets();
         this.registry.registerListeners();
         this.registry.registerCommands();
+        this.registry.registerGangzones();
 
         new Thread(this.teamSpeakAPI::initialize).start();
 
@@ -151,6 +153,10 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
 
     public PlayerListController playerListController() {
         return controller().getPlayerListController();
+    }
+
+    public RenderController renderController() {
+        return controller().getRenderController();
     }
 
     public ScreenshotController screenshotController() {

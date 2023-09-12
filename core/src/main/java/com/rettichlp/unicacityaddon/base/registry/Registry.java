@@ -4,9 +4,23 @@ import com.google.common.collect.Sets;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.badge.NoPushBadge;
 import com.rettichlp.unicacityaddon.badge.VipBadge;
+import com.rettichlp.unicacityaddon.base.gangzones.AbstractGangzone;
+import com.rettichlp.unicacityaddon.base.gangzones.Altstadt;
+import com.rettichlp.unicacityaddon.base.gangzones.Farm;
+import com.rettichlp.unicacityaddon.base.gangzones.Hafen;
+import com.rettichlp.unicacityaddon.base.gangzones.Plattenbau;
+import com.rettichlp.unicacityaddon.base.gangzones.Rotlicht;
+import com.rettichlp.unicacityaddon.base.gangzones.Yachthafen;
+import com.rettichlp.unicacityaddon.base.gangzones.Calderon;
+import com.rettichlp.unicacityaddon.base.gangzones.Kerzakov;
+import com.rettichlp.unicacityaddon.base.gangzones.LaCosaNostra;
+import com.rettichlp.unicacityaddon.base.gangzones.LeMilieu;
+import com.rettichlp.unicacityaddon.base.gangzones.Obrien;
+import com.rettichlp.unicacityaddon.base.gangzones.Westsideballas;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCBadge;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
+import com.rettichlp.unicacityaddon.base.registry.annotation.UCGangzone;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCNameTag;
 import com.rettichlp.unicacityaddon.commands.ABuyCommand;
 import com.rettichlp.unicacityaddon.commands.ActivityCommand;
@@ -200,6 +214,10 @@ public class Registry {
     @Getter
     private final Set<Command> commands = new HashSet<>();
 
+    @Accessors(fluent = true)
+    @Getter
+    private final Set<AbstractGangzone> gangzones = new HashSet<>();
+
     private final HashSet<Class<?>> badgeList = Sets.newHashSet(
             NoPushBadge.class,
             VipBadge.class
@@ -382,6 +400,21 @@ public class Registry {
             YasinCommand.class
     );
 
+    private final HashSet<Class<?>> gangzoneList = Sets.newHashSet(
+            Altstadt.class,
+            Farm.class,
+            Hafen.class,
+            Plattenbau.class,
+            Rotlicht.class,
+            Yachthafen.class,
+            Calderon.class,
+            Kerzakov.class,
+            LaCosaNostra.class,
+            LeMilieu.class,
+            Obrien.class,
+            Westsideballas.class
+    );
+
     private final UnicacityAddon unicacityAddon;
 
     public Registry(UnicacityAddon unicacityAddon) {
@@ -512,5 +545,34 @@ public class Registry {
                     }
                 });
         this.unicacityAddon.logger().info("Registered {}/{} Commands, {} skipped (deactivated)", registeredCommandCount, commandClassSet.size() - deactivatedCommandCount.get(), deactivatedCommandCount.get());
+    }
+
+    public void registerGangzones() {
+        AtomicInteger registeredGangzoneCount = new AtomicInteger();
+        AtomicInteger deactivatedGangzoneCount = new AtomicInteger();
+        Set<Class<?>> gangzoneClassSet = this.gangzoneList;
+        gangzoneClassSet.remove(UnicacityCommand.class);
+        gangzoneClassSet.stream()
+                .filter(gangzoneClass -> gangzoneClass.isAnnotationPresent(UCGangzone.class))
+                .forEach(gangzoneClass -> {
+                    UCGangzone ucGangzone = gangzoneClass.getAnnotation(UCGangzone.class);
+                    if (ucGangzone.deactivated()) {
+                        deactivatedGangzoneCount.getAndIncrement();
+                    } else {
+                        try {
+                            AbstractGangzone gangzone = (AbstractGangzone) gangzoneClass.getConstructor(UnicacityAddon.class, UCGangzone.class).newInstance(this.unicacityAddon, ucGangzone);
+
+                            Objects.requireNonNull(gangzone, "Gangzone");
+                            this.gangzones.add(gangzone);
+
+                            registeredGangzoneCount.getAndIncrement();
+                        } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException |
+                                 InstantiationException e) {
+                            this.unicacityAddon.logger().warn("Can't register Gangzone: {}", gangzoneClass.getSimpleName());
+                            this.unicacityAddon.logger().error(e.getMessage());
+                        }
+                    }
+                });
+        this.unicacityAddon.logger().info("Registered {}/{} Gangzones, {} skipped (deactivated)", registeredGangzoneCount, gangzoneClassSet.size() - deactivatedGangzoneCount.get(), deactivatedGangzoneCount.get());
     }
 }

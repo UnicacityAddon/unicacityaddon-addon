@@ -106,6 +106,9 @@ public class DefaultUnicacityAddonConfiguration extends AddonConfig implements U
     private final ConfigProperty<Boolean> debug = new ConfigProperty<>(false);
 
     @SwitchSetting
+    private final ConfigProperty<Boolean> gangwar = new ConfigProperty<>(false);
+
+    @SwitchSetting
     private final ConfigProperty<Boolean> local = new ConfigProperty<>(false);
 
     @Override
@@ -201,6 +204,11 @@ public class DefaultUnicacityAddonConfiguration extends AddonConfig implements U
     @Override
     public ConfigProperty<Boolean> debug() {
         return this.debug;
+    }
+
+    @Override
+    public ConfigProperty<Boolean> gangwar() {
+        return this.gangwar;
     }
 
     @Override
