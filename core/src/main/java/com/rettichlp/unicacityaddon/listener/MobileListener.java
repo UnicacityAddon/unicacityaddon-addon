@@ -67,10 +67,8 @@ public class MobileListener {
         }
 
         Matcher mobileOffMatcher = PatternHandler.MOBILE_OFF_PATTERN.matcher(msg);
-        if (mobileOffMatcher.find()) {
-            if (!hasCommunications) {
-                p.sendInfoMessage("Dein Handy liegt bei dir zu Hause.");
-            }
+        if (mobileOffMatcher.find() && !hasCommunications) {
+            p.sendInfoMessage("Dein Handy liegt bei dir zu Hause.");
             return;
         }
 
