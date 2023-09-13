@@ -171,6 +171,7 @@ public class PatternHandler {
     public static final Pattern MOBILE_REMOVE_PATTERN = Pattern.compile("^((?:\\[UC])*\\w+) hat dir deine Kommunikationsgeräte abgenommen\\.$");
     public static final Pattern MOBILE_GET_PATTERN = Pattern.compile("^Du hast dein Handy genommen\\.$" +
             "|^((?:\\[UC])*\\w+) hat dir deine Kommunikationsgeräte wiedergegeben\\.$");
+    public static final Pattern MOBILE_OFF_PATTERN = Pattern.compile("^Dein Handy ist ausgeschaltet\\.$");
     public static final Pattern MOBILE_TOGGLE_PATTERN = Pattern.compile("^Du hast dein Telefon (ein|aus)geschaltet\\.$" +
             "|^Der Akku von deinem Handy ist leer\\.$");
 
