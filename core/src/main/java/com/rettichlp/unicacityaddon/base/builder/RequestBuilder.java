@@ -99,7 +99,10 @@ public class RequestBuilder {
                                         .of("UnicacityAddon").color(ColorCode.DARK_AQUA).bold().advance().space()
                                         .of("API").color(ColorCode.AQUA).advance()
                                         .createComponent())
-                                .text(Message.getBuilder().of(success.getInfo()).advance().createComponent())
+                                .text(Message.getBuilder()
+                                        .of("●").color(ColorCode.GREEN).advance().space()
+                                        .of(success.getInfo()).advance()
+                                        .createComponent())
                                 .icon(this.unicacityAddon.utilService().icon())
                                 .type(Notification.Type.ADVANCEMENT)
                                 .build());

@@ -30,8 +30,14 @@ public class UnicacityAddonException extends Exception {
     public void sendNotification() {
         if (this.unicacityAddon != null && !this.notificationMessage.isBlank()) {
             Laby.labyAPI().notificationController().push(Notification.builder()
-                    .title(Message.getBuilder().of("Fehler!").color(ColorCode.RED).bold().advance().createComponent())
-                    .text(Message.getBuilder().of(this.notificationMessage).advance().createComponent())
+                    .title(Message.getBuilder()
+                            .of("UnicacityAddon").color(ColorCode.DARK_AQUA).bold().advance().space()
+                            .of("API").color(ColorCode.AQUA).advance()
+                            .createComponent())
+                    .text(Message.getBuilder()
+                            .of("●").color(ColorCode.RED).advance().space()
+                            .of(this.notificationMessage).advance()
+                            .createComponent())
                     .icon(this.unicacityAddon.utilService().icon())
                     .type(Notification.Type.ADVANCEMENT)
                     .build());
