@@ -2,7 +2,6 @@ package com.rettichlp.unicacityaddon.base.gangzones;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCGangzone;
-import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import net.labymod.api.util.Color;
 import net.labymod.api.util.Pair;
 import net.labymod.api.util.math.vector.FloatVector3;
