@@ -54,15 +54,21 @@ public class MobileListener {
             return;
         }
 
-        Matcher communicationsRemoveMatcher = PatternHandler.MOBILE_REMOVE_PATTERN.matcher(msg);
-        if (communicationsRemoveMatcher.find()) {
+        Matcher mobileRemoveMatcher = PatternHandler.MOBILE_REMOVE_PATTERN.matcher(msg);
+        if (mobileRemoveMatcher.find()) {
             hasCommunications = false;
             return;
         }
 
-        Matcher communicationsGetMatcher = PatternHandler.MOBILE_GET_PATTERN.matcher(msg);
-        if (communicationsGetMatcher.find()) {
+        Matcher mobileGetMatcher = PatternHandler.MOBILE_GET_PATTERN.matcher(msg);
+        if (mobileGetMatcher.find()) {
             hasCommunications = true;
+            return;
+        }
+
+        Matcher mobileOffMatcher = PatternHandler.MOBILE_OFF_PATTERN.matcher(msg);
+        if (mobileOffMatcher.find() && !hasCommunications) {
+            p.sendInfoMessage("Dein Handy liegt bei dir zu Hause.");
             return;
         }
 
