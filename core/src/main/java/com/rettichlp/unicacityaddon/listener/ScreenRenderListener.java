@@ -9,7 +9,6 @@ import com.rettichlp.unicacityaddon.base.gangzones.AbstractGangzone;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.commands.GetGunPatternCommand;
 import net.labymod.api.client.gui.screen.key.Key;
-import net.labymod.api.client.world.item.ItemStack;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.render.ScreenRenderEvent;
 import net.labymod.api.event.client.render.world.RenderWorldEvent;
@@ -19,6 +18,7 @@ import net.labymod.api.util.Pair;
 import net.labymod.api.util.math.vector.FloatVector3;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -87,8 +87,16 @@ public class ScreenRenderListener {
 
     @Subscribe
     public void onItemStackTooltip(ItemStackTooltipEvent e) {
-        ItemStack itemStack = e.itemStack();
-        lastHoveredSlotNumber = this.unicacityAddon.guiController().getSlotNumberByDisplayName(this.unicacityAddon.utilService().text().plain(itemStack.getDisplayName()));
+        String plainDisplayName = this.unicacityAddon.utilService().text().plain(e.itemStack().getDisplayName());
+
+        Collection<String> aBuyBlacklist = new ArrayList<>(Arrays.stream(Weapon.values()).map(Weapon::getName).toList());
+        aBuyBlacklist.add("Inventar");
+        aBuyBlacklist.add("Baseballschläger");
+        aBuyBlacklist.add("Messer");
+
+        lastHoveredSlotNumber = aBuyBlacklist.stream().noneMatch(plainDisplayName::contains)
+                ? this.unicacityAddon.guiController().getSlotNumberByDisplayName(plainDisplayName)
+                : -1;
     }
 
     @Subscribe
