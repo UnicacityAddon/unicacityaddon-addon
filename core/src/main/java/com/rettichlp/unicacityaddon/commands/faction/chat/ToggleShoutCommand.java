@@ -3,6 +3,7 @@ package com.rettichlp.unicacityaddon.commands.faction.chat;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
+import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.registry.UnicacityCommand;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 
@@ -24,13 +25,18 @@ public class ToggleShoutCommand extends UnicacityCommand {
     @Override
     public boolean execute(String[] arguments) {
         AddonPlayer p = this.unicacityAddon.player();
-        p.setShouting(!p.isShouting());
+
+        boolean isCivilian = p.getFaction().equals(Faction.NULL);
+        p.setShouting(!p.isShouting() && !isCivilian);
 
         if (p.isShouting()) {
             p.sendInfoMessage("Ab sofort schreist du jede Nachricht.");
+        } else if (isCivilian){
+            p.sendInfoMessage("Diese Funktion ist nur für Fraktionsmitglieder verfügbar.");
         } else {
             p.sendInfoMessage("Ab sofort redest du wieder normal.");
         }
+
         return true;
     }
 
