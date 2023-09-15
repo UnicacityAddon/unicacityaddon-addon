@@ -89,9 +89,12 @@ public class ScreenRenderListener {
     public void onItemStackTooltip(ItemStackTooltipEvent e) {
         String plainDisplayName = this.unicacityAddon.utilService().text().plain(e.itemStack().getDisplayName());
 
-        Collection<String> aBuyBlacklist = new ArrayList<>(Arrays.stream(Weapon.values()).map(Weapon::getName).toList());
-        aBuyBlacklist.add("Inventar");
+        Collection<String> aBuyBlacklist = new ArrayList<>();
+        aBuyBlacklist.addAll(Arrays.stream(Weapon.values()).map(Weapon::getName).toList());
+        aBuyBlacklist.addAll(Arrays.stream(Weapon.values()).map(Weapon::getOldName).toList());
         aBuyBlacklist.add("Baseballschläger");
+        aBuyBlacklist.add("Flammenwerfer");
+        aBuyBlacklist.add("Inventar Upgrade");
         aBuyBlacklist.add("Messer");
 
         lastHoveredSlotNumber = aBuyBlacklist.stream().noneMatch(plainDisplayName::contains)
