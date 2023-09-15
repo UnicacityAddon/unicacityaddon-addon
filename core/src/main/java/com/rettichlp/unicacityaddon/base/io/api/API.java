@@ -27,13 +27,11 @@ import com.rettichlp.unicacityaddon.base.enums.api.StatisticType;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
-import com.rettichlp.unicacityaddon.base.text.ColorCode;
-import com.rettichlp.unicacityaddon.base.text.Message;
+import com.rettichlp.unicacityaddon.base.services.NotificationService;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import lombok.Getter;
 import lombok.Setter;
 import net.labymod.api.Laby;
-import net.labymod.api.client.component.Component;
 import net.labymod.api.client.session.Session;
 import net.labymod.api.labyconnect.TokenStorage.Purpose;
 import net.labymod.api.labyconnect.TokenStorage.Token;
@@ -153,7 +151,7 @@ public class API {
     public void sync(AddonPlayer addonPlayer) {
         this.addonPlayer = addonPlayer;
 
-        Laby.labyAPI().notificationController().push(syncNotification(Type.STARTED));
+        Notification syncStartedNotification = this.unicacityAddon.notificationService().sendUnicacityAddonNotification("Synchronisierung gestartet.", NotificationService.SendState.PROCESSING);
 
         new Thread(() -> {
             try {
@@ -172,43 +170,16 @@ public class API {
                 this.roleplayNameList = this.sendRoleplayNameRequest();
                 this.wantedReasonList = this.sendWantedReasonRequest();
 
-                Laby.labyAPI().notificationController().pop(syncNotification(Type.STARTED));
-                Laby.labyAPI().notificationController().push(syncNotification(Type.SUCCESS));
+                Laby.labyAPI().notificationController().pop(syncStartedNotification);
+                this.unicacityAddon.notificationService().sendUnicacityAddonNotification("Synchronisierung abgeschlossen.", NotificationService.SendState.SUCCESS);
             } catch (TokenException | APIResponseException | IOException e) {
                 this.unicacityAddon.logger().warn("Data synchronization cannot be performed!");
                 this.unicacityAddon.logger().error(e.getMessage());
 
-                Laby.labyAPI().notificationController().pop(syncNotification(Type.STARTED));
-                Laby.labyAPI().notificationController().push(syncNotification(Type.FAILURE));
+                Laby.labyAPI().notificationController().pop(syncStartedNotification);
+                this.unicacityAddon.notificationService().sendUnicacityAddonNotification("Synchronisierung fehlgeschlagen.", NotificationService.SendState.FAILURE);
             }
         }).start();
-    }
-
-    private Notification syncNotification(@NotNull Type type) {
-        Component text = switch (type) {
-            case STARTED -> Message.getBuilder()
-                    .of("●").color(ColorCode.BLUE).advance().space()
-                    .of("Aktualisierung gestartet.").advance()
-                    .createComponent();
-            case SUCCESS -> Message.getBuilder()
-                    .of("●").color(ColorCode.GREEN).advance().space()
-                    .of("Aktualisierung abgeschlossen.").advance()
-                    .createComponent();
-            case FAILURE -> Message.getBuilder()
-                    .of("●").color(ColorCode.RED).advance().space()
-                    .of("Aktualisierung fehlgeschlagen.").advance()
-                    .createComponent();
-        };
-
-        return Notification.builder()
-                .title(Message.getBuilder()
-                        .of("UnicacityAddon").color(ColorCode.DARK_AQUA).bold().advance().space()
-                        .of("API").color(ColorCode.AQUA).advance()
-                        .createComponent())
-                .text(text)
-                .icon(this.unicacityAddon.utilService().icon())
-                .type(Notification.Type.ADVANCEMENT)
-                .build();
     }
 
     private void loadFactionData() {
