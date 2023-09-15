@@ -1,12 +1,12 @@
 package com.rettichlp.unicacityaddon.base.builder;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.base.text.ColorCode;
-import com.rettichlp.unicacityaddon.base.text.Message;
-import net.labymod.api.Laby;
-import net.labymod.api.notification.Notification;
+import com.rettichlp.unicacityaddon.base.services.NotificationService;
 
 import java.io.File;
+import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 /**
  * @author RettichLP
@@ -24,6 +24,8 @@ public class ScreenshotBuilder {
 
         private final UnicacityAddon unicacityAddon;
         private File file;
+        private CompletableFuture<File> savedFileFuture;
+        private String url;
 
         public Builder(UnicacityAddon unicacityAddon) {
             this.unicacityAddon = unicacityAddon;
@@ -31,51 +33,45 @@ public class ScreenshotBuilder {
 
         public Builder file(File file) {
             this.file = file;
+            this.savedFileFuture = new CompletableFuture<>();
+            this.url = null;
             return this;
         }
 
         public void save() {
-            this.file = this.unicacityAddon.screenshotController().createScreenshot(file);
+            File screenshotFile = this.unicacityAddon.screenshotController().createScreenshot(this.file);
+            this.savedFileFuture.complete(screenshotFile);
 
-            Notification CREATION_SUCCESS = Notification.builder()
-                    .title(Message.getBuilder().of("Screenshot").color(ColorCode.AQUA).bold().advance().createComponent())
-                    .text(Message.getBuilder().of("Der Screenshot wurde gespeichert.").color(ColorCode.WHITE).advance().createComponent())
-                    .icon(this.unicacityAddon.utilService().icon())
-                    .build();
-
-            Notification CREATION_FAILURE = Notification.builder()
-                    .title(Message.getBuilder().of("Fehler!").color(ColorCode.RED).bold().advance().createComponent())
-                    .text(Message.getBuilder().of("Screenshot konnte nicht erstellt werden.").color(ColorCode.WHITE).advance().createComponent())
-                    .icon(this.unicacityAddon.utilService().icon())
-                    .build();
-
-            Laby.references().notificationController().push(this.file != null ? CREATION_SUCCESS : CREATION_FAILURE);
+            if (screenshotFile != null) {
+                this.unicacityAddon.notificationService().sendScreenshotNotification("Der Screenshot wurde gespeichert.", NotificationService.SendState.SUCCESS);
+            } else {
+                this.unicacityAddon.notificationService().sendScreenshotNotification("Screenshot konnte nicht erstellt werden.", NotificationService.SendState.FAILURE);
+            }
         }
 
         public String upload() {
-            save();
-
-            String url = null;
-            if (this.file != null) {
-                url = this.unicacityAddon.utilService().imageUpload().uploadToLink(this.file);
+            if (!this.savedFileFuture.isDone()) {
+                save();
             }
 
-            if (url != null) {
-                this.unicacityAddon.player().copyToClipboard(url);
-                Laby.references().notificationController().push(Notification.builder()
-                        .title(Message.getBuilder().of("Hochgeladen!").color(ColorCode.AQUA).bold().advance().createComponent())
-                        .text(Message.getBuilder().of("Der Link wurde in die Zwischenablage kopiert.").color(ColorCode.WHITE).advance().createComponent())
-                        .icon(this.unicacityAddon.utilService().icon())
-                        .build());
-            } else {
-                Laby.references().notificationController().push(Notification.builder()
-                        .title(Message.getBuilder().of("Fehler!").color(ColorCode.RED).bold().advance().createComponent())
-                        .text(Message.getBuilder().of("Screenshot konnte nicht hochgeladen werden.").color(ColorCode.WHITE).advance().createComponent())
-                        .icon(this.unicacityAddon.utilService().icon())
-                        .build());
-            }
+            new Thread(() -> {
+                try {
+                    File savedFile = this.savedFileFuture.get();
 
-            return url;
+                    Optional.ofNullable(savedFile)
+                            .map(sf -> this.unicacityAddon.utilService().imageUpload().uploadToLink(sf))
+                            .ifPresentOrElse(url -> {
+                                this.url = url;
+                                this.unicacityAddon.player().copyToClipboard(url);
+                                this.unicacityAddon.notificationService().sendScreenshotNotification("Der Link wurde in die Zwischenablage kopiert.", NotificationService.SendState.SUCCESS);
+                            }, () -> this.unicacityAddon.notificationService().sendScreenshotNotification("Der Screenshot konnte nicht hochgeladen werden.", NotificationService.SendState.FAILURE));
+
+                } catch (InterruptedException | ExecutionException e) {
+                    this.unicacityAddon.logger().error(e.getMessage());
+                }
+            }).start();
+
+            return this.url;
         }
     }
 }
