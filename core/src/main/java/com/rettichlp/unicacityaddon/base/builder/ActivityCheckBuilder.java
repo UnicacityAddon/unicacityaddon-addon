@@ -16,11 +16,11 @@ import java.util.List;
 @NoArgsConstructor
 public class ActivityCheckBuilder {
 
+    private static final Collection<Faction> allowedFactions = List.of(Faction.LEMILIEU);
+
     public static Builder getBuilder(UnicacityAddon unicacityAddon) {
         return new Builder(unicacityAddon);
     }
-
-    private static final Collection<Faction> allowedFactions = List.of(Faction.LEMILIEU);
 
     public static class Builder {
 

@@ -53,7 +53,7 @@ theme:
   features:
     - announce.dismiss
     - header.autohide
-#    - navigation.tabs
+    # - navigation.tabs
     - navigation.sections
     - navigation.indexes
     - navigation.top

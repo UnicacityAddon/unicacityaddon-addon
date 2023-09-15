@@ -12,7 +12,8 @@ import java.util.List;
 /**
  * @author RettichLP
  */
-@UCCommand(prefix = "toggleshout", aliases = {"toggles", "toggleschreien", "sonorus"}) // Sonorus = Harry Potter Anspielung
+@UCCommand(prefix = "toggleshout", aliases = {"toggles", "toggleschreien", "sonorus"})
+// Sonorus = Harry Potter Anspielung
 public class ToggleShoutCommand extends UnicacityCommand {
 
     private final UnicacityAddon unicacityAddon;
@@ -31,7 +32,7 @@ public class ToggleShoutCommand extends UnicacityCommand {
 
         if (p.isShouting()) {
             p.sendInfoMessage("Ab sofort schreist du jede Nachricht.");
-        } else if (isCivilian){
+        } else if (isCivilian) {
             p.sendInfoMessage("Diese Funktion ist nur für Fraktionsmitglieder verfügbar.");
         } else {
             p.sendInfoMessage("Ab sofort redest du wieder normal.");

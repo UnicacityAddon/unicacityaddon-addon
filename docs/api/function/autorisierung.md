@@ -11,6 +11,7 @@ neuen Addon-Tokens wird dieses mit dem LabyConnect JWT Token an die API gesendet
 
 Die API verifiziert das JWT Token mit dem öffentlichen LabyConnect Schlüssel. Wenn das JWT Token gültig ist, werden die
 Inhalte des Tokens encoded (Beispiel):
+
 ```json
 {
   "user_name": "RettichLP",
@@ -24,6 +25,7 @@ Inhalte des Tokens encoded (Beispiel):
   "iat": 1689584400
 }
 ```
+
 Die Minecraft UUID wird anschließend mit der gehashten Minecraft UUID im generiertem Addon-Token verglichen. Stimmen
 beide überein, ist das Addon-Token valide und gehört zum mitgesendetem LabyConnect JWT Token. Anhand der Minecraft UUID
 können die Berechtigungen des Spielers (z. B. von der [UnicaCity Webseite](https://unicacity.de/)) ausgelesen werden.
