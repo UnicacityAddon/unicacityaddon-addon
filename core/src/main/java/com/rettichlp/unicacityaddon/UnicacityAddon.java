@@ -9,6 +9,7 @@ import com.rettichlp.unicacityaddon.base.services.FactionService;
 import com.rettichlp.unicacityaddon.base.services.FileService;
 import com.rettichlp.unicacityaddon.base.services.NameTagService;
 import com.rettichlp.unicacityaddon.base.services.NavigationService;
+import com.rettichlp.unicacityaddon.base.services.NotificationService;
 import com.rettichlp.unicacityaddon.base.services.UtilService;
 import com.rettichlp.unicacityaddon.base.services.WebService;
 import com.rettichlp.unicacityaddon.base.teamspeak.TeamSpeakAPI;
@@ -103,6 +104,7 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
     private FileService fileService;
     private NameTagService nameTagService;
     private NavigationService navigationService;
+    private NotificationService notificationService;
     private UtilService utilService;
     private WebService webService;
 
@@ -117,6 +119,7 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
         this.fileService = new FileService(this);
         this.nameTagService = new NameTagService(this);
         this.navigationService = new NavigationService(this);
+        this.notificationService = new NotificationService(this);
         this.utilService = new UtilService(this);
         this.webService = new WebService(this);
 

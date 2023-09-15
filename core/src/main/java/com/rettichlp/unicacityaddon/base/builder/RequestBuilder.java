@@ -13,10 +13,7 @@ import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.api.response.Success;
 import com.rettichlp.unicacityaddon.base.enums.api.ApplicationPath;
 import com.rettichlp.unicacityaddon.base.io.api.APIResponseException;
-import com.rettichlp.unicacityaddon.base.text.ColorCode;
-import com.rettichlp.unicacityaddon.base.text.Message;
-import net.labymod.api.Laby;
-import net.labymod.api.notification.Notification;
+import com.rettichlp.unicacityaddon.base.services.NotificationService;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -94,18 +91,7 @@ public class RequestBuilder {
                     JsonElement jsonElement = send();
                     if (jsonElement.isJsonObject()) {
                         Success success = parse(jsonElement.getAsJsonObject(), Success.class);
-                        Laby.labyAPI().notificationController().push(Notification.builder()
-                                .title(Message.getBuilder()
-                                        .of("UnicacityAddon").color(ColorCode.DARK_AQUA).bold().advance().space()
-                                        .of("API").color(ColorCode.AQUA).advance()
-                                        .createComponent())
-                                .text(Message.getBuilder()
-                                        .of("●").color(ColorCode.GREEN).advance().space()
-                                        .of(success.getInfo()).advance()
-                                        .createComponent())
-                                .icon(this.unicacityAddon.utilService().icon())
-                                .type(Notification.Type.ADVANCEMENT)
-                                .build());
+                        this.unicacityAddon.notificationService().sendUnicacityAddonNotification(success.getInfo(), NotificationService.SendState.SUCCESS);
                     }
                 } catch (APIResponseException e) {
                     e.sendNotification();
