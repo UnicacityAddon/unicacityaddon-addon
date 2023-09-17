@@ -68,7 +68,7 @@ public class BlacklistModifyListener {
             reason = removeModifiers(reason);
             reason += " [Vogelfrei]"; // append outlaw reason
 
-            Collection<Faction> factionsWithHigherOutlawPrice = List.of(Faction.CALDERON, Faction.LEMILIEU);
+            Collection<Faction> factionsWithHigherOutlawPrice = List.of(Faction.CALDERON, Faction.LEMILIEU, Faction.WESTSIDEBALLAS);
             outlawPriceModificator = factionsWithHigherOutlawPrice.contains(p.getFaction()) ? 500 : 0;
         } else {
             if (reason.contains(ModifyBlacklistCommand.addReason.getReason())) {
