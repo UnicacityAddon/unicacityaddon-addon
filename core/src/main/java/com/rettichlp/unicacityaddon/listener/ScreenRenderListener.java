@@ -8,6 +8,7 @@ import com.rettichlp.unicacityaddon.base.gangzones.AbstractAttackableGangzone;
 import com.rettichlp.unicacityaddon.base.gangzones.AbstractGangzone;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.commands.GetGunPatternCommand;
+import net.labymod.api.Laby;
 import net.labymod.api.client.gui.screen.key.Key;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.render.ScreenRenderEvent;
@@ -71,7 +72,8 @@ public class ScreenRenderListener {
             boolean activeGangwarMode = this.unicacityAddon.player().hasGangwar();
 
             this.getNearestGangzone(activeGangwarMode).forEach(gangzone -> {
-                if (gangzone != null) {
+                // only 1.12.2 feature (server is currently on 1.12.2)
+                if (gangzone != null && Laby.labyAPI().minecraft().getVersion().equalsIgnoreCase("1.12.2")) {
                     if (gangzone instanceof AbstractAttackableGangzone attackableGangzone && activeGangwarMode) {
                         attackableGangzone.renderGangwarFacades();
                         attackableGangzone.renderGangwarOutline();
