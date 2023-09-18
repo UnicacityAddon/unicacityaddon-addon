@@ -7,6 +7,7 @@ import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
+import com.rettichlp.unicacityaddon.commands.AutoFirstAidCommand;
 import com.rettichlp.unicacityaddon.commands.ShutdownJailCommand;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.event.HoverEvent;
@@ -50,6 +51,7 @@ public class TimerListener {
                 this.unicacityAddon.fileService().data().setTimer(seconds);
             }
 
+            AutoFirstAidCommand.autoAcceptFirstAid = true;
             p.sendMessage(Message.getBuilder()
                     .info().space()
                     .of("Das UnicacityAddon nimmt Erste Hilfe automatisch an. Klicke").color(ColorCode.WHITE).advance().space()
