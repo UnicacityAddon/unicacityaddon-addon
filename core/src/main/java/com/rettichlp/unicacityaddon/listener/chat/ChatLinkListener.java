@@ -67,8 +67,8 @@ public class ChatLinkListener {
 
         e.setMessage(Message.getBuilder()
                 .of(splittedlegacyChatMessage.length > 0 ? splittedlegacyChatMessage[0] : "").advance()
-                .of(label).color(colorCode).bold()
-                        .icon(icon)
+                .of(label + " ↗").color(colorCode).bold()
+//                        .icon(icon)
                         .hoverEvent(HoverEvent.Action.SHOW_TEXT, Message.getBuilder().of(label + " öffnen").color(colorCode).advance().createComponent())
                         .clickEvent(ClickEvent.Action.OPEN_URL, matchedLink)
                         .advance()
