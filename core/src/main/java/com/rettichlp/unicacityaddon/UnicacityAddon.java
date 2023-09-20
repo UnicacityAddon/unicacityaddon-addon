@@ -9,12 +9,14 @@ import com.rettichlp.unicacityaddon.base.services.FactionService;
 import com.rettichlp.unicacityaddon.base.services.FileService;
 import com.rettichlp.unicacityaddon.base.services.NameTagService;
 import com.rettichlp.unicacityaddon.base.services.NavigationService;
+import com.rettichlp.unicacityaddon.base.services.NotificationService;
 import com.rettichlp.unicacityaddon.base.services.UtilService;
 import com.rettichlp.unicacityaddon.base.services.WebService;
 import com.rettichlp.unicacityaddon.base.teamspeak.TeamSpeakAPI;
 import com.rettichlp.unicacityaddon.controller.DeadBodyController;
 import com.rettichlp.unicacityaddon.controller.GuiController;
 import com.rettichlp.unicacityaddon.controller.PlayerListController;
+import com.rettichlp.unicacityaddon.controller.RenderController;
 import com.rettichlp.unicacityaddon.controller.ScreenshotController;
 import com.rettichlp.unicacityaddon.controller.SoundController;
 import com.rettichlp.unicacityaddon.controller.TransportController;
@@ -37,12 +39,12 @@ import net.labymod.api.models.addon.annotation.AddonMain;
  * user-friendliness, an update should not always have to be created for changes to content-related data. I utilize an
  * API to provide data, leveraging a private server. Data is available for the following purposes:
  * <ul>
+ *     <li>activity check <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/activitycheck/LEMILIEU/add">API</a> (unauthorized)</li>
  *     <li>auto nc <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/autonc">API</a> (unauthorized)</li>
  *     <li>addon groups <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/player">API</a></li>
  *     <li>banners <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/banner">API</a></li>
  *     <li>blacklist reasons <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/blacklistreason/LEMILIEU">API</a> (unauthorized)</li>
  *     <li>blackmarket locations <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/blackmarket">API</a></li>
- *     <li>broadcasts <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/broadcast/queue">API</a></li>
  *     <li>events <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/event">API</a></li>
  *     <li>house bans <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/houseban?advanced=false">API</a> (unauthorized for <code>advanced=true</code>)</li>
  *     <li>house ban reasons <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/housebanreason">API</a></li>
@@ -102,6 +104,7 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
     private FileService fileService;
     private NameTagService nameTagService;
     private NavigationService navigationService;
+    private NotificationService notificationService;
     private UtilService utilService;
     private WebService webService;
 
@@ -116,6 +119,7 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
         this.fileService = new FileService(this);
         this.nameTagService = new NameTagService(this);
         this.navigationService = new NavigationService(this);
+        this.notificationService = new NotificationService(this);
         this.utilService = new UtilService(this);
         this.webService = new WebService(this);
 
@@ -130,6 +134,7 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
         this.registry.registerHudWidgets();
         this.registry.registerListeners();
         this.registry.registerCommands();
+        this.registry.registerGangzones();
 
         new Thread(this.teamSpeakAPI::initialize).start();
 
@@ -151,6 +156,10 @@ public class UnicacityAddon extends LabyAddon<DefaultUnicacityAddonConfiguration
 
     public PlayerListController playerListController() {
         return controller().getPlayerListController();
+    }
+
+    public RenderController renderController() {
+        return controller().getRenderController();
     }
 
     public ScreenshotController screenshotController() {

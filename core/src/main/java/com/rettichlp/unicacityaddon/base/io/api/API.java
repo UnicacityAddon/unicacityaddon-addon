@@ -4,7 +4,6 @@ import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.api.AutoNC;
 import com.rettichlp.unicacityaddon.api.BlackMarketLocation;
 import com.rettichlp.unicacityaddon.api.BlacklistReason;
-import com.rettichlp.unicacityaddon.api.Broadcast;
 import com.rettichlp.unicacityaddon.api.NaviPoint;
 import com.rettichlp.unicacityaddon.api.Revive;
 import com.rettichlp.unicacityaddon.api.RoleplayName;
@@ -17,7 +16,6 @@ import com.rettichlp.unicacityaddon.api.management.Management;
 import com.rettichlp.unicacityaddon.api.management.ManagementUser;
 import com.rettichlp.unicacityaddon.api.player.Player;
 import com.rettichlp.unicacityaddon.api.player.PlayerEntry;
-import com.rettichlp.unicacityaddon.api.response.Success;
 import com.rettichlp.unicacityaddon.api.statistic.Statistic;
 import com.rettichlp.unicacityaddon.api.statisticTop.StatisticTop;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
@@ -29,13 +27,11 @@ import com.rettichlp.unicacityaddon.base.enums.api.StatisticType;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
-import com.rettichlp.unicacityaddon.base.text.ColorCode;
-import com.rettichlp.unicacityaddon.base.text.Message;
+import com.rettichlp.unicacityaddon.base.services.NotificationService;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import lombok.Getter;
 import lombok.Setter;
 import net.labymod.api.Laby;
-import net.labymod.api.client.component.Component;
 import net.labymod.api.client.session.Session;
 import net.labymod.api.labyconnect.TokenStorage.Purpose;
 import net.labymod.api.labyconnect.TokenStorage.Token;
@@ -71,7 +67,6 @@ import java.util.zip.Checksum;
  *     <li>banners <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/banner">API</a></li>
  *     <li>blacklist reasons <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/blacklistreason/LEMILIEU">API</a> (unauthorized)</li>
  *     <li>blackmarket locations <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/blackmarket">API</a></li>
- *     <li>broadcasts <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/broadcast/queue">API</a></li>
  *     <li>events <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/event">API</a></li>
  *     <li>house bans <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/houseban?advanced=false">API</a> (unauthorized for <code>advanced=true</code>)</li>
  *     <li>house ban reasons <a href="http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/housebanreason">API</a></li>
@@ -156,7 +151,7 @@ public class API {
     public void sync(AddonPlayer addonPlayer) {
         this.addonPlayer = addonPlayer;
 
-        Laby.labyAPI().notificationController().push(syncNotification(Type.STARTED));
+        Notification syncStartedNotification = this.unicacityAddon.notificationService().sendUnicacityAddonNotification("Synchronisierung gestartet.", NotificationService.SendState.PROCESSING);
 
         new Thread(() -> {
             try {
@@ -175,43 +170,16 @@ public class API {
                 this.roleplayNameList = this.sendRoleplayNameRequest();
                 this.wantedReasonList = this.sendWantedReasonRequest();
 
-                Laby.labyAPI().notificationController().pop(syncNotification(Type.STARTED));
-                Laby.labyAPI().notificationController().push(syncNotification(Type.SUCCESS));
+                Laby.labyAPI().notificationController().pop(syncStartedNotification);
+                this.unicacityAddon.notificationService().sendUnicacityAddonNotification("Synchronisierung abgeschlossen.", NotificationService.SendState.SUCCESS);
             } catch (TokenException | APIResponseException | IOException e) {
-                this.unicacityAddon.logger().warn(e.getMessage());
                 this.unicacityAddon.logger().warn("Data synchronization cannot be performed!");
+                this.unicacityAddon.logger().error(e.getMessage());
 
-                Laby.labyAPI().notificationController().pop(syncNotification(Type.STARTED));
-                Laby.labyAPI().notificationController().push(syncNotification(Type.FAILURE));
+                Laby.labyAPI().notificationController().pop(syncStartedNotification);
+                this.unicacityAddon.notificationService().sendUnicacityAddonNotification("Synchronisierung fehlgeschlagen.", NotificationService.SendState.FAILURE);
             }
         }).start();
-    }
-
-    private Notification syncNotification(@NotNull Type type) {
-        Component text = null;
-        ColorCode colorCode = ColorCode.WHITE;
-
-        switch (type) {
-            case STARTED -> {
-                colorCode = ColorCode.AQUA;
-                text = Message.getBuilder().of("Aktualisierung gestartet.").advance().createComponent();
-            }
-            case SUCCESS -> {
-                colorCode = ColorCode.GREEN;
-                text = Message.getBuilder().of("Aktualisierung abgeschlossen.").advance().createComponent();
-            }
-            case FAILURE -> {
-                colorCode = ColorCode.RED;
-                text = Message.getBuilder().of("Aktualisierung fehlgeschlagen.").advance().createComponent();
-            }
-        }
-
-        return Notification.builder()
-                .title(Message.getBuilder().of("Synchronisierung").color(colorCode).bold().advance().createComponent())
-                .text(text)
-                .icon(this.unicacityAddon.utilService().icon())
-                .type(Notification.Type.ADVANCEMENT)
-                .build();
     }
 
     private void loadFactionData() {
@@ -262,29 +230,29 @@ public class API {
                 .getAsJsonArrayAndParse(AutoNC.class);
     }
 
-    public Success sendAutoNCAddRequest(String words, String answer) {
-        return RequestBuilder.getBuilder(this.unicacityAddon)
+    public void sendAutoNCAddRequest(String words, String answer) {
+        RequestBuilder.getBuilder(this.unicacityAddon)
                 .nonProd(this.unicacityAddon.configuration().local().get())
                 .applicationPath(ApplicationPath.AUTO_NC)
                 .subPath(ADD_SUB_PATH)
                 .parameter(Map.of(
                         "words", words,
                         "answer", answer))
-                .getAsJsonObjectAndParse(Success.class);
+                .sendAsync();
     }
 
-    public Success sendAutoNCRemoveRequest(Long id) {
-        return RequestBuilder.getBuilder(this.unicacityAddon)
+    public void sendAutoNCRemoveRequest(Long id) {
+        RequestBuilder.getBuilder(this.unicacityAddon)
                 .nonProd(this.unicacityAddon.configuration().local().get())
                 .applicationPath(ApplicationPath.AUTO_NC)
                 .subPath(REMOVE_SUB_PATH)
                 .parameter(Map.of(
                         "id", String.valueOf(id)))
-                .getAsJsonObjectAndParse(Success.class);
+                .sendAsync();
     }
 
-    public Success sendActivityCheckActivity(Activity activity, String type, String value, DrugType drugType, DrugPurity drugPurity, Long date, String screenshot) {
-        return RequestBuilder.getBuilder(this.unicacityAddon)
+    public void sendActivityCheckActivity(Activity activity, String type, String value, DrugType drugType, DrugPurity drugPurity, Long date, String screenshot) {
+        RequestBuilder.getBuilder(this.unicacityAddon)
                 .nonProd(this.unicacityAddon.configuration().local().get())
                 .applicationPath(ApplicationPath.ACTIVITY_CHECK)
                 .subPath(this.addonPlayer.getFaction() + "/add")
@@ -296,7 +264,7 @@ public class API {
                         "drugPurity", String.valueOf(Optional.ofNullable(drugPurity).map(DrugPurity::getPurity).orElse(-1)),
                         "date", String.valueOf(Optional.ofNullable(date).orElse(0L)),
                         "screenshot", Optional.ofNullable(screenshot).orElse("").replace(" ", "-")))
-                .getAsJsonObjectAndParse(Success.class);
+                .sendAsync();
     }
 
     public void sendBannerAddRequest(@NotNull Faction faction, int x, int y, int z, String naviPoint) {
@@ -329,8 +297,8 @@ public class API {
                 .getAsJsonArrayAndParse(BlackMarketLocation.class);
     }
 
-    public Success sendBlacklistReasonAddRequest(String reason, String price, String kills) {
-        return RequestBuilder.getBuilder(this.unicacityAddon)
+    public void sendBlacklistReasonAddRequest(String reason, String price, String kills) {
+        RequestBuilder.getBuilder(this.unicacityAddon)
                 .nonProd(this.unicacityAddon.configuration().local().get())
                 .applicationPath(ApplicationPath.BLACKLISTREASON)
                 .subPath(this.addonPlayer.getFaction() + "/add")
@@ -338,37 +306,17 @@ public class API {
                         "reason", reason,
                         "price", price,
                         "kills", kills))
-                .getAsJsonObjectAndParse(Success.class);
+                .sendAsync();
     }
 
-    public Success sendBlacklistReasonRemoveRequest(String reason) {
-        return RequestBuilder.getBuilder(this.unicacityAddon)
+    public void sendBlacklistReasonRemoveRequest(String reason) {
+        RequestBuilder.getBuilder(this.unicacityAddon)
                 .nonProd(this.unicacityAddon.configuration().local().get())
                 .applicationPath(ApplicationPath.BLACKLISTREASON)
                 .subPath(this.addonPlayer.getFaction() + "/remove")
                 .parameter(Map.of(
                         "reason", reason))
-                .getAsJsonObjectAndParse(Success.class);
-    }
-
-    public List<Broadcast> sendBroadcastQueueRequest() {
-        return RequestBuilder.getBuilder(this.unicacityAddon)
-                .preCondition(this.token != null)
-                .nonProd(this.unicacityAddon.configuration().local().get())
-                .applicationPath(ApplicationPath.BROADCAST)
-                .subPath(QUEUE_SUB_PATH)
-                .getAsJsonArrayAndParse(Broadcast.class);
-    }
-
-    public Success sendBroadcastSendRequest(String message, String sendTime) {
-        return RequestBuilder.getBuilder(this.unicacityAddon)
-                .nonProd(this.unicacityAddon.configuration().local().get())
-                .applicationPath(ApplicationPath.BROADCAST)
-                .subPath(SEND_SUB_PATH)
-                .parameter(Map.of(
-                        "message", message,
-                        "sendTime", sendTime))
-                .getAsJsonObjectAndParse(Success.class);
+                .sendAsync();
     }
 
     public Event sendEventRequest() {
@@ -421,26 +369,26 @@ public class API {
                 .getAsJsonArrayAndParse(HouseBan.class);
     }
 
-    public Success sendHouseBanAddRequest(String name, String reason) {
-        return RequestBuilder.getBuilder(this.unicacityAddon)
+    public void sendHouseBanAddRequest(String name, String reason) {
+        RequestBuilder.getBuilder(this.unicacityAddon)
                 .nonProd(this.unicacityAddon.configuration().local().get())
                 .applicationPath(ApplicationPath.HOUSEBAN)
                 .subPath(ADD_SUB_PATH)
                 .parameter(Map.of(
                         "name", name,
                         "reason", reason))
-                .getAsJsonObjectAndParse(Success.class);
+                .sendAsync();
     }
 
-    public Success sendHouseBanRemoveRequest(String name, String reason) {
-        return RequestBuilder.getBuilder(this.unicacityAddon)
+    public void sendHouseBanRemoveRequest(String name, String reason) {
+        RequestBuilder.getBuilder(this.unicacityAddon)
                 .nonProd(this.unicacityAddon.configuration().local().get())
                 .applicationPath(ApplicationPath.HOUSEBAN)
                 .subPath(REMOVE_SUB_PATH)
                 .parameter(Map.of(
                         "name", name,
                         "reason", reason))
-                .getAsJsonObjectAndParse(Success.class);
+                .sendAsync();
     }
 
     /**
@@ -453,25 +401,25 @@ public class API {
                 .getAsJsonArrayAndParse(HouseBanReason.class);
     }
 
-    public Success sendHouseBanReasonAddRequest(String reason, String days) {
-        return RequestBuilder.getBuilder(this.unicacityAddon)
+    public void sendHouseBanReasonAddRequest(String reason, String days) {
+        RequestBuilder.getBuilder(this.unicacityAddon)
                 .nonProd(this.unicacityAddon.configuration().local().get())
                 .applicationPath(ApplicationPath.HOUSEBANREASON)
                 .subPath(ADD_SUB_PATH)
                 .parameter(Map.of(
                         "reason", reason,
                         "days", days))
-                .getAsJsonObjectAndParse(Success.class);
+                .sendAsync();
     }
 
-    public Success sendHouseBanReasonRemoveRequest(String reason) {
-        return RequestBuilder.getBuilder(this.unicacityAddon)
+    public void sendHouseBanReasonRemoveRequest(String reason) {
+        RequestBuilder.getBuilder(this.unicacityAddon)
                 .nonProd(this.unicacityAddon.configuration().local().get())
                 .applicationPath(ApplicationPath.HOUSEBANREASON)
                 .subPath(REMOVE_SUB_PATH)
                 .parameter(Map.of(
                         "reason", reason))
-                .getAsJsonObjectAndParse(Success.class);
+                .sendAsync();
     }
 
     public Management sendManagementRequest() {
@@ -496,8 +444,8 @@ public class API {
                 .getAsJsonArrayAndParse(NaviPoint.class);
     }
 
-    public Success sendNaviPointAddRequest(String name, String x, String y, String z, String article) {
-        return RequestBuilder.getBuilder(this.unicacityAddon)
+    public void sendNaviPointAddRequest(String name, String x, String y, String z, String article) {
+        RequestBuilder.getBuilder(this.unicacityAddon)
                 .nonProd(this.unicacityAddon.configuration().local().get())
                 .applicationPath(ApplicationPath.NAVIPOINT)
                 .subPath(ADD_SUB_PATH)
@@ -507,17 +455,17 @@ public class API {
                         "y", y,
                         "z", z,
                         "article", article))
-                .getAsJsonObjectAndParse(Success.class);
+                .sendAsync();
     }
 
-    public Success sendNaviPointRemoveRequest(String name) {
-        return RequestBuilder.getBuilder(this.unicacityAddon)
+    public void sendNaviPointRemoveRequest(String name) {
+        RequestBuilder.getBuilder(this.unicacityAddon)
                 .nonProd(this.unicacityAddon.configuration().local().get())
                 .applicationPath(ApplicationPath.NAVIPOINT)
                 .subPath(REMOVE_SUB_PATH)
                 .parameter(Map.of(
                         "name", name))
-                .getAsJsonObjectAndParse(Success.class);
+                .sendAsync();
     }
 
     public Player sendPlayerRequest() {
@@ -527,26 +475,26 @@ public class API {
                 .getAsJsonObjectAndParse(Player.class);
     }
 
-    public Success sendPlayerAddRequest(String name, String group) {
-        return RequestBuilder.getBuilder(this.unicacityAddon)
+    public void sendPlayerAddRequest(String name, String group) {
+        RequestBuilder.getBuilder(this.unicacityAddon)
                 .nonProd(this.unicacityAddon.configuration().local().get())
                 .applicationPath(ApplicationPath.PLAYER)
                 .subPath(ADD_SUB_PATH)
                 .parameter(Map.of(
                         "name", name,
                         "group", group))
-                .getAsJsonObjectAndParse(Success.class);
+                .sendAsync();
     }
 
-    public Success sendPlayerRemoveRequest(String name, String group) {
-        return RequestBuilder.getBuilder(this.unicacityAddon)
+    public void sendPlayerRemoveRequest(String name, String group) {
+        RequestBuilder.getBuilder(this.unicacityAddon)
                 .nonProd(this.unicacityAddon.configuration().local().get())
                 .applicationPath(ApplicationPath.PLAYER)
                 .subPath(REMOVE_SUB_PATH)
                 .parameter(Map.of(
                         "name", name,
                         "group", group))
-                .getAsJsonObjectAndParse(Success.class);
+                .sendAsync();
     }
 
     public List<Revive> sendReviveRequest() {
@@ -579,34 +527,34 @@ public class API {
                 .getAsJsonArrayAndParse(RoleplayName.class);
     }
 
-    public Success sendRoleplayNameSetRequest(String roleplayName) {
-        return RequestBuilder.getBuilder(this.unicacityAddon)
+    public void sendRoleplayNameSetRequest(String roleplayName) {
+        RequestBuilder.getBuilder(this.unicacityAddon)
                 .nonProd(this.unicacityAddon.configuration().local().get())
                 .applicationPath(ApplicationPath.ROLEPLAY)
                 .subPath(UPDATE_SUB_PATH)
                 .parameter(Map.of(
                         "name", roleplayName))
-                .getAsJsonObjectAndParse(Success.class);
+                .sendAsync();
     }
 
-    public Success sendRoleplayNameBlockRequest(String minecraftUuid) {
-        return RequestBuilder.getBuilder(this.unicacityAddon)
+    public void sendRoleplayNameBlockRequest(String minecraftUuid) {
+        RequestBuilder.getBuilder(this.unicacityAddon)
                 .nonProd(this.unicacityAddon.configuration().local().get())
                 .applicationPath(ApplicationPath.ROLEPLAY)
                 .subPath(BLOCK_SUB_PATH)
                 .parameter(Map.of(
                         "minecraftUuid", minecraftUuid))
-                .getAsJsonObjectAndParse(Success.class);
+                .sendAsync();
     }
 
-    public Success sendRoleplayNameUnblockRequest(String minecraftUuid) {
-        return RequestBuilder.getBuilder(this.unicacityAddon)
+    public void sendRoleplayNameUnblockRequest(String minecraftUuid) {
+        RequestBuilder.getBuilder(this.unicacityAddon)
                 .nonProd(this.unicacityAddon.configuration().local().get())
                 .applicationPath(ApplicationPath.ROLEPLAY)
                 .subPath(UNBLOCK_SUB_PATH)
                 .parameter(Map.of(
                         "minecraftUuid", minecraftUuid))
-                .getAsJsonObjectAndParse(Success.class);
+                .sendAsync();
     }
 
     public Statistic sendStatisticRequest() {
@@ -658,25 +606,25 @@ public class API {
                 .getAsJsonArrayAndParse(WantedReason.class);
     }
 
-    public Success sendWantedReasonAddRequest(String reason, String points) {
-        return RequestBuilder.getBuilder(this.unicacityAddon)
+    public void sendWantedReasonAddRequest(String reason, String points) {
+        RequestBuilder.getBuilder(this.unicacityAddon)
                 .nonProd(this.unicacityAddon.configuration().local().get())
                 .applicationPath(ApplicationPath.WANTEDREASON)
                 .subPath(ADD_SUB_PATH)
                 .parameter(Map.of(
                         "reason", reason,
                         "points", points))
-                .getAsJsonObjectAndParse(Success.class);
+                .sendAsync();
     }
 
-    public Success sendWantedReasonRemoveRequest(String reason) {
-        return RequestBuilder.getBuilder(this.unicacityAddon)
+    public void sendWantedReasonRemoveRequest(String reason) {
+        RequestBuilder.getBuilder(this.unicacityAddon)
                 .nonProd(this.unicacityAddon.configuration().local().get())
                 .applicationPath(ApplicationPath.WANTEDREASON)
                 .subPath(REMOVE_SUB_PATH)
                 .parameter(Map.of(
                         "reason", reason))
-                .getAsJsonObjectAndParse(Success.class);
+                .sendAsync();
     }
 
     public List<Yasin> sendYasinRequest() {
@@ -686,34 +634,34 @@ public class API {
                 .getAsJsonArrayAndParse(Yasin.class);
     }
 
-    public Success sendYasinAddRequest(String name) {
-        return RequestBuilder.getBuilder(this.unicacityAddon)
+    public void sendYasinAddRequest(String name) {
+        RequestBuilder.getBuilder(this.unicacityAddon)
                 .nonProd(this.unicacityAddon.configuration().local().get())
                 .applicationPath(ApplicationPath.YASIN)
                 .subPath(ADD_SUB_PATH)
                 .parameter(Map.of(
                         "name", name))
-                .getAsJsonObjectAndParse(Success.class);
+                .sendAsync();
     }
 
-    public Success sendYasinRemoveRequest(String name) {
-        return RequestBuilder.getBuilder(this.unicacityAddon)
+    public void sendYasinRemoveRequest(String name) {
+        RequestBuilder.getBuilder(this.unicacityAddon)
                 .nonProd(this.unicacityAddon.configuration().local().get())
                 .applicationPath(ApplicationPath.YASIN)
                 .subPath(REMOVE_SUB_PATH)
                 .parameter(Map.of(
                         "name", name))
-                .getAsJsonObjectAndParse(Success.class);
+                .sendAsync();
     }
 
-    public Success sendYasinDoneRequest(String name) {
-        return RequestBuilder.getBuilder(this.unicacityAddon)
+    public void sendYasinDoneRequest(String name) {
+        RequestBuilder.getBuilder(this.unicacityAddon)
                 .nonProd(this.unicacityAddon.configuration().local().get())
                 .applicationPath(ApplicationPath.YASIN)
                 .subPath(DONE_SUB_PATH)
                 .parameter(Map.of(
                         "name", name))
-                .getAsJsonObjectAndParse(Success.class);
+                .sendAsync();
     }
 
     public void createToken() throws TokenException, APIResponseException, IOException {

@@ -53,7 +53,7 @@ theme:
   features:
     - announce.dismiss
     - header.autohide
-#    - navigation.tabs
+    # - navigation.tabs
     - navigation.sections
     - navigation.indexes
     - navigation.top
@@ -91,7 +91,6 @@ nav:
           - Banner: api/endpoints/banner.md
           - Blacklist: api/endpoints/blacklist.md
           - Blackmarket: api/endpoints/blackmarket.md
-          - Broadcast: api/endpoints/broadcast.md
           - Event: api/endpoints/event.md
           - Faction Member: api/endpoints/faction-member.md
           - House Ban: api/endpoints/house-ban.md

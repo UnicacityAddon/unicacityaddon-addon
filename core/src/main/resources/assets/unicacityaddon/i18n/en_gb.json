@@ -2,7 +2,10 @@
   "unicacityaddon": {
     "hudWidget": {
       "ammunition": {
-        "name": "Ammunition"
+        "name": "Ammunition",
+        "showAlways": {
+          "name": "Show always"
+        }
       },
       "majorEvent": {
         "name": "Major Event Timer"
@@ -14,7 +17,10 @@
         "name": "Open Services"
       },
       "hearth": {
-        "name": "Hearts"
+        "name": "Hearts",
+        "showAlways": {
+          "name": "Show always"
+        }
       },
       "inventory": {
         "name": "Inventory"
@@ -106,6 +112,10 @@
         "screenshot": {
           "name": "Screenshot with upload to Imgur",
           "description": "Creates a screenshot, uploads it to Imgur, and copies the link to the clipboard"
+        },
+        "showGangzones": {
+          "name": "Gangzones",
+          "description": "Shows gangzone borders and the fight zone during a gangwar"
         }
       },
       "nametag": {
@@ -569,6 +579,10 @@
       "debug": {
         "name": "Debug",
         "description": "Displays debug messages"
+      },
+      "gangwar": {
+        "name": "Gangwar Mode",
+        "description": "Simulates the gangwar mode"
       },
       "local": {
         "name": "Local API connection",

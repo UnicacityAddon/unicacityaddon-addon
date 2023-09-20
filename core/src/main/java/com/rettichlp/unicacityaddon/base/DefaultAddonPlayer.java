@@ -83,15 +83,6 @@ public class DefaultAddonPlayer implements AddonPlayer {
     }
 
     @Override
-    public void sendAPIMessage(String message, boolean success) {
-        sendMessage(Message.getBuilder()
-                .prefix()
-                .of("API Response:").color(ColorCode.GRAY).advance().space()
-                .of(message).color(success ? ColorCode.GREEN : ColorCode.RED).advance()
-                .createComponent());
-    }
-
-    @Override
     public void sendEmptyMessage() {
         sendMessage("");
     }
@@ -193,7 +184,7 @@ public class DefaultAddonPlayer implements AddonPlayer {
 
     @Override
     public boolean hasGangwar() {
-        return getScoreboard().getScores(getScoreboard().getObjective(DisplaySlot.SIDEBAR)).stream()
+        return this.unicacityAddon.configuration().gangwar().get() || getScoreboard().getScores(getScoreboard().getObjective(DisplaySlot.SIDEBAR)).stream()
                 .map(ScoreboardScore::getName)
                 .anyMatch(s -> s.contains("Angreifer") || s.contains("Verteidiger"));
     }

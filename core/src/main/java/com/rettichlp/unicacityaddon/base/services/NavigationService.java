@@ -55,6 +55,10 @@ public class NavigationService {
         return !naviPoints.isEmpty() ? getNearest(location, naviPoints, NaviPoint::getLocation) : Maps.immutableEntry(0D, new NaviPoint("Unbekannt", 0, 0, 0, ""));
     }
 
+    public Map.Entry<Double, FloatVector3> getNearestFloatVector3(FloatVector3 location, Collection<FloatVector3> elements) {
+        return getNearest(location, elements, o -> o);
+    }
+
     public <T> Map.Entry<Double, T> getNearest(FloatVector3 location, T[] elements, Function<T, FloatVector3> locationExtractor) {
         return getNearest(location, List.of(elements), locationExtractor);
     }

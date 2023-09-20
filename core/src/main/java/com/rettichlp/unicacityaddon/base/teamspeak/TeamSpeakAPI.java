@@ -31,6 +31,7 @@ import com.rettichlp.unicacityaddon.base.teamspeak.misc.TeamSpeakController;
 import com.rettichlp.unicacityaddon.base.teamspeak.models.Server;
 import com.rettichlp.unicacityaddon.base.teamspeak.util.Request;
 import lombok.Getter;
+import net.labymod.api.util.ThreadSafe;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -245,7 +246,7 @@ public class TeamSpeakAPI {
 
         for (Listener listener : this.listeners) {
             if (listener.getIdentifier().equals(s[0])) {
-                listener.execute(this, s);
+                ThreadSafe.executeOnRenderThread(() -> listener.execute(this, s));
             }
         }
     }

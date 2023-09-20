@@ -16,12 +16,12 @@ import java.util.stream.Collectors;
 /**
  * @author RettichLP
  */
-@UCCommand(prefix = "playergroup", onlyOnUnicacity = false, usage = "[list|add|remove] [Gruppe] [Spieler]")
-public class PlayerGroupCommand extends UnicacityCommand {
+@UCCommand(prefix = "addongroup", onlyOnUnicacity = false, usage = "[list|add|remove] [Gruppe] [Spieler]")
+public class AddonGroupCommand extends UnicacityCommand {
 
     private final UnicacityAddon unicacityAddon;
 
-    public PlayerGroupCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
+    public AddonGroupCommand(UnicacityAddon unicacityAddon, UCCommand ucCommand) {
         super(unicacityAddon, ucCommand);
         this.unicacityAddon = unicacityAddon;
     }
@@ -34,7 +34,7 @@ public class PlayerGroupCommand extends UnicacityCommand {
             if (arguments.length == 2 && arguments[0].equalsIgnoreCase("list") && Arrays.stream(AddonGroup.values()).anyMatch(addonGroup -> addonGroup.name().equals(arguments[1]))) {
                 p.sendEmptyMessage();
                 p.sendMessage(Message.getBuilder()
-                        .of("Spielergruppe:").color(ColorCode.DARK_AQUA).bold().advance().space()
+                        .of("Addon Gruppe:").color(ColorCode.DARK_AQUA).bold().advance().space()
                         .of(arguments[1]).color(ColorCode.DARK_AQUA).advance()
                         .createComponent());
 
@@ -46,11 +46,9 @@ public class PlayerGroupCommand extends UnicacityCommand {
                 p.sendEmptyMessage();
 
             } else if (arguments.length == 3 && arguments[0].equalsIgnoreCase("add")) {
-                String info = this.unicacityAddon.api().sendPlayerAddRequest(arguments[2], arguments[1]).getInfo();
-                p.sendAPIMessage(info, true);
+                this.unicacityAddon.api().sendPlayerAddRequest(arguments[2], arguments[1]);
             } else if (arguments.length == 3 && arguments[0].equalsIgnoreCase("remove")) {
-                String info = this.unicacityAddon.api().sendPlayerRemoveRequest(arguments[2], arguments[1]).getInfo();
-                p.sendAPIMessage(info, true);
+                this.unicacityAddon.api().sendPlayerRemoveRequest(arguments[2], arguments[1]);
             } else {
                 sendUsage();
             }

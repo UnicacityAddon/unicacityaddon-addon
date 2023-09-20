@@ -50,26 +50,22 @@ public class DrugActivityCommand extends UnicacityCommand {
             return true;
         }
 
-        new Thread(() -> {
-            try {
-                int drugAmount = Integer.parseInt(arguments[2]);
-                File file = this.unicacityAddon.fileService().getNewImageFile();
-                String screenshot = arguments.length == 4 ? arguments[3] : ScreenshotBuilder.getBuilder(unicacityAddon).file(file).upload();
+        try {
+            int drugAmount = Integer.parseInt(arguments[2]);
+            File file = this.unicacityAddon.fileService().getNewImageFile();
+            String screenshot = arguments.length == 4 ? arguments[3] : ScreenshotBuilder.getBuilder(unicacityAddon).file(file).upload();
 
-                String info = ActivityCheckBuilder.getBuilder(this.unicacityAddon)
-                        .activity(Activity.DRUG)
-                        .value(String.valueOf(drugAmount))
-                        .drugType(drugType)
-                        .drugPurity(drugPurity)
-                        .date(System.currentTimeMillis())
-                        .screenshot(screenshot)
-                        .send().getInfo();
-
-                p.sendAPIMessage(info, true);
-            } catch (IOException e) {
-                this.unicacityAddon.logger().warn(e.getMessage());
-            }
-        }).start();
+            ActivityCheckBuilder.getBuilder(this.unicacityAddon)
+                    .activity(Activity.DRUG)
+                    .value(String.valueOf(drugAmount))
+                    .drugType(drugType)
+                    .drugPurity(drugPurity)
+                    .date(System.currentTimeMillis())
+                    .screenshot(screenshot)
+                    .send();
+        } catch (IOException e) {
+            this.unicacityAddon.logger().error(e.getMessage());
+        }
         return true;
     }
 

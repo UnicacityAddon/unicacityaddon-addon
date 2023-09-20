@@ -140,23 +140,6 @@ public class AccountListener {
         if (PatternHandler.ACCOUNT_TREUEBONUS_PATTERN.matcher(msg).find()) {
             new Thread(() -> {
                 GamePlay gamePlay = this.unicacityAddon.api().sendStatisticRequest().getGameplay();
-
-                p.sendMessage(Message.getBuilder()
-                        .space().space()
-                        .of("-").color(ColorCode.DARK_GRAY).advance().space()
-                        .of("Tode").color(ColorCode.GOLD).advance()
-                        .of(":").color(ColorCode.DARK_GRAY).advance().space()
-                        .of(gamePlay.getDeaths() + " Tode").color(ColorCode.RED).advance()
-                        .createComponent());
-
-                p.sendMessage(Message.getBuilder()
-                        .space().space()
-                        .of("-").color(ColorCode.DARK_GRAY).advance().space()
-                        .of("Kills").color(ColorCode.GOLD).advance()
-                        .of(":").color(ColorCode.DARK_GRAY).advance().space()
-                        .of(gamePlay.getKills() + " Kills").color(ColorCode.RED).advance()
-                        .createComponent());
-
                 p.sendMessage(Message.getBuilder()
                         .space().space()
                         .of("-").color(ColorCode.DARK_GRAY).advance().space()

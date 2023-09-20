@@ -116,7 +116,7 @@ public class EquipListCommand extends UnicacityCommand {
                 p.sendEmptyMessage();
 
             } catch (APIResponseException e) {
-                this.unicacityAddon.logger().warn(e.getMessage());
+                this.unicacityAddon.logger().error(e.getMessage());
             }
         }).start();
     }

@@ -63,7 +63,7 @@ public class WinemakerListener {
                 robot.mouseMove(this.lastMousePos.x, this.lastMousePos.y);
                 this.lastMousePos = null;
             } catch (AWTException ex) {
-                this.unicacityAddon.logger().warn(ex.getMessage());
+                this.unicacityAddon.logger().error(ex.getMessage());
             }
         }
     }

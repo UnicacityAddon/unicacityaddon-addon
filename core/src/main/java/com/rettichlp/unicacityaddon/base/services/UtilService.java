@@ -23,6 +23,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -33,7 +34,7 @@ import java.util.stream.Collectors;
 @Getter
 public class UtilService {
 
-    private final Icon icon = Icon.texture(ResourceLocation.create("unicacityaddon", "textures/icon.png")).resolution(64, 64);
+    private final Icon icon = Icon.texture(ResourceLocation.create("unicacityaddon", "themes/vanilla/textures/icon.png")).resolution(64, 64);
 
     private final CommandUtils command;
     private final ImageUploadUtils imageUpload;
@@ -52,7 +53,7 @@ public class UtilService {
 
     @SuppressWarnings("SameReturnValue")
     public String version() {
-        return "2.3.0";
+        return "2.4.0";
     }
 
     public boolean isUnicacity() {
@@ -96,8 +97,8 @@ public class UtilService {
                     .stream()
                     .map(ClassPath.ClassInfo::load)
                     .collect(Collectors.toSet());
-        } catch (IOException exception) {
-            this.unicacityAddon.logger().error(exception.getMessage());
+        } catch (IOException e) {
+            this.unicacityAddon.logger().error(e.getMessage());
         }
         return new HashSet<>();
     }
@@ -124,7 +125,19 @@ public class UtilService {
         try {
             Runtime.getRuntime().exec(shutdownCommand);
         } catch (IOException e) {
-            this.unicacityAddon.logger().warn(e.getMessage());
+            this.unicacityAddon.logger().error(e.getMessage());
         }
+    }
+
+    /**
+     * Replaces the addon api token with "TOKEN"
+     *
+     * @param message Message which needs to be checked
+     * @return Message without addon api token
+     */
+    public String messageWithHiddenToken(String message) {
+        return Optional.ofNullable(this.unicacityAddon.api().getToken())
+                .map(s -> message.replace(s, "TOKEN"))
+                .orElse("Message cannot be displayed because it contains a token.");
     }
 }

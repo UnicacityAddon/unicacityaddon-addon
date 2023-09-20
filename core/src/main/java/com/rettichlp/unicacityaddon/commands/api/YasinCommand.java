@@ -54,14 +54,11 @@ public class YasinCommand extends UnicacityCommand {
 
                 p.sendEmptyMessage();
             } else if (arguments.length == 2 && arguments[0].equalsIgnoreCase("add")) {
-                String info = this.unicacityAddon.api().sendYasinAddRequest(arguments[1]).getInfo();
-                p.sendAPIMessage(info, true);
+                this.unicacityAddon.api().sendYasinAddRequest(arguments[1]);
             } else if (arguments.length == 2 && arguments[0].equalsIgnoreCase("remove")) {
-                String info = this.unicacityAddon.api().sendYasinRemoveRequest(arguments[1]).getInfo();
-                p.sendAPIMessage(info, true);
+                this.unicacityAddon.api().sendYasinRemoveRequest(arguments[1]);
             } else if (arguments.length > 1 && arguments[0].equalsIgnoreCase("done")) {
-                String info = this.unicacityAddon.api().sendYasinDoneRequest(arguments[1]).getInfo();
-                p.sendAPIMessage(info, true);
+                this.unicacityAddon.api().sendYasinDoneRequest(arguments[1]);
             }
         }).start();
         return true;

@@ -1,17 +1,22 @@
 package com.rettichlp.unicacityaddon.base.builder;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.api.response.Success;
 import com.rettichlp.unicacityaddon.base.enums.Activity;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
+import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import lombok.NoArgsConstructor;
+
+import java.util.Collection;
+import java.util.List;
 
 /**
  * @author RettichLP
  */
 @NoArgsConstructor
 public class ActivityCheckBuilder {
+
+    private static final Collection<Faction> allowedFactions = List.of(Faction.LEMILIEU);
 
     public static Builder getBuilder(UnicacityAddon unicacityAddon) {
         return new Builder(unicacityAddon);
@@ -68,15 +73,17 @@ public class ActivityCheckBuilder {
             return this;
         }
 
-        public Success send() {
-            return this.unicacityAddon.api().sendActivityCheckActivity(
-                    this.activity,
-                    this.type,
-                    this.value,
-                    this.drugType,
-                    this.drugPurity,
-                    this.date,
-                    this.screenshot);
+        public void send() {
+            if (allowedFactions.contains(this.unicacityAddon.player().getFaction())) {
+                this.unicacityAddon.api().sendActivityCheckActivity(
+                        this.activity,
+                        this.type,
+                        this.value,
+                        this.drugType,
+                        this.drugPurity,
+                        this.date,
+                        this.screenshot);
+            }
         }
     }
 }

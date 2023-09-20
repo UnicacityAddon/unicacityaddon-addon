@@ -71,5 +71,7 @@ public interface UnicacityAddonConfiguration {
 
     ConfigProperty<Boolean> debug();
 
+    ConfigProperty<Boolean> gangwar();
+
     ConfigProperty<Boolean> local();
 }

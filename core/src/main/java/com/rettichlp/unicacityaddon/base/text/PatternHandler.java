@@ -19,6 +19,9 @@ public class PatternHandler {
     public static final Pattern RANK_PATTERN = Pattern.compile("<strong>Rang (\\d)( \\(Leader\\))*</strong>");
     public static final Pattern STRIP_COLOR_PATTERN = Pattern.compile("(?i)[§&][A-FK-OR0-9]");
     public static final Pattern STRIP_PREFIX_PATTERN = Pattern.compile("\\[[a-zA-Z0-9]+]");
+    public static final Pattern URL_FORUM_PATTERN = Pattern.compile("https://forum\\.unicacity\\.de/index\\.php\\?(forum|thread)/(?<threadId>\\d+)-*(?<title>[a-z0-9-äöü]*)/*(?:&postID=(?<postId>\\d+))*(?:#post(?<post>\\d+))*");
+    public static final Pattern URL_TWITCH_PATTERN = Pattern.compile("https://www\\.twitch\\.tv/(?<channel>[A-Za-z0-9_-]*)");
+    public static final Pattern URL_IMGUR_PATTERN = Pattern.compile("https://(i\\.)*imgur\\.com/(a/)*(.[A-Za-z0-9]+)(\\.png|\\.jpg)*");
 
     /**
      * Pattern for major event timer
@@ -27,8 +30,8 @@ public class PatternHandler {
      */
     public static final Pattern BOMB_PLANTED_PATTERN = Pattern.compile("^News: ACHTUNG! Es wurde eine Bombe in der Nähe von (?<location>.+) gefunden!$");
     public static final Pattern BOMB_REMOVED_PATTERN = Pattern.compile("^News: Die Bombe konnte (nicht|erfolgreich) entschärft werden!$");
-    public static final Pattern BANK_ROB_STARTED_PATTERN = Pattern.compile("^HQ: Die Staatsbank wird ausgeraubt!$");
-    public static final Pattern BANK_ROB_ENDED_PATTERN = Pattern.compile("^HQ: Der Staatsbankraub wurde erfolgreich verhindert!$|^HQ: Der Staatsbankraub konnte nicht verhindert werden!$");
+    public static final Pattern BANK_ROB_STARTED_PATTERN = Pattern.compile("^HQ: Die Staatsbank wird ausgeraubt!$|^\\[Bankraub] (?:\\[UC])*(\\w+) hat einen Bankraub gestartet!$");
+    public static final Pattern BANK_ROB_ENDED_PATTERN = Pattern.compile("^HQ: Der Staatsbankraub (wurde erfolgreich|konnte nicht) verhindert(?: werden)*!$|^\\[Bankraub] Der Bankraub war (?:nicht)* erfolgreich!$");
 
     /**
      * Pattern for car interaction
@@ -74,7 +77,7 @@ public class PatternHandler {
     /**
      * Pattern for name tag providing
      *
-     * @see com.rettichlp.unicacityaddon.listener.chatlog.ChatLogReceiveChatListener
+     * @see com.rettichlp.unicacityaddon.listener.chat.ChatLogListener
      * @see com.rettichlp.unicacityaddon.listener.faction.ContractListener
      * @see com.rettichlp.unicacityaddon.listener.faction.badfaction.blacklist.BlacklistListener
      * @see com.rettichlp.unicacityaddon.listener.faction.badfaction.blacklist.BlacklistModifyListener
@@ -168,6 +171,7 @@ public class PatternHandler {
     public static final Pattern MOBILE_REMOVE_PATTERN = Pattern.compile("^((?:\\[UC])*\\w+) hat dir deine Kommunikationsgeräte abgenommen\\.$");
     public static final Pattern MOBILE_GET_PATTERN = Pattern.compile("^Du hast dein Handy genommen\\.$" +
             "|^((?:\\[UC])*\\w+) hat dir deine Kommunikationsgeräte wiedergegeben\\.$");
+    public static final Pattern MOBILE_OFF_PATTERN = Pattern.compile("^Dein Handy ist ausgeschaltet\\.$");
     public static final Pattern MOBILE_TOGGLE_PATTERN = Pattern.compile("^Du hast dein Telefon (ein|aus)geschaltet\\.$" +
             "|^Der Akku von deinem Handy ist leer\\.$");
 

@@ -140,7 +140,7 @@ public class NameTagService {
                     .anyMatch(s -> s.contains(playerName) && s.startsWith("§8[§9UC§8]§c"));
         } catch (IllegalStateException e) {
             this.unicacityAddon.utilService().debug("Can't retrieve admin duty for " + playerName);
-            this.unicacityAddon.logger().warn(e.getMessage());
+            this.unicacityAddon.logger().error(e.getMessage());
         }
 
         return duty;

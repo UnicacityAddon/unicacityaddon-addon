@@ -33,7 +33,7 @@ import net.labymod.api.configuration.loader.property.ConfigProperty;
 import net.labymod.api.configuration.settings.annotation.SettingSection;
 
 @ConfigName("settings")
-@SpriteTexture("settings.png")
+@SpriteTexture("sprite/settings.png")
 public class DefaultUnicacityAddonConfiguration extends AddonConfig implements UnicacityAddonConfiguration {
 
     @SwitchSetting
@@ -104,6 +104,9 @@ public class DefaultUnicacityAddonConfiguration extends AddonConfig implements U
     @SettingSection("debug")
     @SwitchSetting
     private final ConfigProperty<Boolean> debug = new ConfigProperty<>(false);
+
+    @SwitchSetting
+    private final ConfigProperty<Boolean> gangwar = new ConfigProperty<>(false);
 
     @SwitchSetting
     private final ConfigProperty<Boolean> local = new ConfigProperty<>(false);
@@ -201,6 +204,11 @@ public class DefaultUnicacityAddonConfiguration extends AddonConfig implements U
     @Override
     public ConfigProperty<Boolean> debug() {
         return this.debug;
+    }
+
+    @Override
+    public ConfigProperty<Boolean> gangwar() {
+        return this.gangwar;
     }
 
     @Override

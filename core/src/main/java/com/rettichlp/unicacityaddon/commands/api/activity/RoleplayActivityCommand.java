@@ -35,19 +35,15 @@ public class RoleplayActivityCommand extends UnicacityCommand {
             return true;
         }
 
-        new Thread(() -> {
-            String type = typeOptions.contains(arguments[0]) ? arguments[0] : "sonstiges";
-            String screenshot = arguments[1];
+        String type = typeOptions.contains(arguments[0]) ? arguments[0] : "sonstiges";
+        String screenshot = arguments[1];
 
-            String info = ActivityCheckBuilder.getBuilder(this.unicacityAddon)
-                    .activity(Activity.ROLEPLAY)
-                    .type(type)
-                    .date(System.currentTimeMillis())
-                    .screenshot(screenshot)
-                    .send().getInfo();
-
-            p.sendAPIMessage(info, true);
-        }).start();
+        ActivityCheckBuilder.getBuilder(this.unicacityAddon)
+                .activity(Activity.ROLEPLAY)
+                .type(type)
+                .date(System.currentTimeMillis())
+                .screenshot(screenshot)
+                .send();
         return true;
     }
 

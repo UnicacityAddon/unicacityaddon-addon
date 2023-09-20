@@ -10,6 +10,8 @@ import com.rettichlp.unicacityaddon.commands.faction.badfaction.ModifyBlacklistC
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.regex.Matcher;
 
 /**
@@ -66,7 +68,8 @@ public class BlacklistModifyListener {
             reason = removeModifiers(reason);
             reason += " [Vogelfrei]"; // append outlaw reason
 
-            outlawPriceModificator = p.getFaction().equals(Faction.LEMILIEU) ? 500 : 0;
+            Collection<Faction> factionsWithHigherOutlawPrice = List.of(Faction.CALDERON, Faction.LEMILIEU, Faction.WESTSIDEBALLAS);
+            outlawPriceModificator = factionsWithHigherOutlawPrice.contains(p.getFaction()) ? 500 : 0;
         } else {
             if (reason.contains(ModifyBlacklistCommand.addReason.getReason())) {
                 p.sendErrorMessage("Der Spieler besitzt diesen Blacklistgrund bereits!");
