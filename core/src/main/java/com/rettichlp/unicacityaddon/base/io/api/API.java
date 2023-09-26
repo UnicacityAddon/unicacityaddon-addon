@@ -730,10 +730,4 @@ public class API {
                 .findFirst()
                 .orElse(null);
     }
-
-    private enum Type {
-        STARTED,
-        SUCCESS,
-        FAILURE
-    }
 }
