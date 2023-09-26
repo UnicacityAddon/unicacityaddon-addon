@@ -2,7 +2,7 @@
 
 OpenAPI: (noch nicht verfügbar)
 
-## [/blacklistreason/{factionString}](http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/blacklistreason/WESTSIDEBALLAS)
+## [/blacklistreason/{factionString}](https://rettichlp.de:8443/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/blacklistreason/WESTSIDEBALLAS)
 
 Zeigt die Blacklist-Gründe für die angegebene Fraktion an.
 
@@ -15,7 +15,7 @@ Zeigt die Blacklist-Gründe für die angegebene Fraktion an.
 | `tokenString`   | Addon-Token  |
 | `factionString` | Fraktion     |
 
-## [/blacklistreason/{factionString}/add](http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/blacklistreason/WESTSIDEBALLAS/add?reason=Test&price=1000&kills=50)
+## [/blacklistreason/{factionString}/add](https://rettichlp.de:8443/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/blacklistreason/WESTSIDEBALLAS/add?reason=Test&price=1000&kills=50)
 
 Fügt einen neuen Blacklist-Grund zur angegebenen Fraktion hinzu.
 
@@ -35,7 +35,7 @@ Fügt einen neuen Blacklist-Grund zur angegebenen Fraktion hinzu.
 
     Der Grund muss mit "-" als Leerzeichen angegeben werden!
 
-## [/blacklistreason/{factionString}/remove](http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/blacklistreason/WESTSIDEBALLAS/remove?reason=Test)
+## [/blacklistreason/{factionString}/remove](https://rettichlp.de:8443/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/blacklistreason/WESTSIDEBALLAS/remove?reason=Test)
 
 Entfernt einen Blacklist-Grund von der angegebenen Fraktion.
 

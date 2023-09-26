@@ -2,7 +2,7 @@
 
 OpenAPI: (noch nicht verfügbar)
 
-## [/banner](http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/banner)
+## [/banner](https://rettichlp.de:8443/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/banner)
 
 Zeigt alle registrierten Banner an und eine Übersicht über die Banner-Aufteilung auf Fraktionen für die letzten 24
 Stunden.
@@ -20,7 +20,7 @@ Stunden.
 |---------------|--------------|
 | `tokenString` | Addon-Token  |
 
-## [/banner/add](http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/banner/add?faction=FRAKTION&x=0&y=0&z=0&navipoint=Krankenhaus)
+## [/banner/add](https://rettichlp.de:8443/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/banner/add?faction=FRAKTION&x=0&y=0&z=0&navipoint=Krankenhaus)
 
 Fügt ein neues Banner hinzu.
 

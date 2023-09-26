@@ -2,7 +2,7 @@
 
 OpenAPI: (noch nicht verfügbar)
 
-## [/revive](http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/revive)
+## [/revive](https://rettichlp.de:8443/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/revive)
 
 Fügt einen neuen Revive hinzu.
 
@@ -14,7 +14,7 @@ Fügt einen neuen Revive hinzu.
 |---------------|--------------|
 | `tokenString` | Addon-Token  |
 
-## [/revive/{playerOrRank}](http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/revive/RettichLP)
+## [/revive/{playerOrRank}](https://rettichlp.de:8443/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/revive/RettichLP)
 
 Zeigt die Revive-Anzahl aller Spieler des angegebenen Rangs oder die Revive-Anzahl des angegebenen Spielers an.
 

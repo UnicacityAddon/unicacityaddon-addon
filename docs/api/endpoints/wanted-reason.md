@@ -2,7 +2,7 @@
 
 OpenAPI: (noch nicht verfügbar)
 
-## [/wantedreason](http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/wantedreason)
+## [/wantedreason](https://rettichlp.de:8443/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/wantedreason)
 
 Zeigt die Wanted-Liste an.
 
@@ -14,7 +14,7 @@ Zeigt die Wanted-Liste an.
 |---------------|--------------|
 | `tokenString` | Addon-Token  |
 
-## [/wantedreason/add](http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/wantedreason/add?reason=Test-Grund&points=20)
+## [/wantedreason/add](https://rettichlp.de:8443/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/wantedreason/add?reason=Test-Grund&points=20)
 
 Fügt einen neuen Wanted-Grund zur Wanted-Liste hinzu.
 
@@ -28,7 +28,7 @@ Fügt einen neuen Wanted-Grund zur Wanted-Liste hinzu.
 | `reason`      | Wanted-Grund             |
 | `points`      | Anzahl an Wanted-Punkten |
 
-## [/wantedreason/remove](http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/wantedreason/remove?reason=Test-Grund)
+## [/wantedreason/remove](https://rettichlp.de:8443/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/wantedreason/remove?reason=Test-Grund)
 
 Entfernt einen Wanted-Grund von der Wanted-Liste.
 

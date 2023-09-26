@@ -2,7 +2,7 @@
 
 OpenAPI: (noch nicht verfügbar)
 
-## [/event](http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/event)
+## [/event](https://rettichlp.de:8443/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/event)
 
 Zeigt die Daten für aktuelle Events.
 
@@ -14,7 +14,7 @@ Zeigt die Daten für aktuelle Events.
 |---------------|--------------|
 | `tokenString` | Addon-Token  |
 
-## [/event/bankrob](http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/event/bankrob?startTime=1684868332000)
+## [/event/bankrob](https://rettichlp.de:8443/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/event/bankrob?startTime=1684868332000)
 
 Fügt ein Bankraub Event hinzu.
 
@@ -27,7 +27,7 @@ Fügt ein Bankraub Event hinzu.
 | `tokenString` | Addon-Token                |
 | `startTime`   | Zeitpunkt des Event-Starts |
 
-## [/event/bomb](http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/event/bomb?startTime=1684868332000)
+## [/event/bomb](https://rettichlp.de:8443/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/event/bomb?startTime=1684868332000)
 
 Fügt ein Bomben Event hinzu.
 
@@ -40,7 +40,7 @@ Fügt ein Bomben Event hinzu.
 | `tokenString` | Addon-Token                |
 | `startTime`   | Zeitpunkt des Event-Starts |
 
-## [/event/gangwar](http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/event/gangwar?attacker=5&defender=10)
+## [/event/gangwar](https://rettichlp.de:8443/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/event/gangwar?attacker=5&defender=10)
 
 Setzt die aktuelle Punktzahl für Angreifer und Verteidiger während eines Gangwars.
 
