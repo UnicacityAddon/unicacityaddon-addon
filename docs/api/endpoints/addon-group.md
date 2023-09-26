@@ -2,7 +2,7 @@
 
 OpenAPI: (noch nicht verfügbar)
 
-## [/player](http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/player)
+## [/player](https://rettichlp.de:8443/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/player)
 
 Gibt eine Übersicht aller Gruppen und deren Mitglieder zurück.
 
@@ -14,7 +14,7 @@ Gibt eine Übersicht aller Gruppen und deren Mitglieder zurück.
 |---------------|--------------|
 | `tokenString` | Addon-Token  |
 
-## [/player/groups](http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/player/groups)
+## [/player/groups](https://rettichlp.de:8443/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/player/groups)
 
 Gibt eine Übersicht aller Gruppen zurück.
 
@@ -26,7 +26,7 @@ Gibt eine Übersicht aller Gruppen zurück.
 |---------------|--------------|
 | `tokenString` | Addon-Token  |
 
-## [/player/add](http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/player/add?name=RettichLP&group=CEO)
+## [/player/add](https://rettichlp.de:8443/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/player/add?name=RettichLP&group=CEO)
 
 Fügt den angegebenen Spieler der angegebenen Gruppe hinzu.
 
@@ -40,7 +40,7 @@ Fügt den angegebenen Spieler der angegebenen Gruppe hinzu.
 | `name`        | Minecraft Name des Spielers |
 | `group`       | Name der Gruppe             |
 
-## [/player/remove](http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/player/remove?name=RettichLP&group=CEO)
+## [/player/remove](https://rettichlp.de:8443/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/player/remove?name=RettichLP&group=CEO)
 
 Entfernt den angegebenen Spieler aus der angegebenen Gruppe.
 

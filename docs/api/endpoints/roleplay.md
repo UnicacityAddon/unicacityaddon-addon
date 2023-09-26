@@ -2,7 +2,7 @@
 
 OpenAPI: (noch nicht verfügbar)
 
-## [/roleplay](http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/roleplay)
+## [/roleplay](https://rettichlp.de:8443/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/roleplay)
 
 Zeigt alle UUID mit ihrem zugehörigen Roleplay Namen an.
 
@@ -14,7 +14,7 @@ Zeigt alle UUID mit ihrem zugehörigen Roleplay Namen an.
 |---------------|--------------|
 | `tokenString` | Addon-Token  |
 
-## [/roleplay/update](http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/roleplay/update)
+## [/roleplay/update](https://rettichlp.de:8443/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/roleplay/update)
 
 Aktualisiert Roleplay Daten. Es werden die Daten aktualisiert, die zum angegeben API Token gehören. Somit kann nur jeder
 seine eigenen Daten ändern.

@@ -15,7 +15,7 @@ die Liste ist nicht mehr durch Dekompilierung der `.jar` Datei zu finden.
 
 ## Endpunkte
 
-Die API stellt mehrere Endpunkte zur Verfügung. Alle Endpunkte starten mit der Base-Url: `http://rettichlp.de:8888/`.
+Die API stellt mehrere Endpunkte zur Verfügung. Alle Endpunkte starten mit der Base-Url: `https://rettichlp.de:8443/`.
 Anschließend wird der Pfad der Anwendung und die API Version angegeben: `unicacityaddon/v1/`. Da nicht jeder Zugriff auf
 jeden Endpunkt haben soll, muss das Addon-Token angegeben werden (siehe
 [Autorisierung](autorisierung.md)). Danach wird der Endpunkt definiert und bei Bedarf Parameter
@@ -24,7 +24,7 @@ jeden Endpunkt haben soll, muss das Addon-Token angegeben werden (siehe
 Base-Url:
 
 ```
-http://rettichlp.de:8888/unicacityaddon/v1/{addon-token}/...
+https://rettichlp.de:8443/unicacityaddon/v1/{addon-token}/...
 ```
 
 ## Postman und OpenAPI

@@ -7,7 +7,7 @@
 
 OpenAPI: (noch nicht verfügbar)
 
-## [/autonc](http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/autonc)
+## [/autonc](https://rettichlp.de:8443/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/autonc)
 
 Gibt eine Übersicht aller Auto-NC Schlüsselwörter und Antworten.
 
@@ -19,7 +19,7 @@ Gibt eine Übersicht aller Auto-NC Schlüsselwörter und Antworten.
 |---------------|--------------|
 | `tokenString` | Addon-Token  |
 
-## [/autonc/add](http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/autonc/add?words=Wort1,Wort2,Wort3&answer=Antwort)
+## [/autonc/add](https://rettichlp.de:8443/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/autonc/add?words=Wort1,Wort2,Wort3&answer=Antwort)
 
 Gibt eine Übersicht aller Gruppen zurück.
 
@@ -33,7 +33,7 @@ Gibt eine Übersicht aller Gruppen zurück.
 | `words`       | Wörter (Wort1,Wort2,Wort3,...) |
 | `answer`      | Antwort                        |
 
-## [/autonc/remove](http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/autonc/remove?id=1)
+## [/autonc/remove](https://rettichlp.de:8443/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/autonc/remove?id=1)
 
 Fügt den angegebenen Spieler der angegebenen Gruppe hinzu.
 

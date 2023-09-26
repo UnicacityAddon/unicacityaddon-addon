@@ -2,7 +2,7 @@
 
 OpenAPI: (noch nicht verfügbar)
 
-## [/navipoint](http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/navipoint)
+## [/navipoint](https://rettichlp.de:8443/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/navipoint)
 
 Zeigt die Navi-Punkte an.
 
@@ -14,7 +14,7 @@ Zeigt die Navi-Punkte an.
 |---------------|--------------|
 | `tokenString` | Addon-Token  |
 
-## [/navipoint/add](http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/navipoint/add?name=Krankenhaus&x=1&y=2&z=3&article=das)
+## [/navipoint/add](https://rettichlp.de:8443/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/navipoint/add?name=Krankenhaus&x=1&y=2&z=3&article=das)
 
 Fügt einen neuen Navi-Punkt hinzu.
 
@@ -40,7 +40,7 @@ Fügt einen neuen Navi-Punkt hinzu.
     Der Artikel wird benötigt, da es einen Anwendungsfall gibt, für den der Navi-Punkt mit dem Artikel angezeigt werden
     muss. Für die Sperrgebiet-Nachricht muss der Artikel automatisiert zur Verfügung gestellt werden.
 
-## [/navipoint/remove](http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/navipoint/remove?name=Krankenhaus)
+## [/navipoint/remove](https://rettichlp.de:8443/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/navipoint/remove?name=Krankenhaus)
 
 Entfernt einen Navi-Punkt.
 

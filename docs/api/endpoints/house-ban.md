@@ -2,7 +2,7 @@
 
 OpenAPI: (noch nicht verfügbar)
 
-## [/houseban](http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/houseban?advanced=false)
+## [/houseban](https://rettichlp.de:8443/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/houseban?advanced=false)
 
 Zeigt die aktuellen Hausverbote an.
 
@@ -15,7 +15,7 @@ Zeigt die aktuellen Hausverbote an.
 | `tokenString` | Addon-Token                                                             |
 | `advanced`    | `false` default<br/>`true` zeigt an, wer das Hausverbot eingetragen hat |
 
-## [/houseban/add](http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/houseban/add?name=RettichLP&reason=Gewaltandrohung)
+## [/houseban/add](https://rettichlp.de:8443/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/houseban/add?name=RettichLP&reason=Gewaltandrohung)
 
 Fügt dem angegebenen Spieler den angegebenen Hausverbot-Grund hinzu.
 
@@ -33,7 +33,7 @@ Fügt dem angegebenen Spieler den angegebenen Hausverbot-Grund hinzu.
 
     Der Grund muss mit "-" als Leerzeichen angegeben werden!
 
-## [/houseban/remove](http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/houseban/remove?name=RettichLP&reason=Gewaltandrohung)
+## [/houseban/remove](https://rettichlp.de:8443/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/houseban/remove?name=RettichLP&reason=Gewaltandrohung)
 
 Entfernt dem angegebenen Spieler den angegebenen Hausverbot-Grund.
 
