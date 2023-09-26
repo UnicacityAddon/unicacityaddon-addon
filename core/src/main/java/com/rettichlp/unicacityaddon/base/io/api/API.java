@@ -155,11 +155,14 @@ public class API {
 
         new Thread(() -> {
             try {
+                // load faction data before api data (it is loaded even if api data loading fails)
+                this.loadFactionData();
+
+                // load token for api requests
                 this.createToken();
 
-                this.loadFactionData();
+                // load api data
                 this.loadPlayerData();
-
                 this.autoNCList = this.sendAutoNCRequest();
                 this.blacklistReasonList = this.sendBlacklistReasonRequest();
                 this.blackMarketLocationList = this.sendBlackMarketLocationRequest();
@@ -186,6 +189,7 @@ public class API {
         playerFactionMap.clear();
         playerRankMap.clear();
         for (Faction faction : Faction.values()) {
+            long loadTime = System.currentTimeMillis();
             String factionWebsiteSource = this.unicacityAddon.factionService().getWebsiteSource(faction);
             List<String> nameList = this.unicacityAddon.utilService().list().getAllMatchesFromString(PatternHandler.NAME_PATTERN, factionWebsiteSource);
             List<String> rankList = this.unicacityAddon.utilService().list().getAllMatchesFromString(PatternHandler.RANK_PATTERN, factionWebsiteSource);
@@ -196,6 +200,8 @@ public class API {
                         .replace("<strong>Rang ", "")
                         .charAt(0))));
             });
+
+            this.unicacityAddon.logger().info("Loaded faction data for faction {} in {}ms", faction, System.currentTimeMillis() - loadTime);
         }
     }
 
@@ -723,11 +729,5 @@ public class API {
                 .filter(predicate)
                 .findFirst()
                 .orElse(null);
-    }
-
-    private enum Type {
-        STARTED,
-        SUCCESS,
-        FAILURE
     }
 }
