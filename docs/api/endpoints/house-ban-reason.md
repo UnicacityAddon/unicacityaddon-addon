@@ -2,7 +2,7 @@
 
 OpenAPI: (noch nicht verfügbar)
 
-## [/housebanreason](http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/housebanreason)
+## [/housebanreason](https://rettichlp.de:8443/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/housebanreason)
 
 Zeigt die Hausverbot-Gründe an.
 
@@ -14,7 +14,7 @@ Zeigt die Hausverbot-Gründe an.
 |---------------|--------------|
 | `tokenString` | Addon-Token  |
 
-## [/housebanreason/add](http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/housebanreason/add?reason=Test-Grund&days=5)
+## [/housebanreason/add](https://rettichlp.de:8443/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/housebanreason/add?reason=Test-Grund&days=5)
 
 Fügt einen neuen Hausverbot-Grund hinzu.
 
@@ -32,7 +32,7 @@ Fügt einen neuen Hausverbot-Grund hinzu.
 
     Der Grund muss mit "-" als Leerzeichen angegeben werden!
 
-## [/housebanreason/remove](http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/housebanreason/remove?reason=Test-Grund)
+## [/housebanreason/remove](https://rettichlp.de:8443/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/housebanreason/remove?reason=Test-Grund)
 
 Entfernt einen Hausverbot-Grund.
 

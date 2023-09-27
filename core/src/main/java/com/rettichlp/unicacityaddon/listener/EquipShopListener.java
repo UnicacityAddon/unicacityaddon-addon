@@ -78,18 +78,26 @@ public class EquipShopListener {
             this.slotNumber = ScreenRenderListener.lastHoveredSlotNumber;
 
             if (this.slotNumber >= 0) {
+                boolean lastHoveredSlotItemDisplayNameIsFertilizerOrWater = ScreenRenderListener.lastHoveredSlotItemDisplayName.equals("Dünger") || ScreenRenderListener.lastHoveredSlotItemDisplayName.equals("Wasser");
+
                 new Timer().scheduleAtFixedRate(new TimerTask() {
                     @Override
                     public void run() {
                         if (EquipShopListener.this.amountLeft > 0) {
                             EquipShopListener.this.unicacityAddon.guiController().inventoryClick(slotNumber);
                             EquipShopListener.this.amountLeft--;
+
+                            // If the last hovered item was "Dünger" or "Wasser" run "buy"-command
+                            // It isn't executed by Unicacity -> Bug: https://forum.unicacity.de/index.php?thread/109374-blumenladen-kaufverhalten-f%C3%BCr-d%C3%BCnger-und-wasser/
+                            if (EquipShopListener.this.amountLeft > 0 && lastHoveredSlotItemDisplayNameIsFertilizerOrWater) {
+                                p.sendServerMessage("/buy");
+                            }
                         } else {
                             this.cancel();
                             EquipShopListener.this.slotNumber = -1;
                         }
                     }
-                }, 0, period);
+                }, 0, lastHoveredSlotItemDisplayNameIsFertilizerOrWater ? 1000 : period);
             }
         } else if (e.getKey().equals(e.hotkeyConfiguration().aEquip().get())) {
             this.amountLeft = aEquipAmount;

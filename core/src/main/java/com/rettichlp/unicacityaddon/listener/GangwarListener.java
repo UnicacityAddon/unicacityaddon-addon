@@ -41,7 +41,8 @@ public class GangwarListener {
         }
     }
 
-    @Subscribe
+    // disabled because gangwar score displaying functionality changed on Unicacity
+    // @Subscribe
     public void onUnicacityAddonTick(UnicacityAddonTickEvent e) {
         if (e.isPhase(UnicacityAddonTickEvent.Phase.SECOND_30)) {
             AddonPlayer p = this.unicacityAddon.player();

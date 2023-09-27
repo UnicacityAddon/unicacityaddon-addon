@@ -59,7 +59,7 @@ public class WebService {
     /**
      * Creates an url as {@link String}
      *
-     * @param nonProd         If <code>true</code> the url is created on production environment <a href="http://rettichlp.de:8888/unicacityaddon/v1/">http://rettichlp.de:8888/unicacityaddon/v1/</a> otherwise <a href="http://localhost:8888/unicacityaddon/v1/">http://localhost:8888/unicacityaddon/v1/</a>
+     * @param nonProd         If <code>true</code> the url is created on production environment <a href="https://rettichlp.de:8443/unicacityaddon/v1/">https://rettichlp.de:8443/unicacityaddon/v1/</a> otherwise <a href="http://localhost:8888/unicacityaddon/v1/">http://localhost:8888/unicacityaddon/v1/</a>
      * @param applicationPath The application type which is requested
      * @param subPath         The ongoing path parameters for match application requirements
      * @param parameter       Parameters as {@link Map}, will be mapped as query parameters
@@ -68,7 +68,7 @@ public class WebService {
      */
     @NotNull
     private String createUrl(boolean nonProd, ApplicationPath applicationPath, String subPath, Map<String, String> parameter) {
-        return (nonProd ? "http://localhost:8888/unicacityaddon/v1/" : "http://rettichlp.de:8888/unicacityaddon/v1/")
+        return (nonProd ? "https://localhost:8443/unicacityaddon/v1/" : "https://rettichlp.de:8443/unicacityaddon/v1/")
                 + this.unicacityAddon.api().getToken()
                 + applicationPath.getApplicationPath()
                 + (subPath == null ? "" : "/" + subPath)

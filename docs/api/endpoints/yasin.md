@@ -2,7 +2,7 @@
 
 OpenAPI: (noch nicht verfügbar)
 
-## [/yasin](http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/yasin)
+## [/yasin](https://rettichlp.de:8443/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/yasin)
 
 Zeigt die Yasin-Liste an.
 
@@ -14,7 +14,7 @@ Zeigt die Yasin-Liste an.
 |---------------|--------------|
 | `tokenString` | Addon-Token  |
 
-## [/yasin/add](http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/yasin/add?name=RettichLP)
+## [/yasin/add](https://rettichlp.de:8443/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/yasin/add?name=RettichLP)
 
 Fügt einen neuen Spieler zur Yasin-Liste hinzu.
 
@@ -27,7 +27,7 @@ Fügt einen neuen Spieler zur Yasin-Liste hinzu.
 | `tokenString` | Addon-Token                 |
 | `name`        | Minecraft Name des Spielers |
 
-## [/yasin/done](http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/yasin/done?name=RettichLP)
+## [/yasin/done](https://rettichlp.de:8443/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/yasin/done?name=RettichLP)
 
 Markiert einen Spieler auf der Yasin-Liste als erledigt.
 
@@ -40,7 +40,7 @@ Markiert einen Spieler auf der Yasin-Liste als erledigt.
 | `tokenString` | Addon-Token                 |
 | `name`        | Minecraft Name des Spielers |
 
-## [/yasin/remove](http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/yasin/remove?name=RettichLP)
+## [/yasin/remove](https://rettichlp.de:8443/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/yasin/remove?name=RettichLP)
 
 Entfernt einen Spieler von der Yasin-Liste.
 

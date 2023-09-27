@@ -11,11 +11,11 @@ assignees: ''
 Describe this bug with all information you have... How can it be reproduced? Do you have a crash log? What have you done
 before the bug occurred? What did you expect? Do you have screenshots?
 
-LabyMod version: `3` `4`
+LabyMod version: `4`
 
 Minecraft version: `1.12.2`
 
-Addon version: `2.4.0`
+Addon version: `2.4.1`
 
 <hr>
 

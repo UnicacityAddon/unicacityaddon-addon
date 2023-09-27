@@ -2,9 +2,14 @@ name: Build Wiki
 
 on:
   push:
-    branches: [ "develop" ]
+    branches:
+      - 'develop'
+      - 'hotfix/**'
   pull_request:
-    branches: [ "develop" ]
+    branches:
+      - 'main'
+      - 'develop'
+      - 'hotfix/**'
   workflow_dispatch:
 
 jobs:

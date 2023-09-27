@@ -2,7 +2,7 @@
 
 OpenAPI: (noch nicht verfügbar)
 
-## [/mgmt](http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/mgmt)
+## [/mgmt](https://rettichlp.de:8443/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/mgmt)
 
 Zeigt Daten wie Client Anzahl, Versionsverteilung oder aktuelle Version an.
 
@@ -14,7 +14,7 @@ Zeigt Daten wie Client Anzahl, Versionsverteilung oder aktuelle Version an.
 |---------------|--------------|
 | `tokenString` | Addon-Token  |
 
-## [/mgmt/users](http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/mgmt/users)
+## [/mgmt/users](https://rettichlp.de:8443/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/mgmt/users)
 
 Zeigt alle registrierten Clients mit der Aktivität, Version, UUID und Versionsaktualität an.
 
@@ -26,7 +26,7 @@ Zeigt alle registrierten Clients mit der Aktivität, Version, UUID und Versionsa
 |---------------|--------------|
 | `tokenString` | Addon-Token  |
 
-## [/mgmt/version](http://rettichlp.de:8888/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/mgmt/version?type=add&version=1.0.0)
+## [/mgmt/version](https://rettichlp.de:8443/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/mgmt/version?type=add&version=1.0.0)
 
 Markiert eine Version als aktuell oder veraltet.
 
