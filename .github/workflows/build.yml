@@ -7,7 +7,6 @@ on:
       - 'hotfix/**'
   pull_request:
     branches:
-      - 'main'
       - 'develop'
       - 'hotfix/**'
   workflow_dispatch:

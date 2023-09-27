@@ -53,7 +53,7 @@ public class UtilService {
 
     @SuppressWarnings("SameReturnValue")
     public String version() {
-        return "2.4.1";
+        return "2.5.0-dev";
     }
 
     public boolean isUnicacity() {
