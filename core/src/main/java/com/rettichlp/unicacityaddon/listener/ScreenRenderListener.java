@@ -33,6 +33,7 @@ import java.util.concurrent.TimeUnit;
 @UCEvent
 public class ScreenRenderListener {
 
+    public static String lastHoveredSlotItemDisplayName = "";
     public static int lastHoveredSlotNumber = -1;
     public static List<Integer> settingPath = new ArrayList<>();
     private boolean showGangzones = false;
@@ -99,6 +100,7 @@ public class ScreenRenderListener {
         aBuyBlacklist.add("Inventar Upgrade");
         aBuyBlacklist.add("Messer");
 
+        lastHoveredSlotItemDisplayName = plainDisplayName;
         lastHoveredSlotNumber = aBuyBlacklist.stream().noneMatch(plainDisplayName::contains)
                 ? this.unicacityAddon.guiController().getSlotNumberByDisplayName(plainDisplayName)
                 : -1;
