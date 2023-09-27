@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "com.rettichlp.unicacityaddon"
-version = "2.4.0"
+version = "2.4.1"
 
 java.toolchain.languageVersion.set(JavaLanguageVersion.of(17))
 
@@ -17,7 +17,7 @@ labyMod {
         author = "RettichLP & Dimiikou"
         description = "UnicacityAddon is a LabyMod addon written for the Minecraft server Unicacity and provides specialized, nice-to-have features and utilities for everyday gameplay."
         minecraftVersion = "1.12.2<*"
-        version = System.getenv().getOrDefault("VERSION", "2.4.0")
+        version = System.getenv().getOrDefault("VERSION", "2.4.1")
     }
 
     minecraft {
