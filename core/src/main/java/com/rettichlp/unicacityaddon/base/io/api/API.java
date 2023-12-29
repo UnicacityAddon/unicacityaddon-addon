@@ -16,14 +16,11 @@ import com.rettichlp.unicacityaddon.api.management.ManagementUser;
 import com.rettichlp.unicacityaddon.api.player.Player;
 import com.rettichlp.unicacityaddon.api.player.PlayerEntry;
 import com.rettichlp.unicacityaddon.api.statistic.Statistic;
-import com.rettichlp.unicacityaddon.api.statisticTop.StatisticTop;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.builder.RequestBuilder;
 import com.rettichlp.unicacityaddon.base.enums.api.AddonGroup;
 import com.rettichlp.unicacityaddon.base.enums.api.ApplicationPath;
 import com.rettichlp.unicacityaddon.base.enums.api.StatisticType;
-import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
-import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.services.NotificationService;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
@@ -528,14 +525,6 @@ public class API {
                 .parameter(Map.of(
                         "type", statisticType.name()))
                 .sendAsync();
-    }
-
-    public StatisticTop sendStatisticTopRequest() {
-        return RequestBuilder.getBuilder(this.unicacityAddon)
-                .nonProd(this.unicacityAddon.configuration().local().get())
-                .applicationPath(ApplicationPath.STATISTIC)
-                .subPath(TOP_SUB_PATH)
-                .getAsJsonObjectAndParse(StatisticTop.class);
     }
 
     public void sendTokenCreateRequest(Token token) throws APIResponseException, IOException {
