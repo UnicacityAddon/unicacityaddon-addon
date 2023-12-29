@@ -43,7 +43,7 @@ and on the other hand the support for Minecraft version 1.16.5+.
 ### Supported Versions
 
 > In LabyMod 3 there was no command implementation, so there was used Minecraft Forge for this. In LabyMod 4 is an own
-> command implementation so Minecraft Forge isn't longer needed.
+> command implementation so Minecraft Forge is no longer needed.
 
 #### LabyMod 3
 
@@ -60,12 +60,6 @@ Requires Minecraft Forge: ❌<br>
 Supported Minecraft versions:
 
 - `1.12.2`
-- `1.16.5`
-- `1.17.1`
-- `1.18.2`
-- `1.19.2`
-- `1.19.3`
-- `1.19.4`
 
 ## Installation
 
