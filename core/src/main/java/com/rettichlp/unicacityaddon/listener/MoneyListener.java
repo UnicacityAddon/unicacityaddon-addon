@@ -2,15 +2,12 @@ package com.rettichlp.unicacityaddon.listener;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
-import com.rettichlp.unicacityaddon.base.builder.ActivityCheckBuilder;
 import com.rettichlp.unicacityaddon.base.config.atm.ATMConfiguration;
-import com.rettichlp.unicacityaddon.base.enums.Activity;
 import com.rettichlp.unicacityaddon.base.enums.api.StatisticType;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
-import com.rettichlp.unicacityaddon.commands.api.activity.PayEquipCommand;
 import com.rettichlp.unicacityaddon.commands.money.ATMFillCommand;
 import com.rettichlp.unicacityaddon.commands.money.RichTaxesCommand;
 import net.labymod.api.event.Subscribe;
@@ -137,15 +134,6 @@ public class MoneyListener {
         if (cashToFBankMatcher.find() && msg.contains(p.getName())) {
             int money = Integer.parseInt(cashToFBankMatcher.group(1));
             this.unicacityAddon.fileService().data().removeCashBalance(money);
-
-            if (PayEquipCommand.payEquipMap.getValue() == money && this.unicacityAddon.utilService().isUnicacity()) {
-                ActivityCheckBuilder.getBuilder(this.unicacityAddon)
-                        .activity(Activity.EQUIP_EDIT)
-                        .type(PayEquipCommand.payEquipMap.getKey())
-                        .value("true")
-                        .send();
-            }
-
             return;
         }
 

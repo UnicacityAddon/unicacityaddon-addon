@@ -1,7 +1,6 @@
 package com.rettichlp.unicacityaddon.base.io.api;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.api.AutoNC;
 import com.rettichlp.unicacityaddon.api.BlackMarketLocation;
 import com.rettichlp.unicacityaddon.api.BlacklistReason;
 import com.rettichlp.unicacityaddon.api.NaviPoint;
@@ -17,15 +16,11 @@ import com.rettichlp.unicacityaddon.api.management.ManagementUser;
 import com.rettichlp.unicacityaddon.api.player.Player;
 import com.rettichlp.unicacityaddon.api.player.PlayerEntry;
 import com.rettichlp.unicacityaddon.api.statistic.Statistic;
-import com.rettichlp.unicacityaddon.api.statisticTop.StatisticTop;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.builder.RequestBuilder;
-import com.rettichlp.unicacityaddon.base.enums.Activity;
 import com.rettichlp.unicacityaddon.base.enums.api.AddonGroup;
 import com.rettichlp.unicacityaddon.base.enums.api.ApplicationPath;
 import com.rettichlp.unicacityaddon.base.enums.api.StatisticType;
-import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
-import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
 import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.services.NotificationService;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
@@ -61,8 +56,6 @@ import java.util.zip.Checksum;
  * user-friendliness, an update should not always have to be created for changes to content-related data. I utilize an
  * API to provide data, leveraging a private server. Data is available for the following purposes:
  * <ul>
- *     <li>activity check <a href="https://rettichlp.de:8443/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/activitycheck/LEMILIEU/add">API</a> (unauthorized)</li>
- *     <li>auto nc <a href="https://rettichlp.de:8443/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/autonc">API</a> (unauthorized)</li>
  *     <li>addon groups <a href="https://rettichlp.de:8443/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/player">API</a></li>
  *     <li>banners <a href="https://rettichlp.de:8443/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/banner">API</a></li>
  *     <li>blacklist reasons <a href="https://rettichlp.de:8443/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/blacklistreason/LEMILIEU">API</a> (unauthorized)</li>
@@ -121,8 +114,6 @@ public class API {
     private final Map<String, Integer> playerRankMap = new HashMap<>();
 
     @Setter
-    private List<AutoNC> autoNCList = new ArrayList<>();
-    @Setter
     private List<BlacklistReason> blacklistReasonList = new ArrayList<>();
     @Setter
     private List<BlackMarketLocation> blackMarketLocationList = new ArrayList<>();
@@ -163,7 +154,6 @@ public class API {
 
                 // load api data
                 this.loadPlayerData();
-                this.autoNCList = this.sendAutoNCRequest();
                 this.blacklistReasonList = this.sendBlacklistReasonRequest();
                 this.blackMarketLocationList = this.sendBlackMarketLocationRequest();
                 this.houseBanList = this.sendHouseBanRequest(this.addonPlayer.getFaction().equals(Faction.RETTUNGSDIENST));
@@ -226,51 +216,6 @@ public class API {
             AddonGroup.BLACKLIST.getMemberList().addAll(player.getBLACKLIST().stream().map(PlayerEntry::getName).toList());
             AddonGroup.DYAVOL.getMemberList().addAll(player.getDYAVOL().stream().map(PlayerEntry::getName).toList());
         }
-    }
-
-    public List<AutoNC> sendAutoNCRequest() {
-        return RequestBuilder.getBuilder(this.unicacityAddon)
-                .preCondition(false) // deactivated because Unicacity guidelines
-                .nonProd(this.unicacityAddon.configuration().local().get())
-                .applicationPath(ApplicationPath.AUTO_NC)
-                .getAsJsonArrayAndParse(AutoNC.class);
-    }
-
-    public void sendAutoNCAddRequest(String words, String answer) {
-        RequestBuilder.getBuilder(this.unicacityAddon)
-                .nonProd(this.unicacityAddon.configuration().local().get())
-                .applicationPath(ApplicationPath.AUTO_NC)
-                .subPath(ADD_SUB_PATH)
-                .parameter(Map.of(
-                        "words", words,
-                        "answer", answer))
-                .sendAsync();
-    }
-
-    public void sendAutoNCRemoveRequest(Long id) {
-        RequestBuilder.getBuilder(this.unicacityAddon)
-                .nonProd(this.unicacityAddon.configuration().local().get())
-                .applicationPath(ApplicationPath.AUTO_NC)
-                .subPath(REMOVE_SUB_PATH)
-                .parameter(Map.of(
-                        "id", String.valueOf(id)))
-                .sendAsync();
-    }
-
-    public void sendActivityCheckActivity(Activity activity, String type, String value, DrugType drugType, DrugPurity drugPurity, Long date, String screenshot) {
-        RequestBuilder.getBuilder(this.unicacityAddon)
-                .nonProd(this.unicacityAddon.configuration().local().get())
-                .applicationPath(ApplicationPath.ACTIVITY_CHECK)
-                .subPath(this.addonPlayer.getFaction() + "/add")
-                .parameter(Map.of(
-                        "activity", String.valueOf(activity),
-                        "type", Optional.ofNullable(type).orElse("").replace(" ", "-"),
-                        "value", Optional.ofNullable(value).orElse("").replace(" ", "-"),
-                        "drugType", Optional.ofNullable(drugType).map(DrugType::name).orElse(""),
-                        "drugPurity", String.valueOf(Optional.ofNullable(drugPurity).map(DrugPurity::getPurity).orElse(-1)),
-                        "date", String.valueOf(Optional.ofNullable(date).orElse(0L)),
-                        "screenshot", Optional.ofNullable(screenshot).orElse("").replace(" ", "-")))
-                .sendAsync();
     }
 
     public void sendBannerAddRequest(@NotNull Faction faction, int x, int y, int z, String naviPoint) {
@@ -580,14 +525,6 @@ public class API {
                 .parameter(Map.of(
                         "type", statisticType.name()))
                 .sendAsync();
-    }
-
-    public StatisticTop sendStatisticTopRequest() {
-        return RequestBuilder.getBuilder(this.unicacityAddon)
-                .nonProd(this.unicacityAddon.configuration().local().get())
-                .applicationPath(ApplicationPath.STATISTIC)
-                .subPath(TOP_SUB_PATH)
-                .getAsJsonObjectAndParse(StatisticTop.class);
     }
 
     public void sendTokenCreateRequest(Token token) throws APIResponseException, IOException {

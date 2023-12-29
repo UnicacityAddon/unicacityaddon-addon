@@ -1,13 +1,8 @@
 package com.rettichlp.unicacityaddon.commands.faction;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.builder.TabCompletionBuilder;
-import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
-import com.rettichlp.unicacityaddon.base.io.api.APIResponseException;
 import com.rettichlp.unicacityaddon.base.registry.UnicacityCommand;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCCommand;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
@@ -41,8 +36,6 @@ public class EquipListCommand extends UnicacityCommand {
         if (arguments.length == 1 && arguments[0].equalsIgnoreCase("reset")) {
             this.unicacityAddon.fileService().data().setEquipMap(new HashMap<>());
             p.sendInfoMessage("Equipliste gelöscht.");
-        } else if (p.getFaction().equals(Faction.LEMILIEU)) {
-            equipListLeMilieu(p);
         } else {
             equipList(p);
         }
@@ -83,41 +76,5 @@ public class EquipListCommand extends UnicacityCommand {
                 .createComponent());
 
         p.sendEmptyMessage();
-    }
-
-    private void equipListLeMilieu(AddonPlayer p) {
-        NumberFormat numberFormat = NumberFormat.getNumberInstance(new Locale("da", "DK"));
-        p.sendEmptyMessage();
-        p.sendMessage(Message.getBuilder()
-                .of("Equip:").color(ColorCode.DARK_AQUA).bold().advance()
-                .createComponent());
-
-        new Thread(() -> {
-            try {
-                String response = this.unicacityAddon.webService().sendRequest("https://lemilieu.de/api/equip/get?member=" + p.getShortUniqueId());
-
-                JsonArray jsonArray = new JsonParser().parse(response).getAsJsonArray();
-                jsonArray.forEach(jsonElement -> {
-                    JsonObject jsonObject = jsonElement.getAsJsonObject();
-                    String payed = jsonObject.get("payed").getAsString();
-
-                    if (payed.equals("false")) {
-                        String id = jsonObject.get("id").getAsString();
-                        String price = jsonObject.get("price").getAsString();
-                        String item = jsonObject.get("item").getAsString();
-
-                        p.sendMessage(Message.getBuilder()
-                                .of("» ID " + id + ": " + item + " -").color(ColorCode.GRAY).advance().space()
-                                .of(numberFormat.format(Integer.parseInt(price)) + "$").color(ColorCode.AQUA).advance()
-                                .createComponent());
-                    }
-                });
-
-                p.sendEmptyMessage();
-
-            } catch (APIResponseException e) {
-                this.unicacityAddon.logger().error(e.getMessage());
-            }
-        }).start();
     }
 }

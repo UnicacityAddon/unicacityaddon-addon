@@ -51,21 +51,14 @@ import com.rettichlp.unicacityaddon.commands.SyncCommand;
 import com.rettichlp.unicacityaddon.commands.TimerCommand;
 import com.rettichlp.unicacityaddon.commands.TodoListCommand;
 import com.rettichlp.unicacityaddon.commands.api.AddonGroupCommand;
-import com.rettichlp.unicacityaddon.commands.api.AutoNCCommand;
 import com.rettichlp.unicacityaddon.commands.api.BlacklistReasonCommand;
 import com.rettichlp.unicacityaddon.commands.api.HousebanCommand;
 import com.rettichlp.unicacityaddon.commands.api.HousebanReasonCommand;
 import com.rettichlp.unicacityaddon.commands.api.NaviPointCommand;
 import com.rettichlp.unicacityaddon.commands.api.ReviveStatsCommand;
 import com.rettichlp.unicacityaddon.commands.api.TokenCommand;
-import com.rettichlp.unicacityaddon.commands.api.TopListCommand;
 import com.rettichlp.unicacityaddon.commands.api.WantedReasonCommand;
 import com.rettichlp.unicacityaddon.commands.api.YasinCommand;
-import com.rettichlp.unicacityaddon.commands.api.activity.DrugActivityCommand;
-import com.rettichlp.unicacityaddon.commands.api.activity.MoneyActivityCommand;
-import com.rettichlp.unicacityaddon.commands.api.activity.PayEquipCommand;
-import com.rettichlp.unicacityaddon.commands.api.activity.ProtectionMoneyCommand;
-import com.rettichlp.unicacityaddon.commands.api.activity.RoleplayActivityCommand;
 import com.rettichlp.unicacityaddon.commands.faction.CheckActiveMembersCommand;
 import com.rettichlp.unicacityaddon.commands.faction.DropDrugAllCommand;
 import com.rettichlp.unicacityaddon.commands.faction.EquipListCommand;
@@ -88,7 +81,6 @@ import com.rettichlp.unicacityaddon.commands.faction.chat.FForceCommand;
 import com.rettichlp.unicacityaddon.commands.faction.chat.SFForceCommand;
 import com.rettichlp.unicacityaddon.commands.faction.chat.ToggleShoutCommand;
 import com.rettichlp.unicacityaddon.commands.faction.chat.ToggleWhisperCommand;
-import com.rettichlp.unicacityaddon.commands.faction.rettungsdienst.CheckFireCommand;
 import com.rettichlp.unicacityaddon.commands.faction.rettungsdienst.RecipeAcceptCommand;
 import com.rettichlp.unicacityaddon.commands.faction.rettungsdienst.RecipeCommand;
 import com.rettichlp.unicacityaddon.commands.faction.state.ASUCommand;
@@ -315,7 +307,6 @@ public class Registry {
             ActivityCommand.class,
             AddonGroupCommand.class,
             AutoFirstAidCommand.class,
-            AutoNCCommand.class,
             BlackMarketCommand.class,
             BlacklistInfoCommand.class,
             BlacklistReasonCommand.class,
@@ -326,7 +317,6 @@ public class Registry {
             ChannelActivityCommand.class,
             ChatLogCommand.class,
             CheckActiveMembersCommand.class,
-            CheckFireCommand.class,
             ClearCommand.class,
             ClockCommand.class,
             CoordlistCommand.class,
@@ -336,7 +326,6 @@ public class Registry {
             DepositCommand.class,
             DiscordCommand.class,
             DropDrugAllCommand.class,
-            DrugActivityCommand.class,
             DutyCommand.class,
             DyavolCommand.class,
             EquipListCommand.class,
@@ -356,7 +345,6 @@ public class Registry {
             MobileMuteCommand.class,
             ModifyBlacklistCommand.class,
             ModifyWantedsCommand.class,
-            MoneyActivityCommand.class,
             MoveCommand.class,
             MoveHereCommand.class,
             MoveToCommand.class,
@@ -367,8 +355,6 @@ public class Registry {
             NearestNaviPointCommand.class,
             OwnUseCommand.class,
             OwnUseGiftCommand.class,
-            PayEquipCommand.class,
-            ProtectionMoneyCommand.class,
             PunishCommand.class,
             RecipeAcceptCommand.class,
             RecipeCommand.class,
@@ -377,7 +363,6 @@ public class Registry {
             ResetPlantTimerCommand.class,
             ReviveStatsCommand.class,
             RichTaxesCommand.class,
-            RoleplayActivityCommand.class,
             RoleplayNameCommand.class,
             SFForceCommand.class,
             ScreenCommand.class,
@@ -395,7 +380,6 @@ public class Registry {
             ToggleShoutCommand.class,
             ToggleWhisperCommand.class,
             TokenCommand.class,
-            TopListCommand.class,
             WantedReasonCommand.class,
             YasinCommand.class
     );
