@@ -51,7 +51,6 @@ import com.rettichlp.unicacityaddon.commands.SyncCommand;
 import com.rettichlp.unicacityaddon.commands.TimerCommand;
 import com.rettichlp.unicacityaddon.commands.TodoListCommand;
 import com.rettichlp.unicacityaddon.commands.api.AddonGroupCommand;
-import com.rettichlp.unicacityaddon.commands.api.AutoNCCommand;
 import com.rettichlp.unicacityaddon.commands.api.BlacklistReasonCommand;
 import com.rettichlp.unicacityaddon.commands.api.HousebanCommand;
 import com.rettichlp.unicacityaddon.commands.api.HousebanReasonCommand;
@@ -315,7 +314,6 @@ public class Registry {
             ActivityCommand.class,
             AddonGroupCommand.class,
             AutoFirstAidCommand.class,
-            AutoNCCommand.class,
             BlackMarketCommand.class,
             BlacklistInfoCommand.class,
             BlacklistReasonCommand.class,

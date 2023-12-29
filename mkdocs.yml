@@ -87,7 +87,6 @@ nav:
           - Daten: api/function/daten-und-speicherung.md
       - Endpunkte:
           - Addon Group: api/endpoints/addon-group.md
-          - AutoNC: api/endpoints/autonc.md
           - Banner: api/endpoints/banner.md
           - Blacklist: api/endpoints/blacklist.md
           - Blackmarket: api/endpoints/blackmarket.md

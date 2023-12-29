@@ -1,7 +1,6 @@
 package com.rettichlp.unicacityaddon.base.io.api;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
-import com.rettichlp.unicacityaddon.api.AutoNC;
 import com.rettichlp.unicacityaddon.api.BlackMarketLocation;
 import com.rettichlp.unicacityaddon.api.BlacklistReason;
 import com.rettichlp.unicacityaddon.api.NaviPoint;
@@ -121,8 +120,6 @@ public class API {
     private final Map<String, Integer> playerRankMap = new HashMap<>();
 
     @Setter
-    private List<AutoNC> autoNCList = new ArrayList<>();
-    @Setter
     private List<BlacklistReason> blacklistReasonList = new ArrayList<>();
     @Setter
     private List<BlackMarketLocation> blackMarketLocationList = new ArrayList<>();
@@ -163,7 +160,6 @@ public class API {
 
                 // load api data
                 this.loadPlayerData();
-                this.autoNCList = this.sendAutoNCRequest();
                 this.blacklistReasonList = this.sendBlacklistReasonRequest();
                 this.blackMarketLocationList = this.sendBlackMarketLocationRequest();
                 this.houseBanList = this.sendHouseBanRequest(this.addonPlayer.getFaction().equals(Faction.RETTUNGSDIENST));
@@ -226,35 +222,6 @@ public class API {
             AddonGroup.BLACKLIST.getMemberList().addAll(player.getBLACKLIST().stream().map(PlayerEntry::getName).toList());
             AddonGroup.DYAVOL.getMemberList().addAll(player.getDYAVOL().stream().map(PlayerEntry::getName).toList());
         }
-    }
-
-    public List<AutoNC> sendAutoNCRequest() {
-        return RequestBuilder.getBuilder(this.unicacityAddon)
-                .preCondition(false) // deactivated because Unicacity guidelines
-                .nonProd(this.unicacityAddon.configuration().local().get())
-                .applicationPath(ApplicationPath.AUTO_NC)
-                .getAsJsonArrayAndParse(AutoNC.class);
-    }
-
-    public void sendAutoNCAddRequest(String words, String answer) {
-        RequestBuilder.getBuilder(this.unicacityAddon)
-                .nonProd(this.unicacityAddon.configuration().local().get())
-                .applicationPath(ApplicationPath.AUTO_NC)
-                .subPath(ADD_SUB_PATH)
-                .parameter(Map.of(
-                        "words", words,
-                        "answer", answer))
-                .sendAsync();
-    }
-
-    public void sendAutoNCRemoveRequest(Long id) {
-        RequestBuilder.getBuilder(this.unicacityAddon)
-                .nonProd(this.unicacityAddon.configuration().local().get())
-                .applicationPath(ApplicationPath.AUTO_NC)
-                .subPath(REMOVE_SUB_PATH)
-                .parameter(Map.of(
-                        "id", String.valueOf(id)))
-                .sendAsync();
     }
 
     public void sendActivityCheckActivity(Activity activity, String type, String value, DrugType drugType, DrugPurity drugPurity, Long date, String screenshot) {

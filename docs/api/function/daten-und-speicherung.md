@@ -9,13 +9,6 @@ Speichert Spieler und (sofern zugeordnet) deren Gruppen.
 - `minecraftUuid` Minecraft UUID des Spielers
 - `groupList` Liste aus Gruppen, zu denen der Spieler gehört
 
-## AutoNC
-
-Speichert Schlüsselwörter oder Symbole und eine Antwort.
-
-- `words` Liste aus Wörtern oder Symbolen
-- `answer` Antwort Text
-
 ## Banner
 
 Speichert den Banner-Status.

@@ -11,7 +11,6 @@ import lombok.Getter;
 public enum ApplicationPath {
 
     ACTIVITY_CHECK("/activitycheck"),
-    AUTO_NC("/autonc"),
     BANNER("/banner"),
     BLACKLISTREASON("/blacklistreason"),
     BLACKMARKETLOCATION("/blackmarket"),
