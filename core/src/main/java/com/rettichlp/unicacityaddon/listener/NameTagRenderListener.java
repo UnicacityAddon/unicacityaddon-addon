@@ -29,9 +29,6 @@ public class NameTagRenderListener {
         PlayerNameTagRenderEvent.Context context = e.context();
         NetworkPlayerInfo networkPlayerInfo = e.playerInfo();
 
-        if (networkPlayerInfo == null)
-            return;
-
         String playerName = networkPlayerInfo.profile().getUsername();
 
         if (context.equals(PlayerNameTagRenderEvent.Context.PLAYER_RENDER)) {

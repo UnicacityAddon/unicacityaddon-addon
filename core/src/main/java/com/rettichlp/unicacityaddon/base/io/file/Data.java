@@ -6,7 +6,6 @@ import com.rettichlp.unicacityaddon.base.enums.Weapon;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugPurity;
 import com.rettichlp.unicacityaddon.base.enums.faction.DrugType;
 import com.rettichlp.unicacityaddon.base.enums.faction.Equip;
-import com.rettichlp.unicacityaddon.base.enums.faction.Faction;
 import com.rettichlp.unicacityaddon.base.events.OfflineDataChangedEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
@@ -179,7 +178,7 @@ public class Data {
     }
 
     public List<TodolistEntry> getTodolist() {
-        return Optional.ofNullable(todolist).orElse(new ArrayList<>());
+        return Optional.ofNullable(this.todolist).orElse(new ArrayList<>());
     }
 
     /**

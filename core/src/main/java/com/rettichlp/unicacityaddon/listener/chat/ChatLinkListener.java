@@ -7,8 +7,6 @@ import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.event.HoverEvent;
-import net.labymod.api.client.gui.icon.Icon;
-import net.labymod.api.client.resources.ResourceLocation;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 
@@ -36,7 +34,6 @@ public class ChatLinkListener {
         Matcher urlImgurMatcher = PatternHandler.URL_IMGUR_PATTERN.matcher(legacyChatMessage);
 
         String matchedLink;
-        Icon icon;
         String label;
         ColorCode colorCode;
 
@@ -45,19 +42,16 @@ public class ChatLinkListener {
 
             matchedLink = urlForumMatcher.group();
             label = !title.isEmpty() ? this.unicacityAddon.utilService().text().createTitle(title) : "Unicacity Forum";
-            icon = Icon.sprite16(ResourceLocation.create("unicacityaddon", "themes/vanilla/textures/sprite/chat.png"), 0, 0);
             colorCode = ColorCode.RED;
         } else if (urlTwitchMatcher.find()) {
             String channel = urlTwitchMatcher.group("channel");
 
             matchedLink = urlTwitchMatcher.group();
             label = !channel.isEmpty() ? this.unicacityAddon.utilService().text().createTitle(channel) : "Twitch";
-            icon = Icon.sprite16(ResourceLocation.create("labymod", "themes/vanilla/textures/settings/hud/hud.png"), 4, 3);
             colorCode = ColorCode.LIGHT_PURPLE;
         } else if (urlImgurMatcher.find()) {
             matchedLink = urlImgurMatcher.group();
             label = "Imgur";
-            icon = Icon.sprite16(ResourceLocation.create("unicacityaddon", "themes/vanilla/textures/sprite/chat.png"), 1, 0);
             colorCode = ColorCode.GREEN;
         } else {
             return;
