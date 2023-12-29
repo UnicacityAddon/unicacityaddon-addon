@@ -62,7 +62,7 @@ public class ReviveListener {
     public void onActionBarReceive(ActionBarReceiveEvent e) {
         AddonPlayer p = this.unicacityAddon.player();
 
-        if (System.currentTimeMillis() - this.lastReviveMessageDisplayTime > TimeUnit.SECONDS.toMillis(5) && this.unicacityAddon.utilService().text().plain(e.message()).equals("Du lebst nun wieder.")) {
+        if (System.currentTimeMillis() - this.lastReviveMessageDisplayTime > TimeUnit.SECONDS.toMillis(5) && this.unicacityAddon.utilService().text().plain(e.getMessage()).equals("Du lebst nun wieder.")) {
             this.lastReviveMessageDisplayTime = System.currentTimeMillis();
 
             this.unicacityAddon.fileService().data().removeBankBalance(50); // successfully revived by medic = 50$

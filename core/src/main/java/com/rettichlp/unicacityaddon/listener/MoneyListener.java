@@ -2,15 +2,12 @@ package com.rettichlp.unicacityaddon.listener;
 
 import com.rettichlp.unicacityaddon.UnicacityAddon;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
-import com.rettichlp.unicacityaddon.base.builder.ActivityCheckBuilder;
 import com.rettichlp.unicacityaddon.base.config.atm.ATMConfiguration;
-import com.rettichlp.unicacityaddon.base.enums.Activity;
 import com.rettichlp.unicacityaddon.base.enums.api.StatisticType;
 import com.rettichlp.unicacityaddon.base.registry.annotation.UCEvent;
 import com.rettichlp.unicacityaddon.base.text.ColorCode;
 import com.rettichlp.unicacityaddon.base.text.Message;
 import com.rettichlp.unicacityaddon.base.text.PatternHandler;
-import com.rettichlp.unicacityaddon.commands.api.activity.PayEquipCommand;
 import com.rettichlp.unicacityaddon.commands.money.ATMFillCommand;
 import com.rettichlp.unicacityaddon.commands.money.RichTaxesCommand;
 import net.labymod.api.event.Subscribe;
