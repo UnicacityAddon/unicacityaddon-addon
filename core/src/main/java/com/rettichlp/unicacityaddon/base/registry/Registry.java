@@ -57,7 +57,6 @@ import com.rettichlp.unicacityaddon.commands.api.HousebanReasonCommand;
 import com.rettichlp.unicacityaddon.commands.api.NaviPointCommand;
 import com.rettichlp.unicacityaddon.commands.api.ReviveStatsCommand;
 import com.rettichlp.unicacityaddon.commands.api.TokenCommand;
-import com.rettichlp.unicacityaddon.commands.api.TopListCommand;
 import com.rettichlp.unicacityaddon.commands.api.WantedReasonCommand;
 import com.rettichlp.unicacityaddon.commands.api.YasinCommand;
 import com.rettichlp.unicacityaddon.commands.faction.CheckActiveMembersCommand;
@@ -82,7 +81,6 @@ import com.rettichlp.unicacityaddon.commands.faction.chat.FForceCommand;
 import com.rettichlp.unicacityaddon.commands.faction.chat.SFForceCommand;
 import com.rettichlp.unicacityaddon.commands.faction.chat.ToggleShoutCommand;
 import com.rettichlp.unicacityaddon.commands.faction.chat.ToggleWhisperCommand;
-import com.rettichlp.unicacityaddon.commands.faction.rettungsdienst.CheckFireCommand;
 import com.rettichlp.unicacityaddon.commands.faction.rettungsdienst.RecipeAcceptCommand;
 import com.rettichlp.unicacityaddon.commands.faction.rettungsdienst.RecipeCommand;
 import com.rettichlp.unicacityaddon.commands.faction.state.ASUCommand;
@@ -319,7 +317,6 @@ public class Registry {
             ChannelActivityCommand.class,
             ChatLogCommand.class,
             CheckActiveMembersCommand.class,
-            CheckFireCommand.class,
             ClearCommand.class,
             ClockCommand.class,
             CoordlistCommand.class,
@@ -383,7 +380,6 @@ public class Registry {
             ToggleShoutCommand.class,
             ToggleWhisperCommand.class,
             TokenCommand.class,
-            TopListCommand.class,
             WantedReasonCommand.class,
             YasinCommand.class
     );
