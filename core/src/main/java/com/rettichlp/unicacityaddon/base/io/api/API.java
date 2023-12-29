@@ -19,7 +19,6 @@ import com.rettichlp.unicacityaddon.api.statistic.Statistic;
 import com.rettichlp.unicacityaddon.api.statisticTop.StatisticTop;
 import com.rettichlp.unicacityaddon.base.AddonPlayer;
 import com.rettichlp.unicacityaddon.base.builder.RequestBuilder;
-import com.rettichlp.unicacityaddon.base.enums.Activity;
 import com.rettichlp.unicacityaddon.base.enums.api.AddonGroup;
 import com.rettichlp.unicacityaddon.base.enums.api.ApplicationPath;
 import com.rettichlp.unicacityaddon.base.enums.api.StatisticType;
@@ -60,8 +59,6 @@ import java.util.zip.Checksum;
  * user-friendliness, an update should not always have to be created for changes to content-related data. I utilize an
  * API to provide data, leveraging a private server. Data is available for the following purposes:
  * <ul>
- *     <li>activity check <a href="https://rettichlp.de:8443/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/activitycheck/LEMILIEU/add">API</a> (unauthorized)</li>
- *     <li>auto nc <a href="https://rettichlp.de:8443/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/autonc">API</a> (unauthorized)</li>
  *     <li>addon groups <a href="https://rettichlp.de:8443/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/player">API</a></li>
  *     <li>banners <a href="https://rettichlp.de:8443/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/banner">API</a></li>
  *     <li>blacklist reasons <a href="https://rettichlp.de:8443/unicacityaddon/v1/dhgpsklnag2354668ec1d905xcv34d9bdee4b877/blacklistreason/LEMILIEU">API</a> (unauthorized)</li>
@@ -222,22 +219,6 @@ public class API {
             AddonGroup.BLACKLIST.getMemberList().addAll(player.getBLACKLIST().stream().map(PlayerEntry::getName).toList());
             AddonGroup.DYAVOL.getMemberList().addAll(player.getDYAVOL().stream().map(PlayerEntry::getName).toList());
         }
-    }
-
-    public void sendActivityCheckActivity(Activity activity, String type, String value, DrugType drugType, DrugPurity drugPurity, Long date, String screenshot) {
-        RequestBuilder.getBuilder(this.unicacityAddon)
-                .nonProd(this.unicacityAddon.configuration().local().get())
-                .applicationPath(ApplicationPath.ACTIVITY_CHECK)
-                .subPath(this.addonPlayer.getFaction() + "/add")
-                .parameter(Map.of(
-                        "activity", String.valueOf(activity),
-                        "type", Optional.ofNullable(type).orElse("").replace(" ", "-"),
-                        "value", Optional.ofNullable(value).orElse("").replace(" ", "-"),
-                        "drugType", Optional.ofNullable(drugType).map(DrugType::name).orElse(""),
-                        "drugPurity", String.valueOf(Optional.ofNullable(drugPurity).map(DrugPurity::getPurity).orElse(-1)),
-                        "date", String.valueOf(Optional.ofNullable(date).orElse(0L)),
-                        "screenshot", Optional.ofNullable(screenshot).orElse("").replace(" ", "-")))
-                .sendAsync();
     }
 
     public void sendBannerAddRequest(@NotNull Faction faction, int x, int y, int z, String naviPoint) {

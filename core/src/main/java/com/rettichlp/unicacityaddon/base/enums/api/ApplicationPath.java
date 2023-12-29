@@ -10,7 +10,6 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum ApplicationPath {
 
-    ACTIVITY_CHECK("/activitycheck"),
     BANNER("/banner"),
     BLACKLISTREASON("/blacklistreason"),
     BLACKMARKETLOCATION("/blackmarket"),

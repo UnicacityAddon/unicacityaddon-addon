@@ -60,11 +60,6 @@ import com.rettichlp.unicacityaddon.commands.api.TokenCommand;
 import com.rettichlp.unicacityaddon.commands.api.TopListCommand;
 import com.rettichlp.unicacityaddon.commands.api.WantedReasonCommand;
 import com.rettichlp.unicacityaddon.commands.api.YasinCommand;
-import com.rettichlp.unicacityaddon.commands.api.activity.DrugActivityCommand;
-import com.rettichlp.unicacityaddon.commands.api.activity.MoneyActivityCommand;
-import com.rettichlp.unicacityaddon.commands.api.activity.PayEquipCommand;
-import com.rettichlp.unicacityaddon.commands.api.activity.ProtectionMoneyCommand;
-import com.rettichlp.unicacityaddon.commands.api.activity.RoleplayActivityCommand;
 import com.rettichlp.unicacityaddon.commands.faction.CheckActiveMembersCommand;
 import com.rettichlp.unicacityaddon.commands.faction.DropDrugAllCommand;
 import com.rettichlp.unicacityaddon.commands.faction.EquipListCommand;
@@ -334,7 +329,6 @@ public class Registry {
             DepositCommand.class,
             DiscordCommand.class,
             DropDrugAllCommand.class,
-            DrugActivityCommand.class,
             DutyCommand.class,
             DyavolCommand.class,
             EquipListCommand.class,
@@ -354,7 +348,6 @@ public class Registry {
             MobileMuteCommand.class,
             ModifyBlacklistCommand.class,
             ModifyWantedsCommand.class,
-            MoneyActivityCommand.class,
             MoveCommand.class,
             MoveHereCommand.class,
             MoveToCommand.class,
@@ -365,8 +358,6 @@ public class Registry {
             NearestNaviPointCommand.class,
             OwnUseCommand.class,
             OwnUseGiftCommand.class,
-            PayEquipCommand.class,
-            ProtectionMoneyCommand.class,
             PunishCommand.class,
             RecipeAcceptCommand.class,
             RecipeCommand.class,
@@ -375,7 +366,6 @@ public class Registry {
             ResetPlantTimerCommand.class,
             ReviveStatsCommand.class,
             RichTaxesCommand.class,
-            RoleplayActivityCommand.class,
             RoleplayNameCommand.class,
             SFForceCommand.class,
             ScreenCommand.class,
